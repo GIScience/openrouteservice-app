@@ -1,0 +1,54 @@
+html, body {
+    font-family: 'Source Sans Pro', sans-serif !important;
+    font-size: 90%;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    line-height: 1.4;
+    color: rgba(0, 0, 0, 0.8);
+    background-color: #000;
+    color: #444;
+    margin: 0;
+    padding: 0;
+}
+
+.ors-header {
+    display: flex;
+    flex: 0 0 50px;
+    background-color: #b5152b;
+}
+
+.ors-main {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: row;
+    background-color: yellow;
+}
+
+.ors-sidebar {
+    flex: 0 1 388px;
+    order: 1;
+    flex-direction: row;
+    color: #707070;
+    background-color: grey;
+}
+
+.ors-map {
+    display: flex;
+    flex: 1 1 auto;
+    order: 2;
+    background-color: pink;
+}
+
+@media screen and (min-width: 319px) and (max-width: 720px) {
+    .ors-main {
+        flex-direction: column;
+    }
+    .ors-sidebar {
+        order: 2;
+        flex-basis: 50vh;
+    }
+    .ors-map {
+        order: 1;
+    }
+}

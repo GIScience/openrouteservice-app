@@ -1,32 +1,41 @@
 <html>
-  <head>
-    <title>Angular 2 QuickStart JS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles.css">
-
+    <head>
+        <title>ORS-ng</title>
+        <meta content="width=device-width, initial-scale=1" name="viewport">
+            <link href="app/css/styles.css" rel="stylesheet"></link>
+        </meta>
+    </head>
+    <body>
+    <!-- 3. Display the application -->
+        <!-- header component -->
+        <ors-header class="ors-header"></ors-header>
+        <div class="ors-main">   
+            <div class="ors-sidebar">
+                <!-- side controls which control ng-view -->
+                <ors-controls class="ors-controls"></ors-controls>
+                <div ng-view class="ors-panel">
+                    <!-- ng-view content, either routing, accessibility or feedback -->
+                </div>
+                <ors-footer class="ors-footer"></ors-footer>
+            </div>  
+            <ors-map class="ors-map"></ors-map>             
+        </div>      
+    </body>
     <!-- 1. Load libraries -->
     <!-- IE required polyfill -->
     <script src="node_modules/core-js/client/shim.min.js"></script>
-
     <script src="node_modules/zone.js/dist/zone.js"></script>
-    <script src="node_modules/reflect-metadata/Reflect.js"></script>
 
-    <script src="node_modules/rxjs/bundles/Rx.umd.js"></script>
-    <script src="node_modules/@angular/core/bundles/core.umd.js"></script>
-    <script src="node_modules/@angular/common/bundles/common.umd.js"></script>
-    <script src="node_modules/@angular/compiler/bundles/compiler.umd.js"></script>
-    <script src="node_modules/@angular/platform-browser/bundles/platform-browser.umd.js"></script>
-    <script src="node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js"></script>
-
+    <script src="app/lib/rxjs/dist/rx.js"></script>
+    <script src="app/lib/jquery/dist/jquery.js"></script>
+    <script src="app/lib/angular/angular.js"></script>
+    <script src="app/lib/angular-animate/angular-animate.js"></script>
+    <script src="app/lib/angular-route/angular-route.js"></script>
+    <script src="app/lib/angular-resource/angular-resource.js"></script>
+    <script src="app/lib/angular-mocks/angular-mocks.js"></script>
+    <script src="app/lib/lodash/dist/lodash.min.js"></script>
+    <script src="app/lib/XMLWriter/XMLWriter.js"></script>
+    <script src="app/lib/leaflet/dist/leaflet.js"></script>
     <!-- 2. Load our 'modules' -->
-    <script src='app/app.component.js'></script>
-    <script src='app/main.js'></script>
-
-  </head>
-
-  <!-- 3. Display the application -->
-  <body>
-    <my-app>Loading...</my-app>
-  </body>
-
+    <script src="app/js/app.js"></script>
 </html>
