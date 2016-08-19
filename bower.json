@@ -1,22 +1,22 @@
 {
-    "name": "OpenRouteService.org",
-    "description": "Angular 1.x version of ORS",
-    "version": "1.0.0",
-    "homepage": "http://www.uni-heidelberg.de",
-    "license": "MIT",
-    "private": true,
-    "dependencies": {
-        "angular": "latest",
-        "angular-mocks": "latest",
-        "jquery": "latest",
-        "lodash": "latest",
-        "bootstrap": "^3.3.6",
-        "leaflet": "latest",
-        "angular-route": "latest",
-        "angular-resource": "latest",
-        "angular-animate": "latest",
-        "angular-bootstrap": "latest",
-        "XMLWriter": "latest",
-        "rxjs": "latest"
-    }
+  "name": "OpenRouteService.org",
+  "description": "Angular 1.x version of ORS",
+  "version": "1.0.0",
+  "homepage": "http://www.uni-heidelberg.de",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "latest",
+    "angular-mocks": "latest",
+    "jquery": "latest",
+    "lodash": "latest",
+    "bootstrap": "^3.3.6",
+    "leaflet": "latest",
+    "angular-route": "latest",
+    "angular-resource": "latest",
+    "angular-animate": "latest",
+    "angular-bootstrap": "latest",
+    "XMLWriter": "latest",
+    "rxjs": "latest"
+  }
 }

@@ -2,42 +2,58 @@ html, body {
     font-family: 'Source Sans Pro', sans-serif !important;
     font-size: 90%;
     display: flex;
-    min-height: 100vh;
+    min-height: 100%;
     flex-direction: column;
-    line-height: 1.4;
-    color: rgba(0, 0, 0, 0.8);
-    background-color: #000;
     color: #444;
     margin: 0;
     padding: 0;
+    background-color: gray !important;
 }
 
 .ors-header {
     display: flex;
     flex: 0 0 50px;
-    background-color: #b5152b;
+    border: 3px solid #b5152b;
 }
 
 .ors-main {
     display: flex;
-    flex: 1 0 auto;
+    flex: 1 1 auto;
     flex-direction: row;
     background-color: yellow;
 }
 
 .ors-sidebar {
-    flex: 0 1 388px;
     order: 1;
-    flex-direction: row;
     color: #707070;
-    background-color: grey;
+    background-color: purple;
+    display: flex;
+    flex: 0 1 388px;
+    flex-direction: row;
+}
+
+.ors-navigation {
+    border: 3px solid green;
+    overflow: auto;
+    display: flex;
+    flex: 0 1 44px;
+}
+
+.ors-panel {
+    border: 3px solid blue;
+    overflow: auto;
+    display: flex;
+    flex: 0 1 344px;
+}
+
+.ors-footer {
+    
 }
 
 .ors-map {
-    display: flex;
     flex: 1 1 auto;
     order: 2;
-    background-color: pink;
+    border: 3px solid pink;
 }
 
 @media screen and (min-width: 319px) and (max-width: 720px) {
@@ -47,6 +63,10 @@ html, body {
     .ors-sidebar {
         order: 2;
         flex-basis: 50vh;
+        flex: 1 1 auto;
+    }
+    .ors-panel {
+        flex: 1 1 auto;
     }
     .ors-map {
         order: 1;

@@ -8,7 +8,8 @@
     "license": "ISC",
     "dependencies": {
         "core-js": "^2.4.0",
-        "zone.js": "0.6.12"
+        "zone.js": "0.6.12",
+        "@angular/router": "*"
     },
     "devDependencies": {
         "concurrently": "^2.0.0",
