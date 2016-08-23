@@ -1,0 +1,18 @@
+<div class="input-group">
+    <input aria-label="Text input with multiple buttons" class="form-control" wp-index=$ctrl.idx ng-model=$ctrl.waypoint._address>
+        <div class="input-group-btn">
+            <button aria-label="Help" class="btn btn-default" type="button" ng-show="$ctrl.showHideMoveUp()" ng-click="$ctrl.moveup()">
+                <i class="fa fa-arrow-up">
+                </i>
+            </button>
+            <button aria-label="Help" class="btn btn-default" type="button" ng-show="$ctrl.showHideMoveDown()" ng-click="$ctrl.movedown()">
+                <i class="fa fa-arrow-down">
+                </i>
+            </button>
+            <button aria-label="Help" class="btn btn-default" type="button" ng-click="$ctrl.delete()">
+                <i class="fa fa-remove">
+                </i>
+            </button>
+        </div>
+    </input>
+</div>

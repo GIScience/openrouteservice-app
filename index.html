@@ -6,6 +6,7 @@
             <link href="app/css/styles.css" rel="stylesheet"></link>
             <link href="app/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" ></link>
             <link href="app/lib/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet" ></link>
+            <link href="app/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet"></link>
         </meta>
     </head>
     <body ng-app="orsApp">
@@ -24,7 +25,7 @@
     <script src="node_modules/zone.js/dist/zone.js"></script>
     <script src="app/lib/rxjs/dist/rx.js"></script>
     <script src="app/lib/jquery/dist/jquery.js"></script>
-    <script src="app/lib/angular/angular.js"></script>
+    <script src="app/lib/angular/angular158.js"></script>
     <script src="app/lib/angular-animate/angular-animate.js"></script>
     <script src="app/lib/angular-route/angular-route.js"></script>
     <script src="app/lib/angular-resource/angular-resource.js"></script>
@@ -37,5 +38,19 @@
     
     <!-- 2. Load our 'modules' -->
     <script src="app/js/app.js"></script>
-    <script src="app/js/app_panels.js"></script>
+    <script src="app/components/ors-navigation/ors-nav.js"></script>
+    <script src="app/components/ors-panel-routing/ors-panel-routing.js"></script>
+    <script src="app/components/ors-panel-routing/ors-waypoints/ors-waypoints.js"></script>
+    <script src="app/components/ors-panel-routing/ors-waypoints/ors-waypoint/ors-waypoint.js"></script>
+    <script src="app/components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-route-controls.js"></script>
+    <script src="app/components/ors-panel-routing/ors-profiles-options/ors-profiles-options.js"></script>
+    <script src="app/components/ors-panel-accessibilityanalysis/ors-panel-accessibilityanalysis.js"></script>
+    <script src="app/components/ors-panel-download/ors-panel-download.js"></script>
+    <script src="app/components/ors-map/ors-map.js"></script>
+
+    <script src="app/infrastructure/ors-settings.js"></script>
+    <script src="app/infrastructure/ors-objects.js"></script>
+
+
+
 </html>

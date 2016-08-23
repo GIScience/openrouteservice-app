@@ -6,17 +6,18 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "angular": "latest",
-    "angular-mocks": "latest",
+    "angular": "^1.5.3",
+    "angular-mocks": "^1.5.3",
     "jquery": "latest",
     "lodash": "latest",
     "bootstrap": "^3.3.6",
     "leaflet": "latest",
-    "angular-route": "latest",
-    "angular-resource": "latest",
-    "angular-animate": "latest",
+    "angular-route": "^1.5.3",
+    "angular-resource": "^1.5.3",
+    "angular-animate": "^1.5.3",
     "angular-bootstrap": "latest",
     "XMLWriter": "latest",
-    "rxjs": "latest"
+    "rxjs": "latest",
+    "font-awesome": "fontawesome#^4.6.3"
   }
 }
