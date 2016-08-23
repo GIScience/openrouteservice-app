@@ -1,5 +1,5 @@
 <div class="input-group">
-    <input aria-label="Text input with multiple buttons" class="form-control" wp-index=$ctrl.idx ng-model=$ctrl.waypoint._address>
+    <input aria-label="Text input with multiple buttons" class="form-control" placeholder="insert address" ng-model=$ctrl.waypoint._address ng-model-options="{debounce: 1000}" ng-change="$ctrl.addressChanged()">
         <div class="input-group-btn">
             <button aria-label="Help" class="btn btn-default" type="button" ng-show="$ctrl.showHideMoveUp()" ng-click="$ctrl.moveup()">
                 <i class="fa fa-arrow-up">

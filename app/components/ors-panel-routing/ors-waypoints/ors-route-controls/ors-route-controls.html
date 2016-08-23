@@ -1,17 +1,14 @@
 <div aria-label="..." class="btn-group" role="group">
-    <button class="btn btn-default" type="button" ng-click="$ctrl.add()">
+    <button class="btn btn-default" type="button" ng-show="$ctrl.showAdd" ng-click="$ctrl.add()">
         ADD
-    </button>
-    <button class="btn btn-default" type="button">
-        OPT
     </button>
     <button class="btn btn-default" type="button">
         ZOOM
     </button>
-    <button class="btn btn-default" type="button">
+    <button class="btn btn-default" type="button" ng-click="$ctrl.reset()">
         RES
     </button>
-     <button class="btn btn-default" type="button">
+     <button class="btn btn-default" type="button" ng-click="$ctrl.reversing()">
         REV
     </button>
 </div>

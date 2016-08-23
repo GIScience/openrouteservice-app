@@ -1,6 +1,13 @@
 angular.module('orsApp.ors-nav', ['ngComponentRouter']).component('orsSidebar', {
     templateUrl: 'app/components/ors-navigation/ors-nav.html',
     transclude: true,
+    bindings: {
+        orsMap: '<',
+    },
+    controller: function() {
+    	var ctrl = this;
+    	console.log(ctrl)
+    },
     $routeConfig: [{
             path: '/routing',
             name: 'Routing',

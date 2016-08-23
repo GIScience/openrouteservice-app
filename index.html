@@ -7,16 +7,17 @@
             <link href="app/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" ></link>
             <link href="app/lib/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet" ></link>
             <link href="app/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet"></link>
+            <link href="app/lib/leaflet/dist/leaflet.css" rel="stylesheet"></link>
         </meta>
     </head>
     <body ng-app="orsApp">
     <!-- 3. Display the application -->
         <!-- header component -->
         <ors-header class="ors-header"></ors-header>
-        <div class="ors-main">   
+        <div class="ors-main" ng-controller="RootController as root">   
             <!-- side controls which control ng-view -->
-            <ors-sidebar class="ors-sidebar"></ors-sidebar>
-            <ors-map class="ors-map"></ors-map>             
+            <ors-sidebar class="ors-sidebar" ors-map="root.myOrsMap"></ors-sidebar>
+            <ors-map id="map" class="ors-map" ors-map="root.myOrsMap"></ors-map>             
         </div>      
     </body>
     <!-- 1. Load libraries -->
@@ -38,6 +39,8 @@
     
     <!-- 2. Load our 'modules' -->
     <script src="app/js/app.js"></script>
+    <script src="app/js/namespaces.js"></script>
+
     <script src="app/components/ors-navigation/ors-nav.js"></script>
     <script src="app/components/ors-panel-routing/ors-panel-routing.js"></script>
     <script src="app/components/ors-panel-routing/ors-waypoints/ors-waypoints.js"></script>
@@ -50,6 +53,7 @@
 
     <script src="app/infrastructure/ors-settings.js"></script>
     <script src="app/infrastructure/ors-objects.js"></script>
+    <script src="app/infrastructure/ors-map-factory.js"></script>
 
 
 
