@@ -1,4 +1,4 @@
-angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.ors-panel-accessibilityanalysis', 'orsApp.ors-panel-download', 'orsApp.ors-map'])
+angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.ors-panel-accessibilityanalysis', 'orsApp.ors-panel-download'])
 
 .config(function($locationProvider) {
     $locationProvider.html5Mode(true);
@@ -25,8 +25,6 @@ angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.
 
 
 })
-
-
 
 
 .component('orsHeader', {
