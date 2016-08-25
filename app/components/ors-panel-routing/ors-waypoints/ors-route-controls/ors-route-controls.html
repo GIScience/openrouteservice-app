@@ -1,14 +1,18 @@
-<div aria-label="..." class="btn-group" role="group">
-    <button class="btn btn-default" type="button" ng-show="$ctrl.showAdd" ng-click="$ctrl.add()">
-        ADD
+<div class="ui icon buttons">
+    <button class="compact tiny ui basic button" ng-show="$ctrl.showAdd" ng-click="$ctrl.add()">
+        <i class="fa fa-plus">
+        </i>
     </button>
-    <button class="btn btn-default" type="button">
-        ZOOM
+    <button class="compact tiny ui basic button" ng-click="$ctrl.reset()">
+        <i class="fa fa-remove">
+        </i>
     </button>
-    <button class="btn btn-default" type="button" ng-click="$ctrl.reset()">
-        RES
+    <button class="compact tiny ui basic button" ng-click="$ctrl.reversing()">
+        <i class="fa fa-reorder">
+        </i>
     </button>
-     <button class="btn btn-default" type="button" ng-click="$ctrl.reversing()">
-        REV
+    <button class="compact tiny ui basic button" ng-click="$ctrl.delete()">
+        <i class="fa fa-expand">
+        </i>
     </button>
 </div>

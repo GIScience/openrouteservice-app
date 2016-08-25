@@ -1,18 +1,20 @@
-<div class="input-group">
-    <input aria-label="Text input with multiple buttons" class="form-control" placeholder="insert address" ng-model=$ctrl.waypoint._address ng-model-options="{debounce: 1000}" ng-change="$ctrl.addressChanged()">
-        <div class="input-group-btn">
-            <button aria-label="Help" class="btn btn-default" type="button" ng-show="$ctrl.showHideMoveUp()" ng-click="$ctrl.moveup()">
-                <i class="fa fa-arrow-up">
-                </i>
-            </button>
-            <button aria-label="Help" class="btn btn-default" type="button" ng-show="$ctrl.showHideMoveDown()" ng-click="$ctrl.movedown()">
-                <i class="fa fa-arrow-down">
-                </i>
-            </button>
-            <button aria-label="Help" class="btn btn-default" type="button" ng-click="$ctrl.delete()">
-                <i class="fa fa-remove">
-                </i>
-            </button>
-        </div>
+<div class="ui icon input">
+    <input ng-change="$ctrl.addressChanged()" ng-model="$ctrl.waypoint._address" ng-model-options="{debounce: 1000}" placeholder="Search..." type="text">
+        <i class="search icon">
+        </i>
     </input>
+</div>
+<div class="ui icon buttons">
+    <button class="compact tiny ui basic button" ng-click="$ctrl.moveup()" ng-show="$ctrl.showHideMoveUp()">
+        <i class="fa fa-arrow-up">
+        </i>
+    </button>
+    <button class="compact tiny ui basic button" ng-click="$ctrl.movedown()" ng-show="$ctrl.showHideMoveDown()">
+        <i class="fa fa-arrow-down">
+        </i>
+    </button>
+    <button class="compact tiny ui basic button" ng-click="$ctrl.delete()">
+        <i class="fa fa-remove">
+        </i>
+    </button>
 </div>

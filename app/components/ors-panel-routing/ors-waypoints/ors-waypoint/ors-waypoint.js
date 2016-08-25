@@ -8,6 +8,7 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
         onMoveDown: '&',
         onDelete: '&',
         onWaypointsChanged: '&',
+        onAddressChanged: '&',
         waypoints: '<',
         showAdd: '='
     }
@@ -17,8 +18,9 @@ function WaypointDetailController() {
     var ctrl = this;
 
     ctrl.addressChanged = () => {
-    	console.log(ctrl.waypoint);
-    	// fire nominatim etc.. on success call ctrl.onWaypointsChanged();
+    	ctrl.onAddressChanged({
+            address: ctrl.waypoint._address
+        });
     };
 
     // ctrl.$doCheck = () => {

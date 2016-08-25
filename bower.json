@@ -18,6 +18,7 @@
     "angular-bootstrap": "latest",
     "XMLWriter": "latest",
     "rxjs": "latest",
-    "font-awesome": "fontawesome#^4.6.3"
+    "font-awesome": "fontawesome#^4.6.3",
+    "semantic": "semantic-ui#^2.2.3"
   }
 }

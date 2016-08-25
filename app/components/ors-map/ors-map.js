@@ -6,8 +6,8 @@ angular.module('orsApp').directive('orsMap', function() {
             orsMap: '='
         },
         link: function(scope, element, attrs) {},
-        controller: ['$scope', '$compile', '$timeout', 'orsSettingsFactory', 'orsObjectsFactory', 'orsMapFactory', 'notifyingFactory',
-            function($scope, $compile, $timeout, orsSettingsFactory, orsObjectsFactory, orsMapFactory, notifyingFactory) {
+        controller: ['$scope', '$compile', '$timeout', 'orsSettingsFactory', 'orsObjectsFactory', 'orsMapFactory',
+            function($scope, $compile, $timeout, orsSettingsFactory, orsObjectsFactory, orsMapFactory) {
                 // // add map
                 var ctrl = this;
                 ctrl.orsMap = $scope.orsMap;
@@ -37,8 +37,8 @@ angular.module('orsApp').directive('orsMap', function() {
                  * Listens to left mouse click on map
                  * @param {Object} e: Click event
                  */
-                ctrl.mapModel.map.on('click', function(e) {
-                    var displayPos = e.latlng;
+                ctrl.mapModel.map.on('contextmenu', function(e) {
+                    ctrl.displayPos = e.latlng;
                     var popupEvent = $compile('<ors-popup></ors-popup>')($scope);
                     var popup = L.popup({
                         closeButton: true,
@@ -46,33 +46,22 @@ angular.module('orsApp').directive('orsMap', function() {
                     }).setContent(popupEvent[0]).setLatLng(e.latlng);
                     ctrl.mapModel.map.openPopup(popup);
                 });
+                ctrl.addWaypoint = (idx) => {
+                    console.log('adding wp...', idx, ctrl.displayPos);
+                    // add waypoint to map
 
-                ctrl.resetWaypoints = () => {
-                    console.log('resetting...')
-                    //$timeout(function() {
-                        orsSettingsFactory.resetWaypoints();
-                        notifyingFactory.notifyPanel();
-                    //});
+                    var waypoint = orsObjectsFactory.createWaypoint('', ctrl.displayPos);
+                    orsSettingsFactory.insertWaypoint(idx, waypoint);
+                    // update waypoints and notify panel..
                 };
-
-
-                // subscribe from panel
-		        notifyingFactory.subscribePanel(ctrl, function somethingChanged() {
-		            // Handle notification
-		            console.log(orsSettingsFactory.getWaypoints());
-		            console.log('something has happened on panel, update map..');
-		        });
-
-
-
-                // $timeout(function() {
-                //     ctrl.resetWaypoints();
-                //     notifyingFactory.notify();
-                // }, 2000);
-
-                // console.log(orsSettingsFactory.getWaypoints());
-                //   orsSettingsFactory.setWaypoints([1,2,3,4,5,6]);
-                //   console.log(orsSettingsFactory.getWaypoints());
+                
+                ctrl.waypoints = orsSettingsFactory.getWaypoints();
+                
+                // subscribes to change in panel
+                var subscription = orsSettingsFactory.subscribe(function onNext(d) {
+                	console.log('CHANGE IN PANEL!!!', d);
+                    ctrl.waypoints = d;
+                });
             }
         ]
     };
@@ -84,11 +73,10 @@ angular.module('orsApp').directive('orsPopup', ['$compile', '$timeout', 'orsSett
             restrict: 'E',
             require: '^orsMap', //one directive used,
             templateUrl: 'app/components/ors-map/directive-templates/ors-popup.html',
-            scope: true,
             link: function(scope, elem, attr, mapCtrl) {
                 console.log(mapCtrl)
-                scope.reset = function() {
-                    mapCtrl.resetWaypoints();
+                scope.add = (idx) => {
+                    mapCtrl.addWaypoint(idx);
                 };
             }
         };

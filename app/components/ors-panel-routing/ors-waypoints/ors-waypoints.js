@@ -3,7 +3,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
     bindings: {
         orsMap: '<',
     },
-    controller(orsSettingsFactory, orsObjectsFactory, notifyingFactory) {
+    controller(orsSettingsFactory, orsObjectsFactory) {
         var ctrl = this;
         console.log(ctrl.orsMap)
         ctrl.$onInit = () => {
@@ -13,11 +13,10 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
             console.log(ctrl.orsMap)
             L.marker([1, 0]).addTo(ctrl.orsMap);
         };
-        // subscribe from map
-        notifyingFactory.subscribeMap(ctrl, function somethingChanged() {
-            // Handle notification
-            ctrl.waypoints = orsSettingsFactory.getWaypoints();
-            console.log('something has happened on map, update panel..');
+        // subscribes to changes in the map
+        var subscription = orsSettingsFactory.subscribe(function onNext(d) {
+            console.log('CHANGE IN MAP!!!', d);
+            ctrl.waypoints = d;
         });
         ctrl.$doCheck = () => {
             // check if array has changed
@@ -36,7 +35,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         };
         ctrl.resetWaypoints = () => {
             ctrl.waypoints = [];
-            //orsSettingsFactory.setWaypoints(ctrl.waypoints);
+            orsSettingsFactory.setWaypoints(ctrl.waypoints);
         };
         ctrl.moveUpWaypoint = (idx) => {
             console.log('called');
@@ -48,7 +47,6 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
                     orsSettingsFactory.setWaypoints(ctrl.waypoints);
                 }
             }
-            //notifyingFactory.notifyMap();
         };
         ctrl.moveDownWaypoint = (idx) => {
             if (ctrl.waypoints.length == 2) {
@@ -57,12 +55,29 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
                 ctrl.waypoints.move(idx, idx + 1);
                 orsSettingsFactory.setWaypoints(ctrl.waypoints);
             }
-            //notifyingFactory.notifyMap();
         };
         ctrl.addWaypoint = () => {
             let wp = orsObjectsFactory.createWaypoint('', new L.latLng());
             ctrl.waypoints.push(wp);
             orsSettingsFactory.setWaypoints(ctrl.waypoints);
+        };
+        ctrl.addressChanged = (address) => {
+            // fire nominatim etc.. on success call ctrl.onWaypointsChanged();
+            console.log(address)
+                // fire nominatim
+            var requestData = utilsFactory.generateXml(scope.filterText);
+            requestFactory.geocode(requestData).then(function(response) {
+                var data = utilsFactory.domParser(response.data);
+                var error = errorFactory.parseResponse(data);
+                if (!error) {
+                    scope.addressData = utilsFactory.processAddresses(data);
+                    scope.isResponseListVisible = true;
+                } else {
+                    scope.angularddress = 'error code: 0';
+                }
+            }, function(response) {
+                $scope.errorMessage = errorFactory.generalErrors('It was not possible to get the address at this time. Sorry for the inconvenience!');
+            });
         };
     }
 });
