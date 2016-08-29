@@ -3,7 +3,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
     bindings: {
         orsMap: '<',
     },
-    controller(orsSettingsFactory, orsObjectsFactory) {
+    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService) {
         var ctrl = this;
         console.log(ctrl.orsMap)
         ctrl.$onInit = () => {
@@ -14,10 +14,12 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
             L.marker([1, 0]).addTo(ctrl.orsMap);
         };
         // subscribes to changes in the map
-        var subscription = orsSettingsFactory.subscribe(function onNext(d) {
-            console.log('CHANGE IN MAP!!!', d);
+        //orsSettingsFactory.subscribeToMap();
+        orsSettingsFactory.subscribeToMap(function onNext(d) {
+            console.log('changes in map detected..', d);
             ctrl.waypoints = d;
         });
+        console.log(ctrl.waypoints)
         ctrl.$doCheck = () => {
             // check if array has changed
             //console.log('update route');
@@ -61,23 +63,12 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
             ctrl.waypoints.push(wp);
             orsSettingsFactory.setWaypoints(ctrl.waypoints);
         };
-        ctrl.addressChanged = (address) => {
-            // fire nominatim etc.. on success call ctrl.onWaypointsChanged();
-            console.log(address)
-                // fire nominatim
-            var requestData = utilsFactory.generateXml(scope.filterText);
-            requestFactory.geocode(requestData).then(function(response) {
-                var data = utilsFactory.domParser(response.data);
-                var error = errorFactory.parseResponse(data);
-                if (!error) {
-                    scope.addressData = utilsFactory.processAddresses(data);
-                    scope.isResponseListVisible = true;
-                } else {
-                    scope.angularddress = 'error code: 0';
-                }
-            }, function(response) {
-                $scope.errorMessage = errorFactory.generalErrors('It was not possible to get the address at this time. Sorry for the inconvenience!');
-            });
+        ctrl.addressChanged = () => {
+            // const wp = orsObjectsFactory.createWaypoint(address.shortAddress, address.position);
+            // console.log(wp)
+            // ctrl.waypoints.push(wp);
+            console.log(ctrl.waypoints)
+            orsSettingsFactory.setWaypoints(ctrl.waypoints);
         };
     }
 });

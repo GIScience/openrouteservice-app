@@ -23,7 +23,7 @@
     <!-- IE required polyfill -->
     <script src="node_modules/core-js/client/shim.min.js"></script>
     <script src="node_modules/zone.js/dist/zone.js"></script>
-    <script src="app/lib/rxjs/dist/rx.js"></script>
+    <script src="app/lib/rxjs/dist/rx.all.js"></script>
     <script src="app/lib/jquery/dist/jquery.js"></script>
     <script src="app/lib/angular/angular158.js"></script>
     <script src="app/lib/angular-animate/angular-animate.js"></script>
@@ -35,10 +35,11 @@
     <script src="app/lib/lodash/dist/lodash.min.js"></script>
     <script src="app/lib/XMLWriter/XMLWriter.js"></script>
     <script src="app/lib/leaflet/dist/leaflet.js"></script>
-    
+
     <!-- 2. Load our 'modules' -->
     <script src="app/js/app.js"></script>
     <script src="app/js/namespaces.js"></script>
+    <script src="app/js/lists.js"></script>
 
     <script src="app/components/ors-navigation/ors-nav.js"></script>
     <script src="app/components/ors-panel-routing/ors-panel-routing.js"></script>
@@ -50,8 +51,11 @@
     <script src="app/components/ors-panel-download/ors-panel-download.js"></script>
     <script src="app/components/ors-map/ors-map.js"></script>
 
-    <script src="app/infrastructure/ors-settings.js"></script>
-    <script src="app/infrastructure/ors-objects.js"></script>
-    <script src="app/infrastructure/ors-map-factory.js"></script>
+    <script src="app/infrastructure/ors-settings-service.js"></script>
+    <script src="app/infrastructure/ors-objects-service.js"></script>
+    <script src="app/infrastructure/ors-map-service.js"></script>
+    <script src="app/infrastructure/ors-request-service.js"></script>
+    <script src="app/infrastructure/ors-utils-service.js"></script>
+    <script src="app/infrastructure/ors-error-service.js"></script>
 
 </html>

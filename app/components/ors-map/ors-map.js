@@ -49,18 +49,18 @@ angular.module('orsApp').directive('orsMap', function() {
                 ctrl.addWaypoint = (idx) => {
                     console.log('adding wp...', idx, ctrl.displayPos);
                     // add waypoint to map
-
                     var waypoint = orsObjectsFactory.createWaypoint('', ctrl.displayPos);
-                    orsSettingsFactory.insertWaypoint(idx, waypoint);
-                    // update waypoints and notify panel..
+                    orsSettingsFactory.insertWaypointFromMap(idx, waypoint);
+
+                    // re-add waypoints
+                    ctrl.waypoints = orsSettingsFactory.getWaypoints();
+
                 };
-                
-                ctrl.waypoints = orsSettingsFactory.getWaypoints();
-                
-                // subscribes to change in panel
-                var subscription = orsSettingsFactory.subscribe(function onNext(d) {
-                	console.log('CHANGE IN PANEL!!!', d);
+                // subscribes to changes in panel
+                orsSettingsFactory.subscribeToPanel(function onNext(d) {
+                    console.log('changes in panel detected..', d);
                     ctrl.waypoints = d;
+                    // re-add waypoints
                 });
             }
         ]

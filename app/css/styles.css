@@ -56,6 +56,10 @@ html, body {
     border: 3px solid pink;
 }
 
+.ors-control-button {
+    padding: 5px !important;
+}
+
 @media screen and (min-width: 319px) and (max-width: 720px) {
     .ors-main {
         flex-direction: column;

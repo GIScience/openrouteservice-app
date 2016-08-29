@@ -1,4 +1,4 @@
-<ors-waypoint idx="$index" ng-repeat="waypoint in $ctrl.waypoints" on-delete="$ctrl.deleteWaypoint(idx)" on-move-down="$ctrl.moveDownWaypoint(idx)" on-move-up="$ctrl.moveUpWaypoint(idx)" on-waypoints-changed="$ctrl.waypointsChanged()" on-address-changed="$ctrl.addressChanged(address)" waypoint="waypoint" waypoints="$ctrl.waypoints" show-add="$ctrl.showAdd">
+<ors-waypoint idx="$index" ng-repeat="waypoint in $ctrl.waypoints" on-delete="$ctrl.deleteWaypoint(idx)" on-move-down="$ctrl.moveDownWaypoint(idx)" on-move-up="$ctrl.moveUpWaypoint(idx)" on-waypoints-changed="$ctrl.waypointsChanged()" on-address-changed="$ctrl.addressChanged(waypoint)" waypoint="waypoint" waypoints="$ctrl.waypoints" show-add="$ctrl.showAdd">
 </ors-waypoint>
 <ors-route-controls show-add="$ctrl.showAdd" on-add="$ctrl.addWaypoint()" on-reverse="$ctrl.reverseWaypoints()" on-reset="$ctrl.resetWaypoints()" on-waypoints-changed="$ctrl.waypointsChanged()">
 </ors-route-controls>

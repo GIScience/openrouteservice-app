@@ -7,6 +7,7 @@ angular.module('orsApp').factory('orsObjectsFactory', function() {
     }
     return {
         createWaypoint: (address, latlng) => {
+            console.log(address, latlng)
             return new waypoint(address, latlng);
         }
     };

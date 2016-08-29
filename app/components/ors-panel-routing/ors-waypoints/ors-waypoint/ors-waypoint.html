@@ -1,20 +1,30 @@
-<div class="ui icon input">
-    <input ng-change="$ctrl.addressChanged()" ng-model="$ctrl.waypoint._address" ng-model-options="{debounce: 1000}" placeholder="Search..." type="text">
-        <i class="search icon">
-        </i>
-    </input>
-</div>
-<div class="ui icon buttons">
-    <button class="compact tiny ui basic button" ng-click="$ctrl.moveup()" ng-show="$ctrl.showHideMoveUp()">
-        <i class="fa fa-arrow-up">
-        </i>
-    </button>
-    <button class="compact tiny ui basic button" ng-click="$ctrl.movedown()" ng-show="$ctrl.showHideMoveDown()">
-        <i class="fa fa-arrow-down">
-        </i>
-    </button>
-    <button class="compact tiny ui basic button" ng-click="$ctrl.delete()">
-        <i class="fa fa-remove">
-        </i>
-    </button>
+<div class="ui segment">
+    <div class="ui icon input">
+        <input ng-change="$ctrl.addressChanged()" ng-click="$ctrl.checkForAddresses()" ng-model="$ctrl.waypoint._address" ng-model-options="{debounce: 1000}" placeholder="Search..." type="text">
+            <i class="search icon">
+            </i>
+        </input>
+    </div>
+    <div class="ui icon buttons">
+        <button class="tiny ui basic button ors-control-button" ng-click="$ctrl.moveup()" ng-show="$ctrl.showHideMoveUp()">
+            <i class="fa fa-arrow-up">
+            </i>
+        </button>
+        <button class="tiny ui basic button ors-control-button" ng-click="$ctrl.movedown()" ng-show="$ctrl.showHideMoveDown()">
+            <i class="fa fa-arrow-down">
+            </i>
+        </button>
+        <button class="tiny ui basic button ors-control-button" ng-click="$ctrl.delete()">
+            <i class="fa fa-remove">
+            </i>
+        </button>
+    </div>
+    <div class="ui relaxed divided list" ng-show="$ctrl.showAddresses">
+        <div class="item" ng-repeat="address in $ctrl.addresses">
+            <i class="large github middle aligned icon"></i>
+            <div class="content">
+                <div class="description" ng-click="$ctrl.select(address)">{{address.shortAddress}}</div>
+            </div>
+        </div>
+    </div>
 </div>
