@@ -6,12 +6,11 @@ angular.module('orsApp').directive('orsMap', function() {
             orsMap: '='
         },
         link: function(scope, element, attrs) {},
-        controller: ['$scope', '$compile', '$timeout', 'orsSettingsFactory', 'orsObjectsFactory', 'orsMapFactory',
-            function($scope, $compile, $timeout, orsSettingsFactory, orsObjectsFactory, orsMapFactory) {
+        controller: ['$scope', '$compile', '$timeout', 'orsSettingsFactory', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsErrorhandlerService',
+            function($scope, $compile, $timeout, orsSettingsFactory, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsErrorhandlerService) {
                 // // add map
                 var ctrl = this;
                 ctrl.orsMap = $scope.orsMap;
-                console.log(ctrl.orsMap)
                 ctrl.basemaps = {
                     basemap: L.tileLayer(namespaces.layerMapSurfer.url, {
                         attribution: namespaces.layerMapSurfer.attribution
@@ -32,7 +31,7 @@ angular.module('orsApp').directive('orsMap', function() {
                     ctrl.mapModel.geofeatures.layerRoutePoints.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerRouteLines.addTo(ctrl.orsMap);
                 });
-                ctrl.orsMap.setView([0, 0], 1);
+                ctrl.orsMap.setView([49.409445, 8.692953], 13);
                 /**
                  * Listens to left mouse click on map
                  * @param {Object} e: Click event
@@ -46,22 +45,54 @@ angular.module('orsApp').directive('orsMap', function() {
                     }).setContent(popupEvent[0]).setLatLng(e.latlng);
                     ctrl.mapModel.map.openPopup(popup);
                 });
-                ctrl.addWaypoint = (idx) => {
-                    console.log('adding wp...', idx, ctrl.displayPos);
+                ctrl.processMapWaypoint = (idx, pos, updateWp) => {
                     // add waypoint to map
-                    var waypoint = orsObjectsFactory.createWaypoint('', ctrl.displayPos);
-                    orsSettingsFactory.insertWaypointFromMap(idx, waypoint);
-
-                    // re-add waypoints
-                    ctrl.waypoints = orsSettingsFactory.getWaypoints();
-
+                    // get the address from the response
+                    if (updateWp) {
+                        orsSettingsFactory.updateWaypoint(idx,'', pos);
+                    } else {
+                        const waypoint = orsObjectsFactory.createWaypoint('', pos);
+                        orsSettingsFactory.insertWaypointFromMap(idx, waypoint);
+                    }
+                    orsRequestService.getAddress(pos, idx);
+                    // close the popup
+                    ctrl.mapModel.map.closePopup();
                 };
-                // subscribes to changes in panel
-                orsSettingsFactory.subscribeToPanel(function onNext(d) {
-                    console.log('changes in panel detected..', d);
-                    ctrl.waypoints = d;
+                ctrl.addWaypoint = (idx, iconIdx, pos) => {
+                    console.log(lists.waypointIcons[iconIdx])
+                    var waypointIcon = new L.icon(lists.waypointIcons[iconIdx]);
+                    console.log('icon', waypointIcon)
+                        // create the waypoint marker
+                    wayPointMarker = new L.marker(pos, {
+                        icon: waypointIcon,
+                        draggable: 'true',
+                        idx: idx
+                    });
+                    wayPointMarker.addTo(ctrl.mapModel.geofeatures.layerRoutePoints);
+                    // If the waypoint is dragged
+                    wayPointMarker.on('dragend', function(event) {
+                        // idx of waypoint
+                        const idx = event.target.options.idx;
+                        const pos = event.target._latlng;
+                        ctrl.processMapWaypoint(idx, pos, true);
+                    });
+                };
+                // subscribes to changes on in waypoint settings
+                orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
+                    console.log('changes in waypoints detected..', d);
+                    const waypoints = d;
                     // re-add waypoints
+                    ctrl.reAddWaypoints(waypoints);
                 });
+                ctrl.reAddWaypoints = (waypoints) => {
+                    ctrl.mapModel.geofeatures.layerRoutePoints.clearLayers();
+                    var idx = 0;
+                    angular.forEach(waypoints, (waypoint) => {
+                        var iconIdx = orsSettingsFactory.getIconIdx(idx);
+                        if (waypoint._latlng.lat && waypoint._latlng.lng) ctrl.addWaypoint(idx, iconIdx, waypoint._latlng);
+                        idx += 1;
+                    });
+                };
             }
         ]
     };
@@ -74,9 +105,8 @@ angular.module('orsApp').directive('orsPopup', ['$compile', '$timeout', 'orsSett
             require: '^orsMap', //one directive used,
             templateUrl: 'app/components/ors-map/directive-templates/ors-popup.html',
             link: function(scope, elem, attr, mapCtrl) {
-                console.log(mapCtrl)
                 scope.add = (idx) => {
-                    mapCtrl.addWaypoint(idx);
+                    mapCtrl.processMapWaypoint(idx, mapCtrl.displayPos);
                 };
             }
         };

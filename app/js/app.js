@@ -1,4 +1,4 @@
-angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.ors-panel-accessibilityanalysis', 'orsApp.ors-panel-download']).config(function($locationProvider, $httpProvider) {
+angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.ors-panel-accessibilityanalysis', 'orsApp.ors-panel-download', 'ui.sortable']).config(function($locationProvider, $httpProvider) {
     var ak = '?api_key=0894982ba55b12d3d3e4abd28d1838f2';
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push(function($q) {
@@ -30,11 +30,11 @@ angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.
     //     // console.log(ctrl.map);
     // });
 }).component('orsHeader', {
-    template: '<p>Header, {{$ctrl.user.name}} !</p>',
+    template: '<p>Hello, {{$ctrl.user.name}} !</p>',
     transclude: true,
     controller: function() {
         this.user = {
-            name: 'Timothy'
+            name: 'OpenRouteService.org'
         };
     }
 });

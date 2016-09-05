@@ -1,5 +1,6 @@
+@import 'https://fonts.googleapis.com/css?family=Open+Sans';
 html, body {
-    font-family: 'Source Sans Pro', sans-serif !important;
+    font-family: 'Open Sans', sans-serif !important;
     font-size: 90%;
     display: flex;
     min-height: 100%;
@@ -7,57 +8,177 @@ html, body {
     color: #444;
     margin: 0;
     padding: 0;
-    background-color: gray !important;
+    -background-color: gray !important;
 }
 
 .ors-header {
     display: flex;
     flex: 0 0 50px;
-    border: 3px solid #b5152b;
+    -border: 3px solid #b5152b;
 }
 
 .ors-main {
     display: flex;
     flex: 1 1 auto;
     flex-direction: row;
-    background-color: yellow;
+    -background-color: yellow;
 }
 
 .ors-sidebar {
     order: 1;
     color: #707070;
-    background-color: purple;
+    -background-color: purple;
     display: flex;
     flex: 0 1 388px;
     flex-direction: row;
 }
 
 .ors-navigation {
-    border: 3px solid green;
+    border-right: 1px solid #F0F0F0;
     overflow: auto;
     display: flex;
     flex: 0 1 44px;
 }
 
 .ors-panel {
-    border: 3px solid blue;
+    -border: 3px solid blue;
     overflow: auto;
     display: flex;
     flex: 0 1 344px;
 }
 
-.ors-footer {
-    
+.ors-routing-navigation {
+    position: absolute;
+    height: 35px;
+    background-color: yellow;
+    width: 344px;
+    z-index: 1;
 }
+
+.ors-routing-inner {
+    position: relative;
+    height: auto;
+}
+
+.ors-routing-info {
+    position: absolute;
+    top: 35px;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: 344px;
+}
+
+.ors-label {
+    min-width: 1em !important;
+    min-height: 1em !important;
+}
+
+.ors-footer {}
 
 .ors-map {
     flex: 1 1 auto;
     order: 2;
-    border: 3px solid pink;
+    -border: 3px solid pink;
 }
 
 .ors-control-button {
-    padding: 5px !important;
+    padding: 0 !important;
+    border: none;
+    box-shadow: none !important;
+}
+
+.ors-routing-grid {
+    margin: 2rem 0 0 0 !important;
+    padding: 10px !important;
+    background: pink;
+    width: 324px;
+}
+
+.ors-input {
+    height: 35px;
+}
+
+.ors-profile-options {
+    position: absolute;
+    width: 100%;
+    background-color: yellow;
+    z-index:
+}
+
+.ors-input-label {
+    background: none #FFFFFF;
+    border-left: none !important;
+    border-top: 1px solid rgba(34, 36, 38, 0.15) !important;
+    color: rgba(0, 0, 0, 0.87);
+    box-shadow: none;
+    border-bottom: 1px solid rgba(34, 36, 38, 0.15) !important;
+    border-right: 1px solid rgba(34, 36, 38, 0.15) !important;
+}
+
+.ors-wp-list {
+    clear: both;
+    list-style: none outside none;
+    margin: 12px 0 0 0;
+}
+
+.ors-wp-item {
+    width: 320px;
+    padding: 2px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: move;
+    border-radius: 3px;
+}
+
+.ors-segment {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.ors-wp-divider {
+    margin: 0.6rem !important;
+}
+
+.ors-button {
+    width: 35px;
+    height: 35px;
+}
+
+.ui-sortable-disabled .ors-wp-item {
+    cursor: default;
+}
+
+div.ors-wp-table {
+    display: table;
+    border-collapse: collapse;
+    width: 100%;
+    color: #fff;
+}
+
+div.ors-wp-tr {
+    display: table-row;
+}
+
+div.ors-wp-td {
+    display: table-cell;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.flright {
+    float: right;
+}
+
+.flleft {
+    float: left;
+}
+
+.right {
+    text-align: right;
+}
+
+.left {
+    text-align: left;
 }
 
 @media screen and (min-width: 319px) and (max-width: 720px) {

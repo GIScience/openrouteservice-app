@@ -2,9 +2,17 @@
     <head>
         <title>ORS-ng</title>
         <base href="/"> <!-- is needed for removal of hash in ng views -->
-        <meta content="width=device-width, initial-scale=1" name="viewport">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" name="viewport">
             <link href="app/css/styles.css" rel="stylesheet"></link>
-            <link href="app/lib/semantic/dist/semantic.css" rel="stylesheet" ></link>
+            <link href="app/lib/semantic/dist/components/input.css" rel="stylesheet" ></link>
+            <link href="app/lib/semantic/dist/components/button.css" rel="stylesheet" ></link>
+            <link href="app/lib/semantic/dist/components/divider.css" rel="stylesheet" ></link>
+            <link href="app/lib/semantic/dist/components/label.css" rel="stylesheet" ></link>
+            <link href="app/lib/semantic/dist/components/icon.css" rel="stylesheet" ></link>
+            <link href="app/lib/semantic/dist/components/list.css" rel="stylesheet" ></link>
+            <link href="app/lib/semantic/dist/components/dropdown.css" rel="stylesheet" ></link>
+            <link href="app/lib/semantic/dist/components/menu.css" rel="stylesheet" ></link>
+
             <link href="app/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet"></link>
             <link href="app/lib/leaflet/dist/leaflet.css" rel="stylesheet"></link>
         </meta>
@@ -25,16 +33,18 @@
     <script src="node_modules/zone.js/dist/zone.js"></script>
     <script src="app/lib/rxjs/dist/rx.all.js"></script>
     <script src="app/lib/jquery/dist/jquery.js"></script>
+    <script src="app/lib/jquery-ui/jquery-ui.js"></script>
     <script src="app/lib/angular/angular158.js"></script>
     <script src="app/lib/angular-animate/angular-animate.js"></script>
     <script src="app/lib/angular-route/angular-route.js"></script>
     <script src="app/lib/angular-resource/angular-resource.js"></script>
     <script src="app/lib/angular-mocks/angular-mocks.js"></script>
     <script src="node_modules/@angular/router/angular1/angular_1_router.js"></script>
-    <script src="app/lib/semantic/dist/semantic.js"></script>
+    <!--<script src="app/lib/semantic/dist/semantic.js"></script>-->
     <script src="app/lib/lodash/dist/lodash.min.js"></script>
     <script src="app/lib/XMLWriter/XMLWriter.js"></script>
     <script src="app/lib/leaflet/dist/leaflet.js"></script>
+    <script src="app/lib/angular-ui-sortable/sortable.js"></script>
 
     <!-- 2. Load our 'modules' -->
     <script src="app/js/app.js"></script>
@@ -57,5 +67,5 @@
     <script src="app/infrastructure/ors-request-service.js"></script>
     <script src="app/infrastructure/ors-utils-service.js"></script>
     <script src="app/infrastructure/ors-error-service.js"></script>
-
+    <script src="app/infrastructure/ors-params-service.js"></script>
 </html>

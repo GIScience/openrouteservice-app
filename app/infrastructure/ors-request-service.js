@@ -1,11 +1,10 @@
-angular.module('orsApp').factory('orsRequestService', ['$http',
-    function($http) {
+angular.module('orsApp').factory('orsRequestService', ['$http', 'orsUtilsService', 'orsErrorhandlerService', 'orsSettingsFactory',
+    function($http, orsUtilsService, orsErrorhandlerService, orsSettingsFactory) {
         /**
          * Requests geocoding from ORS backend
          * @param {String} requestData: XML for request payload
          */
         var orsRequestService = {};
-
         orsRequestService.geocode = function(requestData) {
             var url = namespaces.services.geocoding;
             return $http({
@@ -30,10 +29,10 @@ angular.module('orsApp').factory('orsRequestService', ['$http',
          * Requests GeoJSON file
          * @param {String} JSONurl: location of GeoJSON file for request payload
          */
-        orsRequestService.readGeoJSON = function(JSONurl){
+        orsRequestService.readGeoJSON = function(JSONurl) {
             return $http({
-                method:'GET',
-                url:JSONurl
+                method: 'GET',
+                url: JSONurl
             });
         };
         /**
@@ -44,7 +43,21 @@ angular.module('orsApp').factory('orsRequestService', ['$http',
             var data = response.data;
             return data;
         };
-
+        orsRequestService.getAddress = function(pos, idx, init) {
+            var requestData = orsUtilsService.reverseXml(pos);
+            orsRequestService.geocode(requestData).then(function(response) {
+                const data = orsUtilsService.domParser(response.data);
+                const error = orsErrorhandlerService.parseResponse(data);
+                if (!error) {
+                    const addressData = orsUtilsService.processAddresses(data, true);
+                    orsSettingsFactory.updateWaypointAddress(idx, addressData[0].address, init);
+                } else {
+                    console.log('Not able to find address!');
+                }
+            }, function(response) {
+                console.log('It was not possible to get the address of the current waypoint. Sorry for the inconvenience!');
+            });
+        };
         return orsRequestService;
     }
 ]);

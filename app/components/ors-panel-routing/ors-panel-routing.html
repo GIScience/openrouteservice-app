@@ -1,10 +1,11 @@
-<div class="ui basic segment">
-    <ors-profiles-options>
-    </ors-profiles-options>
+<div class="ors-routing-navigation">
+	<ors-profiles-options></ors-profiles-options>
 </div>
-<div class="ui basic segment">
-    <ors-waypoints ors-map="$ctrl.parent.orsMap">
-    </ors-waypoints>
+<div class="ors-routing-inner">
+	<div class="ors-routing-info">
+		<ors-waypoints ors-map="$ctrl.parent.orsMap" ors-params="$ctrl.routeParams"></ors-waypoints>
+	</div>
 </div>
+
 <!-- <ors-route-summary class="ors-panel" ng-show=""></ors-route-summary -->
 <!-- <ors-route-instructions class="ors-panel" ng-show=""></ors-route-instructions -->

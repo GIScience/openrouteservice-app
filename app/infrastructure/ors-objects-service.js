@@ -5,10 +5,18 @@ angular.module('orsApp').factory('orsObjectsFactory', function() {
             this._latlng = latlng;
         }
     }
+    class uiWaypoint {
+        constructor(idx) {
+            this._idx = idx;
+        }
+    }
     return {
         createWaypoint: (address, latlng) => {
-            console.log(address, latlng)
             return new waypoint(address, latlng);
+        },
+        createUiWaypoint: (idx) => {
+            return new uiWaypoint(idx);
         }
+
     };
 });

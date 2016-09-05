@@ -32,18 +32,18 @@ lists.geocodingContainers = {
 };
 lists.waypointIcons = {
     0: {
-        iconUrl: 'img/start.png',
+        iconUrl: 'app/img/start.png',
         iconSize: [30, 70], // size of the icon
         iconAnchor: [15, 35] // point of the icon which will correspond to marker's location
     },
-    1: {
-        iconUrl: 'img/end.png',
+    2: {
+        iconUrl: 'app/img/end.png',
         iconSize: [30, 70], // size of the icon
         iconAnchor: [15, 35] // point of the icon which will correspond to marker's location
     },
     // anything else
-    2: {
-        iconUrl: 'img/via.png',
+    1: {
+        iconUrl: 'app/img/via.png',
         iconSize: [30, 70], // size of the icon
         iconAnchor: [15, 35] // point of the icon which will correspond to marker's location
     },

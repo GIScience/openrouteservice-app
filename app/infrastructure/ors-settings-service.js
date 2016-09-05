@@ -1,40 +1,74 @@
 angular.module('orsApp').factory('orsSettingsFactory', ['orsObjectsFactory', function(orsObjectsFactory) {
-    
-
-    var settings = {};
-        settings.waypoints = [orsObjectsFactory.createWaypoint('', new L.latLng()), orsObjectsFactory.createWaypoint('', new L.latLng())];
-
-    var mapSubject = new Rx.Subject();
-    var panelSubject = new Rx.Subject();
-    var settingsSubject = new Rx.Subject();
-
+    let settings = {
+        waypoints: []
+    };
+    let waypointsSubject = new Rx.Subject();
+    let settingsSubject = new Rx.Subject();
     settingsSubject.subscribe(function(x) {
-        console.log('settings', x);
+        console.log('settings changed..', x);
     }, function(err) {
         console.log(err);
     }, function() {
         console.log('Completed');
     });
-    return {
-        subscribeToMap: (o) => {
-            return mapSubject.subscribe(o)
-        },
-        subscribeToPanel: (o) => {
-            return panelSubject.subscribe(o);
-        },
-        getWaypoints: () => {
-            return settings.waypoints;
-        },
-        setWaypoints: (d) => {
-            settings.waypoints = d;
-            panelSubject.onNext(d);
-            settingsSubject.onNext(settings);
-        },
-        insertWaypointFromMap: (idx, wp) => {
-            if (idx == 0 || idx == 2) settings.waypoints[idx] = wp;
-            if (idx == 1) settings.waypoints.splice(idx, 0, wp);
-            mapSubject.onNext(settings.waypoints);
-            settingsSubject.onNext(settings);
+    let orsSettingsFactory = {};
+    orsSettingsFactory.subscribeToWaypoints = (o) => {
+        return waypointsSubject.subscribe(o);
+    };
+    orsSettingsFactory.getWaypoints = () => {
+        return settings.waypoints;
+    };
+    orsSettingsFactory.initWaypoints = () => {
+        settings.waypoints = [orsObjectsFactory.createWaypoint('', new L.latLng()), orsObjectsFactory.createWaypoint('', new L.latLng())];
+        return settings.waypoints;
+    };
+    orsSettingsFactory.updateWaypoint = (idx, address, pos) => {
+        settings.waypoints[idx]._latlng = pos;
+        settings.waypoints[idx]._address = address;
+        waypointsSubject.onNext(settings.waypoints);
+    };
+    orsSettingsFactory.updateWaypointAddress = (idx, address, init) => {
+        if (init) {
+            settings.waypoints[idx]._address = address;
+        } else {
+            if (idx == 0) {
+                settings.waypoints[idx]._address = address;
+            } else if (idx == 2) {
+                settings.waypoints[settings.waypoints.length - 1]._address = address;
+            } else if (idx == 1) {
+                settings.waypoints[settings.waypoints.length - 2]._address = address;
+            }
         }
     };
+    orsSettingsFactory.setWaypoints = (d) => {
+        settings.waypoints = d;
+        waypointsSubject.onNext(settings.waypoints);
+        settingsSubject.onNext(settings);
+    };
+    orsSettingsFactory.insertWaypointFromMap = (idx, wp) => {
+        if (idx == 0) {
+            settings.waypoints[idx] = wp;
+        } else if (idx == 2) {
+            settings.waypoints[settings.waypoints.length - 1] = wp;
+        } else if (idx == 1) {
+            settings.waypoints.splice(settings.waypoints.length - 1, 0, wp);
+        }
+        waypointsSubject.onNext(settings.waypoints);
+        settingsSubject.onNext(settings);
+    };
+    orsSettingsFactory.getIconIdx = (idx) => {
+        let iconIdx;
+        // start
+        if (idx == 0) {
+            iconIdx = 0;
+            // last
+        } else if (idx == settings.waypoints.length - 1) {
+            iconIdx = 2;
+            // via
+        } else {
+            iconIdx = 1;
+        }
+        return iconIdx;
+    };
+    return orsSettingsFactory;
 }]);

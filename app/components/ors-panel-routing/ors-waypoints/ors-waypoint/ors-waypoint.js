@@ -2,9 +2,7 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
     templateUrl: 'app/components/ors-panel-routing/ors-waypoints/ors-waypoint/ors-waypoint.html',
     bindings: {
         idx: '<',
-        waypoint: '=',
-        onMoveUp: '&',
-        onMoveDown: '&',
+        waypoint: '<',
         onDelete: '&',
         onWaypointsChanged: '&',
         onAddressChanged: '&',
@@ -20,12 +18,19 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
             ctrl.waypoint._latlng = address.position;
             ctrl.onAddressChanged(ctrl.waypoint);
         };
+        ctrl.getIdx = () => {
+            if (ctrl.idx == 0) return 'A';
+            else if (ctrl.idx == ctrl.waypoints.length - 1) return 'B';
+            else return ctrl.idx;
+        };
         ctrl.checkForAddresses = () => {
             if (ctrl.addresses) ctrl.showAddresses = true;
         };
         ctrl.addressChanged = () => {
             console.log(ctrl.waypoint._address)
-                // fire nominatim
+            // is this a waypoint...?
+            
+            // fire nominatim
             const requestData = orsUtilsService.generateXml(ctrl.waypoint._address);
             orsRequestService.geocode(requestData).then(function(response) {
                 let data = orsUtilsService.domParser(response.data);
@@ -41,6 +46,13 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
                 console.log(response)
                     //$scope.errorMessage = orsErrorhandlerService.generalErrors('It was not possible to get the address at this time. Sorry for the inconvenience!');
             });
+        };
+        ctrl.getPlaceholder = () => {
+            let placeholder;
+            if (ctrl.idx == 0) placeholder = 'Start';
+            else if (ctrl.idx == ctrl.waypoints.length - 1) placeholder = 'End';
+            else placeholder = 'Via';
+            return placeholder;
         };
         // ctrl.$doCheck = () => {
         // 	console.log('check')
@@ -58,32 +70,6 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
                 idx: ctrl.idx
             });
             ctrl.onWaypointsChanged();
-        };
-        ctrl.moveup = () => {
-            ctrl.onMoveUp({
-                idx: ctrl.idx
-            });
-            ctrl.onWaypointsChanged();
-        };
-        ctrl.movedown = () => {
-            ctrl.onMoveDown({
-                idx: ctrl.idx
-            });
-            ctrl.onWaypointsChanged();
-        };
-        ctrl.showHideMoveUp = () => {
-            if (ctrl.idx == 0) {
-                return false;
-            } else {
-                return true;
-            }
-        };
-        ctrl.showHideMoveDown = () => {
-            if (ctrl.idx == ctrl.waypoints.length - 1) {
-                return false;
-            } else {
-                return true;
-            }
         };
     }
 });

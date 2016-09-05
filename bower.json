@@ -19,6 +19,8 @@
     "XMLWriter": "latest",
     "rxjs": "latest",
     "font-awesome": "fontawesome#^4.6.3",
-    "semantic": "semantic-ui#^2.2.3"
+    "semantic": "semantic-ui#^2.2.3",
+    "angular-ui-sortable": "^0.14.3",
+    "jquery-ui": "jqueryui#^1.12.0"
   }
 }
