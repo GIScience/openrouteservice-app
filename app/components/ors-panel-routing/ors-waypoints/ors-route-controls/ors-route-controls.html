@@ -1,17 +1,21 @@
-<div class="ui icon buttons">
-    <button class="compact tiny ui basic button" ng-show="$ctrl.showAdd" ng-click="$ctrl.add()">
+<div class="ors-route-controls">
+    <button class="ors-controls-button flleft" ng-show="$ctrl.showAdd" ng-click="$ctrl.add()">
         <i class="fa fa-plus">
         </i>
     </button>
-    <button class="compact tiny ui basic button" ng-click="$ctrl.reset()">
+    <button class="ors-controls-button flleft" ng-show="$ctrl.showAdd" ng-click="$ctrl.add()">
+        <i class="fa fa-circle-o">
+        </i>
+    </button>
+    <button class="ors-controls-button flright" ng-click="$ctrl.reset()">
         <i class="fa fa-remove">
         </i>
     </button>
-    <button class="compact tiny ui basic button" ng-click="$ctrl.reversing()">
+    <button class="ors-controls-button flright" ng-click="$ctrl.reversing()">
         <i class="fa fa-reorder">
         </i>
     </button>
-    <button class="compact tiny ui basic button" ng-click="$ctrl.delete()">
+    <button class="ors-controls-button flright" ng-click="$ctrl.delete()">
         <i class="fa fa-expand">
         </i>
     </button>

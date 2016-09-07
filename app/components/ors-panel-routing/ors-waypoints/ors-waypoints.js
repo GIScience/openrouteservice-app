@@ -8,15 +8,11 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         var ctrl = this;
         console.log(ctrl.orsMap)
         ctrl.$onInit = () => {
-            console.log(ctrl.orsParams.length)
-            if (ctrl.orsParams.length > 0) {
-                console.log(ctrl.orsParams)
-                let settings = orsParamsService.importSettings(ctrl.orsParams);
-                console.log(settings, 'huura')
-                orsSettingsFactory.setWaypoints(settings.waypoints);
-            } else {
+            ctrl.waypoints = orsSettingsFactory.getWaypoints();
+            if (ctrl.waypoints.length == 0) {
                 ctrl.waypoints = orsSettingsFactory.initWaypoints();
             }
+            console.warn(ctrl.waypoints)
             ctrl.showAdd = true;
         };
         // subscribes to changes in waypoints, this doesnt have to be added though, why?
@@ -25,20 +21,20 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
             ctrl.waypoints = d;
         });
         ctrl.collapsed = false;
-        ctrl.collapseIcon = "fa fa-lg fa-minus-circle";
+        ctrl.collapseIcon = "fa fa-minus-circle";
         ctrl.collapse = () => {
             ctrl.collapsed = ctrl.collapsed == true ? false : true;
             if (ctrl.collapsed == true) {
                 ctrl.sortableOptions = {
                     disabled: true
                 };
-                ctrl.collapseIcon = "fa fa-lg fa-plus-circle";
+                ctrl.collapseIcon = "fa fa-plus-circle";
             }
             if (ctrl.collapsed == false) {
                 ctrl.sortableOptions = {
                     disabled: false
                 };
-                ctrl.collapseIcon = "fa fa-lg fa-minus-circle";
+                ctrl.collapseIcon = "fa fa-minus-circle";
             }
         };
         ctrl.showViapoints = (idx) => {
@@ -86,7 +82,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         ctrl.addWaypoint = () => {
             let wp = orsObjectsFactory.createWaypoint('', new L.latLng());
             ctrl.waypoints.push(wp);
-            orsSettingsFactory.setWaypoints(ctrl.waypoints);
+            //orsSettingsFactory.setWaypoints(ctrl.waypoints);
         };
         ctrl.addressChanged = () => {
             // const wp = orsObjectsFactory.createWaypoint(address.shortAddress, address.position);

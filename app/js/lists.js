@@ -48,3 +48,62 @@ lists.waypointIcons = {
         iconAnchor: [15, 35] // point of the icon which will correspond to marker's location
     },
 };
+lists.profiles = {
+    Car: {
+        name: 'Car',
+        elevation: false
+    },
+    Bicycle: {
+        name: 'Bicycle',
+        elevation: true,
+        subtypes: {
+            default: {
+                name: 'Bicycle',
+            },
+            mtb: {
+                name: 'BicycleMTB',
+            },
+            racing: {
+                name: 'BicycleRacer',
+            },
+            touring: {
+                name: 'BicycleTouring',
+            },
+            safest: {
+                name: 'BicycleSafety',
+            }
+        }
+    },
+    Pedestrian: {
+        name: 'Pedestrian',
+        elevation: true
+    },
+    Wheelchair: {
+        name: 'Wheelchair',
+        elevation: true
+    },
+    HeavyVehicle: {
+        name: 'HeavyVehicle',
+        elevation: false,
+        subtypes: {
+            default: {
+                name: 'HGV'
+            },
+            goods: {
+                name: 'Goods'
+            },
+            bus: {
+                name: 'Bus'
+            },
+            agricultural: {
+                name: 'Agricultural'
+            },
+            forestry: {
+                name: 'Foresty'
+            },
+            delivery: {
+                name: 'Delivery'
+            }
+        }
+    }
+};

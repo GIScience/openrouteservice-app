@@ -1,4 +1,4 @@
-		<button class="tiny ui basic button ors-control-button flright" style="position: absolute; right: 5px; top:15px;" ng-show="$ctrl.waypoints.length > 2" ng-click="$ctrl.collapse()">
+		<button class="tiny ui basic button ors-control-button flright" style="position: absolute; right: 3px; top:22px;" ng-show="$ctrl.waypoints.length > 2" ng-click="$ctrl.collapse()">
 			<i ng-class="$ctrl.collapseIcon"></i>
 		</button>
 	<div ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.waypoints" class="ors-wp-list">
@@ -12,6 +12,6 @@
 			 </div>
 		</div>
 	</div>
-	<ors-route-controls class="ui basic segment" show-add="$ctrl.showAdd" on-add="$ctrl.addWaypoint()" on-reverse="$ctrl.reverseWaypoints()" on-reset="$ctrl.resetWaypoints()" on-waypoints-changed="$ctrl.waypointsChanged()">
+	<ors-route-controls show-add="$ctrl.showAdd" on-add="$ctrl.addWaypoint()" on-reverse="$ctrl.reverseWaypoints()" on-reset="$ctrl.resetWaypoints()" on-waypoints-changed="$ctrl.waypointsChanged()">
 	</ors-route-controls>
 </div>

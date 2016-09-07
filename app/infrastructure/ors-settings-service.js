@@ -1,17 +1,30 @@
 angular.module('orsApp').factory('orsSettingsFactory', ['orsObjectsFactory', function(orsObjectsFactory) {
     let settings = {
-        waypoints: []
+        waypoints: [],
+        currentProfile: {
+            activeSubtype: undefined,
+            active: "Car"
+        }
     };
     let waypointsSubject = new Rx.Subject();
     let settingsSubject = new Rx.Subject();
     settingsSubject.subscribe(function(x) {
-        console.log('settings changed..', x);
+        console.log('settings changed..fire request!', x);
     }, function(err) {
         console.log(err);
     }, function() {
         console.log('Completed');
     });
     let orsSettingsFactory = {};
+    orsSettingsFactory.setSettings = (params) => {
+        for (var k in params) {
+            settings[k] = params[k];
+        }
+        console.log(settings);
+    };
+    orsSettingsFactory.getCurrentProfile = () => {
+        return settings.currentProfile;
+    };
     orsSettingsFactory.subscribeToWaypoints = (o) => {
         return waypointsSubject.subscribe(o);
     };
@@ -69,6 +82,10 @@ angular.module('orsApp').factory('orsSettingsFactory', ['orsObjectsFactory', fun
             iconIdx = 1;
         }
         return iconIdx;
+    };
+    orsSettingsFactory.setProfile = (profile) => {
+        settings.currentProfile = profile;
+        console.log(settings)
     };
     return orsSettingsFactory;
 }]);

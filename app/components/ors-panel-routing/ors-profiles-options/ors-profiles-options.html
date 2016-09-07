@@ -1,24 +1,116 @@
-    <button class="ors-button flleft" ng-click="$ctrl.changeProfile()">
-        <i class="fa fa-car">
-        </i>
-    </button>
-    <button class="ors-button flleft">
-        <i class="fa fa-bicycle">
-        </i>
-    </button>
-    <button class="ors-button flleft">
-        <i class="fa fa-wheelchair">
-        </i>
-    </button>
-    <button class="ors-button flleft">
-        <i class="fa fa-bus">
-        </i>
-    </button>
-    <button class="ors-button flleft">
-        <i class="fa fa-male">
-        </i>
-    </button>
-    <button class="ors-button flright">
-            <i class="fa fa-cog">
+<ul class="ors-nav-menu">
+    <li>
+        <button class="ors-button flleft" ng-click="$ctrl.changeProfile($ctrl.profiles.Car.name)">
+            <i class="fa fa-lg fa-car" ng-class="{active : $ctrl.activeMenu === $ctrl.profiles.Car.name}">
             </i>
-    </button>
+        </button>
+    </li>
+    <li>
+        <button class="ors-button flleft" ng-click="$ctrl.changeProfile($ctrl.profiles.Bicycle.name)">
+            <i class="fa fa-lg fa-bicycle" ng-class="{active : $ctrl.activeMenu === $ctrl.profiles.Bicycle.name}">
+            </i>
+        </button>
+        <span>
+            <i class="fa fa-caret-down" style="margin-top: 20px;">
+            </i>
+            <ul class="ors-nav-submenu">
+                <li>
+                    <div class="ui radio checkbox">
+                        <input name="orsProfileBicycle" ng-change="$ctrl.changeSubprofile($ctrl.profiles.Bicycle.name)" ng-model="$ctrl.currentProfile.activeSubtype" ng-value="$ctrl.profiles.Bicycle.subtypes.default.name" type="radio">
+                        <label>Normal</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="ui radio checkbox">
+                        <input name="orsProfileBicycle" ng-change="$ctrl.changeSubprofile($ctrl.profiles.Bicycle.name)" ng-model="$ctrl.currentProfile.activeSubtype" ng-value="$ctrl.profiles.Bicycle.subtypes.safest.name" type="radio">
+                        <label>Safest Route</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="ui radio checkbox">
+                        <input name="orsProfileBicycle" ng-change="$ctrl.changeSubprofile($ctrl.profiles.Bicycle.name)" ng-model="$ctrl.currentProfile.activeSubtype" ng-value="$ctrl.profiles.Bicycle.subtypes.touring.name" type="radio">
+                        <label>Cycle Tour</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="ui radio checkbox">
+                        <input name="orsProfileBicycle" ng-change="$ctrl.changeSubprofile($ctrl.profiles.Bicycle.name)" ng-model="$ctrl.currentProfile.activeSubtype" ng-value="$ctrl.profiles.Bicycle.subtypes.mtb.name" type="radio">
+                        <label>Mountain Bicycle</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="ui radio checkbox">
+                        <input name="orsProfileBicycle" ng-change="$ctrl.changeSubprofile($ctrl.profiles.Bicycle.name)" ng-model="$ctrl.currentProfile.activeSubtype" ng-value="$ctrl.profiles.Bicycle.subtypes.racing.name" type="radio">
+                        <label>Racing Bicycle</label>
+                    </div>
+                </li>
+            </ul>
+        </span>
+    </li>
+    <li>
+        <button class="ors-button flleft" ng-click="$ctrl.changeProfile($ctrl.profiles.Pedestrian.name)">
+            <i class="fa fa-lg fa-male" ng-class="{active : $ctrl.activeMenu === $ctrl.profiles.Pedestrian.name}">
+            </i>
+        </button>
+    </li>
+    <li>
+        <button class="ors-button flleft" ng-click="$ctrl.changeProfile($ctrl.profiles.Wheelchair.name)">
+            <i class="fa fa-lg fa-wheelchair" ng-class="{active : $ctrl.activeMenu === $ctrl.profiles.Wheelchair.name}">
+            </i>
+        </button>
+    </li>
+    <li>
+        <button class="ors-button flleft" ng-click="$ctrl.changeProfile($ctrl.profiles.HeavyVehicle.name)">
+            <i class="fa fa-lg fa-bus" ng-class="{active : $ctrl.activeMenu === $ctrl.profiles.HeavyVehicle.name}">
+            </i>
+        </button>
+        <span>
+            <i class="fa fa-caret-down" style="margin-top: 20px;">
+            </i>
+            <ul class="ors-nav-submenu">
+                <li>
+                    <div class="ui radio checkbox">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeSubprofile($ctrl.profiles.HeavyVehicle.name)" ng-model="$ctrl.currentProfile.activeSubtype" ng-value="$ctrl.profiles.HeavyVehicle.subtypes.default.name" type="radio">
+                        <label>Heavy Vehicle</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="ui radio checkbox">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeSubprofile($ctrl.profiles.HeavyVehicle.name)" ng-model="$ctrl.currentProfile.activeSubtype" ng-value="$ctrl.profiles.HeavyVehicle.subtypes.goods.name" type="radio">
+                        <label>Goods</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="ui radio checkbox">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeSubprofile($ctrl.profiles.HeavyVehicle.name)" ng-model="$ctrl.currentProfile.activeSubtype" ng-value="$ctrl.profiles.HeavyVehicle.subtypes.bus.name" type="radio">
+                        <label>Bus</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="ui radio checkbox">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeSubprofile($ctrl.profiles.HeavyVehicle.name)" ng-model="$ctrl.currentProfile.activeSubtype" ng-value="$ctrl.profiles.HeavyVehicle.subtypes.agricultural.name" type="radio">
+                        <label>Agricultural</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="ui radio checkbox">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeSubprofile($ctrl.profiles.HeavyVehicle.name)" ng-model="$ctrl.currentProfile.activeSubtype" ng-value="$ctrl.profiles.HeavyVehicle.subtypes.forestry.name" type="radio">
+                        <label>Forestry</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="ui radio checkbox">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeSubprofile($ctrl.profiles.HeavyVehicle.name)" ng-model="$ctrl.currentProfile.activeSubtype" ng-value="$ctrl.profiles.HeavyVehicle.subtypes.delivery.name" type="radio">
+                        <label>Delivery</label>
+                    </div>
+                </li>
+            </ul>
+        </span>
+    </li>
+    <li style="float: right;">
+        <button class="ors-button" ng-click="$ctrl.callOptions()" ng-show="$ctrl.showOptions">
+            <i class="fa fa-lg fa-cog">
+            </i>
+        </button>
+    </li>
+</ul>

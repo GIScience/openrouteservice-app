@@ -1,9 +1,9 @@
-@import 'https://fonts.googleapis.com/css?family=Open+Sans';
+/*@import 'https://fonts.googleapis.com/css?family=Open+Sans';*/
 html, body {
     font-family: 'Open Sans', sans-serif !important;
     font-size: 90%;
     display: flex;
-    min-height: 100%;
+    min-height: 100vh;
     flex-direction: column;
     color: #444;
     margin: 0;
@@ -34,10 +34,11 @@ html, body {
 }
 
 .ors-navigation {
-    border-right: 1px solid #F0F0F0;
-    overflow: auto;
-    display: flex;
+    border-right: 1px solid #CCC;
+    -display: flex;
     flex: 0 1 44px;
+    border-top: 1px solid #CCC;
+    background-color: #F0F0F0
 }
 
 .ors-panel {
@@ -50,9 +51,11 @@ html, body {
 .ors-routing-navigation {
     position: absolute;
     height: 35px;
-    background-color: yellow;
-    width: 344px;
+    border-bottom: 1px solid #CCC;
+    border-top: 1px solid #CCC;
+    width: 343px;
     z-index: 1;
+    background-color: #F0F0F0;
 }
 
 .ors-routing-inner {
@@ -67,6 +70,12 @@ html, body {
     bottom: 0;
     height: 100%;
     width: 344px;
+}
+
+.ors-route-controls {
+    width: 344px;
+    height: 35px;
+    background-color: #b5152b;
 }
 
 .ors-label {
@@ -119,7 +128,8 @@ html, body {
 .ors-wp-list {
     clear: both;
     list-style: none outside none;
-    margin: 12px 0 0 0;
+    margin: 20px 0 20px 0;
+    /*margin: 12px 0 0 0;*/
 }
 
 .ors-wp-item {
@@ -141,8 +151,68 @@ html, body {
 }
 
 .ors-button {
-    width: 35px;
+    width: 40px;
     height: 35px;
+    background-color: #F0F0F0;
+    border: none;
+    color: #444;
+}
+
+.ors-button:hover {
+    color: #b5152b;
+}
+
+.ors-controls-button {
+    width: 40px;
+    height: 35px;
+    background-color: #b5152b;
+    border: none;
+    color: #FFF;
+}
+
+.ors-controls-button:hover {
+    background-color: rgba(0,0,0,.15);
+}
+
+/* ors profiles nav */
+
+.ors-nav-submenu {
+    display: none;
+    position: absolute;
+    border-radius: 2px;
+    border: 1px solid #CCC;
+    background-color: #F0F0F0;
+    padding: 10px;
+}
+
+.ors-nav-menu>li>span:hover>.ors-nav-submenu {
+    display: block;
+}
+
+.ors-nav-menu>li {
+    float: left;
+    padding-left: 8px;
+}
+
+.ors-nav-menu>li, .ors-nav-submenu>li {
+    list-style: none;
+}
+
+.ors-nav-submenu>li {
+    padding-top: 3px;
+}
+
+.ors-nav-submenu>li label {
+    font-size: 80% !important;
+}
+
+.ors-nav-menu {
+    margin: 0;
+    padding: 0;
+}
+
+.ors-navigation .active, .ors-nav-menu .active {
+  color : #b5152b;
 }
 
 .ui-sortable-disabled .ors-wp-item {
