@@ -1,4 +1,4 @@
-/*@import 'https://fonts.googleapis.com/css?family=Open+Sans';*/
+@import 'https://fonts.googleapis.com/css?family=Open+Sans';
 html, body {
     font-family: 'Open Sans', sans-serif !important;
     font-size: 90%;
@@ -38,7 +38,12 @@ html, body {
     -display: flex;
     flex: 0 1 44px;
     border-top: 1px solid #CCC;
-    background-color: #F0F0F0
+    background-color: #F0F0F0;
+}
+
+.ors-navigation ul {
+    padding: 0;
+    margin: 0;
 }
 
 .ors-panel {
@@ -63,13 +68,52 @@ html, body {
     height: auto;
 }
 
-.ors-routing-info {
+.ors-routing-info, .ors-routing-options {
     position: absolute;
     top: 35px;
     left: 0;
     bottom: 0;
     height: 100%;
     width: 344px;
+}
+
+.ors-routing-options .container {
+    background-color: #F0F0F0;
+}
+
+.ors-routing-options .options-box {
+    padding: 15px;
+    cursor: pointer;
+}
+
+.ors-routing-options .options-box span {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Chrome/Safari/Opera */
+    -khtml-user-select: none;
+    /* Konqueror */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+.ors-routing-options .options-box i {
+    color: #444;
+}
+
+.ors-routing-options .container .collapsable {
+    display: inline-block;
+    overflow: hidden;
+    height: 0;
+}
+
+.ors-routing-options .container .collapsable.showMe {
+    height: auto;
 }
 
 .ors-route-controls {
@@ -171,8 +215,9 @@ html, body {
 }
 
 .ors-controls-button:hover {
-    background-color: rgba(0,0,0,.15);
+    background-color: rgba(0, 0, 0, .15);
 }
+
 
 /* ors profiles nav */
 
@@ -194,8 +239,8 @@ html, body {
     padding-left: 8px;
 }
 
-.ors-nav-menu>li, .ors-nav-submenu>li {
-    list-style: none;
+.ors-nav-menu>li, .ors-nav-submenu>li, .ors-navigation li {
+    list-style: none !important;
 }
 
 .ors-nav-submenu>li {
@@ -212,7 +257,7 @@ html, body {
 }
 
 .ors-navigation .active, .ors-nav-menu .active {
-  color : #b5152b;
+    color: #b5152b;
 }
 
 .ui-sortable-disabled .ors-wp-item {

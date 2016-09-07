@@ -1,17 +1,23 @@
 angular.module('orsApp.ors-profiles-options', []).component('orsProfilesOptions', {
     templateUrl: 'app/components/ors-panel-routing/ors-profiles-options/ors-profiles-options.html',
     bindings: {
-        orsParams: '<'
+        orsParams: '<',
+        showOptions: '=',
+        activeMenu: '=',
+        profiles: '<'
     },
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService) {
         let ctrl = this;
-        ctrl.profiles = lists.profiles;
         ctrl.currentProfile = {};
-        ctrl.activeMenu = ctrl.profiles.Car.name;
         // load permalink infos and set active profile
         ctrl.$onInit = () => {
+            console.log(ctrl.profiles, ctrl.activeMenu)
             ctrl.currentProfile = orsSettingsFactory.getCurrentProfile();
-            if ('active' in ctrl.currentProfile) ctrl.activeMenu = ctrl.profiles[ctrl.currentProfile.active].name;
+            console.log(ctrl.currentProfile, ctrl.profiles[ctrl.currentProfile.active])
+            if ('active' in ctrl.currentProfile) {
+                ctrl.activeMenu = ctrl.profiles[ctrl.currentProfile.active].name;
+                console.log(ctrl.activeMenu)
+            }
         };
         /**
          * Is called when profile is changed
@@ -41,5 +47,10 @@ angular.module('orsApp.ors-profiles-options', []).component('orsProfilesOptions'
         };
         // todo: permalink should update ng-model of subtypes and profile type
         // ctrl.orsParams needed for permalink
+        ctrl.callOptions = () => {
+            console.log('show options..')
+            ctrl.showOptions = ctrl.showOptions == false ? true : false;
+            console.log(ctrl.showOptions)
+        };
     }
 });

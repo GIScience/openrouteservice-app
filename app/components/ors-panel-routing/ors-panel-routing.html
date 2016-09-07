@@ -1,9 +1,12 @@
 <div class="ors-routing-navigation">
-	<ors-profiles-options ors-params="$ctrl.routeParams"></ors-profiles-options>
+	<ors-profiles-options ors-params="$ctrl.routeParams" show-options="$ctrl.showOptions" active-menu="$ctrl.activeMenu" profiles="$ctrl.profiles"></ors-profiles-options>
 </div>
 <div class="ors-routing-inner">
 	<div class="ors-routing-info">
 		<ors-waypoints ors-map="$ctrl.parent.orsMap" ors-params="$ctrl.routeParams"></ors-waypoints>
+	</div>
+	<div class="ors-routing-options" ng-show="$ctrl.showOptions">
+		<ors-options active-menu="$ctrl.activeMenu"></ors-options>
 	</div>
 </div>
 
