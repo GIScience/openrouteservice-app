@@ -1,0 +1,62 @@
+<div class="container">
+    <div class="options-box" ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'" >
+	    <div ng-click="routeweightOptions = !routeweightOptions">
+	        <i ng-class="$ctrl.getClass(routeweightOptions)"></i><span>Route weight</span>
+	    </div>
+	    <div class="collapsable" ng-class="{ showMe: routeweightOptions }">
+	        <h3>
+	            This should collapse
+	        </h3>
+	    </div>
+	</div>
+    <div class="options-box" ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'">
+	    <div ng-click="avoidablesOptions = !avoidablesOptions">
+	        <i ng-class="$ctrl.getClass(avoidablesOptions)"></i><span>Avoid road types</span>
+	    </div>
+	    <div class="collapsable" ng-class="{ showMe: avoidablesOptions }">
+	        <h3>
+	            This should collapse
+	        </h3>
+	    </div>
+	</div>
+	<div class="options-box" ng-show="$ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Pedestrian'">
+	    <div ng-click="difficultyOptions = !difficultyOptions">
+	        <i ng-class="$ctrl.getClass(difficultyOptions)"></i><span>Difficulty settings</span>
+	    </div>
+	    <div class="collapsable" ng-class="{ showMe: difficultyOptions }">
+	        <h3>
+	            This should collapse
+	        </h3>
+	    </div>
+	</div>
+	<div class="options-box" ng-show="$ctrl.activeMenu == 'HeavyVehicle'">
+	    <div ng-click="hgvOptions = !hgvOptions">
+	        <i ng-class="$ctrl.getClass(hgvOptions)"></i><span>HGV settings</span>
+	    </div>
+	    <div class="collapsable" ng-class="{ showMe: hgvOptions }">
+	        <h3>
+	            This should collapse
+	        </h3>
+	    </div>
+	</div>
+	<div class="options-box" ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'">
+	    <div ng-click="maxspeedOptions = !maxspeedOptions">
+	        <i ng-class="$ctrl.getClass(maxspeedOptions)"></i><span>Maximum speed</span>
+	    </div>
+	    <div class="collapsable" ng-class="{ showMe: maxspeedOptions }">
+	        <h3>
+	            This should collapse
+	        </h3>
+	    </div>
+	</div>
+	<div class="options-box" ng-show="$ctrl.activeMenu == 'Wheelchair'">
+	    <div ng-click="wheelchairOptions = !wheelchairOptions">
+	        <i ng-class="$ctrl.getClass(wheelchairOptions)"></i><span>Wheelchair settings</span>
+	    </div>
+	    <div class="collapsable" ng-class="{ showMe: wheelchairOptions }">
+	        <h3>
+	            This should collapse
+	        </h3>
+	    </div>
+	</div>
+</div>
