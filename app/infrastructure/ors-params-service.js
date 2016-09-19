@@ -1,13 +1,19 @@
 angular.module('orsApp').factory('orsParamsService', ['orsObjectsFactory', 'orsRequestService', function(orsObjectsFactory, orsRequestService) {
     let orsParamsService = {};
-    orsParamsService.settings = {};
-    orsParamsService.settings.currentProfile = {};
+    orsParamsService.settings = {
+        waypoints: [],
+        profile: {
+            subprofile: {
+                type: undefined
+            },
+            options: {}
+        }
+    };
     orsParamsService.importSettings = (params) => {
-        angular.forEach(params, function(param) {
-            param = param.split("=");
-            console.log(param)
-            if (param[0] == 'wps') {
-                const wps = param[1].match(/[^,]+,[^,]+/g);
+        angular.forEach(params, function(value, key) {
+            console.log(value, key);
+            if (key == 'wps') {
+                const wps = value.match(/[^,]+,[^,]+/g);
                 let idx = 0,
                     waypoints = [];
                 angular.forEach(wps, function(wp) {
@@ -21,12 +27,14 @@ angular.module('orsApp').factory('orsParamsService', ['orsObjectsFactory', 'orsR
                 });
                 orsParamsService.settings.waypoints = waypoints;
             }
-            if (param[0] == 'profile') {
-
-                orsParamsService.settings.currentProfile.active = param[1];
+            if (key == 'profile') {
+                orsParamsService.settings.profile.type = value;
             }
-            if (param[0] == 'subprofile') {
-                orsParamsService.settings.currentProfile.activeSubtype = param[1];   
+            if (key == 'subprofile') {
+                orsParamsService.settings.profile.subprofile.type = value;
+            }
+            if (key == 'weight') {
+                orsParamsService.settings.profile.options.weight = value;
             }
         });
         return orsParamsService.settings;

@@ -107,3 +107,45 @@ lists.profiles = {
         }
     }
 };
+lists.optionList = {
+    weight: {
+        fastest: {
+            name: 'Fastest'
+        },
+        shortest: {
+            name: 'Shortest'
+        },
+        recommended: {
+            name: 'Recommended'
+        }
+    },
+    avoidables: {
+        ferry: {
+            name: 'Ferry'
+        },
+        unpaved: {
+            name: 'Unpavedroads'
+        },
+        paved: {
+            name: 'Pavedroads'
+        },
+        fords: {
+            name: 'Fords'
+        },
+        steps: {
+            name: 'Steps'
+        },
+        highways: {
+            name: 'Highways'
+        },
+        tollroads: {
+            name: 'Tollroads'
+        },
+        tunnels: {
+            name: 'Tunnels'
+        },
+        tracks: {
+            name: 'Tracks'
+        }
+    }
+};

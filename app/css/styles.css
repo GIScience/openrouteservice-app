@@ -36,7 +36,7 @@ html, body {
 .ors-navigation {
     border-right: 1px solid #CCC;
     -display: flex;
-    flex: 0 1 44px;
+    flex: 0 1 43px;
     border-top: 1px solid #CCC;
     background-color: #F0F0F0;
 }
@@ -58,12 +58,12 @@ html, body {
     height: 35px;
     border-bottom: 1px solid #CCC;
     border-top: 1px solid #CCC;
-    width: 343px;
+    width: 344px;
     z-index: 1;
     background-color: #F0F0F0;
 }
 
-.ors-routing-inner {
+.ors-routing-inner, .ors-instructions {
     position: relative;
     height: auto;
 }
@@ -239,7 +239,7 @@ html, body {
     padding-left: 8px;
 }
 
-.ors-nav-menu>li, .ors-nav-submenu>li, .ors-navigation li {
+.ors-nav-menu>li, .ors-nav-submenu>li, .ors-navigation li, li {
     list-style: none !important;
 }
 

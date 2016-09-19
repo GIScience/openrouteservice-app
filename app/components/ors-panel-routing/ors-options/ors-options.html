@@ -4,9 +4,26 @@
 	        <i ng-class="$ctrl.getClass(routeweightOptions)"></i><span>Route weight</span>
 	    </div>
 	    <div class="collapsable" ng-class="{ showMe: routeweightOptions }">
-	        <h3>
-	            This should collapse
-	        </h3>
+	        <ul>
+	        	<li>
+			    	<div class="ui radio checkbox">
+		                <input name="orsRouteWeightInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.weight" type="radio" ng-value="$ctrl.optionList.weight.fastest.name">
+		                <label>Fastest</label>
+		            </div>
+		        </li>
+		        <li>
+		            <div class="ui radio checkbox">
+		                <input name="orsRouteWeightInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.weight" type="radio" ng-value="$ctrl.optionList.weight.shortest.name">
+		                <label>Shortest</label>
+		            </div>
+		        </li>
+		        <li>
+		            <div class="ui radio checkbox">
+		                <input name="orsRouteWeightInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.weight" type="radio" ng-value="$ctrl.optionList.weight.recommended.name">
+		                <label>Recommended</label>
+		            </div>
+		        </li>
+            </ul>
 	    </div>
 	</div>
     <div class="options-box" ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'">
@@ -14,9 +31,62 @@
 	        <i ng-class="$ctrl.getClass(avoidablesOptions)"></i><span>Avoid road types</span>
 	    </div>
 	    <div class="collapsable" ng-class="{ showMe: avoidablesOptions }">
-	        <h3>
-	            This should collapse
-	        </h3>
+	       <ul>
+	        	<li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'">
+			    	<div class="ui checkbox">
+		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.ferry" type="checkbox">
+		                <label>Ferries</label>
+		            </div>
+		        </li>
+		        <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'HeavyVehicle'">
+			    	<div class="ui checkbox">
+		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.unpaved" type="checkbox">
+		                <label>Unpaved Roads</label>
+		            </div>
+		        </li>
+		        <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'HeavyVehicle'">
+			    	<div class="ui checkbox">
+		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.paved" type="checkbox">
+		                <label>Paved Roads</label>
+		            </div>
+		        </li>
+		        <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'HeavyVehicle'">
+			    	<div class="ui checkbox">
+		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.fords" type="checkbox">
+		                <label>Fords</label>
+		            </div>
+		        </li>
+		        <li ng-show="$ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Pedestrian' || $ctrl.activeMenu == 'Wheelchair'">
+			    	<div class="ui checkbox">
+		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.steps" type="checkbox">
+		                <label>Steps</label>
+		            </div>
+		        </li>
+		        <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'HeavyVehicle'">
+			    	<div class="ui checkbox">
+		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.highways" type="checkbox">
+		                <label>Highways</label>
+		            </div>
+		        </li>
+		        <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'HeavyVehicle'">
+			    	<div class="ui checkbox">
+		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tollroads" type="checkbox">
+		                <label>Toll Roads</label>
+		            </div>
+		        </li>
+		        <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'HeavyVehicle'">
+			    	<div class="ui checkbox">
+		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tunnels" type="checkbox">
+		                <label>Tunnels</label>
+		            </div>
+		        </li>
+		        <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'HeavyVehicle'">
+			    	<div class="ui checkbox">
+		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tracks" type="checkbox">
+		                <label>Tracks</label>
+		            </div>
+		        </li>
+		    </ul>
 	    </div>
 	</div>
 	<div class="options-box" ng-show="$ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Pedestrian'">

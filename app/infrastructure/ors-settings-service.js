@@ -1,9 +1,17 @@
 angular.module('orsApp').factory('orsSettingsFactory', ['orsObjectsFactory', function(orsObjectsFactory) {
     let settings = {
         waypoints: [],
-        currentProfile: {
-            activeSubtype: undefined,
-            active: "Car"
+        profile: {
+            type: 'Car',
+            subprofile: {
+                type: undefined,
+            },
+            options: {
+                maxspeed: undefined,
+                filters: {},
+                avoidables: {},
+                weight: 'Fastest'
+            }
         }
     };
     let waypointsSubject = new Rx.Subject();
@@ -17,13 +25,17 @@ angular.module('orsApp').factory('orsSettingsFactory', ['orsObjectsFactory', fun
     });
     let orsSettingsFactory = {};
     orsSettingsFactory.setSettings = (params) => {
+        console.log('params', params)
         for (var k in params) {
             settings[k] = params[k];
         }
         console.log(settings);
     };
-    orsSettingsFactory.getCurrentProfile = () => {
-        return settings.currentProfile;
+    orsSettingsFactory.getActiveProfile = () => {
+        return settings.profile;
+    };
+    orsSettingsFactory.getActiveOptions = () => {
+        return settings.profile.options;
     };
     orsSettingsFactory.subscribeToWaypoints = (o) => {
         return waypointsSubject.subscribe(o);
@@ -83,9 +95,10 @@ angular.module('orsApp').factory('orsSettingsFactory', ['orsObjectsFactory', fun
         }
         return iconIdx;
     };
-    orsSettingsFactory.setProfile = (profile) => {
-        settings.currentProfile = profile;
-        console.log(settings)
+    orsSettingsFactory.setProfile = (currentProfile) => {
+        console.log('setting profile', currentProfile)
+        settings.profile.type = currentProfile.type;
+        if ('subprofile' in currentProfile) settings.profile.subprofile.type = currentProfile.subprofile.type;
     };
     return orsSettingsFactory;
 }]);
