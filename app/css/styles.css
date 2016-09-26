@@ -1,4 +1,4 @@
-@import 'https://fonts.googleapis.com/css?family=Open+Sans';
+/*@import 'https://fonts.googleapis.com/css?family=Open+Sans';*/
 html, body {
     font-family: 'Open Sans', sans-serif !important;
     font-size: 90%;
@@ -36,7 +36,7 @@ html, body {
 .ors-navigation {
     border-right: 1px solid #CCC;
     -display: flex;
-    flex: 0 1 43px;
+    flex: 0 1 44px;
     border-top: 1px solid #CCC;
     background-color: #F0F0F0;
 }
@@ -55,7 +55,7 @@ html, body {
 
 .ors-routing-navigation {
     position: absolute;
-    height: 35px;
+    height: 39px;
     border-bottom: 1px solid #CCC;
     border-top: 1px solid #CCC;
     width: 344px;
@@ -70,7 +70,7 @@ html, body {
 
 .ors-routing-info, .ors-routing-options {
     position: absolute;
-    top: 35px;
+    top: 37px;
     left: 0;
     bottom: 0;
     height: 100%;
@@ -79,10 +79,11 @@ html, body {
 
 .ors-routing-options .container {
     background-color: #F0F0F0;
+    padding: 10px;
 }
 
 .ors-routing-options .options-box {
-    padding: 15px;
+    -padding-bottom: 15px;
     cursor: pointer;
 }
 
@@ -118,7 +119,7 @@ html, body {
 
 .ors-route-controls {
     width: 344px;
-    height: 35px;
+    height: 37px;
     background-color: #b5152b;
 }
 
@@ -196,7 +197,7 @@ html, body {
 
 .ors-button {
     width: 40px;
-    height: 35px;
+    height: 37px;
     background-color: #F0F0F0;
     border: none;
     color: #444;
@@ -208,16 +209,36 @@ html, body {
 
 .ors-controls-button {
     width: 40px;
-    height: 35px;
+    height: 37px;
     background-color: #b5152b;
     border: none;
     color: #FFF;
 }
 
 .ors-controls-button:hover {
-    background-color: rgba(0, 0, 0, .15);
+    background: rgba(0, 0, 0, .15);
 }
 
+/* options menus */
+.ors-options-menu {
+    padding-left: 10px;
+}
+
+.ors-options-menu>li {
+    margin-bottom: 5px;
+}
+
+.ors-options-input {
+    height: 35px;
+}
+
+.ors-options-input input{
+    width: 150px;
+}
+
+.ng-invalid-max, .ng-invalid-min {
+    background-color: #ffeaea !important;
+}
 
 /* ors profiles nav */
 

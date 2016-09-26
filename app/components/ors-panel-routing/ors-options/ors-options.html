@@ -4,7 +4,7 @@
 	        <i ng-class="$ctrl.getClass(routeweightOptions)"></i><span>Route weight</span>
 	    </div>
 	    <div class="collapsable" ng-class="{ showMe: routeweightOptions }">
-	        <ul>
+	        <ul class="ors-options-menu">
 	        	<li>
 			    	<div class="ui radio checkbox">
 		                <input name="orsRouteWeightInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.weight" type="radio" ng-value="$ctrl.optionList.weight.fastest.name">
@@ -31,7 +31,7 @@
 	        <i ng-class="$ctrl.getClass(avoidablesOptions)"></i><span>Avoid road types</span>
 	    </div>
 	    <div class="collapsable" ng-class="{ showMe: avoidablesOptions }">
-	       <ul>
+	       <ul class="ors-options-menu">
 	        	<li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'">
 			    	<div class="ui checkbox">
 		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.ferry" type="checkbox">
@@ -104,9 +104,38 @@
 	        <i ng-class="$ctrl.getClass(hgvOptions)"></i><span>HGV settings</span>
 	    </div>
 	    <div class="collapsable" ng-class="{ showMe: hgvOptions }">
-	        <h3>
-	            This should collapse
-	        </h3>
+	       <ul class="ors-options-menu">
+	       		<li>
+			       <div class="ui action input ors-options-input">
+					 	<input type="number" min="0" max="50" placeholder="meters" ng-model="$ctrl.currentOptions.filters.hgv_options.length">
+					  	<button class="ui basic mini button" ng-click="$ctrl.changeOptions()">Length</button>
+					</div>
+				</li>
+				<li>
+					<div class="ui action input ors-options-input">
+					 	<input type="number" min="0" max="20" placeholder="meters" ng-model="$ctrl.currentOptions.filters.hgv_options.width">
+					  	<button class="ui basic mini button" ng-click="$ctrl.changeOptions()">Width</button>
+					</div>
+				</li>
+				<li>
+					<div class="ui action input ors-options-input">
+					 	<input type="number" min="0" max="15" placeholder="meters" ng-model="$ctrl.currentOptions.filters.hgv_options.height">
+					  	<button class="ui basic mini button" ng-click="$ctrl.changeOptions()">Height</button>
+					</div>
+				</li>
+				<li>
+					<div class="ui action input ors-options-input">
+					 	<input type="number" min="0" max="1000" placeholder="tons" ng-model="$ctrl.currentOptions.filters.hgv_options.weight">
+					  	<button class="ui basic mini button" ng-click="$ctrl.changeOptions()">Weight</button>
+					</div>
+				</li>
+				<li>
+					<div class="ui action input ors-options-input">
+					 	<input type="number" min="0" max="1000" placeholder="tons" ng-model="$ctrl.currentOptions.filters.hgv_options.load">
+					  	<button class="ui basic mini button" ng-click="$ctrl.changeOptions()">Axle Load</button>
+					</div>
+				</li>
+			</ul>
 	    </div>
 	</div>
 	<div class="options-box" ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'">
@@ -114,9 +143,14 @@
 	        <i ng-class="$ctrl.getClass(maxspeedOptions)"></i><span>Maximum speed</span>
 	    </div>
 	    <div class="collapsable" ng-class="{ showMe: maxspeedOptions }">
-	        <h3>
-	            This should collapse
-	        </h3>
+	        <ul class="ors-options-menu">
+		        <li>
+			        <div class="ui action input ors-options-input">
+					 	<input type="number" min="0" max="350" placeholder="km/h" ng-model="$ctrl.currentOptions.maxspeed">
+					  	<button class="ui basic mini button" ng-click="$ctrl.changeOptions()">Set</button>
+					</div>
+				</li>
+			</ul>
 	    </div>
 	</div>
 	<div class="options-box" ng-show="$ctrl.activeMenu == 'Wheelchair'">

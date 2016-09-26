@@ -1,4 +1,4 @@
-angular.module('orsApp').factory('orsErrorhandlerService', ['orsUtilsService',
+angular.module('orsApp.error-service', []).factory('orsErrorhandlerService', ['orsUtilsService',
     function(orsUtilsService) {
         /**
          * Checks if response contains errors

@@ -1,4 +1,4 @@
-angular.module('orsApp').factory('orsObjectsFactory', function() {
+angular.module('orsApp.objects-service' , []).factory('orsObjectsFactory', function() {
     class waypoint {
         constructor(address, latlng) {
             this._address = address;

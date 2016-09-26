@@ -1,4 +1,4 @@
-angular.module('orsApp').factory('orsRequestService', ['$http', 'orsUtilsService', 'orsErrorhandlerService', 'orsSettingsFactory',
+angular.module('orsApp.request-service', []).factory('orsRequestService', ['$http', 'orsUtilsService', 'orsErrorhandlerService', 'orsSettingsFactory',
     function($http, orsUtilsService, orsErrorhandlerService, orsSettingsFactory) {
         /**
          * Requests geocoding from ORS backend

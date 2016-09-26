@@ -1,4 +1,4 @@
-angular.module('orsApp').factory('orsUtilsService', ['$http',
+angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http',
     function($http) {
         var orsUtilsService = {};
         /**

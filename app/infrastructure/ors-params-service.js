@@ -1,4 +1,4 @@
-angular.module('orsApp').factory('orsParamsService', ['orsObjectsFactory', 'orsRequestService', function(orsObjectsFactory, orsRequestService) {
+angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObjectsFactory', 'orsRequestService', function(orsObjectsFactory, orsRequestService) {
     let orsParamsService = {};
     orsParamsService.settings = {
         waypoints: [],

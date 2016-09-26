@@ -1,4 +1,4 @@
-angular.module('orsApp').factory('orsSettingsFactory', ['orsObjectsFactory', function(orsObjectsFactory) {
+angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', function(orsObjectsFactory) {
     let settings = {
         waypoints: [],
         profile: {
@@ -8,9 +8,13 @@ angular.module('orsApp').factory('orsSettingsFactory', ['orsObjectsFactory', fun
             },
             options: {
                 maxspeed: undefined,
-                filters: {},
-                avoidables: {},
-                weight: 'Fastest'
+                avoidables: undefined,
+                weight: 'Fastest',
+                filters: {
+                    hgv_options: undefined,
+                    difficulty_options: undefined,
+                    wheelchair_options: undefined
+                }
             }
         }
     };

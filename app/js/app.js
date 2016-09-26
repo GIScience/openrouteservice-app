@@ -1,4 +1,19 @@
-angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.ors-panel-accessibilityanalysis', 'orsApp.ors-panel-download', 'ui.sortable']).config(function($locationProvider, $httpProvider) {
+angular.module('orsApp', [
+    'orsApp.ors-nav', 
+    'orsApp.ors-panel-routing', 
+    'orsApp.ors-panel-accessibilityanalysis', 
+    'orsApp.ors-panel-download', 
+    'ui.sortable', 
+    'orsApp.error-service', 
+    'orsApp.map-service', 
+    'orsApp.objects-service', 
+    'orsApp.params-service',
+    'orsApp.request-service', 
+    'orsApp.settings-service', 
+    'orsApp.utils-service'
+])
+
+.config(function($locationProvider, $httpProvider) {
     var ak = '?api_key=0894982ba55b12d3d3e4abd28d1838f2';
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push(function($q) {
@@ -13,7 +28,9 @@ angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.
             }
         };
     });
-}).controller('RootController', function(orsSettingsFactory, orsObjectsFactory, orsMapFactory) {
+})
+
+.controller('RootController', function(orsSettingsFactory, orsObjectsFactory, orsMapFactory) {
     // add map
     var ctrl = this;
     ctrl.myOrsMap = orsMapFactory.initMapA("map");
@@ -29,7 +46,9 @@ angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.
     //     // L.marker([0, 0]).addTo(ctrl.map);
     //     // console.log(ctrl.map);
     // });
-}).component('orsHeader', {
+})
+
+.component('orsHeader', {
     template: '<p>Hello, {{$ctrl.user.name}} !</p>',
     transclude: true,
     controller: function() {
@@ -38,6 +57,7 @@ angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.
         };
     }
 });
+
 Array.prototype.move = function(from, to) {
     this.splice(to, 0, this.splice(from, 1)[0]);
     return this;

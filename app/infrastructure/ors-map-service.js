@@ -1,4 +1,4 @@
-angular.module('orsApp').factory('orsMapFactory', ['$q',
+angular.module('orsApp.map-service', []).factory('orsMapFactory', ['$q',
     function($q) {
         var deferred = $q.defer();
         return {
