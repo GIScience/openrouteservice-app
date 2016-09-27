@@ -1,4 +1,4 @@
-angular.module('orsApp', [
+var orsApp = angular.module('orsApp', [
     'orsApp.ors-nav', 
     'orsApp.ors-panel-routing', 
     'orsApp.ors-panel-accessibilityanalysis', 
@@ -10,7 +10,8 @@ angular.module('orsApp', [
     'orsApp.params-service',
     'orsApp.request-service', 
     'orsApp.settings-service', 
-    'orsApp.utils-service'
+    'orsApp.utils-service',
+    'rzModule'
 ])
 
 .config(function($locationProvider, $httpProvider) {

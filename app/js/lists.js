@@ -51,72 +51,85 @@ lists.waypointIcons = {
 lists.profiles = {
     Car: {
         name: 'Car',
-        elevation: false
+        elevation: false,
+        subgroup: 'Car'
     },
     Bicycle: {
         name: 'Bicycle',
         elevation: true,
-        subtypes: {
-            default: {
-                name: 'Bicycle',
-            },
-            mtb: {
-                name: 'BicycleMTB',
-            },
-            racing: {
-                name: 'BicycleRacer',
-            },
-            touring: {
-                name: 'BicycleTouring',
-            },
-            safest: {
-                name: 'BicycleSafety',
-            }
-        }
+        subgroup: 'Bicycle'
+    },
+    BicycleMTB: {
+        name: 'BicycleMTB',
+        elevation: true,
+        subgroup: 'Bicycle'
+    },
+    BicycleRacer: {
+        name: 'BicycleRacer',
+        elevation: true,
+        subgroup: 'Bicycle'
+    },
+    BicycleTouring: {
+        name: 'BicycleTouring',
+        elevation: true,
+        subgroup: 'Bicycle'
+    },
+    BicycleSafety: {
+        name: 'BicycleSafety',
+        elevation: true,
+        subgroup: 'Bicycle'
     },
     Pedestrian: {
         name: 'Pedestrian',
-        elevation: true
+        elevation: true,
+        subgroup: 'Pedestrian'
     },
     Wheelchair: {
         name: 'Wheelchair',
-        elevation: true
+        elevation: true,
+        subgroup: 'Wheelchair'
     },
     HeavyVehicle: {
         name: 'HeavyVehicle',
         elevation: false,
-        subtypes: {
-            default: {
-                name: 'HGV'
-            },
-            goods: {
-                name: 'Goods'
-            },
-            bus: {
-                name: 'Bus'
-            },
-            agricultural: {
-                name: 'Agricultural'
-            },
-            forestry: {
-                name: 'Foresty'
-            },
-            delivery: {
-                name: 'Delivery'
-            }
-        }
+        subgroup: 'HeavyVehicle'
+    },
+    Goods: {
+        name: 'Goods',
+        elevation: false,
+        subgroup: 'HeavyVehicle'
+    },
+    Bus: {
+        name: 'Bus',
+        elevation: false,
+        subgroup: 'HeavyVehicle'
+    },
+    Agricultural: {
+        name: 'Agricultural',
+        elevation: false,
+        subgroup: 'HeavyVehicle'
+    },
+    Foresty: {
+        name: 'Foresty',
+        elevation: false,
+        subgroup: 'HeavyVehicle'
+    },
+    Delivery: {
+        name: 'Delivery',
+        elevation: false,
+        subgroup: 'HeavyVehicle'
     }
 };
 lists.optionList = {
     weight: {
-        fastest: {
-            name: 'Fastest'
+        Fastest: {
+            value: 'Fastest'
         },
-        shortest: {
-            name: 'Shortest'
+        Shortest: {
+            value: 'Shortest'
         },
-        recommended: {
-            name: 'Recommended'
+        Recommended: {
+            value: 'Recommended'
         }
     },
     avoidables: {
@@ -147,5 +160,99 @@ lists.optionList = {
         tracks: {
             name: 'Tracks'
         }
+    },
+    hgvParams: {
+        Length: {
+            min: 2,
+            max: 15
+        },
+        Height: {
+            min: 2,
+            max: 5
+        },
+        Width: {
+            min: 2,
+            max: 5
+        },
+        Weight: {
+            min: 1,
+            max: 100
+        },
+        AxleLoad: {
+            min: 1,
+            max: 100
+        }
+    },
+    maxspeeds: {
+        Car: {
+            min: 30,
+            max: 300,
+            step: 5
+        },
+        Bicycle: {
+            min: 5,
+            max: 50,
+            step: 1
+        },
+        BicycleMTB: {
+            min: 5,
+            max: 50,
+            step: 1
+        },
+        BicycleRacer: {
+            min: 5,
+            max: 50,
+            step: 1
+        },
+        BicycleTouring: {
+            min: 5,
+            max: 50,
+            step: 1
+        },
+        BicycleSafety: {
+            min: 5,
+            max: 50,
+            step: 1
+        },
+        Pedestrian: {
+            min: 3,
+            max: 15,
+            step: 1
+        },
+        Wheelchair: {
+            min: 5,
+            max: 50,
+            step: 1
+        },
+        HeavyVehicle: {
+            min: 30,
+            max: 200,
+            step: 5
+        },
+        Goods: {
+            min: 30,
+            max: 200,
+            step: 5
+        },
+        Bus: {
+            min: 30,
+            max: 200,
+            step: 5
+        },
+        Agricultural: {
+            min: 30,
+            max: 200,
+            step: 5
+        },
+        Foresty: {
+            min: 30,
+            max: 200,
+            step: 5
+        },
+        Delivery: {
+            min: 30,
+            max: 200,
+            step: 5
+        },
     }
 };
