@@ -132,6 +132,34 @@ lists.optionList = {
             value: 'Recommended'
         }
     },
+    difficulty: {
+        fitness: {
+            Default: {
+                name: 'Not set',
+                value: -1
+            },
+            Novice: {
+                name: 'Novice',
+                value: 0
+            },
+            Amateur: {
+                name: 'Amateur',
+                value: 1
+            },
+            Athlete: {
+                name: 'Athlete',
+                value: 2
+            },
+            Pro: {
+                name: 'Professional',
+                value: 3
+            }
+        },
+        steepness: {
+            min: 0,
+            max: 15
+        }
+    },
     avoidables: {
         ferry: {
             name: 'Ferry'

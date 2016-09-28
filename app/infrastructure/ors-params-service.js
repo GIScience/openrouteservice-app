@@ -48,6 +48,12 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
             if (key == 'length') {
                 orsParamsService.settings.profile.options.length = value;
             }
+            if (key == 'fitness') {
+                orsParamsService.settings.profile.options.fitness = value;   
+            }
+            if (key == 'steepness') {
+                orsParamsService.settings.profile.options.steepness = value;
+            }
         });
         return orsParamsService.settings;
     };

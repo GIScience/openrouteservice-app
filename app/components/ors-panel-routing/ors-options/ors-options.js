@@ -10,14 +10,11 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
         ctrl.optionList = lists.optionList;
         ctrl.$onInit = function() {
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
+            console.log(ctrl.currentOptions);
             // set weight slider from params
-            if (ctrl.currentOptions.weight) {
-                ctrl.weightValue = ctrl.currentOptions.weight;
-            } else {
-                ctrl.weightValue = ctrl.optionList.weight.Fastest;
-            }
+            ctrl.currentOptions.weight = ctrl.currentOptions.weight !== undefined ? ctrl.currentOptions.weight : ctrl.optionList.weight.Fastest;
             ctrl.weightSlider = {
-                value: ctrl.weightValue,
+                value: ctrl.currentOptions.weight,
                 options: {
                     stepsArray: [{
                         value: ctrl.optionList.weight.Fastest.value,
@@ -42,13 +39,9 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
             };
             // set maxspeed slider from params
             ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeMenu];
-            if (ctrl.currentOptions.maxspeed) {
-                ctrl.maxspeedValue = ctrl.currentOptions.maxspeed;
-            } else {
-                ctrl.maxspeedValue = ctrl.maxspeedOptions.min;
-            }
+            ctrl.currentOptions.maxspeed = ctrl.currentOptions.maxspeed !== undefined ? ctrl.currentOptions.maxspeed : ctrl.maxspeedOptions.min;
             ctrl.maxspeedSlider = {
-                value: ctrl.maxspeedValue,
+                value: ctrl.currentOptions.maxspeed,
                 options: {
                     floor: ctrl.maxspeedOptions.min,
                     ceil: ctrl.maxspeedOptions.max,
@@ -62,17 +55,15 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                     }
                 }
             };
-            ctrl.heightValue = ctrl.currentOptions.height ? ctrl.currentOptions.height : ctrl.optionList.hgvParams.Height.min;
-            ctrl.widthValue = ctrl.currentOptions.width ? ctrl.currentOptions.width : ctrl.optionList.hgvParams.Width.min;
-            ctrl.lengthValue = ctrl.currentOptions.length ? ctrl.currentOptions.length : ctrl.optionList.hgvParams.Length.min;
-            ctrl.hgvWeightValue = ctrl.currentOptions.hgvWeight ? ctrl.currentOptions.hgvWeight : ctrl.optionList.hgvParams.Weight.min;
-            ctrl.axleloadValue = ctrl.currentOptions.axleload ? ctrl.currentOptions.axleload : ctrl.optionList.hgvParams.AxleLoad.min;
-            
-            console.log(ctrl.heightValue,ctrl.widthValue,ctrl.lengthValue,ctrl.hgvWeightValue,ctrl.axleloadValue)
-
+            // set hgv options from params
+            ctrl.currentOptions.height = ctrl.currentOptions.height !== undefined ? ctrl.currentOptions.height : ctrl.optionList.hgvParams.Height.min;
+            ctrl.currentOptions.width = ctrl.currentOptions.width !== undefined ? ctrl.currentOptions.width : ctrl.optionList.hgvParams.Width.min;
+            ctrl.currentOptions.length = ctrl.currentOptions.length !== undefined ? ctrl.currentOptions.length : ctrl.optionList.hgvParams.Length.min;
+            ctrl.currentOptions.hgvWeight = ctrl.currentOptions.hgvWeight !== undefined ? ctrl.currentOptions.hgvWeight : ctrl.optionList.hgvParams.Weight.min;
+            ctrl.currentOptions.axleload = ctrl.currentOptions.axleload !== undefined ? ctrl.currentOptions.axleload : ctrl.optionList.hgvParams.AxleLoad.min;
             ctrl.hgvSliders = {
                 Height: {
-                    value: ctrl.heightValue,
+                    value: ctrl.currentOptions.height,
                     options: {
                         floor: ctrl.optionList.hgvParams.Height.min,
                         ceil: ctrl.optionList.hgvParams.Height.max,
@@ -80,13 +71,13 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                             return value + ' <b>m</b>';
                         },
                         onChange: function() {
-                            ctrl.currentOptions.heightValue = ctrl.hgvSliders.Height.value;
+                            ctrl.currentOptions.height = ctrl.hgvSliders.Height.value;
                             ctrl.changeOptions();
                         }
                     }
                 },
                 Length: {
-                    value: ctrl.lengthValue,
+                    value: ctrl.currentOptions.length,
                     options: {
                         floor: ctrl.optionList.hgvParams.Length.min,
                         ceil: ctrl.optionList.hgvParams.Length.max,
@@ -94,13 +85,13 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                             return value + ' <b>m</b>';
                         },
                         onChange: function() {
-                            ctrl.currentOptions.lengthValue = ctrl.hgvSliders.Length.value;
+                            ctrl.currentOptions.length = ctrl.hgvSliders.Length.value;
                             ctrl.changeOptions();
                         }
                     }
                 },
                 Width: {
-                    value: ctrl.widthValue,
+                    value: ctrl.currentOptions.width,
                     options: {
                         floor: ctrl.optionList.hgvParams.Width.min,
                         ceil: ctrl.optionList.hgvParams.Width.max,
@@ -108,13 +99,13 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                             return value + ' <b>m</b>';
                         },
                         onChange: function() {
-                            ctrl.currentOptions.widthValue = ctrl.hgvSliders.Width.value;
+                            ctrl.currentOptions.width = ctrl.hgvSliders.Width.value;
                             ctrl.changeOptions();
                         }
                     }
                 },
                 AxleLoad: {
-                    value: ctrl.axleloadValue,
+                    value: ctrl.currentOptions.axleload,
                     options: {
                         floor: ctrl.optionList.hgvParams.AxleLoad.min,
                         ceil: ctrl.optionList.hgvParams.AxleLoad.max,
@@ -122,13 +113,13 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                             return value + ' <b>t</b>';
                         },
                         onChange: function() {
-                            ctrl.currentOptions.axleloadValue = ctrl.hgvSliders.AxleLoad.value;
+                            ctrl.currentOptions.axleload = ctrl.hgvSliders.AxleLoad.value;
                             ctrl.changeOptions();
                         }
                     }
                 },
                 Weight: {
-                    value: ctrl.hgvWeightValue,
+                    value: ctrl.currentOptions.hgvWeight,
                     options: {
                         floor: ctrl.optionList.hgvParams.Weight.min,
                         ceil: ctrl.optionList.hgvParams.Weight.max,
@@ -136,13 +127,73 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                             return value + ' <b>t</b>';
                         },
                         onChange: function() {
-                            ctrl.currentOptions.hgvWeightValue = ctrl.hgvSliders.Weight.value;
+                            ctrl.currentOptions.hgvWeight = ctrl.hgvSliders.Weight.value;
                             ctrl.changeOptions();
                         }
                     }
                 }
             };
-            console.log('done')
+            // Difficulty settings
+            ctrl.currentOptions.fitness = ctrl.currentOptions.fitness !== undefined ? ctrl.optionList.difficulty.fitness[ctrl.currentOptions.fitness].value : ctrl.optionList.difficulty.fitness.Default.value;
+            ctrl.currentOptions.steepness = ctrl.currentOptions.steepness !== undefined ? ctrl.currentOptions.steepness : ctrl.optionList.difficulty.steepness.min;
+            ctrl.avoidHillsCheckbox();
+            ctrl.difficultySliders = {
+                Fitness: {
+                    value: ctrl.currentOptions.fitness,
+                    options: {
+                        stepsArray: [{
+                            value: ctrl.optionList.difficulty.fitness.Default.value,
+                            legend: ctrl.optionList.difficulty.fitness.Default.name
+                        }, {
+                            value: ctrl.optionList.difficulty.fitness.Novice.value,
+                            legend: ctrl.optionList.difficulty.fitness.Novice.name
+                        }, {
+                            value: ctrl.optionList.difficulty.fitness.Amateur.value,
+                            legend: ctrl.optionList.difficulty.fitness.Amateur.name
+                        }, {
+                            value: ctrl.optionList.difficulty.fitness.Athlete.value,
+                            legend: ctrl.optionList.difficulty.fitness.Athlete.name
+                        }, {
+                            value: ctrl.optionList.difficulty.fitness.Pro.value,
+                            legend: ctrl.optionList.difficulty.fitness.Pro.name
+                        }],
+                        showTicks: true,
+                        showTicksValues: false,
+                        hidePointerLabels: true,
+                        hideLimitLabels: true,
+                        onChange: function() {
+                            ctrl.currentOptions.fitness = ctrl.difficultySliders.Fitness.value;
+                            ctrl.changeOptions();
+                            ctrl.avoidHillsCheckbox();
+                        }
+                    }
+                },
+                Steepness: {
+                    value: ctrl.currentOptions.steepness,
+                    options: {
+                        floor: ctrl.optionList.difficulty.steepness.min,
+                        ceil: ctrl.optionList.difficulty.steepness.max,
+                        translate: function(value) {
+                            return value + ' <b>%</b>';
+                        },
+                        onChange: function() {
+                            ctrl.currentOptions.steepness = ctrl.difficultySliders.Steepness.value;
+                            ctrl.changeOptions();
+                        }
+                    }
+                }
+            };
+        };
+        ctrl.avoidHillsCheckbox = () => {
+            let avoidhillsCheckbox = angular.element(document.querySelector('#cb-avoidhills'));
+            let avoidhillsCheckboxInput = angular.element(document.querySelector('#cb-avoidhills-input'));
+            if (ctrl.currentOptions.fitness >= 0) {
+                avoidhillsCheckbox.addClass('disabled');
+                avoidhillsCheckboxInput.attr('disabled', 'disabled');
+            } else {
+                avoidhillsCheckbox.removeClass('disabled');
+                avoidhillsCheckboxInput.removeAttr('disabled');
+            }
         };
         ctrl.$onChanges = function(changesObj) {
             if (changesObj.showOptions) ctrl.refreshSlider();
@@ -156,10 +207,11 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                     ctrl.maxspeedSlider.options.step = ctrl.maxspeedOptions.step;
                 }
             }
-            console.log(ctrl.maxspeedOptions)
         };
         ctrl.changeOptions = function() {
             // call setoptions
+            console.log(ctrl.currentOptions.difficulty)
+            if (ctrl.currentOptions.difficulty) ctrl.difficultySliders.Fitness.options.disabled = ctrl.currentOptions.difficulty.avoidhills === true ? true : false;
             console.log(ctrl.currentOptions);
         };
         ctrl.getClass = (bool) => {

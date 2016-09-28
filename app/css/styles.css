@@ -83,7 +83,7 @@ html, body {
 }
 
 .ors-routing-options .options-box {
-    -padding-bottom: 15px;
+    padding-bottom: 15px;
     cursor: pointer;
 }
 
@@ -224,6 +224,7 @@ html, body {
 .ors-options-menu {
     width: 270px;
     padding-left: 10px;
+    padding-top: 10px;
     display: block;
 }
 
