@@ -149,3 +149,7 @@ lists.optionList = {
         }
     }
 };
+lists.isochroneList = {
+    0: {id: 0, name: 'Recursive Grid'},
+	1: {id: 1, name: 'TIN'}
+};

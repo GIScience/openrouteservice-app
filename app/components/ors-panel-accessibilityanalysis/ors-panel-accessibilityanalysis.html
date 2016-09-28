@@ -1,0 +1,23 @@
+<div class="container">
+	<li>
+		<label for="repeatSelect"> Isochrone method: </label>
+		<select name="repeatSelect" id="repeatSelect"
+			ng-options="option.name for option in $ctrl.availableOptions track by option.id"
+			ng-model="$ctrl.selectedOption">
+		</select>
+	</li>
+	<li>
+		<label for="repeatSelect"> Select minutes: </label>
+		<select name="repeatSelect" id="repeatSelect"
+			ng-options="option.name for option in $ctrl.availableOptions track by option.id"
+			ng-model="$ctrl.selectedOption">
+		</select>
+	</li>
+	<li>
+		<label for="repeatSelect"> Isochrone interval: </label>
+		<select name="repeatSelect" id="repeatSelect"
+			ng-options="option.name for option in $ctrl.availableOptions track by option.id"
+			ng-model="$ctrl.selectedOption">
+		</select>
+	</li>
+</div>
