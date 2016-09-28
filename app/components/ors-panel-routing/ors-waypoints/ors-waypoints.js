@@ -110,5 +110,15 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
                 orsSettingsFactory.setWaypoints(ctrl.waypoints);
             }
         };
+
+        ctrl.slider = {
+            value: 'B',
+            options: {
+                stepsArray: 'ABC'.split('') // equals to ['A', 'B', ... 'Z']
+            }
+        };
+
+
+        
     }
 });

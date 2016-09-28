@@ -3,9 +3,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         waypoints: [],
         profile: {
             type: 'Car',
-            subprofile: {
-                type: undefined,
-            },
             options: {
                 maxspeed: undefined,
                 avoidables: undefined,
@@ -102,7 +99,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     orsSettingsFactory.setProfile = (currentProfile) => {
         console.log('setting profile', currentProfile)
         settings.profile.type = currentProfile.type;
-        if ('subprofile' in currentProfile) settings.profile.subprofile.type = currentProfile.subprofile.type;
     };
     return orsSettingsFactory;
 }]);

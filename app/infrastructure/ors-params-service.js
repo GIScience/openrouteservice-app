@@ -3,9 +3,6 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
     orsParamsService.settings = {
         waypoints: [],
         profile: {
-            subprofile: {
-                type: undefined
-            },
             options: {}
         }
     };
@@ -30,11 +27,26 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
             if (key == 'profile') {
                 orsParamsService.settings.profile.type = value;
             }
-            if (key == 'subprofile') {
-                orsParamsService.settings.profile.subprofile.type = value;
-            }
             if (key == 'weight') {
                 orsParamsService.settings.profile.options.weight = value;
+            }
+            if (key == 'maxspeed') {
+                orsParamsService.settings.profile.options.maxspeed = value;
+            }
+            if (key == 'hgvweight') {
+                orsParamsService.settings.profile.options.hgvWeight = value;
+            }
+            if (key == 'width') {
+                orsParamsService.settings.profile.options.width = value;
+            }
+            if (key == 'height') {
+                orsParamsService.settings.profile.options.height = value;
+            }
+            if (key == 'axleload') {
+                orsParamsService.settings.profile.options.axleload = value;
+            }
+            if (key == 'length') {
+                orsParamsService.settings.profile.options.length = value;
             }
         });
         return orsParamsService.settings;

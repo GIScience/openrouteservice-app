@@ -1,4 +1,4 @@
-/*@import 'https://fonts.googleapis.com/css?family=Open+Sans';*/
+@import 'https://fonts.googleapis.com/css?family=Open+Sans';
 html, body {
     font-family: 'Open Sans', sans-serif !important;
     font-size: 90%;
@@ -115,6 +115,7 @@ html, body {
 
 .ors-routing-options .container .collapsable.showMe {
     height: auto;
+    overflow: visible;
 }
 
 .ors-route-controls {
@@ -221,7 +222,9 @@ html, body {
 
 /* options menus */
 .ors-options-menu {
+    width: 270px;
     padding-left: 10px;
+    display: block;
 }
 
 .ors-options-menu>li {
@@ -333,3 +336,17 @@ div.ors-wp-td {
         order: 1;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
