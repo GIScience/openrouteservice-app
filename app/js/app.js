@@ -2,7 +2,6 @@ var orsApp = angular.module('orsApp', [
     'orsApp.ors-nav', 
     'orsApp.ors-panel-routing', 
     'orsApp.ors-panel-accessibilityanalysis', 
-    'orsApp.ors-panel-download', 
     'ui.sortable', 
     'orsApp.error-service', 
     'orsApp.map-service', 
