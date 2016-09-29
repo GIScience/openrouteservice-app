@@ -2,17 +2,16 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
     templateUrl: 'app/components/ors-panel-routing/ors-waypoints/ors-waypoints.html',
     bindings: {
         orsMap: '<',
-        orsParams: '<'
+        orsParams: '<',
+        activeProfileOption: '<'
     },
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
         var ctrl = this;
-        console.log(ctrl.orsMap)
         ctrl.$onInit = () => {
             ctrl.waypoints = orsSettingsFactory.getWaypoints();
             if (ctrl.waypoints.length == 0) {
                 ctrl.waypoints = orsSettingsFactory.initWaypoints();
             }
-            console.warn(ctrl.waypoints)
             ctrl.showAdd = true;
         };
         // subscribes to changes in waypoints, this doesnt have to be added though, why?
@@ -110,15 +109,5 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
                 orsSettingsFactory.setWaypoints(ctrl.waypoints);
             }
         };
-
-        ctrl.slider = {
-            value: 'B',
-            options: {
-                stepsArray: 'ABC'.split('') // equals to ['A', 'B', ... 'Z']
-            }
-        };
-
-
-        
     }
 });

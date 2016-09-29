@@ -1,12 +1,6 @@
 <div style="position: absolute; right: 6px; top:22px;" ng-show="$ctrl.waypoints.length > 2" ng-click="$ctrl.collapse()">
 	<i ng-class="$ctrl.collapseIcon"></i>
 </div>
-
-
-
-
-
-
 <div ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.waypoints" class="ors-wp-list">
      <div ng-repeat="waypoint in $ctrl.waypoints" ng-show="$ctrl.collapseWp($index)" class="ors-wp-item">
      	<ors-waypoint idx="$index" on-delete="$ctrl.deleteWaypoint(idx)" on-waypoints-changed="$ctrl.waypointsChanged()" on-address-changed="$ctrl.addressChanged(waypoint)" waypoint="waypoint" waypoints="$ctrl.waypoints" show-add="$ctrl.showAdd">
@@ -18,5 +12,5 @@
 		 </div>
 	</div>
 </div>
-<ors-route-controls show-add="$ctrl.showAdd" on-add="$ctrl.addWaypoint()" on-reverse="$ctrl.reverseWaypoints()" on-reset="$ctrl.resetWaypoints()" on-waypoints-changed="$ctrl.waypointsChanged()">
+<ors-route-controls show-add="$ctrl.showAdd" on-add="$ctrl.addWaypoint()" on-reverse="$ctrl.reverseWaypoints()" on-reset="$ctrl.resetWaypoints()" on-waypoints-changed="$ctrl.waypointsChanged()" active-profile-option="$ctrl.activeProfileOption">
 </ors-route-controls>

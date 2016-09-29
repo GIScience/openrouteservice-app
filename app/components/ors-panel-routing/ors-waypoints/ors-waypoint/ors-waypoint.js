@@ -27,9 +27,7 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
             if (ctrl.addresses) ctrl.showAddresses = true;
         };
         ctrl.addressChanged = () => {
-            console.log(ctrl.waypoint._address)
             // is this a waypoint...?
-            
             // fire nominatim
             const requestData = orsUtilsService.generateXml(ctrl.waypoint._address);
             orsRequestService.geocode(requestData).then(function(response) {

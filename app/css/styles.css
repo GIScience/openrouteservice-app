@@ -68,11 +68,16 @@ html, body {
     height: auto;
 }
 
-.ors-routing-info, .ors-routing-options {
+.ors-routing-info {
     position: absolute;
     top: 37px;
     left: 0;
     bottom: 0;
+    height: 100%;
+    width: 344px;
+}
+
+.ors-routing-options {
     height: 100%;
     width: 344px;
 }
@@ -154,6 +159,11 @@ html, body {
     height: 35px;
 }
 
+.ors-input input {
+    font-family: 'Open Sans', sans-serif !important;
+    font-size: 90%;
+}
+
 .ors-profile-options {
     position: absolute;
     width: 100%;
@@ -222,7 +232,7 @@ html, body {
 
 /* options menus */
 .ors-options-menu {
-    width: 270px;
+    width: 300px;
     padding-left: 10px;
     padding-top: 10px;
     display: block;
@@ -306,7 +316,7 @@ div.ors-wp-td {
 }
 
 .flright {
-    float: right;
+    float: right !important;
 }
 
 .flleft {

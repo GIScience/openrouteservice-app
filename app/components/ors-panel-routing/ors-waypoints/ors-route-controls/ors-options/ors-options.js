@@ -1,37 +1,31 @@
 angular.module('orsApp.ors-options', []).component('orsOptions', {
-    templateUrl: 'app/components/ors-panel-routing/ors-options/ors-options.html',
+    templateUrl: 'app/components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-options/ors-options.html',
     bindings: {
         activeMenu: '<',
         showOptions: '<'
     },
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService, $scope, $timeout) {
         var ctrl = this;
-        console.log('showoptions', ctrl.showOptions)
         ctrl.optionList = lists.optionList;
         ctrl.$onInit = function() {
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
-            console.log(ctrl.currentOptions);
             // set weight slider from params
             ctrl.currentOptions.weight = ctrl.currentOptions.weight !== undefined ? ctrl.currentOptions.weight : ctrl.optionList.weight.Fastest;
             ctrl.weightSlider = {
                 value: ctrl.currentOptions.weight,
                 options: {
                     stepsArray: [{
-                        value: ctrl.optionList.weight.Fastest.value,
-                        legend: ctrl.optionList.weight.Fastest.value
+                        value: ctrl.optionList.weight.Fastest.value
                     }, {
-                        value: ctrl.optionList.weight.Shortest.value,
-                        legend: ctrl.optionList.weight.Shortest.value
+                        value: ctrl.optionList.weight.Shortest.value
                     }, {
-                        value: ctrl.optionList.weight.Recommended.value,
-                        legend: ctrl.optionList.weight.Recommended.value
+                        value: ctrl.optionList.weight.Recommended.value
                     }],
                     showTicks: true,
                     showTicksValues: false,
                     hidePointerLabels: true,
                     hideLimitLabels: true,
                     onChange: function() {
-                        console.log('change')
                         ctrl.currentOptions.weight = ctrl.weightSlider.value;
                         ctrl.changeOptions();
                     }
@@ -134,7 +128,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                 }
             };
             // Difficulty settings
-            ctrl.currentOptions.fitness = ctrl.currentOptions.fitness !== undefined ? ctrl.optionList.difficulty.fitness[ctrl.currentOptions.fitness].value : ctrl.optionList.difficulty.fitness.Default.value;
+            ctrl.currentOptions.fitness = ctrl.currentOptions.fitness !== undefined ? ctrl.optionList.difficulty.fitness[ctrl.currentOptions.fitness].name : ctrl.optionList.difficulty.fitness.Unset.name;
             ctrl.currentOptions.steepness = ctrl.currentOptions.steepness !== undefined ? ctrl.currentOptions.steepness : ctrl.optionList.difficulty.steepness.min;
             ctrl.avoidHillsCheckbox();
             ctrl.difficultySliders = {
@@ -142,20 +136,15 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                     value: ctrl.currentOptions.fitness,
                     options: {
                         stepsArray: [{
-                            value: ctrl.optionList.difficulty.fitness.Default.value,
-                            legend: ctrl.optionList.difficulty.fitness.Default.name
+                            value: ctrl.optionList.difficulty.fitness.Unset.name
                         }, {
-                            value: ctrl.optionList.difficulty.fitness.Novice.value,
-                            legend: ctrl.optionList.difficulty.fitness.Novice.name
+                            value: ctrl.optionList.difficulty.fitness.Novice.name
                         }, {
-                            value: ctrl.optionList.difficulty.fitness.Amateur.value,
-                            legend: ctrl.optionList.difficulty.fitness.Amateur.name
+                            value: ctrl.optionList.difficulty.fitness.Moderate.name
                         }, {
-                            value: ctrl.optionList.difficulty.fitness.Athlete.value,
-                            legend: ctrl.optionList.difficulty.fitness.Athlete.name
+                            value: ctrl.optionList.difficulty.fitness.Amateur.name
                         }, {
-                            value: ctrl.optionList.difficulty.fitness.Pro.value,
-                            legend: ctrl.optionList.difficulty.fitness.Pro.name
+                            value: ctrl.optionList.difficulty.fitness.Pro.name
                         }],
                         showTicks: true,
                         showTicksValues: false,
@@ -183,11 +172,87 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                     }
                 }
             };
+            // wheelchair sliders
+            ctrl.currentOptions.surface = ctrl.currentOptions.surface !== undefined ? ctrl.optionList.wheelchair.Surface[ctrl.currentOptions.surface].value : ctrl.optionList.wheelchair.Surface['0'].value;
+            ctrl.currentOptions.incline = ctrl.currentOptions.incline !== undefined ? ctrl.optionList.wheelchair.Incline[ctrl.currentOptions.incline].value : ctrl.optionList.wheelchair.Incline['0'].value;
+            ctrl.currentOptions.curb = ctrl.currentOptions.curb !== undefined ? ctrl.optionList.wheelchair.Curb[ctrl.currentOptions.curb].value : ctrl.optionList.wheelchair.Curb['0'].value;
+            ctrl.wheelchairSliders = {
+                Surface: {
+                    value: ctrl.currentOptions.surface,
+                    options: {
+                        stepsArray: [{
+                            value: ctrl.optionList.wheelchair.Surface['0'].value
+                        }, {
+                            value: ctrl.optionList.wheelchair.Surface['1'].value
+                        }, {
+                            value: ctrl.optionList.wheelchair.Surface['2'].value
+                        }, {
+                            value: ctrl.optionList.wheelchair.Surface['3'].value
+                        }, {
+                            value: ctrl.optionList.wheelchair.Surface['4'].value
+                        }],
+                        showTicks: true,
+                        showTicksValues: false,
+                        hidePointerLabels: true,
+                        hideLimitLabels: true,
+                        onChange: function() {
+                            ctrl.currentOptions.surface = ctrl.wheelchairSliders.Surface.value;
+                            ctrl.changeOptions();
+                        }
+                    }
+                },
+                Incline: {
+                    value: ctrl.currentOptions.incline,
+                    options: {
+                        stepsArray: [{
+                            value: ctrl.optionList.wheelchair.Incline['0'].value
+                        }, {
+                            value: ctrl.optionList.wheelchair.Incline['1'].value
+                        }, {
+                            value: ctrl.optionList.wheelchair.Incline['2'].value
+                        }, {
+                            value: ctrl.optionList.wheelchair.Incline['3'].value
+                        }, {
+                            value: ctrl.optionList.wheelchair.Incline['4'].value
+                        }],
+                        showTicks: true,
+                        showTicksValues: false,
+                        hidePointerLabels: true,
+                        hideLimitLabels: true,
+                        onChange: function() {
+                            ctrl.currentOptions.incline = ctrl.wheelchairSliders.Incline.value;
+                            ctrl.changeOptions();
+                        }
+                    }
+                },
+                Curb: {
+                    value: ctrl.currentOptions.curb,
+                    options: {
+                        stepsArray: [{
+                            value: ctrl.optionList.wheelchair.Curb['0'].value
+                        }, {
+                            value: ctrl.optionList.wheelchair.Curb['1'].value
+                        }, {
+                            value: ctrl.optionList.wheelchair.Curb['2'].value
+                        }, {
+                            value: ctrl.optionList.wheelchair.Curb['3'].value
+                        }],
+                        showTicks: true,
+                        showTicksValues: false,
+                        hidePointerLabels: true,
+                        hideLimitLabels: true,
+                        onChange: function() {
+                            ctrl.currentOptions.curb = ctrl.wheelchairSliders.Curb.value;
+                            ctrl.changeOptions();
+                        }
+                    }
+                }
+            };
         };
         ctrl.avoidHillsCheckbox = () => {
             let avoidhillsCheckbox = angular.element(document.querySelector('#cb-avoidhills'));
             let avoidhillsCheckboxInput = angular.element(document.querySelector('#cb-avoidhills-input'));
-            if (ctrl.currentOptions.fitness >= 0) {
+            if (ctrl.optionList.difficulty.fitness[ctrl.currentOptions.fitness].value >= 0) {
                 avoidhillsCheckbox.addClass('disabled');
                 avoidhillsCheckboxInput.attr('disabled', 'disabled');
             } else {
@@ -210,9 +275,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
         };
         ctrl.changeOptions = function() {
             // call setoptions
-            console.log(ctrl.currentOptions.difficulty)
             if (ctrl.currentOptions.difficulty) ctrl.difficultySliders.Fitness.options.disabled = ctrl.currentOptions.difficulty.avoidhills === true ? true : false;
-            console.log(ctrl.currentOptions);
         };
         ctrl.getClass = (bool) => {
             if (bool === true) return "fa fa-lg fa-fw fa-caret-up";
@@ -220,7 +283,6 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
         };
         ctrl.refreshSlider = function() {
             $timeout(function() {
-                console.log('force rendering')
                 $scope.$broadcast('rzSliderForceRender');
             });
         };

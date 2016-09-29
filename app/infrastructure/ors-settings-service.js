@@ -1,20 +1,5 @@
 angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', function(orsObjectsFactory) {
-    let settings = {
-        waypoints: [],
-        profile: {
-            type: 'Car',
-            options: {
-                maxspeed: undefined,
-                avoidables: undefined,
-                weight: 'Fastest',
-                filters: {
-                    hgv_options: undefined,
-                    difficulty_options: undefined,
-                    wheelchair_options: undefined
-                }
-            }
-        }
-    };
+    let settings = {};
     let waypointsSubject = new Rx.Subject();
     let settingsSubject = new Rx.Subject();
     settingsSubject.subscribe(function(x) {
@@ -26,11 +11,9 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     });
     let orsSettingsFactory = {};
     orsSettingsFactory.setSettings = (params) => {
-        console.log('params', params)
         for (var k in params) {
             settings[k] = params[k];
         }
-        console.log(settings);
     };
     orsSettingsFactory.getActiveProfile = () => {
         return settings.profile;
@@ -97,7 +80,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         return iconIdx;
     };
     orsSettingsFactory.setProfile = (currentProfile) => {
-        console.log('setting profile', currentProfile)
         settings.profile.type = currentProfile.type;
     };
     return orsSettingsFactory;

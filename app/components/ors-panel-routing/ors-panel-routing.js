@@ -8,7 +8,6 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
             ctrl.routeParams = next.params;
             let settings = orsParamsService.importSettings(ctrl.routeParams);
             orsSettingsFactory.setSettings(settings);
-            ctrl.showOptions = false;
             ctrl.profiles = lists.profiles;
             //ctrl.activeMenu = ctrl.profiles.Car.name;
             ctrl.activeMenu = orsSettingsFactory.getActiveProfile().type;

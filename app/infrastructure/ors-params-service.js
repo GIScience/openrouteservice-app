@@ -3,7 +3,10 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
     orsParamsService.settings = {
         waypoints: [],
         profile: {
-            options: {}
+            type: 'Car',
+            options: {
+                weight: 'Fastest'
+            }
         }
     };
     orsParamsService.importSettings = (params) => {
@@ -49,10 +52,19 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
                 orsParamsService.settings.profile.options.length = value;
             }
             if (key == 'fitness') {
-                orsParamsService.settings.profile.options.fitness = value;   
+                orsParamsService.settings.profile.options.fitness = value;
             }
             if (key == 'steepness') {
                 orsParamsService.settings.profile.options.steepness = value;
+            }
+            if (key == 'surface') {
+                orsParamsService.settings.profile.options.surface = value;
+            }
+            if (key == 'incline') {
+                orsParamsService.settings.profile.options.incline = value;
+            }
+            if (key == 'curb') {
+                orsParamsService.settings.profile.options.curb = value;
             }
         });
         return orsParamsService.settings;

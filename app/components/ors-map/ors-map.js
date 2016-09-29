@@ -54,7 +54,7 @@ angular.module('orsApp').directive('orsMap', function() {
                         const waypoint = orsObjectsFactory.createWaypoint('', pos);
                         orsSettingsFactory.insertWaypointFromMap(idx, waypoint);
                     }
-                    orsRequestService.getAddress(pos, idx);
+                    orsRequestService.getAddress(pos, idx, updateWp);
                     // close the popup
                     ctrl.mapModel.map.closePopup();
                 };
