@@ -1,23 +1,26 @@
 <div class="container">
 	<li>
 		<label for="repeatSelect"> Isochrone method: </label>
-		<select name="repeatSelect" id="repeatSelect"
-			ng-options="option.name for option in $ctrl.availableOptions track by option.id"
-			ng-model="$ctrl.selectedOption">
-		</select>
+		<div class="ors-options-menu">
+				<div class="ors-options-menu">
+					<rzslider rz-slider-model="$ctrl.isochroneOptionsSlider.value" rz-slider-options="$ctrl.isochroneOptionsSlider.options"></rzslider>
+				</div>		        
+			</div>
 	</li>
 	<li>
 		<label for="repeatSelect"> Select minutes: </label>
-		<select name="repeatSelect" id="repeatSelect"
-			ng-options="option.name for option in $ctrl.availableOptions track by option.id"
-			ng-model="$ctrl.selectedOption">
-		</select>
+			<div class="ors-options-menu">
+				<div class="ors-options-menu">
+					<rzslider rz-slider-model="$ctrl.isochroneMinutesSlider.value" rz-slider-options="$ctrl.isochroneMinutesSlider.options"></rzslider>
+				</div>		        
+			</div>
 	</li>
 	<li>
 		<label for="repeatSelect"> Isochrone interval: </label>
-		<select name="repeatSelect" id="repeatSelect"
-			ng-options="option.name for option in $ctrl.availableOptions track by option.id"
-			ng-model="$ctrl.selectedOption">
-		</select>
+			<div class="ors-options-menu">
+				<div class="ors-options-menu">
+					<rzslider rz-slider-model="$ctrl.isochroneIntervalSlider.value" rz-slider-options="$ctrl.isochroneIntervalSlider.options"></rzslider>
+				</div>		        
+			</div>
 	</li>
 </div>

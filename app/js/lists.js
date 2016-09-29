@@ -257,6 +257,26 @@ lists.optionList = {
     }
 };
 lists.isochroneList = {
-    0: {id: 0, name: 'Recursive Grid'},
-	1: {id: 1, name: 'TIN'}
+    methodOptions: {
+		RG: {
+			id: 0,
+			name: 'Recursive Grid'
+		},
+		TIN: {
+			id: 1,
+			name: 'TIN'
+		}
+	},
+	minutesOptions: {
+		min: 1,
+		max: 30,
+		step: 1,
+		default: 15
+	},
+	intervalOptions: {
+		min: 1,
+		max: 29,
+		step: 1,
+		default: 5
+	}
 };
