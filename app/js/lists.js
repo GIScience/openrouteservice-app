@@ -132,6 +132,34 @@ lists.optionList = {
             value: 'Recommended'
         }
     },
+    difficulty: {
+        fitness: {
+            Unset: {
+                name: 'Unset',
+                value: -1
+            },
+            Novice: {
+                name: 'Novice',
+                value: 0
+            },
+            Moderate: {
+                name: 'Moderate',
+                value: 1
+            },
+            Amateur: {
+                name: 'Amateur',
+                value: 2
+            },
+            Pro: {
+                name: 'Pro',
+                value: 3
+            }
+        },
+        steepness: {
+            min: 0,
+            max: 15
+        }
+    },
     avoidables: {
         ferry: {
             name: 'Ferry'
@@ -160,6 +188,70 @@ lists.optionList = {
         tracks: {
             name: 'Tracks'
         }
+    },
+    wheelchair: {
+        Surface: {
+            '0': {
+                name: 'Concrete, asphalt',
+                value: 0
+            },
+            '1': {
+                name: 'Flattened Cobblestone and better',
+                value: 1
+            },
+            '2': {
+                name: 'Cobblestone and better',
+                value: 2
+            },
+            '3': {
+                name: 'Compacted',
+                value: 3
+            },
+            '4': {
+                name: 'All traversable surfaces',
+                value: 4
+            }
+        },
+        Incline: {
+            '0': {
+                name: 'Up to 3%',
+                value: 0
+            },
+            '1': {
+                name: 'Up to 6%',
+                value: 1
+            },
+            '2': {
+                name: 'Up to 10%',
+                value: 2
+            },
+            '3': {
+                name: 'Up to 15%',
+                value: 4
+            },
+            '4': {
+                name: 'Flexible',
+                value: 5
+            }
+        },
+        Curb: {
+            '0': {
+                name: 'Up to 3cm',
+                value: 0
+            },
+            '1': {
+                name: 'Up to 6cm',
+                value: 1
+            },
+            '2': {
+                name: 'Up to 10cm',
+                value: 2
+            },
+            '3': {
+                name: 'Flexible',
+                value: 3
+            }
+        },
     },
     hgvParams: {
         Length: {

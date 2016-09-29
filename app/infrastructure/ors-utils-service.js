@@ -235,7 +235,6 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http',
                     addressData.push(addressContainer);
                 });
             });
-            console.log('addressData', addressData)
             return addressData;
         };
         /**

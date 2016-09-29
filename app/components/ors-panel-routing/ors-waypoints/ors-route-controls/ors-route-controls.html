@@ -7,16 +7,23 @@
         <i class="fa fa-circle-o">
         </i>
     </button>
-    <button class="ors-controls-button flright" ng-click="$ctrl.reset()">
+    <button class="ors-controls-button flleft" ng-click="$ctrl.reset()">
         <i class="fa fa-remove">
         </i>
     </button>
-    <button class="ors-controls-button flright" ng-click="$ctrl.reversing()">
-        <i class="fa fa-reorder">
+    <button class="ors-controls-button flleft" ng-click="$ctrl.reversing()">
+        <i class="fa fa-retweet">
         </i>
     </button>
-    <button class="ors-controls-button flright" ng-click="$ctrl.delete()">
+    <button class="ors-controls-button flleft" ng-click="$ctrl.delete()">
         <i class="fa fa-expand">
         </i>
     </button>
+    <button class="ors-controls-button flright" ng-click="$ctrl.callOptions()">
+        <i class="fa fa-sliders">
+        </i>
+    </button>
+</div>
+<div class="ors-routing-options" ng-show="$ctrl.showOptions">
+    <ors-options active-menu="$ctrl.activeProfileOption" show-options="$ctrl.showOptions"></ors-options>
 </div>

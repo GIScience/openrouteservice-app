@@ -25,7 +25,6 @@ angular.module('orsApp.ors-profiles-options', []).component('orsProfilesOptions'
         };
         ctrl.callOptions = () => {
             ctrl.showOptions = ctrl.showOptions == false ? true : false;
-            console.log(ctrl.showOptions)
         };
     }
 });

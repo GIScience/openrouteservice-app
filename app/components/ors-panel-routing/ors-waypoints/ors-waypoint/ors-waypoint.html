@@ -5,7 +5,7 @@
             <span>{{$ctrl.getIdx()}}</span>
         </div>
         <div class="ors-wp-td right"> 
-            <div class="ui mini right labeled fluid left icon input ors-input">
+            <div class="ui right labeled fluid left icon input ors-input">
                 <i class="search icon"></i>
                 <input ng-change="$ctrl.addressChanged()" ng-click="$ctrl.checkForAddresses()" ng-model="$ctrl.waypoint._address" ng-model-options="{debounce: 1000}" placeholder={{$ctrl.getPlaceholder()}} type="text">
                 <div class="ui basic label ors-input-label">

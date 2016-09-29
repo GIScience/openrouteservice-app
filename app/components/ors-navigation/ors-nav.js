@@ -6,7 +6,6 @@ angular.module('orsApp.ors-nav', ['ngComponentRouter']).component('orsSidebar', 
     },
     controller: function() {
     	var ctrl = this;
-    	console.log(ctrl)
     	ctrl.activeMenu = 'routing';
     },
     $routeConfig: [{

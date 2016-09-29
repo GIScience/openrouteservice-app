@@ -44,6 +44,7 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$htt
             return data;
         };
         orsRequestService.getAddress = function(pos, idx, init) {
+            console.log(pos,idx,init)
             var requestData = orsUtilsService.reverseXml(pos);
             orsRequestService.geocode(requestData).then(function(response) {
                 const data = orsUtilsService.domParser(response.data);
