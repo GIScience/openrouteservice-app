@@ -1,14 +1,21 @@
+<ors-aa-waypoints ors-map="$ctrl.parent.orsMap" ors-params="$ctrl.routeParams" show-options="$ctrl.showOptions" active-profile-option="$ctrl.activeMenu"></ors-aa-waypoints>
 <div class="container">
 	<li>
-		<label for="repeatSelect"> Isochrone method: </label>
-		<div class="ors-options-menu">
-				<div class="ors-options-menu">
+		<div class="ui label tiny flleft">
+			Isochrone method
+			<div class="detail"> {{$ctrl.isochroneOptionsSlider.options.translate($ctrl.isochroneOptionsSlider.value)}}</div>
+		</div>
+		<div class="ors-options-menu-small">
+				<div class="ors-options-menu-small">
 					<rzslider rz-slider-model="$ctrl.isochroneOptionsSlider.value" rz-slider-options="$ctrl.isochroneOptionsSlider.options"></rzslider>
 				</div>		        
 			</div>
 	</li>
 	<li>
-		<label for="repeatSelect"> Select minutes: </label>
+		<div class="ui label tiny flleft">
+			Time distance
+			<div class="detail"> {{$ctrl.isochroneMinutesSlider.value}} min</div>
+		</div>
 			<div class="ors-options-menu">
 				<div class="ors-options-menu">
 					<rzslider rz-slider-model="$ctrl.isochroneMinutesSlider.value" rz-slider-options="$ctrl.isochroneMinutesSlider.options"></rzslider>
@@ -16,7 +23,10 @@
 			</div>
 	</li>
 	<li>
-		<label for="repeatSelect"> Isochrone interval: </label>
+		<div class="ui label tiny flleft">
+			Isochrone interval
+			<div class="detail"> {{$ctrl.isochroneIntervalSlider.value}} min</div>
+		</div>
 			<div class="ors-options-menu">
 				<div class="ors-options-menu">
 					<rzslider rz-slider-model="$ctrl.isochroneIntervalSlider.value" rz-slider-options="$ctrl.isochroneIntervalSlider.options"></rzslider>
@@ -24,3 +34,5 @@
 			</div>
 	</li>
 </div>
+<ors-aa-controls on-reset="$ctrl.resetWaypoints()" on-waypoints-changed="$ctrl.waypointsChanged()" active-profile-option="$ctrl.activeProfileOption">
+</ors-aa-controls>

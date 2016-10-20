@@ -1,0 +1,31 @@
+<div class="ors-wp-table">
+    <div class="ors-wp-tr">
+        <div class="ors-wp-td right"> 
+            <div class="ui right labeled fluid left icon input ors-input">
+                <i class="search icon"></i>
+                <input ng-change="$ctrl.addressChanged()" ng-click="$ctrl.checkForAddresses()" ng-model="$ctrl.waypoint._address" ng-model-options="{debounce: 1000}" placeholder={{$ctrl.getPlaceholder()}} type="text">
+                <div class="ui basic label ors-input-label">
+                    <button class="tiny ui basic button ors-control-button" ng-click="$ctrl.delete()">
+                    <i class="fa fa-remove"></i>
+                </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ <div ng-show="$ctrl.showAddresses">
+    <div class="ui relaxed divided list">
+        <div class="item" ng-repeat="address in $ctrl.addresses">
+            <i class="large github middle aligned icon"></i>
+            <div class="content">
+                <div class="description" ng-click="$ctrl.select(address)">{{address.shortAddress}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

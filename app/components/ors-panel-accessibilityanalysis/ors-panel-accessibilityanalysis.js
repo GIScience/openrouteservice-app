@@ -1,13 +1,24 @@
-angular.module('orsApp.ors-panel-accessibilityanalysis', []).component('orsAnalysis', {
+angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-controls', 'orsApp.ors-aa-waypoints']).component('orsAnalysis', {
     templateUrl: 'app/components/ors-panel-accessibilityanalysis/ors-panel-accessibilityanalysis.html',
-    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService) {
+    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
         var ctrl = this;
-        ctrl.$onInit = function() {};
-        ctrl.$routerOnActivate = function() {
-			ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
-            console.log(ctrl.currentOptions);
+        ctrl.$onInit = function() {
+		};
+        ctrl.$routerOnActivate = function(next) {
+			// console.log(orsSettingsFactory.getWaypoints());
+			ctrl.routeParams = next.params;
+            if (orsSettingsFactory.getWaypoints().length == 0){
+				let settings = orsParamsService.importSettings(ctrl.routeParams);
+				orsSettingsFactory.setAASettings(settings);
+			}
+			
+			ctrl.currentOptions = {};//orsSettingsFactory.getActiveOptions();
 			ctrl.availableOptions = lists.isochroneList.methodOptions;
-			console.log(ctrl.availableOptions);
+			//Notify the settings that we're now in the aa panel
+			orsSettingsFactory.updateNgRoute(next.urlPath);
+			//Notify the map that it should reload the aa waypoint if there is one already
+			orsSettingsFactory.updateAAWaypoints();
+			
 			ctrl.isochroneOptionsSlider = {
 					value: ctrl.availableOptions.RG.id,
 					options: {
@@ -20,6 +31,7 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', []).component('orsAnaly
 						onEnd: function() {
 							ctrl.changeOptions();
 						}
+						// scale: 0.5
 					}
 			};
 			
@@ -40,8 +52,8 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', []).component('orsAnaly
 						onChange: function() {
 							ctrl.isochroneIntervalSlider.options.ceil = ctrl.isochroneMinutesSlider.value - 1;
 							if (ctrl.isochroneIntervalSlider.value > ctrl.isochroneIntervalSlider.options.ceil) ctrl.isochroneIntervalSlider.value = ctrl.isochroneIntervalSlider.options.ceil;
-							console.log(ctrl.isochroneIntervalSlider);
-						}
+						},
+						hidePointerLabels: true
 					}
 			};
 			
@@ -58,7 +70,8 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', []).component('orsAnaly
 						onEnd: function() {
 							ctrl.currentOptions.isochroneInterval = ctrl.isochroneIntervalSlider.value;
 							ctrl.changeOptions();
-						}
+						},
+						hidePointerLabels: true
 					}
 			};
         };

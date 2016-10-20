@@ -1,5 +1,5 @@
-angular.module('orsApp.ors-route-controls', []).component('orsRouteControls', {
-    templateUrl: 'app/components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-route-controls.html',
+angular.module('orsApp.ors-aa-controls', []).component('orsAaControls', {
+    templateUrl: 'app/components/ors-panel-accessibilityanalysis/ors-aa-controls/ors-aa-controls.html',
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService) {
         var ctrl = this;
         ctrl.add = () => {
@@ -11,10 +11,8 @@ angular.module('orsApp.ors-route-controls', []).component('orsRouteControls', {
             console.log('resetting');
             ctrl.onReset();
         };
-        ctrl.reversing = () => {
-            console.log('reverse');
-            ctrl.onReverse();
-            ctrl.onWaypointsChanged();
+		ctrl.zoomToArea = () => {
+            console.log('zooming');
         };
     },
     bindings: {

@@ -77,15 +77,15 @@ angular.module('orsApp').directive('orsMap', function() {
                         ctrl.processMapWaypoint(idx, pos, true);
                     });
                 };
-                // subscribes to changes on in waypoint settings
-                orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
-                    console.log('changes in waypoints detected..', d);
-                    const waypoints = d;
-                    // re-add waypoints
-                    ctrl.reAddWaypoints(waypoints);
+				ctrl.clearMap = () => {
+                    ctrl.mapModel.geofeatures.layerRoutePoints.clearLayers();
+                };
+				orsSettingsFactory.subscribeToNgRoute(function onNext(d) {
+                    console.log('route was changed to', d);
+					ctrl.clearMap();
                 });
                 ctrl.reAddWaypoints = (waypoints) => {
-                    ctrl.mapModel.geofeatures.layerRoutePoints.clearLayers();
+                    ctrl.clearMap();
                     var idx = 0;
                     angular.forEach(waypoints, (waypoint) => {
                         var iconIdx = orsSettingsFactory.getIconIdx(idx);
@@ -93,6 +93,22 @@ angular.module('orsApp').directive('orsMap', function() {
                         idx += 1;
                     });
                 };
+                // subscribes to changes on in waypoint settings
+                orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
+                    console.log('changes in waypoints detected..', d);
+                    const waypoints = d;
+                    // re-add waypoints
+                    ctrl.reAddWaypoints(waypoints);
+                });
+				// subscribes to changes on in aa waypoint settings
+                orsSettingsFactory.subscribeToAAWaypoints(function onNext(d) {
+                    console.log('changes in waypoints detected..', d);
+                    const waypoints = d;
+                    // re-add waypoints
+                    ctrl.reAddWaypoints(waypoints);
+                });
+				
+				
             }
         ]
     };

@@ -238,6 +238,13 @@ html, body {
     display: block;
 }
 
+.ors-options-menu-small {
+    width: 150px;
+    padding-left: 10px;
+    padding-top: 10px;
+    display: block;
+}
+
 .ors-options-menu>li {
     margin-bottom: 5px;
 }
