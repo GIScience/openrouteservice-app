@@ -15,7 +15,7 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
             ctrl.showAdd = true;
         };
         // subscribes to changes in waypoints, this doesnt have to be added though, why?
-        orsSettingsFactory.subscribeToAAWaypoints(function onNext(d) {
+        orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
             console.log('waypoints updated!!! panel', d);
             ctrl.waypoints = d;
         });
@@ -63,10 +63,10 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
             ctrl.waypoints = orsSettingsFactory.initSingleWaypoint();
         };
         ctrl.addressChanged = () => {
-            const wp = orsObjectsFactory.createWaypoint(address.shortAddress, address.position);
-            console.log(wp)
-            ctrl.waypoints.push(wp);
-            console.log(ctrl.waypoints)
+            // const wp = orsObjectsFactory.createWaypoint(address.shortAddress, address.position);
+            // console.log(wp)
+            // ctrl.waypoints.push(wp);
+            // console.log(ctrl.waypoints)
             orsSettingsFactory.setWaypoints(ctrl.waypoints);
         };
         ctrl.sortableOptions = {

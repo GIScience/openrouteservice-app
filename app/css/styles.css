@@ -185,6 +185,7 @@ html, body {
     clear: both;
     list-style: none outside none;
     margin: 20px 0 20px 0;
+    padding: 0 10px 0 10px;
     /*margin: 12px 0 0 0;*/
 }
 
@@ -195,6 +196,10 @@ html, body {
     font-weight: bold;
     cursor: move;
     border-radius: 3px;
+}
+
+.ors-container {
+    padding: 0 10px 0 10px;
 }
 
 .ors-segment {

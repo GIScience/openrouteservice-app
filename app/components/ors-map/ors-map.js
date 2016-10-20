@@ -49,7 +49,7 @@ angular.module('orsApp').directive('orsMap', function() {
                     // add waypoint to map
                     // get the address from the response
                     if (updateWp) {
-                        orsSettingsFactory.updateWaypoint(idx,'', pos);
+                        orsSettingsFactory.updateWaypoint(idx, '', pos);
                     } else {
                         const waypoint = orsObjectsFactory.createWaypoint('', pos);
                         orsSettingsFactory.insertWaypointFromMap(idx, waypoint);
@@ -77,38 +77,35 @@ angular.module('orsApp').directive('orsMap', function() {
                         ctrl.processMapWaypoint(idx, pos, true);
                     });
                 };
-				ctrl.clearMap = () => {
+                ctrl.clearMap = () => {
                     ctrl.mapModel.geofeatures.layerRoutePoints.clearLayers();
                 };
-				orsSettingsFactory.subscribeToNgRoute(function onNext(d) {
+                orsSettingsFactory.subscribeToNgRoute(function onNext(d) {
                     console.log('route was changed to', d);
-					ctrl.clearMap();
+                    ctrl.clearMap();
                 });
                 ctrl.reAddWaypoints = (waypoints) => {
                     ctrl.clearMap();
                     var idx = 0;
                     angular.forEach(waypoints, (waypoint) => {
+                        console.log(waypoints)
                         var iconIdx = orsSettingsFactory.getIconIdx(idx);
                         if (waypoint._latlng.lat && waypoint._latlng.lng) ctrl.addWaypoint(idx, iconIdx, waypoint._latlng);
                         idx += 1;
                     });
                 };
-                // subscribes to changes on in waypoint settings
-                orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
-                    console.log('changes in waypoints detected..', d);
-                    const waypoints = d;
-                    // re-add waypoints
-                    ctrl.reAddWaypoints(waypoints);
-                });
-				// subscribes to changes on in aa waypoint settings
-                orsSettingsFactory.subscribeToAAWaypoints(function onNext(d) {
-                    console.log('changes in waypoints detected..', d);
-                    const waypoints = d;
-                    // re-add waypoints
-                    ctrl.reAddWaypoints(waypoints);
-                });
-				
-				
+                /** 
+                 * subscribes to changes on in waypoint settings
+                 * for now wrapped in timeout because waiting for routerActivate
+                 */
+                $timeout(function() {
+                    orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
+                        console.log('changes in routing waypoints detected..', d);
+                        const waypoints = d;
+                        // re-add waypoints
+                        ctrl.reAddWaypoints(waypoints);
+                    });
+                }, 1000);
             }
         ]
     };
