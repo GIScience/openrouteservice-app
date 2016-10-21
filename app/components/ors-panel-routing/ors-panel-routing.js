@@ -6,13 +6,14 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
         //http://localhost:3000/routing?wps=48.3333,10.1667,48.7758459,9.1829321,48.7758459,9.1839321&profile=Bicycle&subprofile=BicycleMTB&weight=Fastest
         ctrl.$routerOnActivate = function(next) {
             orsSettingsFactory.updateNgRoute(next.urlPath);
-            ctrl.routeParams = next.params;
             /** 
              * check if anything is saved in the settings object
              * if there isn't initialize settings object from permalink or provide empty settings object
              */
             if (orsSettingsFactory.getWaypoints().length == 0) {
-                let settings = orsParamsService.importSettings(ctrl.routeParams);
+                console.log('importing routing settings..')
+                ctrl.routeParams = next.params;
+                const settings = orsParamsService.importSettings(ctrl.routeParams);
                 orsSettingsFactory.setSettings(settings);
             } 
             orsSettingsFactory.updateWaypoints();

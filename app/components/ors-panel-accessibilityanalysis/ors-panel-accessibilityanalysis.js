@@ -2,9 +2,11 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
     templateUrl: 'app/components/ors-panel-accessibilityanalysis/ors-panel-accessibilityanalysis.html',
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
         var ctrl = this;
+        ctrl.optionList = lists.isochroneOptionList;
+        console.warn(ctrl.optionList)
         ctrl.$onInit = function() {};
         ctrl.$routerOnActivate = function(next) {
-            // notify the settings that we're now in the aa panel
+            /** notify the settings that we're now in the aa panel */
             orsSettingsFactory.updateNgRoute(next.urlPath);
             /** 
              * check if anything is saved in the settings object
@@ -12,40 +14,41 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
              */
             ctrl.routeParams = next.params;
             if (orsSettingsFactory.getWaypoints().length == 0) {
-                let settings = orsParamsService.importSettings(ctrl.routeParams);
+            	console.log('importing aa settings..')
+            	console.log(JSON.stringify(orsSettingsFactory.getWaypoints()));
+                const settings = orsParamsService.importSettings(ctrl.routeParams);
+                console.log(JSON.stringify(settings));
                 orsSettingsFactory.setSettings(settings);
             }
             orsSettingsFactory.updateWaypoints();
-            ctrl.currentOptions = {}; //orsSettingsFactory.getActiveOptions();
-            ctrl.availableOptions = lists.isochroneList.methodOptions;
-            //Notify the map that it should reload the aa waypoint if there is one already
+            ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
+            ctrl.currentOptions.analysis_options.method = ctrl.currentOptions.analysis_options.method !== undefined ? ctrl.currentOptions.analysis_options.method : ctrl.optionList.methodOptions.RG.id;
             ctrl.isochroneOptionsSlider = {
-                value: ctrl.availableOptions.RG.id,
+                value: ctrl.currentOptions.analysis_options.method,
                 options: {
-                    floor: ctrl.availableOptions.RG.id,
-                    ceil: ctrl.availableOptions.TIN.id,
+                    floor: ctrl.optionList.methodOptions.RG.id,
+                    ceil: ctrl.optionList.methodOptions.TIN.id,
                     step: 1,
                     translate: function(value) {
-                        return value == 0 ? ctrl.availableOptions.RG.name : ctrl.availableOptions.TIN.name;
+                        return value == 0 ? ctrl.optionList.methodOptions.RG.name : ctrl.optionList.methodOptions.TIN.name;
                     },
                     onEnd: function() {
-                            ctrl.changeOptions();
-                        }
-                        // scale: 0.5
+                        ctrl.changeOptions();
+                    }
                 }
             };
-            ctrl.isochroneMinutes = lists.isochroneList.minutesOptions;
+            ctrl.currentOptions.analysis_options.minutes = ctrl.currentOptions.analysis_options.minutes !== undefined ? ctrl.currentOptions.analysis_options.minutes : ctrl.optionList.minutesOptions.default;
             ctrl.isochroneMinutesSlider = {
-                value: ctrl.isochroneMinutes.default,
+                value: ctrl.currentOptions.analysis_options.minutes,
                 options: {
-                    floor: ctrl.isochroneMinutes.min,
-                    ceil: ctrl.isochroneMinutes.max,
-                    step: ctrl.isochroneMinutes.step,
+                    floor: ctrl.optionList.minutesOptions.min,
+                    ceil: ctrl.optionList.minutesOptions.max,
+                    step: ctrl.optionList.minutesOptions.step,
                     translate: function(value) {
                         return value + ' <b>min</b>';
                     },
                     onEnd: function() {
-                        ctrl.currentOptions.isochroneMinutes = ctrl.isochroneMinutesSlider.value;
+                        ctrl.currentOptions.analysis_options.minutes = ctrl.isochroneMinutesSlider.value;
                         ctrl.changeOptions();
                     },
                     onChange: function() {
@@ -55,28 +58,23 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
                     hidePointerLabels: true
                 }
             };
-            ctrl.isochroneInterval = lists.isochroneList.intervalOptions;
+            ctrl.currentOptions.analysis_options.interval = ctrl.currentOptions.analysis_options.interval !== undefined ? ctrl.currentOptions.analysis_options.interval : ctrl.optionList.intervalOptions.default;
             ctrl.isochroneIntervalSlider = {
-                value: ctrl.isochroneInterval.default,
+                value: ctrl.currentOptions.analysis_options.interval,
                 options: {
-                    floor: ctrl.isochroneInterval.min,
-                    ceil: ctrl.isochroneInterval.max,
-                    step: ctrl.isochroneInterval.step,
+                    floor: ctrl.optionList.intervalOptions.min,
+                    ceil: ctrl.optionList.intervalOptions.max,
+                    step: ctrl.optionList.intervalOptions.step,
                     translate: function(value) {
                         return value + ' <b>min</b>';
                     },
                     onEnd: function() {
-                        ctrl.currentOptions.isochroneInterval = ctrl.isochroneIntervalSlider.value;
+                        ctrl.currentOptions.analysis_options.interval = ctrl.isochroneIntervalSlider.value;
                         ctrl.changeOptions();
                     },
                     hidePointerLabels: true
                 }
             };
-        };
-        ctrl.goInstructions = function() {};
-        ctrl.getClass = (bool) => {
-            if (bool === true) return "fa fa-lg fa-fw fa-caret-up";
-            else return "fa fa-lg fa-fw fa-caret-down";
         };
         ctrl.changeOptions = function() {
             // call setoptions

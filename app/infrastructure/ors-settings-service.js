@@ -1,78 +1,92 @@
 angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', function(orsObjectsFactory) {
-    let waypointsSubject = new Rx.BehaviorSubject({});
-    let aa_waypointsSubject = new Rx.BehaviorSubject({});
-    let aa_settingsSubject = new Rx.BehaviorSubject({});
-    let settingsSubject = new Rx.BehaviorSubject({});
-    let ngRouteSubject = new Rx.BehaviorSubject(undefined);
-    // settingsSubject.subscribe(function(x) {
-    //     console.log('settings changed..fire request!', x);
-    // }, function(err) {
-    //     console.log(err);
-    // }, function() {
-    //     console.log('Completed');
-    // });
     let orsSettingsFactory = {};
-    // global reference settings
-    orsSettingsFactory.panelSettings = undefined;
-    orsSettingsFactory.panelWaypoints = undefined;
+    /** Behaviour subjects routing. */
+    orsSettingsFactory.routingWaypointsSubject = new Rx.BehaviorSubject({});
+    orsSettingsFactory.routingSettingsSubject = new Rx.BehaviorSubject({});
+    /** Behaviour subjects accessibility analysis. */
+    orsSettingsFactory.aaWaypointsSubject = new Rx.BehaviorSubject({});
+    orsSettingsFactory.aaSettingsSubject = new Rx.BehaviorSubject({});
+    /** Behaviour subject routing. */
+    orsSettingsFactory.ngRouteSubject = new Rx.BehaviorSubject(undefined);
+    /** Global reference settings, these are switched when panels are changed - default is routing.*/
+    orsSettingsFactory.panelSettings = orsSettingsFactory.routingSettingsSubject;
+    orsSettingsFactory.panelWaypoints = orsSettingsFactory.routingWaypointsSubject;
+    /**
+     * Sets the settings from permalink
+     * @param {Object} The settings object.
+     */
     orsSettingsFactory.setSettings = (params) => {
         let set = orsSettingsFactory.panelSettings.getValue();
+        console.warn('set settings..', orsSettingsFactory.panelSettings.getValue());
         for (var k in params) {
             set[k] = params[k];
         }
-        orsSettingsFactory.panelSettings.onNext(set);
+        //orsSettingsFactory.panelSettings.onNext(set);
     };
+    /**
+     * Returns active profile.
+     * @return {Object} The profile object.
+     */
     orsSettingsFactory.getActiveProfile = () => {
         if (!('profile' in orsSettingsFactory.panelSettings.getValue())) return [];
         return orsSettingsFactory.panelSettings.getValue().profile;
     };
+    /**
+     * Returns current options.
+     * @return {Object} The options object, may contain both profile options and aa options.
+     */
     orsSettingsFactory.getActiveOptions = () => {
+        console.info(orsSettingsFactory.panelSettings.getValue());
         if (!('profile' in orsSettingsFactory.panelSettings.getValue())) return [];
         if (!('options' in orsSettingsFactory.panelSettings.getValue().profile)) return [];
         return orsSettingsFactory.panelSettings.getValue().profile.options;
     };
+    /** Subscription function to current waypoints object, used in map. */
     orsSettingsFactory.subscribeToWaypoints = (o) => {
         return orsSettingsFactory.panelWaypoints.subscribe(o);
     };
+    /** Subscription function to current route object. */
     orsSettingsFactory.subscribeToNgRoute = (o) => {
-        return ngRouteSubject.subscribe(o);
+        return orsSettingsFactory.ngRouteSubject.subscribe(o);
     };
+    /** Subscription function to current settings */
+    orsSettingsFactory.subscribeToSettings = (o) => {
+        return orsSettingsFactory.panelSettings.subscribe(o);
+    };
+    /** Returns waypoints in settings. If none are set then returns empty list. */
     orsSettingsFactory.getWaypoints = () => {
         if (!('waypoints' in orsSettingsFactory.panelSettings.getValue())) return [];
         return orsSettingsFactory.panelSettings.getValue().waypoints;
     };
     /**
-     * todo: let's merge these functions
-     */ 
-    orsSettingsFactory.initWaypoints = () => {
-        settingsSubject.getValue().waypoints = [orsObjectsFactory.createWaypoint('', new L.latLng()), orsObjectsFactory.createWaypoint('', new L.latLng())];
-        return settingsSubject.getValue().waypoints;
-    };
-    orsSettingsFactory.initSingleWaypoint = () => {
-        aa_settingsSubject.value.waypoint = [orsObjectsFactory.createWaypoint('', new L.latLng())];
-        return aa_settingsSubject.getValue().waypoint;
+     * Intializes empty waypoints without coordinates
+     * @param {number} n - Specifices the amount of waypoints to be added
+     */
+    orsSettingsFactory.initWaypoints = (n) => {
+        for (var i = 1; i <= n; i++) {
+            wp = orsObjectsFactory.createWaypoint('', new L.latLng());
+            orsSettingsFactory.panelSettings.getValue().waypoints.push(wp);
+        }
+        return orsSettingsFactory.panelSettings.getValue().waypoints;
     };
     orsSettingsFactory.updateWaypoint = (idx, address, pos) => {
-        console.log('updating waypoint..');
-        // map wants to add a waypoint. Add it to the right set of settings 
         orsSettingsFactory.panelSettings.getValue().waypoints[idx]._latlng = pos;
         orsSettingsFactory.panelSettings.getValue().waypoints[idx]._address = address;
-        orsSettingsFactory.panelWaypoints.onNext(settingsSubject.getValue().waypoints);
+        orsSettingsFactory.panelWaypoints.onNext(orsSettingsFactory.panelSettings.getValue().waypoints);
     };
     orsSettingsFactory.updateWaypoints = () => {
         orsSettingsFactory.panelWaypoints.onNext(orsSettingsFactory.panelSettings.getValue().waypoints);
     };
     orsSettingsFactory.updateNgRoute = (newRoute) => {
-        ngRouteSubject.onNext(newRoute);
-        if (ngRouteSubject.getValue() == 'routing') {
-            orsSettingsFactory.panelSettings = settingsSubject;
-            orsSettingsFactory.panelWaypoints = waypointsSubject;
-        } else if (ngRouteSubject.getValue() == 'analysis') {
-            orsSettingsFactory.panelSettings = aa_settingsSubject;
-            orsSettingsFactory.panelWaypoints = aa_waypointsSubject;
+        orsSettingsFactory.ngRouteSubject.onNext(newRoute);
+        if (orsSettingsFactory.ngRouteSubject.getValue() == 'routing') {
+            orsSettingsFactory.panelSettings = orsSettingsFactory.routingSettingsSubject;
+            orsSettingsFactory.panelWaypoints = orsSettingsFactory.routingWaypointsSubject;
+        } else if (orsSettingsFactory.ngRouteSubject.getValue() == 'analysis') {
+            orsSettingsFactory.panelSettings = orsSettingsFactory.aaSettingsSubject;
+            orsSettingsFactory.panelWaypoints = orsSettingsFactory.aaWaypointsSubject;
         }
-        console.log(orsSettingsFactory.panelSettings)
-        console.log(orsSettingsFactory.panelWaypoints)
+        console.log('BOM DIA.....', orsSettingsFactory.panelSettings)
     };
     orsSettingsFactory.updateWaypointAddress = (idx, address, init) => {
         let set = orsSettingsFactory.panelSettings.getValue();
@@ -90,14 +104,22 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
             orsSettingsFactory.panelSettings.onNext(set);
         }
     };
-    orsSettingsFactory.setWaypoints = (d) => {
-        let currentSettingsSubject = orsSettingsFactory.panelSettings;
-        let currentWaypointSubject = orsSettingsFactory.panelWaypoints;
-        let set = currentSettingsSubject.getValue();
-        set.waypoints = d;
-        currentWaypointSubject.onNext(set.waypoints);
-        currentSettingsSubject.onNext(set);
+    /**
+     * Sets waypoints into settings.
+     * @param {waypoints.<Object>} List of waypoint objects.
+     */
+    orsSettingsFactory.setWaypoints = (waypoints) => {
+        orsSettingsFactory.panelSettings.getValue().waypoints = waypoints;
+        //orsSettingsFactory.panelSettings.onNext(orsSettingsFactory.panelSettings.getValue());
+        /** For map to update */
+        orsSettingsFactory.panelWaypoints.onNext(waypoints);
     };
+    /**
+     * Inserts waypoint to settings waypoints when added on map. This can
+     * either be a start, via or end
+     * @param {number} idx - Type of wp which should be added: start, via or end.
+     * @param {Object} wp - The waypoint object to be inserted to wp list.
+     */
     orsSettingsFactory.insertWaypointFromMap = (idx, wp) => {
         if (idx == 0) {
             orsSettingsFactory.panelSettings.value.waypoints[idx] = wp;
@@ -109,13 +131,18 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         orsSettingsFactory.panelWaypoints.onNext(orsSettingsFactory.panelSettings.getValue().waypoints);
         orsSettingsFactory.panelSettings.onNext(orsSettingsFactory.panelSettings.getValue());
     };
+    /**
+     * Determines which icon should be returned.
+     * @param {number} idx - Type of wp which should be added: start, via or end.
+     * @return {number} iconIdx - 0, 1 or 2.
+     */
     orsSettingsFactory.getIconIdx = (idx) => {
         let iconIdx;
         // start
         if (idx == 0) {
             iconIdx = 0;
             // last
-        } else if (idx == settingsSubject.getValue().waypoints.length - 1) {
+        } else if (idx == orsSettingsFactory.panelSettings.getValue().waypoints.length - 1) {
             iconIdx = 2;
             // via
         } else {
@@ -123,10 +150,14 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         }
         return iconIdx;
     };
+    /**
+     * Sets the profile of selected in settings.
+     * @param {Object} currentProfile - current profile.
+     */
     orsSettingsFactory.setProfile = (currentProfile) => {
-        let set = settingsSubject.getValue();
+        let set = orsSettingsFactory.panelSettings.getValue();
         set.profile.type = currentProfile.type;
-        settingsSubject.onNext(set);
+        orsSettingsFactory.panelSettings.onNext(set);
     };
     return orsSettingsFactory;
 }]);

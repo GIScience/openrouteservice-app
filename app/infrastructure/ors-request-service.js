@@ -44,7 +44,8 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$htt
             return data;
         };
         orsRequestService.getAddress = function(pos, idx, init) {
-            console.log(pos,idx,init)
+            console.log(pos, idx, init)
+            orsSettingsFactory.updateWaypointAddress(idx, pos, init);
             var requestData = orsUtilsService.reverseXml(pos);
             orsRequestService.geocode(requestData).then(function(response) {
                 const data = orsUtilsService.domParser(response.data);
@@ -59,6 +60,10 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$htt
                 console.log('It was not possible to get the address of the current waypoint. Sorry for the inconvenience!');
             });
         };
+        /** Fix that this isn't fired twice */
+        orsSettingsFactory.subscribeToSettings(function onNext(d) {
+            console.log('changes in settings detected..', d);
+        });
         return orsRequestService;
     }
 ]);

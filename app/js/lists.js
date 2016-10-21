@@ -348,7 +348,7 @@ lists.optionList = {
         },
     }
 };
-lists.isochroneList = {
+lists.isochroneOptionList = {
     methodOptions: {
 		RG: {
 			id: 0,

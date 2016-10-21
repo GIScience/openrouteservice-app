@@ -59,10 +59,8 @@ angular.module('orsApp').directive('orsMap', function() {
                     ctrl.mapModel.map.closePopup();
                 };
                 ctrl.addWaypoint = (idx, iconIdx, pos) => {
-                    console.log(lists.waypointIcons[iconIdx])
                     var waypointIcon = new L.icon(lists.waypointIcons[iconIdx]);
-                    console.log('icon', waypointIcon)
-                        // create the waypoint marker
+                    // create the waypoint marker
                     wayPointMarker = new L.marker(pos, {
                         icon: waypointIcon,
                         draggable: 'true',
@@ -88,7 +86,6 @@ angular.module('orsApp').directive('orsMap', function() {
                     ctrl.clearMap();
                     var idx = 0;
                     angular.forEach(waypoints, (waypoint) => {
-                        console.log(waypoints)
                         var iconIdx = orsSettingsFactory.getIconIdx(idx);
                         if (waypoint._latlng.lat && waypoint._latlng.lng) ctrl.addWaypoint(idx, iconIdx, waypoint._latlng);
                         idx += 1;
@@ -96,16 +93,13 @@ angular.module('orsApp').directive('orsMap', function() {
                 };
                 /** 
                  * subscribes to changes on in waypoint settings
-                 * for now wrapped in timeout because waiting for routerActivate
                  */
-                $timeout(function() {
-                    orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
-                        console.log('changes in routing waypoints detected..', d);
-                        const waypoints = d;
-                        // re-add waypoints
-                        ctrl.reAddWaypoints(waypoints);
-                    });
-                }, 1000);
+                orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
+                    console.log('changes in routing waypoints detected..', d);
+                    const waypoints = d;
+                    // re-add waypoints
+                    ctrl.reAddWaypoints(waypoints);
+                });
             }
         ]
     };

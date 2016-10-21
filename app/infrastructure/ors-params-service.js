@@ -1,15 +1,16 @@
 angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObjectsFactory', 'orsRequestService', function(orsObjectsFactory, orsRequestService) {
     let orsParamsService = {};
-    orsParamsService.settings = {
-        waypoints: [],
-        profile: {
-            type: 'Car',
-            options: {
-                weight: 'Fastest'
-            }
-        }
-    };
     orsParamsService.importSettings = (params) => {
+        const settings = {
+            waypoints: [],
+            profile: {
+                type: 'Car',
+                options: {
+                    weight: 'Fastest',
+                    analysis_options: {}
+                }
+            }
+        };
         angular.forEach(params, function(value, key) {
             console.log(value, key);
             if (key == 'wps') {
@@ -25,49 +26,59 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
                     orsRequestService.getAddress(wp._latlng, idx, true);
                     idx += 1;
                 });
-                orsParamsService.settings.waypoints = waypoints;
+                settings.waypoints = waypoints;
             }
             if (key == 'profile') {
-                orsParamsService.settings.profile.type = value;
+                settings.profile.type = value;
             }
             if (key == 'weight') {
-                orsParamsService.settings.profile.options.weight = value;
+                settings.profile.options.weight = value;
             }
             if (key == 'maxspeed') {
-                orsParamsService.settings.profile.options.maxspeed = value;
+                settings.profile.options.maxspeed = value;
             }
             if (key == 'hgvweight') {
-                orsParamsService.settings.profile.options.hgvWeight = value;
+                settings.profile.options.hgvWeight = value;
             }
             if (key == 'width') {
-                orsParamsService.settings.profile.options.width = value;
+                settings.profile.options.width = value;
             }
             if (key == 'height') {
-                orsParamsService.settings.profile.options.height = value;
+                settings.profile.options.height = value;
             }
             if (key == 'axleload') {
-                orsParamsService.settings.profile.options.axleload = value;
+                settings.profile.options.axleload = value;
             }
             if (key == 'length') {
-                orsParamsService.settings.profile.options.length = value;
+                settings.profile.options.length = value;
             }
             if (key == 'fitness') {
-                orsParamsService.settings.profile.options.fitness = value;
+                settings.profile.options.fitness = value;
             }
             if (key == 'steepness') {
-                orsParamsService.settings.profile.options.steepness = value;
+                settings.profile.options.steepness = value;
             }
             if (key == 'surface') {
-                orsParamsService.settings.profile.options.surface = value;
+                settings.profile.options.surface = value;
             }
             if (key == 'incline') {
-                orsParamsService.settings.profile.options.incline = value;
+                settings.profile.options.incline = value;
             }
             if (key == 'curb') {
-                orsParamsService.settings.profile.options.curb = value;
+                settings.profile.options.curb = value;
+            }
+            if (key == 'method') {
+                settings.profile.options.analysis_options.method = value;
+            }
+            if (key == 'minutes') {
+                settings.profile.options.analysis_options.minutes = value;
+            }
+            if (key == 'interval') {
+                settings.profile.options.analysis_options.interval = value;
             }
         });
-        return orsParamsService.settings;
+        console.warn(JSON.stringify(settings));
+        return settings;
     };
     return orsParamsService;
 }]);

@@ -8,6 +8,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
         var ctrl = this;
         ctrl.optionList = lists.optionList;
         ctrl.$onInit = function() {
+            /** This is a reference of the settings object, if we change here, it is updated in settings */
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
             // set weight slider from params
             ctrl.currentOptions.weight = ctrl.currentOptions.weight !== undefined ? ctrl.currentOptions.weight : ctrl.optionList.weight.Fastest;

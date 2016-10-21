@@ -10,7 +10,7 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         ctrl.$onInit = () => {
             ctrl.waypoints = orsSettingsFactory.getWaypoints();
             if (ctrl.waypoints.length == 0) {
-                ctrl.waypoints = orsSettingsFactory.initSingleWaypoint();
+                ctrl.waypoints = orsSettingsFactory.initWaypoints(1);
             }
             ctrl.showAdd = true;
         };
@@ -60,7 +60,7 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         };
 
         ctrl.resetWaypoints = () => {
-            ctrl.waypoints = orsSettingsFactory.initSingleWaypoint();
+            ctrl.waypoints = orsSettingsFactory.initWaypoints(1);
         };
         ctrl.addressChanged = () => {
             // const wp = orsObjectsFactory.createWaypoint(address.shortAddress, address.position);

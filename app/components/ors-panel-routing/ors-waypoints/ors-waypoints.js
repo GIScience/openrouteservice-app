@@ -8,17 +8,19 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
         var ctrl = this;
         ctrl.$onInit = () => {
+            /** If waypoints list is empty initialize new waypoints. */
             ctrl.waypoints = orsSettingsFactory.getWaypoints();
             if (ctrl.waypoints.length == 0) {
-                ctrl.waypoints = orsSettingsFactory.initWaypoints();
+                ctrl.waypoints = orsSettingsFactory.initWaypoints(2);
             }
             ctrl.showAdd = true;
         };
-        // subscribes to changes in waypoints, this doesnt have to be added though, why?
-        orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
-            console.log('waypoints updated!!! panel', d);
-            ctrl.waypoints = d;
-        });
+        // subscribes to changes in waypoints, this doesnt have to be added though, why? Because of reference?
+        // orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
+        //     console.log('waypoints updated!!! panel', d);
+        //     ctrl.waypoints = d;
+        // });
+        /**Determines which collapse icon to show. */
         ctrl.collapsed = false;
         ctrl.collapseIcon = "fa fa-minus-circle";
         ctrl.collapse = () => {
@@ -36,6 +38,10 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
                 ctrl.collapseIcon = "fa fa-minus-circle";
             }
         };
+        /**
+         * Determines whether list of viapoints should be shown.
+         * @param {number} The idx.
+         */
         ctrl.showViapoints = (idx) => {
             if (ctrl.collapsed == true) {
                 if (ctrl.waypoints.length > 2) {
@@ -49,6 +55,10 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
                 return false;
             }
         };
+        /**
+         * Determines whether list of waypoints should be collapsed.
+         * @param {number} The idx.
+         */
         ctrl.collapseWp = (idx) => {
             if (ctrl.collapsed == true) {
                 if (idx == 0 || idx == ctrl.waypoints.length - 1) {
@@ -61,35 +71,42 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
             }
         };
         ctrl.$doCheck = () => {
-            // check if array has changed
-            //console.log('update route');
         };
-        ctrl.waypointsChanged = () => {
-            console.log('wps changed');
-        };
+        /**
+         * Removes waypoint. If only start and end are set new wp is created.
+         * @param {number} The idx.
+         */
         ctrl.deleteWaypoint = (idx) => {
-            ctrl.waypoints.splice(idx, 1);
+            if (ctrl.waypoints.length == 2) {
+                let wp = orsObjectsFactory.createWaypoint('', new L.latLng());
+                ctrl.waypoints[idx] = wp;
+            } else {
+                ctrl.waypoints.splice(idx, 1);
+            }
             orsSettingsFactory.setWaypoints(ctrl.waypoints);
         };
+        /** Reveres waypoints order. */
         ctrl.reverseWaypoints = () => {
             ctrl.waypoints.reverse();
             orsSettingsFactory.setWaypoints(ctrl.waypoints);
         };
+        /** Resets waypoints to emptry start and end. */
         ctrl.resetWaypoints = () => {
-            ctrl.waypoints = orsSettingsFactory.initWaypoints();
+            ctrl.waypoints = orsSettingsFactory.initWaypoints(2);
+            orsSettingsFactory.updateWaypoints();
         };
+        /** Adds waypoint to the end. */
         ctrl.addWaypoint = () => {
             let wp = orsObjectsFactory.createWaypoint('', new L.latLng());
             ctrl.waypoints.push(wp);
-            //orsSettingsFactory.setWaypoints(ctrl.waypoints);
-        };
-        ctrl.addressChanged = () => {
-            // const wp = orsObjectsFactory.createWaypoint(address.shortAddress, address.position);
-            // console.log(wp)
-            // ctrl.waypoints.push(wp);
-            console.log(ctrl.waypoints)
             orsSettingsFactory.setWaypoints(ctrl.waypoints);
         };
+
+        /** If dropdown of addresses is openend once again and address is changed. */
+        ctrl.addressChanged = () => {
+            orsSettingsFactory.setWaypoints(ctrl.waypoints);
+        };
+        /** Sortable options for angular-jquery-ui .*/
         ctrl.sortableOptions = {
             axis: 'y',
             containment: 'parent',

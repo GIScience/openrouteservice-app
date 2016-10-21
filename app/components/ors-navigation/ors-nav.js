@@ -5,21 +5,17 @@ angular.module('orsApp.ors-nav', ['ngComponentRouter']).component('orsSidebar', 
         orsMap: '<',
     },
     controller($location) {
-    	var ctrl = this;
-    	console.log($location.url())
-    	ctrl.activeMenu = $location.url();
-    	console.log(ctrl.activeMenu)
+        var ctrl = this;
+        ctrl.activeMenu = $location.url();
     },
     $routeConfig: [{
-            path: '/routing',
-            name: 'Routing',
-            component: 'orsRoute',
-            useAsDefault: true
-        }, {
-            path: '/analysis',
-            name: 'Analysis',
-            component: 'orsAnalysis'
-        }
-        //    {path: '/disaster', name: 'Asteroid', redirectTo: ['CrisisCenter', 'CrisisDetail', {id:3}]}
-    ]
+        path: '/routing',
+        name: 'Routing',
+        component: 'orsRoute',
+        useAsDefault: true
+    }, {
+        path: '/analysis',
+        name: 'Analysis',
+        component: 'orsAnalysis'
+    }]
 }).value('$routerRootComponent', 'orsSidebar');
