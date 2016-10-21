@@ -4,9 +4,11 @@ angular.module('orsApp.ors-nav', ['ngComponentRouter']).component('orsSidebar', 
     bindings: {
         orsMap: '<',
     },
-    controller: function() {
+    controller($location) {
     	var ctrl = this;
-    	ctrl.activeMenu = 'routing';
+    	console.log($location.url())
+    	ctrl.activeMenu = $location.url();
+    	console.log(ctrl.activeMenu)
     },
     $routeConfig: [{
             path: '/routing',
@@ -17,10 +19,6 @@ angular.module('orsApp.ors-nav', ['ngComponentRouter']).component('orsSidebar', 
             path: '/analysis',
             name: 'Analysis',
             component: 'orsAnalysis'
-        }, {
-            path: '/download',
-            name: 'Download',
-            component: 'orsDownload'
         }
         //    {path: '/disaster', name: 'Asteroid', redirectTo: ['CrisisCenter', 'CrisisDetail', {id:3}]}
     ]

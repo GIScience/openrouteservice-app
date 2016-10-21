@@ -15,7 +15,7 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
                 let settings = orsParamsService.importSettings(ctrl.routeParams);
                 orsSettingsFactory.setSettings(settings);
             }
-            orsSettingsFactory.updateAAWaypoints();
+            orsSettingsFactory.updateWaypoints();
             ctrl.currentOptions = {}; //orsSettingsFactory.getActiveOptions();
             ctrl.availableOptions = lists.isochroneList.methodOptions;
             //Notify the map that it should reload the aa waypoint if there is one already

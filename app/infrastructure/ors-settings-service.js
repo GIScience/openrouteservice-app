@@ -62,14 +62,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     orsSettingsFactory.updateWaypoints = () => {
         orsSettingsFactory.panelWaypoints.onNext(orsSettingsFactory.panelSettings.getValue().waypoints);
     };
-    orsSettingsFactory.updateAAWaypoint = (address, pos) => {
-        console.log("Update");
-        aa_waypointsSubject.onNext([orsObjectsFactory.createWaypoint(address, new L.latLng(pos))]);
-    };
-    orsSettingsFactory.updateAAWaypoints = () => {
-        console.log(aa_settingsSubject.getValue());
-        aa_waypointsSubject.onNext(aa_settingsSubject.getValue().waypoints);
-    };
     orsSettingsFactory.updateNgRoute = (newRoute) => {
         ngRouteSubject.onNext(newRoute);
         if (ngRouteSubject.getValue() == 'routing') {
