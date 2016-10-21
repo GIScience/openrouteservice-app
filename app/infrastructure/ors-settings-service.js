@@ -21,6 +21,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         for (var k in params) {
             set[k] = params[k];
         }
+        /** Fire request. */
         //orsSettingsFactory.panelSettings.onNext(set);
     };
     /**
@@ -43,6 +44,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     };
     /** Subscription function to current waypoints object, used in map. */
     orsSettingsFactory.subscribeToWaypoints = (o) => {
+        console.warn(true, JSON.stringify(orsSettingsFactory.panelWaypoints));
         return orsSettingsFactory.panelWaypoints.subscribe(o);
     };
     /** Subscription function to current route object. */
@@ -59,7 +61,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         return orsSettingsFactory.panelSettings.getValue().waypoints;
     };
     /**
-     * Intializes empty waypoints without coordinates
+     * Intializes empty waypoints without coordinates.
      * @param {number} n - Specifices the amount of waypoints to be added
      */
     orsSettingsFactory.initWaypoints = (n) => {
@@ -69,30 +71,51 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         }
         return orsSettingsFactory.panelSettings.getValue().waypoints;
     };
+    /** 
+     * Updates waypoint address and position in settings.
+     * @param {number} idx - Which is the index of the to be updated wp.
+     * @param {string} address - Which is the string of the address.
+     * @param {Object} pos - Which is the latlng object.
+     */
     orsSettingsFactory.updateWaypoint = (idx, address, pos) => {
         orsSettingsFactory.panelSettings.getValue().waypoints[idx]._latlng = pos;
         orsSettingsFactory.panelSettings.getValue().waypoints[idx]._address = address;
-        orsSettingsFactory.panelWaypoints.onNext(orsSettingsFactory.panelSettings.getValue().waypoints);
+        /** Fire a new request. */
+        orsSettingsFactory.panelSettings.onNext(orsSettingsFactory.panelSettings.getValue());
+        //orsSettingsFactory.panelWaypoints.onNext(orsSettingsFactory.panelSettings.getValue().waypoints);
     };
+    /** Used for map update */
     orsSettingsFactory.updateWaypoints = () => {
         orsSettingsFactory.panelWaypoints.onNext(orsSettingsFactory.panelSettings.getValue().waypoints);
     };
+    /** 
+     * This is basically the heart of navigation. If the panels are switched between
+     * routing and accessibility analysis the subject references are updated.
+     * @param {string} newRoute - Path of current location.
+     */
     orsSettingsFactory.updateNgRoute = (newRoute) => {
-        orsSettingsFactory.ngRouteSubject.onNext(newRoute);
-        if (orsSettingsFactory.ngRouteSubject.getValue() == 'routing') {
+        if (newRoute == 'routing') {
             orsSettingsFactory.panelSettings = orsSettingsFactory.routingSettingsSubject;
             orsSettingsFactory.panelWaypoints = orsSettingsFactory.routingWaypointsSubject;
-        } else if (orsSettingsFactory.ngRouteSubject.getValue() == 'analysis') {
+            console.log('switched to routing', orsSettingsFactory.panelWaypoints);
+        } else if (newRoute == 'analysis') {
             orsSettingsFactory.panelSettings = orsSettingsFactory.aaSettingsSubject;
             orsSettingsFactory.panelWaypoints = orsSettingsFactory.aaWaypointsSubject;
+            console.log('switched to analysis', orsSettingsFactory.panelWaypoints);
         }
-        console.log('BOM DIA.....', orsSettingsFactory.panelSettings)
+        orsSettingsFactory.ngRouteSubject.onNext(newRoute);
     };
+    /** 
+     * Updates waypoint address. No need to fire subscription for settings.
+     * This is done already when updated latlng.
+     * @param {number} idx - Index of waypoint.
+     * @param {string} address - Address as string.
+     * @param {boolean} init - When this is true, forgot why I need this fuck.
+     */
     orsSettingsFactory.updateWaypointAddress = (idx, address, init) => {
         let set = orsSettingsFactory.panelSettings.getValue();
         if (init) {
             set.waypoints[idx]._address = address;
-            orsSettingsFactory.panelSettings.onNext(set);
         } else {
             if (idx == 0) {
                 set.waypoints[idx]._address = address;
@@ -101,7 +124,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
             } else if (idx == 1) {
                 set.waypoints[set.waypoints.length - 2]._address = address;
             }
-            orsSettingsFactory.panelSettings.onNext(set);
         }
     };
     /**
@@ -110,7 +132,8 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      */
     orsSettingsFactory.setWaypoints = (waypoints) => {
         orsSettingsFactory.panelSettings.getValue().waypoints = waypoints;
-        //orsSettingsFactory.panelSettings.onNext(orsSettingsFactory.panelSettings.getValue());
+        /** fire a new request */
+        orsSettingsFactory.panelSettings.onNext(orsSettingsFactory.panelSettings.getValue());
         /** For map to update */
         orsSettingsFactory.panelWaypoints.onNext(waypoints);
     };
@@ -128,7 +151,10 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         } else if (idx == 1) {
             orsSettingsFactory.panelSettings.value.waypoints.splice(orsSettingsFactory.panelSettings.value.waypoints.length - 1, 0, wp);
         }
+        /** Update Map. */
+        console.warn(orsSettingsFactory.panelSettings.getValue().waypoints)
         orsSettingsFactory.panelWaypoints.onNext(orsSettingsFactory.panelSettings.getValue().waypoints);
+        /** Fire a new request. */
         orsSettingsFactory.panelSettings.onNext(orsSettingsFactory.panelSettings.getValue());
     };
     /**
@@ -138,13 +164,10 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      */
     orsSettingsFactory.getIconIdx = (idx) => {
         let iconIdx;
-        // start
         if (idx == 0) {
             iconIdx = 0;
-            // last
         } else if (idx == orsSettingsFactory.panelSettings.getValue().waypoints.length - 1) {
             iconIdx = 2;
-            // via
         } else {
             iconIdx = 1;
         }
@@ -157,6 +180,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     orsSettingsFactory.setProfile = (currentProfile) => {
         let set = orsSettingsFactory.panelSettings.getValue();
         set.profile.type = currentProfile.type;
+        /** Fire a new request. */
         orsSettingsFactory.panelSettings.onNext(set);
     };
     return orsSettingsFactory;

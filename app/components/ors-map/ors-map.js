@@ -59,6 +59,7 @@ angular.module('orsApp').directive('orsMap', function() {
                     ctrl.mapModel.map.closePopup();
                 };
                 ctrl.addWaypoint = (idx, iconIdx, pos) => {
+                    console.log('adding waypoint')
                     var waypointIcon = new L.icon(lists.waypointIcons[iconIdx]);
                     // create the waypoint marker
                     wayPointMarker = new L.marker(pos, {
@@ -78,27 +79,30 @@ angular.module('orsApp').directive('orsMap', function() {
                 ctrl.clearMap = () => {
                     ctrl.mapModel.geofeatures.layerRoutePoints.clearLayers();
                 };
-                orsSettingsFactory.subscribeToNgRoute(function onNext(d) {
-                    console.log('route was changed to', d);
-                    ctrl.clearMap();
-                });
                 ctrl.reAddWaypoints = (waypoints) => {
                     ctrl.clearMap();
                     var idx = 0;
+                    console.log('readding..')
                     angular.forEach(waypoints, (waypoint) => {
+                        console.log(waypoint)
                         var iconIdx = orsSettingsFactory.getIconIdx(idx);
                         if (waypoint._latlng.lat && waypoint._latlng.lng) ctrl.addWaypoint(idx, iconIdx, waypoint._latlng);
                         idx += 1;
                     });
                 };
-                /** 
-                 * subscribes to changes on in waypoint settings
-                 */
-                orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
-                    console.log('changes in routing waypoints detected..', d);
-                    const waypoints = d;
-                    // re-add waypoints
-                    ctrl.reAddWaypoints(waypoints);
+                orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
+                    console.log('route was changed to', route);
+                    ctrl.clearMap();
+                    /** 
+                     * subscribes to changes on in waypoint settings, this
+                     * must be called on every route change to update subscription
+                     */
+                    orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
+                        console.log('changes in routing waypoints detected..', d);
+                        const waypoints = d;
+                        // re-add waypoints
+                        ctrl.reAddWaypoints(waypoints);
+                    });
                 });
             }
         ]
