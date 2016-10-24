@@ -14,10 +14,7 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
              */
             ctrl.routeParams = next.params;
             if (orsSettingsFactory.getWaypoints().length == 0) {
-            	console.log('importing aa settings..')
-            	console.log(JSON.stringify(orsSettingsFactory.getWaypoints()));
                 const settings = orsParamsService.importSettings(ctrl.routeParams);
-                console.log(JSON.stringify(settings));
                 orsSettingsFactory.setSettings(settings);
             }
             orsSettingsFactory.updateWaypoints();
@@ -79,6 +76,7 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
         ctrl.changeOptions = function() {
             // call setoptions
             console.log(ctrl.currentOptions);
+            orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
         };
     },
     require: {

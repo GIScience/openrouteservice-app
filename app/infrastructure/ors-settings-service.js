@@ -22,7 +22,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
             set[k] = params[k];
         }
         /** Fire request. */
-        //orsSettingsFactory.panelSettings.onNext(set);
+        orsSettingsFactory.panelSettings.onNext(set);
     };
     /**
      * Returns active profile.
@@ -42,6 +42,10 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         if (!('options' in orsSettingsFactory.panelSettings.getValue().profile)) return [];
         return orsSettingsFactory.panelSettings.getValue().profile.options;
     };
+    orsSettingsFactory.setActiveOptions = (options) => {
+        orsSettingsFactory.panelSettings.getValue().profile.options = options;
+        orsSettingsFactory.panelSettings.onNext(orsSettingsFactory.panelSettings.getValue());
+    };
     /** Subscription function to current waypoints object, used in map. */
     orsSettingsFactory.subscribeToWaypoints = (o) => {
         console.warn(true, JSON.stringify(orsSettingsFactory.panelWaypoints));
@@ -50,10 +54,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     /** Subscription function to current route object. */
     orsSettingsFactory.subscribeToNgRoute = (o) => {
         return orsSettingsFactory.ngRouteSubject.subscribe(o);
-    };
-    /** Subscription function to current settings */
-    orsSettingsFactory.subscribeToSettings = (o) => {
-        return orsSettingsFactory.panelSettings.subscribe(o);
     };
     /** Returns waypoints in settings. If none are set then returns empty list. */
     orsSettingsFactory.getWaypoints = () => {
@@ -103,6 +103,8 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
             orsSettingsFactory.panelWaypoints = orsSettingsFactory.aaWaypointsSubject;
             console.log('switched to analysis', orsSettingsFactory.panelWaypoints);
         }
+        /** Subscription function to current settings */
+        orsSettingsFactory.panelSettings.subscribe(x => console.info(x));
         orsSettingsFactory.ngRouteSubject.onNext(newRoute);
     };
     /** 
@@ -183,5 +185,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         /** Fire a new request. */
         orsSettingsFactory.panelSettings.onNext(set);
     };
+
     return orsSettingsFactory;
 }]);

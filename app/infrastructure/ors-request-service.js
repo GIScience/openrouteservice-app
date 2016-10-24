@@ -60,10 +60,6 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$htt
                 console.log('It was not possible to get the address of the current waypoint. Sorry for the inconvenience!');
             });
         };
-        /** Fix that this isn't fired twice */
-        orsSettingsFactory.subscribeToSettings(function onNext(d) {
-            console.log('changes in settings detected..', d);
-        });
         return orsRequestService;
     }
 ]);

@@ -277,6 +277,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
         ctrl.changeOptions = function() {
             // call setoptions
             if (ctrl.currentOptions.difficulty) ctrl.difficultySliders.Fitness.options.disabled = ctrl.currentOptions.difficulty.avoidhills === true ? true : false;
+            orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
         };
         ctrl.getClass = (bool) => {
             if (bool === true) return "fa fa-lg fa-fw fa-caret-up";
