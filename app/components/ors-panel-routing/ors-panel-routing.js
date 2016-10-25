@@ -5,6 +5,7 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
         ctrl.$onInit = function() {};
         //http://localhost:3000/routing?wps=48.3333,10.1667,48.7758459,9.1829321,48.7758459,9.1839321&profile=Bicycle&subprofile=BicycleMTB&weight=Fastest
         ctrl.$routerOnActivate = function(next) {
+            console.log('updating ng route')
             orsSettingsFactory.updateNgRoute(next.urlPath);
             /** 
              * check if anything is saved in the settings object
