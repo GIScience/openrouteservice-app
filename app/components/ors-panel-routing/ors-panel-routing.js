@@ -14,6 +14,7 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
             if (orsSettingsFactory.getWaypoints().length == 0) {
                 console.log('importing routing settings..')
                 ctrl.routeParams = next.params;
+                orsSettingsFactory.initWaypoints(2);
                 const settings = orsParamsService.importSettings(ctrl.routeParams);
                 orsSettingsFactory.setSettings(settings);
             } 

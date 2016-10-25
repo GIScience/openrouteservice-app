@@ -10,8 +10,11 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
              * check if anything is saved in the settings object
              * if there isn't initialize settings object from permalink or provide empty
              */
-            ctrl.routeParams = next.params;
+
+
             if (orsSettingsFactory.getWaypoints().length == 0) {
+                ctrl.routeParams = next.params;
+                orsSettingsFactory.initWaypoints(1);
                 const settings = orsParamsService.importSettings(ctrl.routeParams);
                 orsSettingsFactory.setSettings(settings);
             }

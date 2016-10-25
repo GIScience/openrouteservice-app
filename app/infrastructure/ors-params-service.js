@@ -12,7 +12,7 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
             }
         };
         angular.forEach(params, function(value, key) {
-            console.log(value, key);
+            console.info(value, key);
             if (key == 'wps') {
                 const wps = value.match(/[^,]+,[^,]+/g);
                 let idx = 0,

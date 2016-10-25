@@ -2,10 +2,14 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     let orsSettingsFactory = {};
     /** Behaviour subjects routing. */
     orsSettingsFactory.routingWaypointsSubject = new Rx.BehaviorSubject({});
-    orsSettingsFactory.routingSettingsSubject = new Rx.BehaviorSubject({});
+    orsSettingsFactory.routingSettingsSubject = new Rx.BehaviorSubject({
+        waypoints: []
+    });
     /** Behaviour subjects accessibility analysis. */
     orsSettingsFactory.aaWaypointsSubject = new Rx.BehaviorSubject({});
-    orsSettingsFactory.aaSettingsSubject = new Rx.BehaviorSubject({});
+    orsSettingsFactory.aaSettingsSubject = new Rx.BehaviorSubject({
+        waypoints: []
+    });
     /** Behaviour subject routing. */
     orsSettingsFactory.ngRouteSubject = new Rx.BehaviorSubject(undefined);
     /** Global reference settings, these are switched when panels are changed - default is routing.*/
@@ -55,9 +59,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     };
     /** Returns waypoints in settings. If none are set then returns empty list. */
     orsSettingsFactory.getWaypoints = () => {
-        console.log(currentSettingsObj)
-        console.log(currentSettingsObj, orsSettingsFactory[currentSettingsObj])
-        console.warn(orsSettingsFactory.routingSettingsSubject);
         if (!('waypoints' in orsSettingsFactory[currentSettingsObj].getValue())) return [];
         return orsSettingsFactory[currentSettingsObj].getValue().waypoints;
     };
@@ -66,6 +67,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * @param {number} n - Specifices the amount of waypoints to be added
      */
     orsSettingsFactory.initWaypoints = (n) => {
+        console.log(orsSettingsFactory[currentSettingsObj].getValue())
         for (var i = 1; i <= n; i++) {
             wp = orsObjectsFactory.createWaypoint('', new L.latLng());
             orsSettingsFactory[currentSettingsObj].getValue().waypoints.push(wp);
@@ -101,17 +103,19 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         console.log('objs', currentSettingsObj, currentWaypointsObj)
         orsSettingsFactory.ngRouteSubject.onNext(newRoute);
     });
-        orsSettingsFactory.handleRoutePresent = () => {};
-
-    /** Subscription function to current settings */
+    orsSettingsFactory.handleRoutePresent = () => {
+        return true;
+    };
+    /** Subscription function to current routing settings */
     orsSettingsFactory.routingSettingsSubject.subscribe(x => {
-        // treat routing and analysis differently
-        orsSettingsFactory.handleRoutePresent();
-        // var isRoutePresent = waypoint.getNumWaypointsSet() >= 2;
-        // if (isRoutePresent) {
-        // }
         console.info('routing request', x);
+        const isRoutePresent = orsSettingsFactory.handleRoutePresent();
+        // var isRoutePresent = waypoint.getNumWaypointsSet() >= 2;
+        if (isRoutePresent) {
+            console.info('routing request two wp yes', x);
+        }
     });
+    /** Subscription function to current accessibility settings */
     orsSettingsFactory.aaSettingsSubject.subscribe(x => {
         console.info('aa request', x);
     });
@@ -124,6 +128,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      */
     orsSettingsFactory.updateWaypointAddress = (idx, address, init) => {
         let set = orsSettingsFactory[currentSettingsObj].getValue();
+        console.log('set', set)
         if (init) {
             set.waypoints[idx]._address = address;
         } else {
