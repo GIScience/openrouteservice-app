@@ -1,0 +1,44 @@
+<div class="ors-container">
+    <li>
+        <div class="ui label tiny flleft">
+            Isochrone method
+            <div class="detail">
+                {{$ctrl.isochroneOptionsSlider.options.translate($ctrl.isochroneOptionsSlider.value)}}
+            </div>
+        </div>
+        <div class="ors-options-menu-small">
+            <div class="ors-options-menu-small">
+                <rzslider rz-slider-model="$ctrl.isochroneOptionsSlider.value" rz-slider-options="$ctrl.isochroneOptionsSlider.options">
+                </rzslider>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="ui label tiny flleft">
+            Time distance
+            <div class="detail">
+                {{$ctrl.isochroneMinutesSlider.value}} min
+            </div>
+        </div>
+        <div class="ors-options-menu">
+            <div class="ors-options-menu">
+                <rzslider rz-slider-model="$ctrl.isochroneMinutesSlider.value" rz-slider-options="$ctrl.isochroneMinutesSlider.options">
+                </rzslider>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="ui label tiny flleft">
+            Isochrone interval
+            <div class="detail">
+                {{$ctrl.isochroneIntervalSlider.value}} min
+            </div>
+        </div>
+        <div class="ors-options-menu">
+            <div class="ors-options-menu">
+                <rzslider rz-slider-model="$ctrl.isochroneIntervalSlider.value" rz-slider-options="$ctrl.isochroneIntervalSlider.options">
+                </rzslider>
+            </div>
+        </div>
+    </li>
+</div>

@@ -1,5 +1,5 @@
 angular.module('orsApp.ors-profiles-options', []).component('orsProfilesOptions', {
-    templateUrl: 'app/components/ors-panel-routing/ors-profiles-options/ors-profiles-options.html',
+    templateUrl: 'app/components/ors-profiles-options/ors-profiles-options.html',
     bindings: {
         orsParams: '<',
         showOptions: '=',

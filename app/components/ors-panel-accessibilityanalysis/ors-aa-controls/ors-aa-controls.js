@@ -2,10 +2,10 @@ angular.module('orsApp.ors-aa-controls', []).component('orsAaControls', {
     templateUrl: 'app/components/ors-panel-accessibilityanalysis/ors-aa-controls/ors-aa-controls.html',
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService) {
         var ctrl = this;
-        ctrl.add = () => {
+        ctrl.calculate = () => {
             console.log('adding');
-            ctrl.onAdd();
-            ctrl.showAdd = true;
+            ctrl.onCalculate();
+            // ctrl.showAdd = true;
         };
         ctrl.reset = () => {
             console.log('resetting');
@@ -16,7 +16,7 @@ angular.module('orsApp.ors-aa-controls', []).component('orsAaControls', {
         };
     },
     bindings: {
-        onAdd: '&',
+        onCalculate: '&',
         onReset: '&',
         onReverse: '&',
         onWaypointsChanged: '&',
