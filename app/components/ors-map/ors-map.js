@@ -38,7 +38,12 @@ angular.module('orsApp').directive('orsMap', function() {
                  */
                 ctrl.mapModel.map.on('contextmenu', function(e) {
                     ctrl.displayPos = e.latlng;
-                    var popupEvent = $compile('<ors-popup></ors-popup>')($scope);
+                    let popupEvent;
+                    if (ctrl.routing) {
+                        popupEvent = $compile('<ors-popup></ors-popup>')($scope);
+                    } else {
+                        popupEvent = $compile('<ors-aa-popup></ors-aa-popup>')($scope);
+                    }
                     var popup = L.popup({
                         closeButton: true,
                         className: 'cm-popup'
@@ -92,6 +97,7 @@ angular.module('orsApp').directive('orsMap', function() {
                 };
                 orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
                     console.log('route was changed to', route);
+                    ctrl.routing = route == 'routing' ? true : false;
                     ctrl.clearMap();
                     /** 
                      * subscribes to changes on in waypoint settings, this
@@ -101,7 +107,7 @@ angular.module('orsApp').directive('orsMap', function() {
                         orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
                             console.log('changes in routing waypoints detected..', d);
                             const waypoints = d;
-                            // re-add waypoints
+                            // re-add waypoints only after init
                             if (waypoints.length > 0) ctrl.reAddWaypoints(waypoints);
                         });
                     }
@@ -117,6 +123,20 @@ angular.module('orsApp').directive('orsPopup', ['$compile', '$timeout', 'orsSett
             restrict: 'E',
             require: '^orsMap', //one directive used,
             templateUrl: 'app/components/ors-map/directive-templates/ors-popup.html',
+            link: function(scope, elem, attr, mapCtrl) {
+                scope.add = (idx) => {
+                    mapCtrl.processMapWaypoint(idx, mapCtrl.displayPos);
+                };
+            }
+        };
+    }
+]);
+angular.module('orsApp').directive('orsAaPopup', ['$compile', '$timeout', 'orsSettingsFactory',
+    function($compile, $timeout, orsSettingsFactory) {
+        return {
+            restrict: 'E',
+            require: '^orsMap', //one directive used,
+            templateUrl: 'app/components/ors-map/directive-templates/ors-aa-popup.html',
             link: function(scope, elem, attr, mapCtrl) {
                 scope.add = (idx) => {
                     mapCtrl.processMapWaypoint(idx, mapCtrl.displayPos);
