@@ -5,7 +5,7 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         orsParams: '<',
         activeProfileOption: '<'
     },
-    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
+    controller($scope, orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
         var ctrl = this;
         ctrl.$onInit = () => {
             ctrl.waypoints = orsSettingsFactory.getWaypoints();
@@ -54,9 +54,9 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         ctrl.waypointsChanged = () => {
             console.log('wps changed');
         };
-        ctrl.deleteWaypoint = (idx) => {
-            ctrl.waypoints.splice(idx, 1);
-            orsSettingsFactory.setWaypoints(ctrl.waypoints);
+        ctrl.deleteWaypoint = () => {
+            let wp = orsObjectsFactory.createWaypoint('', new L.latLng());
+            ctrl.waypoints[0] = wp;
         };
 
         ctrl.resetWaypoints = () => {
@@ -69,6 +69,9 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
             // console.log(ctrl.waypoints)
             orsSettingsFactory.setWaypoints(ctrl.waypoints);
         };
+        $scope.$on('resetWaypoints', function(e) {  
+            ctrl.deleteWaypoint();
+         });
         ctrl.sortableOptions = {
             axis: 'y',
             containment: 'parent',

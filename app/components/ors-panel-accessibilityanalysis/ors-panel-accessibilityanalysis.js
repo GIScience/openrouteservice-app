@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-controls', 'orsApp.ors-aa-waypoints', 'orsApp.ors-aa-sliders']).component('orsAnalysis', {
     templateUrl: 'app/components/ors-panel-accessibilityanalysis/ors-panel-accessibilityanalysis.html',
-    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
+    controller($scope, orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
         var ctrl = this;
         ctrl.$onInit = function() {};
         ctrl.$routerOnActivate = function(next) {
@@ -23,7 +23,11 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
         ctrl.calculate = function() {
             console.log("Fire request AA");
             console.log(ctrl.currentOptions);
+        };
+        ctrl.resetWaypoints = function() {
+            $scope.$broadcast('resetWaypoints');
         }
+
     },
     require: {
         parent: '^orsSidebar'
