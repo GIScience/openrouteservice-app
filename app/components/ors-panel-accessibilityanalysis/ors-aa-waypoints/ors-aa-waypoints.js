@@ -54,13 +54,10 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         ctrl.waypointsChanged = () => {
             console.log('wps changed');
         };
-        ctrl.deleteWaypoint = () => {
+        ctrl.deleteWaypoint = () => {};
+        ctrl.resetWaypoints = () => {
             let wp = orsObjectsFactory.createWaypoint('', new L.latLng());
             ctrl.waypoints[0] = wp;
-        };
-
-        ctrl.resetWaypoints = () => {
-            ctrl.waypoints = orsSettingsFactory.initWaypoints(1);
         };
         ctrl.addressChanged = () => {
             // const wp = orsObjectsFactory.createWaypoint(address.shortAddress, address.position);
@@ -69,9 +66,9 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
             // console.log(ctrl.waypoints)
             orsSettingsFactory.setWaypoints(ctrl.waypoints);
         };
-        $scope.$on('resetWaypoints', function(e) {  
+        $scope.$on('resetWaypoints', function(e) {
             ctrl.deleteWaypoint();
-         });
+        });
         ctrl.sortableOptions = {
             axis: 'y',
             containment: 'parent',
