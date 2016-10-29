@@ -1,164 +1,255 @@
 <div class="container">
-    <div class="options-box" ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'" >
-	    <div ng-click="routeweightOptions = !routeweightOptions">
-	        <i ng-class="$ctrl.getClass(routeweightOptions)"></i><span>Route preference</span>
-	    </div>
-	    <div class="collapsable" ng-class="{ showMe: routeweightOptions }">
-	    	<div class="ors-options-menu">
-				<div class="ui label tiny flleft">
-				 	Weight:
-				 	<div class="detail"> {{$ctrl.weightSlider.value}}</div>
-				</div>
-				<rzslider rz-slider-model="$ctrl.weightSlider.value" rz-slider-options="$ctrl.weightSlider.options"></rzslider>
-	    	</div>
-	    </div>
-	</div>
     <div class="options-box" ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'">
-	    <div ng-click="avoidablesOptions = !avoidablesOptions">
-	        <i ng-class="$ctrl.getClass(avoidablesOptions)"></i><span>Avoid road types</span>
-	    </div>
-	    <div class="collapsable" ng-class="{ showMe: avoidablesOptions }">
-	       <ul class="ors-options-menu">
-	        	<li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'">
-			    	<div class="ui checkbox">
-		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.ferry" type="checkbox">
-		                <label>Ferries</label>
-		            </div>
-		        </li>
-		        <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'HeavyVehicle'">
-			    	<div class="ui checkbox">
-		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.unpaved" type="checkbox">
-		                <label>Unpaved Roads</label>
-		            </div>
-		        </li>
-		        <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'HeavyVehicle'">
-			    	<div class="ui checkbox">
-		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.paved" type="checkbox">
-		                <label>Paved Roads</label>
-		            </div>
-		        </li>
-		        <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'HeavyVehicle'">
-			    	<div class="ui checkbox">
-		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.fords" type="checkbox">
-		                <label>Fords</label>
-		            </div>
-		        </li>
-		        <li ng-show="$ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Pedestrian' || $ctrl.activeMenu == 'Wheelchair'">
-			    	<div class="ui checkbox">
-		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.steps" type="checkbox">
-		                <label>Steps</label>
-		            </div>
-		        </li>
-		        <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'HeavyVehicle'">
-			    	<div class="ui checkbox">
-		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.highways" type="checkbox">
-		                <label>Highways</label>
-		            </div>
-		        </li>
-		        <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'HeavyVehicle'">
-			    	<div class="ui checkbox">
-		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tollroads" type="checkbox">
-		                <label>Toll Roads</label>
-		            </div>
-		        </li>
-		        <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'HeavyVehicle'">
-			    	<div class="ui checkbox">
-		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tunnels" type="checkbox">
-		                <label>Tunnels</label>
-		            </div>
-		        </li>
-		        <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'HeavyVehicle'">
-			    	<div class="ui checkbox">
-		                <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tracks" type="checkbox">
-		                <label>Tracks</label>
-		            </div>
-		        </li>
-		    </ul>
-	    </div>
-	</div>
-	<div class="options-box" ng-show="$ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Pedestrian'">
-	    <div ng-click="difficultyOptions = !difficultyOptions">
-	        <i ng-class="$ctrl.getClass(difficultyOptions)"></i><span>Difficulty settings</span>
-	    </div>
-	    <div class="collapsable" ng-class="{ showMe: difficultyOptions }">
-	    	<div class="ors-options-menu">
-		        <div class="ui label tiny flleft">
-				 	Fitness:
-				 	<div class="detail">{{$ctrl.currentOptions.fitness}}</div>
-				</div>
-		    	<rzslider rz-slider-model="$ctrl.difficultySliders.Fitness.value" rz-slider-options="$ctrl.difficultySliders.Fitness.options"></rzslider>
-		    	<div class="ui divider"></div>
-		    	<div id="cb-avoidhills" class="ui checkbox">
-	                <input id="cb-avoidhills-input" name="orsRouteDifficultyAvoidHills" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.difficulty.avoidhills" type="checkbox">
-	                <label>Avoid hills</label>
-		        </div>
-		        <div class="ui divider"></div>
-    			<div class="ui label tiny flleft">
-				 	Max. steepness
-				</div>
-    			<rzslider rz-slider-model="$ctrl.difficultySliders.Steepness.value" rz-slider-options="$ctrl.difficultySliders.Steepness.options"></rzslider>
-		    </div>
-	    </div>
-	</div>
-	<div class="options-box" ng-show="$ctrl.activeMenu == 'HeavyVehicle'">
-	    <div ng-click="hgvOptions = !hgvOptions">
-	        <i ng-class="$ctrl.getClass(hgvOptions)"></i><span>HGV settings</span>
-	    </div>
-	    <div class="collapsable" ng-class="{ showMe: hgvOptions }">
-	       <div class="ors-options-menu">
-				<rzslider rz-slider-model="$ctrl.hgvSliders.Length.value" rz-slider-options="$ctrl.hgvSliders.Length.options"></rzslider>
-				<div class="ui mini label">Length</div>
-				<rzslider rz-slider-model="$ctrl.hgvSliders.Width.value" rz-slider-options="$ctrl.hgvSliders.Width.options"></rzslider>
-				<div class="ui mini label">Width</div>
-				<rzslider rz-slider-model="$ctrl.hgvSliders.Height.value" rz-slider-options="$ctrl.hgvSliders.Height.options"></rzslider>
-				<div class="ui mini label">Length</div>
-				<rzslider rz-slider-model="$ctrl.hgvSliders.Weight.value" rz-slider-options="$ctrl.hgvSliders.Weight.options"></rzslider>
-				<div class="ui mini label">Weight</div>
-				<rzslider rz-slider-model="$ctrl.hgvSliders.AxleLoad.value" rz-slider-options="$ctrl.hgvSliders.AxleLoad.options"></rzslider>
-				<div class="ui mini label">Axle Load</div>
-			</div>
-	    </div>
-	</div>
-	<div class="options-box" ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'">
-	    <div ng-click="maxspeedOptions = !maxspeedOptions">
-	        <i ng-class="$ctrl.getClass(maxspeedOptions)"></i><span>Additional settings</span>
-	    </div>
-	    <div class="collapsable" ng-class="{ showMe: maxspeedOptions }">
-	        <div class="ors-options-menu">
-		        <div class="ors-options-menu">
-		        	<div class="ui mini label">Maximum speed</div>
-					<rzslider rz-slider-model="$ctrl.maxspeedSlider.value" rz-slider-options="$ctrl.maxspeedSlider.options"></rzslider>
-	    		</div>		        
-			</div>
-	    </div>
-	</div>
-	<div class="options-box" ng-show="$ctrl.activeMenu == 'Wheelchair'">
-	    <div ng-click="wheelchairOptions = !wheelchairOptions">
-	        <i ng-class="$ctrl.getClass(wheelchairOptions)"></i><span>Wheelchair settings</span>
-	    </div>
-	    <div class="collapsable" ng-class="{ showMe: wheelchairOptions }">
-	        <div class="ors-options-menu">
-		        <div class="ors-options-menu">
-		        	<div class="ui label tiny flleft">
-				 	Surface:
-				 	<div class="detail"> {{$ctrl.optionList.wheelchair.Surface[$ctrl.wheelchairSliders.Surface.value].name}}</div>
-					</div>
-					<rzslider rz-slider-model="$ctrl.wheelchairSliders.Surface.value" rz-slider-options="$ctrl.wheelchairSliders.Surface.options"></rzslider>
-					<div class="ui divider"></div>
-					<div class="ui label tiny flleft">
-				 	Incline:
-				 	<div class="detail"> {{$ctrl.optionList.wheelchair.Incline[$ctrl.wheelchairSliders.Incline.value].name}}</div>
-					</div>
-					<rzslider rz-slider-model="$ctrl.wheelchairSliders.Incline.value" rz-slider-options="$ctrl.wheelchairSliders.Incline.options"></rzslider>
-					<div class="ui divider"></div>
-					<div class="ui label tiny flleft">
-				 	Curb:
-				 	<div class="detail"> {{$$ctrl.optionList.wheelchair.Curb[$ctrl.wheelchairSliders.Curb.value].name}}</div>
-					</div>
-					<rzslider rz-slider-model="$ctrl.wheelchairSliders.Curb.value" rz-slider-options="$ctrl.wheelchairSliders.Curb.options"></rzslider>
-
-	    		</div>		        
-			</div>
-	    </div>
-	</div>
+        <div ng-click="routeweightOptions = !routeweightOptions">
+            <i ng-class="$ctrl.getClass(routeweightOptions)">
+            </i>
+            <span>
+                Route preference
+            </span>
+        </div>
+        <div class="collapsable" ng-class="{ showMe: routeweightOptions }">
+            <div class="ors-options-menu">
+                <div class="ui label tiny flleft">
+                    Weight:
+                    <div class="detail">
+                        {{$ctrl.weightSlider.value}}
+                    </div>
+                </div>
+                <rzslider rz-slider-model="$ctrl.weightSlider.value" rz-slider-options="$ctrl.weightSlider.options">
+                </rzslider>
+            </div>
+        </div>
+    </div>
+    <div class="options-box" ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'">
+        <div ng-click="avoidablesOptions = !avoidablesOptions">
+            <i ng-class="$ctrl.getClass(avoidablesOptions)">
+            </i>
+            <span>
+                Avoid road types
+            </span>
+        </div>
+        <div class="collapsable" ng-class="{ showMe: avoidablesOptions }">
+            <ul class="ors-options-menu">
+                <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'">
+                    <div class="ui checkbox">
+                        <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.ferry" type="checkbox">
+                            <label>
+                                Ferries
+                            </label>
+                        </input>
+                    </div>
+                </li>
+                <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'HeavyVehicle'">
+                    <div class="ui checkbox">
+                        <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.unpaved" type="checkbox">
+                            <label>
+                                Unpaved Roads
+                            </label>
+                        </input>
+                    </div>
+                </li>
+                <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'HeavyVehicle'">
+                    <div class="ui checkbox">
+                        <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.paved" type="checkbox">
+                            <label>
+                                Paved Roads
+                            </label>
+                        </input>
+                    </div>
+                </li>
+                <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'HeavyVehicle'">
+                    <div class="ui checkbox">
+                        <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.fords" type="checkbox">
+                            <label>
+                                Fords
+                            </label>
+                        </input>
+                    </div>
+                </li>
+                <li ng-show="$ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Pedestrian' || $ctrl.activeMenu == 'Wheelchair'">
+                    <div class="ui checkbox">
+                        <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.steps" type="checkbox">
+                            <label>
+                                Steps
+                            </label>
+                        </input>
+                    </div>
+                </li>
+                <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'HeavyVehicle'">
+                    <div class="ui checkbox">
+                        <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.highways" type="checkbox">
+                            <label>
+                                Highways
+                            </label>
+                        </input>
+                    </div>
+                </li>
+                <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'HeavyVehicle'">
+                    <div class="ui checkbox">
+                        <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tollroads" type="checkbox">
+                            <label>
+                                Toll Roads
+                            </label>
+                        </input>
+                    </div>
+                </li>
+                <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'HeavyVehicle'">
+                    <div class="ui checkbox">
+                        <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tunnels" type="checkbox">
+                            <label>
+                                Tunnels
+                            </label>
+                        </input>
+                    </div>
+                </li>
+                <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'HeavyVehicle'">
+                    <div class="ui checkbox">
+                        <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tracks" type="checkbox">
+                            <label>
+                                Tracks
+                            </label>
+                        </input>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="options-box" ng-show="$ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Pedestrian'">
+        <div ng-click="difficultyOptions = !difficultyOptions">
+            <i ng-class="$ctrl.getClass(difficultyOptions)">
+            </i>
+            <span>
+                Difficulty settings
+            </span>
+        </div>
+        <div class="collapsable" ng-class="{ showMe: difficultyOptions }">
+            <div class="ors-options-menu">
+                <div class="ui label tiny flleft">
+                    Fitness:
+                    <div class="detail">
+                        {{$ctrl.currentOptions.fitness}}
+                    </div>
+                </div>
+                <rzslider rz-slider-model="$ctrl.difficultySliders.Fitness.value" rz-slider-options="$ctrl.difficultySliders.Fitness.options">
+                </rzslider>
+                <div class="ui divider">
+                </div>
+                <div class="ui checkbox" id="cb-avoidhills">
+                    <input id="cb-avoidhills-input" name="orsRouteDifficultyAvoidHills" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.difficulty.avoidhills" type="checkbox">
+                        <label>
+                            Avoid hills
+                        </label>
+                    </input>
+                </div>
+                <div class="ui divider">
+                </div>
+                <div class="ui label tiny flleft">
+                    Max. steepness
+                </div>
+                <rzslider rz-slider-model="$ctrl.difficultySliders.Steepness.value" rz-slider-options="$ctrl.difficultySliders.Steepness.options">
+                </rzslider>
+            </div>
+        </div>
+    </div>
+    <div class="options-box" ng-show="$ctrl.activeMenu == 'HeavyVehicle'">
+        <div ng-click="hgvOptions = !hgvOptions">
+            <i ng-class="$ctrl.getClass(hgvOptions)">
+            </i>
+            <span>
+                HGV settings
+            </span>
+        </div>
+        <div class="collapsable" ng-class="{ showMe: hgvOptions }">
+            <div class="ors-options-menu">
+                <rzslider rz-slider-model="$ctrl.hgvSliders.Length.value" rz-slider-options="$ctrl.hgvSliders.Length.options">
+                </rzslider>
+                <div class="ui mini label">
+                    Length
+                </div>
+                <rzslider rz-slider-model="$ctrl.hgvSliders.Width.value" rz-slider-options="$ctrl.hgvSliders.Width.options">
+                </rzslider>
+                <div class="ui mini label">
+                    Width
+                </div>
+                <rzslider rz-slider-model="$ctrl.hgvSliders.Height.value" rz-slider-options="$ctrl.hgvSliders.Height.options">
+                </rzslider>
+                <div class="ui mini label">
+                    Length
+                </div>
+                <rzslider rz-slider-model="$ctrl.hgvSliders.Weight.value" rz-slider-options="$ctrl.hgvSliders.Weight.options">
+                </rzslider>
+                <div class="ui mini label">
+                    Weight
+                </div>
+                <rzslider rz-slider-model="$ctrl.hgvSliders.AxleLoad.value" rz-slider-options="$ctrl.hgvSliders.AxleLoad.options">
+                </rzslider>
+                <div class="ui mini label">
+                    Axle Load
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="options-box" ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'">
+        <div ng-click="maxspeedOptions = !maxspeedOptions">
+            <i ng-class="$ctrl.getClass(maxspeedOptions)">
+            </i>
+            <span>
+                Additional settings
+            </span>
+        </div>
+        <div class="collapsable" ng-class="{ showMe: maxspeedOptions }">
+            <div class="ors-options-menu">
+                <div class="ors-options-menu">
+                    <div class="ui mini label">
+                        Maximum speed
+                    </div>
+                    <rzslider rz-slider-model="$ctrl.maxspeedSlider.value" rz-slider-options="$ctrl.maxspeedSlider.options">
+                    </rzslider>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="options-box" ng-show="$ctrl.activeMenu == 'Wheelchair'">
+        <div ng-click="wheelchairOptions = !wheelchairOptions">
+            <i ng-class="$ctrl.getClass(wheelchairOptions)">
+            </i>
+            <span>
+                Wheelchair settings
+            </span>
+        </div>
+        <div class="collapsable" ng-class="{ showMe: wheelchairOptions }">
+            <div class="ors-options-menu">
+                <div class="ors-options-menu">
+                    <div class="ui label tiny flleft">
+                        Surface:
+                        <div class="detail">
+                            {{$ctrl.optionList.wheelchair.Surface[$ctrl.wheelchairSliders.Surface.value].name}}
+                        </div>
+                    </div>
+                    <rzslider rz-slider-model="$ctrl.wheelchairSliders.Surface.value" rz-slider-options="$ctrl.wheelchairSliders.Surface.options">
+                    </rzslider>
+                    <div class="ui divider">
+                    </div>
+                    <div class="ui label tiny flleft">
+                        Incline:
+                        <div class="detail">
+                            {{$ctrl.optionList.wheelchair.Incline[$ctrl.wheelchairSliders.Incline.value].name}}
+                        </div>
+                    </div>
+                    <rzslider rz-slider-model="$ctrl.wheelchairSliders.Incline.value" rz-slider-options="$ctrl.wheelchairSliders.Incline.options">
+                    </rzslider>
+                    <div class="ui divider">
+                    </div>
+                    <div class="ui label tiny flleft">
+                        Curb:
+                        <div class="detail">
+                            {{$$ctrl.optionList.wheelchair.Curb[$ctrl.wheelchairSliders.Curb.value].name}}
+                        </div>
+                    </div>
+                    <rzslider rz-slider-model="$ctrl.wheelchairSliders.Curb.value" rz-slider-options="$ctrl.wheelchairSliders.Curb.options">
+                    </rzslider>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

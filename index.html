@@ -3,7 +3,6 @@
         <title>ORS-ng</title>
         <base href="/"> <!-- is needed for removal of hash in ng views -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" name="viewport">
-            <link href="app/css/styles.css" rel="stylesheet"></link>
             <link href="app/lib/angularjs-slider/dist/rzslider.css" rel="stylesheet" ></link>
             <link href="app/lib/semantic/dist/components/reset.css" rel="stylesheet" ></link>
             <link href="app/lib/semantic/dist/components/input.css" rel="stylesheet" ></link>
@@ -15,10 +14,11 @@
             <link href="app/lib/semantic/dist/components/checkbox.css" rel="stylesheet" ></link>
             <link href="app/lib/semantic/dist/components/label.css" rel="stylesheet" ></link>
             <link href="app/lib/semantic/dist/components/loader.css" rel="stylesheet" ></link>
+            <link href="app/lib/semantic/dist/components/form.css" rel="stylesheet" ></link>
+
+            <link href="app/css/styles.css" rel="stylesheet"></link>
 
             <!--<link href="app/lib/semantic/dist/semantic.min.css" rel="stylesheet" ></link>-->
-
-
 
             <link href="app/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet"></link>
             <link href="app/lib/leaflet/dist/leaflet.css" rel="stylesheet"></link>
@@ -26,13 +26,16 @@
     </head>
     <body ng-app="orsApp">
     <!-- 3. Display the application -->
-        <!-- header component -->
+        <!-- header component 
+            1. need to pass language and unit stuff to settings
+            2. if permalink is called the settings in header have to be updated
+        -->
         <ors-header class="ors-header"></ors-header>
         <div class="ors-main" ng-controller="RootController as root">   
             <!-- side controls which control ng-view -->
             <ors-sidebar class="ors-sidebar" ors-map="root.myOrsMap"></ors-sidebar>
             <ors-map id="map" class="ors-map" ors-map="root.myOrsMap"></ors-map>             
-        </div>      
+        </div>
     </body>
     <!-- 1. Load libraries -->
     <!-- IE required polyfill -->
@@ -70,7 +73,6 @@
     <script src="app/infrastructure/ors-params-service.js"></script>
 
     <script src="app/components/ors-navigation/ors-nav.js"></script>
-    <script src="app/components/ors-header/ors-header.js"></script>
 
     <script src="app/components/ors-panel-routing/ors-panel-routing.js"></script>
     <script src="app/components/ors-panel-routing/ors-waypoints/ors-waypoints.js"></script>
@@ -83,6 +85,8 @@
     <script src="app/components/ors-panel-accessibilityanalysis/ors-aa-waypoints/ors-aa-waypoints.js"></script>
     <script src="app/components/ors-panel-accessibilityanalysis/ors-aa-waypoints/ors-aa-waypoint/ors-aa-waypoint.js"></script>
     <script src="app/components/ors-panel-accessibilityanalysis/ors-aa-sliders/ors-aa-sliders.js"></script>
+        <script src="app/components/ors-header/ors-header.js"></script>
+
     <script src="app/components/ors-map/ors-map.js"></script>
 
 

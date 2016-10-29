@@ -10,6 +10,10 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     orsSettingsFactory.aaSettingsSubject = new Rx.BehaviorSubject({
         waypoints: []
     });
+    /** User specific settings */
+    orsSettingsFactory.globalSettings = new Rx.BehaviorSubject({
+        user_options: {}
+    });
     /** Behaviour subject routing. */
     orsSettingsFactory.ngRouteSubject = new Rx.BehaviorSubject(undefined);
     /** Global reference settings, these are switched when panels are changed - default is routing.*/
@@ -35,6 +39,24 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         return orsSettingsFactory[currentSettingsObj].getValue().profile;
     };
     /**
+     * Returns current user options.
+     * @return {Object} The options object, may contain both profile options and aa options.
+     */
+    orsSettingsFactory.getGlobalSettings = () => {
+        return orsSettingsFactory.globalSettings.getValue().user_options;
+    };
+    /**
+     * Sets current user options.
+     */
+    orsSettingsFactory.setGlobalSettings = (options) => {
+        console.log('setting global settings')
+        //orsSettingsFactory.globalSettings.getValue().user_options = options;
+
+        orsSettingsFactory.globalSettings.onNext(options);
+
+
+    };
+    /**
      * Returns current options.
      * @return {Object} The options object, may contain both profile options and aa options.
      */
@@ -54,7 +76,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     };
     /** Subscription function to current route object. */
     orsSettingsFactory.subscribeToNgRoute = (o) => {
-        console.log('ooo', o)
         return orsSettingsFactory.ngRouteSubject.subscribe(o);
     };
     /** Returns waypoints in settings. If none are set then returns empty list. */

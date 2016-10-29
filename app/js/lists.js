@@ -372,3 +372,20 @@ lists.isochroneOptionList = {
 		default: 5
 	}
 };
+lists.userOptions = {
+    language: {
+        default: 'en',
+        en: 'en',
+        de: 'de'
+    },
+    routinglang: {
+        default: 'en',
+        en: 'en',
+        de: 'de'
+    },
+    units: {
+        default: 'km',
+        km: 'km',
+        mi: 'mi'
+    }
+};

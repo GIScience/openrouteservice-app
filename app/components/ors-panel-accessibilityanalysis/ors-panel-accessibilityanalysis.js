@@ -14,11 +14,13 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
                 ctrl.routeParams = next.params;
                 orsSettingsFactory.initWaypoints(1);
                 const settings = orsParamsService.importSettings(ctrl.routeParams);
-                orsSettingsFactory.setSettings(settings);
+                orsSettingsFactory.setSettings(settings.settings);
+                orsSettingsFactory.setGlobalSettings(settings.globalSettings);
             }
             orsSettingsFactory.updateWaypoints();
             ctrl.profiles = lists.profiles;
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
+
         };
         ctrl.calculate = function() {
             console.log("Fire request AA");

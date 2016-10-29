@@ -11,6 +11,9 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
                 }
             }
         };
+        const globalSettings = {
+            user_options: {}
+        };
         angular.forEach(params, function(value, key) {
             console.info(value, key);
             if (key == 'wps') {
@@ -76,9 +79,21 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
             if (key == 'interval') {
                 settings.profile.options.analysis_options.interval = value;
             }
+            if (key == 'language') {
+                globalSettings.user_options.language = value;
+            }
+            if (key == 'routinglang') {
+                globalSettings.user_options.routinglang = value;
+            }
+            if (key == 'units') {
+                globalSettings.user_options.units = value;
+            }
         });
-        console.warn(JSON.stringify(settings));
-        return settings;
+        console.warn(JSON.stringify(globalSettings));
+        return {
+            settings: settings,
+            globalSettings: globalSettings
+        };
     };
     return orsParamsService;
 }]);
