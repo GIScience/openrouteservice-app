@@ -3,10 +3,12 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
     bindings: {
         orsMap: '<',
         orsParams: '<',
-        activeProfileOption: '<'
+        activeProfile: '<',
+        activeSubgroup: '<',
     },
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
         var ctrl = this;
+        console.log(ctrl.activeProfile, ctrl.activeSubgroup)
         ctrl.$onInit = () => {
             /** If waypoints list is empty initialize new waypoints. */
             ctrl.waypoints = orsSettingsFactory.getWaypoints();
@@ -70,8 +72,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
                 return true;
             }
         };
-        ctrl.$doCheck = () => {
-        };
+        ctrl.$doCheck = () => {};
         /**
          * Removes waypoint. If only start and end are set new wp is created.
          * @param {number} The idx.
@@ -101,7 +102,6 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
             ctrl.waypoints.push(wp);
             orsSettingsFactory.setWaypoints(ctrl.waypoints);
         };
-
         /** If dropdown of addresses is openend once again and address is changed. */
         ctrl.addressChanged = () => {
             orsSettingsFactory.setWaypoints(ctrl.waypoints);

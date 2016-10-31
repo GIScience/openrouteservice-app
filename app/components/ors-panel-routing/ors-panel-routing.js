@@ -15,15 +15,20 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
                 console.log('importing routing settings..')
                 ctrl.routeParams = next.params;
                 orsSettingsFactory.initWaypoints(2);
-                const settings = orsParamsService.importSettings(ctrl.routeParams);
-                console.info('SETTINGS', settings)
-                orsSettingsFactory.setSettings(settings.settings);
-                orsSettingsFactory.setGlobalSettings(settings.globalSettings);
-            } 
+                const importedParams = orsParamsService.importSettings(ctrl.routeParams);
+                orsSettingsFactory.initSettings(importedParams.settings);
+                orsSettingsFactory.initUserOptions(importedParams.user_options);
+            }
+            // TODO site language only saved in cookies!!! remove from permalink, only use cookies
+            // if site language changed saved in cookie and reload, this is needed due to translations
+            // routing instructions and units are used for routing request
             orsSettingsFactory.updateWaypoints();
             ctrl.profiles = lists.profiles;
             //ctrl.activeMenu = ctrl.profiles.Car.name;
-            ctrl.activeMenu = orsSettingsFactory.getActiveProfile().type;
+            ctrl.activeProfile = orsSettingsFactory.getActiveProfile().type;
+            ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup; 
+
+            console.log(ctrl.activeProfile, ctrl.activeSubgroup)
             ctrl.shouldDisplayRouteDetails = false;
         };
         ctrl.goInstructions = function() {

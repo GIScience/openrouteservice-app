@@ -16,6 +16,7 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
             ctrl.showAddresses = false;
             ctrl.waypoint._address = address.shortAddress;
             ctrl.waypoint._latlng = address.position;
+            ctrl.waypoint._set = 1;
             ctrl.onAddressChanged(ctrl.waypoint);
         };
         ctrl.getIdx = () => {

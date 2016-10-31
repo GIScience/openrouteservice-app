@@ -14,18 +14,6 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$htt
             });
         };
         /**
-         * Requests route from ORS backend
-         * @param {String} requestData: XML for request payload
-         */
-        orsRequestService.fetchRoute = function(requestData) {
-            var url = namespaces.services.routing;
-            return $http({
-                method: 'POST',
-                url: url,
-                data: requestData
-            });
-        };
-        /**
          * Requests GeoJSON file
          * @param {String} JSONurl: location of GeoJSON file for request payload
          */

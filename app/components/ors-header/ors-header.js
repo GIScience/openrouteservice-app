@@ -3,19 +3,16 @@ angular.module('orsApp.ors-header', []).component('orsHeader', {
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService) {
         var ctrl = this;
         ctrl.optionList = lists.userOptions;
+        ctrl.cookieOptions = {};
+        /** http://localhost:3000/routing?units=mi&language=de&routinglanguage=en */
         ctrl.$onInit = function() {};
-        /** subscription to global settings update */
-        orsSettingsFactory.globalSettings.subscribe(x => {
-            console.log(JSON.stringify(x))
-            ctrl.currentOptions = x;
-            console.log(!('units' in ctrl.currentOptions))
-
-            if (!('language' in ctrl.currentOptions.user_options)) ctrl.currentOptions.user_options.language = ctrl.optionList.language.default;
-            if (!('routinglang' in ctrl.currentOptions.user_options)) ctrl.currentOptions.user_options.routinglang = ctrl.optionList.routinglang.default;
-            if (!('units' in ctrl.currentOptions.user_options)) ctrl.currentOptions.user_options.units = ctrl.optionList.units.default;
-            
-            console.log(JSON.stringify(ctrl.currentOptions))
-
+        /** subscription to settings, when permalink is used with lang params
+        we have to update language settings. This is called before panel settings
+        object is defined, this is why we have two subscriptions */
+        orsSettingsFactory.userOptionsSubject.subscribe(settings => {
+            ctrl.currentOptions = settings;
+            if (!('routinglang' in ctrl.currentOptions)) ctrl.currentOptions.routinglang = ctrl.optionList.routinglanguages.default;
+            if (!('units' in ctrl.currentOptions)) ctrl.currentOptions.units = ctrl.optionList.units.default;
         });
         ctrl.showModal = {
             settings: false,
@@ -34,8 +31,14 @@ angular.module('orsApp.ors-header', []).component('orsHeader', {
             if (idx == 1) ctrl.showModal.feedback = true;
         };
         ctrl.changeOptions = () => {
-            console.log(ctrl.currentOptions)
-            orsSettingsFactory.setGlobalSettings(ctrl.currentOptions);
+            orsSettingsFactory.setUserOptions(ctrl.currentOptions);
+            // TODO: 
+            // 1. If site lang is changed, set cookie
+            // 2. Reload site if site language is changed, we need this due to translations
+        };
+        ctrl.translate = (term) => {
+            return term;
+            //orsTranslateService.translate
         };
     },
     bindings: {}

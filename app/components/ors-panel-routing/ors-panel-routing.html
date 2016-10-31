@@ -4,11 +4,11 @@
 	</button>
 </div>
 <div class="ors-routing-navigation" ng-if="!$ctrl.shouldDisplayRouteDetails">
-	<ors-profiles-options ors-params="$ctrl.routeParams" show-options="$ctrl.showOptions" active-menu="$ctrl.activeMenu" profiles="$ctrl.profiles"></ors-profiles-options>
+	<ors-profiles-options ors-params="$ctrl.routeParams" show-options="$ctrl.showOptions" active-subgroup="$ctrl.activeSubgroup" active-profile="$ctrl.activeProfile" profiles="$ctrl.profiles"></ors-profiles-options>
 </div>
 <div class="ors-routing-inner" ng-if="!$ctrl.shouldDisplayRouteDetails">
 	<div class="ors-routing-info">
-		<ors-waypoints ors-map="$ctrl.parent.orsMap" ors-params="$ctrl.routeParams" show-options="$ctrl.showOptions" active-profile-option="$ctrl.activeMenu"></ors-waypoints>
+		<ors-waypoints ors-map="$ctrl.parent.orsMap" ors-params="$ctrl.routeParams" show-options="$ctrl.showOptions" active-subgroup="$ctrl.activeSubgroup" active-profile="$ctrl.activeProfile"></ors-waypoints>
 		<!-- this will be the route summary -->
 		<button class="ors-button flleft" ng-click="$ctrl.goInstructions()">
 	        <i class="fa fa-lg fa-bicycle"></i>

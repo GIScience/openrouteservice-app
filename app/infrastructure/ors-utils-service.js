@@ -52,8 +52,9 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http',
          * @param {Array.<Object>} routePoints: List of latLng objects
          * @return {String} xmlRequest: XML document
          */
-        orsUtilsService.generateRouteXml = function(routePoints) {
-            //build request
+        orsUtilsService.generateRouteXml = function(userOptions, settings) {
+            console.log(userOptions, settings)
+                //build request
             var writer = new XMLWriter('UTF-8', '1.0');
             writer.writeStartDocument();
             //<xls:XLS>
@@ -65,7 +66,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http',
             writer.writeAttributeString('xmlns:xlink', namespaces.xlink);
             writer.writeAttributeString('xmlns:xsi', namespaces.xsi);
             writer.writeAttributeString('version', '1.1');
-            writer.writeAttributeString('xls:lang', 'de');
+            writer.writeAttributeString('xls:lang', userOptions.routinglang);
             //<xls:RequestHeader />
             writer.writeElementString('xls:RequestHeader');
             //<xls:Request>
@@ -79,17 +80,56 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http',
             //<xls:RoutePlan>
             writer.writeStartElement('xls:RoutePlan');
             //<xls:RoutePreference />
-            writer.writeElementString('xls:RoutePreference', 'Pedestrian');
+            writer.writeElementString('xls:RoutePreference', settings.profile.type);
             writer.writeStartElement('xls:ExtendedRoutePreference');
-            writer.writeElementString('xls:WeightingMethod', 'Fastest');
+            writer.writeElementString('xls:WeightingMethod', settings.profile.options.weight);
+            if (lists.profiles[settings.profile.type].elevation === true) {
+                writer.writeElementString('xls:SurfaceInformation', 'true');
+                writer.writeElementString('xls:ElevationInformation', 'true');
+            }
+            if (settings.profile.options.maxspeed > 0) {
+                writer.writeElementString('xls:MaxSpeed', settings.profile.options.maxspeed.toString());
+            }
+            if (lists.profiles[settings.profile.type].subgroup == 'HeavyVehicle') {
+                writer.writeElementString('xls:VehicleType', settings.profile.type);
+                if (!angular.isUndefined(settings.profile.options.width)) writer.writeElementString('xls:Width', settings.profile.options.width.toString());
+                if (!angular.isUndefined(settings.profile.options.height)) writer.writeElementString('xls:Height', settings.profile.options.height.toString());
+                if (!angular.isUndefined(settings.profile.options.weight)) writer.writeElementString('xls:Weight', settings.profile.options.weight.toString());
+                if (!angular.isUndefined(settings.profile.options.length)) writer.writeElementString('xls:Length', settings.profile.options.length.toString());
+                if (!angular.isUndefined(settings.profile.options.axleload)) writer.writeElementString('xls:AxleLoad', settings.profile.options.axleload.toString());
+                // TODO :truck hazardous
+                if (!angular.isUndefined(settings.profile.options.hazardous)) {
+                    writer.writeStartElement('xls:LoadCharacteristics');
+                    writer.writeElementString('xls:LoadCharacteristic', settings.profile.options.hazardous.toString());
+                    writer.writeEndElement();
+                }
+            }
+            if (lists.profiles[settings.profile.type].subgroup == 'Wheelchair') {
+                //surface
+                writer.writeStartElement('xls:SurfaceTypes');
+                writer.writeElementString('xls:SurfaceType', settings.profile.options.surface.toString());
+                writer.writeEndElement();
+                //incline
+                writer.writeElementString('xls:Incline', settings.profile.options.incline.toString());
+                //sloped curb
+                writer.writeElementString('xls:SlopedCurb', settings.profile.options.curb.toString());
+            }
+            if (lists.profiles[settings.profile.type].subgroup == 'Bicycle' || lists.profiles[settings.profile.type].subgroup == 'Pedestrian' ||  lists.profiles[settings.profile.type].subgroup == 'Wheelchair') {
+                if (settings.profile.options.steepness >= 0 & settings.profile.options.steepness <= 15) {
+                    writer.writeElementString('xls:MaxSteepness', settings.profile.options.steepness.toString());
+                }
+                if (settings.profile.options.fitness >= 0 & settings.profile.options.fitness <= 3) {
+                    writer.writeElementString('xls:DifficultyLevel', settings.profile.options.fitness.toString());
+                }
+            }
             //</xls:ExtendedRoutePreference>            
             writer.writeEndElement();
             //<xls:WayPointList>
             writer.writeStartElement('xls:WayPointList');
-            for (var i = 0; i < routePoints.length; i++) {
+            for (var i = 0; i < settings.waypoints.length; i++) {
                 if (i === 0) {
                     writer.writeStartElement('xls:StartPoint');
-                } else if (i == (routePoints.length - 1)) {
+                } else if (i == (settings.waypoints.length - 1)) {
                     writer.writeStartElement('xls:EndPoint');
                 } else {
                     writer.writeStartElement('xls:ViaPoint');
@@ -102,7 +142,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http',
                 //<gml:pos />
                 writer.writeStartElement('gml:pos');
                 writer.writeAttributeString('srsName', 'EPSG:4326');
-                writer.writeString(routePoints[i].lng + ' ' + routePoints[i].lat);
+                writer.writeString(settings.waypoints[i]._latlng.lng + ' ' + settings.waypoints[i]._latlng.lat);
                 writer.writeEndElement();
                 //</gml:Point>
                 writer.writeEndElement();
@@ -111,6 +151,59 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http',
                 writer.writeEndElement();
             }
             //</xls:WayPointList>
+            writer.writeEndElement();
+            //<xls:AvoidList>
+            writer.writeStartElement('xls:AvoidList');
+            // if (avoidAreas) {
+            //     //avoidAreas contains an array of Leaflet latLngs
+            //     for (var i = 0; i < avoidAreas.length; i++) {
+            //         var currentArea = avoidAreas[i];
+            //         var corners = currentArea.getLatLngs()[0];
+            //         // ignore lines
+            //         if (corners.length > 2) {
+            //             //<xls:AOI>
+            //             writer.writeStartElement('xls:AOI');
+            //             //<gml:Polygon>
+            //             writer.writeStartElement('gml:Polygon');
+            //             //<gml:exterior>
+            //             writer.writeStartElement('gml:exterior');
+            //             //<gml:LinearRing>
+            //             writer.writeStartElement('gml:LinearRing');
+            //             for (var j = 0; j < corners.length; j++) {
+            //                 writer.writeStartElement('gml:pos');
+            //                 writer.writeString(corners[j].lng + ' ' + corners[j].lat);
+            //                 writer.writeEndElement();
+            //                 // close polygon
+            //                 if (j == corners.length - 1) {
+            //                     writer.writeStartElement('gml:pos');
+            //                     writer.writeString(corners[0].lng + ' ' + corners[0].lat);
+            //                     writer.writeEndElement();
+            //                 }
+            //             }
+            //             writer.writeEndElement();
+            //             //</gml:exterior>
+            //             writer.writeEndElement();
+            //             //</gml:Polygon>
+            //             writer.writeEndElement();
+            //             //</xls:AOI>
+            //             writer.writeEndElement();
+            //         }
+            //     }
+            // }
+            /** loop through avoidable objects in settings and check if they can
+            be used by selected routepref */
+            const subgroup = lists.profiles[settings.profile.type].subgroup;
+            angular.forEach(settings.profile.options.avoidables, function(value, key) {
+                if (value === true) {
+                    const avSubgroups = lists.optionList.avoidables[key].subgroups;
+                    if (_.includes(avSubgroups, subgroup)) writer.writeElementString('xls:AvoidFeature', lists.optionList.avoidables[key].name);
+                }
+            });
+            if (!angular.isUndefined(settings.profile.options.difficulty)) {
+                if (settings.profile.options.difficulty.avoidhills === true) writer.writeElementString('xls:AvoidFeature', 'Hills');
+            }
+            //</xls:AvoidList>
+            //</xls:AvoidList>
             writer.writeEndElement();
             //</xls:RoutePlan>
             writer.writeEndElement();

@@ -13,14 +13,14 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
             if (orsSettingsFactory.getWaypoints().length == 0) {
                 ctrl.routeParams = next.params;
                 orsSettingsFactory.initWaypoints(1);
-                const settings = orsParamsService.importSettings(ctrl.routeParams);
-                orsSettingsFactory.setSettings(settings.settings);
-                orsSettingsFactory.setGlobalSettings(settings.globalSettings);
+                const importedParams = orsParamsService.importSettings(ctrl.routeParams);
+                console.info('SETTINGS', importedParams)
+                orsSettingsFactory.initSettings(importedParams.settings);
+                orsSettingsFactory.initUserOptions(importedParams.user_options);
             }
             orsSettingsFactory.updateWaypoints();
             ctrl.profiles = lists.profiles;
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
-
         };
         ctrl.calculate = function() {
             console.log("Fire request AA");
@@ -29,7 +29,6 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
         ctrl.resetWaypoints = function() {
             $scope.$broadcast('resetWaypoints');
         }
-
     },
     require: {
         parent: '^orsSidebar'

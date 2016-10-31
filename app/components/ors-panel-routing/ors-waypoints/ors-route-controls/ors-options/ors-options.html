@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="options-box" ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'">
+    <div class="options-box" ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Wheelchair' || $ctrl.activeSubgroup == 'HeavyVehicle' || $ctrl.activeSubgroup == 'Pedestrian'">
         <div ng-click="routeweightOptions = !routeweightOptions">
             <i ng-class="$ctrl.getClass(routeweightOptions)">
             </i>
@@ -20,7 +20,7 @@
             </div>
         </div>
     </div>
-    <div class="options-box" ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'">
+    <div class="options-box" ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Wheelchair' || $ctrl.activeSubgroup == 'HeavyVehicle' || $ctrl.activeSubgroup == 'Pedestrian'">
         <div ng-click="avoidablesOptions = !avoidablesOptions">
             <i ng-class="$ctrl.getClass(avoidablesOptions)">
             </i>
@@ -30,7 +30,7 @@
         </div>
         <div class="collapsable" ng-class="{ showMe: avoidablesOptions }">
             <ul class="ors-options-menu">
-                <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'">
+                <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Wheelchair' || $ctrl.activeSubgroup == 'HeavyVehicle' || $ctrl.activeSubgroup == 'Pedestrian'">
                     <div class="ui checkbox">
                         <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.ferry" type="checkbox">
                             <label>
@@ -39,7 +39,7 @@
                         </input>
                     </div>
                 </li>
-                <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'HeavyVehicle'">
+                <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'HeavyVehicle'">
                     <div class="ui checkbox">
                         <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.unpaved" type="checkbox">
                             <label>
@@ -48,7 +48,7 @@
                         </input>
                     </div>
                 </li>
-                <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'HeavyVehicle'">
+                <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'HeavyVehicle'">
                     <div class="ui checkbox">
                         <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.paved" type="checkbox">
                             <label>
@@ -57,7 +57,7 @@
                         </input>
                     </div>
                 </li>
-                <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'HeavyVehicle'">
+                <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'HeavyVehicle'">
                     <div class="ui checkbox">
                         <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.fords" type="checkbox">
                             <label>
@@ -66,7 +66,7 @@
                         </input>
                     </div>
                 </li>
-                <li ng-show="$ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Pedestrian' || $ctrl.activeMenu == 'Wheelchair'">
+                <li ng-show="$ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Pedestrian' || $ctrl.activeSubgroup == 'Wheelchair'">
                     <div class="ui checkbox">
                         <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.steps" type="checkbox">
                             <label>
@@ -75,7 +75,7 @@
                         </input>
                     </div>
                 </li>
-                <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'HeavyVehicle'">
+                <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'HeavyVehicle'">
                     <div class="ui checkbox">
                         <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.highways" type="checkbox">
                             <label>
@@ -84,7 +84,7 @@
                         </input>
                     </div>
                 </li>
-                <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'HeavyVehicle'">
+                <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'HeavyVehicle'">
                     <div class="ui checkbox">
                         <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tollroads" type="checkbox">
                             <label>
@@ -93,7 +93,7 @@
                         </input>
                     </div>
                 </li>
-                <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'HeavyVehicle'">
+                <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'HeavyVehicle'">
                     <div class="ui checkbox">
                         <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tunnels" type="checkbox">
                             <label>
@@ -102,7 +102,7 @@
                         </input>
                     </div>
                 </li>
-                <li ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'HeavyVehicle'">
+                <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'HeavyVehicle'">
                     <div class="ui checkbox">
                         <input name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tracks" type="checkbox">
                             <label>
@@ -114,7 +114,7 @@
             </ul>
         </div>
     </div>
-    <div class="options-box" ng-show="$ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Pedestrian'">
+    <div class="options-box" ng-show="$ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Pedestrian'">
         <div ng-click="difficultyOptions = !difficultyOptions">
             <i ng-class="$ctrl.getClass(difficultyOptions)">
             </i>
@@ -151,7 +151,7 @@
             </div>
         </div>
     </div>
-    <div class="options-box" ng-show="$ctrl.activeMenu == 'HeavyVehicle'">
+    <div class="options-box" ng-show="$ctrl.activeSubgroup == 'HeavyVehicle'">
         <div ng-click="hgvOptions = !hgvOptions">
             <i ng-class="$ctrl.getClass(hgvOptions)">
             </i>
@@ -189,7 +189,7 @@
             </div>
         </div>
     </div>
-    <div class="options-box" ng-show="$ctrl.activeMenu == 'Car' || $ctrl.activeMenu == 'Bicycle' || $ctrl.activeMenu == 'Wheelchair' || $ctrl.activeMenu == 'HeavyVehicle' || $ctrl.activeMenu == 'Pedestrian'">
+    <div class="options-box" ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Wheelchair' || $ctrl.activeSubgroup == 'HeavyVehicle' || $ctrl.activeSubgroup == 'Pedestrian'">
         <div ng-click="maxspeedOptions = !maxspeedOptions">
             <i ng-class="$ctrl.getClass(maxspeedOptions)">
             </i>
@@ -209,7 +209,7 @@
             </div>
         </div>
     </div>
-    <div class="options-box" ng-show="$ctrl.activeMenu == 'Wheelchair'">
+    <div class="options-box" ng-show="$ctrl.activeSubgroup == 'Wheelchair'">
         <div ng-click="wheelchairOptions = !wheelchairOptions">
             <i ng-class="$ctrl.getClass(wheelchairOptions)">
             </i>

@@ -19,7 +19,6 @@ lists.wpColors = {
     0: '#9e9e9e',
     1: '#707070'
 };
-lists.distanceUnits = ['m', 'km', 'yd', 'mi'];
 lists.geocodingContainers = {
     reverse: {
         inner: 'ReverseGeocodedLocation',
@@ -134,23 +133,23 @@ lists.optionList = {
     },
     difficulty: {
         fitness: {
-            Unset: {
+            '-1': {
                 name: 'Unset',
                 value: -1
             },
-            Novice: {
+            '0': {
                 name: 'Novice',
                 value: 0
             },
-            Moderate: {
+            '1': {
                 name: 'Moderate',
                 value: 1
             },
-            Amateur: {
+            '2': {
                 name: 'Amateur',
                 value: 2
             },
-            Pro: {
+            '3': {
                 name: 'Pro',
                 value: 3
             }
@@ -162,31 +161,40 @@ lists.optionList = {
     },
     avoidables: {
         ferry: {
-            name: 'Ferry'
+            name: 'Ferry',
+            subgroups: ['Car', 'Bicycle', 'HeavyVehicle', 'Wheelchair', 'Pedestrian']
         },
         unpaved: {
-            name: 'Unpavedroads'
+            name: 'Unpavedroads',
+            subgroups: ['Car', 'Bicycle', 'HeavyVehicle']
         },
         paved: {
-            name: 'Pavedroads'
+            name: 'Pavedroads',
+            subgroups: ['Car', 'Bicycle', 'HeavyVehicle']
         },
         fords: {
-            name: 'Fords'
+            name: 'Fords',
+            subgroups: ['Car', 'Bicycle', 'HeavyVehicle', 'Wheelchair', 'Pedestrian']
         },
         steps: {
-            name: 'Steps'
+            name: 'Steps',
+            subgroups: ['Wheelchair', 'Pedestrian']
         },
         highways: {
-            name: 'Highways'
+            name: 'Highways',
+            subgroups: ['Car', 'HeavyVehicle']
         },
         tollroads: {
-            name: 'Tollroads'
+            name: 'Tollroads',
+            subgroups: ['Car', 'HeavyVehicle']
         },
         tunnels: {
-            name: 'Tunnels'
+            name: 'Tunnels',
+            subgroups: ['Car', 'HeavyVehicle']
         },
         tracks: {
-            name: 'Tracks'
+            name: 'Tracks',
+            subgroups: ['Car', 'HeavyVehicle']
         }
     },
     wheelchair: {
@@ -279,109 +287,121 @@ lists.optionList = {
         Car: {
             min: 30,
             max: 300,
+            default: 100,
             step: 5
         },
         Bicycle: {
             min: 5,
             max: 50,
+            default: 25,
             step: 1
         },
         BicycleMTB: {
             min: 5,
             max: 50,
+            default: 20,
             step: 1
         },
         BicycleRacer: {
             min: 5,
             max: 50,
+            default: 30,
             step: 1
         },
         BicycleTouring: {
             min: 5,
             max: 50,
+            default: 25,
             step: 1
         },
         BicycleSafety: {
             min: 5,
             max: 50,
+            default: 20,
             step: 1
         },
         Pedestrian: {
             min: 3,
             max: 15,
+            default: 6,
             step: 1
         },
         Wheelchair: {
             min: 5,
             max: 50,
+            default: 8,
             step: 1
         },
         HeavyVehicle: {
             min: 30,
             max: 200,
+            default: 100,
             step: 5
         },
         Goods: {
             min: 30,
             max: 200,
+            default: 100,
             step: 5
         },
         Bus: {
             min: 30,
             max: 200,
+            default: 100,
             step: 5
         },
         Agricultural: {
             min: 30,
             max: 200,
+            default: 100,
             step: 5
         },
         Foresty: {
             min: 30,
             max: 200,
+            default: 100,
             step: 5
         },
         Delivery: {
             min: 30,
             max: 200,
+            default: 100,
             step: 5
         },
     }
 };
 lists.isochroneOptionList = {
     methodOptions: {
-		RG: {
-			id: 0,
-			name: 'Recursive Grid'
-		},
-		TIN: {
-			id: 1,
-			name: 'TIN'
-		}
-	},
-	minutesOptions: {
-		min: 1,
-		max: 30,
-		step: 1,
-		default: 15
-	},
-	intervalOptions: {
-		min: 1,
-		max: 29,
-		step: 1,
-		default: 5
-	}
+        RG: {
+            id: 0,
+            name: 'Recursive Grid'
+        },
+        TIN: {
+            id: 1,
+            name: 'TIN'
+        }
+    },
+    minutesOptions: {
+        min: 1,
+        max: 30,
+        step: 1,
+        default: 15
+    },
+    intervalOptions: {
+        min: 1,
+        max: 29,
+        step: 1,
+        default: 5
+    }
 };
 lists.userOptions = {
-    language: {
+    languages: {
         default: 'en',
-        en: 'en',
-        de: 'de'
+        all: ['de', 'en', 'es', 'fr', 'it', 'nl', 'hu', 'ru', 'ua', 'cz', 'pl', 'cnsimple', 'cn']
     },
-    routinglang: {
+    routinglanguages: {
         default: 'en',
-        en: 'en',
-        de: 'de'
+        all: ['de', 'en', 'es', 'fr', 'it', 'nl', 'hu', 'ru', 'ua', 'cz', 'pl', 'cnsimple', 'cn', 'bg', 'hr', 'nl_BE', 'eo', 'fi', 'fr', 'pl', 'pt_BR', 'ro', 'se', 'dk', 'tr', 'ca', 'ja', 'no', 'vi', 'nb', 'de-rheinl', 'de-opplat', 'de-berlin', 'de-swabia', 'de-ruhrpo', 'de-at-ooe', 'de-bay']
     },
     units: {
         default: 'km',

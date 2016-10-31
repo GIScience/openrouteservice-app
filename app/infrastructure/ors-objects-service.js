@@ -6,9 +6,10 @@ angular.module('orsApp.objects-service', []).factory('orsObjectsFactory', functi
          * @param {string} address - The address string.
          * @param {Object} latlng - The leaflet latlng object.
          */
-        constructor(address, latlng) {
+        constructor(address, latlng, set) {
             this._address = address;
             this._latlng = latlng;
+            this._set = set;
         }
     }
     return {
@@ -16,8 +17,8 @@ angular.module('orsApp.objects-service', []).factory('orsObjectsFactory', functi
          * Get new waypoint.
          * @return {Object} A new waypoint object.
          */
-        createWaypoint: (address, latlng) => {
-            return new waypoint(address, latlng);
+        createWaypoint: (address, latlng, set = 0) => {
+            return new waypoint(address, latlng, set);
         }
     };
 });

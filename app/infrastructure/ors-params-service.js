@@ -11,9 +11,7 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
                 }
             }
         };
-        const globalSettings = {
-            user_options: {}
-        };
+        const user_options = {};
         angular.forEach(params, function(value, key) {
             console.info(value, key);
             if (key == 'wps') {
@@ -23,7 +21,7 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
                 angular.forEach(wps, function(wp) {
                     wp = wp.split(",");
                     console.log(wp)
-                    wp = orsObjectsFactory.createWaypoint('', new L.latLng([parseFloat(wp[0]), parseFloat(wp[1])]));
+                    wp = orsObjectsFactory.createWaypoint('', new L.latLng([parseFloat(wp[0]), parseFloat(wp[1])]), 1);
                     console.log(wp)
                     waypoints.push(wp);
                     orsRequestService.getAddress(wp._latlng, idx, true);
@@ -79,20 +77,21 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
             if (key == 'interval') {
                 settings.profile.options.analysis_options.interval = value;
             }
-            if (key == 'language') {
-                globalSettings.user_options.language = value;
-            }
+            /** not going to be passed in permalink */
+            // if (key == 'language') {
+            //     settings.user_options.language = value;
+            // }
             if (key == 'routinglang') {
-                globalSettings.user_options.routinglang = value;
+                user_options.routinglang = value;
             }
             if (key == 'units') {
-                globalSettings.user_options.units = value;
+                user_options.units = value;
             }
         });
-        console.warn(JSON.stringify(globalSettings));
+        //console.warn(JSON.stringify(globalSettings));
         return {
             settings: settings,
-            globalSettings: globalSettings
+            user_options: user_options
         };
     };
     return orsParamsService;

@@ -56,7 +56,7 @@ angular.module('orsApp').directive('orsMap', function() {
                     if (updateWp) {
                         orsSettingsFactory.updateWaypoint(idx, '', pos);
                     } else {
-                        const waypoint = orsObjectsFactory.createWaypoint('', pos);
+                        const waypoint = orsObjectsFactory.createWaypoint('', pos, 1);
                         orsSettingsFactory.insertWaypointFromMap(idx, waypoint);
                     }
                     orsRequestService.getAddress(pos, idx, updateWp);
@@ -85,11 +85,9 @@ angular.module('orsApp').directive('orsMap', function() {
                     ctrl.mapModel.geofeatures.layerRoutePoints.clearLayers();
                 };
                 ctrl.reAddWaypoints = (waypoints) => {
-                    console.log(waypoints)
                     ctrl.clearMap();
                     var idx = 0;
                     angular.forEach(waypoints, (waypoint) => {
-                        console.log('waypoint', waypoints, waypoint)
                         var iconIdx = orsSettingsFactory.getIconIdx(idx);
                         if (waypoint._latlng.lat && waypoint._latlng.lng) ctrl.addWaypoint(idx, iconIdx, waypoint._latlng);
                         idx += 1;

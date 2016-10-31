@@ -1,4 +1,4 @@
-angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', function(orsObjectsFactory) {
+angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRouteProcessingService', function(orsObjectsFactory, orsUtilsService, orsRouteProcessingService) {
     let orsSettingsFactory = {};
     /** Behaviour subjects routing. */
     orsSettingsFactory.routingWaypointsSubject = new Rx.BehaviorSubject({});
@@ -10,10 +10,8 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     orsSettingsFactory.aaSettingsSubject = new Rx.BehaviorSubject({
         waypoints: []
     });
-    /** User specific settings */
-    orsSettingsFactory.globalSettings = new Rx.BehaviorSubject({
-        user_options: {}
-    });
+    /** Behaviour subject for user options, language and units */
+    orsSettingsFactory.userOptionsSubject = new Rx.BehaviorSubject({});
     /** Behaviour subject routing. */
     orsSettingsFactory.ngRouteSubject = new Rx.BehaviorSubject(undefined);
     /** Global reference settings, these are switched when panels are changed - default is routing.*/
@@ -22,47 +20,49 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * Sets the settings from permalink
      * @param {Object} The settings object.
      */
-    orsSettingsFactory.setSettings = (params) => {
+    orsSettingsFactory.initSettings = (params) => {
         let set = orsSettingsFactory[currentSettingsObj].getValue();
         for (var k in params) {
             set[k] = params[k];
         }
-        /** Fire request. */
+        /** Fire request */
         orsSettingsFactory[currentSettingsObj].onNext(set);
     };
-    /**
+    orsSettingsFactory.initUserOptions = (params) => {
+        let set = orsSettingsFactory.userOptionsSubject.getValue();
+        for (var k in params) {
+            set[k] = params[k];
+        }
+        orsSettingsFactory.userOptionsSubject.onNext(set);
+    };
+    /** 
+     * Sets user specific options in settings (language and units)
+     * @param {Object} options- Consists of routing instruction language and units km/mi
+     */
+    orsSettingsFactory.setUserOptions = (options) => {
+        /** user settings are updated for both panels accordingly */
+        orsSettingsFactory.userOptionsSubject.getValue().user_options = options;
+        /** units or routing instructions lang are updated, no new request */
+    };
+    /** 
+     * Gets user specific options in settings (language and units)
+     * @return {Object} The user settings
+     */
+    orsSettingsFactory.getUserOptions = () => {
+        return orsSettingsFactory.userOptionsSubject.getValue();
+    };
+    /**;
      * Returns active profile.
      * @return {Object} The profile object.
      */
     orsSettingsFactory.getActiveProfile = () => {
-        if (!('profile' in orsSettingsFactory[currentSettingsObj].getValue())) return [];
         return orsSettingsFactory[currentSettingsObj].getValue().profile;
-    };
-    /**
-     * Returns current user options.
-     * @return {Object} The options object, may contain both profile options and aa options.
-     */
-    orsSettingsFactory.getGlobalSettings = () => {
-        return orsSettingsFactory.globalSettings.getValue().user_options;
-    };
-    /**
-     * Sets current user options.
-     */
-    orsSettingsFactory.setGlobalSettings = (options) => {
-        console.log('setting global settings')
-        //orsSettingsFactory.globalSettings.getValue().user_options = options;
-
-        orsSettingsFactory.globalSettings.onNext(options);
-
-
     };
     /**
      * Returns current options.
      * @return {Object} The options object, may contain both profile options and aa options.
      */
     orsSettingsFactory.getActiveOptions = () => {
-        if (!('profile' in orsSettingsFactory[currentSettingsObj].getValue())) return [];
-        if (!('options' in orsSettingsFactory[currentSettingsObj].getValue().profile)) return [];
         return orsSettingsFactory[currentSettingsObj].getValue().profile.options;
     };
     orsSettingsFactory.setActiveOptions = (options) => {
@@ -71,7 +71,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     };
     /** Subscription function to current waypoints object, used in map. */
     orsSettingsFactory.subscribeToWaypoints = (o) => {
-        console.warn(orsSettingsFactory, currentWaypointsObj)
         return orsSettingsFactory[currentWaypointsObj].subscribe(o);
     };
     /** Subscription function to current route object. */
@@ -80,7 +79,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     };
     /** Returns waypoints in settings. If none are set then returns empty list. */
     orsSettingsFactory.getWaypoints = () => {
-        if (!('waypoints' in orsSettingsFactory[currentSettingsObj].getValue())) return [];
         return orsSettingsFactory[currentSettingsObj].getValue().waypoints;
     };
     /**
@@ -88,7 +86,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * @param {number} n - Specifices the amount of waypoints to be added
      */
     orsSettingsFactory.initWaypoints = (n) => {
-        console.log(orsSettingsFactory[currentSettingsObj].getValue())
         for (var i = 1; i <= n; i++) {
             wp = orsObjectsFactory.createWaypoint('', new L.latLng());
             orsSettingsFactory[currentSettingsObj].getValue().waypoints.push(wp);
@@ -121,24 +118,42 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         console.info('newRoute', newRoute)
         currentSettingsObj = orsSettingsFactory.getCurrentSettings(newRoute);
         currentWaypointsObj = orsSettingsFactory.getCurrentWaypoints(newRoute);
-        console.log('objs', currentSettingsObj, currentWaypointsObj)
+        /** panels switched, clear the map */
         orsSettingsFactory.ngRouteSubject.onNext(newRoute);
     });
-    orsSettingsFactory.handleRoutePresent = () => {
-        return true;
+    /** 
+     * Checks if two waypoints are set
+     * @param {Object} settings - route settings object
+     * @return {boolean} routePresent - whether route is present
+     */
+    orsSettingsFactory.handleRoutePresent = (settings) => {
+        let sum = 0,
+            routePresent = false;
+        angular.forEach(settings.waypoints, function(waypoint) {
+            sum += waypoint._set;
+            if (sum == 2) {
+                routePresent = true;
+                return;
+            }
+        });
+        return routePresent;
     };
     /** Subscription function to current routing settings */
-    orsSettingsFactory.routingSettingsSubject.subscribe(x => {
-        console.info('routing request', x);
-        const isRoutePresent = orsSettingsFactory.handleRoutePresent();
+    orsSettingsFactory.routingSettingsSubject.subscribe(settings => {
+        console.log(true, 'go', settings)
+        /** get user obtions */
+        const isRoutePresent = orsSettingsFactory.handleRoutePresent(settings);
         // var isRoutePresent = waypoint.getNumWaypointsSet() >= 2;
         if (isRoutePresent) {
-            console.info('routing request two wp yes', x);
+            const userOptions = orsSettingsFactory.getUserOptions();
+            const payload = orsUtilsService.generateRouteXml(userOptions, settings);
+            orsRouteProcessingService.fetchRoute(payload);
         }
     });
     /** Subscription function to current accessibility settings */
     orsSettingsFactory.aaSettingsSubject.subscribe(x => {
         console.info('aa request', x);
+        const userOptions = orsSettingsFactory.getUserOptions();
     });
     /** 
      * Updates waypoint address. No need to fire subscription for settings.
@@ -149,7 +164,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      */
     orsSettingsFactory.updateWaypointAddress = (idx, address, init) => {
         let set = orsSettingsFactory[currentSettingsObj].getValue();
-        console.log('set', set)
         if (init) {
             set.waypoints[idx]._address = address;
         } else {

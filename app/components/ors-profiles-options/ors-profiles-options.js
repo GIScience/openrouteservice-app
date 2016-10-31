@@ -3,7 +3,8 @@ angular.module('orsApp.ors-profiles-options', []).component('orsProfilesOptions'
     bindings: {
         orsParams: '<',
         showOptions: '=',
-        activeMenu: '=',
+        activeProfile: '=',
+        activeSubgroup: '=',
         profiles: '<'
     },
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService) {
@@ -12,7 +13,8 @@ angular.module('orsApp.ors-profiles-options', []).component('orsProfilesOptions'
         // load permalink infos and set active profile
         ctrl.$onInit = () => {
             ctrl.currentProfile = orsSettingsFactory.getActiveProfile();
-            ctrl.activeMenu = ctrl.profiles[ctrl.currentProfile.type].subgroup;
+            ctrl.activeSubgroup = ctrl.profiles[ctrl.currentProfile.type].subgroup; 
+            ctrl.activeProfile = ctrl.currentProfile.type;
         };
         /**
          * Is called when profile is changed
@@ -20,7 +22,8 @@ angular.module('orsApp.ors-profiles-options', []).component('orsProfilesOptions'
          */	
         ctrl.changeProfile = (profile) => {
             if (profile) ctrl.currentProfile.type = profile;
-            ctrl.activeMenu = ctrl.profiles[ctrl.currentProfile.type].subgroup;
+            ctrl.activeProfile = ctrl.currentProfile.type;
+            ctrl.activeSubgroup = ctrl.profiles[ctrl.currentProfile.type].subgroup;
             orsSettingsFactory.setProfile(ctrl.currentProfile);
         };
         ctrl.callOptions = () => {

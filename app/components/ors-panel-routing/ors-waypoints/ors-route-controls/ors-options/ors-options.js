@@ -1,12 +1,14 @@
 angular.module('orsApp.ors-options', []).component('orsOptions', {
     templateUrl: 'app/components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-options/ors-options.html',
     bindings: {
-        activeMenu: '<',
+        activeSubgroup: '<',
+        activeProfile: '<',
         showOptions: '<'
     },
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService, $scope, $timeout) {
         var ctrl = this;
         ctrl.optionList = lists.optionList;
+        console.log(ctrl.activeSubgroup, ctrl.activeProfile)
         ctrl.$onInit = function() {
             /** This is a reference of the settings object, if we change here, it is updated in settings */
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
@@ -33,8 +35,8 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                 }
             };
             // set maxspeed slider from params
-            ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeMenu];
-            ctrl.currentOptions.maxspeed = ctrl.currentOptions.maxspeed !== undefined ? ctrl.currentOptions.maxspeed : ctrl.maxspeedOptions.min;
+            ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeSubgroup];
+            ctrl.currentOptions.maxspeed = ctrl.currentOptions.maxspeed !== undefined ? ctrl.currentOptions.maxspeed : ctrl.maxspeedOptions.default;
             ctrl.maxspeedSlider = {
                 value: ctrl.currentOptions.maxspeed,
                 options: {
@@ -129,7 +131,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                 }
             };
             // Difficulty settings
-            ctrl.currentOptions.fitness = ctrl.currentOptions.fitness !== undefined ? ctrl.optionList.difficulty.fitness[ctrl.currentOptions.fitness].name : ctrl.optionList.difficulty.fitness.Unset.name;
+            ctrl.currentOptions.fitness = ctrl.currentOptions.fitness !== undefined ? ctrl.optionList.difficulty.fitness[ctrl.currentOptions.fitness].value : ctrl.optionList.difficulty.fitness['-1'].value;
             ctrl.currentOptions.steepness = ctrl.currentOptions.steepness !== undefined ? ctrl.currentOptions.steepness : ctrl.optionList.difficulty.steepness.min;
             ctrl.avoidHillsCheckbox();
             ctrl.difficultySliders = {
@@ -137,20 +139,25 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                     value: ctrl.currentOptions.fitness,
                     options: {
                         stepsArray: [{
-                            value: ctrl.optionList.difficulty.fitness.Unset.name
+                            value: ctrl.optionList.difficulty.fitness['-1'].value
                         }, {
-                            value: ctrl.optionList.difficulty.fitness.Novice.name
+                            value: ctrl.optionList.difficulty.fitness['0'].value
                         }, {
-                            value: ctrl.optionList.difficulty.fitness.Moderate.name
+                            value: ctrl.optionList.difficulty.fitness['1'].value
                         }, {
-                            value: ctrl.optionList.difficulty.fitness.Amateur.name
+                            value: ctrl.optionList.difficulty.fitness['2'].value
                         }, {
-                            value: ctrl.optionList.difficulty.fitness.Pro.name
+                            value: ctrl.optionList.difficulty.fitness['3'].value
                         }],
                         showTicks: true,
                         showTicksValues: false,
                         hidePointerLabels: true,
                         hideLimitLabels: true,
+                        // TODO: doesn't work
+                        translate: function(value) {
+                            return ctrl.optionList.difficulty.fitness[value].name;
+                            
+                        },
                         onEnd: function() {
                             ctrl.currentOptions.fitness = ctrl.difficultySliders.Fitness.value;
                             ctrl.changeOptions();
@@ -263,11 +270,14 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
         };
         ctrl.$onChanges = function(changesObj) {
             if (changesObj.showOptions) ctrl.refreshSlider();
-            if (changesObj.activeMenu) {
-                ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeMenu];
+            if (changesObj.activeSubgroup || changesObj.activeProfile ) {
+                ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeProfile];
                 // check if already initiated
+                /** update slider settings */
                 if (ctrl.maxspeedSlider) {
-                    ctrl.maxspeedSlider.value = ctrl.maxspeedOptions.min;
+                    ctrl.maxspeedSlider.value = ctrl.maxspeedOptions.default;
+                    ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
+                    console.info(ctrl.currentOptions)
                     ctrl.maxspeedSlider.options.floor = ctrl.maxspeedOptions.min;
                     ctrl.maxspeedSlider.options.ceil = ctrl.maxspeedOptions.max;
                     ctrl.maxspeedSlider.options.step = ctrl.maxspeedOptions.step;

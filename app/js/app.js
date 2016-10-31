@@ -11,6 +11,7 @@ var orsApp = angular.module('orsApp', [
     'orsApp.request-service', 
     'orsApp.settings-service', 
     'orsApp.utils-service',
+    'orsApp.route-processing-service',
     'rzModule'
 ])
 

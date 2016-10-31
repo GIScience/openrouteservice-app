@@ -2,6 +2,7 @@ angular.module('orsApp.ors-route-controls', []).component('orsRouteControls', {
     templateUrl: 'app/components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-route-controls.html',
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService) {
         var ctrl = this;
+        console.log(ctrl.activeSubgroup)
         ctrl.showOptions = false;
         ctrl.add = () => {
             ctrl.onAdd();
@@ -24,6 +25,7 @@ angular.module('orsApp.ors-route-controls', []).component('orsRouteControls', {
         onReverse: '&',
         onWaypointsChanged: '&',
         showAdd: '=',
-        activeProfileOption: '<'
+        activeSubgroup: '<',
+        activeProfile: '<'
     }
 });
