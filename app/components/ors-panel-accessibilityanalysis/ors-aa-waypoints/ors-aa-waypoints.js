@@ -54,6 +54,9 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         ctrl.waypointsChanged = () => {
             console.log('wps changed');
         };
+        /**
+         * Creates an empty waypoint and replaces the current one with it
+         */
         ctrl.deleteWaypoint = () => {
             let wp = orsObjectsFactory.createWaypoint('', new L.latLng());
             ctrl.waypoints[0] = wp;
@@ -69,6 +72,9 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
             // console.log(ctrl.waypoints)
             orsSettingsFactory.setWaypoints(ctrl.waypoints);
         };
+        /**
+         * Listener to the panel js. Empties the input field and removes the waypoint from the list
+         */
         $scope.$on('resetWaypoints', function(e) {  
             ctrl.deleteWaypoint();
          });

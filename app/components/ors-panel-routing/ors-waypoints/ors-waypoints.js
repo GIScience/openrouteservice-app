@@ -70,8 +70,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
                 return true;
             }
         };
-        ctrl.$doCheck = () => {
-        };
+        ctrl.$doCheck = () => {};
         /**
          * Removes waypoint. If only start and end are set new wp is created.
          * @param {number} The idx.
@@ -101,9 +100,19 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
             ctrl.waypoints.push(wp);
             orsSettingsFactory.setWaypoints(ctrl.waypoints);
         };
-
         /** If dropdown of addresses is openend once again and address is changed. */
         ctrl.addressChanged = () => {
+            orsSettingsFactory.setWaypoints(ctrl.waypoints);
+        };
+        /**
+         * Toggles the roundtrip setting
+         */
+        ctrl.setRoundtrip = () => {
+            console.log("roundtrip");
+            console.log(ctrl.waypoints.slice(0,1));
+            let wp = orsObjectsFactory.createWaypoint(ctrl.waypoints[0]._address, ctrl.waypoints[0]._latlng);
+            ctrl.waypoints.push(wp);
+            console.log(ctrl.waypoints);
             orsSettingsFactory.setWaypoints(ctrl.waypoints);
         };
         /** Sortable options for angular-jquery-ui .*/

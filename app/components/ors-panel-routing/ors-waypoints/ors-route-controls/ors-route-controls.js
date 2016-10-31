@@ -20,6 +20,7 @@ angular.module('orsApp.ors-route-controls', []).component('orsRouteControls', {
     },
     bindings: {
         onAdd: '&',
+        setRoundtrip: '&',
         onReset: '&',
         onReverse: '&',
         onWaypointsChanged: '&',
