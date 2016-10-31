@@ -3,7 +3,8 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
     bindings: {
         orsMap: '<',
         orsParams: '<',
-        activeProfileOption: '<'
+        activeProfile: '<',
+        activeSubgroup: '<'
     },
     controller($scope, orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
         var ctrl = this;
