@@ -26,6 +26,9 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
             console.log("Fire request AA");
             console.log(ctrl.currentOptions);
         };
+        /**
+         * Called when clicking the reset button. Broadcasts the delete to the waypoint
+         */
         ctrl.resetWaypoints = function() {
             $scope.$broadcast('resetWaypoints');
         }

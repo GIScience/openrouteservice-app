@@ -106,6 +106,17 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         ctrl.addressChanged = () => {
             orsSettingsFactory.setWaypoints(ctrl.waypoints);
         };
+        /**
+         * Toggles the roundtrip setting
+         */
+        ctrl.setRoundtrip = () => {
+            console.log("roundtrip");
+            console.log(ctrl.waypoints.slice(0,1));
+            let wp = orsObjectsFactory.createWaypoint(ctrl.waypoints[0]._address, ctrl.waypoints[0]._latlng);
+            ctrl.waypoints.push(wp);
+            console.log(ctrl.waypoints);
+            orsSettingsFactory.setWaypoints(ctrl.waypoints);
+        };
         /** Sortable options for angular-jquery-ui .*/
         ctrl.sortableOptions = {
             axis: 'y',
