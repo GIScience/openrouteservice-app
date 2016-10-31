@@ -1,10 +1,10 @@
 <div class="ors-routing-navigation">
-    <ors-profiles-options active-menu="$ctrl.activeMenu" ors-params="$ctrl.routeParams" profiles="$ctrl.profiles" show-options="$ctrl.showOptions">
+    <ors-profiles-options active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup" ors-params="$ctrl.routeParams" profiles="$ctrl.profiles" show-options="$ctrl.showOptions">
     </ors-profiles-options>
 </div>
 <div class="ors-routing-inner" ng-if="!$ctrl.shouldDisplayRouteDetails">
     <div class="ors-routing-info">
-        <ors-aa-waypoints active-profile-option="$ctrl.activeMenu" ors-map="$ctrl.parent.orsMap" ors-params="$ctrl.routeParams" show-options="$ctrl.showOptions">
+        <ors-aa-waypoints active-subgroup="$ctrl.activeSubgroup" active-profile="$ctrl.activeProfile" ors-map="$ctrl.parent.orsMap" ors-params="$ctrl.routeParams" show-options="$ctrl.showOptions">
         </ors-aa-waypoints>
         <ors-aa-sliders current-options="$ctrl.currentOptions">
         </ors-aa-sliders>

@@ -13,6 +13,7 @@ angular.module('orsApp.ors-profiles-options', []).component('orsProfilesOptions'
         // load permalink infos and set active profile
         ctrl.$onInit = () => {
             ctrl.currentProfile = orsSettingsFactory.getActiveProfile();
+            console.log(ctrl.profiles[ctrl.currentProfile.type].subgroup)
             ctrl.activeSubgroup = ctrl.profiles[ctrl.currentProfile.type].subgroup; 
             ctrl.activeProfile = ctrl.currentProfile.type;
         };

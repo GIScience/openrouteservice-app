@@ -21,6 +21,8 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
             orsSettingsFactory.updateWaypoints();
             ctrl.profiles = lists.profiles;
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
+            ctrl.activeProfile = orsSettingsFactory.getActiveProfile().type;
+            ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup; 
         };
         ctrl.calculate = function() {
             console.log("Fire request AA");
