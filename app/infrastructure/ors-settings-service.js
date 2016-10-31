@@ -86,6 +86,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * @param {number} n - Specifices the amount of waypoints to be added
      */
     orsSettingsFactory.initWaypoints = (n) => {
+        orsSettingsFactory[currentSettingsObj].getValue().waypoints = [];
         for (var i = 1; i <= n; i++) {
             wp = orsObjectsFactory.createWaypoint('', new L.latLng());
             orsSettingsFactory[currentSettingsObj].getValue().waypoints.push(wp);
