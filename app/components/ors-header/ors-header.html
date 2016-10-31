@@ -1,0 +1,49 @@
+<ul>
+    <li ;="" style="float: left">
+        <a>
+            OpenRouteService.org
+        </a>
+    </li>
+    <li>
+        <div class="ui simple dropdown item">
+            <i class="fa fa-info-circle fa-2x">
+            </i>
+            <div class="menu">
+                <div class="item" ng-click="$ctrl.showModalFn(0)">
+                    <i class="fa fa-cog">
+                    </i>
+                    <span id="tl_settings">
+                        Settings
+                    </span>
+                </div>
+                <div class="item" ng-click="$ctrl.showModalFn(1)">
+                    <i class="fa fa-pencil">
+                    </i>
+                    <span id="tl_feedback">
+                        Feedback
+                    </span>
+                </div>
+                <div class="item">
+                    <i class="fa fa-code">
+                    </i>
+                    <span id="tl_documentation">
+                        Documentation
+                    </span>
+                </div>
+                <div class="item">
+                    <i class="fa fa-google">
+                    </i>
+                    <span id="tl_googlegroups">
+                        Google Groups
+                    </span>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+<div class="ors-modal-container" data-ng-show="$ctrl.showModal.settings || $ctrl.showModal.feedback">
+    <div data-ng-show="$ctrl.showModal.settings" ng-include="'app/includes/settings.html'">
+    </div>
+    <div data-ng-show="$ctrl.showModal.feedback" ng-include="'app/includes/feedback.html'">
+    </div>
+</div>

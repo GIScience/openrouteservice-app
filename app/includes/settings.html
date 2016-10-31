@@ -1,0 +1,47 @@
+<form class="ors-dialog scrollable">
+    <header>
+        <h1>
+            Settings
+        </h1>
+    </header>
+    <section>
+        <h2>
+            Units
+        </h2>
+        <div class="field ors-inline">
+            <div class="ui radio checkbox">
+                <input name="orsUnits" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.user_options.units" type="radio" ng-value="$ctrl.optionList.units.km">
+                    <label id="tl_kilometers">
+                        Kilometers
+                    </label>
+                </input>
+            </div>
+        </div>
+        <div class="field ors-inline">
+            <div class="ui radio checkbox">
+                <input name="orsUnits" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.user_options.units" type="radio" ng-value="$ctrl.optionList.units.mi">
+                    <label id="tl_miles">
+                        Miles
+                    </label>
+                </input>
+            </div>
+        </div>
+    </section>
+    <div class="ui divider">
+    </div>
+    <section>
+        <h2>
+            Language
+        </h2>
+    </section>
+    <div class="ui divider">
+    </div>
+    <section>
+        <h2>
+            Language Routing Instructions
+        </h2>
+    </section>
+</form>
+<button class="ors-modal-close" data-ng-click="$ctrl.closeModal()" style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBmaWxsPSIjMGYzNDc4IiBkPSJNOS43MDMgOGw0LjA4Ny00LjA4NmEuNzI2LjcyNiAwIDAgMCAwLTEuMDIxbC0uNjgzLS42ODNhLjcyNC43MjQgMCAwIDAtMS4wMjEgMEw4IDYuMjk4IDMuOTEyIDIuMjFhLjcyMi43MjIgMCAwIDAtMS4wMiAwbC0uNjgyLjY4MmEuNzI0LjcyNCAwIDAgMCAwIDEuMDIxTDYuMjk2IDggMi4yMSAxMi4wODZhLjcyNC43MjQgMCAwIDAgMCAxLjAyMWwuNjgyLjY4MmEuNzIyLjcyMiAwIDAgMCAxLjAyIDBMOCA5LjcwMWw0LjA4NyA0LjA4OGEuNzI0LjcyNCAwIDAgMCAxLjAyMSAwbC42ODMtLjY4MmEuNzI2LjcyNiAwIDAgMCAwLTEuMDIxTDkuNzAzIDh6Ii8+PC9zdmc+");'>
+    close
+</button>

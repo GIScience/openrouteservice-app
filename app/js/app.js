@@ -2,6 +2,7 @@ var orsApp = angular.module('orsApp', [
     'orsApp.ors-nav', 
     'orsApp.ors-panel-routing', 
     'orsApp.ors-panel-accessibilityanalysis', 
+    'orsApp.ors-header',
     'ui.sortable', 
     'orsApp.error-service', 
     'orsApp.map-service', 
@@ -46,16 +47,6 @@ var orsApp = angular.module('orsApp', [
     //     // L.marker([0, 0]).addTo(ctrl.map);
     //     // console.log(ctrl.map);
     // });
-})
-
-.component('orsHeader', {
-    template: '<p>Hello, {{$ctrl.user.name}} !</p>',
-    transclude: true,
-    controller: function() {
-        this.user = {
-            name: 'OpenRouteService.org'
-        };
-    }
 });
 
 Array.prototype.move = function(from, to) {
