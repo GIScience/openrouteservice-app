@@ -16,6 +16,7 @@
     "angular-resource": "^1.5.3",
     "angular-animate": "^1.5.3",
     "angular-bootstrap": "latest",
+    "angular-cookies": "^1.5.3",
     "XMLWriter": "latest",
     "rxjs": "latest",
     "font-awesome": "fontawesome#^4.6.3",

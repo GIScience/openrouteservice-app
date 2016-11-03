@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-header', []).component('orsHeader', {
     templateUrl: 'app/components/ors-header/ors-header.html',
-    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService) {
+    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsCookiesFactory) {
         var ctrl = this;
         ctrl.optionList = lists.userOptions;
         ctrl.cookieOptions = {};
@@ -31,7 +31,9 @@ angular.module('orsApp.ors-header', []).component('orsHeader', {
             if (idx == 1) ctrl.showModal.feedback = true;
         };
         ctrl.changeOptions = () => {
+            console.log(ctrl.currentOptions);
             orsSettingsFactory.setUserOptions(ctrl.currentOptions);
+            orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions);
             // TODO: 
             // 1. If site lang is changed, set cookie
             // 2. Reload site if site language is changed, we need this due to translations

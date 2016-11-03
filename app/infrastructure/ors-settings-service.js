@@ -1,4 +1,4 @@
-angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRouteProcessingService', function(orsObjectsFactory, orsUtilsService, orsRouteProcessingService) {
+angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRouteProcessingService', function(orsObjectsFactory, orsUtilsService, orsRouteProcessingService, orsCookiesFactory) {
     let orsSettingsFactory = {};
     /** Behaviour subjects routing. */
     orsSettingsFactory.routingWaypointsSubject = new Rx.BehaviorSubject({});
@@ -41,7 +41,10 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      */
     orsSettingsFactory.setUserOptions = (options) => {
         /** user settings are updated for both panels accordingly */
-        orsSettingsFactory.userOptionsSubject.getValue().user_options = options;
+        console.dir(options);
+        orsSettingsFactory.userOptionsSubject.onNext(options);
+        console.dir(options);
+        // orsCookiesFactory.setCookieUserOptions(options);
         /** units or routing instructions lang are updated, no new request */
     };
     /** 
