@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-aa-controls', []).component('orsAaControls', {
     templateUrl: 'app/components/ors-panel-accessibilityanalysis/ors-aa-controls/ors-aa-controls.html',
-    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService) {
+    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsMapFactory) {
         var ctrl = this;
         ctrl.calculate = () => {
             console.log('adding');
@@ -12,7 +12,7 @@ angular.module('orsApp.ors-aa-controls', []).component('orsAaControls', {
             ctrl.onReset();
         };
 		ctrl.zoomToArea = () => {
-            console.log('zooming');
+            orsMapFactory.mapServiceSubject.onNext({id: 0, params: "params"});
         };
     },
     bindings: {

@@ -2,6 +2,11 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
     templateUrl: 'app/components/ors-panel-accessibilityanalysis/ors-aa-sliders/ors-aa-sliders.html',
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
         var ctrl = this;
+        ctrl.$onInit = function() {
+            if (ctrl.isochroneMinutesSlider.value > 1) ctrl.isochroneIntervalSlider.options.ceil = ctrl.isochroneMinutesSlider.value - 1;
+            else ctrl.isochroneIntervalSlider.options.ceil = 1;
+            if (ctrl.isochroneIntervalSlider.value > ctrl.isochroneIntervalSlider.options.ceil) ctrl.isochroneIntervalSlider.value = ctrl.isochroneIntervalSlider.options.ceil;
+        };
         ctrl.optionList = lists.isochroneOptionList;
         ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
         console.log(ctrl.currentOptions);

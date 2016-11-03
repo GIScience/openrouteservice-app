@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-route-controls', []).component('orsRouteControls', {
     templateUrl: 'app/components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-route-controls.html',
-    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService) {
+    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsMapFactory) {
         var ctrl = this;
         console.log(ctrl.activeSubgroup)
         ctrl.showOptions = false;
@@ -18,6 +18,12 @@ angular.module('orsApp.ors-route-controls', []).component('orsRouteControls', {
         ctrl.callOptions = () => {
             ctrl.showOptions = ctrl.showOptions == false ? true : false;
         };
+        /**
+         * Called when clicking the zoom button. Forwards zoom command to mapservice
+         */
+        ctrl.zoom = () => {
+            orsMapFactory.mapServiceSubject.onNext({id: 0});
+        }
     },
     bindings: {
         onAdd: '&',

@@ -93,6 +93,13 @@ angular.module('orsApp').directive('orsMap', function() {
                         idx += 1;
                     });
                 };
+                /**
+                 * zooms the map so that the whole route becomes visible (i.e. all features of the route line layer)
+                 */
+                ctrl.zoom = () => {
+                        ctrl.orsMap.fitBounds(new L.featureGroup(Object.keys(ctrl.mapModel.geofeatures).map(function (key) { return ctrl.mapModel.geofeatures[key]; })).getBounds());
+                    }
+                    // subscribeToZoom () {ctrl.zoom()}
                 orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
                     console.log('route was changed to', route);
                     ctrl.routing = route == 'routing' ? true : false;
@@ -108,6 +115,18 @@ angular.module('orsApp').directive('orsMap', function() {
                             // re-add waypoints only after init
                             if (waypoints.length > 0) ctrl.reAddWaypoints(waypoints);
                         });
+                    }
+                });
+                /**
+                 * Dispatches all commands sent by Mapservice by using id and then performing the corresponding function
+                 */
+                orsMapFactory.subscribeToMapFunctions(function onNext(params) {
+                    switch (params.id) {
+                        case 0:
+                            ctrl.zoom();
+                            break;
+                        default:
+                            break;
                     }
                 });
             }
