@@ -6,7 +6,10 @@ angular.module('orsApp.ors-nav', ['ngComponentRouter']).component('orsSidebar', 
     },
     controller($location) {
         var ctrl = this;
-        ctrl.activeMenu = '/routing';
+        if ($location.path() == '/') {
+            ctrl.activeMenu = '/routing';
+        }
+        else ctrl.activeMenu = $location.path();
     },
     $routeConfig: [{
         path: '/routing',

@@ -1,15 +1,15 @@
-angular.module('orsApp.route-processing-service', []).factory('orsRouteProcessingService', ['$http', 'orsErrorhandlerService',
+angular.module('orsApp.route-processing-service', []).factory('orsRouteService', ['$http', 'orsErrorhandlerService',
     function($http, orsErrorhandlerService) {
         /**
          * Requests geocoding from ORS backend
          * @param {String} requestData: XML for request payload
          */
-        var orsRouteProcessingService = {};
+        let orsRouteService = {};
         /**
          * Requests route from ORS backend
          * @param {String} requestData: XML for request payload
          */
-        orsRouteProcessingService.fetchRoute = function(requestData) {
+        orsRouteService.fetchRoute = function(requestData) {
             var url = namespaces.services.routing;
             return $http({
                 method: 'POST',
@@ -17,9 +17,10 @@ angular.module('orsApp.route-processing-service', []).factory('orsRouteProcessin
                 data: requestData
             });
         };
-        orsRouteProcessingService.parseRoute = function(response) {
-
+        orsRouteService.parseRouteJSON = function(response) {
+           console.warn(response)
+           // TODO!!!
         };
-        return orsRouteProcessingService;
+        return orsRouteService;
     }
 ]);

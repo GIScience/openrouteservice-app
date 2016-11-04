@@ -1,4 +1,4 @@
-angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRouteProcessingService', function(orsObjectsFactory, orsUtilsService, orsRouteProcessingService) {
+angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRouteService', function(orsObjectsFactory, orsUtilsService, orsRouteProcessingService) {
     let orsSettingsFactory = {};
     /** Behaviour subjects routing. */
     orsSettingsFactory.routingWaypointsSubject = new Rx.BehaviorSubject({});
@@ -147,7 +147,10 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         if (isRoutePresent) {
             const userOptions = orsSettingsFactory.getUserOptions();
             const payload = orsUtilsService.generateRouteXml(userOptions, settings);
-            orsRouteProcessingService.fetchRoute(payload);
+            const response = orsRouteProcessingService.fetchRoute(payload);
+            orsRouteProcessingService.parseRouteJSON(response);
+        } else {
+            console.log('Not enough waypoints..')
         }
     });
     /** Subscription function to current accessibility settings */
