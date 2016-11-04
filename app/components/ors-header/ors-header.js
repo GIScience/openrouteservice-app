@@ -1,9 +1,8 @@
 angular.module('orsApp.ors-header', []).component('orsHeader', {
     templateUrl: 'app/components/ors-header/ors-header.html',
-    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService) {
+    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsCookiesFactory) {
         var ctrl = this;
         ctrl.optionList = lists.userOptions;
-        ctrl.cookieOptions = {};
         /** http://localhost:3000/routing?units=mi&language=de&routinglanguage=en */
         ctrl.$onInit = function() {};
         /** subscription to settings, when permalink is used with lang params
@@ -11,6 +10,7 @@ angular.module('orsApp.ors-header', []).component('orsHeader', {
         object is defined, this is why we have two subscriptions */
         orsSettingsFactory.userOptionsSubject.subscribe(settings => {
             ctrl.currentOptions = settings;
+            if (!('language' in ctrl.currentOptions)) ctrl.currentOptions.language = ctrl.optionList.languages.default;
             if (!('routinglang' in ctrl.currentOptions)) ctrl.currentOptions.routinglang = ctrl.optionList.routinglanguages.default;
             if (!('units' in ctrl.currentOptions)) ctrl.currentOptions.units = ctrl.optionList.units.default;
         });
@@ -31,7 +31,9 @@ angular.module('orsApp.ors-header', []).component('orsHeader', {
             if (idx == 1) ctrl.showModal.feedback = true;
         };
         ctrl.changeOptions = () => {
+            console.log(ctrl.currentOptions);
             orsSettingsFactory.setUserOptions(ctrl.currentOptions);
+            orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions);
             // TODO: 
             // 1. If site lang is changed, set cookie
             // 2. Reload site if site language is changed, we need this due to translations

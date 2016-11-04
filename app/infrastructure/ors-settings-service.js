@@ -1,4 +1,4 @@
-angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRouteService', function(orsObjectsFactory, orsUtilsService, orsRouteProcessingService) {
+angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRouteService', function(orsObjectsFactory, orsUtilsService, orsCookiesFactory, orsRouteService) {
     let orsSettingsFactory = {};
     /** Behaviour subjects routing. */
     orsSettingsFactory.routingWaypointsSubject = new Rx.BehaviorSubject({});
@@ -41,7 +41,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      */
     orsSettingsFactory.setUserOptions = (options) => {
         /** user settings are updated for both panels accordingly */
-        orsSettingsFactory.userOptionsSubject.getValue().user_options = options;
+        orsSettingsFactory.userOptionsSubject.onNext(options);
         /** units or routing instructions lang are updated, no new request */
     };
     /** 
@@ -86,6 +86,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * @param {number} n - Specifices the amount of waypoints to be added
      */
     orsSettingsFactory.initWaypoints = (n) => {
+        orsSettingsFactory[currentSettingsObj].getValue().waypoints = [];
         for (var i = 1; i <= n; i++) {
             wp = orsObjectsFactory.createWaypoint('', new L.latLng());
             orsSettingsFactory[currentSettingsObj].getValue().waypoints.push(wp);

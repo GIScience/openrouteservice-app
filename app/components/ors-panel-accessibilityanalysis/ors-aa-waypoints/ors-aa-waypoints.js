@@ -57,8 +57,8 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         };
         ctrl.deleteWaypoint = () => {};
         ctrl.resetWaypoints = () => {
-            let wp = orsObjectsFactory.createWaypoint('', new L.latLng());
-            ctrl.waypoints[0] = wp;
+            ctrl.waypoints = orsSettingsFactory.initWaypoints(1);
+            orsSettingsFactory.updateWaypoints();
         };
         ctrl.addressChanged = () => {
             // const wp = orsObjectsFactory.createWaypoint(address.shortAddress, address.position);
@@ -66,6 +66,10 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
             // ctrl.waypoints.push(wp);
             // console.log(ctrl.waypoints)
             orsSettingsFactory.setWaypoints(ctrl.waypoints);
+        };
+        ctrl.calculate = function() {
+            console.log("Fire request AA");
+            console.log(ctrl.currentOptions);
         };
         $scope.$on('resetWaypoints', function(e) {
             ctrl.deleteWaypoint();

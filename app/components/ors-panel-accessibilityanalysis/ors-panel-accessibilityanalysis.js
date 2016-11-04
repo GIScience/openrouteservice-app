@@ -24,10 +24,6 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
             ctrl.activeProfile = orsSettingsFactory.getActiveProfile().type;
             ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup; 
         };
-        ctrl.calculate = function() {
-            console.log("Fire request AA");
-            console.log(ctrl.currentOptions);
-        };
         /**
          * Called when clicking the reset button. Broadcasts the delete to the waypoint
          */

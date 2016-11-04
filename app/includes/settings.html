@@ -34,7 +34,7 @@
             Language
         </h2>
         <label>Choose language</label>
-        <select name="language" ng-change="$ctrl.changeOptions()" data-ng-model="$ctrl.cookieOptions.user_options.language" data-ng-options="$ctrl.translate(language) for language in $ctrl.optionList.languages.all"></select>
+        <select name="language" ng-change="$ctrl.changeOptions()" data-ng-model="$ctrl.currentOptions.language" data-ng-options="$ctrl.translate(language) for language in $ctrl.optionList.languages.all"></select>
     </section>
     <div class="ui divider">
     </div>
