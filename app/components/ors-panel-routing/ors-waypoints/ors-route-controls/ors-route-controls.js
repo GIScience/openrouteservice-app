@@ -24,9 +24,6 @@ angular.module('orsApp.ors-route-controls', []).component('orsRouteControls', {
         ctrl.zoom = () => {
             orsMapFactory.mapServiceSubject.onNext({id: 0});
         }
-        ctrl.cookie = () => {
-            orsCookiesFactory.cookieswap();
-        }
     },
     bindings: {
         onAdd: '&',

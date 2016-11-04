@@ -3,7 +3,6 @@ angular.module('orsApp.ors-header', []).component('orsHeader', {
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsCookiesFactory) {
         var ctrl = this;
         ctrl.optionList = lists.userOptions;
-        ctrl.cookieOptions = {};
         /** http://localhost:3000/routing?units=mi&language=de&routinglanguage=en */
         ctrl.$onInit = function() {};
         /** subscription to settings, when permalink is used with lang params
@@ -11,6 +10,7 @@ angular.module('orsApp.ors-header', []).component('orsHeader', {
         object is defined, this is why we have two subscriptions */
         orsSettingsFactory.userOptionsSubject.subscribe(settings => {
             ctrl.currentOptions = settings;
+            if (!('language' in ctrl.currentOptions)) ctrl.currentOptions.language = ctrl.optionList.languages.default;
             if (!('routinglang' in ctrl.currentOptions)) ctrl.currentOptions.routinglang = ctrl.optionList.routinglanguages.default;
             if (!('units' in ctrl.currentOptions)) ctrl.currentOptions.units = ctrl.optionList.units.default;
         });

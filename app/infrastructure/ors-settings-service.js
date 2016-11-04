@@ -41,10 +41,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      */
     orsSettingsFactory.setUserOptions = (options) => {
         /** user settings are updated for both panels accordingly */
-        console.dir(options);
         orsSettingsFactory.userOptionsSubject.onNext(options);
-        console.dir(options);
-        // orsCookiesFactory.setCookieUserOptions(options);
         /** units or routing instructions lang are updated, no new request */
     };
     /** 
