@@ -132,6 +132,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
             };
             // Difficulty settings
             ctrl.currentOptions.fitness = ctrl.currentOptions.fitness !== undefined ? ctrl.optionList.difficulty.fitness[ctrl.currentOptions.fitness].value : ctrl.optionList.difficulty.fitness['-1'].value;
+            ctrl.fitnessValue = ctrl.optionList.difficulty.fitness[ctrl.currentOptions.fitness].name;
             ctrl.currentOptions.steepness = ctrl.currentOptions.steepness !== undefined ? ctrl.currentOptions.steepness : ctrl.optionList.difficulty.steepness.min;
             ctrl.avoidHillsCheckbox();
             ctrl.difficultySliders = {
@@ -153,15 +154,11 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                         showTicksValues: false,
                         hidePointerLabels: true,
                         hideLimitLabels: true,
-                        // TODO: doesn't work
-                        translate: function(value) {
-                            return ctrl.optionList.difficulty.fitness[value].name;
-                            
-                        },
                         onEnd: function() {
                             ctrl.currentOptions.fitness = ctrl.difficultySliders.Fitness.value;
                             ctrl.changeOptions();
                             ctrl.avoidHillsCheckbox();
+                            ctrl.fitnessValue = ctrl.optionList.difficulty.fitness[ctrl.currentOptions.fitness].name;
                         }
                     }
                 },
@@ -270,7 +267,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
         };
         ctrl.$onChanges = function(changesObj) {
             if (changesObj.showOptions) ctrl.refreshSlider();
-            if (changesObj.activeSubgroup || changesObj.activeProfile ) {
+            if (changesObj.activeSubgroup || changesObj.activeProfile) {
                 ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeProfile];
                 // check if already initiated
                 /** update slider settings */

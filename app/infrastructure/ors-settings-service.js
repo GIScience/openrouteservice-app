@@ -1,4 +1,4 @@
-angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRouteProcessingService', function(orsObjectsFactory, orsUtilsService, orsRouteProcessingService, orsCookiesFactory) {
+angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRouteService', function(orsObjectsFactory, orsUtilsService, orsRouteService) {
     let orsSettingsFactory = {};
     /** Behaviour subjects routing. */
     orsSettingsFactory.routingWaypointsSubject = new Rx.BehaviorSubject({});
@@ -20,11 +20,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * Sets the settings from permalink
      * @param {Object} The settings object.
      */
-    orsSettingsFactory.initSettings = (params) => {
-        let set = orsSettingsFactory[currentSettingsObj].getValue();
-        for (var k in params) {
-            set[k] = params[k];
-        }
+    orsSettingsFactory.setSettings = (set) => {
         /** Fire request */
         orsSettingsFactory[currentSettingsObj].onNext(set);
     };
@@ -38,7 +34,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         for (var k in params) {
             set[k] = params[k];
         }
-        console.dir(set);
         orsSettingsFactory.userOptionsSubject.onNext(set);
     };
     /** 
@@ -145,7 +140,15 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         if (isRoutePresent) {
             const userOptions = orsSettingsFactory.getUserOptions();
             const payload = orsUtilsService.generateRouteXml(userOptions, settings);
-            orsRouteProcessingService.fetchRoute(payload);
+            orsRouteService.fetchRoute(payload).then(function(response) {
+                const profile = settings.profile.type;
+                console.log(profile, settings.profile)
+                orsRouteService.processResponse(response, profile);
+            }, function(response) {
+                console.log(response);
+            });
+        } else {
+            console.log('Not enough waypoints..')
         }
     });
     /** Subscription function to current accessibility settings */

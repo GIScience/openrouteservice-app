@@ -409,3 +409,7 @@ lists.userOptions = {
         mi: 'mi'
     }
 };
+lists.layers = {
+    0: 'layerRoutePoints',
+    1: 'layerRouteLines'
+};

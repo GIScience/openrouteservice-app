@@ -97,9 +97,26 @@ angular.module('orsApp').directive('orsMap', function() {
                  * zooms the map so that the whole route becomes visible (i.e. all features of the route line layer)
                  */
                 ctrl.zoom = () => {
-                        ctrl.orsMap.fitBounds(new L.featureGroup(Object.keys(ctrl.mapModel.geofeatures).map(function (key) { return ctrl.mapModel.geofeatures[key]; })).getBounds());
-                    }
-                    // subscribeToZoom () {ctrl.zoom()}
+                    ctrl.orsMap.fitBounds(new L.featureGroup(Object.keys(ctrl.mapModel.geofeatures).map(function(key) {
+                        return ctrl.mapModel.geofeatures[key];
+                    })).getBounds());
+                };
+                /** 
+                 * adds features to specific layer
+                 * @param {Object} package - The action package
+                 */
+                ctrl.add = (package) => {
+                    L.polyline(package.geometry, {
+                        color: 'red'
+                    }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
+                };
+                /** 
+                 * clears specific layer
+                 */
+                ctrl.clear = (package) => {
+                    ctrl.mapModel.geofeatures[package.layerCode].clearLayers();
+                };
+                // subscribeToZoom () {ctrl.zoom()}
                 orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
                     console.log('route was changed to', route);
                     ctrl.routing = route == 'routing' ? true : false;
@@ -121,9 +138,18 @@ angular.module('orsApp').directive('orsMap', function() {
                  * Dispatches all commands sent by Mapservice by using id and then performing the corresponding function
                  */
                 orsMapFactory.subscribeToMapFunctions(function onNext(params) {
-                    switch (params.id) {
+                    console.log(params)
+                    switch (params._actionCode) {
+                        /** zoom to features */
                         case 0:
                             ctrl.zoom();
+                            break;
+                            /** add features */
+                        case 1:
+                            ctrl.add(params._package);
+                            break;
+                        case 2: 
+                            ctrl.clear(params._package);
                             break;
                         default:
                             break;

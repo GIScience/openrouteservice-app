@@ -11,10 +11,11 @@ var orsApp = angular.module('orsApp', [
     'orsApp.request-service', 
     'orsApp.settings-service', 
     'orsApp.utils-service',
-    'orsApp.route-processing-service',
+    'orsApp.route-service',
     'orsApp.cookies-service',
     'ngCookies',
-    'rzModule'
+    'rzModule',
+    'ngSanitize'
 ])
 
 .config(function($locationProvider, $httpProvider) {

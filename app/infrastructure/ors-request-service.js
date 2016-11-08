@@ -14,16 +14,6 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$htt
             });
         };
         /**
-         * Requests GeoJSON file
-         * @param {String} JSONurl: location of GeoJSON file for request payload
-         */
-        orsRequestService.readGeoJSON = function(JSONurl) {
-            return $http({
-                method: 'GET',
-                url: JSONurl
-            });
-        };
-        /**
          * Processes response
          * @param {Object} response: response data
          */

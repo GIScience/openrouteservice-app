@@ -14,7 +14,7 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
                 ctrl.routeParams = next.params;
                 orsSettingsFactory.initWaypoints(1);
                 const importedParams = orsParamsService.importSettings(ctrl.routeParams);
-                orsSettingsFactory.initSettings(importedParams.settings);
+                orsSettingsFactory.setSettings(importedParams.settings);
                 orsSettingsFactory.setUserOptions(orsCookiesFactory.getCookies());
                 orsSettingsFactory.setUserOptions(importedParams.user_options);
             }

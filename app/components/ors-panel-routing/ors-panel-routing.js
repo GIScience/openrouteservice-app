@@ -1,4 +1,4 @@
-angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-profiles-options', 'orsApp.ors-options']).component('orsRoute', {
+angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-profiles-options', 'orsApp.ors-options', 'orsApp.ors-summary', 'orsApp.ors-instructions']).component('orsRoute', {
     templateUrl: 'app/components/ors-panel-routing/ors-panel-routing.html',
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService, orsCookiesFactory) {
         var ctrl = this;
@@ -16,7 +16,7 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
                 ctrl.routeParams = next.params;
                 orsSettingsFactory.initWaypoints(2);
                 const importedParams = orsParamsService.importSettings(ctrl.routeParams);
-                orsSettingsFactory.initSettings(importedParams.settings);
+                orsSettingsFactory.setSettings(importedParams.settings);
                 orsSettingsFactory.setUserOptions(orsCookiesFactory.getCookies());
                 orsSettingsFactory.setUserOptions(importedParams.user_options);
             }
@@ -31,8 +31,10 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
             console.log(ctrl.activeProfile, ctrl.activeSubgroup)
             ctrl.shouldDisplayRouteDetails = false;
         };
-        ctrl.goInstructions = function() {
+        ctrl.showInstructions = (segments = undefined) => {
             ctrl.shouldDisplayRouteDetails = ctrl.shouldDisplayRouteDetails == true ? false : true;
+            if (segments) ctrl.segments = segments;
+            console.log(ctrl.segments)
         };
     },
     require: {
