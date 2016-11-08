@@ -1,0 +1,9 @@
+<!-- note: at one stage this will be a scrollable div -->
+<div class="ors-summary">
+	<ul>
+	    <li data-ng-click="$ctrl.showInstructions({segments: route.segments})" data-ng-repeat="route in $ctrl.routes">
+	        <p ng-bind-html="route.summary.distance">
+	        </p>
+	    </li>
+	</ul>
+</div>

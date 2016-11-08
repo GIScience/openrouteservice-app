@@ -139,7 +139,7 @@ html, body {
     background-color: #F0F0F0;
 }
 
-.ors-navigation ul {
+.ors-summary ul, .ors-navigation ul {
     padding: 0;
     margin: 0;
 }
@@ -163,6 +163,11 @@ html, body {
 .ors-routing-inner, .ors-instructions {
     position: relative;
     height: auto;
+}
+
+.ors-summary {
+    -background: yellow;
+    -height: 200px;
 }
 
 .ors-routing-info {

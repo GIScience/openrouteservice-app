@@ -1,19 +1,11 @@
-<div class="ors-instructions" ng-if="$ctrl.shouldDisplayRouteDetails">
-	<button class="ors-button flleft" ng-click="$ctrl.goInstructions()">
-	        <i class="fa fa-lg fa-bicycle"></i>
-	</button>
-</div>
-<div class="ors-routing-navigation" ng-if="!$ctrl.shouldDisplayRouteDetails">
+<ors-instructions ng-show="$ctrl.shouldDisplayRouteDetails" route-segments="$ctrl.segments" show-instructions="$ctrl.showInstructions()">
+</ors-instructions>
+<div class="ors-routing-navigation" ng-show="!$ctrl.shouldDisplayRouteDetails">
 	<ors-profiles-options ors-params="$ctrl.routeParams" show-options="$ctrl.showOptions" active-subgroup="$ctrl.activeSubgroup" active-profile="$ctrl.activeProfile" profiles="$ctrl.profiles"></ors-profiles-options>
 </div>
-<div class="ors-routing-inner" ng-if="!$ctrl.shouldDisplayRouteDetails">
+<div class="ors-routing-inner" ng-show="!$ctrl.shouldDisplayRouteDetails">
 	<div class="ors-routing-info">
 		<ors-waypoints ors-map="$ctrl.parent.orsMap" ors-params="$ctrl.routeParams" show-options="$ctrl.showOptions" active-subgroup="$ctrl.activeSubgroup" active-profile="$ctrl.activeProfile"></ors-waypoints>
-		<!-- this will be the route summary -->
-		<button class="ors-button flleft" ng-click="$ctrl.goInstructions()">
-	        <i class="fa fa-lg fa-bicycle"></i>
-	    </button>
-	    <!-- wrap in component? -->
+		<ors-summaries show-instructions="$ctrl.showInstructions(segments)"></ors-summaries>
 	</div>
 </div>
-<!-- <ors-route-instructions class="ors-panel" ng-show=""></ors-route-instructions -->

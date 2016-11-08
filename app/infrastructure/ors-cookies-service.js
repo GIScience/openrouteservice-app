@@ -11,7 +11,7 @@ angular.module('orsApp.cookies-service', ['ngCookies']).factory('orsCookiesFacto
          */
         orsCookiesFactory.setCookieUserOptions = (options) => {
             $cookies.putObject('userOptions', options);
-        }
+        };
         return orsCookiesFactory;
     }
 ]);

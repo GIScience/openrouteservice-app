@@ -22,8 +22,10 @@ angular.module('orsApp.ors-route-controls', []).component('orsRouteControls', {
          * Called when clicking the zoom button. Forwards zoom command to mapservice
          */
         ctrl.zoom = () => {
-            orsMapFactory.mapServiceSubject.onNext({id: 0});
-        }
+            orsMapFactory.mapServiceSubject.onNext({
+                id: 0
+            });
+        };
     },
     bindings: {
         onAdd: '&',

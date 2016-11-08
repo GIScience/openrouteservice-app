@@ -1,4 +1,4 @@
-angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRouteService', function(orsObjectsFactory, orsUtilsService, orsCookiesFactory, orsRouteService) {
+angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRouteService', function(orsObjectsFactory, orsUtilsService, orsRouteService) {
     let orsSettingsFactory = {};
     /** Behaviour subjects routing. */
     orsSettingsFactory.routingWaypointsSubject = new Rx.BehaviorSubject({});
@@ -20,20 +20,9 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * Sets the settings from permalink
      * @param {Object} The settings object.
      */
-    orsSettingsFactory.initSettings = (params) => {
-        let set = orsSettingsFactory[currentSettingsObj].getValue();
-        for (var k in params) {
-            set[k] = params[k];
-        }
+    orsSettingsFactory.setSettings = (params) => {
         /** Fire request */
-        orsSettingsFactory[currentSettingsObj].onNext(set);
-    };
-    orsSettingsFactory.initUserOptions = (params) => {
-        let set = orsSettingsFactory.userOptionsSubject.getValue();
-        for (var k in params) {
-            set[k] = params[k];
-        }
-        orsSettingsFactory.userOptionsSubject.onNext(set);
+        orsSettingsFactory[currentSettingsObj].onNext(params);
     };
     /** 
      * Sets user specific options in settings (language and units)
@@ -148,8 +137,13 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         if (isRoutePresent) {
             const userOptions = orsSettingsFactory.getUserOptions();
             const payload = orsUtilsService.generateRouteXml(userOptions, settings);
-            const response = orsRouteProcessingService.fetchRoute(payload);
-            orsRouteProcessingService.parseRouteJSON(response);
+            orsRouteService.fetchRoute(payload).then(function(response) {
+                const profile = settings.profile.type;
+                console.log(profile, settings.profile)
+                orsRouteService.processResponse(response, profile);
+            }, function(response) {
+                console.log(response);
+            });
         } else {
             console.log('Not enough waypoints..')
         }

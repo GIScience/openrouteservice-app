@@ -34,9 +34,7 @@ angular.module('orsApp.ors-header', []).component('orsHeader', {
             console.log(ctrl.currentOptions);
             orsSettingsFactory.setUserOptions(ctrl.currentOptions);
             orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions);
-            // TODO: 
-            // 1. If site lang is changed, set cookie
-            // 2. Reload site if site language is changed, we need this due to translations
+            // TODO: Reload site if site language is changed, we need this due to translations
         };
         ctrl.translate = (term) => {
             return term;

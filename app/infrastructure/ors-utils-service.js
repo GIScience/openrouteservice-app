@@ -546,8 +546,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http',
             return element;
         };
         /**
-         * Calls the Javascript functions getElementsByTagNameNS or getElementsByTagName according to the browsers capabilities.
-         * Chrome and Firefox will be fine with element.getElementsByTagNameNS(ns, tagName), but IE can only cope with element.getElementsByTagName('namespaceTag': tagName)
+         * Calls the Javascript functions getElementsByTagNameNS
          * @param element: XML element to retrieve the information from
          * @param ns: Namespace to operate in
          * @param tagName: attribute name of the child elements to return
