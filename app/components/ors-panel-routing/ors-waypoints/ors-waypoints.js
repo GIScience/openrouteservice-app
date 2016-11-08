@@ -104,7 +104,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         };
         /** If dropdown of addresses is openend once again and address is changed. */
         ctrl.addressChanged = () => {
-            orsSettingsFactory.setWaypoints(ctrl.waypoints);
+            orsSettingsFactory.setWaypoints(ctrl.waypoints, true);
         };
         /**
          * Toggles the roundtrip setting
@@ -134,7 +134,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
             start: function() {},
             update: function(e, ui) {},
             stop: function(e, ui) {
-                orsSettingsFactory.setWaypoints(ctrl.waypoints);
+                orsSettingsFactory.setWaypoints(ctrl.waypoints, true);
             }
         };
     }

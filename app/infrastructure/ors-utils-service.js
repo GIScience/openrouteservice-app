@@ -126,10 +126,15 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http',
             writer.writeEndElement();
             //<xls:WayPointList>
             writer.writeStartElement('xls:WayPointList');
-            for (var i = 0; i < settings.waypoints.length; i++) {
+            /** prepare waypoints */
+            let waypoints = [];
+            angular.forEach(settings.waypoints, function(waypoint) {
+                if (waypoint._set == 1) waypoints.push(waypoint);
+            });
+            for (let j = 0, i = 0; i < waypoints.length; i++) {
                 if (i === 0) {
                     writer.writeStartElement('xls:StartPoint');
-                } else if (i == (settings.waypoints.length - 1)) {
+                } else if (i == (waypoints.length - 1)) {
                     writer.writeStartElement('xls:EndPoint');
                 } else {
                     writer.writeStartElement('xls:ViaPoint');
@@ -142,7 +147,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http',
                 //<gml:pos />
                 writer.writeStartElement('gml:pos');
                 writer.writeAttributeString('srsName', 'EPSG:4326');
-                writer.writeString(settings.waypoints[i]._latlng.lng + ' ' + settings.waypoints[i]._latlng.lat);
+                writer.writeString(waypoints[i]._latlng.lng + ' ' + waypoints[i]._latlng.lat);
                 writer.writeEndElement();
                 //</gml:Point>
                 writer.writeEndElement();

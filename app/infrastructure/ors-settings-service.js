@@ -133,7 +133,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         console.log(true, 'go', settings)
         /** get user obtions */
         const isRoutePresent = orsSettingsFactory.handleRoutePresent(settings);
-        // var isRoutePresent = waypoint.getNumWaypointsSet() >= 2;
         if (isRoutePresent) {
             const userOptions = orsSettingsFactory.getUserOptions();
             const payload = orsUtilsService.generateRouteXml(userOptions, settings);
@@ -177,11 +176,12 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     /**
      * Sets waypoints into settings.
      * @param {waypoints.<Object>} List of waypoint objects.
+     * @param {boolean} toggleRequest - Whether a request should be initiated
      */
-    orsSettingsFactory.setWaypoints = (waypoints) => {
+    orsSettingsFactory.setWaypoints = (waypoints, toggleRequest) => {
         orsSettingsFactory[currentSettingsObj].getValue().waypoints = waypoints;
         /** fire a new request */
-        orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
+        if (toggleRequest) orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
         /** For map to update */
         orsSettingsFactory[currentWaypointsObj].onNext(waypoints);
     };

@@ -448,6 +448,10 @@ div.ors-wp-td {
     text-align: left;
 }
 
+.cm-popup-option {
+    cursor: pointer;
+}
+
 @media screen and (min-width: 319px) and (max-width: 720px) {
     .ors-main {
         flex-direction: column;
