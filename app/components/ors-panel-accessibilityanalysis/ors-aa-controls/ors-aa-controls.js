@@ -11,8 +11,10 @@ angular.module('orsApp.ors-aa-controls', []).component('orsAaControls', {
             console.log('resetting');
             ctrl.onReset();
         };
-		ctrl.zoomToArea = () => {
-            orsMapFactory.mapServiceSubject.onNext({id: 0, params: "params"});
+        ctrl.zoomToArea = () => {
+            orsMapFactory.mapServiceSubject.onNext({
+                _actionCode: 0
+            });
         };
     },
     bindings: {
