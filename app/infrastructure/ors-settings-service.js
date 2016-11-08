@@ -28,21 +28,18 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         /** Fire request */
         orsSettingsFactory[currentSettingsObj].onNext(set);
     };
-    orsSettingsFactory.initUserOptions = (params) => {
-        let set = orsSettingsFactory.userOptionsSubject.getValue();
-        for (var k in params) {
-            set[k] = params[k];
-        }
-        orsSettingsFactory.userOptionsSubject.onNext(set);
-    };
     /** 
      * Sets user specific options in settings (language and units)
      * @param {Object} options- Consists of routing instruction language and units km/mi
      */
-    orsSettingsFactory.setUserOptions = (options) => {
-        /** user settings are updated for both panels accordingly */
-        orsSettingsFactory.userOptionsSubject.onNext(options);
-        /** units or routing instructions lang are updated, no new request */
+    orsSettingsFactory.setUserOptions = (params) => {
+        if (params === undefined) return;
+        let set = orsSettingsFactory.userOptionsSubject.getValue();
+        for (var k in params) {
+            set[k] = params[k];
+        }
+        console.dir(set);
+        orsSettingsFactory.userOptionsSubject.onNext(set);
     };
     /** 
      * Gets user specific options in settings (language and units)
@@ -142,7 +139,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     /** Subscription function to current routing settings */
     orsSettingsFactory.routingSettingsSubject.subscribe(settings => {
         console.log(true, 'go', settings)
-        /** get user obtions */
+            /** get user obtions */
         const isRoutePresent = orsSettingsFactory.handleRoutePresent(settings);
         // var isRoutePresent = waypoint.getNumWaypointsSet() >= 2;
         if (isRoutePresent) {

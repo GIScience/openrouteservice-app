@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-controls', 'orsApp.ors-aa-waypoints', 'orsApp.ors-aa-sliders']).component('orsAnalysis', {
     templateUrl: 'app/components/ors-panel-accessibilityanalysis/ors-panel-accessibilityanalysis.html',
-    controller($scope, orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
+    controller($scope, orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService, orsCookiesFactory) {
         var ctrl = this;
         ctrl.$onInit = function() {};
         ctrl.$routerOnActivate = function(next) {
@@ -14,15 +14,15 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
                 ctrl.routeParams = next.params;
                 orsSettingsFactory.initWaypoints(1);
                 const importedParams = orsParamsService.importSettings(ctrl.routeParams);
-                console.info('SETTINGS', importedParams)
                 orsSettingsFactory.initSettings(importedParams.settings);
-                orsSettingsFactory.initUserOptions(importedParams.user_options);
+                orsSettingsFactory.setUserOptions(orsCookiesFactory.getCookies());
+                orsSettingsFactory.setUserOptions(importedParams.user_options);
             }
             orsSettingsFactory.updateWaypoints();
             ctrl.profiles = lists.profiles;
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
             ctrl.activeProfile = orsSettingsFactory.getActiveProfile().type;
-            ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup; 
+            ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
         };
         /**
          * Called when clicking the reset button. Broadcasts the delete to the waypoint
