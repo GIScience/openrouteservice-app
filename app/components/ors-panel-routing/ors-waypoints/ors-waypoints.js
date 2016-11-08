@@ -28,15 +28,11 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         ctrl.collapse = () => {
             ctrl.collapsed = ctrl.collapsed == true ? false : true;
             if (ctrl.collapsed == true) {
-                ctrl.sortableOptions = {
-                    disabled: true
-                };
+                ctrl.sortableOptions.disabled = true;
                 ctrl.collapseIcon = "fa fa-plus-circle";
             }
             if (ctrl.collapsed == false) {
-                ctrl.sortableOptions = {
-                    disabled: false
-                };
+                ctrl.sortableOptions.disabled = false;
                 ctrl.collapseIcon = "fa fa-minus-circle";
             }
         };
@@ -78,13 +74,15 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
          * @param {number} The idx.
          */
         ctrl.deleteWaypoint = (idx) => {
+            /** is this waypoint set, if so fire request and update route **/
+            let toggleRequest = (ctrl.waypoints[idx]._set == 1) ? true : false;
             if (ctrl.waypoints.length == 2) {
                 let wp = orsObjectsFactory.createWaypoint('', new L.latLng());
                 ctrl.waypoints[idx] = wp;
             } else {
                 ctrl.waypoints.splice(idx, 1);
             }
-            orsSettingsFactory.setWaypoints(ctrl.waypoints);
+            orsSettingsFactory.setWaypoints(ctrl.waypoints, toggleRequest);
         };
         /** Reveres waypoints order. */
         ctrl.reverseWaypoints = () => {
@@ -104,14 +102,14 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         };
         /** If dropdown of addresses is openend once again and address is changed. */
         ctrl.addressChanged = () => {
-            orsSettingsFactory.setWaypoints(ctrl.waypoints);
+            orsSettingsFactory.setWaypoints(ctrl.waypoints, true);
         };
         /**
          * Toggles the roundtrip setting
          */
         ctrl.setRoundtrip = () => {
             console.log("roundtrip");
-            console.log(ctrl.waypoints.slice(0,1));
+            console.log(ctrl.waypoints.slice(0, 1));
             let wp = orsObjectsFactory.createWaypoint(ctrl.waypoints[0]._address, ctrl.waypoints[0]._latlng);
             ctrl.waypoints.push(wp);
             console.log(ctrl.waypoints);
@@ -134,7 +132,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
             start: function() {},
             update: function(e, ui) {},
             stop: function(e, ui) {
-                orsSettingsFactory.setWaypoints(ctrl.waypoints);
+                orsSettingsFactory.setWaypoints(ctrl.waypoints, true);
             }
         };
     }
