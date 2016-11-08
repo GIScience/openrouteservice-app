@@ -1,9 +1,32 @@
 <!-- note: at one stage this will be a scrollable div -->
 <div class="ors-summary">
-	<ul>
-	    <li data-ng-click="$ctrl.showInstructions({segments: route.segments})" data-ng-repeat="route in $ctrl.routes">
-	        <p ng-bind-html="route.summary.distance">
-	        </p>
-	    </li>
-	</ul>
+    <ul>
+        <li data-ng-click="$ctrl.showInstructions({segments: route.segments})" data-ng-repeat="route in $ctrl.routes">
+            <div class="ors-route-card">
+                <div ng-switch on="$ctrl.profiles[route.profile].subgroup" class="route-card-left">
+                	<div ng-switch-when="Car">
+                		<i class="fa fa-lg fa-car"></i>
+                	</div>
+                	<div ng-switch-when="Bicycle">
+                		<i class="fa fa-lg fa-bicycle"></i>
+                	</div>
+                	<div ng-switch-when="HeavyVehicle">
+                		<i class="fa fa-lg fa-bus"></i>
+                	</div>
+                	<div ng-switch-when="Wheelchair">
+                		<i class="fa fa-lg fa-wheelchair"></i>
+                	</div>
+					<div ng-switch-when="Pedestrian">
+                		<i class="fa fa-lg fa-male"></i>
+                	</div>    	
+                </div>
+                <div class="route-card-right">
+                    <p ng-bind-html="route.summary.distance">
+                    </p>
+                </div>
+                <div class="route-card-bottom-border">
+                </div>
+            </div>
+        </li>
+    </ul>
 </div>

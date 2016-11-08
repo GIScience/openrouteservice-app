@@ -24,6 +24,7 @@ angular.module('orsApp.ors-profiles-options', []).component('orsProfilesOptions'
         ctrl.changeProfile = (profile) => {
             if (profile) ctrl.currentProfile.type = profile;
             ctrl.activeProfile = ctrl.currentProfile.type;
+            console.log(ctrl.currentProfile.type)
             ctrl.activeSubgroup = ctrl.profiles[ctrl.currentProfile.type].subgroup;
             orsSettingsFactory.setProfile(ctrl.currentProfile);
         };

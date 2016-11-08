@@ -5,6 +5,8 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
     },
     controller(orsSettingsFactory, orsRouteService, orsErrorhandlerService) {
         let ctrl = this;
+        ctrl.profiles = lists.profiles;
+        console.log(ctrl.profiles)
         console.log('summary yea')
             // subscribe to route object?
         orsRouteService.routesSubject.subscribe(routes => {

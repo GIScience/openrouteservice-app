@@ -283,6 +283,40 @@ html, body {
     border-right: 1px solid rgba(34, 36, 38, 0.15) !important;
 }
 
+.ors-addresses {
+    padding: 15px 0 15px 0;
+    font-weight: normal;
+}
+
+.ors-route-card {
+    position: relative;
+    background-color: #fff;
+    color: #737c89;
+    width: 100%;
+    display: flex;
+    z-index: -1;
+}
+
+.route-card-left {
+    margin: 1.6rem 2rem 0;
+    flex-shrink: 0;
+}
+
+.route-card-right {
+    flex: 1 1 auto;
+    margin-right: 2.4rem;
+    margin-top: 1.6rem;
+}
+
+.route-card-bottom-border {
+    position: absolute;
+    bottom: 0;
+    left: 1.6rem;
+    right: 1.6rem;
+    height: 1px;
+    border-bottom: .1rem solid #edf3f5;
+}
+
 .ors-wp-list {
     clear: both;
     list-style: none outside none;

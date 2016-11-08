@@ -88,32 +88,32 @@ lists.profiles = {
         elevation: true,
         subgroup: 'Wheelchair'
     },
-    HeavyVehicle: {
-        name: 'HeavyVehicle',
+    hgv: {
+        name: 'hgv',
         elevation: false,
         subgroup: 'HeavyVehicle'
     },
-    Goods: {
-        name: 'Goods',
+    goods: {
+        name: 'goods',
         elevation: false,
         subgroup: 'HeavyVehicle'
     },
-    Bus: {
-        name: 'Bus',
+    bus: {
+        name: 'bus',
         elevation: false,
         subgroup: 'HeavyVehicle'
     },
-    Agricultural: {
-        name: 'Agricultural',
+    agricultural: {
+        name: 'agricultural',
         elevation: false,
         subgroup: 'HeavyVehicle'
     },
-    Foresty: {
-        name: 'Foresty',
+    foresty: {
+        name: 'foresty',
         elevation: false,
         subgroup: 'HeavyVehicle'
     },
-    Delivery: {
+    delivery: {
         name: 'Delivery',
         elevation: false,
         subgroup: 'HeavyVehicle'
@@ -332,37 +332,37 @@ lists.optionList = {
             default: 8,
             step: 1
         },
-        HeavyVehicle: {
+        hgv: {
             min: 30,
             max: 200,
             default: 100,
             step: 5
         },
-        Goods: {
+        goods: {
             min: 30,
             max: 200,
             default: 100,
             step: 5
         },
-        Bus: {
+        bus: {
             min: 30,
             max: 200,
             default: 100,
             step: 5
         },
-        Agricultural: {
+        agricultural: {
             min: 30,
             max: 200,
             default: 100,
             step: 5
         },
-        Foresty: {
+        foresty: {
             min: 30,
             max: 200,
             default: 100,
             step: 5
         },
-        Delivery: {
+        delivery: {
             min: 30,
             max: 200,
             default: 100,

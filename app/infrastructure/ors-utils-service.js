@@ -80,7 +80,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http',
             //<xls:RoutePlan>
             writer.writeStartElement('xls:RoutePlan');
             //<xls:RoutePreference />
-            writer.writeElementString('xls:RoutePreference', settings.profile.type);
+            writer.writeElementString('xls:RoutePreference', lists.profiles[settings.profile.type].subgroup);
             writer.writeStartElement('xls:ExtendedRoutePreference');
             writer.writeElementString('xls:WeightingMethod', settings.profile.options.weight);
             if (lists.profiles[settings.profile.type].elevation === true) {
@@ -94,7 +94,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http',
                 writer.writeElementString('xls:VehicleType', settings.profile.type);
                 if (!angular.isUndefined(settings.profile.options.width)) writer.writeElementString('xls:Width', settings.profile.options.width.toString());
                 if (!angular.isUndefined(settings.profile.options.height)) writer.writeElementString('xls:Height', settings.profile.options.height.toString());
-                if (!angular.isUndefined(settings.profile.options.weight)) writer.writeElementString('xls:Weight', settings.profile.options.weight.toString());
+                if (!angular.isUndefined(settings.profile.options.weight)) writer.writeElementString('xls:Weight', settings.profile.options.hgvWeight.toString());
                 if (!angular.isUndefined(settings.profile.options.length)) writer.writeElementString('xls:Length', settings.profile.options.length.toString());
                 if (!angular.isUndefined(settings.profile.options.axleload)) writer.writeElementString('xls:AxleLoad', settings.profile.options.axleload.toString());
                 // TODO :truck hazardous
