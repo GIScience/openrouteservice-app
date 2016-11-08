@@ -23,7 +23,7 @@ angular.module('orsApp.ors-route-controls', []).component('orsRouteControls', {
          */
         ctrl.zoom = () => {
             orsMapFactory.mapServiceSubject.onNext({
-                id: 0
+                _actionCode: 0
             });
         };
     },
