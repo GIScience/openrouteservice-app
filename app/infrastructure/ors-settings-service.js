@@ -20,18 +20,21 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * Sets the settings from permalink
      * @param {Object} The settings object.
      */
-    orsSettingsFactory.setSettings = (params) => {
+    orsSettingsFactory.setSettings = (set) => {
         /** Fire request */
-        orsSettingsFactory[currentSettingsObj].onNext(params);
+        orsSettingsFactory[currentSettingsObj].onNext(set);
     };
     /** 
      * Sets user specific options in settings (language and units)
      * @param {Object} options- Consists of routing instruction language and units km/mi
      */
-    orsSettingsFactory.setUserOptions = (options) => {
-        /** user settings are updated for both panels accordingly */
-        orsSettingsFactory.userOptionsSubject.onNext(options);
-        /** units or routing instructions lang are updated, no new request */
+    orsSettingsFactory.setUserOptions = (params) => {
+        if (params === undefined) return;
+        let set = orsSettingsFactory.userOptionsSubject.getValue();
+        for (var k in params) {
+            set[k] = params[k];
+        }
+        orsSettingsFactory.userOptionsSubject.onNext(set);
     };
     /** 
      * Gets user specific options in settings (language and units)
@@ -131,7 +134,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     /** Subscription function to current routing settings */
     orsSettingsFactory.routingSettingsSubject.subscribe(settings => {
         console.log(true, 'go', settings)
-        /** get user obtions */
+            /** get user obtions */
         const isRoutePresent = orsSettingsFactory.handleRoutePresent(settings);
         if (isRoutePresent) {
             const userOptions = orsSettingsFactory.getUserOptions();

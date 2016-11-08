@@ -11,6 +11,7 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
                 }
             }
         };
+        console.log("importing param setttings");
         const user_options = {};
         angular.forEach(params, function(value, key) {
             console.info(value, key);
@@ -88,6 +89,7 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
                 user_options.units = value;
             }
         });
+        console.log(user_options);
         //console.warn(JSON.stringify(globalSettings));
         return {
             settings: settings,
