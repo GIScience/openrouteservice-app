@@ -25,7 +25,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         orsSettingsFactory[currentSettingsObj].onNext(set);
     };
     /** 
-     * Sets user specific options in settings (language and units)
+     * Sets user specific options in settings (language, routinglang and units). Can be used for any key-value pair. Is used by both permalink and Cookies
      * @param {Object} options- Consists of routing instruction language and units km/mi
      */
     orsSettingsFactory.setUserOptions = (params) => {

@@ -15,6 +15,10 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
                 orsSettingsFactory.initWaypoints(1);
                 const importedParams = orsParamsService.importSettings(ctrl.routeParams);
                 orsSettingsFactory.setSettings(importedParams.settings);
+                /**
+                 * First get the Cookie Settings (These are currently language, routinglanguage and units). Then get the permalink user settings (Can be routinglanguage and units)
+                 * The permalink settings replace the cookie settings if they exist.
+                 */
                 orsSettingsFactory.setUserOptions(orsCookiesFactory.getCookies());
                 orsSettingsFactory.setUserOptions(importedParams.user_options);
             }
