@@ -68,8 +68,8 @@ lists.profiles = {
         elevation: true,
         subgroup: 'Bicycle'
     },
-    BicycleTouring: {
-        name: 'BicycleTouring',
+    BicycleTour: {
+        name: 'BicycleTour',
         elevation: true,
         subgroup: 'Bicycle'
     },
@@ -308,7 +308,7 @@ lists.optionList = {
             default: 30,
             step: 1
         },
-        BicycleTouring: {
+        BicycleTour: {
             min: 5,
             max: 50,
             default: 25,

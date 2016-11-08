@@ -182,6 +182,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * @param {boolean} toggleRequest - Whether a request should be initiated
      */
     orsSettingsFactory.setWaypoints = (waypoints, toggleRequest) => {
+        console.log(waypoints, toggleRequest);
         orsSettingsFactory[currentSettingsObj].getValue().waypoints = waypoints;
         /** fire a new request */
         if (toggleRequest) orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
