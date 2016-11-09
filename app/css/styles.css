@@ -227,8 +227,9 @@ html, body {
 
 .ors-route-controls {
     width: 344px;
-    height: 37px;
-    background-color: #b5152b;
+    height: 39px;
+    border-top: 1px solid #F0F0F0;
+    border-bottom: 1px solid #F0F0F0;
 }
 
 .ors-label {
@@ -291,21 +292,37 @@ html, body {
 .ors-route-card {
     position: relative;
     background-color: #fff;
-    color: #737c89;
     width: 100%;
     display: flex;
     z-index: -1;
 }
 
 .route-card-left {
+    color: rgba(0, 0, 0, 0.6);
     margin: 1.6rem 2rem 0;
     flex-shrink: 0;
 }
 
 .route-card-right {
+    color: rgba(0, 0, 0, 0.8);
     flex: 1 1 auto;
     margin-right: 2.4rem;
     margin-top: 1.6rem;
+}
+
+.summary-item {
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: 12px;
+}
+
+button.summary-select {
+    background: none !important;
+    border: none;
+    padding-bottom: 5px !important;
+    font-weight: bold;
+    color: #b5152b;
+    display: block;
 }
 
 .route-card-bottom-border {
@@ -362,13 +379,13 @@ html, body {
 .ors-controls-button {
     width: 40px;
     height: 37px;
-    background-color: #b5152b;
     border: none;
-    color: #FFF;
+    color: rgba(0, 0, 0, 0.6);
+    background-color: #FFF
 }
 
-.ors-controls-button:hover {
-    background: rgba(0, 0, 0, .15);
+.ors-controls-button i:hover {
+    color: #b5152b;
 }
 
 

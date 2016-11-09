@@ -31,11 +31,10 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
             console.log(ctrl.activeProfile, ctrl.activeSubgroup)
             ctrl.shouldDisplayRouteDetails = false;
         };
-        ctrl.showInstructions = (segments = undefined) => {
+        ctrl.showInstructions = () => {
             ctrl.shouldDisplayRouteDetails = ctrl.shouldDisplayRouteDetails == true ? false : true;
-            if (segments) ctrl.segments = segments;
-            console.log(ctrl.segments)
         };
+        ctrl.route = {};
     },
     require: {
         parent: '^orsSidebar'

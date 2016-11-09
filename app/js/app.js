@@ -15,7 +15,8 @@ var orsApp = angular.module('orsApp', [
     'orsApp.cookies-service',
     'ngCookies',
     'rzModule',
-    'ngSanitize'
+    'ngSanitize',
+    'orsApp.ors-filters'
 ])
 
 .config(function($locationProvider, $httpProvider) {
