@@ -19,7 +19,8 @@ angular.module('orsApp').directive('orsMap', function() {
                 ctrl.geofeatures = {
                     layerLocationMarker: L.featureGroup(),
                     layerRoutePoints: L.featureGroup(),
-                    layerRouteLines: L.featureGroup()
+                    layerRouteLines: L.featureGroup(),
+                    layerEmph: L.featureGroup()
                 };
                 ctrl.mapModel = {
                     map: ctrl.orsMap,
@@ -30,6 +31,7 @@ angular.module('orsApp').directive('orsMap', function() {
                     ctrl.mapModel.basemaps.basemap.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerRoutePoints.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerRouteLines.addTo(ctrl.orsMap);
+                    ctrl.mapModel.geofeatures.layerEmph.addTo(ctrl.orsMap);
                 });
                 ctrl.orsMap.setView([49.409445, 8.692953], 13);
                 /**
@@ -134,6 +136,12 @@ angular.module('orsApp').directive('orsMap', function() {
                         });
                     }
                 });
+                /** highlights a geometry */
+                ctrl.highlight = (package) => {
+                    L.polyline(package.geometry, {
+                        color: '#b5152b'
+                    }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
+                };
                 /**
                  * Dispatches all commands sent by Mapservice by using id and then performing the corresponding function
                  */
@@ -148,8 +156,11 @@ angular.module('orsApp').directive('orsMap', function() {
                         case 1:
                             ctrl.add(params._package);
                             break;
-                        case 2: 
+                        case 2:
                             ctrl.clear(params._package);
+                            break;
+                        case 3:
+                            ctrl.highlight(params._package);
                             break;
                         default:
                             break;

@@ -1,11 +1,12 @@
-<ors-instructions ng-show="$ctrl.shouldDisplayRouteDetails" route="$ctrl.route" show-instructions="$ctrl.showInstructions()">
-</ors-instructions>
+<div class="ors-routing-instructions" ng-show="$ctrl.shouldDisplayRouteDetails">
+	<ors-instructions should-display-route-details="$ctrl.shouldDisplayRouteDetails" route="$ctrl.route" show-instructions="$ctrl.showInstructions()"></ors-instructions>
+</div>
 <div class="ors-routing-navigation" ng-show="!$ctrl.shouldDisplayRouteDetails">
 	<ors-profiles-options ors-params="$ctrl.routeParams" show-options="$ctrl.showOptions" active-subgroup="$ctrl.activeSubgroup" active-profile="$ctrl.activeProfile" profiles="$ctrl.profiles"></ors-profiles-options>
 </div>
 <div class="ors-routing-inner" ng-show="!$ctrl.shouldDisplayRouteDetails">
 	<div class="ors-routing-info">
 		<ors-waypoints ors-map="$ctrl.parent.orsMap" ors-params="$ctrl.routeParams" show-options="$ctrl.showOptions" active-subgroup="$ctrl.activeSubgroup" active-profile="$ctrl.activeProfile"></ors-waypoints>
-		<ors-summaries show-instructions="$ctrl.showInstructions()" route="$ctrl.route"></ors-summaries>
+		<ors-summaries should-display-route-details="$ctrl.shouldDisplayRouteDetails" show-instructions="$ctrl.showInstructions()" route="$ctrl.route"></ors-summaries>
 	</div>
 </div>

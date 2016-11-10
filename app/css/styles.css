@@ -151,6 +151,11 @@ html, body {
     flex: 0 1 344px;
 }
 
+.ors-routing-instructions {
+    width: 344px;
+    z-index: 1;
+}
+
 .ors-routing-navigation {
     position: absolute;
     height: 39px;

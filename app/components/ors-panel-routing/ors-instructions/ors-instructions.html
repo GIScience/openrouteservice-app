@@ -1,6 +1,5 @@
-<button class="ors-button flleft" ng-click="$ctrl.showInstructions()">
-    <i class="fa fa-lg fa-bicycle">
+<button class="ors-controls-button flright" ng-click="$ctrl.showInstructions()">
+    <i class="fa fa-lg fa-arrow-left">
     </i>
 </button>
-<p ng-bind-html="$ctrl.route.segments[0].distance">
-</p>
+<div ng-include="'app/includes/route-summary.html'"></div>

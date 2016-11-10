@@ -18,6 +18,18 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
                 data: requestData
             });
         };
+        orsRouteService.DeEmph = function() {
+            /** clear emph */
+            let action = orsObjectsFactory.createMapAction(2, lists.layers[2], undefined, undefined);
+            orsMapFactory.mapServiceSubject.onNext(action);
+        };
+
+        orsRouteService.Emph = function(geom) {
+            /** either whole or a slice if intervals */
+            action = orsObjectsFactory.createMapAction(3, lists.layers[2], geom, undefined);
+            orsMapFactory.mapServiceSubject.onNext(action);
+        };
+
         orsRouteService.processRoutes = function(response) {
             console.log(orsRouteService.routeObj.routes);
             /** clear map */
@@ -25,6 +37,7 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
             orsMapFactory.mapServiceSubject.onNext(action);
 
             _.each(orsRouteService.routeObj.routes, function(route) {
+                /** add layers */
                 let action = orsObjectsFactory.createMapAction(1, lists.layers[1], route.points, undefined);
                 orsMapFactory.mapServiceSubject.onNext(action);
             });
