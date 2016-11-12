@@ -34,7 +34,6 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
         ctrl.showInstructions = () => {
             ctrl.shouldDisplayRouteDetails = ctrl.shouldDisplayRouteDetails == true ? false : true;
         };
-        ctrl.route = {};
     },
     require: {
         parent: '^orsSidebar'

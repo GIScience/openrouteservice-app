@@ -1,5 +1,5 @@
 <div class="ors-route-card">
-    <div class="route-card-left" ng-switch="" on="$ctrl.profiles[$ctrl.route.profile].subgroup">
+    <div class="route-card-left" ng-switch="" on="$ctrl.profiles[route.profile].subgroup">
         <div ng-switch-when="Car">
             <i class="fa fa-lg fa-car">
             </i>
@@ -25,37 +25,35 @@
         <div class="summary-item">
             <i class="fa fa-clock-o">
             </i>
-            <span ng-bind-html="($ctrl.route.summary.duration | duration)">
+            <span ng-bind-html="(route.summary.duration | duration)">
             </span>
         </div>
         <div class="summary-item">
             <i class="fa fa-arrows-h">
             </i>
-            <span ng-bind-html="($ctrl.route.summary.distance | distance)">
+            <span ng-bind-html="(route.summary.distance | distance)">
             </span>
         </div>
-        <div class="summary-item" ng-if="$ctrl.route.summary.actualDistance">
+        <div class="summary-item" ng-if="route.summary.actualDistance">
             <i class="fa fa-ellipsis-h">
             </i>
-            <span ng-bind-html="($ctrl.route.summary.actualDistance | distance)">
+            <span ng-bind-html="(route.summary.actualDistance | distance)">
             </span>
         </div>
-        <div class="summary-item" ng-if="$ctrl.route.summary.ascent">
+        <div class="summary-item" ng-if="route.summary.ascent">
             <i class="fa fa-long-arrow-up">
             </i>
-            <span ng-bind-html="$ctrl.route.summary.ascent">
+            <span ng-bind-html="route.summary.ascent">
             </span>
         </div>
-        <div class="summary-item" ng-if="$ctrl.route.summary.descent">
+        <div class="summary-item" ng-if="route.summary.descent">
             <i class="fa fa-long-arrow-down">
             </i>
-            <span ng-bind-html="$ctrl.route.summary.descent">
+            <span ng-bind-html="route.summary.descent">
             </span>
         </div>
         <button class="summary-select" data-ng-click="$ctrl.showInstructions(); $ctrl.setInstructions(route);" ng-show="!$ctrl.shouldDisplayRouteDetails">
             Details
         </button>
-    </div>
-    <div class="route-card-bottom-border">
     </div>
 </div>

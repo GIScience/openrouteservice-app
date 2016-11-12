@@ -12,43 +12,6 @@ html, body {
     -background-color: gray !important;
 }
 
-.ors-header {
-    display: flex;
-    flex: 0 0 50px;
-}
-
-.ors-header ul {
-    width: 100%;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    background-color: #999;
-    font-size: 100%;
-}
-
-.ors-header li {
-    float: right;
-}
-
-.ors-header li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 16px 16px;
-    text-decoration: none;
-}
-
-.ors-header li div {
-    color: white;
-    text-align: left;
-    padding: 14px 16px;
-}
-
-.ors-inline {
-    display: inline;
-    padding-left: 15px;
-}
-
 
 /** for settings menu to appear */
 
@@ -123,12 +86,59 @@ html, body {
     -background-color: yellow;
 }
 
-.ors-sidebar {
-    order: 1;
-    color: #707070;
-    -background-color: purple;
+.ors-left {
     display: flex;
     flex: 0 1 388px;
+    flex-direction: column;
+    -background-color: yellow;
+    order: 1;
+    z-index: 1;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+
+}
+
+.ors-header {
+    display: flex;
+    flex: 0 0 40px;
+    z-index: 2;
+}
+
+.ors-header ul {
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(181, 21, 43, 1);
+    font-size: 100%;
+}
+
+.ors-header li {
+    float: right;
+}
+
+.ors-header li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 12px 16px;
+    text-decoration: none;
+}
+
+.ors-header li div {
+    color: white;
+    text-align: left;
+    padding: 14px 16px;
+}
+
+.ors-inline {
+    display: inline;
+    padding-left: 15px;
+}
+
+.ors-sidebar {
+    color: #707070;
+    display: flex;
+    flex: 1 1 388px;
     flex-direction: row;
 }
 
@@ -144,30 +154,31 @@ html, body {
     margin: 0;
 }
 
-.ors-panel {
-    -border: 3px solid blue;
-    overflow: auto;
+.ors-outlet {
     display: flex;
-    flex: 0 1 344px;
 }
 
-.ors-routing-instructions {
-    width: 344px;
-    z-index: 1;
+ors-route {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
 }
 
-.ors-routing-navigation {
-    position: absolute;
-    height: 39px;
+.ors-profiles-options {
     border-bottom: 1px solid #CCC;
+    flex: 0 0 39px;
     width: 344px;
-    z-index: 1;
     background-color: #F0F0F0;
 }
 
-.ors-routing-inner, .ors-instructions {
-    position: relative;
-    height: auto;
+.ors-routing-inner {
+    flex: 0 1 auto;
+    overflow-y: scroll;
+}
+
+.ors-instructions-summary {
+    flex: 0 0 auto;
+    width: 344px;
 }
 
 .ors-summary {
@@ -175,14 +186,7 @@ html, body {
     -height: 200px;
 }
 
-.ors-routing-info {
-    position: absolute;
-    top: 37px;
-    left: 0;
-    bottom: 0;
-    height: 100%;
-    width: 344px;
-}
+
 
 .ors-routing-options {
     height: 100%;
@@ -279,6 +283,11 @@ html, body {
     z-index:
 }
 
+/** this is needed for scrollbar to align to box */
+.ui.input {
+    position: static !important;
+}
+
 .ors-input-label {
     background: none #FFFFFF;
     border-left: none !important;
@@ -330,11 +339,7 @@ button.summary-select {
     display: block;
 }
 
-.route-card-bottom-border {
-    position: absolute;
-    bottom: 0;
-    left: 1.6rem;
-    right: 1.6rem;
+.bottom-border {
     height: 1px;
     border-bottom: .1rem solid #edf3f5;
 }
@@ -391,6 +396,35 @@ button.summary-select {
 
 .ors-controls-button i:hover {
     color: #b5152b;
+}
+
+
+/* surface, waytype and steepness graphs */
+
+.ors-types {
+    width: 100%;
+}
+
+.ors-types .list {
+    min-height: 25px;
+    padding-bottom: 5px;
+}
+
+.ors-types .list ul {
+    margin-left: -20px;
+}
+
+.ors-types .list li {
+    float: left;
+    font-size: 90%;
+    margin-right: 20px;
+}
+
+.ors-types .list li span {
+    color: #707070;
+    font-size: 90%;
+    position: relative;
+    margin-left: -5px;
 }
 
 
@@ -512,9 +546,12 @@ div.ors-wp-td {
     .ors-main {
         flex-direction: column;
     }
-    .ors-sidebar {
+    .ors-left {
         order: 2;
         flex-basis: 50vh;
+        flex: 1 1 auto;
+    }
+    .ors-sidebar {
         flex: 1 1 auto;
     }
     .ors-panel {

@@ -146,7 +146,6 @@ angular.module('orsApp').directive('orsMap', function() {
                  * Dispatches all commands sent by Mapservice by using id and then performing the corresponding function
                  */
                 orsMapFactory.subscribeToMapFunctions(function onNext(params) {
-                    console.log(params)
                     switch (params._actionCode) {
                         /** zoom to features */
                         case 0:
