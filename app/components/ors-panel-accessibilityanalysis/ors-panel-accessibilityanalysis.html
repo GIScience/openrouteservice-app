@@ -1,11 +1,6 @@
-<div class="ors-routing-navigation">
-    <ors-profiles-options active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup" ors-params="$ctrl.routeParams" profiles="$ctrl.profiles" show-options="$ctrl.showOptions">
-    </ors-profiles-options>
-</div>
-<div class="ors-routing-inner" ng-if="!$ctrl.shouldDisplayRouteDetails">
-    <div class="ors-routing-info">
-        <ors-aa-waypoints active-subgroup="$ctrl.activeSubgroup" active-profile="$ctrl.activeProfile" ors-map="$ctrl.parent.orsMap" ors-params="$ctrl.routeParams" show-options="$ctrl.showOptions">
-        </ors-aa-waypoints>
-        
-    </div>
+<ors-profiles-options class="ors-profiles-options" active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup" ors-params="$ctrl.routeParams" profiles="$ctrl.profiles" show-options="$ctrl.showOptions">
+</ors-profiles-options>
+<div class="ors-routing-inner">
+    <ors-aa-waypoints active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup" ors-map="$ctrl.parent.orsMap" ors-params="$ctrl.routeParams" show-options="$ctrl.showOptions">
+    </ors-aa-waypoints>
 </div>
