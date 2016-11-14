@@ -19,7 +19,8 @@ angular.module('orsApp').directive('orsMap', function() {
                 ctrl.geofeatures = {
                     layerLocationMarker: L.featureGroup(),
                     layerRoutePoints: L.featureGroup(),
-                    layerRouteLines: L.featureGroup()
+                    layerRouteLines: L.featureGroup(),
+                    layerAccessibilityAnalysis: L.featureGroup()
                 };
                 ctrl.mapModel = {
                     map: ctrl.orsMap,
@@ -30,6 +31,7 @@ angular.module('orsApp').directive('orsMap', function() {
                     ctrl.mapModel.basemaps.basemap.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerRoutePoints.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerRouteLines.addTo(ctrl.orsMap);
+                    ctrl.mapModel.geofeatures.layerAccessibilityAnalysis.addTo(ctrl.orsMap);
                 });
                 ctrl.orsMap.setView([49.409445, 8.692953], 13);
                 /**
@@ -111,6 +113,16 @@ angular.module('orsApp').directive('orsMap', function() {
                     }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
                 };
                 /** 
+                 * adds polygon to specific layer
+                 * @param {Object} package - The action package
+                 */
+                ctrl.addPolygon = (package) => {
+                    console.log(package);
+                    L.multiPolygon(package.geometry, {
+                        color: 'green'
+                    }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
+                };
+                /** 
                  * clears specific layer
                  */
                 ctrl.clear = (package) => {
@@ -148,9 +160,11 @@ angular.module('orsApp').directive('orsMap', function() {
                         case 1:
                             ctrl.add(params._package);
                             break;
-                        case 2: 
+                        case 2:
                             ctrl.clear(params._package);
                             break;
+                        case 3:
+                            ctrl.addPolygon(params._package);
                         default:
                             break;
                     }

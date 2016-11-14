@@ -23,7 +23,6 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
             /** clear map */
             let action = orsObjectsFactory.createMapAction(2, lists.layers[1], undefined, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
-
             _.each(orsRouteService.routeObj.routes, function(route) {
                 let action = orsObjectsFactory.createMapAction(1, lists.layers[1], route.points, undefined);
                 orsMapFactory.mapServiceSubject.onNext(action);
@@ -34,6 +33,7 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
         /** prepare route to json */
         orsRouteService.processResponse = function(response, profile) {
             response = orsUtilsService.domParser(response.data); /** later this xml parsing can be skipped as json is returned.. */
+            console.log(response);
             orsRouteService.routeObj = {
                 status: 'Ok',
                 routes: [{}]
