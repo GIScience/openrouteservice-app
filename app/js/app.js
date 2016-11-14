@@ -9,9 +9,11 @@
  *|                                                     http://www.giscience.uni-hd.de
  *|------------------------------------------------------------------------------------*/
 /**
- * @author: Timothy Ellersiek, timothy.ellersiek@geog.uni-heidelberg.de
+ * @author: Timothy Ellersiek, timothy.ellersiek@geog.uni-heidelberg.de, Hendrik Leuschner, hendrik.leuschner@uni-heidelberg.de
  * @version: 1.0
  */
+
+
 let orsApp = angular.module('orsApp', [
     'orsApp.ors-nav', 
     'orsApp.ors-panel-routing', 
@@ -27,6 +29,7 @@ let orsApp = angular.module('orsApp', [
     'orsApp.utils-service',
     'orsApp.route-service',
     'orsApp.cookies-service',
+    'orsApp.aa-service',
     'ngCookies',
     'rzModule',
     'ngSanitize',
@@ -49,9 +52,7 @@ let orsApp = angular.module('orsApp', [
             }
         };
     });
-})
-
-.controller('RootController', function(orsSettingsFactory, orsObjectsFactory, orsMapFactory) {
+}).controller('RootController', function(orsSettingsFactory, orsObjectsFactory, orsMapFactory) {
     // add map
     let ctrl = this;
     ctrl.myOrsMap = orsMapFactory.initMapA("map");
@@ -68,7 +69,6 @@ let orsApp = angular.module('orsApp', [
     //     // console.log(ctrl.map);
     // });
 });
-
 Array.prototype.move = function(from, to) {
     this.splice(to, 0, this.splice(from, 1)[0]);
     return this;

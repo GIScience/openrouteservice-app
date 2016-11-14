@@ -50,6 +50,7 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
         /** prepare route to json */
         orsRouteService.processResponse = function(response, profile) {
             response = orsUtilsService.domParser(response.data); /** later this xml parsing can be skipped as json is returned.. */
+            console.log(response);
             orsRouteService.routeObj = {
                 status: 'Ok',
                 routes: [{}]

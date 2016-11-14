@@ -298,6 +298,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http',
                 doc.async = false;
                 dom = doc.loadXML(data);
             }
+            console.log(dom);
             return dom;
         };
         /**
@@ -722,6 +723,16 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http',
             }
             distance = orsUtilsService.round(distance);
             return [origDistance, distance, uom];
+        };
+        /**
+         * positions are often set as data-attributes in the Ui/ HTML file. Converts them to OpenLayers.LonLat position
+         * @param positionString: String containing the coordinates
+         * @return: OpenLayers.LonLat with these coordinates 
+         */
+        orsUtilsService.convertPositionStringToLonLat = function(positionString) {
+            var pos = positionString.split(' ');
+            pos = L.latLng(pos[1], pos[0]);
+            return pos;
         };
         /**
          * rounds a given distance to an appropriate number of digits

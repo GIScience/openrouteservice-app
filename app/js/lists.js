@@ -412,5 +412,6 @@ lists.userOptions = {
 lists.layers = {
     0: 'layerRoutePoints',
     1: 'layerRouteLines',
-    2: 'layerEmph'
+    2: 'layerEmph',
+    3: 'layerAccessibilityAnalysis'
 };

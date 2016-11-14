@@ -1,4 +1,4 @@
-angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRouteService', function(orsObjectsFactory, orsUtilsService, orsRouteService) {
+angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRouteService', 'orsAaService', function(orsObjectsFactory, orsUtilsService, orsRouteService, orsAaService) {
     let orsSettingsFactory = {};
     /** Behaviour subjects routing. */
     orsSettingsFactory.routingWaypointsSubject = new Rx.BehaviorSubject({});
@@ -153,9 +153,31 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         }
     });
     /** Subscription function to current accessibility settings */
-    orsSettingsFactory.aaSettingsSubject.subscribe(x => {
-        console.info('aa request', x);
-        const userOptions = orsSettingsFactory.getUserOptions();
+    orsSettingsFactory.aaSettingsSubject.subscribe(settings => {
+        // const isWaypointSet = settings.waypoints..handleRoutePresent(settings);
+        // var isRoutePresent = waypoint.getNumWaypointsSet() >= 2;
+        if (settings.waypoints.length > 0) {
+            console.log(true, 'go', settings)
+                /** get user obtions */
+                // const isRoutePresent = orsSettingsFactory.handleRoutePresent(settings);
+                // var isRoutePresent = waypoint.getNumWaypointsSet() >= 2;
+                // if (isRoutePresent) {
+                // const userOptions = orsSettingsFactory.getUserOptions();
+            const payload = orsAaService.generateAnalysisRequest(settings);
+            orsAaService.fetchAnalysis(payload).then(function(response) {
+                console.log(response);
+                orsAaService.parseResponseToPolygon(response);
+                // const profile = settings.profile.type;
+                // console.log(profile, settings.profile)
+                // orsRouteService.processResponse(response, profile);
+            }, function(response) {
+                console.log(response);
+                console.log(orsAaService.parseResponseToPolygon(response));
+            });
+        }
+        // } else {
+        // console.log('Not enough waypoints..')
+        // }
     });
     /** 
      * Updates waypoint address. No need to fire subscription for settings.
