@@ -18,12 +18,29 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
                 data: requestData
             });
         };
+        orsRouteService.setCurrentRouteIdx = (idx) => {
+            orsRouteService.currentRouteIdx = idx;
+        }
+        orsRouteService.getCurrentRouteIdx = () => {
+            return orsRouteService.currentRouteIdx;
+        }
+        orsRouteService.DeEmph = function() {
+            /** clear emph */
+            let action = orsObjectsFactory.createMapAction(2, lists.layers[2], undefined, undefined);
+            orsMapFactory.mapServiceSubject.onNext(action);
+        };
+        orsRouteService.Emph = function(geom) {
+            /** either whole or a slice if intervals */
+            action = orsObjectsFactory.createMapAction(3, lists.layers[2], geom, undefined);
+            orsMapFactory.mapServiceSubject.onNext(action);
+        };
         orsRouteService.processRoutes = function(response) {
             console.log(orsRouteService.routeObj.routes);
             /** clear map */
             let action = orsObjectsFactory.createMapAction(2, lists.layers[1], undefined, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
             _.each(orsRouteService.routeObj.routes, function(route) {
+                /** add layers */
                 let action = orsObjectsFactory.createMapAction(1, lists.layers[1], route.points, undefined);
                 orsMapFactory.mapServiceSubject.onNext(action);
             });
@@ -53,13 +70,15 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
             const segmentsObj = orsRouteService.parseInstructions(orsUtilsService.getElementsByTagNameNS(response, namespaces.xls, 'RouteInstructionsList')[0]);
             orsRouteService.routeObj.routes[0].segments = segmentsObj.segments;
             orsRouteService.routeObj.routes[0].wayPoints = _.flatten([0, segmentsObj.viapoints, orsRouteService.routeObj.routes[0].points.length - 1]);
-            orsRouteService.routeObj.routes[0].extras = orsRouteService.parseExtras(response);
+            const extrasObj = orsRouteService.parseExtras(response);
+            if (extrasObj !== false) orsRouteService.routeObj.routes[0].extras = extrasObj;
             orsRouteService.processRoutes();
         };
         orsRouteService.parseExtras = function(response) {
-            extras = {};
+            extras = false;
             let steepnessXML = orsUtilsService.getElementsByTagNameNS(response, namespaces.xls, 'WaySteepnessList')[0];
             if (!(_.isUndefined(steepnessXML))) {
+                extras = {};
                 steepnessXML = orsUtilsService.getElementsByTagNameNS(steepnessXML, namespaces.xls, 'WaySteepness');
                 /** extract gradients */
                 extras.gradients = [];
@@ -73,6 +92,7 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
                     chunk.value = value.textContent;
                     extras.gradients.push(chunk);
                 });
+                return extras
             }
             return extras;
         };
@@ -228,20 +248,27 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
             obj.duration = timeMs;
             /** Distance */
             let distance = orsUtilsService.getElementsByTagNameNS(summary, namespaces.xls, 'TotalDistance')[0];
-            if (!(_.isUndefined(distance))) distance = distance.getAttribute('value');
-            obj.distance = distance;
+            if (!(_.isUndefined(distance))) {
+                distance = distance.getAttribute('value');
+                obj.distance = distance;
+            }
             /** Actual distance */
             let actualDistance = orsUtilsService.getElementsByTagNameNS(summary, namespaces.xls, 'ActualDistance')[0];
-            console.log(_.isUndefined(actualDistance))
-            if (!(_.isUndefined(actualDistance))) actualDistance.getAttribute('value');
-            obj.actualDistance = actualDistance;
+            if (!(_.isUndefined(actualDistance))) {
+                actualDistance = actualDistance.getAttribute('value');
+                obj.actualDistance = actualDistance;
+            }
             /** Ascent and Descent */
             let ascent = orsUtilsService.getElementsByTagNameNS(summary, namespaces.xls, 'Ascent')[0];
             let descent = orsUtilsService.getElementsByTagNameNS(summary, namespaces.xls, 'Descent')[0];
-            if (!(_.isUndefined(ascent))) ascent = ascent.getAttribute('value');
-            if (!(_.isUndefined(descent))) descent = descent.getAttribute('value');
-            obj.ascent = ascent;
-            obj.descent = descent;
+            if (!(_.isUndefined(ascent))) {
+                ascent = ascent.getAttribute('value');
+                obj.ascent = ascent;
+            }
+            if (!(_.isUndefined(descent))) {
+                descent = descent.getAttribute('value');
+                obj.descent = descent;
+            }
             /** Bounding box */
             let boundingBoxXML = orsUtilsService.getElementsByTagNameNS(summary, namespaces.xls, 'BoundingBox')[0],
                 boundingBox = [];

@@ -1,52 +1,13 @@
 /*@import 'https://fonts.googleapis.com/css?family=Open+Sans';*/
 
 html, body {
-    font-family: 'Open Sans', sans-serif !important;
     font-size: 90%;
     display: flex;
-    min-height: 100vh;
+    height: 100%;
     flex-direction: column;
     color: #444;
     margin: 0;
     padding: 0;
-    -background-color: gray !important;
-}
-
-.ors-header {
-    display: flex;
-    flex: 0 0 50px;
-}
-
-.ors-header ul {
-    width: 100%;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    background-color: #999;
-    font-size: 100%;
-}
-
-.ors-header li {
-    float: right;
-}
-
-.ors-header li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 16px 16px;
-    text-decoration: none;
-}
-
-.ors-header li div {
-    color: white;
-    text-align: left;
-    padding: 14px 16px;
-}
-
-.ors-inline {
-    display: inline;
-    padding-left: 15px;
 }
 
 
@@ -118,25 +79,101 @@ html, body {
 
 .ors-main {
     display: flex;
-    flex: 1 1 auto;
     flex-direction: row;
-    -background-color: yellow;
+    height: 100%;
+}
+
+.ors-left {
+    order: 1;
+    z-index: 1;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    flex: 0 1 388px;
+    height: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.ors-right {
+    flex: 1 1 auto;
+    order: 2;
+}
+
+
+/** header */
+
+.ors-header {
+    display: flex;
+    flex: 0 0 40px;
+    z-index: 2;
+}
+
+.ors-header ul {
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(181, 21, 43, 1);
+    font-size: 100%;
+}
+
+.ors-header li {
+    float: right;
+}
+
+.ors-header li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 12px 16px;
+    text-decoration: none;
+}
+
+.ors-header li div {
+    color: white;
+    text-align: left;
+    padding: 14px 16px;
+}
+
+.ors-inline {
+    display: inline;
+    padding-left: 15px;
 }
 
 .ors-sidebar {
-    order: 1;
     color: #707070;
-    -background-color: purple;
+    flex: 1 1 388px;
+    min-height: 0;  /* needed for FF */
+    -webkit-box-flex: 1 1 388px;
+    -webkit-flex: 1 1 388px;
+    -ms-flex: 1 1 388px;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    flex: 0 1 388px;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
     flex-direction: row;
 }
 
 .ors-navigation {
     border-right: 1px solid #CCC;
-    -display: flex;
-    flex: 0 1 44px;
     background-color: #F0F0F0;
+    flex: 0 0 44px;
+    overflow-y: auto;
+}
+
+.ors-summary {
+    width: 344px;
 }
 
 .ors-summary ul, .ors-navigation ul {
@@ -144,45 +181,52 @@ html, body {
     margin: 0;
 }
 
-.ors-panel {
-    -border: 3px solid blue;
-    overflow: auto;
+.ors-outlet {
     display: flex;
-    flex: 0 1 344px;
 }
 
-.ors-routing-navigation {
-    position: absolute;
-    height: 39px;
+ors-route, ors-analysis {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 344px;
+    overflow-x: hidden; /* otherwise y-scrollbar will cause x-scrollbar */
+}
+
+ors-instructions {
+    display: flex;
+    min-height: 0;     /* needed for FF */
+    flex-direction: column;
+}
+
+.ors-profiles-options {
     border-bottom: 1px solid #CCC;
     width: 344px;
-    z-index: 1;
-    background-color: #F0F0F0;
+    background: #F0F0F0;
+    flex: 0 1 39px;
 }
 
-.ors-routing-inner, .ors-instructions {
-    position: relative;
-    height: auto;
+.ors-routing-inner {
+    flex: 1 1 auto;
+    overflow-y: auto;
 }
 
-.ors-summary {
-    -background: yellow;
-    -height: 200px;
-}
-
-.ors-routing-info {
-    position: absolute;
-    top: 37px;
-    left: 0;
-    bottom: 0;
-    height: 100%;
+.ors-instructions-summary {
+    flex: 0 0 auto;
     width: 344px;
 }
 
-.ors-routing-options {
-    height: 100%;
-    width: 344px;
-}
 
 .ors-routing-options .container {
     background-color: #F0F0F0;
@@ -226,9 +270,9 @@ html, body {
 }
 
 .ors-route-controls {
-    width: 344px;
-    height: 37px;
-    background-color: #b5152b;
+    height: 39px;
+    border-top: 1px solid #F0F0F0;
+    border-bottom: 1px solid #F0F0F0;
 }
 
 .ors-label {
@@ -236,13 +280,9 @@ html, body {
     min-height: 1em !important;
 }
 
-.ors-footer {}
 
-.ors-map {
-    flex: 1 1 auto;
-    order: 2;
-    -border: 3px solid pink;
-}
+
+
 
 .ors-control-button {
     padding: 0 !important;
@@ -273,6 +313,9 @@ html, body {
     z-index:
 }
 
+
+/** this is needed for scrollbar to align to box */
+
 .ors-input-label {
     background: none #FFFFFF;
     border-left: none !important;
@@ -283,12 +326,57 @@ html, body {
     border-right: 1px solid rgba(34, 36, 38, 0.15) !important;
 }
 
+.ors-addresses {
+    padding: 15px 0 15px 0;
+    font-weight: normal;
+}
+
+.ors-route-card {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    display: flex;
+    z-index: -1;
+}
+
+.route-card-left {
+    color: rgba(0, 0, 0, 0.6);
+    margin: 1.6rem 2rem 0;
+    flex-shrink: 0;
+}
+
+.route-card-right {
+    color: rgba(0, 0, 0, 0.8);
+    flex: 1 1 auto;
+    margin-right: 2.4rem;
+    margin-top: 1.6rem;
+}
+
+.summary-item {
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: 12px;
+}
+
+button.summary-select {
+    background: none !important;
+    border: none;
+    padding-bottom: 5px !important;
+    font-weight: bold;
+    color: #b5152b;
+    display: block;
+}
+
+.bottom-border {
+    height: 1px;
+    border-bottom: .1rem solid #edf3f5;
+}
+
 .ors-wp-list {
     clear: both;
     list-style: none outside none;
     margin: 20px 0 20px 0;
-    padding: 0 10px 0 10px;
-    /*margin: 12px 0 0 0;*/
+    padding-left: 10px;
 }
 
 .ors-wp-item {
@@ -328,13 +416,42 @@ html, body {
 .ors-controls-button {
     width: 40px;
     height: 37px;
-    background-color: #b5152b;
     border: none;
-    color: #FFF;
+    color: rgba(0, 0, 0, 0.6);
+    background-color: #FFF
 }
 
-.ors-controls-button:hover {
-    background: rgba(0, 0, 0, .15);
+.ors-controls-button i:hover {
+    color: #b5152b;
+}
+
+
+/* surface, waytype and steepness graphs */
+
+.ors-types {
+    width: 100%;
+}
+
+.ors-types .list {
+    min-height: 25px;
+    padding-bottom: 5px;
+}
+
+.ors-types .list ul {
+    margin-left: -20px;
+}
+
+.ors-types .list li {
+    float: left;
+    font-size: 90%;
+    margin-right: 20px;
+}
+
+.ors-types .list li span {
+    color: #707070;
+    font-size: 90%;
+    position: relative;
+    margin-left: -5px;
 }
 
 
@@ -430,6 +547,7 @@ div.ors-wp-tr {
 div.ors-wp-td {
     display: table-cell;
     color: rgba(0, 0, 0, 0.4);
+    vertical-align: middle;
 }
 
 .flright {
@@ -456,15 +574,18 @@ div.ors-wp-td {
     .ors-main {
         flex-direction: column;
     }
-    .ors-sidebar {
+    .ors-left {
         order: 2;
-        flex-basis: 50vh;
+        flex: 1 1 50vh;
+    }
+    .ors-sidebar {
         flex: 1 1 auto;
     }
     .ors-panel {
         flex: 1 1 auto;
     }
-    .ors-map {
+    .ors-right {
         order: 1;
+        height: 50vh;
     }
 }

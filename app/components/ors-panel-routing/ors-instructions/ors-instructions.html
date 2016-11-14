@@ -1,6 +1,41 @@
-<button class="ors-button flleft" ng-click="$ctrl.showInstructions()">
-    <i class="fa fa-lg fa-bicycle">
-    </i>
-</button>
-<p ng-bind-html="$ctrl.routeSegments[0].distance">
-</p>
+<div class="ors-instructions-summary"> 
+	<button class="ors-controls-button flright" ng-click="$ctrl.showInstructions()">
+	    <i class="fa fa-lg fa-arrow-left">
+	    </i>
+	</button>
+	<div ng-include="'app/includes/route-summary.html'">
+	</div>
+	<ors-route-extras ng-if="route.extras" route="route" route-index="$ctrl.routeIndex">
+	</ors-route-extras>
+	<div class="bottom-border">
+	</div>
+</div>
+<div class="ors-routing-inner">
+
+	If you move from one page of a site without a scrollbar to another with a scrollbar, you'll see a slight layout shift as things squeeze inward a bit to make room for the scrollbar.
+
+A classic fix was html { overflow-y: scroll; } to force the scrollbar all the time. Ayke van Laëthem has found a more elegant solution in html { margin-left: calc(100vw - 100%); } which works because vw accounts for the scrollbar and % doesn't, and... just read it as there are a few more things you'll need to be aware of anyway.
+
+Pretty sweet for a first blog post Ayke!If you move from one page of a site without a scrollbar to another with a scrollbar, you'll see a slight layout shift as things squeeze inward a bit to make room for the scrollbar.
+
+A classic fix was html { overflow-y: scroll; } to force the scrollbar all the time. Ayke van Laëthem has found a more elegant solution in html { margin-left: calc(100vw - 100%); } which works because vw accounts for the scrollbar and % doesn't, and... just read it as there are a few more things you'll need to be aware of anyway.
+
+Pretty sweet for a first blog post Ayke!If you move from one page of a site without a scrollbar to another with a scrollbar, you'll see a slight layout shift as things squeeze inward a bit to make room for the scrollbar.
+
+A classic fix was html { overflow-y: scroll; } to force the scrollbar all the time. Ayke van Laëthem has found a more elegant solution in html { margin-left: calc(100vw - 100%); } which works because vw accounts for the scrollbar and % doesn't, and... just read it as there are a few more things you'll need to be aware of anyway.
+
+Pretty sweet for a first blog post Ayke!If you move from one page of a site without a scrollbar to another with a scrollbar, you'll see a slight layout shift as things squeeze inward a bit to make room for the scrollbar.
+
+A classic fix was html { overflow-y: scroll; } to force the scrollbar all the time. Ayke van Laëthem has found a more elegant solution in html { margin-left: calc(100vw - 100%); } which works because vw accounts for the scrollbar and % doesn't, and... just read it as there are a few more things you'll need to be aware of anyway.
+
+Pretty sweet for a first blog post Ayke!If you move from one page of a site without a scrollbar to another with a scrollbar, you'll see a slight layout shift as things squeeze inward a bit to make room for the scrollbar.
+
+A classic fix was html { overflow-y: scroll; } to force the scrollbar all the time. Ayke van Laëthem has found a more elegant solution in html { margin-left: calc(100vw - 100%); } which works because vw accounts for the scrollbar and % doesn't, and... just read it as there are a few more things you'll need to be aware of anyway.
+
+Pretty sweet for a first blog post Ayke!If you move from one page of a site without a scrollbar to another with a scrollbar, you'll see a slight layout shift as things squeeze inward a bit to make room for the scrollbar.
+
+A classic fix was html { overflow-y: scroll; } to force the scrollbar all the time. Ayke van Laëthem has found a more elegant solution in html { margin-left: calc(100vw - 100%); } which works because vw accounts for the scrollbar and % doesn't, and... just read it as there are a few more things you'll need to be aware of anyway.
+
+Pretty sweet for a first blog post Ayke!
+
+</div>

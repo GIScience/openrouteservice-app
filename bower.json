@@ -24,6 +24,7 @@
     "angular-ui-sortable": "^0.14.3",
     "jquery-ui": "jqueryui#^1.12.0",
     "angularjs-slider": "^5.5.1",
-    "angular-sanitize": "^1.5.8"
+    "angular-sanitize": "^1.5.8",
+    "d3": "3"
   }
 }

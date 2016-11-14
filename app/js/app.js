@@ -1,10 +1,44 @@
-var orsApp = angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.ors-panel-accessibilityanalysis', 'orsApp.ors-header', 'ui.sortable', 'orsApp.error-service', 'orsApp.map-service', 'orsApp.objects-service', 'orsApp.params-service', 'orsApp.request-service', 'orsApp.settings-service', 'orsApp.utils-service', 'orsApp.aa-service', 'orsApp.route-service', 'orsApp.cookies-service', 'ngCookies', 'rzModule', 'ngSanitize']).config(function($locationProvider, $httpProvider) {
-    var ak = '?api_key=0894982ba55b12d3d3e4abd28d1838f2';
+
+/*+-------------+----------------------------------------------------------*
+ *|        /\   |     University of Heidelberg                             *
+ *|       |  |  |     Department of Geography                              *
+ *|      _|  |_ |     GIScience Research Group                             *
+ *|    _/      \|                                                          *
+ *|___|         |                                                          *
+ *|             |     Berliner Straße 48                                   *
+ *|             |     D-69221 Heidelberg, Germany                          *
+ *+-------------+----------------------------------------------------------*/
+
+let orsApp = angular.module('orsApp', [
+    'orsApp.ors-nav', 
+    'orsApp.ors-panel-routing', 
+    'orsApp.ors-panel-accessibilityanalysis', 
+    'orsApp.ors-header',
+    'ui.sortable', 
+    'orsApp.error-service', 
+    'orsApp.map-service', 
+    'orsApp.objects-service', 
+    'orsApp.params-service',
+    'orsApp.request-service', 
+    'orsApp.settings-service', 
+    'orsApp.utils-service',
+    'orsApp.route-service',
+    'orsApp.cookies-service',
+    'orsApp.aa-service',
+    'ngCookies',
+    'rzModule',
+    'ngSanitize',
+    'orsApp.ors-filters',
+    'orsApp.ors-route-extras'
+])
+
+.config(function($locationProvider, $httpProvider) {
+    const ak = '?api_key=0894982ba55b12d3d3e4abd28d1838f2';
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push(function($q) {
         return {
             'request': function(config) {
-                for (var k in namespaces.services) {
+                for (let k in namespaces.services) {
                     if (config.url == namespaces.services[k]) {
                         config.url = config.url + ak;
                     }
@@ -15,7 +49,7 @@ var orsApp = angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routi
     });
 }).controller('RootController', function(orsSettingsFactory, orsObjectsFactory, orsMapFactory) {
     // add map
-    var ctrl = this;
+    let ctrl = this;
     ctrl.myOrsMap = orsMapFactory.initMapA("map");
     // orsMapFactory.map.then(function(map) {
     //     ctrl.myOrsMap = map

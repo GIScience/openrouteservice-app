@@ -30,11 +30,13 @@
             1. need to pass language and unit stuff to settings
             2. if permalink is called the settings in header have to be updated
         -->
-        <ors-header class="ors-header"></ors-header>
         <div class="ors-main" ng-controller="RootController as root">   
-            <!-- side controls which control ng-view -->
-            <ors-sidebar class="ors-sidebar" ors-map="root.myOrsMap"></ors-sidebar>
-            <ors-map id="map" class="ors-map" ors-map="root.myOrsMap"></ors-map>             
+            <div class="ors-left">
+                <ors-header class="ors-header"></ors-header>
+                <!-- side controls which control ng-view -->
+                <ors-sidebar class="ors-sidebar" ors-map="root.myOrsMap"></ors-sidebar>
+            </div>
+            <ors-map id="map" class="ors-right" ors-map="root.myOrsMap"></ors-map>             
         </div>
     </body>
     <!-- 1. Load libraries -->
@@ -58,14 +60,17 @@
     <script src="app/lib/leaflet/dist/leaflet.js"></script>
     <script src="app/lib/angular-ui-sortable/sortable.js"></script>
     <script src="app/lib/angularjs-slider/dist/rzslider.js"></script>
+    <script src="app/lib/d3/d3.js"></script>
 
     <!-- 2. Load our 'modules' -->
     <script src="app/js/namespaces.js"></script>
     <script src="app/js/lists.js"></script>
+    <script src="app/js/mappings.js"></script>
 
     <script src="app/infrastructure/ors-settings-service.js"></script>
   
     <script src="app/js/app.js"></script>
+    <script src="app/js/filters.js"></script>
 
     <script src="app/infrastructure/ors-objects-service.js"></script>
     <script src="app/infrastructure/ors-map-service.js"></script>
@@ -86,6 +91,8 @@
     <script src="app/components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-route-controls.js"></script>
     <script src="app/components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-options/ors-options.js"></script>
     <script src="app/components/ors-panel-routing/ors-instructions/ors-instructions.js"></script>
+    <script src="app/components/ors-panel-routing/ors-route-extras/ors-route-extras.js"></script>
+    <script src="app/components/ors-panel-routing/ors-route-extras/ors-bars-chart/ors-bars-chart.js"></script>
     <script src="app/components/ors-profiles-options/ors-profiles-options.js"></script>
     <script src="app/components/ors-panel-accessibilityanalysis/ors-panel-accessibilityanalysis.js"></script>
     <script src="app/components/ors-panel-accessibilityanalysis/ors-aa-controls/ors-aa-controls.js"></script>

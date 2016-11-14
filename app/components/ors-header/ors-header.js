@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-header', []).component('orsHeader', {
     templateUrl: 'app/components/ors-header/ors-header.html',
-    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsCookiesFactory) {
+    controller($scope, orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsCookiesFactory) {
         var ctrl = this;
         ctrl.optionList = lists.userOptions;
         /** http://localhost:3000/routing?units=mi&language=de&routinglanguage=en */

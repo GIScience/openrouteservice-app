@@ -60,8 +60,8 @@
         </button>
     </li>
     <li>
-        <button class="ors-button flleft" ng-click="$ctrl.changeProfile($ctrl.profiles.HeavyVehicle.name)">
-            <i class="fa fa-lg fa-bus" ng-class="{active : $ctrl.activeSubgroup === $ctrl.profiles.HeavyVehicle.name}">
+        <button class="ors-button flleft" ng-click="$ctrl.changeProfile($ctrl.profiles.hgv.name)">
+            <i class="fa fa-lg fa-bus" ng-class="{active : $ctrl.activeSubgroup === $ctrl.profiles.hgv.subgroup}">
             </i>
         </button>
         <span>
@@ -70,37 +70,37 @@
             <ul class="ors-nav-submenu">
                 <li>
                     <div class="ui radio checkbox">
-                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.HeavyVehicle.name" type="radio">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.hgv.name" type="radio">
                         <label>Heavy Vehicle</label>
                     </div>
                 </li>
                 <li>
                     <div class="ui radio checkbox">
-                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.Goods.name" type="radio">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.goods.name" type="radio">
                         <label>Goods</label>
                     </div>
                 </li>
                 <li>
                     <div class="ui radio checkbox">
-                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.Bus.name" type="radio">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.bus.name" type="radio">
                         <label>Bus</label>
                     </div>
                 </li>
                 <li>
                     <div class="ui radio checkbox">
-                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.Agricultural.name" type="radio">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.agricultural.name" type="radio">
                         <label>Agricultural</label>
                     </div>
                 </li>
                 <li>
                     <div class="ui radio checkbox">
-                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.Forestry.name" type="radio">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.forestry.name" type="radio">
                         <label>Forestry</label>
                     </div>
                 </li>
                 <li>
                     <div class="ui radio checkbox">
-                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.Delivery.name" type="radio">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.delivery.name" type="radio">
                         <label>Delivery</label>
                     </div>
                 </li>

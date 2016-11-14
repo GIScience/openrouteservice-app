@@ -1,0 +1,59 @@
+<div class="ors-route-card">
+    <div class="route-card-left" ng-switch="" on="$ctrl.profiles[route.profile].subgroup">
+        <div ng-switch-when="Car">
+            <i class="fa fa-lg fa-car">
+            </i>
+        </div>
+        <div ng-switch-when="Bicycle">
+            <i class="fa fa-lg fa-bicycle">
+            </i>
+        </div>
+        <div ng-switch-when="HeavyVehicle">
+            <i class="fa fa-lg fa-bus">
+            </i>
+        </div>
+        <div ng-switch-when="Wheelchair">
+            <i class="fa fa-lg fa-wheelchair">
+            </i>
+        </div>
+        <div ng-switch-when="Pedestrian">
+            <i class="fa fa-lg fa-male">
+            </i>
+        </div>
+    </div>
+    <div class="route-card-right">
+        <div class="summary-item">
+            <i class="fa fa-clock-o">
+            </i>
+            <span ng-bind-html="(route.summary.duration | duration)">
+            </span>
+        </div>
+        <div class="summary-item">
+            <i class="fa fa-arrows-h">
+            </i>
+            <span ng-bind-html="(route.summary.distance | distance)">
+            </span>
+        </div>
+        <div class="summary-item" ng-if="route.summary.actualDistance">
+            <i class="fa fa-ellipsis-h">
+            </i>
+            <span ng-bind-html="(route.summary.actualDistance | distance)">
+            </span>
+        </div>
+        <div class="summary-item" ng-if="route.summary.ascent">
+            <i class="fa fa-long-arrow-up">
+            </i>
+            <span ng-bind-html="route.summary.ascent">
+            </span>
+        </div>
+        <div class="summary-item" ng-if="route.summary.descent">
+            <i class="fa fa-long-arrow-down">
+            </i>
+            <span ng-bind-html="route.summary.descent">
+            </span>
+        </div>
+        <button class="summary-select" data-ng-click="$ctrl.showInstructions(); $ctrl.setInstructions(route);" ng-show="!$ctrl.shouldDisplayRouteDetails">
+            Details
+        </button>
+    </div>
+</div>

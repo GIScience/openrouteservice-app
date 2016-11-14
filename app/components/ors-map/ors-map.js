@@ -20,7 +20,8 @@ angular.module('orsApp').directive('orsMap', function() {
                     layerLocationMarker: L.featureGroup(),
                     layerRoutePoints: L.featureGroup(),
                     layerRouteLines: L.featureGroup(),
-                    layerAccessibilityAnalysis: L.featureGroup()
+                    layerAccessibilityAnalysis: L.featureGroup(),
+                    layerEmph: L.featureGroup()
                 };
                 ctrl.mapModel = {
                     map: ctrl.orsMap,
@@ -32,6 +33,7 @@ angular.module('orsApp').directive('orsMap', function() {
                     ctrl.mapModel.geofeatures.layerRoutePoints.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerRouteLines.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerAccessibilityAnalysis.addTo(ctrl.orsMap);
+                    ctrl.mapModel.geofeatures.layerEmph.addTo(ctrl.orsMap);
                 });
                 ctrl.orsMap.setView([49.409445, 8.692953], 13);
                 /**
@@ -146,11 +148,16 @@ angular.module('orsApp').directive('orsMap', function() {
                         });
                     }
                 });
+                /** highlights a geometry */
+                ctrl.highlight = (package) => {
+                    L.polyline(package.geometry, {
+                        color: '#b5152b'
+                    }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
+                };
                 /**
                  * Dispatches all commands sent by Mapservice by using id and then performing the corresponding function
                  */
                 orsMapFactory.subscribeToMapFunctions(function onNext(params) {
-                    console.log(params)
                     switch (params._actionCode) {
                         /** zoom to features */
                         case 0:
@@ -164,7 +171,11 @@ angular.module('orsApp').directive('orsMap', function() {
                             ctrl.clear(params._package);
                             break;
                         case 3:
+                            ctrl.highlight(params._package);
+                            break;
+                        case 4:
                             ctrl.addPolygon(params._package);
+                            break;
                         default:
                             break;
                     }
