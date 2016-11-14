@@ -1,13 +1,17 @@
-/*+-------------+----------------------------------------------------------*
- *|        /\   |     University of Heidelberg                             *
- *|       |  |  |     Department of Geography                              *
- *|      _|  |_ |     GIScience Research Group                             *
- *|    _/      \|                                                          *
- *|___|         |                                                          *
- *|             |     Berliner Straße 48                                   *
- *|             |     D-69221 Heidelberg, Germany                          *
- *+-------------+----------------------------------------------------------*/
-
+/*|-----------------------------------------------------------------------------------
+ *|                                                     University of Heidelberg
+ *|   _____ _____  _____      _                         Department of Geography
+ *|  / ____|_   _|/ ____|    (_)                        Chair of GIScience
+ *| | |  __  | | | (___   ___ _  ___ _ __   ___ ___     (C) 2011
+ *| | | |_ | | |  \___ \ / __| |/ _ \ '_ \ / __/ _ \
+ *| | |__| |_| |_ ____) | (__| |  __/ | | | (_|  __/    Berliner Strasse 48
+ *|  \_____|_____|_____/ \___|_|\___|_| |_|\___\___|    D-69120 Heidelberg, Germany
+ *|                                                     http://www.giscience.uni-hd.de
+ *|------------------------------------------------------------------------------------*/
+/**
+ * @author: Timothy Ellersiek, timothy.ellersiek@geog.uni-heidelberg.de
+ * @version: 1.0
+ */
 let orsApp = angular.module('orsApp', [
     'orsApp.ors-nav', 
     'orsApp.ors-panel-routing', 
