@@ -49,6 +49,7 @@ html, body {
 .ors-right {
     flex: 1 1 auto;
     order: 2;
+    z-index: 0;
 }
 
 
