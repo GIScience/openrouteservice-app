@@ -565,3 +565,7 @@ div.ors-wp-td {
 .cm-popup-option {
     cursor: pointer;
 }
+
+.leaflet-top, .leaflet-bottom {
+    z-index: 0 !important;
+}
