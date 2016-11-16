@@ -1,0 +1,44 @@
+<header>
+    <h1>
+        Import route from file
+    </h1>
+</header>
+<section>
+    <h2>
+        Select file(s)
+    </h2>
+    <input accept=".gpx,.tcx,.gml,.kml,.geojson" class="ui fluid mini button" id="importFiles" multiple="" name="file" onchange="angular.element(this).scope().$ctrl.fileNameChanged(this)" type="file">
+    </input>
+</section>
+<div class="ui divider">
+</div>
+<section>
+    <div ng-repeat="file in $ctrl.uploadedFiles track by $index">
+        <div class="ui segment">
+            <h2 class="ui center floated header">
+                <i class="large file text left aligned icon">
+                </i>
+                <a class="header middle" ng-bind="file.name">
+                </a>
+            </h2>
+            <div class="ui hidden divider">
+            </div>
+            <div class="ui fluid checkbox">
+                <input ng-change="$ctrl.previewRoute(file.preview)" ng-model="file.preview" type="checkbox">
+                    <label>
+                        Preview route
+                    </label>
+                </input>
+            </div>
+            <div class="ui hidden divider">
+            </div>
+            <div>
+                <button class="ui fluid mini button" ng-click="$ctrl.importRoute()" type="submit">
+                    Import this route
+                </button>
+            </div>
+        </div>
+        <div class="ui clearing divider">
+        </div>
+    </div>
+</section>
