@@ -102,7 +102,7 @@ angular.module('orsApp').directive('orsMap', function() {
                 /**
                  * zooms the map so that the whole route becomes visible (i.e. all features of the route line layer)
                  */
-                ctrl.zoom = () => {
+                ctrl.zoom = (package) => {
                     ctrl.orsMap.fitBounds(new L.featureGroup(Object.keys(ctrl.mapModel.geofeatures).map(function(key) {
                         return ctrl.mapModel.geofeatures[key];
                     })).getBounds());
@@ -177,11 +177,10 @@ angular.module('orsApp').directive('orsMap', function() {
                     switch (params._actionCode) {
                         /** zoom to features */
                         case 0:
-                            ctrl.zoom();
+                            ctrl.zoom(params._package);
                             break;
                             /** add features */
                         case 1:
-                        
                             ctrl.add(params._package);
                             console.log(params._package)
                             break;

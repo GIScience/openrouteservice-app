@@ -34,7 +34,7 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
                     extension: (theFile.name).slice(((theFile.name).lastIndexOf(".") - 1 >>> 0) + 2),
                     index: processedCount,
                     content: e.result,
-                    preview:true
+                    preview:false
                 }
             };
             var onLoadEndHandler = function() {
@@ -54,6 +54,7 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
                 // create map action add geom to layer tracks
                 let action = orsObjectsFactory.createMapAction(1, lists.layers[4], geometry.geometry.coordinates, file.index);
                 orsMapFactory.mapServiceSubject.onNext(action)
+                let action = orsObjectsFactory.createMapAction(0, lists.layers[4], undefined, file.index);
             } else {
                 let action = orsObjectsFactory.createMapAction(2, lists.layers[4], undefined, file.index);
                 //ctrl.previewRoutes.removeLayer(ctrl.theId)
@@ -62,13 +63,14 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
         }
         ctrl.importRoute = function() {
             //remove all existing layers before import. There must only be one layer in this group
-            ctrl.importedRoutes.eachLayer(function(layer) {
+            console.log("clicked")
+            /*ctrl.importedRoutes.eachLayer(function(layer) {
                 ctrl.importedRoutes.removeLayer(layer)
             });
             //add the clicked layer
             ctrl.theRoute = orsImportFactory.importFile(ctrl.uploadedFiles.extension, ctrl.uploadedFiles.content);
             ctrl.importedRoutes.addLayer(ctrl.theRoute);
-            ctrl.map.fitBounds(ctrl.theRoute.getBounds());
+            ctrl.map.fitBounds(ctrl.theRoute.getBounds());*/
         }
     },
     bindings: {
