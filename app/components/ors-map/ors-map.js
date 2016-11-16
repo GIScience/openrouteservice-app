@@ -113,7 +113,8 @@ angular.module('orsApp').directive('orsMap', function() {
                  */
                 ctrl.add = (package) => {
                     L.polyline(package.geometry, {
-                        color: 'red'
+                        color: package.color === true ? package.color : 'red',
+                        index: package.fId === true ? package.fId : null
                     }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
                 };
                 /** 
@@ -127,9 +128,18 @@ angular.module('orsApp').directive('orsMap', function() {
                     }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
                 };
                 /** 
-                 * clears specific layer
+                 * clears layer entirely or specific layer in layer
                  */
                 ctrl.clear = (package) => {
+                    if (package.ftIndex) {
+                        //ctrl.mapModel.geofeatures[package.layerCode].clearLayers();
+                        ctrl.mapModel.geofeatures[package.layerCode].eachLayer(function(layer) {
+                            if (layer.options.index == package.ftIndex) {
+                                ctrl.mapModel.geofeatures[package.layerCode].removeLayer(layer);
+                                return;
+                            }
+                        });
+                    }
                     ctrl.mapModel.geofeatures[package.layerCode].clearLayers();
                 };
                 // subscribeToZoom () {ctrl.zoom()}
