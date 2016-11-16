@@ -31,6 +31,7 @@ let orsApp = angular.module('orsApp', [
     'orsApp.route-service',
     'orsApp.cookies-service',
     'orsApp.aa-service',
+    'orsApp.GeoFileHandler-service',
     'ngCookies',
     'rzModule',
     'ngSanitize',

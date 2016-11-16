@@ -1,4 +1,4 @@
-angular.module('orsApp.ors-route-controls', []).component('orsRouteControls', {
+angular.module('orsApp.ors-route-controls', ['orsApp.ors-importRoute-controls']).component('orsRouteControls', {
     templateUrl: 'app/components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-route-controls.html',
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsMapFactory, orsCookiesFactory) {
         let ctrl = this;

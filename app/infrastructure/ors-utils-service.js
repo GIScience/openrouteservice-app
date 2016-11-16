@@ -114,7 +114,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http',
                 //sloped curb
                 writer.writeElementString('xls:SlopedCurb', settings.profile.options.curb.toString());
             }
-            if (lists.profiles[settings.profile.type].subgroup == 'Bicycle' || lists.profiles[settings.profile.type].subgroup == 'Pedestrian' ||  lists.profiles[settings.profile.type].subgroup == 'Wheelchair') {
+            if (lists.profiles[settings.profile.type].subgroup == 'Bicycle' || lists.profiles[settings.profile.type].subgroup == 'Pedestrian' || lists.profiles[settings.profile.type].subgroup == 'Wheelchair') {
                 if (settings.profile.options.steepness >= 0 & settings.profile.options.steepness <= 15) {
                     writer.writeElementString('xls:MaxSteepness', settings.profile.options.steepness.toString());
                 }

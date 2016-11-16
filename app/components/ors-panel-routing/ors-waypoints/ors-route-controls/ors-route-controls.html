@@ -29,10 +29,8 @@
     </button>
 </div>
 <div class="ors-routing-options" ng-show="$ctrl.showOptions">
-    <ors-options active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup" show-options="$ctrl.showOptions">
-    </ors-options>
+    <ors-options active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup" show-options="$ctrl.showOptions"> </ors-options>
 </div>
 <ors-modal data-ng-show="$ctrl.showImport" show-fn="$ctrl.showImportFiles()">
-    <!-- <div data-ng-show="$ctrl.showModal.settings" ng-include="'app/includes/settings.html'">
-                </div> -->
+    <ors-import-route-controls imported-routes = "" preview-routes = "" > </ors-import-route-controls>
 </ors-modal>
