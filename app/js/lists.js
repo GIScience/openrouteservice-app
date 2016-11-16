@@ -413,5 +413,6 @@ lists.layers = {
     0: 'layerRoutePoints',
     1: 'layerRouteLines',
     2: 'layerEmph',
-    3: 'layerAccessibilityAnalysis'
+    3: 'layerAccessibilityAnalysis',
+    4: 'layerTracks'
 };

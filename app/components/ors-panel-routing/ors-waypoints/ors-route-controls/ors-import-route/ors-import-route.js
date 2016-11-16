@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteControls', {
     templateUrl: '/app/components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-import-route/import_route_tpl.html',
-    controller($scope, orsImportFactory) {
+    controller($scope, orsImportFactory, orsObjectsFactory, orsMapFactory) {
         let ctrl = this;
         console.log("here")
         ctrl.showCSVopt = false;
@@ -46,16 +46,18 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
                 }
             };
         };
-        ctrl.previewRoute = function(boolean) {
+        ctrl.previewRoute = function(boolean, file) {
             if (boolean) {
-                console.log(ctrl.uploadedFiles)
-                ctrl.theRoute = orsImportFactory.importFile(ctrl.uploadedFiles.extension, ctrl.uploadedFiles.content);
-                ctrl.loadedPreviewLayersId = []
-                ctrl.theId = ctrl.loadedPreviewLayersId[ctrl.uploadedFiles.index] = ctrl.theRoute._leaflet_id
-                ctrl.previewRoutes.addLayer(ctrl.theRoute);
-                ctrl.map.fitBounds(ctrl.theRoute.getBounds())
+                //console.log(file)
+                const geometry = orsImportFactory.importFile(file.extension, file.content);
+                //console.log(geometry.geometry.coordinates)
+                // create map action add geom to layer tracks
+                let action = orsObjectsFactory.createMapAction(1, lists.layers[4], geometry.geometry.coordinates, file.index);
+                orsMapFactory.mapServiceSubject.onNext(action)
             } else {
-                ctrl.previewRoutes.removeLayer(ctrl.theId)
+                let action = orsObjectsFactory.createMapAction(2, lists.layers[4], undefined, file.index);
+                //ctrl.previewRoutes.removeLayer(ctrl.theId)
+                orsMapFactory.mapServiceSubject.onNext(action)
             }
         }
         ctrl.importRoute = function() {

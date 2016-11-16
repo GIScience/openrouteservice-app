@@ -42,17 +42,17 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                 if (jxon.gpx.wpt) {
                     //just get the coordinates from the wpt key
                     for (var i = 0; i < jxon.gpx.wpt.length; i++) {
-                        gpxCoordinates[i] = [jxon.gpx.wpt[i].$lon, jxon.gpx.wpt[i].$lat];
+                        gpxCoordinates[i] = [jxon.gpx.wpt[i].$lat, jxon.gpx.wpt[i].$lon];
                     }
                 } else if (jxon.gpx.rte) {
                     //get the coordinates from the rte key
                     for (var i = 0; i < jxon.gpx.rte.rtept.length; i++) {
-                        gpxCoordinates[i] = [jxon.gpx.rte.rtept[i].$lon, jxon.gpx.rte.rtept[i].$lat];
+                        gpxCoordinates[i] = [jxon.gpx.rte.rtept[i].$lat, jxon.gpx.rte.rtept[i].$lon];
                     }
                 } else if (jxon.gpx.trk) {
                     //get the coordinates from the trk key
                     for (var i = 0; i < jxon.gpx.trk.trkseg.trkpt.length; i++) {
-                        gpxCoordinates[i] = [jxon.gpx.trk.trkseg.trkpt[i].$lon, jxon.gpx.trk.trkseg.trkpt[i].$lat];
+                        gpxCoordinates[i] = [jxon.gpx.trk.trkseg.trkpt[i].$lat, jxon.gpx.trk.trkseg.trkpt[i].$lon];
                     }
                 };
                 //get the CRS link
@@ -92,9 +92,9 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                 var tcxCoordinates = [];
                 for (var i = 0; i < jxon.TrainingCenterDatabase.Courses.Course.Track.TrackPoint.length; i++) {
                     if (jxon.TrainingCenterDatabase.Courses.Course.Track.TrackPoint[i].AltitudeMeters != undefined) {
-                        tcxCoordinates[i] = [jxon.TrainingCenterDatabase.Courses.Course.Track.TrackPoint[i].Position.LongitudeDegrees, jxon.TrainingCenterDatabase.Courses.Course.Track.TrackPoint[i].Position.LatitudeDegrees, jxon.TrainingCenterDatabase.Courses.Course.Track.TrackPoint[i].AltitudeMeters];
+                        tcxCoordinates[i] = [jxon.TrainingCenterDatabase.Courses.Course.Track.TrackPoint[i].Position.LatitudeDegrees, jxon.TrainingCenterDatabase.Courses.Course.Track.TrackPoint[i].Position.LongitudeDegrees, jxon.TrainingCenterDatabase.Courses.Course.Track.TrackPoint[i].AltitudeMeters];
                     } else {
-                        tcxCoordinates[i] = [jxon.TrainingCenterDatabase.Courses.Course.Track.TrackPoint[i].Position.LongitudeDegrees, jxon.TrainingCenterDatabase.Courses.Course.Track.TrackPoint[i].Position.LatitudeDegrees, 0];
+                        tcxCoordinates[i] = [jxon.TrainingCenterDatabase.Courses.Course.Track.TrackPoint[i].Position.LatitudeDegrees, jxon.TrainingCenterDatabase.Courses.Course.Track.TrackPoint[i].Position.LongitudeDegrees, 0];
                     }
                 }
                 //get the crs link
@@ -135,6 +135,12 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                 for (var i = 0; i < kmlCoordinates.length; i++) {
                     kmlCoordinates[i] = kmlCoordinates[i].split(",");
                 };
+                //switch kmlCoordinates position 0 with position 1 (lat and lon)
+                for (var i=0; i< kmlCoordinates.length; i++){
+                    var aux = kmlCoordinates[i][0];
+                    kmlCoordinates[i][0] = kmlCoordinates[i][1];
+                    kmlCoordinates[i][1] = aux;
+                }
                 //get the crs link
                 var crsLink = "http://spatialreference.org/ref/epsg/" + epsgCode + "/proj4/";
                 //Create the GeoJSON object
@@ -1107,8 +1113,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                         alert("Error: file extension not is valid");
                 };
                 // add the leaflet geojson constructor
-                var LeafletLayer = new L.geoJson(geoJSONImportDoc);
-                return LeafletLayer;
+                return geoJSONImportDoc;
             }
             return orsImportFactory
         }

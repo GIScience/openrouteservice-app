@@ -21,7 +21,8 @@ angular.module('orsApp').directive('orsMap', function() {
                     layerRoutePoints: L.featureGroup(),
                     layerRouteLines: L.featureGroup(),
                     layerAccessibilityAnalysis: L.featureGroup(),
-                    layerEmph: L.featureGroup()
+                    layerEmph: L.featureGroup(),
+                    layerTracks: L.featureGroup()
                 };
                 ctrl.mapModel = {
                     map: ctrl.orsMap,
@@ -34,6 +35,7 @@ angular.module('orsApp').directive('orsMap', function() {
                     ctrl.mapModel.geofeatures.layerRouteLines.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerAccessibilityAnalysis.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerEmph.addTo(ctrl.orsMap);
+                    ctrl.mapModel.geofeatures.layerTracks.addTo(ctrl.orsMap);
                 });
                 ctrl.orsMap.setView([49.409445, 8.692953], 13);
                 /**
@@ -165,6 +167,7 @@ angular.module('orsApp').directive('orsMap', function() {
                             break;
                             /** add features */
                         case 1:
+                        console.log(params)
                             ctrl.add(params._package);
                             break;
                         case 2:

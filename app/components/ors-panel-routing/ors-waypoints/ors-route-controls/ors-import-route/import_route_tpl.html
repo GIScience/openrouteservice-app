@@ -13,7 +13,7 @@
 <div class="ui divider">
 </div>
 <section>
-    <div ng-repeat="file in $ctrl.uploadedFiles track by $index">
+    <div ng-repeat="file in $ctrl.uploadedFiles track by $index" > 
         <div class="ui segment">
             <h2 class="ui center floated header">
                 <i class="large file text left aligned icon">
@@ -24,7 +24,7 @@
             <div class="ui hidden divider">
             </div>
             <div class="ui fluid checkbox">
-                <input ng-change="$ctrl.previewRoute(file.preview)" ng-model="file.preview" type="checkbox">
+                <input ng-change="$ctrl.previewRoute(file.preview,file)" ng-init="$ctrl.previewRoute(false, file)" ng-model="file.preview" type="checkbox">
                     <label>
                         Preview route
                     </label>
