@@ -34,7 +34,7 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
                     extension: (theFile.name).slice(((theFile.name).lastIndexOf(".") - 1 >>> 0) + 2),
                     index: processedCount,
                     content: e.result,
-                    preview:false
+                    preview:true
                 }
             };
             var onLoadEndHandler = function() {

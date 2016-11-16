@@ -112,9 +112,10 @@ angular.module('orsApp').directive('orsMap', function() {
                  * @param {Object} package - The action package
                  */
                 ctrl.add = (package) => {
+                    console.log(package)
                     L.polyline(package.geometry, {
-                        color: package.color === true ? package.color : 'red',
-                        index: package.fId === true ? package.fId : null
+                        color: !(package.color === undefined) ? package.color : 'red',
+                        index: !(package.featureId == undefined) ? package.featureId : null
                     }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
                 };
                 /** 
@@ -131,16 +132,19 @@ angular.module('orsApp').directive('orsMap', function() {
                  * clears layer entirely or specific layer in layer
                  */
                 ctrl.clear = (package) => {
-                    if (package.ftIndex) {
+                    if (!(package.featureId == undefined)) {
+                        console.log(true)
                         //ctrl.mapModel.geofeatures[package.layerCode].clearLayers();
                         ctrl.mapModel.geofeatures[package.layerCode].eachLayer(function(layer) {
-                            if (layer.options.index == package.ftIndex) {
+                            if (layer.options.index == package.featureId) {
                                 ctrl.mapModel.geofeatures[package.layerCode].removeLayer(layer);
-                                return;
+                                
                             }
                         });
+                    } else {
+                        ctrl.mapModel.geofeatures[package.layerCode].clearLayers();
                     }
-                    ctrl.mapModel.geofeatures[package.layerCode].clearLayers();
+                    
                 };
                 // subscribeToZoom () {ctrl.zoom()}
                 orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
@@ -177,11 +181,13 @@ angular.module('orsApp').directive('orsMap', function() {
                             break;
                             /** add features */
                         case 1:
-                        console.log(params)
+                        
                             ctrl.add(params._package);
+                            console.log(params._package)
                             break;
                         case 2:
                             ctrl.clear(params._package);
+                            console.log(params._package)
                             break;
                         case 3:
                             ctrl.highlight(params._package);
