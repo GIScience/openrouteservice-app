@@ -103,9 +103,17 @@ angular.module('orsApp').directive('orsMap', function() {
                  * zooms the map so that the whole route becomes visible (i.e. all features of the route line layer)
                  */
                 ctrl.zoom = (package) => {
-                    ctrl.orsMap.fitBounds(new L.featureGroup(Object.keys(ctrl.mapModel.geofeatures).map(function(key) {
-                        return ctrl.mapModel.geofeatures[key];
-                    })).getBounds());
+                    if (!(package.featureId === undefined)) {
+                        ctrl.mapModel.geofeatures[package.layerCode].eachLayer(function(layer) {
+                            if (layer.options.index == package.featureId) {
+                                ctrl.orsMap.fitBounds(layer.getBounds());
+                            }
+                        });
+                    } else {
+                        ctrl.orsMap.fitBounds(new L.featureGroup(Object.keys(ctrl.mapModel.geofeatures).map(function(key) {
+                            return ctrl.mapModel.geofeatures[key];
+                        })).getBounds());
+                    }
                 };
                 /** 
                  * adds features to specific layer
@@ -133,18 +141,14 @@ angular.module('orsApp').directive('orsMap', function() {
                  */
                 ctrl.clear = (package) => {
                     if (!(package.featureId == undefined)) {
-                        console.log(true)
-                        //ctrl.mapModel.geofeatures[package.layerCode].clearLayers();
                         ctrl.mapModel.geofeatures[package.layerCode].eachLayer(function(layer) {
                             if (layer.options.index == package.featureId) {
                                 ctrl.mapModel.geofeatures[package.layerCode].removeLayer(layer);
-                                
                             }
                         });
                     } else {
                         ctrl.mapModel.geofeatures[package.layerCode].clearLayers();
                     }
-                    
                 };
                 // subscribeToZoom () {ctrl.zoom()}
                 orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
@@ -182,11 +186,9 @@ angular.module('orsApp').directive('orsMap', function() {
                             /** add features */
                         case 1:
                             ctrl.add(params._package);
-                            console.log(params._package)
                             break;
                         case 2:
                             ctrl.clear(params._package);
-                            console.log(params._package)
                             break;
                         case 3:
                             ctrl.highlight(params._package);
