@@ -48,17 +48,18 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
         };
         ctrl.previewRoute = function(boolean, file) {
             if (boolean) {
-                //console.log(file)
+                //gets the Geometry from the opened file
                 const geometry = orsImportFactory.importFile(file.extension, file.content);
-                //console.log(geometry.geometry.coordinates)
-                // create map action add geom to layer tracks
-                let action = orsObjectsFactory.createMapAction(1, lists.layers[4], geometry.geometry.coordinates, file.index);
-                orsMapFactory.mapServiceSubject.onNext(action)
-                let action = orsObjectsFactory.createMapAction(0, lists.layers[4], undefined, file.index);
+                // create map action and add geom to layer tracks. Adds the track when checkbox is checked
+                let action_loadToMap = orsObjectsFactory.createMapAction(1, lists.layers[4], geometry.geometry.coordinates, file.index);
+                orsMapFactory.mapServiceSubject.onNext(action_loadToMap)
+                // create the zoom to layer action. Zooms to layer when checkbox is checked
+                let action_zoomToLayer = orsObjectsFactory.createMapAction(0, lists.layers[4], undefined, file.index);
+                orsMapFactory.mapServiceSubject.onNext(action_zoomToLayer)
             } else {
-                let action = orsObjectsFactory.createMapAction(2, lists.layers[4], undefined, file.index);
-                //ctrl.previewRoutes.removeLayer(ctrl.theId)
-                orsMapFactory.mapServiceSubject.onNext(action)
+                // removes the layer when unchecking the checkbox
+                let action_removeLayer = orsObjectsFactory.createMapAction(2, lists.layers[4], undefined, file.index);
+                orsMapFactory.mapServiceSubject.onNext(action_removeLayer)
             }
         }
         ctrl.importRoute = function() {

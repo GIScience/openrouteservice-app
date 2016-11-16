@@ -192,6 +192,11 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
              * @return {Object} geoJSONDoc: a GeoJSON object
              */
             orsParseFactory.parseGeoJson = function(geoJson) {
+                for (var i=0; i<geoJson.geometry.coordinates.length; i++){
+                    var aux = geoJson.geometry.coordinates[i][0];
+                    geoJson.geometry.coordinates[i][0] = geoJson.geometry.coordinates[i][1];
+                    geoJson.geometry.coordinates[i][1] = aux; 
+                }
                 var geoJSONDoc = geoJson;
                 return geoJSONDoc;
             };
