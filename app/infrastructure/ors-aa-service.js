@@ -256,7 +256,7 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', 'orsUt
             }
             action = orsObjectsFactory.createMapAction(4, lists.layers[3], polygons, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
-        }
+        };
         return orsAaService;
     }
 ]);

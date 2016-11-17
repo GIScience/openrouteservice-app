@@ -21,7 +21,8 @@ angular.module('orsApp').directive('orsMap', function() {
                     layerRoutePoints: L.featureGroup(),
                     layerRouteLines: L.featureGroup(),
                     layerAccessibilityAnalysis: L.featureGroup(),
-                    layerEmph: L.featureGroup()
+                    layerEmph: L.featureGroup(),
+                    layerTracks: L.featureGroup()
                 };
                 ctrl.mapModel = {
                     map: ctrl.orsMap,
@@ -34,6 +35,7 @@ angular.module('orsApp').directive('orsMap', function() {
                     ctrl.mapModel.geofeatures.layerRouteLines.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerAccessibilityAnalysis.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerEmph.addTo(ctrl.orsMap);
+                    ctrl.mapModel.geofeatures.layerTracks.addTo(ctrl.orsMap);
                 });
                 ctrl.orsMap.setView([49.409445, 8.692953], 13);
                 /**
@@ -108,18 +110,28 @@ angular.module('orsApp').directive('orsMap', function() {
                 /**
                  * zooms the map so that the whole route becomes visible (i.e. all features of the route line layer)
                  */
-                ctrl.zoom = () => {
-                    ctrl.orsMap.fitBounds(new L.featureGroup(Object.keys(ctrl.mapModel.geofeatures).map(function(key) {
-                        return ctrl.mapModel.geofeatures[key];
-                    })).getBounds());
+                ctrl.zoom = (package) => {
+                    if (!(package.featureId === undefined)) {
+                        ctrl.mapModel.geofeatures[package.layerCode].eachLayer(function(layer) {
+                            if (layer.options.index == package.featureId) {
+                                ctrl.orsMap.fitBounds(layer.getBounds());
+                            }
+                        });
+                    } else {
+                        ctrl.orsMap.fitBounds(new L.featureGroup(Object.keys(ctrl.mapModel.geofeatures).map(function(key) {
+                            return ctrl.mapModel.geofeatures[key];
+                        })).getBounds());
+                    }
                 };
                 /** 
                  * adds features to specific layer
                  * @param {Object} package - The action package
                  */
                 ctrl.add = (package) => {
+                    console.log(package)
                     L.polyline(package.geometry, {
-                        color: 'red'
+                        color: !(package.color === undefined) ? package.color : 'red',
+                        index: !(package.featureId == undefined) ? package.featureId : null
                     }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
                 };
                 /** 
@@ -133,11 +145,18 @@ angular.module('orsApp').directive('orsMap', function() {
                     }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
                 };
                 /** 
-                 * clears specific layer
+                 * clears layer entirely or specific layer in layer
                  */
                 ctrl.clear = (package) => {
-                    console.log("clearing", package);
-                    ctrl.mapModel.geofeatures[package.layerCode].clearLayers();
+                    if (!(package.featureId == undefined)) {
+                        ctrl.mapModel.geofeatures[package.layerCode].eachLayer(function(layer) {
+                            if (layer.options.index == package.featureId) {
+                                ctrl.mapModel.geofeatures[package.layerCode].removeLayer(layer);
+                            }
+                        });
+                    } else {
+                        ctrl.mapModel.geofeatures[package.layerCode].clearLayers();
+                    }
                 };
                 // subscribeToZoom () {ctrl.zoom()}
                 orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
@@ -170,7 +189,7 @@ angular.module('orsApp').directive('orsMap', function() {
                     switch (params._actionCode) {
                         /** zoom to features */
                         case 0:
-                            ctrl.zoom();
+                            ctrl.zoom(params._package);
                             break;
                             /** add features */
                         case 1:

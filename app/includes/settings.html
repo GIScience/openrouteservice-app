@@ -1,51 +1,52 @@
-<form class="ors-dialog scrollable">
-    <header>
-        <h1>
-            Settings
-        </h1>
-    </header>
-    <section>
-        <h2>
-            Units
-        </h2>
-        <div class="field ors-inline">
-            <div class="ui radio checkbox">
-                <input name="orsUnits" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.units" type="radio" ng-value="$ctrl.optionList.units.km">
-                    <label>
-                        {{$ctrl.translate('Kilometers')}}
-                    </label>
-                </input>
-            </div>
+<header>
+    <h1>
+        Settings
+    </h1>
+</header>
+<section>
+    <h2>
+        Units
+    </h2>
+    <div class="field ors-inline">
+        <div class="ui radio checkbox">
+            <input name="orsUnits" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.units" ng-value="$ctrl.optionList.units.km" type="radio">
+                <label>
+                    {{$ctrl.translate('Kilometers')}}
+                </label>
+            </input>
         </div>
-        <div class="field ors-inline">
-            <div class="ui radio checkbox">
-                <input name="orsUnits" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.units" type="radio" ng-value="$ctrl.optionList.units.mi">
-                    <label>
-                        {{$ctrl.translate('Miles')}}
-                    </label>
-                </input>
-            </div>
+    </div>
+    <div class="field ors-inline">
+        <div class="ui radio checkbox">
+            <input name="orsUnits" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.units" ng-value="$ctrl.optionList.units.mi" type="radio">
+                <label>
+                    {{$ctrl.translate('Miles')}}
+                </label>
+            </input>
         </div>
-    </section>
-    <div class="ui divider">
     </div>
-    <section>
-        <h2>
-            Language
-        </h2>
-        <label>Choose language</label>
-        <select name="language" ng-change="$ctrl.changeOptions()" data-ng-model="$ctrl.currentOptions.language" data-ng-options="$ctrl.translate(language) for language in $ctrl.optionList.languages.all"></select>
-    </section>
-    <div class="ui divider">
-    </div>
-    <section>
-        <h2>
-            Language Routing Instructions
-        </h2>
-        <label>Choose routing language</label>
-        <select name="routinglanguage" ng-change="$ctrl.changeOptions()" data-ng-model="$ctrl.currentOptions.routinglang" data-ng-options="$ctrl.translate(language) for language in $ctrl.optionList.routinglanguages.all"></select>
-    </section>
-</form>
-<button class="ors-modal-close" data-ng-click="$ctrl.closeModal()" style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBmaWxsPSIjMGYzNDc4IiBkPSJNOS43MDMgOGw0LjA4Ny00LjA4NmEuNzI2LjcyNiAwIDAgMCAwLTEuMDIxbC0uNjgzLS42ODNhLjcyNC43MjQgMCAwIDAtMS4wMjEgMEw4IDYuMjk4IDMuOTEyIDIuMjFhLjcyMi43MjIgMCAwIDAtMS4wMiAwbC0uNjgyLjY4MmEuNzI0LjcyNCAwIDAgMCAwIDEuMDIxTDYuMjk2IDggMi4yMSAxMi4wODZhLjcyNC43MjQgMCAwIDAgMCAxLjAyMWwuNjgyLjY4MmEuNzIyLjcyMiAwIDAgMCAxLjAyIDBMOCA5LjcwMWw0LjA4NyA0LjA4OGEuNzI0LjcyNCAwIDAgMCAxLjAyMSAwbC42ODMtLjY4MmEuNzI2LjcyNiAwIDAgMCAwLTEuMDIxTDkuNzAzIDh6Ii8+PC9zdmc+");'>
-    close
-</button>
+</section>
+<div class="ui divider">
+</div>
+<section>
+    <h2>
+        Language
+    </h2>
+    <label>
+        Choose language
+    </label>
+    <select data-ng-model="$ctrl.currentOptions.language" data-ng-options="$ctrl.translate(language) for language in $ctrl.optionList.languages.all" name="language" ng-change="$ctrl.changeOptions()">
+    </select>
+</section>
+<div class="ui divider">
+</div>
+<section>
+    <h2>
+        Language Routing Instructions
+    </h2>
+    <label>
+        Choose routing language
+    </label>
+    <select data-ng-model="$ctrl.currentOptions.routinglang" data-ng-options="$ctrl.translate(language) for language in $ctrl.optionList.routinglanguages.all" name="routinglanguage" ng-change="$ctrl.changeOptions()">
+    </select>
+</section>

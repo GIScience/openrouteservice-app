@@ -1,19 +1,25 @@
+/*|-----------------------------------------------------------------------------------
+ *|                                                     University of Heidelberg
+ *|   _____ _____  _____      _                         Department of Geography
+ *|  / ____|_   _|/ ____|    (_)                        Chair of GIScience
+ *| | |  __  | | | (___   ___ _  ___ _ __   ___ ___     (C) 2011
+ *| | | |_ | | |  \___ \ / __| |/ _ \ '_ \ / __/ _ \
+ *| | |__| |_| |_ ____) | (__| |  __/ | | | (_|  __/    Berliner Strasse 48
+ *|  \_____|_____|_____/ \___|_|\___|_| |_|\___\___|    D-69120 Heidelberg, Germany
+ *|                                                     http://www.giscience.uni-hd.de
+ *|------------------------------------------------------------------------------------*/
+/**
+ * @author: Timothy Ellersiek, timothy.ellersiek@geog.uni-heidelberg.de, Hendrik Leuschner, hendrik.leuschner@uni-heidelberg.de
+ * @version: 1.0
+ */
 
-/*+-------------+----------------------------------------------------------*
- *|        /\   |     University of Heidelberg                             *
- *|       |  |  |     Department of Geography                              *
- *|      _|  |_ |     GIScience Research Group                             *
- *|    _/      \|                                                          *
- *|___|         |                                                          *
- *|             |     Berliner Straße 48                                   *
- *|             |     D-69221 Heidelberg, Germany                          *
- *+-------------+----------------------------------------------------------*/
 
 let orsApp = angular.module('orsApp', [
     'orsApp.ors-nav', 
     'orsApp.ors-panel-routing', 
     'orsApp.ors-panel-accessibilityanalysis', 
     'orsApp.ors-header',
+    'orsApp.ors-modal',
     'ui.sortable', 
     'orsApp.error-service', 
     'orsApp.map-service', 
@@ -25,8 +31,9 @@ let orsApp = angular.module('orsApp', [
     'orsApp.route-service',
     'orsApp.cookies-service',
     'orsApp.aa-service',
+    'orsApp.GeoFileHandler-service',
     'ngCookies',
-    'rzModule',
+    'rzModule', 
     'ngSanitize',
     'orsApp.ors-filters',
     'orsApp.ors-route-extras'

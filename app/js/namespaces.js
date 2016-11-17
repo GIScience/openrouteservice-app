@@ -13,7 +13,16 @@ namespaces = {
     xlink: 'http://www.w3.org/1999/xlink',
     xsi: 'http://www.w3.org/2001/XMLSchema-instance',
     ascc: 'http://www.ascc.net/xml/schematron',
-    aas: 'http://www.geoinform.fh-mainz.de/aas'
+    aas: 'http://www.geoinform.fh-mainz.de/aas',
+    gpx: 'http://www.topografix.com/GPX/1/1',
+    xml: 'http://www.w3.org/XML/1998/namespace',
+    xsd: 'http://www.w3.org/2001/XMLSchema',
+    tcx: 'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2',
+    gml32: 'http://www.opengis.net/gml/3.2',
+    xs: 'http://www.w3.org/2001/XMLSchema',
+    kml: 'http://www.opengis.net/kml/2.2',
+    atom: 'http://www.w3.org/2005/Atom',
+    xal: 'urn:oasis:names:tc:ciq:xsdschema:xAL:2.0'
 };
 namespaces.schemata = {
     directoryService: 'http://www.opengis.net/xls http://schemas.opengis.net/ols/1.1.0/DirectoryService.xsd',
@@ -23,7 +32,10 @@ namespaces.schemata = {
     presentationService: 'http://www.opengis.net/xls http://schemas.opengis.net/ols/1.1.0/PresentationService.xsd',
     routeService: 'http://www.opengis.net/xls http://schemas.opengis.net/ols/1.1.0/RouteService.xsd',
     wpsService: 'http://www.opengis.net/xls http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd',
-    lineStringService: 'http://www.opengis.net/gml http://schemas.opengis.net/gml/3.1.1/base/geometryBasic0d1d.xsd'
+    lineStringService: 'http://www.opengis.net/gml http://schemas.opengis.net/gml/3.1.1/base/geometryBasic0d1d.xsd',
+    gpxService: 'http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd',
+    tcxService: 'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd',
+    kmlService: 'http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd'
 };
 /**
  * services that are called by openrouteservice, e.g. to determine the route between two waypoints
@@ -39,6 +51,21 @@ namespaces.services = {
     analyse: 'http://openls.geog.uni-heidelberg.de/analysis', //for accessibility analysis requests
     shorten: 'http://openls.geog.uni-heidelberg.de/shortenlink', //for bitly shortlink conversion
     overpass: 'http://overpass-api.de/api/interpreter', //for specified restriction requests
+};
+/**
+ * metadata used when generating (export) files on the openrouteservice
+ */
+namespaces.metadata = {
+    name: 'OpenRouteService Route',
+    description: 'Route exported using GIScience Universität Heidelberg OpenRouteService',
+    authorName: 'GIScience Universität Heidelberg',
+    authorEmailId: 'some_person',
+    authorEmailDomain: 'geog.uni-heidelberg.de',
+    copyright: 'OpenRouteService - GIScience Universität Heidelberg',
+    license: 'MIT',
+    link: 'http://www.geog.uni-heidelberg.de/gis/index_en.html',
+    keywords: 'OpenRouteService. Routing. GIS. Universität Heidelberg',
+    src: 'Route point logged using OpenRouteService'
 };
 /**
  * map layers used on the openlayers map

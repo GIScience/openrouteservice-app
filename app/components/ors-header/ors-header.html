@@ -41,9 +41,9 @@
         </div>
     </li>
 </ul>
-<div class="ors-modal-container" data-ng-show="$ctrl.showModal.settings || $ctrl.showModal.feedback">
+<ors-modal data-ng-show="$ctrl.showModal.settings || $ctrl.showModal.feedback" show-fn="$ctrl.closeModal()">
     <div data-ng-show="$ctrl.showModal.settings" ng-include="'app/includes/settings.html'">
     </div>
     <div data-ng-show="$ctrl.showModal.feedback" ng-include="'app/includes/feedback.html'">
     </div>
-</div>
+</ors-modal>
