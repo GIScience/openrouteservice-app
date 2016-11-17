@@ -11,7 +11,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
             ignorePrefixedNodes: false,
             parseValues: false,
             parserErrorHandler: undefined
-        }
+        };
         $JXONProvider.config(jxonConfig);
     }])
     /**
@@ -54,7 +54,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                     for (var i = 0; i < jxon.gpx.trk.trkseg.trkpt.length; i++) {
                         gpxCoordinates[i] = [jxon.gpx.trk.trkseg.trkpt[i].$lat, jxon.gpx.trk.trkseg.trkpt[i].$lon];
                     }
-                };
+                }
                 //get the CRS link
                 var epsgCode = "4326";
                 var crsLink = "http://spatialreference.org/ref/epsg/" + epsgCode + "/proj4/";
@@ -134,9 +134,9 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                 kmlCoordinates = kmlCoordinates.split("\n")
                 for (var i = 0; i < kmlCoordinates.length; i++) {
                     kmlCoordinates[i] = kmlCoordinates[i].split(",");
-                };
+                }
                 //switch kmlCoordinates position 0 with position 1 (lat and lon)
-                for (var i=0; i< kmlCoordinates.length; i++){
+                for (var i = 0; i < kmlCoordinates.length; i++) {
                     var aux = kmlCoordinates[i][0];
                     kmlCoordinates[i][0] = kmlCoordinates[i][1];
                     kmlCoordinates[i][1] = aux;
@@ -192,10 +192,10 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
              * @return {Object} geoJSONDoc: a GeoJSON object
              */
             orsParseFactory.parseGeoJson = function(geoJson) {
-                for (var i=0; i<geoJson.geometry.coordinates.length; i++){
+                for (var i = 0; i < geoJson.geometry.coordinates.length; i++) {
                     var aux = geoJson.geometry.coordinates[i][0];
                     geoJson.geometry.coordinates[i][0] = geoJson.geometry.coordinates[i][1];
-                    geoJson.geometry.coordinates[i][1] = aux; 
+                    geoJson.geometry.coordinates[i][1] = aux;
                 }
                 var geoJSONDoc = geoJson;
                 return geoJSONDoc;
@@ -251,7 +251,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                     csvArray[i] = csvObject;
                     //reset the csv object
                     csvObject = {};
-                };
+                }
                 // get the coordinates
                 var csvCoordAux;
                 switch (options.geometryFormat) {
@@ -262,7 +262,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                         var lat = csvArray[i][options.csvLatLabel];
                         var lng = csvArray[i][options.csvLnglabel];
                         csvCoordinates[i] = [lat, lng];
-                    };
+                    }
                     break;
                     case 'xyz':
                             for (var i = 0; i < csvArray.length; i++) {
@@ -270,42 +270,42 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                             var lng = csvArray[i][options.csvLnglabel];
                             var height = csvArray[i][options.csvHeightLabel];
                             csvCoordinates[i] = [lat, lng, height];
-                        };
+                        }
                         break;
                     case 'wkt':
                             for (var i = 0; i < csvArray.length; i++) {
                             csvCoordinates[i] = (csvArray[i][options.csvWktLabel]).toUpperCase();
                             csvCoordinates[i] = csvCoordinates[i].replace("LINESTRING(", "");
                             csvCoordinates[i] = csvCoordinates[i].replace(")", "");
-                        };
+                        }
                         for (var i = 0; i < csvCoordinates.length; i++) {
                             csvCoordinates[i] = csvCoordinates[i].split(" ");
                             csvCoordAux = csvCoordinates[i][0];
                             csvCoordinates[i][0] = csvCoordinates[i][1];
                             csvCoordinates[i][1] = csvCoordAux;
-                        };
+                        }
                         break;
                     case 'wktWaypoints':
                             for (var i = 0; i < csvArray.length; i++) {
                             csvCoordinates[i] = (csvArray[i][options.csvWktLabel]).toUpperCase();
                             csvCoordinates[i] = csvCoordinates[i].replace("POINT(", "");
                             csvCoordinates[i] = csvCoordinates[i].replace(")", "");
-                        };
+                        }
                         for (var i = 0; i < csvCoordinates.length; i++) {
                             csvCoordinates[i] = csvCoordinates[i].split(" ");
                             csvCoordAux = csvCoordinates[i][0];
                             csvCoordinates[i][0] = csvCoordinates[i][1];
                             csvCoordinates[i][1] = csvCoordAux;
-                        };
+                        }
                         break;
-                };
+                }
                 // get the other csv columns as properties
                 for (var property in csvArray[0]) {
                     if (property != userDefinedValues.latLabel || property != userDefinedValues.lngLabel || property != userDefinedValues.heightLabel || property != userDefinedValues.wktLabel || property != userDefinedValues.crsLabel) {
                         //add the entries to the properties object
                         propertiesObj[property] = csvArray[0][property];
                     }
-                };
+                }
                 //get the link for the Coordinate reference system associated with this object. If is not defined, then use the default value (it's users's fault if not specified)
                 if (options.crsLabel != undefined) {
                     var epsgCode = "4326";
@@ -374,10 +374,10 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                         gpxWaypoint: true,
                         gpxRoute: undefined,
                         gpxTrack: undefined
-                    }
+                    };
                 } else {
                     options = options;
-                };
+                }
                 //get the route global variable
                 var routeVars = routeGlobalVars(route);
                 //create the gpx object 
@@ -437,32 +437,32 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                     } else {
                         altitude = 0;
                         altitude = altitude.toFixed(3);
-                    };
+                    }
                     var wpt_pt = {
-                            "ele": i,
-                            "time": date.toISOString(),
-                            "name": "Waypoint #" + i,
-                            "extensions": {
-                                "TrackPointExtension": {
-                                    "height": altitude,
-                                },
-                                "distance": (distanceCovered).toFixed(3),
+                        "ele": i,
+                        "time": date.toISOString(),
+                        "name": "Waypoint #" + i,
+                        "extensions": {
+                            "TrackPointExtension": {
+                                "height": altitude,
                             },
-                            "$lat": (routeVars.routeCoords[i].lat).toFixed(coordinatePrecision),
-                            "$lon": (routeVars.routeCoords[i].lng).toFixed(coordinatePrecision),
-                        }
-                        //set the date to each point based on the distance between points and average speed do reach from one point to the next one
+                            "distance": (distanceCovered).toFixed(3),
+                        },
+                        "$lat": (routeVars.routeCoords[i].lat).toFixed(coordinatePrecision),
+                        "$lon": (routeVars.routeCoords[i].lng).toFixed(coordinatePrecision),
+                    };
+                    //set the date to each point based on the distance between points and average speed do reach from one point to the next one
                     if (i < (routeVars.routeCoords.length) - 1) {
                         var from = new L.marker([routeVars.routeCoords[i].lat, routeVars.routeCoords[i].lng]).toGeoJSON();
                         var to = new L.marker([routeVars.routeCoords[i + 1].lat, routeVars.routeCoords[i + 1].lng]).toGeoJSON();
-                    };
+                    }
                     var pointDistance = turf.distance(from, to, 'kilometers') / 0.001;
                     distanceCovered = distanceCovered + pointDistance;
                     var timeCovered = (pointDistance / (Number(avgSpeed) * 1000 / (3600 * 1000)));
                     date.setMilliseconds(date.getMilliseconds() + timeCovered);
                     // push the waypoint into the gpx.waypoint object
                     gpx.gpx.wpt.push(wpt_pt);
-                };
+                }
                 // create the "rte" object
                 var rte = {
                     "src": namespaces.metadata.src,
@@ -479,7 +479,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                     } else {
                         altitude = 0;
                         altitude = altitude.toFixed(3);
-                    };
+                    }
                     var rtept_pt = {
                             "ele": i,
                             "time": date.toISOString(),
@@ -497,13 +497,13 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                     if (i < (routeVars.routeCoords.length) - 1) {
                         var from = new L.marker([routeVars.routeCoords[i].lat, routeVars.routeCoords[i].lng]).toGeoJSON();
                         var to = new L.marker([routeVars.routeCoords[i + 1].lat, routeVars.routeCoords[i + 1].lng]).toGeoJSON();
-                    };
+                    }
                     var pointDistance = turf.distance(from, to, 'kilometers') / 0.001;
                     var timeCovered = (pointDistance / (Number(avgSpeed) * 1000 / (3600 * 1000)));
                     date.setMilliseconds(date.getMilliseconds() + timeCovered);
                     // push the route point into the route object
                     rte.rtept.push(rtept_pt);
-                };
+                }
                 // create the "trk" object
                 var trk = {
                     "src": namespaces.metadata.src,
@@ -522,7 +522,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                     } else {
                         altitude = 0;
                         altitude = altitude.toFixed(3);
-                    };
+                    }
                     var trkpt_pt = {
                             "ele": i,
                             "time": date.toISOString(),
@@ -540,27 +540,27 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                     if (i < (routeVars.routeCoords.length) - 1) {
                         var from = new L.marker([routeVars.routeCoords[i].lat, routeVars.routeCoords[i].lng]).toGeoJSON();
                         var to = new L.marker([routeVars.routeCoords[i + 1].lat, routeVars.routeCoords[i + 1].lng]).toGeoJSON();
-                    };
+                    }
                     var pointDistance = turf.distance(from, to, 'kilometers') / 0.001;
                     distanceCovered = distanceCovered + pointDistance;
                     var timeCovered = (pointDistance / (Number(avgSpeed) * 1000 / (3600 * 1000)));
                     date.setMilliseconds(date.getMilliseconds() + timeCovered);
                     // push the track point into the trk.trkpt object
                     trk.trkseg.trkpt.push(trkpt_pt);
-                };
+                }
                 // in case the gpxRoute our gpxTrack are false in the options, remove from the gpx object. gpx Waypoint will always be present
                 if (options.gpxRoute) {
                     // add "rte" to the gpx object
                     gpx.gpx.rte.push(rte);
                 } else {
                     delete gpx.gpx.rte;
-                };
+                }
                 if (options.gpxTrack) {
                     // add "trk" to the gpx object
                     gpx.gpx.trk.push(trk);
                 } else {
                     delete gpx.gpx.trk;
-                };
+                }
                 //create the jxon object
                 var jxonObj = gpx;
                 //Convert the JXON object into a readable string and then convert again to a JXON object
@@ -583,10 +583,10 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                 if (options === {} || options === null || options === undefined) {
                     options = {
                         tcxOptions: undefined
-                    }
+                    };
                 } else {
                     options = options;
-                };
+                }
                 //get the route global variable
                 var routeVars = routeGlobalVars(route);
                 var tcx = {
@@ -613,27 +613,27 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                 tcx.TrainingCenterDatabase.Folders.push(Folders);
                 // Create the "Courses" object
                 var Courses = {
-                        "Course": {
-                            "Name": namespaces.metadata.name,
-                            "Lap": {
-                                "TotalTimeSeconds": (Number(routeVars.routeTotalDist) / ((Number(avgSpeed) * 1000) / 3600)).toFixed(3),
-                                "DistanceMeters": (routeVars.routeTotalDist).toFixed(3),
-                                "BeginPosition": {
-                                    "LatitudeDegrees": (routeVars.routeCoords[0].lat).toFixed(coordinatePrecision),
-                                    "LongitudeDegrees": (routeVars.routeCoords[0].lng).toFixed(coordinatePrecision),
-                                },
-                                "EndPosition": {
-                                    "LatitudeDegrees": (routeVars.routeCoords[routeVars.routeCoords.length - 1].lat).toFixed(coordinatePrecision),
-                                    "LongitudeDegrees": (routeVars.routeCoords[routeVars.routeCoords.length - 1].lng).toFixed(coordinatePrecision),
-                                },
-                                "Intensity": "Active",
+                    "Course": {
+                        "Name": namespaces.metadata.name,
+                        "Lap": {
+                            "TotalTimeSeconds": (Number(routeVars.routeTotalDist) / ((Number(avgSpeed) * 1000) / 3600)).toFixed(3),
+                            "DistanceMeters": (routeVars.routeTotalDist).toFixed(3),
+                            "BeginPosition": {
+                                "LatitudeDegrees": (routeVars.routeCoords[0].lat).toFixed(coordinatePrecision),
+                                "LongitudeDegrees": (routeVars.routeCoords[0].lng).toFixed(coordinatePrecision),
                             },
-                            "Track": {
-                                "TrackPoint": [],
-                            }
+                            "EndPosition": {
+                                "LatitudeDegrees": (routeVars.routeCoords[routeVars.routeCoords.length - 1].lat).toFixed(coordinatePrecision),
+                                "LongitudeDegrees": (routeVars.routeCoords[routeVars.routeCoords.length - 1].lng).toFixed(coordinatePrecision),
+                            },
+                            "Intensity": "Active",
+                        },
+                        "Track": {
+                            "TrackPoint": [],
                         }
                     }
-                    // push the Courses object into the tcx object
+                };
+                // push the Courses object into the tcx object
                 tcx.TrainingCenterDatabase.Courses.push(Courses);
                 // create the "Track" object:
                 var distanceCovered = 0;
@@ -645,7 +645,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                     } else {
                         altitude = 0;
                         altitude = altitude.toFixed(3);
-                    };
+                    }
                     var trackPoint = {
                         "Time": date.toISOString(),
                         "Position": {
@@ -658,7 +658,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                     if (i < (routeVars.routeCoords.length) - 1) {
                         var from = new L.marker([routeVars.routeCoords[i].lat, routeVars.routeCoords[i].lng]).toGeoJSON();
                         var to = new L.marker([routeVars.routeCoords[i + 1].lat, routeVars.routeCoords[i + 1].lng]).toGeoJSON();
-                    };
+                    }
                     var pointDistance = turf.distance(from, to, 'kilometers') / 0.001;
                     distanceCovered = distanceCovered + pointDistance;
                     var timeCovered = (pointDistance / (Number(avgSpeed) * 1000 / (3600 * 1000)));
@@ -688,10 +688,10 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                 if (options === {} || options === null || options === undefined) {
                     options = {
                         altitudeMode: 'clampedToGround'
-                    }
+                    };
                 } else {
                     options = options;
-                };
+                }
                 //get the route global variable
                 var routeVars = routeGlobalVars(route);
                 var kml = {
@@ -740,7 +740,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                 for (var i = 0; i < routeVars.routeCoords.length; i++) {
                     var lat = (routeVars.routeCoords[i].lat).toFixed(coordinatePrecision);
                     var lng = (routeVars.routeCoords[i].lng).toFixed(coordinatePrecision);
-                    if (routeVars.routeCoords[i].alt != undefined) {
+                    if (routeVars.routeCoords[i].alt !== undefined) {
                         altitude = routeVars.routeCoords[i].alt;
                         altitude = altitude.toFixed(3);
                     } else {
@@ -748,7 +748,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                         altitude = altitude.toFixed(3);
                     }
                     kmlCoordinates[i] = lng + "," + lat + "," + altitude;
-                };
+                }
                 //join coordinates into a string separates by "new line"
                 kmlCoordinates = kmlCoordinates.join('\r\n');
                 //create the placemark object
@@ -792,7 +792,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                 if (options === {} || options === null || options === undefined) {
                     options = {
                         gmlOptions: undefined
-                    }
+                    };
                 } else {
                     options = options;
                 };
