@@ -4,16 +4,22 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
         showInstructions: '&',
         shouldDisplayRouteDetails: '<'
     },
-    controller(orsSettingsFactory, orsObjectsFactory, orsRouteService, orsErrorhandlerService) {
+    controller(orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsRouteService, orsErrorhandlerService) {
         let ctrl = this;
         ctrl.profiles = lists.profiles;
         ctrl.setIdx = (idx) => {
             orsRouteService.setCurrentRouteIdx(idx);
         };
+        ctrl.getIdx = () => {
+            return orsRouteService.getCurrentRouteIdx();
+        };
         /** if we are coming back to route panel */
         if (angular.isDefined(orsRouteService.routeObj)) {
             ctrl.routes = orsRouteService.routeObj.routes;
-            ctrl.setInstructions(ctrl.routes[0]);
+            let idx = ctrl.getIdx();
+            console.log(ctrl.routes, idx)
+            let action = orsObjectsFactory.createMapAction(1, lists.layers[1], ctrl.routes[idx].points, undefined);
+            orsMapFactory.mapServiceSubject.onNext(action);
         }
         // subscribe to route object?
         orsRouteService.routesSubject.subscribe(routes => {
