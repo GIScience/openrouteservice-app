@@ -385,13 +385,13 @@ lists.isochroneOptionList = {
         min: 1,
         max: 30,
         step: 1,
-        default: 15
+        default: 3
     },
     intervalOptions: {
         min: 1,
         max: 29,
         step: 1,
-        default: 5
+        default: 1
     }
 };
 lists.userOptions = {

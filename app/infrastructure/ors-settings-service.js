@@ -92,11 +92,12 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * @param {string} address - Which is the string of the address.
      * @param {Object} pos - Which is the latlng object.
      */
-    orsSettingsFactory.updateWaypoint = (idx, address, pos) => {
+    orsSettingsFactory.updateWaypoint = (idx, address, pos, fireRequest = true) => {
+        console.info("updateWaypoint");
         orsSettingsFactory[currentSettingsObj].getValue().waypoints[idx]._latlng = pos;
         orsSettingsFactory[currentSettingsObj].getValue().waypoints[idx]._address = address;
         /** Fire a new request. */
-        orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
+        if (fireRequest) orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
         //orsSettingsFactory.panelWaypoints.onNext(orsSettingsFactory.panelSettings.getValue().waypoints);
     };
     /** Used for map update */
@@ -154,22 +155,13 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     });
     /** Subscription function to current accessibility settings */
     orsSettingsFactory.aaSettingsSubject.subscribe(settings => {
-        // const isWaypointSet = settings.waypoints..handleRoutePresent(settings);
-        // var isRoutePresent = waypoint.getNumWaypointsSet() >= 2;
         if (settings.waypoints.length > 0) {
             console.log(true, 'go', settings)
-                /** get user obtions */
-                // const isRoutePresent = orsSettingsFactory.handleRoutePresent(settings);
-                // var isRoutePresent = waypoint.getNumWaypointsSet() >= 2;
-                // if (isRoutePresent) {
-                // const userOptions = orsSettingsFactory.getUserOptions();
             const payload = orsAaService.generateAnalysisRequest(settings);
             orsAaService.fetchAnalysis(payload).then(function(response) {
-                console.log(response);
-                orsAaService.parseResponseToPolygon(response);
-                // const profile = settings.profile.type;
-                // console.log(profile, settings.profile)
-                // orsRouteService.processResponse(response, profile);
+                orsAaService.processResponse(response);
+                orsAaService.parseResultsToBounds(response);
+                orsAaService.parseResponseToPolygonJSON(response);
             }, function(response) {
                 console.log(response);
                 console.log(orsAaService.parseResponseToPolygon(response));
@@ -204,10 +196,10 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * Sets waypoints into settings.
      * @param {waypoints.<Object>} List of waypoint objects.
      */
-    orsSettingsFactory.setWaypoints = (waypoints) => {
+    orsSettingsFactory.setWaypoints = (waypoints, fireRequest = true) => {
         orsSettingsFactory[currentSettingsObj].getValue().waypoints = waypoints;
         /** fire a new request */
-        orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
+        if (fireRequest) orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
         /** For map to update */
         orsSettingsFactory[currentWaypointsObj].onNext(waypoints);
     };
@@ -217,7 +209,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * @param {number} idx - Type of wp which should be added: start, via or end.
      * @param {Object} wp - The waypoint object to be inserted to wp list.
      */
-    orsSettingsFactory.insertWaypointFromMap = (idx, wp) => {
+    orsSettingsFactory.insertWaypointFromMap = (idx, wp, fireRequest = true) => {
         if (idx == 0) {
             orsSettingsFactory[currentSettingsObj].value.waypoints[idx] = wp;
         } else if (idx == 2) {
@@ -228,7 +220,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         /** Update Map. */
         orsSettingsFactory[currentWaypointsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue().waypoints);
         /** Fire a new request. */
-        orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
+        if (fireRequest) orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
     };
     /** 
      * Returns the current settings depending on the route

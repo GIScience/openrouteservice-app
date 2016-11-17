@@ -69,7 +69,6 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         };
         ctrl.calculate = function() {
             console.log("Fire request AA");
-            console.log(ctrl.currentOptions);
             orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
         };
         $scope.$on('resetWaypoints', function(e) {
