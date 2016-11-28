@@ -1,3 +1,5 @@
+/** dirty hack, the subscription will duplicate if we come back to this component */
+let routeSubscription;
 angular.module('orsApp.ors-summary', []).component('orsSummaries', {
     templateUrl: 'app/components/ors-panel-routing/ors-summary/ors-summary.html',
     bindings: {
@@ -21,8 +23,13 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
             let action = orsObjectsFactory.createMapAction(1, lists.layers[1], ctrl.routes[idx].points, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
         }
-        // subscribe to route object?
-        orsRouteService.routesSubject.subscribe(routes => {
+        /** if we are returning to this panel, dispose all old subscriptions */
+        try {
+            routeSubscription.dispose();
+        } catch (error) {
+            console.log('dude')
+        }
+        routeSubscription = orsRouteService.routesSubject.subscribe(routes => {
             console.info('routes', routes);
             ctrl.routes = routes;
             /** this first route object is used if we are in instruction mode */
