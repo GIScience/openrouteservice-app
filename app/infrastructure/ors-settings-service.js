@@ -72,7 +72,11 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         }
         /** Subscription function to current waypoints object, used in map. */
     orsSettingsFactory.subscribeToWaypoints = (o) => {
-        return orsSettingsFactory[currentWaypointsObj].subscribe(o);
+        return orsSettingsFactory.routingWaypointsSubject.subscribe(o);
+    };
+     /** Subscription function to current aa waypoints object, used in map. */
+    orsSettingsFactory.subscribeToAaWaypoints = (o) => {
+        return orsSettingsFactory.aaWaypointsSubject.subscribe(o);
     };
     /** Subscription function to current route object. */
     orsSettingsFactory.subscribeToNgRoute = (o) => {
@@ -110,6 +114,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     };
     /** Used for map update */
     orsSettingsFactory.updateWaypoints = () => {
+        console.log('updating..')
         orsSettingsFactory[currentWaypointsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue().waypoints);
     };
     /** 
@@ -209,6 +214,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * @param {waypoints.<Object>} List of waypoint objects.
      */
     orsSettingsFactory.setWaypoints = (waypoints, fireRequest = true) => {
+        console.log('setting..')
         orsSettingsFactory[currentSettingsObj].getValue().waypoints = waypoints;
         /** fire a new request */
         if (fireRequest) orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());

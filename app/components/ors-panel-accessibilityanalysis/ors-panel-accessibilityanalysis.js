@@ -29,12 +29,7 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
             ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
             // orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
         };
-        /**
-         * Called when clicking the reset button. Broadcasts the delete to the waypoint
-         */
-        ctrl.resetWaypoints = function() {
-            $scope.$broadcast('resetWaypoints');
-        }
+        
     },
     require: {
         parent: '^orsSidebar'

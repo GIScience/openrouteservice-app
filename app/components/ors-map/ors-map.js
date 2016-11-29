@@ -159,23 +159,36 @@ angular.module('orsApp').directive('orsMap', function() {
                     }
                 };
                 // subscribeToZoom () {ctrl.zoom()}
+                let wpSubscription;
                 orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
                     console.log('route was changed to', route);
                     ctrl.routing = route == 'routing' ? true : false;
                     ctrl.clearMap();
-                    /** 
-                     * subscribes to changes on in waypoint settings, this
-                     * must be called on every route change to update subscription
-                     */
-                    if (route !== undefined) {
-                        orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
-                            console.log('changes in routing waypoints detected..', d);
-                            const waypoints = d;
-                            // re-add waypoints only after init
-                            if (waypoints.length > 0) ctrl.reAddWaypoints(waypoints, ctrl.routing);
-                        });
-                    }
+                    
                 });
+                orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
+                                console.log('changes in routing waypoints detected..', d);
+                                const waypoints = d;
+                                // re-add waypoints only after init
+                                if (waypoints.length > 0) ctrl.reAddWaypoints(waypoints, ctrl.routing);
+                });
+
+                 orsSettingsFactory.subscribeToAaWaypoints(function onNext(d) {
+                                console.log('changes in aa waypoints detected..', d);
+                                const waypoints = d;
+                                // re-add waypoints only after init
+                                if (waypoints.length > 0) ctrl.reAddWaypoints(waypoints, ctrl.routing);
+                });
+
+
+
+
+
+
+
+
+
+
                 /** highlights a geometry */
                 ctrl.highlight = (package) => {
                     L.polyline(package.geometry, {
@@ -206,6 +219,7 @@ angular.module('orsApp').directive('orsMap', function() {
                             break;
                         case 5:
                             ctrl.clearMap();
+                            break;
                         default:
                             break;
                     }
