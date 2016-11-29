@@ -409,6 +409,16 @@ lists.userOptions = {
         mi: 'mi'
     }
 };
+//Whitelist for settings to be stored in permalink
+lists.permalinkFilters = {
+    avoidables: ['ferry', 'unpaved', 'paved', 'fords', 'steps', 'highways', 'tollroads', 'tunnels', 'tracks'],
+    analysis: ['method', 'minutes', 'interval'],
+    Car: ['type', 'weight', 'maxspeed'],
+    hgv: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload'],
+    Bicycle: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
+    Pedestrian: ['type', 'weight', 'maxspeed', 'fitness', 'steepness'],
+    Wheelchair: ['type', 'weight', 'maxspeed', 'incline', 'curb', 'surface']
+};
 lists.layers = {
     0: 'layerRoutePoints',
     1: 'layerRouteLines',

@@ -35,6 +35,7 @@ angular.module('orsApp.ors-header', []).component('orsHeader', {
             console.log(ctrl.currentOptions);
             orsSettingsFactory.setUserOptions(ctrl.currentOptions);
             orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions);
+            orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
             // TODO: Reload site if site language is changed, we need this due to translations
         };
         ctrl.translate = (term) => {
