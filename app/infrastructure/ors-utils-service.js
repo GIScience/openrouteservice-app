@@ -1,5 +1,5 @@
-angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http',
-    function($http) {
+angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', '$location',
+    function($http, $location) {
         var orsUtilsService = {};
         /**
          * generates XML for geocoding
@@ -761,6 +761,52 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http',
             }
             var p = Math.pow(10, precision);
             return Math.round(distance * p) / p;
+        };
+        /**
+         * generates a string of current settings to be used in permalink
+         * @settings: route/analysis settings
+         * @useroptions: useroptions
+         */
+        orsUtilsService.parseSettingsToPermalink = function(settings, userOptions) {
+            console.info("parseSettingsToPermalink", settings);
+            if (settings.profile === undefined) return;
+            var link = '';
+            //Hack to remove angular properties that do not have to be saved
+            let profile = angular.fromJson(angular.toJson(settings.profile));
+            let waypoints = angular.fromJson(angular.toJson(settings.waypoints));
+
+            function getProp(obj) {
+                for (var o in obj) {
+                    if (typeof obj[o] == "object") {
+                        getProp(obj[o]);
+                    } else {
+                        // if ()
+                        //Filter functions and properties of other types
+                        if (typeof obj[o] != "function" && o.toString().charAt(0) != '_' && (lists.permalinkFilters[settings.profile.type].includes(o) || lists.permalinkFilters.avoidables.includes(o) || lists.permalinkFilters.analysis.includes(o))) {
+                            link = link.concat('&' + o + '=' + obj[o]);
+                            console.log(link);
+                        }
+                    }
+                }
+                // return link;
+            }
+            if (waypoints[0] !== undefined) {
+                if (waypoints[0]._latlng.lat !== undefined) {
+                    link = link.concat("wps=");
+                    for (waypoint of waypoints) {
+                        if (waypoint._latlng.lng == undefined) continue;
+                        link = link.concat(waypoint._latlng.lat);
+                        link = link.concat(',');
+                        link = link.concat(waypoint._latlng.lng);
+                        link = link.concat(',');
+                    }
+                    link = link.slice(0, -1);
+                }
+            }
+            getProp(profile);
+            if (userOptions.routinglang !== undefined) link = link.concat('&routinglang=' + userOptions.routinglang);
+            if (userOptions.units !== undefined) link = link.concat('&units=' + userOptions.units);
+            $location.path($location.path(), false).search(link);
         };
         return orsUtilsService;
     }

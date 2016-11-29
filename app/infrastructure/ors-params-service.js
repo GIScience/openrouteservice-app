@@ -7,30 +7,30 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
                 type: 'Car',
                 options: {
                     weight: 'Fastest',
-                    analysis_options: {}
+                    analysis_options: {},
+                    avoidables: {}
                 }
             }
         };
         console.log("importing param setttings");
         const user_options = {};
+        //TODO: Replace with native loop and use break; in each if clause so not all conditions have to be checked all the time
         angular.forEach(params, function(value, key) {
-            console.info(value, key);
             if (key == 'wps') {
+                //TODO Debug, adding does not properly work
                 const wps = value.match(/[^,]+,[^,]+/g);
                 let idx = 0,
                     waypoints = [];
                 angular.forEach(wps, function(wp) {
                     wp = wp.split(",");
-                    console.log(wp)
                     wp = orsObjectsFactory.createWaypoint('', new L.latLng([parseFloat(wp[0]), parseFloat(wp[1])]), 1);
-                    console.log(wp)
                     waypoints.push(wp);
                     orsRequestService.getAddress(wp._latlng, idx, true);
                     idx += 1;
                 });
                 settings.waypoints = waypoints;
             }
-            if (key == 'profile') {
+            if (key == 'type') {
                 settings.profile.type = value;
             }
             if (key == 'weight') {
@@ -88,13 +88,41 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
             if (key == 'units') {
                 user_options.units = value;
             }
+            //http://localhost:3000/routing?type=Car&weight=Fastest&maxspeed=200&ferry=true&unpaved=true&paved=true&fords=true&highways=true&tollroads=true&tunnels=true&tracks=true&routinglang=en&units=km
+            if (key == 'ferry') {
+                settings.profile.options.avoidables.ferry = orsParamsService.parseStringToBool(value);
+            }
+            if (key == 'unpaved') {
+                settings.profile.options.avoidables.unpaved = orsParamsService.parseStringToBool(value);
+            }
+            if (key == 'paved') {
+                settings.profile.options.avoidables.paved = orsParamsService.parseStringToBool(value);
+            }
+            if (key == 'fords') {
+                settings.profile.options.avoidables.fords = orsParamsService.parseStringToBool(value);
+            }
+            if (key == 'highways') {
+                settings.profile.options.avoidables.highways = orsParamsService.parseStringToBool(value);
+            }
+            if (key == 'tollroads') {
+                settings.profile.options.avoidables.tollroads = orsParamsService.parseStringToBool(value);
+            }
+            if (key == 'tunnels') {
+                settings.profile.options.avoidables.tunnels = orsParamsService.parseStringToBool(value);
+            }
+            if (key == 'tracks') {
+                settings.profile.options.avoidables.tracks = orsParamsService.parseStringToBool(value);
+            }
         });
-        console.log(user_options);
         //console.warn(JSON.stringify(globalSettings));
         return {
             settings: settings,
             user_options: user_options
         };
     };
+    orsParamsService.parseStringToBool = (string) => {
+        if (string == "true") return true;
+        return false;
+    }
     return orsParamsService;
 }]);

@@ -2,6 +2,9 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
     templateUrl: 'app/components/ors-panel-routing/ors-panel-routing.html',
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService, orsCookiesFactory) {
         var ctrl = this;
+        ctrl.$routerCanReuse = function(next, prev) {
+            return next.params.name === prev.params.name;
+        };
         ctrl.$onInit = function() {};
         //http://localhost:3000/routing?wps=48.3333,10.1667,48.7758459,9.1829321,48.7758459,9.1839321&profile=Bicycle&subprofile=BicycleMTB&weight=Fastest
         ctrl.$routerOnActivate = function(next) {
@@ -30,7 +33,11 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
             ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
             console.log(ctrl.activeProfile, ctrl.activeSubgroup)
             ctrl.shouldDisplayRouteDetails = false;
+            // orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
         };
+        ctrl.$routerOnReuse = function(next, prev) {
+            console.info("REUSE");
+        }
         ctrl.showInstructions = () => {
             ctrl.shouldDisplayRouteDetails = ctrl.shouldDisplayRouteDetails == true ? false : true;
         };

@@ -61,12 +61,20 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     orsSettingsFactory.setActiveOptions = (options) => {
         orsSettingsFactory[currentSettingsObj].getValue().profile.options = options;
         orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
+        console.log(options);
     };
-    /** Subscription function to current waypoints object, used in map. */
+    /**
+     * Returns current settings.
+     * @return {Object} The settings object, may contain both profile options and aa options.
+     */
+    orsSettingsFactory.getSettings = () => {
+            return orsSettingsFactory[currentSettingsObj].getValue();
+        }
+        /** Subscription function to current waypoints object, used in map. */
     orsSettingsFactory.subscribeToWaypoints = (o) => {
         return orsSettingsFactory.routingWaypointsSubject.subscribe(o);
     };
-     /** Subscription function to current aa waypoints object, used in map. */
+    /** Subscription function to current aa waypoints object, used in map. */
     orsSettingsFactory.subscribeToAaWaypoints = (o) => {
         return orsSettingsFactory.aaWaypointsSubject.subscribe(o);
     };
@@ -150,19 +158,23 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
             orsRouteService.fetchRoute(payload).then(function(response) {
                 const profile = settings.profile.type;
                 console.log(profile, settings.profile)
+                orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
                 orsRouteService.processResponse(response, profile);
             }, function(response) {
                 console.log(response);
             });
         } else {
             console.log('Not enough waypoints..')
+            orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
         }
     });
     /** Subscription function to current accessibility settings */
     orsSettingsFactory.aaSettingsSubject.subscribe(settings => {
+        console.log(settings);
         if (settings.waypoints.length > 0) {
             console.log(true, 'go', settings)
             const payload = orsAaService.generateAnalysisRequest(settings);
+            orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
             orsAaService.fetchAnalysis(payload).then(function(response) {
                 orsAaService.processResponse(response);
                 orsAaService.parseResultsToBounds(response);

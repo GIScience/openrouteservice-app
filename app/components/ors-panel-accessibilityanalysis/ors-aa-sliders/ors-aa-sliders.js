@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
     templateUrl: 'app/components/ors-panel-accessibilityanalysis/ors-aa-sliders/ors-aa-sliders.html',
-    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
+    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService, $location) {
         var ctrl = this;
         ctrl.$onInit = function() {
             if (ctrl.isochroneMinutesSlider.value > 1) ctrl.isochroneIntervalSlider.options.ceil = ctrl.isochroneMinutesSlider.value - 1;
@@ -22,6 +22,7 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
                     return value == 0 ? ctrl.optionList.methodOptions.RG.name : ctrl.optionList.methodOptions.TIN.name;
                 },
                 onEnd: function() {
+                    ctrl.currentOptions.analysis_options.method = ctrl.isochroneOptionsSlider.value;
                     ctrl.changeOptions();
                 }
             }
@@ -67,6 +68,9 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
         };
         ctrl.changeOptions = function() {
             // call setoptions
+            // $location.path('/user/' + "$scope.userId", false);
+            // console.log(ctrl.currentOptions);
+            orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
             //ctrl.onChangeOptions(ctrl.currentOptions);
             // orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
         };
