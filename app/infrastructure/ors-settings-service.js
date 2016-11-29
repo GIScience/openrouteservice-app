@@ -74,7 +74,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     orsSettingsFactory.subscribeToWaypoints = (o) => {
         return orsSettingsFactory.routingWaypointsSubject.subscribe(o);
     };
-     /** Subscription function to current aa waypoints object, used in map. */
+    /** Subscription function to current aa waypoints object, used in map. */
     orsSettingsFactory.subscribeToAaWaypoints = (o) => {
         return orsSettingsFactory.aaWaypointsSubject.subscribe(o);
     };

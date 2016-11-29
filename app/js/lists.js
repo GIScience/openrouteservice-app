@@ -108,13 +108,13 @@ lists.profiles = {
         elevation: false,
         subgroup: 'HeavyVehicle'
     },
-    foresty: {
-        name: 'foresty',
+    forestry: {
+        name: 'forestry',
         elevation: false,
         subgroup: 'HeavyVehicle'
     },
     delivery: {
-        name: 'Delivery',
+        name: 'delivery',
         elevation: false,
         subgroup: 'HeavyVehicle'
     }
@@ -356,7 +356,7 @@ lists.optionList = {
             default: 100,
             step: 5
         },
-        foresty: {
+        forestry: {
             min: 30,
             max: 200,
             default: 100,
@@ -415,7 +415,16 @@ lists.permalinkFilters = {
     analysis: ['method', 'minutes', 'interval'],
     Car: ['type', 'weight', 'maxspeed'],
     hgv: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload'],
+    goods: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload'],
+    bus: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload'],
+    agricultural: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload'],
+    forestry: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload'],
+    delivery: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload'],
     Bicycle: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
+    BicycleSafety: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
+    BicycleMTB: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
+    BicycleRacer: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
+    BicycleTour: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
     Pedestrian: ['type', 'weight', 'maxspeed', 'fitness', 'steepness'],
     Wheelchair: ['type', 'weight', 'maxspeed', 'incline', 'curb', 'surface']
 };
