@@ -25,18 +25,18 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
                         sumDistance += latLngA.distanceTo(latLngB);
                     }
                     if (typeNumber in extras) {
-                        extras[typeNumber].distance += sumDistance
-                        extras[typeNumber].intervals.push([fr, to])
+                        extras[typeNumber].distance += sumDistance;
+                        extras[typeNumber].intervals.push([fr, to]);
                     } else {
                         let text = ctrl.mappings[key][typeNumber].text;
                         let color = ctrl.mappings[key][typeNumber].color;
                         if (key == 'gradients') {
                             if (typeNumber > 5) {
-                                text = ctrl.mappings[key].pointer.up + ctrl.mappings[key][typeNumber].text;
+                                text = ctrl.mappings[key][typeNumber].text;
                             } else if (typeNumber < 5) {
-                                text = ctrl.mappings[key].pointer.down + ctrl.mappings[key][typeNumber].text;
+                                text = ctrl.mappings[key][typeNumber].text;
                             } else if (typeNumber == 5) {
-                                text = ctrl.mappings[key].pointer.default+ctrl.mappings[key][typeNumber].text;
+                                text = ctrl.mappings[key][typeNumber].text;
                             }
                         }
                         extras[typeNumber] = {
@@ -49,7 +49,7 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
                             y0: 0,
                             y1: 0,
                             color: color
-                        }
+                        };
                     }
                 }
             });
@@ -67,10 +67,12 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
             return extras;
         };
         ctrl.routeExtras = {
-            routeIndex: ctrl.routeIndex,
-            gradients: ctrl.processExtras('gradients'),
-            //surfaces: ctrl.processExtras('surfaces'),
-            //wayTypes: ctrl.processExtras('wayTypes')
+            data: {
+                gradients: ctrl.processExtras('gradients'),
+                //surfaces: ctrl.processExtras('surfaces'),
+                //wayTypes: ctrl.processExtras('wayTypes')
+            },
+            index: ctrl.routeIndex,
         };
     }
 });

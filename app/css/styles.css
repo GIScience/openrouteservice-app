@@ -263,6 +263,10 @@ ors-instructions {
     width: 344px;
 }
 
+.ors-bars {
+    padding: 15px 15px 0 15px;
+}
+
 
 /** Route options */
 
@@ -304,15 +308,22 @@ ors-instructions {
 /** Modals appear when settings are clicked */
 
 .ors-modal-container {
-    position: fixed; /* Stay in place */
-    z-index: 9999; /* Sit on top */
+    position: fixed;
+    /* Stay in place */
+    z-index: 9999;
+    /* Sit on top */
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
 }
 
 .ors-modal-container .ors-dialog .close {
@@ -323,16 +334,18 @@ ors-instructions {
     cursor: pointer;
     outline: none;
     width: 50px;
-    background: rgba(255,255,255,1);
+    background: rgba(255, 255, 255, 1);
 }
 
 .ors-modal-container .ors-dialog {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     background-color: #fefefe;
-    margin: 100px auto; /* 15% from the top and centered */
+    margin: 100px auto;
+    /* 15% from the top and centered */
     padding: 50px;
     border: 1px solid #888;
-    width: 650px; /* Could be more or less, depending on screen size */
+    width: 650px;
+    /* Could be more or less, depending on screen size */
     outline: none;
     overflow-x: hidden;
     overflow-y: auto;
@@ -357,7 +370,6 @@ ors-instructions {
     margin: 15px auto;
     padding: 1rem;
 }
-
 
 .ors-inline {
     display: inline;
@@ -567,4 +579,74 @@ div.ors-wp-td {
 
 .leaflet-top, .leaflet-bottom {
     z-index: 0 !important;
+}
+
+
+/** d3 tips */
+
+.d3-tip {
+    line-height: 1;
+    padding: 8px;
+    background: rgba(0, 0, 0, 1);
+    color: #fff;
+    font-size: 90%;
+    border-radius: 4px;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 9999;
+}
+
+
+/* Creates a small triangle extender for the tooltip */
+
+.d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    pointer-events: none;
+}
+
+
+/* Northward tooltips */
+
+.d3-tip.n:after {
+    content: "\25BC";
+    margin: -3px 0 0 0;
+    top: 100%;
+    left: 0;
+    text-align: center;
+}
+
+
+/* Eastward tooltips */
+
+.d3-tip.e:after {
+    content: "\25C0";
+    margin: -4px 0 0 0;
+    top: 50%;
+    left: -8px;
+}
+
+
+/* Southward tooltips */
+
+.d3-tip.s:after {
+    content: "\25B2";
+    margin: 0 0 1px 0;
+    top: -8px;
+    left: 0;
+    text-align: center;
+}
+
+
+/* Westward tooltips */
+
+.d3-tip.w:after {
+    content: "\25B6";
+    margin: -4px 0 0 -1px;
+    top: 50%;
+    left: 100%;
 }

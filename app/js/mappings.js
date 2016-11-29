@@ -1,10 +1,5 @@
 let mappings = {};
 mappings.gradients = {
-    pointer: {
-        default: '<i class="fa fa-caret-right"></i> ',
-        up: '<i class="fa fa-caret-up"></i> ',
-        down: '<i class="fa fa-caret-down"></i> '
-    },
     '0': {
         text: '16%+',
         color: '#028306'

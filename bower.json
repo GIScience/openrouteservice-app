@@ -25,10 +25,10 @@
     "jquery-ui": "jqueryui#^1.12.0",
     "angularjs-slider": "^5.5.1",
     "angular-sanitize": "^1.5.8",
-    "d3": "3",
     "angular-file-saver": "^1.1.2",
     "turfjs": "*",
     "angular-jxon": "*",
-    "vkBeautify": "vkbeautify#*"
+    "vkBeautify": "vkbeautify#*",
+    "d3-tip": "v0.7.1"
   }
 }

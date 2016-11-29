@@ -1,10 +1,3 @@
-<div ng-repeat="obj in $ctrl.routeExtras">
-	<ors-bars-chart obj="obj"></ors-bars-chart>
+<div ng-repeat="(key, obj) in $ctrl.routeExtras.data">
+	<ors-bars-chart route-index="$ctrl.routeIndex" key="key" obj="obj" ></ors-bars-chart>
 </div>
-
-<!-- <div id="wayType" class="ors-types"></div>
-<div class="clear list" id="wayTypeList"></div>
-<div id="surfaceType" class="ors-types"></div>
-<div class="clear list" id="surfaceTypeList"></div>
-<div id="steepnessType" class="ors-types"></div>
-<div class="clear list" id="steepnessTypeList"></div> -->

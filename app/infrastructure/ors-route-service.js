@@ -20,16 +20,17 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
         };
         orsRouteService.setCurrentRouteIdx = (idx) => {
             orsRouteService.currentRouteIdx = idx;
-        }
+        };
         orsRouteService.getCurrentRouteIdx = () => {
             return orsRouteService.currentRouteIdx;
-        }
+        };
         orsRouteService.DeEmph = function() {
             /** clear emph */
             let action = orsObjectsFactory.createMapAction(2, lists.layers[2], undefined, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
         };
         orsRouteService.Emph = function(geom) {
+            console.log(geom)
             /** either whole or a slice if intervals */
             action = orsObjectsFactory.createMapAction(3, lists.layers[2], geom, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
