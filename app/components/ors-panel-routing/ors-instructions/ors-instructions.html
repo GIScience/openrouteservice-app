@@ -1,41 +1,70 @@
-<div class="ors-instructions-summary"> 
-	<button class="ors-controls-button flright" ng-click="$ctrl.showInstructions()">
-	    <i class="fa fa-lg fa-arrow-left">
-	    </i>
-	</button>
-	<div ng-include="'app/includes/route-summary.html'">
-	</div>
-	<ors-route-extras ng-if="route.extras" route="route" route-index="$ctrl.routeIndex">
-	</ors-route-extras>
-	<div class="bottom-border">
-	</div>
+<div class="ors-instructions-summary">
+    <button class="ors-controls-button flright" ng-click="$ctrl.showInstructions()">
+        <i class="fa fa-lg fa-arrow-left">
+        </i>
+    </button>
+    <div ng-include="'app/includes/route-summary.html'">
+    </div>
+    <ors-route-extras ng-if="route.extras" route="route" route-index="$ctrl.routeIndex">
+    </ors-route-extras>
+    <div class="bottom-border">
+    </div>
 </div>
 <div class="ors-routing-inner">
-
-	If you move from one page of a site without a scrollbar to another with a scrollbar, you'll see a slight layout shift as things squeeze inward a bit to make room for the scrollbar.
-
-A classic fix was html { overflow-y: scroll; } to force the scrollbar all the time. Ayke van Laëthem has found a more elegant solution in html { margin-left: calc(100vw - 100%); } which works because vw accounts for the scrollbar and % doesn't, and... just read it as there are a few more things you'll need to be aware of anyway.
-
-Pretty sweet for a first blog post Ayke!If you move from one page of a site without a scrollbar to another with a scrollbar, you'll see a slight layout shift as things squeeze inward a bit to make room for the scrollbar.
-
-A classic fix was html { overflow-y: scroll; } to force the scrollbar all the time. Ayke van Laëthem has found a more elegant solution in html { margin-left: calc(100vw - 100%); } which works because vw accounts for the scrollbar and % doesn't, and... just read it as there are a few more things you'll need to be aware of anyway.
-
-Pretty sweet for a first blog post Ayke!If you move from one page of a site without a scrollbar to another with a scrollbar, you'll see a slight layout shift as things squeeze inward a bit to make room for the scrollbar.
-
-A classic fix was html { overflow-y: scroll; } to force the scrollbar all the time. Ayke van Laëthem has found a more elegant solution in html { margin-left: calc(100vw - 100%); } which works because vw accounts for the scrollbar and % doesn't, and... just read it as there are a few more things you'll need to be aware of anyway.
-
-Pretty sweet for a first blog post Ayke!If you move from one page of a site without a scrollbar to another with a scrollbar, you'll see a slight layout shift as things squeeze inward a bit to make room for the scrollbar.
-
-A classic fix was html { overflow-y: scroll; } to force the scrollbar all the time. Ayke van Laëthem has found a more elegant solution in html { margin-left: calc(100vw - 100%); } which works because vw accounts for the scrollbar and % doesn't, and... just read it as there are a few more things you'll need to be aware of anyway.
-
-Pretty sweet for a first blog post Ayke!If you move from one page of a site without a scrollbar to another with a scrollbar, you'll see a slight layout shift as things squeeze inward a bit to make room for the scrollbar.
-
-A classic fix was html { overflow-y: scroll; } to force the scrollbar all the time. Ayke van Laëthem has found a more elegant solution in html { margin-left: calc(100vw - 100%); } which works because vw accounts for the scrollbar and % doesn't, and... just read it as there are a few more things you'll need to be aware of anyway.
-
-Pretty sweet for a first blog post Ayke!If you move from one page of a site without a scrollbar to another with a scrollbar, you'll see a slight layout shift as things squeeze inward a bit to make room for the scrollbar.
-
-A classic fix was html { overflow-y: scroll; } to force the scrollbar all the time. Ayke van Laëthem has found a more elegant solution in html { margin-left: calc(100vw - 100%); } which works because vw accounts for the scrollbar and % doesn't, and... just read it as there are a few more things you'll need to be aware of anyway.
-
-Pretty sweet for a first blog post Ayke!	
-
+    <div class="ors-route-segments" data-ng-repeat="segment in route.segments">
+        <div class="ors-route-card" ng-mouseleave="$ctrl.DeEmph()" ng-mouseenter="$ctrl.EmphSegment($index)">
+            <div class="left">
+                <span ng-bind-html="$index">
+                </span>
+            </div>
+	        <div class="right">
+	            <div class="summary-item">
+	                <i class="fa fa-clock-o">
+	                </i>
+	                <span ng-bind-html="(segment.duration | duration)">
+	                </span>
+	            </div>
+	            <div class="summary-item">
+	                <i class="fa fa-arrows-h">
+	                </i>
+	                <span ng-bind-html="(segment.distance | distance)">
+	                </span>
+	            </div>
+	            <div class="summary-item" ng-if="segment.ascent">
+	                <i class="fa fa-long-arrow-up">
+	                </i>
+	                <span ng-bind-html="(segment.ascent | distance)">
+	                </span>
+	            </div>
+	            <div class="summary-item" ng-if="segment.descent">
+	                <i class="fa fa-long-arrow-down">
+	                </i>
+	                <span ng-bind-html="(segment.descent | distance)">
+	                </span>
+	            </div>
+	        </div>
+	        <div class="bottom">
+	        	<div style="padding-bottom: 10px;" ng-click="steps = !steps">
+                    <i ng-class="$ctrl.getClass(steps)">
+                    </i>
+                     <span ng-bind-html="('Steps')">
+                     </span>
+                </div>
+	        	<div class="collapsable" ng-class="{ showMe: steps }">
+		            <div class="step" data-ng-repeat="step in segment.steps" ng-mouseout="$ctrl.DeEmph()" ng-mouseover="$ctrl.EmphStep(step.interval)">
+		            	<div class="header">
+		            		<div class="icon" ng-bind-html="step.code"></div>
+		            		<div class="text" ng-bind-html="step.text"></div>
+		            	</div>
+		            	<div class="summary">
+		            		<span ng-bind-html="(step.distance | distance)"></span>
+		            		<span class="pipe">|</span>
+		            		<span ng-bind-html="(step.duration | duration)"></span>
+		            	</div>
+		            </div>
+		        </div>
+	        	<div class="bottom-border short"></div>
+	        </div>
+	    </div>
+	</div>
 </div>

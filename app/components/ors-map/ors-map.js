@@ -90,7 +90,6 @@ angular.module('orsApp').directive('orsMap', function() {
                     });
                 };
                 ctrl.clearMap = () => {
-                    console.log("Clearing entire map");
                     ctrl.mapModel.geofeatures.layerLocationMarker.clearLayers();
                     ctrl.mapModel.geofeatures.layerRoutePoints.clearLayers();
                     ctrl.mapModel.geofeatures.layerRouteLines.clearLayers();
@@ -164,31 +163,19 @@ angular.module('orsApp').directive('orsMap', function() {
                     console.log('route was changed to', route);
                     ctrl.routing = route == 'routing' ? true : false;
                     ctrl.clearMap();
-                    
                 });
                 orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
-                                console.log('changes in routing waypoints detected..', d);
-                                const waypoints = d;
-                                // re-add waypoints only after init
-                                if (waypoints.length > 0) ctrl.reAddWaypoints(waypoints, ctrl.routing);
+                    console.log('changes in routing waypoints detected..', d);
+                    const waypoints = d;
+                    // re-add waypoints only after init
+                    if (waypoints.length > 0) ctrl.reAddWaypoints(waypoints, ctrl.routing);
                 });
-
-                 orsSettingsFactory.subscribeToAaWaypoints(function onNext(d) {
-                                console.log('changes in aa waypoints detected..', d);
-                                const waypoints = d;
-                                // re-add waypoints only after init
-                                if (waypoints.length > 0) ctrl.reAddWaypoints(waypoints, ctrl.routing);
+                orsSettingsFactory.subscribeToAaWaypoints(function onNext(d) {
+                    console.log('changes in aa waypoints detected..', d);
+                    const waypoints = d;
+                    // re-add waypoints only after init
+                    if (waypoints.length > 0) ctrl.reAddWaypoints(waypoints, ctrl.routing);
                 });
-
-
-
-
-
-
-
-
-
-
                 /** highlights a geometry */
                 ctrl.highlight = (package) => {
                     L.polyline(package.geometry, {

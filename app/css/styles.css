@@ -121,7 +121,6 @@ html, body {
 /** Sidebar which contains navigation and routing */
 
 .ors-sidebar {
-    color: #707070;
     flex: 1 1 388px;
     min-height: 0;
     /* needed for FF */
@@ -215,20 +214,60 @@ ors-route, ors-analysis {
     background-color: #fff;
     width: 100%;
     display: flex;
-    z-index: -1;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
-.route-card-left {
+.ors-route-card .left {
     color: rgba(0, 0, 0, 0.6);
-    margin: 1.6rem 2rem 0;
-    flex-shrink: 0;
+    padding: 1rem;
+    flex: 0 0 15%;
 }
 
-.route-card-right {
+.ors-route-card .right {
     color: rgba(0, 0, 0, 0.8);
-    flex: 1 1 auto;
-    margin-right: 2.4rem;
-    margin-top: 1.6rem;
+    flex: 1 1 85%;
+    padding: 1rem;
+}
+
+.ors-route-card .bottom {
+    flex: 0 1 100%;
+}
+
+.ors-route-card .step {
+    width: 100%;
+}
+
+.ors-route-card .step .header {
+    display: flex;
+    flex-direction: row;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.ors-route-card .step .header .icon {
+    flex: 0 0 auto;
+    width: 2rem;
+}
+
+.ors-route-card .step .header .text {
+    flex: 1 1 100%;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+.ors-route-card .step .summary {
+    flex-direction: row;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.ors-route-card .pipe {
+    color: #d4dce3;
+    display: inline-block;
+    padding: 0 .5rem;
 }
 
 .summary-item {
@@ -249,6 +288,12 @@ button.summary-select {
 .bottom-border {
     height: 1px;
     border-bottom: .1rem solid #edf3f5;
+    padding-top: 5px;
+    margin: auto;
+}
+
+.short {
+    width: 85%;
 }
 
 ors-instructions {
@@ -293,15 +338,16 @@ ors-instructions {
     color: #444;
 }
 
-.ors-routing-options .container .collapsable {
+.collapsable {
     display: inline-block;
     overflow: hidden;
     height: 0;
 }
 
-.ors-routing-options .container .collapsable.showMe {
+.collapsable.showMe {
     height: auto;
     overflow: visible;
+    width: 100%;
 }
 
 
@@ -565,11 +611,11 @@ div.ors-wp-td {
     float: left;
 }
 
-.right {
+.textright {
     text-align: right;
 }
 
-.left {
+.textleft {
     text-align: left;
 }
 

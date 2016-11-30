@@ -18,10 +18,10 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
             ctrl.showAdd = true;
         };
         // subscribes to changes in waypoints, this doesnt have to be added though, why? Because of reference?
-        // orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
-        //     console.log('waypoints updated!!! panel', d);
-        //     ctrl.waypoints = d;
-        // });
+        orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
+            console.log('waypoints updated!!! panel', d);
+            ctrl.waypoints = d;
+        });
         /**Determines which collapse icon to show. */
         ctrl.collapsed = false;
         ctrl.collapseIcon = "fa fa-minus-circle";

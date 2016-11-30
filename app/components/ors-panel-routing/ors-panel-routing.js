@@ -6,9 +6,7 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
             return next.params.name === prev.params.name;
         };
         ctrl.$onInit = function() {};
-        //http://localhost:3000/routing?wps=48.3333,10.1667,48.7758459,9.1829321,48.7758459,9.1839321&profile=Bicycle&subprofile=BicycleMTB&weight=Fastest
         ctrl.$routerOnActivate = function(next) {
-            console.log('updating ng route')
             orsSettingsFactory.updateNgRoute(next.urlPath);
             /** 
              * check if anything is saved in the settings object
@@ -20,6 +18,12 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
                 orsSettingsFactory.initWaypoints(2);
                 const importedParams = orsParamsService.importSettings(ctrl.routeParams);
                 orsSettingsFactory.setSettings(importedParams.settings);
+
+                // fetch addresses afterwards
+                angular.forEach(importedParams.settings.waypoints, function(wp, idx) {
+                    console.log(wp,idx)
+                    orsRequestService.getAddress(wp._latlng, idx, true);
+                });
                 orsSettingsFactory.setUserOptions(orsCookiesFactory.getCookies());
                 orsSettingsFactory.setUserOptions(importedParams.user_options);
             }
@@ -31,13 +35,12 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
             //ctrl.activeMenu = ctrl.profiles.Car.name;
             ctrl.activeProfile = orsSettingsFactory.getActiveProfile().type;
             ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
-            console.log(ctrl.activeProfile, ctrl.activeSubgroup)
             ctrl.shouldDisplayRouteDetails = false;
             // orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
         };
         ctrl.$routerOnReuse = function(next, prev) {
             console.info("REUSE");
-        }
+        };
         ctrl.showInstructions = () => {
             ctrl.shouldDisplayRouteDetails = ctrl.shouldDisplayRouteDetails == true ? false : true;
         };

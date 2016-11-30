@@ -123,7 +123,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * @param {string} newRoute - Path of current location.
      */
     orsSettingsFactory.updateNgRoute = (newRoute => {
-        console.info('newRoute', newRoute)
         currentSettingsObj = orsSettingsFactory.getCurrentSettings(newRoute);
         currentWaypointsObj = orsSettingsFactory.getCurrentWaypoints(newRoute);
         /** panels switched, clear the map */
@@ -148,8 +147,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     };
     /** Subscription function to current routing settings */
     orsSettingsFactory.routingSettingsSubject.subscribe(settings => {
-        console.log(true, 'go', settings)
-            /** get user obtions */
+        /** get user obtions */
         const isRoutePresent = orsSettingsFactory.handleRoutePresent(settings);
         // var isRoutePresent = waypoint.getNumWaypointsSet() >= 2;
         if (isRoutePresent) {
@@ -164,15 +162,12 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
                 console.log(response);
             });
         } else {
-            console.log('Not enough waypoints..')
             orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
         }
     });
     /** Subscription function to current accessibility settings */
     orsSettingsFactory.aaSettingsSubject.subscribe(settings => {
-        console.log(settings);
         if (settings.waypoints.length > 0) {
-            console.log(true, 'go', settings)
             const payload = orsAaService.generateAnalysisRequest(settings);
             orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
             orsAaService.fetchAnalysis(payload).then(function(response) {
@@ -180,8 +175,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
                 orsAaService.parseResultsToBounds(response);
                 orsAaService.parseResponseToPolygonJSON(response);
             }, function(response) {
-                console.log(response);
-                console.log(orsAaService.parseResponseToPolygon(response));
             });
         }
         // } else {
@@ -214,7 +207,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * @param {waypoints.<Object>} List of waypoint objects.
      */
     orsSettingsFactory.setWaypoints = (waypoints, fireRequest = true) => {
-        console.log('setting..')
+        console.log('setting..', waypoints)
         orsSettingsFactory[currentSettingsObj].getValue().waypoints = waypoints;
         /** fire a new request */
         if (fireRequest) orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());

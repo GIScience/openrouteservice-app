@@ -9,10 +9,10 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', function()
         },
         template: '<div class="ors-bars"></div>',
         link: function(scope, element, attrs, fn) {
-            var tip = d3.tip().attr('class', 'd3-tip').offset([-10, 0]).html(function(d) {
+            let tip = d3.tip().attr('class', 'd3-tip').offset([-10, 0]).html(function(d) {
                 // var dist = util.convertDistanceFormat(d.distance, preferences.distanceUnit);
                 // return d.percentage + '% ' + d.typetranslated + ' (' + dist[1] + ' ' + dist[2] + ')';
-                return d.type;
+                return d.percentage + '% ' + '(' + d.distance + ')';
             });
             data = [];
             let keys = _.keysIn(scope.obj).map(Number);
@@ -20,7 +20,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', function()
             _.forEach(keys, function(key) {
                 data.push(scope.obj[key]);
             });
-            var margin = {
+            let margin = {
                     top: 0,
                     right: 10,
                     bottom: 0,
@@ -28,10 +28,10 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', function()
                 },
                 width = 330 - margin.left - margin.right,
                 height = 30 - margin.top - margin.bottom;
-            var y = d3.scaleLinear().rangeRound([height, 0]);
-            var x = d3.scaleLinear().rangeRound([0, width]);
-            var xAxis = d3.axisBottom().scale(x);
-            var yAxis = d3.axisLeft().scale(y);
+            let y = d3.scaleLinear().rangeRound([height, 0]);
+            let x = d3.scaleLinear().rangeRound([0, width]);
+            let xAxis = d3.axisBottom().scale(x);
+            let yAxis = d3.axisLeft().scale(y);
             var svg = d3.select(element[0]).append("svg").attr("width", width).attr("height", height);
             y.domain([0]);
             x.domain([0, _.last(data).y1]);
@@ -53,12 +53,13 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', function()
                 // not implemented yet
                 scope.ZoomToSegment(d.intervals);
             });
-            var legendRectSize = 7;
-            var legendSpacing = 7;
-            var legendTotalHeight = 0;
-            var legend = svg.selectAll('.legend').data(data).enter().append('g').attr('class', 'legend').attr('transform', function(d, i) {
-                var legendHeight = legendRectSize + legendSpacing;
-                var vert = height * 1.1 + i * legendHeight;
+            let legendRectSize = 7;
+            let legendSpacing = 7;
+            let legendTotalHeight = 0;
+            let legendContainer = svg.append("g");
+            let legend = legendContainer.selectAll('.legend').data(data).enter().append('g').attr('class', 'legend').attr('transform', function(d, i) {
+                let legendHeight = legendRectSize + legendSpacing;
+                let vert = height * 1.1 + i * legendHeight;
                 legendTotalHeight += legendHeight;
                 return 'translate(' + 0 + ',' + vert + ')';
             });
@@ -75,7 +76,22 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', function()
             legend.on('mouseout', function(d) {
                 scope.DeEmphSegment();
             });
-            svg.attr("height", legendTotalHeight + height);
+            svg.attr("height", 40);
+            if (keys.length > 1) {
+                let show = false;
+                let expandText = svg.append("text").style("text-anchor", "end").attr("x", "310").attr("y", 40).text('show more').on("click", function() {
+                    // Determine if current line is visible
+                    show = show === false ? true : false;
+                    if (show === true) {
+                        svg.attr("height", legendTotalHeight + height);
+                        expandText.text('show less');
+                    } else {
+                        svg.attr("height", 40);
+                        expandText.text('show more');
+                    }
+                    // Hide or show the elements
+                });
+            }
             svg.call(tip);
         },
         controller: ['$scope', 'orsRouteService',

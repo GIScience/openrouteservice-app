@@ -19,16 +19,18 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
             if (key == 'wps') {
                 //TODO Debug, adding does not properly work
                 const wps = value.match(/[^,]+,[^,]+/g);
+                console.info(wps)
                 let idx = 0,
                     waypoints = [];
                 angular.forEach(wps, function(wp) {
                     wp = wp.split(",");
-                    wp = orsObjectsFactory.createWaypoint('', new L.latLng([parseFloat(wp[0]), parseFloat(wp[1])]), 1);
+                    let pos = L.latLng([parseFloat(wp[0]), parseFloat(wp[1])]);
+                    wp = orsObjectsFactory.createWaypoint(pos.toString(), new L.latLng([parseFloat(wp[0]), parseFloat(wp[1])]), 1);
                     waypoints.push(wp);
-                    orsRequestService.getAddress(wp._latlng, idx, true);
                     idx += 1;
                 });
                 settings.waypoints = waypoints;
+                console.info(settings.waypoints)
             }
             if (key == 'type') {
                 settings.profile.type = value;
@@ -123,6 +125,6 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
     orsParamsService.parseStringToBool = (string) => {
         if (string == "true") return true;
         return false;
-    }
+    };
     return orsParamsService;
 }]);

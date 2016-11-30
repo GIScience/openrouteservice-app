@@ -2,7 +2,7 @@
  *|                                                     University of Heidelberg
  *|   _____ _____  _____      _                         Department of Geography
  *|  / ____|_   _|/ ____|    (_)                        Chair of GIScience
- *| | |  __  | | | (___   ___ _  ___ _ __   ___ ___     (C) 2011
+ *| | |  __  | | | (___   ___ _  ___ _ __   ___ ___     (C) 2017
  *| | | |_ | | |  \___ \ / __| |/ _ \ '_ \ / __/ _ \
  *| | |__| |_| |_ ____) | (__| |  __/ | | | (_|  __/    Berliner Strasse 48
  *|  \_____|_____|_____/ \___|_|\___|_| |_|\___\___|    D-69120 Heidelberg, Germany
@@ -31,18 +31,6 @@ let orsApp = angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routi
     // add map
     let ctrl = this;
     ctrl.myOrsMap = orsMapFactory.initMapA("map");
-    // orsMapFactory.map.then(function(map) {
-    //     ctrl.myOrsMap = map
-    //     console.log(ctrl.myOrsMap)
-    //     /* pass ctrl.map down to menu and map component!!! */
-    //     // var tileLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //     //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    //     //     maxZoom: 18
-    //     // }).addTo(ctrl.map);
-    //     // ctrl.map.setView([0, 0], 1);
-    //     // L.marker([0, 0]).addTo(ctrl.map);
-    //     // console.log(ctrl.map);
-    // });
 });
 orsApp.run(['$route', '$rootScope', '$routeParams', '$location',
     function($route, $rootScope, $routeParams, $location) {
@@ -50,9 +38,6 @@ orsApp.run(['$route', '$rootScope', '$routeParams', '$location',
         console.log($location.absUrl());
         $location.path = function(path, reload) {
             console.log($location.absUrl());
-            // console.log(original);
-            console.info("RUN", path, reload);
-            // console.log(path);
             if (reload === false) {
                 var lastRoute = $route.current;
                 var un = $rootScope.$on('$locationChangeSuccess', function() {
