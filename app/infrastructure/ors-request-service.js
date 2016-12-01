@@ -23,7 +23,8 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$htt
         };
         orsRequestService.getAddress = function(pos, idx, init) {
             console.log(pos, idx, init)
-            orsSettingsFactory.updateWaypointAddress(idx, pos, init);
+            const latLngString =  orsUtilsService.parseLatLngString(pos);
+            orsSettingsFactory.updateWaypointAddress(idx, latLngString, init);
             var requestData = orsUtilsService.reverseXml(pos);
             orsRequestService.geocode(requestData).then(function(response) {
                 const data = orsUtilsService.domParser(response.data);

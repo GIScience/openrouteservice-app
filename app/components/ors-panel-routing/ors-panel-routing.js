@@ -21,7 +21,6 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
 
                 // fetch addresses afterwards
                 angular.forEach(importedParams.settings.waypoints, function(wp, idx) {
-                    console.log(wp,idx)
                     orsRequestService.getAddress(wp._latlng, idx, true);
                 });
                 orsSettingsFactory.setUserOptions(orsCookiesFactory.getCookies());

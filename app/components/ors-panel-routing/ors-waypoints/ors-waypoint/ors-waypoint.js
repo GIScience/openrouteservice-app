@@ -28,23 +28,41 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
             if (ctrl.addresses) ctrl.showAddresses = true;
         };
         ctrl.addressChanged = () => {
-            // is this a waypoint...?
-            // fire nominatim
-            const requestData = orsUtilsService.generateXml(ctrl.waypoint._address);
-            orsRequestService.geocode(requestData).then(function(response) {
-                let data = orsUtilsService.domParser(response.data);
-                const error = orsErrorhandlerService.parseResponse(data);
-                if (!error) {
-                    ctrl.addresses = orsUtilsService.processAddresses(data);
-                    // show 
+            // is this a coordinate?
+            let inputCoordinates = ctrl.waypoint._address;
+            // split at "," ";" and " "
+            inputCoordinates = inputCoordinates.split(/[\s,;]+/);
+            if (inputCoordinates.length == 2) {
+                var lat = inputCoordinates[0];
+                var lng = inputCoordinates[1];
+                if (orsUtilsService.isCoordinate(lat, lng)) {
+                    let position = L.latLng(lat, lng);
+                    let positionString = orsUtilsService.parseLatLngString(position);
+                    ctrl.addresses = [{
+                        address: positionString,
+                        position: position,
+                        shortAddress: positionString
+                    }];
                     ctrl.showAddresses = true;
-                } else {
-                    console.log('error');
+                    //49.44045, 8.686752
                 }
-            }, function(response) {
-                console.log(response)
+            } else /** fire nominatim */ {
+                const requestData = orsUtilsService.generateXml(ctrl.waypoint._address);
+                orsRequestService.geocode(requestData).then(function(response) {
+                    let data = orsUtilsService.domParser(response.data);
+                    const error = orsErrorhandlerService.parseResponse(data);
+                    if (!error) {
+                        ctrl.addresses = orsUtilsService.processAddresses(data);
+                        // show 
+                        ctrl.showAddresses = true;
+                    } else {
+                        console.log('error');
+                    }
+                }, function(response) {
+                    console.log(response);
                     //$scope.errorMessage = orsErrorhandlerService.generalErrors('It was not possible to get the address at this time. Sorry for the inconvenience!');
-            });
+                });
+            }
         };
         ctrl.getPlaceholder = () => {
             let placeholder;
@@ -54,14 +72,14 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
             return placeholder;
         };
         // ctrl.$doCheck = () => {
-        // 	console.log('check')
+        //  console.log('check')
         // }
         // ctrl.$onChanges = (changesObj) => {
         //     // can be different kinds of changes
         //     if (changesObj.idx) {
-        //     	console.log(changesObj.idx);
-        //     	console.log(ctrl.waypoints);
-        //     	// if array is reversed, 5 changes, how to unify???
+        //      console.log(changesObj.idx);
+        //      console.log(ctrl.waypoints);
+        //      // if array is reversed, 5 changes, how to unify???
         //     }
         // };
         ctrl.delete = () => {

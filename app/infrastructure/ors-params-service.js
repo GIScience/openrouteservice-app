@@ -1,4 +1,4 @@
-angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObjectsFactory', 'orsRequestService', function(orsObjectsFactory, orsRequestService) {
+angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUtilsService', 'orsObjectsFactory', 'orsRequestService', function(orsUtilsService, orsObjectsFactory, orsRequestService) {
     let orsParamsService = {};
     orsParamsService.importSettings = (params) => {
         const settings = {
@@ -24,13 +24,15 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsObj
                     waypoints = [];
                 angular.forEach(wps, function(wp) {
                     wp = wp.split(",");
-                    let pos = L.latLng([parseFloat(wp[0]), parseFloat(wp[1])]);
-                    wp = orsObjectsFactory.createWaypoint(pos.toString(), new L.latLng([parseFloat(wp[0]), parseFloat(wp[1])]), 1);
+                    const latLng = new L.latLng([parseFloat(wp[0]), parseFloat(wp[1])]);
+                    const latLngString = orsUtilsService.parseLatLngString(latLng);
+                    console.log(latLngString)
+                    wp = orsObjectsFactory.createWaypoint(latLngString, latLng, 1);
                     waypoints.push(wp);
                     idx += 1;
                 });
                 settings.waypoints = waypoints;
-                console.info(settings.waypoints)
+                console.info(JSON.stringify(settings.waypoints))
             }
             if (key == 'type') {
                 settings.profile.type = value;

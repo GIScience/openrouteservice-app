@@ -70,7 +70,6 @@ angular.module('orsApp').directive('orsMap', function() {
                     ctrl.mapModel.map.closePopup();
                 };
                 ctrl.addWaypoint = (idx, iconIdx, pos, fireRequest = true) => {
-                    console.log('adding waypoint')
                     var waypointIcon = new L.icon(lists.waypointIcons[iconIdx]);
                     // create the waypoint marker
                     wayPointMarker = new L.marker(pos, {
@@ -80,7 +79,6 @@ angular.module('orsApp').directive('orsMap', function() {
                     });
                     wayPointMarker.addTo(ctrl.mapModel.geofeatures.layerRoutePoints);
                     // If the waypoint is dragged
-                    console.info("DRAGEND");
                     wayPointMarker.on('dragend', function(event) {
                         // idx of waypoint
                         const idx = event.target.options.idx;

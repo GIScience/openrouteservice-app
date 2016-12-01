@@ -2,6 +2,41 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
     function($http, $location) {
         var orsUtilsService = {};
         /**
+         * checks whether position are valid coordinates
+         * @param {String} lat: Latitude as string
+         * @param {String} lng: Longitude as string
+         * @return {boolean}: true or false
+         */
+        orsUtilsService.isCoordinate = (lat, lng) => {
+            const ck_lat = /^(-?[1-8]?\d(?:\.\d{1,18})?|90(?:\.0{1,18})?)$/;
+            const ck_lng = /^(-?(?:1[0-7]|[1-9])?\d(?:\.\d{1,18})?|180(?:\.0{1,18})?)$/;
+            const validLat = ck_lat.test(lat);
+            const validLon = ck_lng.test(lng);
+            if (validLat && validLon) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+        /**
+         * Rounds decimal of coordinate
+         * @param {String} coord: Coordinate
+         * @return {String} latlng: String latLng representation "lat, lng"
+         */
+        orsUtilsService.roundCoordinate = function(coord) {
+            coord = Math.round(coord * 1000000) / 1000000;
+            return coord;
+        };
+        /**
+         * parses leaflet latlng to string representation
+         * @param {Object} latlng: Leaflet latLng Object
+         * @return {String} latlng: String latLng representation "lat, lng"
+         */
+        orsUtilsService.parseLatLngString = function(latlng) {
+            latlng = Math.round(latlng.lat * 1000000) / 1000000 + ', ' + Math.round(latlng.lng * 1000000) / 1000000;
+            return latlng;
+        };
+        /**
          * generates XML for geocoding
          * @param {String} str: Free form address
          * @return {String} xmlRequest: XML document
@@ -736,7 +771,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
         };
         /**
          * rounds a given distance to an appropriate number of digits
-         * @distane: number to round
+         * @distance: number to round
          */
         orsUtilsService.round = function(distance) {
             //precision - set the number of fractional digits to round to
@@ -771,7 +806,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             console.info("parseSettingsToPermalink", settings);
             if (settings.profile === undefined) return;
             var link = '';
-            //Hack to remove angular properties that do not have to be saved
+            // Hack to remove angular properties that do not have to be saved
             let profile = angular.fromJson(angular.toJson(settings.profile));
             let waypoints = angular.fromJson(angular.toJson(settings.waypoints));
 
@@ -780,24 +815,22 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
                     if (typeof obj[o] == "object") {
                         getProp(obj[o]);
                     } else {
-                        // if ()
-                        //Filter functions and properties of other types
+                        // Filter functions and properties of other types
                         if (typeof obj[o] != "function" && o.toString().charAt(0) != '_' && (lists.permalinkFilters[settings.profile.type].includes(o) || lists.permalinkFilters.avoidables.includes(o) || lists.permalinkFilters.analysis.includes(o))) {
                             link = link.concat('&' + o + '=' + obj[o]);
                             console.log(link);
                         }
                     }
                 }
-                // return link;
             }
             if (waypoints[0] !== undefined) {
                 if (waypoints[0]._latlng.lat !== undefined) {
                     link = link.concat("wps=");
-                    for (waypoint of waypoints) {
+                    for (let waypoint of waypoints) {
                         if (waypoint._latlng.lng == undefined) continue;
-                        link = link.concat(waypoint._latlng.lat);
+                        link = link.concat(Math.round(waypoint._latlng.lat * 1000000) / 1000000);
                         link = link.concat(',');
-                        link = link.concat(waypoint._latlng.lng);
+                        link = link.concat(Math.round(waypoint._latlng.lng * 1000000) / 1000000);
                         link = link.concat(',');
                     }
                     link = link.slice(0, -1);

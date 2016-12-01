@@ -20,7 +20,9 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
             ctrl.routes = orsRouteService.routeObj.routes;
             let idx = ctrl.getIdx();
             console.log(ctrl.routes, idx)
-            let action = orsObjectsFactory.createMapAction(1, lists.layers[1], ctrl.routes[idx].points, undefined);
+            let action = orsObjectsFactory.createMapAction(2, lists.layers[1], undefined, undefined);
+            orsMapFactory.mapServiceSubject.onNext(action);
+            action = orsObjectsFactory.createMapAction(1, lists.layers[1], ctrl.routes[idx].points, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
         }
         /** if we are returning to this panel, dispose all old subscriptions */

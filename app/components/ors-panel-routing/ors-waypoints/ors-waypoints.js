@@ -98,7 +98,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         ctrl.addWaypoint = () => {
             let wp = orsObjectsFactory.createWaypoint('', new L.latLng());
             ctrl.waypoints.push(wp);
-            orsSettingsFactory.setWaypoints(ctrl.waypoints);
+            orsSettingsFactory.setWaypoints(ctrl.waypoints, false);
         };
         /** If dropdown of addresses is openend once again and address is changed. */
         ctrl.addressChanged = () => {
