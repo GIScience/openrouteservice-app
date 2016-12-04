@@ -9,6 +9,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', function()
         },
         template: '<div class="ors-bars"></div>',
         link: function(scope, element, attrs, fn) {
+        	console.log(scope.routeIndex)
             let tip = d3.tip().attr('class', 'd3-tip').offset([-10, 0]).html(function(d) {
                 // var dist = util.convertDistanceFormat(d.distance, preferences.distanceUnit);
                 // return d.percentage + '% ' + d.typetranslated + ' (' + dist[1] + ' ' + dist[2] + ')';

@@ -333,7 +333,6 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
                 doc.async = false;
                 dom = doc.loadXML(data);
             }
-            console.log(dom);
             return dom;
         };
         /**
@@ -818,7 +817,6 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
                         // Filter functions and properties of other types
                         if (typeof obj[o] != "function" && o.toString().charAt(0) != '_' && (lists.permalinkFilters[settings.profile.type].includes(o) || lists.permalinkFilters.avoidables.includes(o) || lists.permalinkFilters.analysis.includes(o))) {
                             link = link.concat('&' + o + '=' + obj[o]);
-                            console.log(link);
                         }
                     }
                 }

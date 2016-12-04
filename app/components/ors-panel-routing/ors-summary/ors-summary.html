@@ -1,10 +1,9 @@
-<!-- note: at one stage this will be a scrollable div -->
 <div class="ors-summary">
     <ul>
         <li data-ng-repeat="route in $ctrl.routes">
-            <div data-ng-click="$ctrl.showInstructions(); $ctrl.setIdx($index);" ng-include="'app/includes/route-summary.html'" ng-mouseout="$ctrl.DeEmphRoute()" ng-mouseover="$ctrl.EmphRoute($index)">
+            <div ng-include="'app/includes/route-summary.html'" ng-mouseout="$ctrl.DeEmphRoute()" ng-mouseover="$ctrl.EmphRoute($index)">
             </div>
-            <ors-route-extras ng-if="route.extras" route="route" route-index="$index">
+            <ors-route-extras ng-if="route.extras" current-route="route" route-index="$index">
             </ors-route-extras>
             <div class="bottom-border">
             </div>

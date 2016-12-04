@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteControls', {
     templateUrl: '/app/components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-import-route/import_route_tpl.html',
-    controller($scope, orsImportFactory, orsObjectsFactory, orsMapFactory) {
+    controller($scope, orsImportFactory, orsObjectsFactory, orsUtilsService, orsMapFactory, orsSettingsFactory) {
         let ctrl = this;
         ctrl.showCSVopt = false;
         ctrl.showXY = false;
@@ -60,16 +60,20 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
                 orsMapFactory.mapServiceSubject.onNext(action_removeLayer);
             }
         };
-        ctrl.importRoute = function() {
-            //remove all existing layers before import. There must only be one layer in this group
-            console.log("clicked");
-            /*ctrl.importedRoutes.eachLayer(function(layer) {
-                ctrl.importedRoutes.removeLayer(layer)
-            });
-            //add the clicked layer
-            ctrl.theRoute = orsImportFactory.importFile(ctrl.uploadedFiles.extension, ctrl.uploadedFiles.content);
-            ctrl.importedRoutes.addLayer(ctrl.theRoute);
-            ctrl.map.fitBounds(ctrl.theRoute.getBounds());*/
+        ctrl.importRoute = function(file) {
+            const geometry = orsImportFactory.importFile(file.extension, file.content);
+            // do some simplifying magic..
+            let start = geometry.geometry.coordinates[0];
+            start = new L.latLng([parseFloat(start[0]), parseFloat(start[1])]);
+            const startString = orsUtilsService.parseLatLngString(start);
+            start = orsObjectsFactory.createWaypoint(startString, start, 1);
+            let end = geometry.geometry.coordinates[geometry.geometry.coordinates.length - 1];
+            end = new L.latLng([parseFloat(end[0]), parseFloat(end[1])]);
+            const endString = orsUtilsService.parseLatLngString(end);
+            end = orsObjectsFactory.createWaypoint(endString, end, 1);
+            let waypoints = [];
+            waypoints.push(...[start, end]);
+            orsSettingsFactory.setWaypoints(waypoints);
         };
     }
 });

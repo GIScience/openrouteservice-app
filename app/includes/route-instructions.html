@@ -1,0 +1,73 @@
+<div class="ors-route-segments">
+    <div class="ors-segment-card" data-ng-repeat="segment in route.segments" ng-class="{highlight: hover}" ng-mouseenter="$ctrl.EmphSegment($index); hover=true;" ng-mouseleave="$ctrl.DeEmph(); hover=false;">
+        <div class="heading">
+            <div class="icon" ng-click="steps = !steps;">
+                <i ng-class="$ctrl.getClass(steps)">
+                </i>
+            </div>
+            <div class="waypoint">
+                <h3 ng-bind-html="$ctrl.waypoints[$index]._address" ng-click="$ctrl.zoomTo($index);">
+                </h3>
+            </div>
+        </div>
+        <div class="summary">
+            <div class="summary-item">
+                <i class="fa fa-clock-o">
+                </i>
+                <span ng-bind-html="(segment.duration | duration)">
+                </span>
+            </div>
+            <div class="summary-item">
+                <i class="fa fa-arrows-h">
+                </i>
+                <span ng-bind-html="(segment.distance | distance)">
+                </span>
+            </div>
+            <div class="summary-item" ng-if="segment.ascent">
+                <i class="fa fa-long-arrow-up">
+                </i>
+                <span ng-bind-html="(segment.ascent | distance)">
+                </span>
+            </div>
+            <div class="summary-item" ng-if="segment.descent">
+                <i class="fa fa-long-arrow-down">
+                </i>
+                <span ng-bind-html="(segment.descent | distance)">
+                </span>
+            </div>
+        </div>
+        <div class="steps">
+            <div class="collapsable" ng-class="{ showMe: steps }">
+                <div class="step" data-ng-repeat="step in segment.steps" ng-class="{highlight: hoverStep}" ng-click="$ctrl.zoomToStep(step.interval);" ng-mouseout="$ctrl.DeEmph(); hoverStep=false;" ng-mouseover="$ctrl.EmphStep(step.interval); hoverStep=true;">
+                    <div class="header">
+                        <div class="icon">
+                            <i ng-class="$ctrl.getIcon(step.code)">
+                            </i>
+                        </div>
+                        <div class="text" ng-bind-html="step.text">
+                        </div>
+                    </div>
+                    <div class="summary">
+                        <span ng-bind-html="(step.distance | distance)">
+                        </span>
+                        <span class="pipe">
+                            |
+                        </span>
+                        <span ng-bind-html="(step.duration | duration)">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-border short">
+        </div>
+    </div>
+    <div class="ors-segment-card" ng-class="{highlight: hover}" ng-mouseenter="hover=true;" ng-mouseleave="hover=false;">
+        <div class="heading">
+            <div class="waypoint">
+                <h3 ng-bind-html="$ctrl.waypoints[$ctrl.waypoints.length-1]._address">
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>

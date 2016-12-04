@@ -19,7 +19,7 @@
         <i class="fa fa-expand">
         </i>
     </button>
-    <button class="ors-controls-button flleft" ng-click="$ctrl.showImportFiles()">
+    <button class="ors-controls-button flleft" data-ng-click="$ctrl.showImport = !$ctrl.showImport">
         <i class="fa fa-upload">
         </i>
     </button>
@@ -31,6 +31,6 @@
 <div class="ors-routing-options" ng-show="$ctrl.showOptions">
     <ors-options active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup" show-options="$ctrl.showOptions"> </ors-options>
 </div>
-<ors-modal data-ng-show="$ctrl.showImport" show-fn="$ctrl.showImportFiles()">
+<ors-modal data-ng-show="$ctrl.showImport" show="$ctrl.showImport">
     <ors-import-route-controls></ors-import-route-controls>
 </ors-modal>

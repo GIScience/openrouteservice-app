@@ -35,7 +35,6 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                 }
             };
             // set maxspeed slider from params
-            console.log(ctrl.optionList.maxspeeds, ctrl.activeSubgroup)
             ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeSubgroup];
             ctrl.currentOptions.maxspeed = ctrl.currentOptions.maxspeed !== undefined ? ctrl.currentOptions.maxspeed : ctrl.maxspeedOptions.default;
             ctrl.maxspeedSlider = {

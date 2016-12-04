@@ -14,21 +14,8 @@ angular.module('orsApp.ors-header', []).component('orsHeader', {
             if (!('routinglang' in ctrl.currentOptions)) ctrl.currentOptions.routinglang = ctrl.optionList.routinglanguages.default;
             if (!('units' in ctrl.currentOptions)) ctrl.currentOptions.units = ctrl.optionList.units.default;
         });
-        ctrl.showModal = {
-            settings: false,
-            feedback: false
-        };
-        ctrl.closeModal = () => {
-            ctrl.showModal.settings = false;
-            ctrl.showModal.feedback = false;
-        };
         ctrl.user = {
             name: 'OpenRouteService.org'
-        };
-        ctrl.showModalFn = (idx) => {
-            console.log(idx)
-            if (idx == 0) ctrl.showModal.settings = true;
-            if (idx == 1) ctrl.showModal.feedback = true;
         };
         ctrl.changeOptions = () => {
             console.log(ctrl.currentOptions);

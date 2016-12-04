@@ -52,7 +52,7 @@
             <span ng-bind-html="(route.summary.descent | distance)">
             </span>
         </div>
-        <button class="summary-select" data-ng-click="$ctrl.showInstructions(); $ctrl.setInstructions(route);" ng-show="!$ctrl.shouldDisplayRouteDetails">
+        <button class="summary-select" data-ng-click="$ctrl.setIdx($index); $ctrl.showInstructions();" ng-show="!$ctrl.shouldDisplayRouteDetails">
             Details
         </button>
     </div>

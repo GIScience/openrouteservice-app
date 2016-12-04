@@ -11,6 +11,7 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
         ctrl.profiles = lists.profiles;
         ctrl.setIdx = (idx) => {
             orsRouteService.setCurrentRouteIdx(idx);
+            console.info(orsRouteService.getCurrentRouteIdx());
         };
         ctrl.getIdx = () => {
             return orsRouteService.getCurrentRouteIdx();
@@ -19,7 +20,6 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
         if (angular.isDefined(orsRouteService.routeObj)) {
             ctrl.routes = orsRouteService.routeObj.routes;
             let idx = ctrl.getIdx();
-            console.log(ctrl.routes, idx)
             let action = orsObjectsFactory.createMapAction(2, lists.layers[1], undefined, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
             action = orsObjectsFactory.createMapAction(1, lists.layers[1], ctrl.routes[idx].points, undefined);
@@ -34,8 +34,8 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
         routeSubscription = orsRouteService.routesSubject.subscribe(routes => {
             console.info('routes', routes);
             ctrl.routes = routes;
-            /** this first route object is used if we are in instruction mode */
-            ctrl.setIdx(0);
+            /** this first route object is used if we are in instruction mode and update the route */
+            //ctrl.setIdx(0);
         });
         ctrl.EmphRoute = (idx) => {
             const geometry = orsRouteService.routeObj.routes[idx].points;

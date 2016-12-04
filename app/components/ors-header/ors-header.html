@@ -9,14 +9,14 @@
             <i class="fa fa-cog fa-lg">
             </i>
             <div class="menu">
-                <div class="item" ng-click="$ctrl.showModalFn(0)">
+                <div class="item" ng-click="$ctrl.showSettings = !$ctrl.showSettings">
                     <i class="fa fa-cog">
                     </i>
                     <span id="tl_settings">
                         Settings
                     </span>
                 </div>
-                <div class="item" ng-click="$ctrl.showModalFn(1)">
+                <div class="item" ng-click="$ctrl.showFeedback = !$ctrl.showFeedback">
                     <i class="fa fa-pencil">
                     </i>
                     <span id="tl_feedback">
@@ -41,9 +41,11 @@
         </div>
     </li>
 </ul>
-<ors-modal data-ng-show="$ctrl.showModal.settings || $ctrl.showModal.feedback" show-fn="$ctrl.closeModal()">
-    <div data-ng-show="$ctrl.showModal.settings" ng-include="'app/includes/settings.html'">
+<ors-modal data-ng-if="$ctrl.showSettings" show="$ctrl.showSettings">
+    <div ng-include="'app/includes/settings.html'">
     </div>
-    <div data-ng-show="$ctrl.showModal.feedback" ng-include="'app/includes/feedback.html'">
+</ors-modal>
+<ors-modal data-ng-if="$ctrl.showFeedback" show="$ctrl.showFeedback">
+    <div ng-include="'app/includes/feedback.html'">
     </div>
 </ors-modal>

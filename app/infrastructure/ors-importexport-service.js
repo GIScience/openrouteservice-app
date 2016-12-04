@@ -131,7 +131,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                 /* TODO */
                 //Get the coordinates
                 var kmlCoordinates = jxon.kml.Document.Placemark.LineString.coordinates;
-                kmlCoordinates = kmlCoordinates.split("\n")
+                kmlCoordinates = kmlCoordinates.split("\n");
                 for (var i = 0; i < kmlCoordinates.length; i++) {
                     kmlCoordinates[i] = kmlCoordinates[i].split(",");
                 }
@@ -221,10 +221,10 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                         csvWktLabel: undefined,
                         csvSeparator: undefined,
                         csvGeometryFormat: undefined
-                    }
+                    };
                 } else {
                     options = options;
-                };
+                }
                 //create an empty array to store the csv objects
                 var csvArray = [];
                 var csvAuxArray = [];
@@ -239,7 +239,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                 //Take the first line to get the header of the CSV
                 var csvHeaders = csvRows.shift(); //by doing a shift, the first line in the csvRows is discarded. it remains stored in csvHeaders
                 //Split the header entries into an array, taking the type of separator into consideration
-                var csvHeaders = csvHeaders.split(options.separator);
+                csvHeaders = csvHeaders.split(options.separator);
                 // Loop through the rows 
                 for (var i = 0; i < csvRows.length; i++) {
                     var rowArray = csvRows[i].split(options.separator);
@@ -341,6 +341,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
         function($JXON) {
             var date = new Date(); //remove
             var routeGlobalVars = function(route) { //remove
+                route = L.polyline(route);
                 //get the GeoJson object of the geo object
                 var geoJSONRoute = route.toGeoJSON();
                 var routeBounds = route.getBounds();
@@ -838,10 +839,10 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                     options = {
                         csvSeparator: 'semicolon',
                         csvFormat: 'xy'
-                    }
+                    };
                 } else {
                     options = options;
-                };
+                }
                 //get the route global variable
                 var routeVars = routeGlobalVars(route);
                 // gets the geoJSON object
@@ -859,7 +860,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                     case 'tab':
                             sep = '\t';
                         break;
-                };
+                }
                 //create the header for the csv file
                 var headerProperties = Object.keys(geojsonObj.properties);
                 var headerGeometry = [];

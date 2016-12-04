@@ -1,22 +1,21 @@
 angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('orsRouteExtras', {
     templateUrl: 'app/components/ors-panel-routing/ors-route-extras/ors-route-extras.html',
     bindings: {
-        route: '<',
+        currentRoute: '<',
         routeIndex: '<'
     },
-    controller(orsErrorhandlerService) {
+    controller(orsErrorhandlerService, $scope) {
         let ctrl = this;
         ctrl.mappings = mappings;
-        ctrl.processExtras = (key) => {
-            console.log(ctrl.route)
-            let totalDistance = ctrl.route.summary.distance;
+        ctrl.processExtras = (currentRoute, key) => {
+            let totalDistance = currentRoute.summary.distance;
             let extras = {};
-            _.forEach(ctrl.route.extras[key], function(elem, i) {
+            _.forEach(currentRoute.extras[key], function(elem, i) {
                 const fr = parseInt(elem.fr),
                     to = parseInt(elem.to) + 1;
                 if (fr !== to) {
                     const typeNumber = parseInt(elem.value) + 5;
-                    const routeSegment = ctrl.route.points.slice(fr, to);
+                    const routeSegment = currentRoute.points.slice(fr, to);
                     /** calculate distances */
                     let sumDistance = 0;
                     for (let i = 0; i < routeSegment.length - 1; i++) {
@@ -66,13 +65,18 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
             }
             return extras;
         };
-        ctrl.routeExtras = {
-            data: {
-                gradients: ctrl.processExtras('gradients'),
+        ctrl.routeExtras = [];
+        $scope.$watch('$ctrl.currentRoute', function(route) {
+            ctrl.routeExtras = [];
+            console.log(true)
+            ctrl.routeExtras.push({
+                    data: ctrl.processExtras(route, 'gradients'),
+                    type: 'gradients',
+                    routeIndex: ctrl.routeIndex
+                });
                 //surfaces: ctrl.processExtras('surfaces'),
                 //wayTypes: ctrl.processExtras('wayTypes')
-            },
-            index: ctrl.routeIndex,
-        };
+                //ctrl.routeExtras = angular.copy(ctrl.routeExtras);
+        });
     }
 });

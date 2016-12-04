@@ -6,6 +6,10 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
          */
         let orsRouteService = {};
         orsRouteService.routesSubject = new Rx.Subject();
+        orsRouteService.resetRoute = () => {
+            orsRouteService.routeObj = {};
+            orsRouteService.routesSubject.onNext([]);
+        };
         /**
          * Requests route from ORS backend
          * @param {String} requestData: XML for request payload
@@ -32,6 +36,10 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
             let action = orsObjectsFactory.createMapAction(3, lists.layers[2], geom, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
         };
+        orsRouteService.zoomTo = function(geom) {
+            let action = orsObjectsFactory.createMapAction(0, lists.layers[2], geom, undefined);
+            orsMapFactory.mapServiceSubject.onNext(action);
+        };
         orsRouteService.processRoutes = function(response) {
             /** clear map */
             let action = orsObjectsFactory.createMapAction(2, lists.layers[1], undefined, undefined);
@@ -47,7 +55,6 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
         /** prepare route to json */
         orsRouteService.processResponse = function(response, profile) {
             response = orsUtilsService.domParser(response.data); /** later this xml parsing can be skipped as json is returned.. */
-            console.log(response);
             orsRouteService.routeObj = {
                 status: 'Ok',
                 routes: [{}]
@@ -57,7 +64,6 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
             orsRouteService.routeObj.routes[0].summary = orsRouteService.parseSummary(orsUtilsService.getElementsByTagNameNS(response, namespaces.xls, 'RouteSummary')[0]);
             orsRouteService.routeObj.routes[0].pointsEncoded = false;
             /** This is a mock, will be returned in JSON response one day.. */
-            console.log(profile, lists.profiles)
             if (lists.profiles[profile].elevation) {
                 orsRouteService.routeObj.routes[0].pointsElevation = true;
             } else {
@@ -109,7 +115,6 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
             return routeString;
         };
         orsRouteService.parseInstructions = function(instructions) {
-            console.log(instructions)
             let viaPoints = [],
                 segments = [],
                 segment = {},

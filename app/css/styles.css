@@ -194,7 +194,7 @@ ors-route, ors-analysis {
     overflow-y: auto;
 }
 
-.ors-route-controls {
+.ors-route-controls, .ors-instruction-controls {
     height: 39px;
     border-top: 1px solid #F0F0F0;
     border-bottom: 1px solid #F0F0F0;
@@ -209,13 +209,18 @@ ors-route, ors-analysis {
     margin: 0;
 }
 
-.ors-route-card {
+.ors-route-card, .ors-segment-card {
     position: relative;
     background-color: #fff;
     width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .ors-route-card .left {
@@ -230,44 +235,74 @@ ors-route, ors-analysis {
     padding: 1rem;
 }
 
-.ors-route-card .bottom {
-    flex: 0 1 100%;
+.ors-segment-card.highlight {
+    background-color: #FAFAFA;
 }
 
-.ors-route-card .step {
-    width: 100%;
-}
-
-.ors-route-card .step .header {
-    display: flex;
-    flex-direction: row;
-    padding-top: 1rem;
+.ors-segment-card .heading, .ors-segment-card .summary, .ors-segment-card .steps {
+    color: rgba(0, 0, 0, 0.6);
     padding-left: 1rem;
     padding-right: 1rem;
+    flex: 0 1 100%;
+    display: flex;
 }
 
-.ors-route-card .step .header .icon {
+.ors-segment-card .heading {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.ors-segment-card .summary {
+    padding-bottom: 1rem;
+}
+
+.ors-segment-card .heading .icon {
+    flex: 0 1 25%;
+}
+
+.ors-segment-card .heading .waypoint {
+    flex: 0 1 auto;
+}
+
+.ors-segment-card .step {
+    width: 100%;
+    padding-top: 1rem;
+}
+
+.ors-segment-card .step.highlight {
+    color: rgba(0, 0, 0, 1);
+}
+
+.ors-segment-card .step .header {
+    display: flex;
+    flex-direction: row;
+}
+
+.ors-segment-card .step .header .icon {
     flex: 0 0 auto;
     width: 2rem;
 }
 
-.ors-route-card .step .header .text {
+.ors-segment-card .step .header .text {
     flex: 1 1 100%;
     word-break: break-word;
     word-wrap: break-word;
 }
 
-.ors-route-card .step .summary {
+.ors-segment-card .step .summary {
     flex-direction: row;
     padding-top: 1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
 }
 
-.ors-route-card .pipe {
+.ors-segment-card .pipe {
     color: #d4dce3;
     display: inline-block;
     padding: 0 .5rem;
+}
+
+h3 {
+    padding: 0;
+    margin: 0;
 }
 
 .summary-item {
@@ -288,7 +323,6 @@ button.summary-select {
 .bottom-border {
     height: 1px;
     border-bottom: .1rem solid #edf3f5;
-    padding-top: 5px;
     margin: auto;
 }
 
@@ -309,9 +343,9 @@ ors-instructions {
 }
 
 .ors-bars {
-    padding: 15px 15px 0 15px;
+    padding: 15px 15px 15px 15px;
+    cursor: default;
 }
-
 
 /** Route options */
 
@@ -488,6 +522,24 @@ div.ors-wp-td {
     vertical-align: middle;
 }
 
+input:focus, input:active {
+    border: 1px solid rgba(34, 36, 38, 0.15) !important;
+    border-right: none !important;
+}
+
+.ors-input-label {
+    border-left: none !important;
+    padding: 10px 8px 0 0 !important;
+}
+
+.ors-input-label button {
+    visibility: hidden !important;
+}
+
+.ors-input-label button.show {
+    visibility: visible !important;
+}
+
 
 /* Extras graphs */
 
@@ -625,6 +677,57 @@ div.ors-wp-td {
 
 .leaflet-top, .leaflet-bottom {
     z-index: 0 !important;
+}
+
+
+/** font awesome rotate icons */
+
+.fa-rotate-45 {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.fa-rotate-90 {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.fa-rotate-135 {
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+    transform: rotate(135deg);
+}
+
+.fa-rotate-225 {
+    -webkit-transform: rotate(225deg);
+    -moz-transform: rotate(225deg);
+    -ms-transform: rotate(225deg);
+    -o-transform: rotate(225deg);
+    transform: rotate(225deg);
+}
+
+.fa-rotate-270 {
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    transform: rotate(270deg);
+}
+
+.fa-rotate-315 {
+    -webkit-transform: rotate(315deg);
+    -moz-transform: rotate(315deg);
+    -ms-transform: rotate(315deg);
+    -o-transform: rotate(315deg);
+    transform: rotate(315deg);
 }
 
 

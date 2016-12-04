@@ -5,66 +5,21 @@
     </button>
     <div ng-include="'app/includes/route-summary.html'">
     </div>
-    <ors-route-extras ng-if="route.extras" route="route" route-index="$ctrl.routeIndex">
+    <div class="ors-instruction-controls">
+	    <button class="ors-controls-button flright" data-ng-click="$ctrl.showExport = !$ctrl.showExport">
+	        <i class="fa fa-download">
+	        </i>
+	    </button>
+	</div>
+    <ors-route-extras ng-if="$ctrl.route.extras" current-route="$ctrl.route" route-index="$ctrl.routeIndex">
     </ors-route-extras>
     <div class="bottom-border">
     </div>
 </div>
 <div class="ors-routing-inner">
-    <div class="ors-route-segments" data-ng-repeat="segment in route.segments">
-        <div class="ors-route-card" ng-mouseleave="$ctrl.DeEmph()" ng-mouseenter="$ctrl.EmphSegment($index)">
-            <div class="left">
-                <span ng-bind-html="$index">
-                </span>
-            </div>
-	        <div class="right">
-	            <div class="summary-item">
-	                <i class="fa fa-clock-o">
-	                </i>
-	                <span ng-bind-html="(segment.duration | duration)">
-	                </span>
-	            </div>
-	            <div class="summary-item">
-	                <i class="fa fa-arrows-h">
-	                </i>
-	                <span ng-bind-html="(segment.distance | distance)">
-	                </span>
-	            </div>
-	            <div class="summary-item" ng-if="segment.ascent">
-	                <i class="fa fa-long-arrow-up">
-	                </i>
-	                <span ng-bind-html="(segment.ascent | distance)">
-	                </span>
-	            </div>
-	            <div class="summary-item" ng-if="segment.descent">
-	                <i class="fa fa-long-arrow-down">
-	                </i>
-	                <span ng-bind-html="(segment.descent | distance)">
-	                </span>
-	            </div>
-	        </div>
-	        <div class="bottom">
-	        	<div style="padding-bottom: 10px;" ng-click="steps = !steps">
-                    <i ng-class="$ctrl.getClass(steps)">
-                    </i>
-                     <span ng-bind-html="('Steps')">
-                     </span>
-                </div>
-	        	<div class="collapsable" ng-class="{ showMe: steps }">
-		            <div class="step" data-ng-repeat="step in segment.steps" ng-mouseout="$ctrl.DeEmph()" ng-mouseover="$ctrl.EmphStep(step.interval)">
-		            	<div class="header">
-		            		<div class="icon" ng-bind-html="step.code"></div>
-		            		<div class="text" ng-bind-html="step.text"></div>
-		            	</div>
-		            	<div class="summary">
-		            		<span ng-bind-html="(step.distance | distance)"></span>
-		            		<span class="pipe">|</span>
-		            		<span ng-bind-html="(step.duration | duration)"></span>
-		            	</div>
-		            </div>
-		        </div>
-	        	<div class="bottom-border short"></div>
-	        </div>
-	    </div>
-	</div>
+    <div ng-include="'app/includes/route-instructions.html'">
+    </div>
 </div>
+<ors-modal data-ng-show="$ctrl.showExport" show="$ctrl.showExport">
+   	<ors-export-route-controls></ors-export-route-controls>
+</ors-modal>

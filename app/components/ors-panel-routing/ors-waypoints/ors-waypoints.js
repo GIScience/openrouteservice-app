@@ -6,7 +6,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         activeProfile: '<',
         activeSubgroup: '<',
     },
-    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
+    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRouteService, orsRequestService, orsErrorhandlerService, orsParamsService) {
         var ctrl = this;
         console.log(ctrl.activeProfile, ctrl.activeSubgroup)
         ctrl.$onInit = () => {
@@ -91,6 +91,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         };
         /** Resets waypoints to emptry start and end. */
         ctrl.resetWaypoints = () => {
+            orsRouteService.resetRoute();
             ctrl.waypoints = orsSettingsFactory.initWaypoints(2);
             orsSettingsFactory.updateWaypoints();
         };

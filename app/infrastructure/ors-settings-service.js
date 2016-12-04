@@ -96,6 +96,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
             wp = orsObjectsFactory.createWaypoint('', new L.latLng());
             orsSettingsFactory[currentSettingsObj].getValue().waypoints.push(wp);
         }
+        orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
         return orsSettingsFactory[currentSettingsObj].getValue().waypoints;
     };
     /** 
@@ -105,7 +106,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * @param {Object} pos - Which is the latlng object.
      */
     orsSettingsFactory.updateWaypoint = (idx, address, pos, fireRequest = true) => {
-        console.info("updateWaypoint");
         orsSettingsFactory[currentSettingsObj].getValue().waypoints[idx]._latlng = pos;
         orsSettingsFactory[currentSettingsObj].getValue().waypoints[idx]._address = address;
         /** Fire a new request. */
@@ -156,14 +156,12 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
             orsRouteService.fetchRoute(payload).then(function(response) {
                 const profile = settings.profile.type;
                 console.log(profile, settings.profile)
-                orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
                 orsRouteService.processResponse(response, profile);
             }, function(response) {
                 console.log(response);
             });
-        } else {
-            orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
-        }
+        } else {}
+        orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
     });
     /** Subscription function to current accessibility settings */
     orsSettingsFactory.aaSettingsSubject.subscribe(settings => {
@@ -174,8 +172,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
                 orsAaService.processResponse(response);
                 orsAaService.parseResultsToBounds(response);
                 orsAaService.parseResponseToPolygonJSON(response);
-            }, function(response) {
-            });
+            }, function(response) {});
         }
         // } else {
         // console.log('Not enough waypoints..')
@@ -212,7 +209,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         /** fire a new request */
         if (fireRequest) orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
         /** For map to update */
-        orsSettingsFactory[currentWaypointsObj].onNext(waypoints);
+        if (fireRequest) orsSettingsFactory[currentWaypointsObj].onNext(waypoints);
     };
     /**
      * Inserts waypoint to settings waypoints when added on map. This can

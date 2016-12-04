@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteControls', {
-    templateUrl: '/app/components/ors-fileHandler/ors-export-route/export_route_tpl.html',
-    controller(orsExportFactory) {
+    templateUrl: '/app/components/ors-panel-routing/ors-instructions/ors-export-route/ors-export-route.html',
+    controller(orsExportFactory, orsRouteService) {
         var ctrl = this;
         ctrl.gpxOptShow = true;
         ctrl.tcxOptShow = false;
@@ -29,16 +29,16 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
         ctrl.change_fileFormat = function(fileformat) {
             switch (fileformat.value) {
                 default:
-                case 'gpx':
+                    case 'gpx':
                     ctrl.gpxOptShow = true;
-                    ctrl.tcxOptShow = false;
-                    ctrl.kmlOptShow = false;
-                    ctrl.gmlOptShow = false;
-                    ctrl.geojsonOptShow = false;
-                    ctrl.csvOptShow = false;
+                ctrl.tcxOptShow = false;
+                ctrl.kmlOptShow = false;
+                ctrl.gmlOptShow = false;
+                ctrl.geojsonOptShow = false;
+                ctrl.csvOptShow = false;
                 break;
                 case 'tcx':
-                    ctrl.gpxOptShow = false;
+                        ctrl.gpxOptShow = false;
                     ctrl.tcxOptShow = true;
                     ctrl.kmlOptShow = false;
                     ctrl.gmlOptShow = false;
@@ -46,7 +46,7 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
                     ctrl.csvOptShow = false;
                     break;
                 case 'kml':
-                    ctrl.gpxOptShow = false;
+                        ctrl.gpxOptShow = false;
                     ctrl.tcxOptShow = false;
                     ctrl.kmlOptShow = true;
                     ctrl.gmlOptShow = false;
@@ -54,7 +54,7 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
                     ctrl.csvOptShow = false;
                     break;
                 case 'gml':
-                    ctrl.gpxOptShow = false;
+                        ctrl.gpxOptShow = false;
                     ctrl.tcxOptShow = false;
                     ctrl.kmlOptShow = false;
                     ctrl.gmlOptShow = true;
@@ -62,7 +62,7 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
                     ctrl.csvOptShow = false;
                     break;
                 case 'geojson':
-                    ctrl.gpxOptShow = false;
+                        ctrl.gpxOptShow = false;
                     ctrl.tcxOptShow = false;
                     ctrl.kmlOptShow = false;
                     ctrl.gmlOptShow = false;
@@ -70,14 +70,14 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
                     ctrl.csvOptShow = false;
                     break;
                 case 'csv':
-                    ctrl.gpxOptShow = false;
+                        ctrl.gpxOptShow = false;
                     ctrl.tcxOptShow = false;
                     ctrl.kmlOptShow = false;
                     ctrl.gmlOptShow = false;
                     ctrl.geojsonOptShow = false;
                     ctrl.csvOptShow = true;
                     break;
-            };
+            }
             ctrl.currentFileFormat = fileformat.value;
         };
         ctrl.writeGpxRouteOrTrack = [{
@@ -161,43 +161,34 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
         ctrl.exportRoute = function() {
             switch (ctrl.currentFileFormat) {
                 default:
-                case 'gpx':
+                    case 'gpx':
                     var options = {};
-                    options.gpxWaypoint = true;
-                    options.gpxRoute = ctrl.current_gpxOpt1;
-                    options.gpxTrack = ctrl.current_gpxOpt2;
-                    break;
+                options.gpxWaypoint = true;
+                options.gpxRoute = ctrl.current_gpxOpt1;
+                options.gpxTrack = ctrl.current_gpxOpt2;
+                break;
                 case 'tcx':
-                    options = {};
+                        options = {};
                     break;
                 case 'kml':
-                    options = {};
+                        options = {};
                     options.altitudeMode = ctrl.current_altitudeMode;
                     break;
                 case 'gml':
-                    options = {};
+                        options = {};
                     break;
                 case 'geojson':
-                    options = {};
+                        options = {};
                     break;
                 case 'csv':
-                    options = {};
+                        options = {};
                     options.csvSeparator = ctrl.current_csvSeparator;
                     options.csvFormat = ctrl.current_csvGeometry;
                     break;
-            };
-            /*LEAFLET*/
-            ctrl.importedRoutes.eachLayer(function(layer) {
-                ctrl.currentRoute = layer._layers[layer._leaflet_id - 1]
-            });
-            if (ctrl.currentRoute == undefined || ctrl.currentRoute == null) {
-                alert('No route loaded into the map')
-            } else {
-                exportFactory.exportFile(ctrl.currentRoute, options, ctrl.currentFileFormat, ctrl.userDefined.avgSpeed, ctrl.userDefined.coordPrecision);
             }
-        }
-    },
-    bindings: {
-        importedRoutes: '<'
+            let currentRoute = orsRouteService.routeObj.routes[orsRouteService.getCurrentRouteIdx()].points;
+            console.log(currentRoute);
+            orsExportFactory.exportFile(currentRoute, options, ctrl.currentFileFormat, ctrl.userDefined.avgSpeed, ctrl.userDefined.coordPrecision);
+        };
     }
 });

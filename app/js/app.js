@@ -35,9 +35,7 @@ let orsApp = angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routi
 orsApp.run(['$route', '$rootScope', '$routeParams', '$location',
     function($route, $rootScope, $routeParams, $location) {
         var original = $location.path;
-        console.log($location.absUrl());
         $location.path = function(path, reload) {
-            console.log($location.absUrl());
             if (reload === false) {
                 var lastRoute = $route.current;
                 var un = $rootScope.$on('$locationChangeSuccess', function() {

@@ -3,7 +3,7 @@ angular.module('orsApp.ors-modal', []).component('orsModal', {
 			<div class="ors-modal-container">
 				<form class="ors-dialog">
 				<ng-transclude></ng-transclude>
-				<button class="ors-button close" data-ng-click="$ctrl.showFn()"">
+				<button class="ors-button close" data-ng-click="$ctrl.show = !$ctrl.show">
 				    <i class="fa fa-lg fa-remove">
 				    </i>
 				</button>
@@ -12,10 +12,11 @@ angular.module('orsApp.ors-modal', []).component('orsModal', {
     `,
     transclude: true,
     bindings: {
-        showFn: '&',
+        show: '=',
     },
     controller() {
         let ctrl = this;
+        
     }
 });
 

@@ -105,7 +105,7 @@ angular.module('orsApp').directive('orsMap', function() {
                     });
                 };
                 /**
-                 * zooms the map so that the whole route becomes visible (i.e. all features of the route line layer)
+                 * Either zooms to feature, geometry or entire layer
                  */
                 ctrl.zoom = (package) => {
                     if (!(package.featureId === undefined)) {
@@ -114,10 +114,15 @@ angular.module('orsApp').directive('orsMap', function() {
                                 ctrl.orsMap.fitBounds(layer.getBounds());
                             }
                         });
-                    } else {
-                        ctrl.orsMap.fitBounds(new L.featureGroup(Object.keys(ctrl.mapModel.geofeatures).map(function(key) {
-                            return ctrl.mapModel.geofeatures[key];
-                        })).getBounds());
+                    } else if (package.featureId === undefined) {
+                        if (package.geometry !== undefined) {
+                            let bounds = new L.LatLngBounds(package.geometry);
+                            ctrl.orsMap.fitBounds(bounds);
+                        } else {
+                            ctrl.orsMap.fitBounds(new L.featureGroup(Object.keys(ctrl.mapModel.geofeatures).map(function(key) {
+                                return ctrl.mapModel.geofeatures[key];
+                            })).getBounds());
+                        }
                     }
                 };
                 /** 
@@ -145,7 +150,7 @@ angular.module('orsApp').directive('orsMap', function() {
                  * clears layer entirely or specific layer in layer
                  */
                 ctrl.clear = (package) => {
-                    if (!(package.featureId == undefined)) {
+                    if (!(package.featureId === undefined)) {
                         ctrl.mapModel.geofeatures[package.layerCode].eachLayer(function(layer) {
                             if (layer.options.index == package.featureId) {
                                 ctrl.mapModel.geofeatures[package.layerCode].removeLayer(layer);
