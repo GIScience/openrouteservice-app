@@ -14,19 +14,12 @@ angular.module('orsApp.ors-header', []).component('orsHeader', {
             if (!('routinglang' in ctrl.currentOptions)) ctrl.currentOptions.routinglang = ctrl.optionList.routinglanguages.default;
             if (!('units' in ctrl.currentOptions)) ctrl.currentOptions.units = ctrl.optionList.units.default;
         });
-        ctrl.user = {
-            name: 'OpenRouteService.org'
-        };
         ctrl.changeOptions = () => {
             console.log(ctrl.currentOptions);
             orsSettingsFactory.setUserOptions(ctrl.currentOptions);
             orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions);
             orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
             // TODO: Reload site if site language is changed, we need this due to translations
-        };
-        ctrl.translate = (term) => {
-            return term;
-            //orsTranslateService.translate
         };
     },
     bindings: {}

@@ -2,14 +2,15 @@ angular.module('orsApp.ors-profiles-options', []).component('orsProfilesOptions'
     templateUrl: 'app/components/ors-profiles-options/ors-profiles-options.html',
     bindings: {
         orsParams: '<',
-        showOptions: '=',
         activeProfile: '=',
         activeSubgroup: '=',
+        showOptions: '=',
         profiles: '<'
     },
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService) {
         let ctrl = this;
         ctrl.currentProfile = {};
+        ctrl.loading = true;
         // load permalink infos and set active profile
         ctrl.$onInit = () => {
             ctrl.currentProfile = orsSettingsFactory.getActiveProfile();

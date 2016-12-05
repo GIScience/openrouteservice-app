@@ -133,39 +133,42 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * @param {Object} settings - route settings object
      * @return {boolean} routePresent - whether route is present
      */
-    orsSettingsFactory.handleRoutePresent = (settings) => {
+    orsSettingsFactory.handleRoutePresent = (settings, num) => {
         let sum = 0,
             routePresent = false;
         angular.forEach(settings.waypoints, function(waypoint) {
             sum += waypoint._set;
-            if (sum == 2) {
+            if (sum == num) {
                 routePresent = true;
                 return;
             }
         });
         return routePresent;
     };
+    
+
     /** Subscription function to current routing settings */
     orsSettingsFactory.routingSettingsSubject.subscribe(settings => {
         /** get user obtions */
-        const isRoutePresent = orsSettingsFactory.handleRoutePresent(settings);
+        const isRoutePresent = orsSettingsFactory.handleRoutePresent(settings, 2);
         // var isRoutePresent = waypoint.getNumWaypointsSet() >= 2;
         if (isRoutePresent) {
             const userOptions = orsSettingsFactory.getUserOptions();
             const payload = orsUtilsService.generateRouteXml(userOptions, settings);
             orsRouteService.fetchRoute(payload).then(function(response) {
                 const profile = settings.profile.type;
-                console.log(profile, settings.profile)
                 orsRouteService.processResponse(response, profile);
             }, function(response) {
-                console.log(response);
+                console.error(response);
             });
         } else {}
         orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
     });
     /** Subscription function to current accessibility settings */
     orsSettingsFactory.aaSettingsSubject.subscribe(settings => {
-        if (settings.waypoints.length > 0) {
+        /** get user obtions */
+        const isAaPresent = orsSettingsFactory.handleRoutePresent(settings, 1);
+        if (isAaPresent) {
             const payload = orsAaService.generateAnalysisRequest(settings);
             orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
             orsAaService.fetchAnalysis(payload).then(function(response) {

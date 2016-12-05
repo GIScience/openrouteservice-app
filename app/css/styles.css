@@ -9,13 +9,17 @@
  *+-------------+----------------------------------------------------------*/
 
 html, body {
-    font-size: 90%;
+    font-size: 90% !important;
     display: flex;
     height: 100%;
     flex-direction: column;
     color: #444;
     margin: 0;
     padding: 0;
+}
+
+html {
+    font-size: 90% !important;
 }
 
 
@@ -108,7 +112,7 @@ html, body {
 .ors-header li div {
     color: white;
     text-align: left;
-    padding: 14px 16px;
+    padding: 13px 16px;
 }
 
 .ui.dropdown .menu {
@@ -346,6 +350,7 @@ ors-instructions {
     padding: 15px 15px 15px 15px;
     cursor: default;
 }
+
 
 /** Route options */
 
@@ -730,6 +735,17 @@ input:focus, input:active {
     transform: rotate(315deg);
 }
 
+#loading-bar-spinner {
+    position: relative;
+    top: 11px;
+    left: -10px;
+}
+
+#loading-bar-spinner .spinner-icon {
+    border-top-color: #444;
+    border-left-color: #444;
+}
+
 
 /** d3 tips */
 
@@ -798,4 +814,9 @@ input:focus, input:active {
     margin: -4px 0 0 -1px;
     top: 50%;
     left: 100%;
+}
+
+/* Semantic ui overrides */
+.ui.checkbox, .item {
+    font-size: 100% !important;
 }

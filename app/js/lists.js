@@ -392,7 +392,7 @@ lists.isochroneOptionList = {
         max: 29,
         step: 1,
         default: 1
-    }
+    }   
 };
 lists.userOptions = {
     languages: {

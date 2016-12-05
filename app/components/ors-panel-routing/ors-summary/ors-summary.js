@@ -29,13 +29,10 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
         try {
             routeSubscription.dispose();
         } catch (error) {
-            console.log('dude')
+            console.warn(error);
         }
         routeSubscription = orsRouteService.routesSubject.subscribe(routes => {
-            console.info('routes', routes);
             ctrl.routes = routes;
-            /** this first route object is used if we are in instruction mode and update the route */
-            //ctrl.setIdx(0);
         });
         ctrl.EmphRoute = (idx) => {
             const geometry = orsRouteService.routeObj.routes[idx].points;

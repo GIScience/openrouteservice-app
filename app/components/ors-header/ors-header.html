@@ -1,7 +1,6 @@
 <ul>
     <li style="float: left">
-        <a>
-            OpenRouteService.org
+        <a href="www.OpenRouteService.org" target="_blank" ng-bind-html="'OPENROUTESERVICE'">
         </a>
     </li>
     <li>
@@ -10,33 +9,29 @@
             </i>
             <div class="menu">
                 <div class="item" ng-click="$ctrl.showSettings = !$ctrl.showSettings">
-                    <i class="fa fa-cog">
+                    <i class="fa fa-fw fa-cog">
                     </i>
-                    <span id="tl_settings">
-                        Settings
+                    <span ng-bind-html="('Settings')">
                     </span>
                 </div>
                 <div class="item" ng-click="$ctrl.showFeedback = !$ctrl.showFeedback">
-                    <i class="fa fa-pencil">
+                    <i class="fa fa-fw fa-pencil">
                     </i>
-                    <span id="tl_feedback">
-                        Feedback
+                    <span ng-bind-html="'Feedback'">
                     </span>
                 </div>
-                <div class="item">
-                    <i class="fa fa-code">
+                <a href="http://openrouteservice.readthedocs.io/" target="_blank" class="item">
+                    <i class="fa fa-fw fa-code">
                     </i>
-                    <span id="tl_documentation">
-                        Documentation
+                    <span ng-bind-html="'Documentation'">
                     </span>
-                </div>
-                <div class="item">
-                    <i class="fa fa-google">
+                </a>
+                <a href="https://groups.google.com/forum/#!forum/openrouteservice" target="_blank" class="item">
+                    <i class="fa fa-fw fa-google">
                     </i>
-                    <span id="tl_googlegroups">
-                        Google Groups
+                    <span ng-bind-html="'Google Groups'">
                     </span>
-                </div>
+                </a>
             </div>
         </div>
     </li>

@@ -287,8 +287,8 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
             orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
         };
         ctrl.getClass = (bool) => {
-            if (bool === true) return "fa fa-lg fa-fw fa-caret-up";
-            else return "fa fa-lg fa-fw fa-caret-down";
+            if (bool === true) return "fa fa-fw fa-chevron-down";
+            else return "fa fa-fw fa-chevron-right";
         };
         ctrl.refreshSlider = function() {
             $timeout(function() {

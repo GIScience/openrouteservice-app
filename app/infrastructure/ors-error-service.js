@@ -14,14 +14,6 @@ angular.module('orsApp.error-service', []).factory('orsErrorhandlerService', ['o
                 return false;
             }
         };
-        /**
-         * Writes a message if an error occurs and displays it on the client with a modal
-         * @param {String} Error message to be displayed
-         */
-        orsErrorhandlerService.generalErrors = function(errorMsg) {
-            $('#error-modal').openModal();
-            return errorMsg
-        };
         return orsErrorhandlerService;
     }
 ]);

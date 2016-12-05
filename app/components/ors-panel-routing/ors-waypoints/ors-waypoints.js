@@ -24,16 +24,16 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         });
         /**Determines which collapse icon to show. */
         ctrl.collapsed = false;
-        ctrl.collapseIcon = "fa fa-minus-circle";
+        ctrl.collapseIcon = "fa fa-chevron-down";
         ctrl.collapse = () => {
             ctrl.collapsed = ctrl.collapsed == true ? false : true;
             if (ctrl.collapsed == true) {
                 ctrl.sortableOptions.disabled = true;
-                ctrl.collapseIcon = "fa fa-plus-circle";
+                ctrl.collapseIcon = "fa fa-chevron-right";
             }
             if (ctrl.collapsed == false) {
                 ctrl.sortableOptions.disabled = false;
-                ctrl.collapseIcon = "fa fa-minus-circle";
+                ctrl.collapseIcon = "fa fa-chevron-down";
             }
         };
         /**
