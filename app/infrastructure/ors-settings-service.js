@@ -145,8 +145,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         });
         return routePresent;
     };
-    
-
     /** Subscription function to current routing settings */
     orsSettingsFactory.routingSettingsSubject.subscribe(settings => {
         /** get user obtions */
@@ -173,8 +171,8 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
             orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
             orsAaService.fetchAnalysis(payload).then(function(response) {
                 orsAaService.processResponse(response);
-                orsAaService.parseResultsToBounds(response);
-                orsAaService.parseResponseToPolygonJSON(response);
+                // orsAaService.parseResultsToBounds(response);
+                // orsAaService.parseResponseToPolygonJSON(response);
             }, function(response) {});
         }
         // } else {

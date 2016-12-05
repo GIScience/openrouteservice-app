@@ -142,9 +142,25 @@ angular.module('orsApp').directive('orsMap', function() {
                  */
                 ctrl.addPolygon = (package) => {
                     console.log(package);
-                    L.multiPolygon(package.geometry, {
-                        color: 'green'
-                    }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
+
+                    function getGradientColor(rangePos) {
+                        console.log(rangePos);
+                        // rgb = [Math.floor((255 * rangePos) / 1), Math.floor((255 * (1 - rangePos)) / 1), 0];
+                        hsl = Math.floor(120 - 120 * rangePos);
+                        // console.log("rgb(" + rgb.join(",") + ")");
+                        return "hsl(" + hsl + ", 100%, 50%" + ")";
+                    };
+                    for (var i = package.geometry.length - 1; i >= 0; i--) {
+                        L.polygon(package.geometry[i], {
+                            fillColor: package.geometry.length == 1 ? getGradientColor(1) : getGradientColor(i / (package.geometry.length - 1)),
+                            color: '#333333',
+                            weight: 1,
+                            fillOpacity: 0.3
+                        }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
+                    }
+                    // L.multiPolygon(package.geometry, {
+                    //     color: 'green'
+                    // }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
                 };
                 /** 
                  * clears layer entirely or specific layer in layer
@@ -178,6 +194,7 @@ angular.module('orsApp').directive('orsMap', function() {
                     const waypoints = d;
                     // re-add waypoints only after init
                     if (waypoints.length > 0) ctrl.reAddWaypoints(waypoints, ctrl.routing);
+                    // ctrl.addWaypoint(idx, iconIdx, waypoint._latlng, fireRequest);
                 });
                 /** highlights a geometry */
                 ctrl.highlight = (package) => {

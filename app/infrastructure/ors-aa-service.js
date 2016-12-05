@@ -223,7 +223,6 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', 'orsUt
                 }
             }
             console.log(orsAaService.orsAaObj);
-            orsAaService.processResponseToMap(collectionArrGeom);
             return collectionArrGeom;
         };
         /**
@@ -254,6 +253,7 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', 'orsUt
             for (poly of orsAaService.orsAaObj.isochrones) {
                 polygons.push(poly.geometry.coordinates);
             }
+            console.log("PROCESSING");
             action = orsObjectsFactory.createMapAction(4, lists.layers[3], polygons, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
         };
