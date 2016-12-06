@@ -79,9 +79,12 @@ namespaces.layerHs = 'http://korona.geog.uni-heidelberg.de/tiles/asterh/x={x}&y=
 namespaces.layerOSM = {};
 namespaces.layerOSM.url = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 //url to OpenCycleMap
-namespaces.layerOSMCycle = 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png';
+namespaces.layerOSMCycle = {};
+namespaces.layerOSMCycle.url = 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png';
 //url to stamen maps
-namespaces.stamenUrl = 'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png';
+namespaces.layerStamen = {};
+namespaces.layerStamen.url = 'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png';
 //urls to TMC overlay
-namespaces.overlayTmc = '';
-namespaces.overlayTmcLines = '';
+namespaces.overlayTmc = {};
+namespaces.overlayHillshade = {};
+namespaces.overlayHillshade.url = 'http://korona.geog.uni-heidelberg.de/tiles/asterh/x={x}&y={y}&z={z}';

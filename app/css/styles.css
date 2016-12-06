@@ -681,7 +681,7 @@ input:focus, input:active {
 }
 
 .leaflet-top, .leaflet-bottom {
-    z-index: 0 !important;
+    /*z-index: 0 !important;*/
 }
 
 
@@ -816,7 +816,9 @@ input:focus, input:active {
     left: 100%;
 }
 
+
 /* Semantic ui overrides */
+
 .ui.checkbox, .item {
     font-size: 100% !important;
 }

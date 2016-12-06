@@ -12,8 +12,26 @@ angular.module('orsApp').directive('orsMap', function() {
                 var ctrl = this;
                 ctrl.orsMap = $scope.orsMap;
                 ctrl.basemaps = {
-                    basemap: L.tileLayer(namespaces.layerMapSurfer.url, {
+                    mapsurfer: L.tileLayer(namespaces.layerMapSurfer.url, {
                         attribution: namespaces.layerMapSurfer.attribution
+                    }),
+                    openstreetmap: L.tileLayer(namespaces.layerOSM.url, {
+                        // attribution: namespaces.layerOSM.attribution
+                    }),
+                    opencyclemap: L.tileLayer(namespaces.layerOSMCycle.url, {
+                        // attribution: namespaces.layerOSM.attribution
+                    }),
+                    stamen: L.tileLayer(namespaces.layerStamen.url, {
+                        // attribution: namespaces.layerMapSurfer.attribution
+                    })
+                };
+                ctrl.overlays = {
+                    hillshade: L.tileLayer.wms(namespaces.overlayHillshade.url, {
+                        format: 'image/png',
+                        opacity: 0.45,
+                        transparent: true,
+                        attribution: '<a href="http://srtm.csi.cgiar.org/">SRTM</a>; ASTER GDEM is a product of <a href="http://www.meti.go.jp/english/press/data/20090626_03.html">METI</a> and <a href="https://lpdaac.usgs.gov/products/aster_policies">NASA</a>',
+                        crs: L.CRS.EPSG900913
                     })
                 };
                 ctrl.geofeatures = {
@@ -30,12 +48,22 @@ angular.module('orsApp').directive('orsMap', function() {
                     geofeatures: ctrl.geofeatures
                 };
                 ctrl.mapModel.map.on("load", function(evt) {
-                    ctrl.mapModel.basemaps.basemap.addTo(ctrl.orsMap);
+                    ctrl.mapModel.basemaps.mapsurfer.addTo(ctrl.orsMap);
+                    // ctrl.layerSwitcher.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerRoutePoints.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerRouteLines.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerAccessibilityAnalysis.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerEmph.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerTracks.addTo(ctrl.orsMap);
+                    //Add layer control
+                    L.control.layers({
+                        "MapSurfer": ctrl.basemaps.mapsurfer,
+                        "OpenStreetMap": ctrl.basemaps.openstreetmap,
+                        "OpenCycleMap": ctrl.basemaps.opencyclemap,
+                        "Stamen": ctrl.basemaps.stamen
+                    }, {
+                        "Hillshade": ctrl.overlays.hillshade
+                    }).addTo(ctrl.orsMap);
                 });
                 ctrl.orsMap.setView([49.409445, 8.692953], 13);
                 /**
