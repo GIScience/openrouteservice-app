@@ -150,7 +150,7 @@ angular.module('orsApp').directive('orsMap', function() {
                             fillColor: package.geometry.length == 1 ? getGradientColor(1) : getGradientColor(i / (package.geometry.length - 1)),
                             color: '#333333',
                             weight: 1,
-                            fillOpacity: 0.2
+                            fillOpacity: 1
                         }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
                     }
                     // for (var i = 0 - 1; i < package.geometry.length; i++) {
@@ -161,7 +161,10 @@ angular.module('orsApp').directive('orsMap', function() {
                     //         fillOpacity: 0.3
                     //     }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
                     // }
-                    // ctrl.mapModel.geofeatures[package.layerCode].setOpacity(0.1);
+                    ctrl.mapModel.geofeatures[package.layerCode].setStyle({
+                        fillOpacity: 0.2,
+                        opacity: 0.8
+                    });
                 };
                 /** 
                  * clears layer entirely or specific layer in layer
