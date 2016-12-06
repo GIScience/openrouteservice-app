@@ -15,6 +15,10 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
                 orsSettingsFactory.initWaypoints(1);
                 const importedParams = orsParamsService.importSettings(ctrl.routeParams);
                 orsSettingsFactory.setSettings(importedParams.settings);
+                // fetch addresses afterwards
+                angular.forEach(importedParams.settings.waypoints, function(wp, idx) {
+                    orsRequestService.getAddress(wp._latlng, idx, true);
+                });
                 /**
                  * First get the Cookie Settings (These are currently language, routinglanguage and units). Then get the permalink user settings (Can be routinglanguage and units)
                  * The permalink settings replace the cookie settings if they exist.
@@ -29,7 +33,6 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
             ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
             // orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
         };
-        
     },
     require: {
         parent: '^orsSidebar'
