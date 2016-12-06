@@ -137,17 +137,14 @@ angular.module('orsApp').directive('orsMap', function() {
                     }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
                 };
                 /** 
-                 * adds polygon to specific layer
+                 * adds polygon array to specific layer
                  * @param {Object} package - The action package
                  */
-                ctrl.addPolygon = (package) => {
+                ctrl.addPolygons = (package) => {
                     console.log(package);
 
                     function getGradientColor(rangePos) {
-                        console.log(rangePos);
-                        // rgb = [Math.floor((255 * rangePos) / 1), Math.floor((255 * (1 - rangePos)) / 1), 0];
                         hsl = Math.floor(120 - 120 * rangePos);
-                        // console.log("rgb(" + rgb.join(",") + ")");
                         return "hsl(" + hsl + ", 100%, 50%" + ")";
                     };
                     for (var i = package.geometry.length - 1; i >= 0; i--) {
@@ -158,9 +155,6 @@ angular.module('orsApp').directive('orsMap', function() {
                             fillOpacity: 0.3
                         }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
                     }
-                    // L.multiPolygon(package.geometry, {
-                    //     color: 'green'
-                    // }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
                 };
                 /** 
                  * clears layer entirely or specific layer in layer
@@ -222,7 +216,7 @@ angular.module('orsApp').directive('orsMap', function() {
                             ctrl.highlight(params._package);
                             break;
                         case 4:
-                            ctrl.addPolygon(params._package);
+                            ctrl.addPolygons(params._package);
                             break;
                         case 5:
                             ctrl.clearMap();
