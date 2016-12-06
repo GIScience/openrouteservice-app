@@ -11,29 +11,25 @@ angular.module('orsApp').directive('orsMap', function() {
                 // // add map
                 var ctrl = this;
                 ctrl.orsMap = $scope.orsMap;
-                ctrl.basemaps = {
-                    mapsurfer: L.tileLayer(namespaces.layerMapSurfer.url, {
-                        attribution: namespaces.layerMapSurfer.attribution
-                    }),
-                    openstreetmap: L.tileLayer(namespaces.layerOSM.url, {
-                        // attribution: namespaces.layerOSM.attribution
-                    }),
-                    opencyclemap: L.tileLayer(namespaces.layerOSMCycle.url, {
-                        // attribution: namespaces.layerOSM.attribution
-                    }),
-                    stamen: L.tileLayer(namespaces.layerStamen.url, {
-                        // attribution: namespaces.layerMapSurfer.attribution
-                    })
-                };
-                ctrl.overlays = {
-                    hillshade: L.tileLayer.wms(namespaces.overlayHillshade.url, {
-                        format: 'image/png',
-                        opacity: 0.45,
-                        transparent: true,
-                        attribution: '<a href="http://srtm.csi.cgiar.org/">SRTM</a>; ASTER GDEM is a product of <a href="http://www.meti.go.jp/english/press/data/20090626_03.html">METI</a> and <a href="https://lpdaac.usgs.gov/products/aster_policies">NASA</a>',
-                        crs: L.CRS.EPSG900913
-                    })
-                };
+
+                const mapsurfer = L.tileLayer(namespaces.layerMapSurfer.url, {
+                    attribution: namespaces.layerMapSurfer.attribution
+                });
+                const openstreetmap = L.tileLayer(namespaces.layerOSM.url, {
+                    attribution: namespaces.layerOSM.attribution
+                });
+                const opencyclemap = L.tileLayer(namespaces.layerOSMCycle.url, {
+                    attribution: namespaces.layerOSMCycle.attribution
+                });
+                const stamen = L.tileLayer(namespaces.layerStamen.url, {
+                    attribution: namespaces.layerStamen.attribution
+                });
+                const hillshade = L.tileLayer(namespaces.overlayHillshade.url, {
+                    format: 'image/png',
+                    opacity: 0.45,
+                    transparent: true,
+                    attribution: '<a href="http://srtm.csi.cgiar.org/">SRTM</a>; ASTER GDEM is a product of <a href="http://www.meti.go.jp/english/press/data/20090626_03.html">METI</a> and <a href="https://lpdaac.usgs.gov/products/aster_policies">NASA</a>'
+                });
                 ctrl.geofeatures = {
                     layerLocationMarker: L.featureGroup(),
                     layerRoutePoints: L.featureGroup(),
@@ -44,26 +40,27 @@ angular.module('orsApp').directive('orsMap', function() {
                 };
                 ctrl.mapModel = {
                     map: ctrl.orsMap,
-                    basemaps: ctrl.basemaps,
                     geofeatures: ctrl.geofeatures
                 };
+                ctrl.baseLayers = {
+                    "MapSurfer": mapsurfer,
+                    "OpenStreetMap": openstreetmap,
+                    "OpenCycleMap": opencyclemap,
+                    "Stamen": stamen
+                };
+                ctrl.overlays = {
+                    "Hillshade": hillshade
+                };
+                console.log(hillshade)
                 ctrl.mapModel.map.on("load", function(evt) {
-                    ctrl.mapModel.basemaps.mapsurfer.addTo(ctrl.orsMap);
-                    // ctrl.layerSwitcher.addTo(ctrl.orsMap);
+                    mapsurfer.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerRoutePoints.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerRouteLines.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerAccessibilityAnalysis.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerEmph.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerTracks.addTo(ctrl.orsMap);
                     //Add layer control
-                    L.control.layers({
-                        "MapSurfer": ctrl.basemaps.mapsurfer,
-                        "OpenStreetMap": ctrl.basemaps.openstreetmap,
-                        "OpenCycleMap": ctrl.basemaps.opencyclemap,
-                        "Stamen": ctrl.basemaps.stamen
-                    }, {
-                        "Hillshade": ctrl.overlays.hillshade
-                    }).addTo(ctrl.orsMap);
+                    L.control.layers(ctrl.baseLayers, ctrl.overlays).addTo(ctrl.orsMap);
                 });
                 ctrl.orsMap.setView([49.409445, 8.692953], 13);
                 /**
