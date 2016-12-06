@@ -146,25 +146,25 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', 'orsUt
              * @return OL.Bounds containing the accessible area; null in case of an error response
              */
         orsAaService.parseResultsToBounds = function(response) {
-                response = orsUtilsService.domParser(response.data);
-                var boundingBox = orsUtilsService.getElementsByTagNameNS(response, namespaces.aas, 'BoundingBox');
-                var bounds, latlngs;
-                if (boundingBox && boundingBox.length > 0) {
-                    latlngs = [];
-                    _.each(orsUtilsService.getElementsByTagNameNS(boundingBox[0], namespaces.gml, 'pos'), function(position) {
-                        position = orsUtilsService.convertPositionStringToLonLat(position.firstChild.nodeValue);
-                        latlngs.push(position);
-                    });
-                }
-                bounds = new L.latLngBounds(latlngs);
-                orsAaService.orsAaObj.bbox[0] = bounds._northEast;
-                orsAaService.orsAaObj.bbox[1] = bounds._southWest;
-                console.log(orsAaService.orsAaObj);
+            response = orsUtilsService.domParser(response.data);
+            var boundingBox = orsUtilsService.getElementsByTagNameNS(response, namespaces.aas, 'BoundingBox');
+            var bounds, latlngs;
+            if (boundingBox && boundingBox.length > 0) {
+                latlngs = [];
+                _.each(orsUtilsService.getElementsByTagNameNS(boundingBox[0], namespaces.gml, 'pos'), function(position) {
+                    position = orsUtilsService.convertPositionStringToLonLat(position.firstChild.nodeValue);
+                    latlngs.push(position);
+                });
             }
-            /**
-             * Parses XML input to JSON object and stores data in orsAaObj
-             * @param {String} response: XML response from server
-             */
+            bounds = new L.latLngBounds(latlngs);
+            orsAaService.orsAaObj.bbox[0] = bounds._northEast;
+            orsAaService.orsAaObj.bbox[1] = bounds._southWest;
+            console.log(orsAaService.orsAaObj);
+        };
+        /**
+         * Parses XML input to JSON object and stores data in orsAaObj
+         * @param {String} response: XML response from server
+         */
         orsAaService.parseResponseToPolygonJSON = function(response) {
             response = orsUtilsService.domParser(response.data);
             console.log(response);
@@ -208,21 +208,19 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', 'orsUt
                                 extIntArr.push(interiorRingArr[j]);
                             }
                         }
-                        console.log(extIntArr);
                         // element.geometry.coordinates[0].push()
                         poly = orsAaService.fetchPolygonGeometry(extIntArr, namespaces.gml, 'pos');
-                        for (tuple of poly[0]) {
+                        //for (tuple of poly[0]) {
                             // element.geometry.coordinates[0].push(tuple);
                             // console.log(tuple);
-                        }
+                        //}
                         collectionArrGeom.push(poly);
                         element.geometry.coordinates = poly;
-                        console.log(poly);
                     }
                     orsAaService.orsAaObj.isochrones.push(element);
                 }
             }
-            console.log(orsAaService.orsAaObj);
+            orsAaService.processResponseToMap(collectionArrGeom);
             return collectionArrGeom;
         };
         /**
@@ -253,7 +251,6 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', 'orsUt
             for (poly of orsAaService.orsAaObj.isochrones) {
                 polygons.push(poly.geometry.coordinates);
             }
-            console.log("PROCESSING");
             action = orsObjectsFactory.createMapAction(4, lists.layers[3], polygons, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
         };

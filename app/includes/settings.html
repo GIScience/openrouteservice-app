@@ -1,17 +1,15 @@
 <header>
-    <h1>
-        Settings
+    <h1 ng-bind-html="'Settings'">
     </h1>
 </header>
 <section>
-    <h2>
+    <h2 ng-bind-html="'Units">
         Units
     </h2>
     <div class="field ors-inline">
         <div class="ui radio checkbox">
             <input name="orsUnits" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.units" ng-value="$ctrl.optionList.units.km" type="radio">
-                <label>
-                    {{$ctrl.translate('Kilometers')}}
+                <label ng-bind-html="'Kilometers'">
                 </label>
             </input>
         </div>
@@ -19,8 +17,7 @@
     <div class="field ors-inline">
         <div class="ui radio checkbox">
             <input name="orsUnits" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.units" ng-value="$ctrl.optionList.units.mi" type="radio">
-                <label>
-                    {{$ctrl.translate('Miles')}}
+                <label ng-bind-html="'Miles'">
                 </label>
             </input>
         </div>
@@ -29,24 +26,20 @@
 <div class="ui divider">
 </div>
 <section>
-    <h2>
-        Language
+    <h2 ng-bind-html="'Language'">
     </h2>
-    <label>
-        Choose language
+    <label ng-bind-html="'Choose language'">
     </label>
-    <select data-ng-model="$ctrl.currentOptions.language" data-ng-options="$ctrl.translate(language) for language in $ctrl.optionList.languages.all" name="language" ng-change="$ctrl.changeOptions()">
+    <select data-ng-model="$ctrl.currentOptions.language" data-ng-options="(language) for language in $ctrl.optionList.languages.all" name="language" ng-change="$ctrl.changeOptions()">
     </select>
 </section>
 <div class="ui divider">
 </div>
 <section>
-    <h2>
-        Language Routing Instructions
+    <h2 ng-bind="'Language Routing Instructions'">
     </h2>
-    <label>
-        Choose routing language
+    <label ng-bind="'Choose routing language'">
     </label>
-    <select data-ng-model="$ctrl.currentOptions.routinglang" data-ng-options="$ctrl.translate(language) for language in $ctrl.optionList.routinglanguages.all" name="routinglanguage" ng-change="$ctrl.changeOptions()">
+    <select data-ng-model="$ctrl.currentOptions.routinglang" data-ng-options="(language) for language in $ctrl.optionList.routinglanguages.all" name="routinglanguage" ng-change="$ctrl.changeOptions()">
     </select>
 </section>
