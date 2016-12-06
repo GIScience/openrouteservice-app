@@ -9,6 +9,7 @@ angular.module('orsApp.ors-header', []).component('orsHeader', {
         we have to update language settings. This is called before panel settings
         object is defined, this is why we have two subscriptions */
         orsSettingsFactory.userOptionsSubject.subscribe(settings => {
+            console.log(ctrl.currentOptions)
             ctrl.currentOptions = settings;
             if (!('language' in ctrl.currentOptions)) ctrl.currentOptions.language = ctrl.optionList.languages.default;
             if (!('routinglang' in ctrl.currentOptions)) ctrl.currentOptions.routinglang = ctrl.optionList.routinglanguages.default;

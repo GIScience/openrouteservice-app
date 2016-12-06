@@ -146,25 +146,25 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', 'orsUt
              * @return OL.Bounds containing the accessible area; null in case of an error response
              */
         orsAaService.parseResultsToBounds = function(response) {
-                response = orsUtilsService.domParser(response.data);
-                var boundingBox = orsUtilsService.getElementsByTagNameNS(response, namespaces.aas, 'BoundingBox');
-                var bounds, latlngs;
-                if (boundingBox && boundingBox.length > 0) {
-                    latlngs = [];
-                    _.each(orsUtilsService.getElementsByTagNameNS(boundingBox[0], namespaces.gml, 'pos'), function(position) {
-                        position = orsUtilsService.convertPositionStringToLonLat(position.firstChild.nodeValue);
-                        latlngs.push(position);
-                    });
-                }
-                bounds = new L.latLngBounds(latlngs);
-                orsAaService.orsAaObj.bbox[0] = bounds._northEast;
-                orsAaService.orsAaObj.bbox[1] = bounds._southWest;
-                console.log(orsAaService.orsAaObj);
+            response = orsUtilsService.domParser(response.data);
+            var boundingBox = orsUtilsService.getElementsByTagNameNS(response, namespaces.aas, 'BoundingBox');
+            var bounds, latlngs;
+            if (boundingBox && boundingBox.length > 0) {
+                latlngs = [];
+                _.each(orsUtilsService.getElementsByTagNameNS(boundingBox[0], namespaces.gml, 'pos'), function(position) {
+                    position = orsUtilsService.convertPositionStringToLonLat(position.firstChild.nodeValue);
+                    latlngs.push(position);
+                });
             }
-            /**
-             * Parses XML input to JSON object and stores data in orsAaObj
-             * @param {String} response: XML response from server
-             */
+            bounds = new L.latLngBounds(latlngs);
+            orsAaService.orsAaObj.bbox[0] = bounds._northEast;
+            orsAaService.orsAaObj.bbox[1] = bounds._southWest;
+            console.log(orsAaService.orsAaObj);
+        };
+        /**
+         * Parses XML input to JSON object and stores data in orsAaObj
+         * @param {String} response: XML response from server
+         */
         orsAaService.parseResponseToPolygonJSON = function(response) {
             response = orsUtilsService.domParser(response.data);
             console.log(response);
@@ -172,7 +172,6 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', 'orsUt
             var poly, isoChroneTime, isoChroneGeometry, collectionArr;
             var collectionArrGeom = [];
             let element;
-            console.log(area);
             if (area) {
                 try {
                     isoChroneTime = orsUtilsService.getElementsByTagNameNS(area[0], namespaces.gml, 'Isochrone', true)[0];
@@ -182,7 +181,6 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', 'orsUt
                 } catch (err) {
                     var collectionArr = orsUtilsService.getElementsByTagNameNS(area[0], namespaces.gml, 'Polygon', true)[0];
                     var areaArr = orsUtilsService.getElementsByTagNameNS(area[0], namespaces.aas, 'IsochroneGeometry', true)[0];
-                    console.log(areaArr[0].attributes['area'].value);
                 }
                 for (var i = 0; i < collectionArr.length; i++) {
                     element = {
@@ -208,21 +206,19 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', 'orsUt
                                 extIntArr.push(interiorRingArr[j]);
                             }
                         }
-                        console.log(extIntArr);
                         // element.geometry.coordinates[0].push()
                         poly = orsAaService.fetchPolygonGeometry(extIntArr, namespaces.gml, 'pos');
-                        for (tuple of poly[0]) {
-                            // element.geometry.coordinates[0].push(tuple);
-                            // console.log(tuple);
-                        }
+                        //for (tuple of poly[0]) {
+                        // element.geometry.coordinates[0].push(tuple);
+                        // console.log(tuple);
+                        //}
                         collectionArrGeom.push(poly);
                         element.geometry.coordinates = poly;
-                        console.log(poly);
                     }
                     orsAaService.orsAaObj.isochrones.push(element);
                 }
             }
-            console.log(orsAaService.orsAaObj);
+            // orsAaService.processResponseToMap(collectionArrGeom);
             return collectionArrGeom;
         };
         /**
@@ -250,10 +246,16 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', 'orsUt
             orsMapFactory.mapServiceSubject.onNext(action);
             //Add polygon to aa layer
             let polygons = [];
+            //Use as soon as AA service does not respond with multiple polygons for the same time value
+            // for (let i = 0; i < orsAaService.orsAaObj.isochrones.length; i++) {
+            //     polygons.push(orsAaService.orsAaObj.isochrones[i].geometry.coordinates);
+            // }
+            // for (let i = orsAaService.orsAaObj.isochrones.length - 1; i > 0; i--) {
+            //     polygons[i].push(polygons[i - 1]);
+            // }
             for (poly of orsAaService.orsAaObj.isochrones) {
                 polygons.push(poly.geometry.coordinates);
             }
-            console.log("PROCESSING");
             action = orsObjectsFactory.createMapAction(4, lists.layers[3], polygons, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
         };

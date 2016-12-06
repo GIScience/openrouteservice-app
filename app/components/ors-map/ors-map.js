@@ -141,20 +141,27 @@ angular.module('orsApp').directive('orsMap', function() {
                  * @param {Object} package - The action package
                  */
                 ctrl.addPolygons = (package) => {
-                    console.log(package);
-
                     function getGradientColor(rangePos) {
                         hsl = Math.floor(120 - 120 * rangePos);
                         return "hsl(" + hsl + ", 100%, 50%" + ")";
-                    };
+                    }
                     for (var i = package.geometry.length - 1; i >= 0; i--) {
                         L.polygon(package.geometry[i], {
                             fillColor: package.geometry.length == 1 ? getGradientColor(1) : getGradientColor(i / (package.geometry.length - 1)),
                             color: '#333333',
                             weight: 1,
-                            fillOpacity: 0.3
+                            fillOpacity: 0.2
                         }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
                     }
+                    // for (var i = 0 - 1; i < package.geometry.length; i++) {
+                    //     L.polygon(package.geometry[i], {
+                    //         fillColor: package.geometry.length == 1 ? getGradientColor(1) : getGradientColor(i / (package.geometry.length - 1)),
+                    //         color: '#333333',
+                    //         weight: 1,
+                    //         fillOpacity: 0.3
+                    //     }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
+                    // }
+                    // ctrl.mapModel.geofeatures[package.layerCode].setOpacity(0.1);
                 };
                 /** 
                  * clears layer entirely or specific layer in layer
