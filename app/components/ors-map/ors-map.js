@@ -11,7 +11,6 @@ angular.module('orsApp').directive('orsMap', function() {
                 // // add map
                 var ctrl = this;
                 ctrl.orsMap = $scope.orsMap;
-
                 const mapsurfer = L.tileLayer(namespaces.layerMapSurfer.url, {
                     attribution: namespaces.layerMapSurfer.attribution
                 });
@@ -91,6 +90,7 @@ angular.module('orsApp').directive('orsMap', function() {
                         orsSettingsFactory.insertWaypointFromMap(idx, waypoint, fireRequest);
                     }
                     orsRequestService.getAddress(pos, idx, updateWp);
+                    orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
                     // close the popup
                     ctrl.mapModel.map.closePopup();
                 };
@@ -133,21 +133,27 @@ angular.module('orsApp').directive('orsMap', function() {
                  * Either zooms to feature, geometry or entire layer
                  */
                 ctrl.zoom = (package) => {
-                    if (!(package.featureId === undefined)) {
-                        ctrl.mapModel.geofeatures[package.layerCode].eachLayer(function(layer) {
-                            if (layer.options.index == package.featureId) {
-                                ctrl.orsMap.fitBounds(layer.getBounds());
+                    if (!(package === undefined)) {
+                        if (!(package.featureId === undefined)) {
+                            ctrl.mapModel.geofeatures[package.layerCode].eachLayer(function(layer) {
+                                if (layer.options.index == package.featureId) {
+                                    ctrl.orsMap.fitBounds(layer.getBounds());
+                                }
+                            });
+                        } else if (package.featureId === undefined) {
+                            if (package.geometry !== undefined) {
+                                let bounds = new L.LatLngBounds(package.geometry);
+                                ctrl.orsMap.fitBounds(bounds);
+                            } else {
+                                ctrl.orsMap.fitBounds(new L.featureGroup(Object.keys(ctrl.mapModel.geofeatures).map(function(key) {
+                                    return ctrl.mapModel.geofeatures[key];
+                                })).getBounds());
                             }
-                        });
-                    } else if (package.featureId === undefined) {
-                        if (package.geometry !== undefined) {
-                            let bounds = new L.LatLngBounds(package.geometry);
-                            ctrl.orsMap.fitBounds(bounds);
-                        } else {
-                            ctrl.orsMap.fitBounds(new L.featureGroup(Object.keys(ctrl.mapModel.geofeatures).map(function(key) {
-                                return ctrl.mapModel.geofeatures[key];
-                            })).getBounds());
                         }
+                    } else {
+                        ctrl.orsMap.fitBounds(new L.featureGroup(Object.keys(ctrl.mapModel.geofeatures).map(function(key) {
+                            return ctrl.mapModel.geofeatures[key];
+                        })).getBounds());
                     }
                 };
                 /** 
