@@ -11,7 +11,6 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
         ctrl.profiles = lists.profiles;
         ctrl.setIdx = (idx) => {
             orsRouteService.setCurrentRouteIdx(idx);
-            console.info(orsRouteService.getCurrentRouteIdx());
         };
         ctrl.getIdx = () => {
             return orsRouteService.getCurrentRouteIdx();
@@ -33,6 +32,7 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
         }
         routeSubscription = orsRouteService.routesSubject.subscribe(routes => {
             ctrl.routes = routes;
+            orsRouteService.setCurrentRouteIdx(0);
         });
         ctrl.EmphRoute = (idx) => {
             const geometry = orsRouteService.routeObj.routes[idx].points;
