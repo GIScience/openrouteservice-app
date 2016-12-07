@@ -51,7 +51,6 @@ angular.module('orsApp').directive('orsMap', function() {
                 ctrl.overlays = {
                     "Hillshade": hillshade
                 };
-                console.log(hillshade)
                 ctrl.mapModel.map.on("load", function(evt) {
                     mapsurfer.addTo(ctrl.orsMap);
                     ctrl.mapModel.geofeatures.layerRoutePoints.addTo(ctrl.orsMap);

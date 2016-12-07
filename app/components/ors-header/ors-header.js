@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-header', []).component('orsHeader', {
     templateUrl: 'app/components/ors-header/ors-header.html',
-    controller($scope, orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsCookiesFactory) {
+    controller($scope, $translate, orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsCookiesFactory) {
         var ctrl = this;
         ctrl.optionList = lists.userOptions;
         /** http://localhost:3000/routing?units=mi&language=de&routinglanguage=en */
@@ -14,8 +14,10 @@ angular.module('orsApp.ors-header', []).component('orsHeader', {
             if (!('language' in ctrl.currentOptions)) ctrl.currentOptions.language = ctrl.optionList.languages.default;
             if (!('routinglang' in ctrl.currentOptions)) ctrl.currentOptions.routinglang = ctrl.optionList.routinglanguages.default;
             if (!('units' in ctrl.currentOptions)) ctrl.currentOptions.units = ctrl.optionList.units.default;
+            $translate.use(ctrl.currentOptions.language);
         });
-        ctrl.changeOptions = () => {
+        ctrl.changeOptions = (langChange) => {
+            if (langChange) $translate.use(ctrl.currentOptions.language);
             console.log(ctrl.currentOptions);
             orsSettingsFactory.setUserOptions(ctrl.currentOptions);
             orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions);

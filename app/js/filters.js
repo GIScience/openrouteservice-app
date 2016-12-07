@@ -40,10 +40,4 @@ angular.module('orsApp.ors-filters', []).filter('duration', function() {
     }
     distance.$stateful = true;
     return distance;
-}]).filter('translate', ['orsTranslationService', function(orsTranslationService) {
-    return function translate(input) {
-        // manipulate input with someService
-        const translation = orsTranslationService.translate(input);
-        return translation;
-    };
 }]);

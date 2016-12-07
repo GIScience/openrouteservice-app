@@ -150,7 +150,7 @@ html {
     border-right: 1px solid #CCC;
     background-color: #F0F0F0;
     flex: 0 0 44px;
-    overflow-y: auto;
+    -overflow-y: auto;
 }
 
 
@@ -584,6 +584,7 @@ input:focus, input:active {
     border: 1px solid #CCC;
     background-color: #F0F0F0;
     padding: 10px;
+    margin-top: -3px;
 }
 
 .ors-nav-menu>li>span:hover>.ors-nav-submenu {
@@ -684,6 +685,11 @@ input:focus, input:active {
     /*z-index: 0 !important;*/
 }
 
+tooltip tip {
+    min-width: 0 !important;
+    padding: 5px 10px !important;
+    border-radius: 4px !important;
+}
 
 /** font awesome rotate icons */
 

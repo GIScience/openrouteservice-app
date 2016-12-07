@@ -1,5 +1,5 @@
 <header>
-    <h1 ng-bind-html="'Settings'">
+    <h1 ng-bind-html="('SETTINGS' | translate)">
     </h1>
 </header>
 <section>
@@ -30,7 +30,7 @@
     </h2>
     <label ng-bind-html="'Choose language'">
     </label>
-    <select data-ng-model="$ctrl.currentOptions.language" data-ng-options="(language) for language in $ctrl.optionList.languages.all" name="language" ng-change="$ctrl.changeOptions()">
+    <select data-ng-model="$ctrl.currentOptions.language" data-ng-options="(language) for language in $ctrl.optionList.languages.all" name="language" ng-change="$ctrl.changeOptions(true)">
     </select>
 </section>
 <div class="ui divider">
