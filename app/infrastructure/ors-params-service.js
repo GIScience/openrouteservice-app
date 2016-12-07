@@ -40,7 +40,7 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUti
             if (key == 'maxspeed') {
                 settings.profile.options.maxspeed = value;
             }
-            if (key == 'hgvweight') {
+            if (key == 'hgvWeight') {
                 settings.profile.options.hgvWeight = value;
             }
             if (key == 'width') {

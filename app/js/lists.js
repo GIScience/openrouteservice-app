@@ -332,7 +332,7 @@ lists.optionList = {
             default: 8,
             step: 1
         },
-        hgv: {
+        HeavyVehicle: {
             min: 30,
             max: 200,
             default: 100,
@@ -392,7 +392,7 @@ lists.isochroneOptionList = {
         max: 29,
         step: 1,
         default: 1
-    }   
+    }
 };
 lists.userOptions = {
     languages: {
