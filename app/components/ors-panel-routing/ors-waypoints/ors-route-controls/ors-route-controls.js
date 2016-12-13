@@ -28,7 +28,6 @@ angular.module('orsApp.ors-route-controls', ['orsApp.ors-importRoute-controls'])
     },
     bindings: {
         onAdd: '&',
-        setRoundtrip: '&',
         onReset: '&',
         onReverse: '&',
         onWaypointsChanged: '&',

@@ -178,23 +178,14 @@ angular.module('orsApp').directive('orsMap', function() {
                     for (var i = package.geometry.length - 1; i >= 0; i--) {
                         L.polygon(package.geometry[i], {
                             fillColor: package.geometry.length == 1 ? getGradientColor(1) : getGradientColor(i / (package.geometry.length - 1)),
-                            color: '#333333',
-                            weight: 1,
+                            color: '#000',
+                            weight: 2,
                             fillOpacity: 1
                         }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
                     }
-                    // for (var i = 0 - 1; i < package.geometry.length; i++) {
-                    //     L.polygon(package.geometry[i], {
-                    //         fillColor: package.geometry.length == 1 ? getGradientColor(1) : getGradientColor(i / (package.geometry.length - 1)),
-                    //         color: '#333333',
-                    //         weight: 1,
-                    //         fillOpacity: 0.3
-                    //     }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
-                    // }
-                    ctrl.mapModel.geofeatures[package.layerCode].setStyle({
-                        fillOpacity: 0.2,
-                        opacity: 0.8
-                    });
+                    // hack to change opacity of entire overlaypane layer but prevent opacity of stroke
+                    const svg = d3.select(ctrl.mapModel.map.getPanes().overlayPane).style("opacity", 0.5);
+                    svg.selectAll("path").style("stroke-opacity", 1);
                 };
                 /** 
                  * clears layer entirely or specific layer in layer
@@ -210,12 +201,11 @@ angular.module('orsApp').directive('orsMap', function() {
                         ctrl.mapModel.geofeatures[package.layerCode].clearLayers();
                     }
                 };
-                // subscribeToZoom () {ctrl.zoom()}
-                let wpSubscription;
                 orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
-                    console.log('route was changed to', route);
-                    ctrl.routing = route == 'routing' ? true : false;
+                    console.log('SUBSCRIBING.....', route)
+
                     ctrl.clearMap();
+                    ctrl.routing = route == 'routing' ? true : false;
                 });
                 orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
                     console.log('changes in routing waypoints detected..', d);

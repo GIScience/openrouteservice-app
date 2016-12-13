@@ -6,7 +6,7 @@
     <div ng-include="'app/includes/route-summary.html'">
     </div>
     <div class="ors-instruction-controls">
-	    <button class="ors-controls-button flright" data-ng-click="$ctrl.showExport = !$ctrl.showExport">
+	    <button tooltips tooltip-template="{{('EXPORT' | translate)}}" tooltip-side="top" class="ors-controls-button flright" data-ng-click="$ctrl.showExport = !$ctrl.showExport">
 	        <i class="fa fa-download">
 	        </i>
 	    </button>

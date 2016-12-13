@@ -1,13 +1,13 @@
 <div class="ors-route-controls">
-	<button class="ors-controls-button flleft" ng-click="$ctrl.calculate()">
+	<button tooltips tooltip-template="{{('CALCULATE' | translate)}}" tooltip-side="top" class="ors-controls-button flleft" ng-click="$ctrl.calculate()">
         <i class="fa fa-fw fa-bullseye">
         </i>
     </button>
-	<button class="ors-controls-button flleft" ng-click="$ctrl.zoomToArea()">
+	<button tooltips tooltip-template="{{('EXPAND' | translate)}}" tooltip-side="top" class="ors-controls-button flleft" ng-click="$ctrl.zoomToArea()">
         <i class="fa fa-expand">
         </i>
     </button>
-    <button class="ors-controls-button flright" ng-click="$ctrl.reset()">
+    <button tooltips tooltip-template="{{('RESET' | translate)}}" tooltip-side="top" class="ors-controls-button flleft" ng-click="$ctrl.reset()">
         <i class="fa fa-remove">
         </i>
     </button>

@@ -22,38 +22,37 @@
         </div>
     </div>
     <div class="right">
-        <div class="summary-item">
+        <div tooltips tooltip-template="{{('DURATION' | translate)}}" tooltip-side="top" class="summary-item" ng-if="route.summary.duration">
             <i class="fa fa-clock-o">
             </i>
             <span ng-bind-html="(route.summary.duration | duration)">
             </span>
         </div>
-        <div class="summary-item">
+        <div tooltips tooltip-template="{{('DISTANCE' | translate)}}" tooltip-side="top" class="summary-item" ng-if="route.summary.distance" >
             <i class="fa fa-arrows-h">
             </i>
             <span ng-bind-html="(route.summary.distance | distance)">
             </span>
         </div>
-        <div class="summary-item" ng-if="route.summary.actualDistance">
+        <div tooltips tooltip-template="{{('ACTUALDISTANCE' | translate)}}" tooltip-side="top" class="summary-item" ng-if="route.summary.actualDistance">
             <i class="fa fa-ellipsis-h">
             </i>
             <span ng-bind-html="(route.summary.actualDistance | distance)">
             </span>
         </div>
-        <div class="summary-item" ng-if="route.summary.ascent">
+        <div tooltips tooltip-template="{{('ASCENT' | translate)}}" tooltip-side="top" class="summary-item" ng-if="route.summary.ascent">
             <i class="fa fa-long-arrow-up">
             </i>
             <span ng-bind-html="(route.summary.ascent | distance)">
             </span>
         </div>
-        <div class="summary-item" ng-if="route.summary.descent">
+        <div tooltips tooltip-template="{{('DESCENT' | translate)}}" tooltip-side="top" class="summary-item" ng-if="route.summary.descent">
             <i class="fa fa-long-arrow-down">
             </i>
             <span ng-bind-html="(route.summary.descent | distance)">
             </span>
         </div>
-        <button class="summary-select" data-ng-click="$ctrl.setIdx($index); $ctrl.showInstructions();" ng-show="!$ctrl.shouldDisplayRouteDetails">
-            Details
+        <button class="summary-select" data-ng-click="$ctrl.setIdx($index); $ctrl.showInstructions();" ng-show="!$ctrl.shouldDisplayRouteDetails" ng-bind-html="('DETAILS' | translate)">>
         </button>
     </div>
 </div>

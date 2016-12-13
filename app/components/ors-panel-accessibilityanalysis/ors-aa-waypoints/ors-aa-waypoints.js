@@ -6,7 +6,7 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         activeProfile: '<',
         activeSubgroup: '<'
     },
-    controller($scope, orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
+    controller($scope, orsSettingsFactory, orsAaService, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
         var ctrl = this;
         ctrl.$onInit = () => {
             ctrl.waypoints = orsSettingsFactory.getWaypoints();
@@ -55,44 +55,21 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         ctrl.waypointsChanged = () => {
             console.log('wps changed');
         };
-        ctrl.deleteWaypoint = () => {};
         ctrl.resetWaypoints = () => {
             ctrl.waypoints = orsSettingsFactory.initWaypoints(1);
             orsSettingsFactory.updateWaypoints();
         };
         ctrl.addressChanged = () => {
-            // const wp = orsObjectsFactory.createWaypoint(address.shortAddress, address.position);
-            // console.log(wp)
-            // ctrl.waypoints.push(wp);
-            // console.log(ctrl.waypoints)
             orsSettingsFactory.setWaypoints(ctrl.waypoints);
         };
         ctrl.calculate = function() {
-            console.log("Fire request AA");
             console.log(ctrl.currentOptions);
             orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
         };
-        $scope.$on('resetWaypoints', function(e) {
-            ctrl.deleteWaypoint();
-        });
-        ctrl.sortableOptions = {
-            axis: 'y',
-            containment: 'parent',
-            activate: function() {},
-            beforeStop: function() {},
-            change: function() {},
-            create: function() {},
-            deactivate: function() {},
-            out: function() {},
-            over: function() {},
-            receive: function() {},
-            remove: function() {},
-            sort: function() {},
-            start: function() {},
-            update: function(e, ui) {},
-            stop: function(e, ui) {
-                orsSettingsFactory.setWaypoints(ctrl.waypoints);
-            }
-        };
+        /** if we are coming back to accessibility panel */
+        if (angular.isDefined(orsAaService.orsAaObj)) {
+            orsAaService.processResponseToMap();
+   
+        }
     }
 });

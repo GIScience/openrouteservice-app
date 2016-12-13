@@ -354,7 +354,7 @@ ors-instructions {
 
 /** Route options */
 
-.ors-routing-options .container {
+.ors-routing-options .container, .ors-routing-inner .container {
     background-color: rgb(250, 250, 250);
     padding: 10px;
 }
@@ -471,15 +471,9 @@ ors-instructions {
     display: block;
 }
 
-.ors-options-menu-small {
+.small {
     width: 150px;
-    padding-left: 10px;
-    padding-top: 10px;
     display: block;
-}
-
-.ors-options-menu>li {
-    margin-bottom: 5px;
 }
 
 .ors-options-input {
@@ -629,10 +623,6 @@ input:focus, input:active {
 .ors-addresses {
     padding: 15px 0 15px 0;
     font-weight: normal;
-}
-
-.ors-container {
-    padding: 0 10px 0 10px;
 }
 
 .ors-button {

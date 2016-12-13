@@ -9,9 +9,7 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
         };
         ctrl.optionList = lists.isochroneOptionList;
         ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
-        console.log(ctrl.currentOptions);
         ctrl.currentOptions.analysis_options.method = ctrl.currentOptions.analysis_options.method !== undefined ? ctrl.currentOptions.analysis_options.method : ctrl.optionList.methodOptions.RG.id;
-        console.log(ctrl.currentOptions.analysis_options.method);
         ctrl.isochroneOptionsSlider = {
             value: ctrl.currentOptions.analysis_options.method,
             options: {
@@ -67,12 +65,7 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
             }
         };
         ctrl.changeOptions = function() {
-            // call setoptions
-            // $location.path('/user/' + "$scope.userId", false);
-            // console.log(ctrl.currentOptions);
             orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
-            //ctrl.onChangeOptions(ctrl.currentOptions);
-            // orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
         };
     },
     require: {

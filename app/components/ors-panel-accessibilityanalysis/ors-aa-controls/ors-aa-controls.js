@@ -3,12 +3,9 @@ angular.module('orsApp.ors-aa-controls', []).component('orsAaControls', {
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsMapFactory) {
         var ctrl = this;
         ctrl.calculate = () => {
-            console.log('adding');
             ctrl.onCalculate();
-            // ctrl.showAdd = true;
         };
         ctrl.reset = () => {
-            console.log('resetting');
             ctrl.onReset();
         };
         ctrl.zoomToArea = () => {
@@ -19,9 +16,6 @@ angular.module('orsApp.ors-aa-controls', []).component('orsAaControls', {
     },
     bindings: {
         onCalculate: '&',
-        onReset: '&',
-        onReverse: '&',
-        onWaypointsChanged: '&',
-        showAdd: '=',
+        onReset: '&'
     }
 });

@@ -1,29 +1,25 @@
 <div class="ors-route-controls">
-    <button class="ors-controls-button flleft" ng-click="$ctrl.add()" ng-show="$ctrl.showAdd">
+    <button tooltips tooltip-template="{{('ADD' | translate)}}" tooltip-side="top" class="ors-controls-button flleft" ng-click="$ctrl.add()" ng-show="$ctrl.showAdd">
         <i class="fa fa-plus">
         </i>
     </button>
-   <!--  <button class="ors-controls-button flleft" ng-click="$ctrl.setRoundtrip()" ng-show="$ctrl.showAdd">
-        <i class="fa fa-circle-o">
-        </i>
-    </button> -->
-    <button class="ors-controls-button flleft" ng-click="$ctrl.reset()">
+    <button tooltips tooltip-template="{{('RESET' | translate)}}" tooltip-side="top" class="ors-controls-button flleft" ng-click="$ctrl.reset()">
         <i class="fa fa-remove">
         </i>
     </button>
-    <button class="ors-controls-button flleft" ng-click="$ctrl.reversing()">
+    <button tooltips tooltip-template="{{('REVERSE' | translate)}}" tooltip-side="top" class="ors-controls-button flleft" ng-click="$ctrl.reversing()">
         <i class="fa fa-retweet">
         </i>
     </button>
-    <button class="ors-controls-button flleft" ng-click="$ctrl.zoom()">
+    <button tooltips tooltip-template="{{('EXPAND' | translate)}}" tooltip-side="top" class="ors-controls-button flleft" ng-click="$ctrl.zoom()">
         <i class="fa fa-expand">
         </i>
     </button>
-    <button class="ors-controls-button flleft" data-ng-click="$ctrl.showImport = !$ctrl.showImport">
+    <button tooltips tooltip-template="{{('UPLOAD' | translate)}}" tooltip-side="top" class="ors-controls-button flleft" data-ng-click="$ctrl.showImport = !$ctrl.showImport">
         <i class="fa fa-upload">
         </i>
     </button>
-    <button class="ors-controls-button flleft" ng-click="$ctrl.callOptions()">
+    <button tooltips tooltip-template="{{('OPTIONS' | translate)}}" tooltip-side="top" class="ors-controls-button flleft" ng-click="$ctrl.callOptions()">
         <i class="fa fa-sliders">
         </i>
     </button>

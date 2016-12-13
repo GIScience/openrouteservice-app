@@ -68,7 +68,6 @@ let orsApp = angular.module('orsApp', [
     'size':'small',
     'speed': 'fast',
     'tooltipTemplateUrlCache': true
-    //etc...
   });
 }])
 .config(['$translateProvider', '$windowProvider',/* 'storageFactory',*/ 
@@ -96,10 +95,13 @@ orsApp.run(['$route', '$rootScope', '$routeParams', '$location',
             if (reload === false) {
                 var lastRoute = $route.current;
                 var un = $rootScope.$on('$locationChangeSuccess', function() {
-                    // console.dir($route);
+                    $location.reload = reload;
+                    console.log($location)
                     $route.current = lastRoute;
                     un();
                 });
+            } else {
+                $location.reload = !reload;
             }
             return original.apply($location, [path]);
         };

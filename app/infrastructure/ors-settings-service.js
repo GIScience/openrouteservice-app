@@ -69,7 +69,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      */
     orsSettingsFactory.getSettings = () => {
             return orsSettingsFactory[currentSettingsObj].getValue();
-        }
+        };
         /** Subscription function to current waypoints object, used in map. */
     orsSettingsFactory.subscribeToWaypoints = (o) => {
         return orsSettingsFactory.routingWaypointsSubject.subscribe(o);
@@ -147,10 +147,10 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     };
     /** Subscription function to current routing settings */
     orsSettingsFactory.routingSettingsSubject.subscribe(settings => {
-        /** get user obtions */
         const isRoutePresent = orsSettingsFactory.handleRoutePresent(settings, 2);
-        // var isRoutePresent = waypoint.getNumWaypointsSet() >= 2;
         if (isRoutePresent) {
+            orsRouteService.resetRoute();
+            //orsRouteService.clearRoutes();
             const userOptions = orsSettingsFactory.getUserOptions();
             const payload = orsUtilsService.generateRouteXml(userOptions, settings);
             orsRouteService.fetchRoute(payload).then(function(response) {

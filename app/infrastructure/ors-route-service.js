@@ -9,6 +9,8 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
         orsRouteService.resetRoute = () => {
             orsRouteService.routeObj = {};
             orsRouteService.routesSubject.onNext([]);
+            let action = orsObjectsFactory.createMapAction(2, lists.layers[1], undefined, undefined);
+            orsMapFactory.mapServiceSubject.onNext(action);
         };
         /**
          * Requests route from ORS backend
@@ -41,9 +43,6 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
             orsMapFactory.mapServiceSubject.onNext(action);
         };
         orsRouteService.processRoutes = function(response) {
-            /** clear map */
-            let action = orsObjectsFactory.createMapAction(2, lists.layers[1], undefined, undefined);
-            orsMapFactory.mapServiceSubject.onNext(action);
             _.each(orsRouteService.routeObj.routes, function(route) {
                 /** add layers */
                 let action = orsObjectsFactory.createMapAction(1, lists.layers[1], route.points, undefined);
