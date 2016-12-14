@@ -9,8 +9,8 @@
         <div class="collapsable" ng-class="{ showMe: routeweightOptions }">
             <div class="ors-options-menu">
                 <div class="ui label tiny flleft">
-                    <span ng-bind-html="('WEIGHT' | translate)">
-                    <div class="detail" ng-bind-html="$ctrl.weightSlider.value"></div>
+                    <span ng-bind-html="('WEIGHT' | translate)"></span>
+                    <div class="detail" ng-bind-html="($ctrl.weightSlider.value | translate)"></div>
                 </div>
                 <rzslider rz-slider-model="$ctrl.weightSlider.value" rz-slider-options="$ctrl.weightSlider.options">
                 </rzslider>

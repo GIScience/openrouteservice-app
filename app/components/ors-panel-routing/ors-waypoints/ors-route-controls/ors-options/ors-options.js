@@ -14,6 +14,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
             // set weight slider from params
             ctrl.currentOptions.weight = ctrl.currentOptions.weight !== undefined ? ctrl.currentOptions.weight : ctrl.optionList.weight.Fastest;
+            console.log(ctrl.currentOptions.weight, ctrl.optionList.weight.Fastest.value)
             ctrl.weightSlider = {
                 value: ctrl.currentOptions.weight,
                 options: {
@@ -293,7 +294,15 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
         ctrl.refreshSlider = function() {
             $timeout(function() {
                 $scope.$broadcast('rzSliderForceRender');
-            });
+            },1000);
         };
+        ctrl.reCalcViewDimensions = () => {
+            $timeout(function() {
+                $scope.$broadcast('reCalcViewDimensions');
+            },1000);
+        };
+        //ctrl.reCalcViewDimensions();
+        ctrl.refreshSlider();
+
     }
 });

@@ -9,14 +9,11 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
             ctrl.profiles = lists.profiles;
         };
         ctrl.$routerOnActivate = function(next) {
-                        console.log(JSON.stringify($location.reload))
-
+            console.log(JSON.stringify($location.reload));
             /** the router is always activated on permalink update. This code
                 must be ignored if the permalink is changed, as no waypoints are changed, interacts with app.js line 99 */
             if ($location.reload !== false) {
-                console.log('going in..')
-                            orsSettingsFactory.updateNgRoute(next.urlPath);
-
+                orsSettingsFactory.updateNgRoute(next.urlPath);
                 /** 
                  * check if anything is saved in the settings object
                  * if there isn't initialize settings object from permalink or provide empty settings object
@@ -39,9 +36,12 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
                 ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
                 ctrl.shouldDisplayRouteDetails = false;
             }
+            //orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
         };
         ctrl.$routerOnReuse = function(next, prev) {
-            // console.info("REUSE");
+            //return false;
+            //console.info("REUSE", next, prev);
+            orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
         };
         ctrl.showInstructions = () => {
             ctrl.shouldDisplayRouteDetails = ctrl.shouldDisplayRouteDetails == true ? false : true;

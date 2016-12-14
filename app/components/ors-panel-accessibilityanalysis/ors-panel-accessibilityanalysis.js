@@ -40,7 +40,10 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
                 ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
                 ctrl.activeProfile = orsSettingsFactory.getActiveProfile().type;
                 ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
+                orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
+
             }
+
         };
     },
     require: {

@@ -26,7 +26,7 @@
     "CALCULATE": "Berechne",
     "PREFERENCE": "Route preference",
     "WEIGHT": "Gewichtung",
-    "AVOIDTYPE": "Straßen vermeiden",
+    "AVOIDTYPES": "Straßen vermeiden",
     "FERRIES": "Fähren",
     "UNPAVED": "Ungepflastere Straßen",
     "PAVED": "Gepflasterte Straßen",
@@ -51,5 +51,17 @@
     "WHEELCHAIRSETTINGS": "Rollstuhl Einstellungen",
     "SURFACE": "Oberfläche",
     "INCLINE": "Anstieg",
-    "CURB": "Bordsteinhöhe"
+    "CURB": "Bordsteinhöhe",
+    "ISOCHRONEMETHOD": "Isochronen Methode",
+    "TIMEDISTANCE": "Zeitliche Distanz",
+    "ISOCHRONEINTERVAL": "Isochronenintervall",
+    "KILOMETERS": "Kilometer",
+    "UNITS": "Einheiten",
+    "MILES": "Meilen",
+    "LANGUAGE": "Sprache",
+    "CHOOSELANG": "Wählen Sie eine Sprache",
+    "LANGROUTING": "Sprache der Routing Anweisungen",
+    "Fastest": "Schnellste",
+    "Recommended": "Bevorzugt",
+    "Shortest": "Kürzeste"
 }

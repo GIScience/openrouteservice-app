@@ -3,13 +3,12 @@
     </h1>
 </header>
 <section>
-    <h2 ng-bind-html="'Units'">
-        Units
+    <h2 ng-bind-html="('UNITS' | translate)">
     </h2>
     <div class="field ors-inline">
         <div class="ui radio checkbox">
             <input name="orsUnits" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.units" ng-value="$ctrl.optionList.units.km" type="radio">
-                <label ng-bind-html="'Kilometers'">
+                <label ng-bind-html="('KILOMETERS' | translate)">
                 </label>
             </input>
         </div>
@@ -17,7 +16,7 @@
     <div class="field ors-inline">
         <div class="ui radio checkbox">
             <input name="orsUnits" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.units" ng-value="$ctrl.optionList.units.mi" type="radio">
-                <label ng-bind-html="'Miles'">
+                <label ng-bind-html="('MILES' | translate)">
                 </label>
             </input>
         </div>
@@ -26,9 +25,9 @@
 <div class="ui divider">
 </div>
 <section>
-    <h2 ng-bind-html="'Language'">
+    <h2 ng-bind-html="('LANGUAGE' | translate)">
     </h2>
-    <label ng-bind-html="'Choose language'">
+    <label ng-bind-html="('CHOOSELANG' | translate)">
     </label>
     <select data-ng-model="$ctrl.currentOptions.language" data-ng-options="(language) for language in $ctrl.optionList.languages.all" name="language" ng-change="$ctrl.changeOptions(true)">
     </select>
@@ -36,9 +35,9 @@
 <div class="ui divider">
 </div>
 <section>
-    <h2 ng-bind="'Language Routing Instructions'">
+    <h2 ng-bind-html="('LANGROUTING' | translate)">
     </h2>
-    <label ng-bind="'Choose routing language'">
+    <label ng-bind-html="('CHOOSELANG' | translate)">
     </label>
     <select data-ng-model="$ctrl.currentOptions.routinglang" data-ng-options="(language) for language in $ctrl.optionList.routinglanguages.all" name="routinglanguage" ng-change="$ctrl.changeOptions()">
     </select>

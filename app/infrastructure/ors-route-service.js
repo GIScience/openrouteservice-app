@@ -1,5 +1,5 @@
-angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 'orsUtilsService', 'orsMapFactory', 'orsObjectsFactory',
-    function($http, orsUtilsService, orsMapFactory, orsObjectsFactory) {
+angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$http', 'orsUtilsService', 'orsMapFactory', 'orsObjectsFactory',
+    function($q, $http, orsUtilsService, orsMapFactory, orsObjectsFactory) {
         /**
          * Requests geocoding from ORS backend
          * @param {String} requestData: XML for request payload
@@ -18,11 +18,19 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
          */
         orsRouteService.fetchRoute = function(requestData) {
             var url = namespaces.services.routing;
-            return $http({
-                method: 'POST',
-                url: url,
-                data: requestData
+            var canceller = $q.defer();
+            var cancel = function(reason) {
+                canceller.resolve(reason);
+            };
+            var promise = $http.post(url, requestData, {
+                timeout: canceller.promise
+            }).then(function(response) {
+                return response.data;
             });
+            return {
+                promise: promise,
+                cancel: cancel
+            };
         };
         orsRouteService.setCurrentRouteIdx = (idx) => {
             orsRouteService.currentRouteIdx = idx;
@@ -52,8 +60,8 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$http', 
             orsRouteService.routesSubject.onNext(orsRouteService.routeObj.routes);
         };
         /** prepare route to json */
-        orsRouteService.processResponse = function(response, profile) {
-            response = orsUtilsService.domParser(response.data); /** later this xml parsing can be skipped as json is returned.. */
+        orsRouteService.processResponse = function(data, profile) {
+            response = orsUtilsService.domParser(data); /** later this xml parsing can be skipped as json is returned.. */
             orsRouteService.routeObj = {
                 status: 'Ok',
                 routes: [{}]

@@ -16,13 +16,15 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
             return orsRouteService.getCurrentRouteIdx();
         };
         /** if we are coming back to route panel */
-        if (angular.isDefined(orsRouteService.routeObj)) {
-            ctrl.routes = orsRouteService.routeObj.routes;
-            let idx = ctrl.getIdx();
-            let action = orsObjectsFactory.createMapAction(2, lists.layers[1], undefined, undefined);
-            orsMapFactory.mapServiceSubject.onNext(action);
-            action = orsObjectsFactory.createMapAction(1, lists.layers[1], ctrl.routes[idx].points, undefined);
-            orsMapFactory.mapServiceSubject.onNext(action);
+        if (angular.isDefined(orsRouteService.routeObj) && angular.isDefined(orsRouteService.routeObj.routes)) {
+            if (orsRouteService.routeObj.routes.length > 0) {
+                ctrl.routes = orsRouteService.routeObj.routes;
+                let idx = ctrl.getIdx() === undefined ? 0 : ctrl.getIdx();
+                let action = orsObjectsFactory.createMapAction(2, lists.layers[1], undefined, undefined);
+                orsMapFactory.mapServiceSubject.onNext(action);
+                action = orsObjectsFactory.createMapAction(1, lists.layers[1], ctrl.routes[idx].points, undefined);
+                orsMapFactory.mapServiceSubject.onNext(action);
+            }
         }
         /** if we are returning to this panel, dispose all old subscriptions */
         try {

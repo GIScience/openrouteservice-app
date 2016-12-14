@@ -5,11 +5,13 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     orsSettingsFactory.routingSettingsSubject = new Rx.BehaviorSubject({
         waypoints: []
     });
+    orsSettingsFactory.routingRequests = [];
     /** Behaviour subjects accessibility analysis. */
     orsSettingsFactory.aaWaypointsSubject = new Rx.BehaviorSubject({});
     orsSettingsFactory.aaSettingsSubject = new Rx.BehaviorSubject({
         waypoints: []
     });
+    orsSettingsFactory.aaRequests = [];
     /** Behaviour subject for user options, language and units */
     orsSettingsFactory.userOptionsSubject = new Rx.BehaviorSubject({});
     /** Behaviour subject routing. */
@@ -61,7 +63,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     orsSettingsFactory.setActiveOptions = (options) => {
         orsSettingsFactory[currentSettingsObj].getValue().profile.options = options;
         orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
-        console.log(options);
     };
     /**
      * Returns current settings.
@@ -149,11 +150,22 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     orsSettingsFactory.routingSettingsSubject.subscribe(settings => {
         const isRoutePresent = orsSettingsFactory.handleRoutePresent(settings, 2);
         if (isRoutePresent) {
+
+            /** Cancel outstanding requests */
+            if (orsSettingsFactory.routingRequests.length > 0) {
+                    orsSettingsFactory.routingRequests[0].cancel("Cancel last request");
+                    orsSettingsFactory.routingRequests.splice(0, 1);
+            }
+
+
             orsRouteService.resetRoute();
             //orsRouteService.clearRoutes();
             const userOptions = orsSettingsFactory.getUserOptions();
             const payload = orsUtilsService.generateRouteXml(userOptions, settings);
-            orsRouteService.fetchRoute(payload).then(function(response) {
+            const request = orsRouteService.fetchRoute(payload);
+            orsSettingsFactory.routingRequests.push(request);
+
+            request.promise.then(function(response) {
                 const profile = settings.profile.type;
                 orsRouteService.processResponse(response, profile);
             }, function(response) {

@@ -56,7 +56,9 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
             console.log('wps changed');
         };
         ctrl.resetWaypoints = () => {
+            console.log(true)
             ctrl.waypoints = orsSettingsFactory.initWaypoints(1);
+            orsAaService.initAaObj();
             orsSettingsFactory.updateWaypoints();
         };
         ctrl.addressChanged = () => {
@@ -69,7 +71,6 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         /** if we are coming back to accessibility panel */
         if (angular.isDefined(orsAaService.orsAaObj)) {
             orsAaService.processResponseToMap();
-   
         }
     }
 });

@@ -206,19 +206,13 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', 'orsUt
                                 extIntArr.push(interiorRingArr[j]);
                             }
                         }
-                        // element.geometry.coordinates[0].push()
                         poly = orsAaService.fetchPolygonGeometry(extIntArr, namespaces.gml, 'pos');
-                        //for (tuple of poly[0]) {
-                        // element.geometry.coordinates[0].push(tuple);
-                        // console.log(tuple);
-                        //}
                         collectionArrGeom.push(poly);
                         element.geometry.coordinates = poly;
                     }
                     orsAaService.orsAaObj.isochrones.push(element);
                 }
             }
-            // orsAaService.processResponseToMap(collectionArrGeom);
             return collectionArrGeom;
         };
         /**

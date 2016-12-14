@@ -88,6 +88,10 @@ let orsApp = angular.module('orsApp', [
     let ctrl = this;
     ctrl.myOrsMap = orsMapFactory.initMapA("map");
 });
+/** We are additionally saving $location.reload which is set to true or false
+depending on whether we are switching app panes or staying on the same but only
+changing the permalink. If the permalink is changed routerOnActive is fired which
+should not happen, to prevent this we check this variable */
 orsApp.run(['$route', '$rootScope', '$routeParams', '$location',
     function($route, $rootScope, $routeParams, $location) {
         var original = $location.path;
@@ -96,12 +100,12 @@ orsApp.run(['$route', '$rootScope', '$routeParams', '$location',
                 var lastRoute = $route.current;
                 var un = $rootScope.$on('$locationChangeSuccess', function() {
                     $location.reload = reload;
-                    console.log($location)
                     $route.current = lastRoute;
                     un();
                 });
             } else {
                 $location.reload = !reload;
+
             }
             return original.apply($location, [path]);
         };

@@ -51,5 +51,17 @@
     "WHEELCHAIRSETTINGS": "Wheelchair settings",
     "SURFACE": "Surface",
     "INCLINE": "Incline",
-    "CURB": "Curb"
+    "CURB": "Curb",
+    "ISOCHRONEMETHOD": "Isochrone method",
+    "TIMEDISTANCE": "Time distance",
+    "ISOCHRONEINTERVAL": "Isochrone interval",
+    "KILOMETERS": "Kilometers",
+    "UNITS": "Units",
+    "MILES": "Miles",
+    "LANGUAGE": "Language",
+    "CHOOSELANG": "Choose language",
+    "LANGROUTING": "Language Routing Instructions",
+    "Fastest": "Fastest",
+    "Recommended": "Recommended",
+    "Shortest": "Shortest"
 }

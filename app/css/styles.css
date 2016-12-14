@@ -19,7 +19,7 @@ html, body {
 }
 
 html {
-    font-size: 90% !important;
+    -font-size: 90% !important;
 }
 
 
@@ -93,8 +93,7 @@ html {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    background-color: rgba(181, 21, 43, 1);
-    font-size: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
 }
 
 .ors-header li {
@@ -103,7 +102,7 @@ html {
 
 .ors-header li a {
     display: block;
-    color: white;
+    color: #FFF;
     text-align: center;
     padding: 12px 16px;
     text-decoration: none;
@@ -320,7 +319,7 @@ button.summary-select {
     border: none;
     padding-bottom: 5px !important;
     font-weight: bold;
-    color: #b5152b;
+    color: #cd6060;
     display: block;
 }
 
@@ -471,6 +470,10 @@ ors-instructions {
     display: block;
 }
 
+.ors-options-menu li {
+    padding-bottom: 5px;
+}
+
 .small {
     width: 150px;
     display: block;
@@ -574,9 +577,9 @@ input:focus, input:active {
 .ors-nav-submenu {
     display: none;
     position: absolute;
-    border-radius: 2px;
+    border-radius: 4px;
     border: 1px solid #CCC;
-    background-color: #F0F0F0;
+    background-color: #FFF;
     padding: 10px;
     margin-top: -3px;
 }
@@ -598,9 +601,6 @@ input:focus, input:active {
     padding-top: 3px;
 }
 
-.ors-nav-submenu>li label {
-    font-size: 80% !important;
-}
 
 .ors-nav-menu {
     margin: 0;
@@ -608,7 +608,7 @@ input:focus, input:active {
 }
 
 .ors-navigation .active, .ors-nav-menu .active {
-    color: #b5152b;
+    color: #cd6060;
 }
 
 
@@ -635,7 +635,7 @@ input:focus, input:active {
 }
 
 .ors-button:hover {
-    color: #b5152b;
+    color: #cd6060;
 }
 
 .ors-controls-button {
@@ -648,7 +648,7 @@ input:focus, input:active {
 }
 
 .ors-controls-button i:hover {
-    color: #b5152b;
+    color: #cd6060;
 }
 
 .flright {
@@ -817,4 +817,8 @@ tooltip tip {
 
 .ui.checkbox, .item {
     font-size: 100% !important;
+}
+
+label, .label {
+    cursor: pointer !important;
 }
