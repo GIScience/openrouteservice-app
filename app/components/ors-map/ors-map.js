@@ -93,8 +93,8 @@ angular.module('orsApp').directive('orsMap', function() {
                     // close the popup
                     ctrl.mapModel.map.closePopup();
                 };
-                ctrl.addWaypoint = (idx, iconIdx, pos, fireRequest = true) => {
-                    var waypointIcon = new L.icon(lists.waypointIcons[iconIdx]);
+                ctrl.addWaypoint = (idx, iconIdx, pos, fireRequest = true, aaIcon = false) => {
+                    let waypointIcon = aaIcon === true ? new L.icon(lists.waypointIcons[3]) : new L.icon(lists.waypointIcons[iconIdx]);
                     // create the waypoint marker
                     wayPointMarker = new L.marker(pos, {
                         icon: waypointIcon,
@@ -118,13 +118,13 @@ angular.module('orsApp').directive('orsMap', function() {
                     ctrl.mapModel.geofeatures.layerAccessibilityAnalysis.clearLayers();
                     ctrl.mapModel.geofeatures.layerEmph.clearLayers();
                 };
-                ctrl.reAddWaypoints = (waypoints, fireRequest = true) => {
+                ctrl.reAddWaypoints = (waypoints, fireRequest = true, aaIcon = false) => {
                     console.info("reAddWaypoints");
                     ctrl.clearMap();
                     var idx = 0;
                     angular.forEach(waypoints, (waypoint) => {
                         var iconIdx = orsSettingsFactory.getIconIdx(idx);
-                        if (waypoint._latlng.lat && waypoint._latlng.lng) ctrl.addWaypoint(idx, iconIdx, waypoint._latlng, fireRequest);
+                        if (waypoint._latlng.lat && waypoint._latlng.lng) ctrl.addWaypoint(idx, iconIdx, waypoint._latlng, fireRequest, aaIcon);
                         idx += 1;
                     });
                 };
@@ -160,11 +160,10 @@ angular.module('orsApp').directive('orsMap', function() {
                  * @param {Object} package - The action package
                  */
                 ctrl.add = (package) => {
-                    console.log(package)
-                    L.polyline(package.geometry, {
-                        color: !(package.color === undefined) ? package.color : 'red',
-                        index: !(package.featureId == undefined) ? package.featureId : null
+                    let polyLine = L.polyline(package.geometry, {
+                        index: !(package.featureId === undefined) ? package.featureId : null
                     }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
+                    polyLine.setStyle(package.style);
                 };
                 /** 
                  * adds polygon array to specific layer
@@ -184,7 +183,7 @@ angular.module('orsApp').directive('orsMap', function() {
                         }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
                     }
                     // hack to change opacity of entire overlaypane layer but prevent opacity of stroke
-                    const svg = d3.select(ctrl.mapModel.map.getPanes().overlayPane).style("opacity", 0.5);
+                    let svg = d3.select(ctrl.mapModel.map.getPanes().overlayPane).style("opacity", 0.5);
                     svg.selectAll("path").style("stroke-opacity", 1);
                 };
                 /** 
@@ -202,10 +201,10 @@ angular.module('orsApp').directive('orsMap', function() {
                     }
                 };
                 orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
-                    console.log('SUBSCRIBING.....', route)
-
+                    let svg = d3.select(ctrl.mapModel.map.getPanes().overlayPane);
                     ctrl.clearMap();
                     ctrl.routing = route == 'routing' ? true : false;
+                    if (ctrl.routing) svg.style("opacity", 1);
                 });
                 orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
                     console.log('changes in routing waypoints detected..', d);
@@ -217,15 +216,9 @@ angular.module('orsApp').directive('orsMap', function() {
                     console.log('changes in aa waypoints detected..', d);
                     const waypoints = d;
                     // re-add waypoints only after init
-                    if (waypoints.length > 0) ctrl.reAddWaypoints(waypoints, ctrl.routing);
+                    if (waypoints.length > 0) ctrl.reAddWaypoints(waypoints, ctrl.routing, true);
                     // ctrl.addWaypoint(idx, iconIdx, waypoint._latlng, fireRequest);
                 });
-                /** highlights a geometry */
-                ctrl.highlight = (package) => {
-                    L.polyline(package.geometry, {
-                        color: '#b5152b'
-                    }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
-                };
                 /**
                  * Dispatches all commands sent by Mapservice by using id and then performing the corresponding function
                  */
@@ -241,9 +234,6 @@ angular.module('orsApp').directive('orsMap', function() {
                             break;
                         case 2:
                             ctrl.clear(params._package);
-                            break;
-                        case 3:
-                            ctrl.highlight(params._package);
                             break;
                         case 4:
                             ctrl.addPolygons(params._package);
@@ -289,37 +279,3 @@ angular.module('orsApp').directive('orsAaPopup', ['$compile', '$timeout', 'orsSe
         };
     }
 ]);
-// angular.module('orsApp.ors-map', []).component('orsMapLOOOL', {
-//     transclude: true,
-//     bindings: {
-//         orsMap: '<',
-//     },
-//     controller(orsSettingsFactory, orsObjectsFactory, orsMapFactory) {
-//         // // add map
-//         var ctrl = this;
-//         ctrl.$onInit = () => {
-//             ctrl.basemaps = {
-//                 basemap: L.tileLayer(namespaces.layerMapSurfer.url, {
-//                     attribution: namespaces.layerMapSurfer.attribution
-//                 })
-//             };
-//             ctrl.geofeatures = {
-//                 layerLocationMarker: L.featureGroup(),
-//                 layerRoutePoints: L.featureGroup(),
-//                 layerRouteLines: L.featureGroup()
-//             };
-//             ctrl.mapModel = {
-//                 map: ctrl.orsMap,
-//                 basemaps: ctrl.basemaps,
-//                 geofeatures: ctrl.geofeatures
-//             };
-//             ctrl.mapModel.map.on("load", function(evt) {
-//                 ctrl.mapModel.basemaps.basemap.addTo(ctrl.orsMap);
-//                 ctrl.mapModel.geofeatures.layerRoutePoints.addTo(ctrl.orsMap);
-//                 ctrl.mapModel.geofeatures.layerRouteLines.addTo(ctrl.orsMap);
-//             });
-//             ctrl.orsMap.setView([0, 0], 1);
-//         };
-//         L.marker([0, 0]).addTo(ctrl.orsMap);
-//     }
-// });

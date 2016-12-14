@@ -22,11 +22,11 @@ angular.module('orsApp.ors-aa-waypoint', []).component('orsAaWaypoint', {
             if (ctrl.addresses) ctrl.showAddresses = true;
         };
         ctrl.addressChanged = () => {
-            // is this a waypoint...?
-            // fire nominatim
-            const requestData = orsUtilsService.generateXml(ctrl.waypoint._address);
-            orsRequestService.geocode(requestData).then(function(response) {
-                let data = orsUtilsService.domParser(response.data);
+            const payload = orsUtilsService.generateXml(ctrl.waypoint._address);
+            const request = orsRequestService.geocode(payload);
+            orsRequestService.clearRequests(request, ctrl.idx);
+            request.promise.then(function(response) {
+                let data = orsUtilsService.domParser(response);
                 const error = orsErrorhandlerService.parseResponse(data);
                 if (!error) {
                     ctrl.addresses = orsUtilsService.processAddresses(data);

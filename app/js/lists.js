@@ -46,6 +46,11 @@ lists.waypointIcons = {
         iconSize: [30, 70], // size of the icon
         iconAnchor: [15, 35] // point of the icon which will correspond to marker's location
     },
+    3: {
+        iconUrl: 'app/img/center.png',
+        iconSize: [30, 70], // size of the icon
+        iconAnchor: [15, 35] // point of the icon which will correspond to marker's location
+    }
 };
 lists.profiles = {
     Car: {
@@ -434,4 +439,30 @@ lists.layers = {
     2: 'layerEmph',
     3: 'layerAccessibilityAnalysis',
     4: 'layerTracks'
+};
+lists.layerStyles = {
+    route: function() {
+        return {
+            stroke: true,
+            color: '#b5152b',
+            weight: 6,
+            opacity: 0.8,
+            lineCap: 'butt',
+            lineJoin: 'round',
+        };
+    },
+    routePadding: function() {
+        return {
+            color: '#fff',
+            weight: 9,
+            opacity: 1
+        };
+    },
+    routeEmph: function(){
+        return {
+            color: 'yellow',
+            weight: 3,
+            opacity: 1
+        };
+    }
 };

@@ -47,9 +47,11 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
                     //49.44045, 8.686752
                 }
             } else /** fire nominatim */ {
-                const requestData = orsUtilsService.generateXml(ctrl.waypoint._address);
-                orsRequestService.geocode(requestData).then(function(response) {
-                    let data = orsUtilsService.domParser(response.data);
+                const payload = orsUtilsService.generateXml(ctrl.waypoint._address);
+                const request = orsRequestService.geocode(payload);
+                orsRequestService.clearRequests(request, ctrl.idx);
+                request.promise.then(function(response) {
+                    let data = orsUtilsService.domParser(response);
                     const error = orsErrorhandlerService.parseResponse(data);
                     if (!error) {
                         ctrl.addresses = orsUtilsService.processAddresses(data);

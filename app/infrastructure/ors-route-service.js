@@ -43,18 +43,23 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$h
             orsMapFactory.mapServiceSubject.onNext(action);
         };
         orsRouteService.Emph = function(geom) {
-            let action = orsObjectsFactory.createMapAction(3, lists.layers[2], geom, undefined);
+            let action = orsObjectsFactory.createMapAction(1, lists.layers[2], geom, undefined, lists.layerStyles.routeEmph());
             orsMapFactory.mapServiceSubject.onNext(action);
         };
         orsRouteService.zoomTo = function(geom) {
             let action = orsObjectsFactory.createMapAction(0, lists.layers[2], geom, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
         };
+        orsRouteService.addRoute = function(geometry) {
+            const routePadding = orsObjectsFactory.createMapAction(1, lists.layers[1], geometry, undefined, lists.layerStyles.routePadding());
+            orsMapFactory.mapServiceSubject.onNext(routePadding);
+            const routeLine = orsObjectsFactory.createMapAction(1, lists.layers[1], geometry, undefined, lists.layerStyles.route());
+            orsMapFactory.mapServiceSubject.onNext(routeLine);
+        };
         orsRouteService.processRoutes = function(response) {
             _.each(orsRouteService.routeObj.routes, function(route) {
                 /** add layers */
-                let action = orsObjectsFactory.createMapAction(1, lists.layers[1], route.points, undefined);
-                orsMapFactory.mapServiceSubject.onNext(action);
+                orsRouteService.addRoute(route.points);
             });
             /** update summary */
             orsRouteService.routesSubject.onNext(orsRouteService.routeObj.routes);

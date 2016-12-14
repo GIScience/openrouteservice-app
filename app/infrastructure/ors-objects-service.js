@@ -20,13 +20,15 @@ angular.module('orsApp.objects-service', []).factory('orsObjectsFactory', functi
          * @param {number} layerCode - The layer code.
          * @param {Array} geometry - List of latlng tuples.
          * @param {number} fId - Feature id to zoom to. 
+         * @param {Object} style - Contains style elements. 
          */
-        constructor(aCode, layerCode, geometry, fId) {
+        constructor(aCode, layerCode, geometry, fId, style) {
             this._actionCode = aCode;
             this._package = {
                 layerCode: layerCode,
                 geometry: geometry,
-                featureId: fId
+                featureId: fId,
+                style: style
             };
         }
     }
@@ -42,8 +44,8 @@ angular.module('orsApp.objects-service', []).factory('orsObjectsFactory', functi
          * Create map interaction object.
          * @return {Object} A map interaction object.
          */
-        createMapAction: (actionCode, layerCode, geometry = undefined, featureId = undefined) => {
-            return new mapAction(actionCode, layerCode, geometry, featureId);
+        createMapAction: (actionCode, layerCode, geometry = undefined, featureId = undefined, style = undefined) => {
+            return new mapAction(actionCode, layerCode, geometry, featureId, style);
         }
     };
 });

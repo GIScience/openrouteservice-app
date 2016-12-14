@@ -2,12 +2,10 @@
     <i class="search icon"></i>
     <input ng-change="$ctrl.addressChanged()" ng-click="$ctrl.checkForAddresses()" ng-model="$ctrl.waypoint._address" ng-model-options="{debounce: 1000}" placeholder={{$ctrl.getPlaceholder()}} type="text">
 </div>
-<div ng-show="$ctrl.showAddresses">
-    <div class="ui relaxed divided list">
+<div class="ors-addresses" ng-show="$ctrl.showAddresses">
+    <div class="ui divided list">
         <div class="item" ng-repeat="address in $ctrl.addresses">
-            <i class="large github middle aligned icon"></i>
-            <div class="content">
-                <div class="description" ng-click="$ctrl.select(address)">{{address.shortAddress}}</div>
+            <div ng-bind-html="address.shortAddress" ng-click="$ctrl.select(address)">
             </div>
         </div>
     </div>
