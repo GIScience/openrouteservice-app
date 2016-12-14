@@ -1,5 +1,5 @@
-angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', 'orsUtilsService', 'orsMapFactory', 'orsObjectsFactory',
-    function($http, orsUtilsService, orsMapFactory, orsObjectsFactory) {
+angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', '$q', 'orsUtilsService', 'orsMapFactory', 'orsObjectsFactory',
+    function($http, $q, orsUtilsService, orsMapFactory, orsObjectsFactory) {
         /**
          * Requests geocoding from ORS backend
          * @param {String} requestData: XML for request payload
@@ -45,11 +45,19 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', 'orsUt
          */
         orsAaService.fetchAnalysis = function(requestData) {
             var url = namespaces.services.analyse;
-            return $http({
-                method: 'POST',
-                url: url,
-                data: requestData
+            var canceller = $q.defer();
+            var cancel = function(reason) {
+                canceller.resolve(reason);
+            };
+            var promise = $http.post(url, requestData, {
+                timeout: canceller.promise
+            }).then(function(response) {
+                return response.data;
             });
+            return {
+                promise: promise,
+                cancel: cancel
+            };
         };
         /**
          * builds and sends the service request
@@ -59,94 +67,94 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', 'orsUt
          * @param {Object} failureCallback: function callback
          */
         orsAaService.generateAnalysisRequest = function(settings) {
-                console.log(settings);
-                var writer = new XMLWriter('UTF-8', '1.0');
-                writer.writeStartDocument();
-                //<aas:AAS>
-                writer.writeElementString('aas:AAS');
-                writer.writeAttributeString('version', '1.0');
-                writer.writeAttributeString('xmlns:aas', namespaces.aas);
-                writer.writeAttributeString('xmlns:xsi', namespaces.xsi);
-                writer.writeAttributeString('xsi:schemaLocation', namespaces.schemata.analyseService);
-                //<aas:RequestHeader />
-                writer.writeElementString('aas:RequestHeader');
-                //<aas:Request>
-                writer.writeStartElement('aas:Request');
-                writer.writeAttributeString('methodName', 'AccessibilityRequest');
-                writer.writeAttributeString('version', '1.0');
-                writer.writeAttributeString('requestID', '00');
-                //<aas:DetermineAccessibilityRequest>
-                writer.writeStartElement('aas:DetermineAccessibilityRequest');
-                //<aas:Accessibility>
-                writer.writeStartElement('aas:Accessibility');
-                //<aas:AccessibilityPreference>
-                writer.writeStartElement('aas:AccessibilityPreference');
-                //<aas:Time/>
-                writer.writeStartElement('aas:Time');
-                writer.writeAttributeString('Duration', 'PT0H' + settings.profile.options.analysis_options.minutes + 'M00S');
-                writer.writeEndElement();
-                //</aas:AccessibilityPreference
-                writer.writeEndElement();
-                //<aas:AccessibilitySettings
-                writer.writeStartElement('aas:AccessibilitySettings');
-                writer.writeElementString('aas:RoutePreference', settings.profile.type || 'Fastest');
-                //<aas:RoutePreference>
-                // writer.writeElementString('aas:Method', settings.profile.options.analysis_options.method || 'Default');
-                //TODO
-                writer.writeElementString('aas:Method', 'Default');
-                //<aas:Method>
-                //To be sent in seconds
-                writer.writeElementString('aas:Interval', (settings.profile.options.analysis_options.interval * 60).toString() || '1000');
-                // writer.writeElementString('aas:Interval', '1000');
-                //<aas:Intervall>                         
-                //</aas:AccessibilitySettings>
-                writer.writeEndElement();
-                //<aas:LocationPoint>
-                writer.writeStartElement('aas:LocationPoint');
-                //<aas:Position>
-                writer.writeStartElement('aas:Position');
-                //<gml:Point>
-                writer.writeStartElement('gml:Point');
-                writer.writeAttributeString('xmlns:gml', namespaces.gml);
-                writer.writeAttributeString('srsName', 'EPSG:4326');
-                //<gml:pos />
-                writer.writeStartElement('gml:pos');
-                writer.writeString(settings.waypoints[0]._latlng.lng + ' ' + settings.waypoints[0]._latlng.lat);
-                writer.writeEndElement();
-                //</gml:Point>
-                writer.writeEndElement();
-                //</aas:Position>
-                writer.writeEndElement();
-                //</aas:LocationPoint>
-                writer.writeEndElement();
-                //</aas:Accessibility>
-                writer.writeEndElement();
-                //<aas:AccessibilityGeometryRequest>
-                writer.writeStartElement('aas:AccessibilityGeometryRequest');
-                //<aas:PolygonPreference />
-                writer.writeStartElement('aas:PolygonPreference');
-                writer.writeString('Detailed');
-                writer.writeEndElement();
-                //</aas:AccessibilityGeometryRequest
-                writer.writeEndElement();
-                //</aas:DetermineAccessibilityRequest>
-                writer.writeEndElement('aas:DetermineAccessibilityRequest');
-                //</aas:Request>
-                writer.writeEndElement();
-                writer.writeEndElement();
-                //</aas:AAS>
-                writer.writeEndDocument();
-                var xmlRequest = writer.flush();
-                writer.close();
-                return xmlRequest;
-            }
-            /**
-             * processes the results and extracts area bounds
-             * @param {Object} result: the response of the service
-             * @return OL.Bounds containing the accessible area; null in case of an error response
-             */
+            console.log(settings);
+            var writer = new XMLWriter('UTF-8', '1.0');
+            writer.writeStartDocument();
+            //<aas:AAS>
+            writer.writeElementString('aas:AAS');
+            writer.writeAttributeString('version', '1.0');
+            writer.writeAttributeString('xmlns:aas', namespaces.aas);
+            writer.writeAttributeString('xmlns:xsi', namespaces.xsi);
+            writer.writeAttributeString('xsi:schemaLocation', namespaces.schemata.analyseService);
+            //<aas:RequestHeader />
+            writer.writeElementString('aas:RequestHeader');
+            //<aas:Request>
+            writer.writeStartElement('aas:Request');
+            writer.writeAttributeString('methodName', 'AccessibilityRequest');
+            writer.writeAttributeString('version', '1.0');
+            writer.writeAttributeString('requestID', '00');
+            //<aas:DetermineAccessibilityRequest>
+            writer.writeStartElement('aas:DetermineAccessibilityRequest');
+            //<aas:Accessibility>
+            writer.writeStartElement('aas:Accessibility');
+            //<aas:AccessibilityPreference>
+            writer.writeStartElement('aas:AccessibilityPreference');
+            //<aas:Time/>
+            writer.writeStartElement('aas:Time');
+            writer.writeAttributeString('Duration', 'PT0H' + settings.profile.options.analysis_options.minutes + 'M00S');
+            writer.writeEndElement();
+            //</aas:AccessibilityPreference
+            writer.writeEndElement();
+            //<aas:AccessibilitySettings
+            writer.writeStartElement('aas:AccessibilitySettings');
+            writer.writeElementString('aas:RoutePreference', settings.profile.type || 'Fastest');
+            //<aas:RoutePreference>
+            // writer.writeElementString('aas:Method', settings.profile.options.analysis_options.method || 'Default');
+            //TODO
+            writer.writeElementString('aas:Method', 'Default');
+            //<aas:Method>
+            //To be sent in seconds
+            writer.writeElementString('aas:Interval', (settings.profile.options.analysis_options.interval * 60).toString() || '1000');
+            // writer.writeElementString('aas:Interval', '1000');
+            //<aas:Intervall>                         
+            //</aas:AccessibilitySettings>
+            writer.writeEndElement();
+            //<aas:LocationPoint>
+            writer.writeStartElement('aas:LocationPoint');
+            //<aas:Position>
+            writer.writeStartElement('aas:Position');
+            //<gml:Point>
+            writer.writeStartElement('gml:Point');
+            writer.writeAttributeString('xmlns:gml', namespaces.gml);
+            writer.writeAttributeString('srsName', 'EPSG:4326');
+            //<gml:pos />
+            writer.writeStartElement('gml:pos');
+            writer.writeString(settings.waypoints[0]._latlng.lng + ' ' + settings.waypoints[0]._latlng.lat);
+            writer.writeEndElement();
+            //</gml:Point>
+            writer.writeEndElement();
+            //</aas:Position>
+            writer.writeEndElement();
+            //</aas:LocationPoint>
+            writer.writeEndElement();
+            //</aas:Accessibility>
+            writer.writeEndElement();
+            //<aas:AccessibilityGeometryRequest>
+            writer.writeStartElement('aas:AccessibilityGeometryRequest');
+            //<aas:PolygonPreference />
+            writer.writeStartElement('aas:PolygonPreference');
+            writer.writeString('Detailed');
+            writer.writeEndElement();
+            //</aas:AccessibilityGeometryRequest
+            writer.writeEndElement();
+            //</aas:DetermineAccessibilityRequest>
+            writer.writeEndElement('aas:DetermineAccessibilityRequest');
+            //</aas:Request>
+            writer.writeEndElement();
+            writer.writeEndElement();
+            //</aas:AAS>
+            writer.writeEndDocument();
+            var xmlRequest = writer.flush();
+            writer.close();
+            return xmlRequest;
+        };
+        /**
+         * processes the results and extracts area bounds
+         * @param {Object} result: the response of the service
+         * @return OL.Bounds containing the accessible area; null in case of an error response
+         */
         orsAaService.parseResultsToBounds = function(response) {
-            response = orsUtilsService.domParser(response.data);
+            response = orsUtilsService.domParser(response);
             var boundingBox = orsUtilsService.getElementsByTagNameNS(response, namespaces.aas, 'BoundingBox');
             var bounds, latlngs;
             if (boundingBox && boundingBox.length > 0) {
@@ -166,7 +174,7 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', 'orsUt
          * @param {String} response: XML response from server
          */
         orsAaService.parseResponseToPolygonJSON = function(response) {
-            response = orsUtilsService.domParser(response.data);
+            response = orsUtilsService.domParser(response);
             console.log(response);
             var area = orsUtilsService.getElementsByTagNameNS(response, namespaces.aas, 'AccessibilityGeometry');
             var poly, isoChroneTime, isoChroneGeometry, collectionArr;

@@ -69,9 +69,9 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * @return {Object} The settings object, may contain both profile options and aa options.
      */
     orsSettingsFactory.getSettings = () => {
-            return orsSettingsFactory[currentSettingsObj].getValue();
-        };
-        /** Subscription function to current waypoints object, used in map. */
+        return orsSettingsFactory[currentSettingsObj].getValue();
+    };
+    /** Subscription function to current waypoints object, used in map. */
     orsSettingsFactory.subscribeToWaypoints = (o) => {
         return orsSettingsFactory.routingWaypointsSubject.subscribe(o);
     };
@@ -127,6 +127,15 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         currentSettingsObj = orsSettingsFactory.getCurrentSettings(newRoute);
         currentWaypointsObj = orsSettingsFactory.getCurrentWaypoints(newRoute);
         /** panels switched, clear the map */
+        /** Cancel outstanding requests */
+        if (orsSettingsFactory.aaRequests.length > 0) {
+            orsSettingsFactory.aaRequests[0].cancel("Cancel last request");
+            orsSettingsFactory.aaRequests.splice(0, 1);
+        }
+        if (orsSettingsFactory.routingRequests.length > 0) {
+            orsSettingsFactory.routingRequests[0].cancel("Cancel last request");
+            orsSettingsFactory.routingRequests.splice(0, 1);
+        }
         orsSettingsFactory.ngRouteSubject.onNext(newRoute);
     });
     /** 
@@ -150,21 +159,17 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     orsSettingsFactory.routingSettingsSubject.subscribe(settings => {
         const isRoutePresent = orsSettingsFactory.handleRoutePresent(settings, 2);
         if (isRoutePresent) {
-
             /** Cancel outstanding requests */
             if (orsSettingsFactory.routingRequests.length > 0) {
-                    orsSettingsFactory.routingRequests[0].cancel("Cancel last request");
-                    orsSettingsFactory.routingRequests.splice(0, 1);
+                orsSettingsFactory.routingRequests[0].cancel("Cancel last request");
+                orsSettingsFactory.routingRequests.splice(0, 1);
             }
-
-
             orsRouteService.resetRoute();
             //orsRouteService.clearRoutes();
             const userOptions = orsSettingsFactory.getUserOptions();
             const payload = orsUtilsService.generateRouteXml(userOptions, settings);
             const request = orsRouteService.fetchRoute(payload);
             orsSettingsFactory.routingRequests.push(request);
-
             request.promise.then(function(response) {
                 const profile = settings.profile.type;
                 orsRouteService.processResponse(response, profile);
@@ -179,13 +184,20 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         /** get user obtions */
         const isAaPresent = orsSettingsFactory.handleRoutePresent(settings, 1);
         if (isAaPresent) {
+            /** Cancel outstanding requests */
+            if (orsSettingsFactory.aaRequests.length > 0) {
+                orsSettingsFactory.aaRequests[0].cancel("Cancel last request");
+                orsSettingsFactory.aaRequests.splice(0, 1);
+            }
             const payload = orsAaService.generateAnalysisRequest(settings);
-            orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
-            orsAaService.fetchAnalysis(payload).then(function(response) {
+            const request = orsAaService.fetchAnalysis(payload);
+            orsSettingsFactory.aaRequests.push(request);
+            request.promise.then(function(response) {
                 orsAaService.processResponse(response);
                 // orsAaService.parseResultsToBounds(response);
                 // orsAaService.parseResponseToPolygonJSON(response);
             }, function(response) {});
+            orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
         }
         // } else {
         // console.log('Not enough waypoints..')
