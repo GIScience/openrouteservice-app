@@ -22,11 +22,12 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
                 if (orsSettingsFactory.getWaypoints().length == 0) {
                     ctrl.routeParams = next.params;
                     orsSettingsFactory.initWaypoints(1);
-                    const importedParams = orsParamsService.importSettings(ctrl.routeParams);
+                    const importedParams = orsParamsService.importSettings(ctrl.routeParams, false);
                     orsSettingsFactory.setSettings(importedParams.settings);
                     // fetch addresses afterwards
                     angular.forEach(importedParams.settings.waypoints, function(wp, idx) {
-                        orsRequestService.getAddress(wp._latlng, idx, true);
+                        orsSettingsFactory.getAddress(wp._latlng, idx, true);
+
                     });
                     /**
                      * First get the Cookie Settings (These are currently language, routinglanguage and units). Then get the permalink user settings (Can be routinglanguage and units)

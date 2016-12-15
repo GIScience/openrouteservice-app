@@ -8,13 +8,11 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService, $scope, $timeout) {
         var ctrl = this;
         ctrl.optionList = lists.optionList;
-        console.log(ctrl.activeSubgroup, ctrl.activeProfile)
         ctrl.$onInit = function() {
             /** This is a reference of the settings object, if we change here, it is updated in settings */
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
             // set weight slider from params
             ctrl.currentOptions.weight = ctrl.currentOptions.weight !== undefined ? ctrl.currentOptions.weight : ctrl.optionList.weight.Fastest;
-            console.log(ctrl.currentOptions.weight, ctrl.optionList.weight.Fastest.value)
             ctrl.weightSlider = {
                 value: ctrl.currentOptions.weight,
                 options: {
@@ -275,7 +273,6 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                 if (ctrl.maxspeedSlider) {
                     ctrl.maxspeedSlider.value = ctrl.maxspeedOptions.default;
                     ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
-                    console.info(ctrl.currentOptions)
                     ctrl.maxspeedSlider.options.floor = ctrl.maxspeedOptions.min;
                     ctrl.maxspeedSlider.options.ceil = ctrl.maxspeedOptions.max;
                     ctrl.maxspeedSlider.options.step = ctrl.maxspeedOptions.step;

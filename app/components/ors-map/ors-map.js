@@ -6,8 +6,8 @@ angular.module('orsApp').directive('orsMap', function() {
             orsMap: '='
         },
         link: function(scope, element, attrs) {},
-        controller: ['$scope', '$compile', '$timeout', 'orsSettingsFactory', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsErrorhandlerService',
-            function($scope, $compile, $timeout, orsSettingsFactory, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsErrorhandlerService) {
+        controller: ['$scope', '$compile', '$timeout', 'orsSettingsFactory', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsErrorhandlerService', 'orsCookiesFactory',
+            function($scope, $compile, $timeout, orsSettingsFactory, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsErrorhandlerService, orsCookiesFactory) {
                 // // add map
                 var ctrl = this;
                 ctrl.orsMap = $scope.orsMap;
@@ -60,7 +60,15 @@ angular.module('orsApp').directive('orsMap', function() {
                     //Add layer control
                     L.control.layers(ctrl.baseLayers, ctrl.overlays).addTo(ctrl.orsMap);
                 });
-                ctrl.orsMap.setView([49.409445, 8.692953], 13);
+                // Check if map options set in cookies
+                const mapOptions = orsCookiesFactory.getMapOptions();
+                if (mapOptions) {
+                    if (mapOptions.mapCenter) ctrl.mapModel.map.panTo(mapOptions.mapCenter);
+                    if (mapOptions.mapZoom) ctrl.mapModel.map.setZoom(mapOptions.mapZoom);
+                } else {
+                    // Heidelberg
+                    ctrl.orsMap.setView([49.409445, 8.692953], 13);
+                }
                 /**
                  * Listens to left mouse click on map
                  * @param {Object} e: Click event
@@ -78,6 +86,20 @@ angular.module('orsApp').directive('orsMap', function() {
                         className: 'cm-popup'
                     }).setContent(popupEvent[0]).setLatLng(e.latlng);
                     ctrl.mapModel.map.openPopup(popup);
+                });
+                //ctrl.mapModel.map.on('baselayerchange', emitMapChangeBaseMap);
+                //ctrl.mapModel.map.on('overlayadd', emitMapChangeOverlay);
+                //ctrl.mapModel.map.on('overlayremove', emitMapChangeOverlay);
+                //ctrl.mapModel.map.on('zoomend', emitMapChangedEvent);
+                //ctrl.mapModel.map.on('zoomend', emitMapChangedZoom);
+                ctrl.mapModel.map.on('moveend', (e) => {
+                    const mapCenter = ctrl.mapModel.map.getCenter();
+                    const mapZoom = ctrl.mapModel.map.getZoom();
+                    const options = {
+                        mapCenter: mapCenter,
+                        mapZoom: mapZoom
+                    };
+                    orsCookiesFactory.setMapOptions(options);
                 });
                 ctrl.processMapWaypoint = (idx, pos, updateWp = false, fireRequest = true) => {
                     // add waypoint to map
@@ -156,6 +178,26 @@ angular.module('orsApp').directive('orsMap', function() {
                     }
                 };
                 /** 
+                 * Highlights marker on map
+                 * @param {Object} package - The action package
+                 */
+                ctrl.highlightWaypoint = (package) => {
+                    ctrl.mapModel.geofeatures[package.layerCode].eachLayer(function(layer) {
+                        if (layer.options.idx == package.featureId) {
+                            let waypointIcon;
+                            if (layer.options.highlighted === true) {
+                                const iconIdx = orsSettingsFactory.getIconIdx(layer.options.idx);
+                                waypointIcon = new L.icon(lists.waypointIcons[iconIdx]);
+                                layer.options.highlighted = false;
+                            } else {
+                                waypointIcon = new L.icon(lists.waypointIcons[3]);
+                                layer.options.highlighted = true;
+                            }
+                            layer.setIcon(waypointIcon);
+                        }
+                    });
+                };
+                /** 
                  * adds features to specific layer
                  * @param {Object} package - The action package
                  */
@@ -178,7 +220,7 @@ angular.module('orsApp').directive('orsMap', function() {
                         L.polygon(package.geometry[i], {
                             fillColor: package.geometry.length == 1 ? getGradientColor(1) : getGradientColor(i / (package.geometry.length - 1)),
                             color: '#000',
-                            weight: 2,
+                            weight: 1,
                             fillOpacity: 1
                         }).addTo(ctrl.mapModel.geofeatures[package.layerCode]);
                     }
@@ -234,6 +276,9 @@ angular.module('orsApp').directive('orsMap', function() {
                             break;
                         case 2:
                             ctrl.clear(params._package);
+                            break;
+                        case 3:
+                            ctrl.highlightWaypoint(params._package);
                             break;
                         case 4:
                             ctrl.addPolygons(params._package);

@@ -9,7 +9,6 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
             ctrl.profiles = lists.profiles;
         };
         ctrl.$routerOnActivate = function(next) {
-            console.log(JSON.stringify($location.reload));
             /** the router is always activated on permalink update. This code
                 must be ignored if the permalink is changed, as no waypoints are changed, interacts with app.js line 99 */
             if ($location.reload !== false) {
@@ -19,7 +18,6 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
                  * if there isn't initialize settings object from permalink or provide empty settings object
                  */
                 if (orsSettingsFactory.getWaypoints().length == 0) {
-                    console.log('importing routing settings..')
                     ctrl.routeParams = next.params;
                     orsSettingsFactory.initWaypoints(2);
                     const importedParams = orsParamsService.importSettings(ctrl.routeParams);

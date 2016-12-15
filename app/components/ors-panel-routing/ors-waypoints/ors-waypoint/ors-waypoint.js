@@ -10,7 +10,7 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
         showAdd: '=',
         addresses: '<'
     },
-    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService) {
+    controller(orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService) {
         var ctrl = this;
         ctrl.select = (address) => {
             ctrl.showAddresses = false;
@@ -23,6 +23,10 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
             if (ctrl.idx == 0) return 'A';
             else if (ctrl.idx == ctrl.waypoints.length - 1) return 'B';
             else return ctrl.idx;
+        };
+        ctrl.emph = () => {
+            const highlightWaypoint = orsObjectsFactory.createMapAction(3, lists.layers[0], undefined, ctrl.idx, undefined);
+            orsMapFactory.mapServiceSubject.onNext(highlightWaypoint);
         };
         ctrl.checkForAddresses = () => {
             if (ctrl.addresses) ctrl.showAddresses = true;

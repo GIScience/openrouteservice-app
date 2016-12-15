@@ -4,8 +4,6 @@ angular.module('orsApp.cookies-service', ['ngCookies']).factory('orsCookiesFacto
         orsCookiesFactory.getCookies = () => {
             let userOptions = $cookies.getObject('userOptions');
             var lang = $window.navigator.language || $window.navigator.userLanguage;
-            console.log(lang);
-            console.log(userOptions);
             if (userOptions === undefined) userOptions = {
                 language: lang
             };
@@ -17,6 +15,19 @@ angular.module('orsApp.cookies-service', ['ngCookies']).factory('orsCookiesFacto
          */
         orsCookiesFactory.setCookieUserOptions = (options) => {
             $cookies.putObject('userOptions', options);
+        };
+        /** 
+         * Sets map specific options in cookies
+         * @param {Object} options - Consists of map options
+         */
+        orsCookiesFactory.setMapOptions = (options) => {
+            $cookies.putObject('mapOptions', options);
+        };
+        /** 
+         * Gets map settings from cookies
+         */
+        orsCookiesFactory.getMapOptions = () => {
+            return $cookies.getObject('mapOptions');
         };
         return orsCookiesFactory;
     }

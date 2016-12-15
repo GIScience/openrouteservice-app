@@ -45,9 +45,9 @@ namespaces.schemata = {
  */
 namespaces.services = {
     geocoding: 'http://openls.geog.uni-heidelberg.de/geocoding', //for address search requests
-    routing: 'http://openls.geog.uni-heidelberg.de/routing', //for routing requests
-    tmc: 'http://openls.geog.uni-heidelberg.de/osm/routing?tmc',
-    analyse: 'http://openls.geog.uni-heidelberg.de/analysis', //for accessibility analysis requests
+    routing: 'http://openls.geog.uni-heidelberg.de/routing-test', //for routing requests
+    tmc: 'http://openls.geog.uni-heidelberg.de/osm/routing-test?tmc',
+    analyse: 'http://openls.geog.uni-heidelberg.de/analysis-test', //for accessibility analysis requests
 };
 /**
  * metadata used when generating (export) files on the openrouteservice

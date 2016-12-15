@@ -2,7 +2,6 @@ angular.module('orsApp.ors-route-controls', ['orsApp.ors-importRoute-controls'])
     templateUrl: 'app/components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-route-controls.html',
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsMapFactory, orsCookiesFactory) {
         let ctrl = this;
-        console.log(ctrl.activeSubgroup)
         ctrl.showOptions = false;
         ctrl.add = () => {
             ctrl.onAdd();
