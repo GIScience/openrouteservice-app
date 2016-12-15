@@ -6,6 +6,17 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', '$q', 
          */
         let orsAaService = {};
         orsAaService.aaSubject = new Rx.Subject();
+        orsAaService.aaRequests = {};
+        orsAaService.aaRequests.requests = [];
+        /** Clears outstanding requests */
+        orsAaService.aaRequests.clear = () => {
+            if (orsAaService.aaRequests.requests.length > 0) {
+                for (let req of orsAaService.aaRequests.requests) {
+                    req.cancel("Cancel last request");
+                }
+                orsAaService.aaRequests.requests = [];
+            }
+        };
         orsAaService.orsAaObj = {
             code: 'Ok',
             bbox: [

@@ -49,8 +49,10 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
                 //gets the Geometry from the opened file
                 const geometry = orsImportFactory.importFile(file.extension, file.content);
                 // create map action and add geom to layer tracks. Adds the track when checkbox is checked
-                let action_loadToMap = orsObjectsFactory.createMapAction(1, lists.layers[4], geometry.geometry.coordinates, file.index);
-                orsMapFactory.mapServiceSubject.onNext(action_loadToMap);
+                let trackPadding = orsObjectsFactory.createMapAction(1, lists.layers[4], geometry.geometry.coordinates, file.index, lists.layerStyles.trackPadding());
+                orsMapFactory.mapServiceSubject.onNext(trackPadding);
+                let track = orsObjectsFactory.createMapAction(1, lists.layers[4], geometry.geometry.coordinates, file.index, lists.layerStyles.track());
+                orsMapFactory.mapServiceSubject.onNext(track);
                 // create the zoom to layer action. Zooms to layer when checkbox is checked
                 let action_zoomToLayer = orsObjectsFactory.createMapAction(0, lists.layers[4], undefined, file.index);
                 orsMapFactory.mapServiceSubject.onNext(action_zoomToLayer);
@@ -62,18 +64,20 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
         };
         ctrl.importRoute = function(file) {
             const geometry = orsImportFactory.importFile(file.extension, file.content);
-            // do some simplifying magic..
-            let start = geometry.geometry.coordinates[0];
-            start = new L.latLng([parseFloat(start[0]), parseFloat(start[1])]);
-            const startString = orsUtilsService.parseLatLngString(start);
-            start = orsObjectsFactory.createWaypoint(startString, start, 1);
-            let end = geometry.geometry.coordinates[geometry.geometry.coordinates.length - 1];
-            end = new L.latLng([parseFloat(end[0]), parseFloat(end[1])]);
-            const endString = orsUtilsService.parseLatLngString(end);
-            end = orsObjectsFactory.createWaypoint(endString, end, 1);
+            let linestring = turf.linestring(geometry.geometry.coordinates);
+            linestring = turf.simplify(linestring, 0.01, false);
             let waypoints = [];
-            waypoints.push(...[start, end]);
+            for (let coord of linestring.geometry.coordinates) {
+                const latLng = new L.latLng([parseFloat(coord[0]), parseFloat(coord[1])]);
+                const latLngString = orsUtilsService.parseLatLngString(latLng);
+                const wpObj = orsObjectsFactory.createWaypoint(latLngString, latLng, 1);
+                waypoints.push(wpObj);
+            }
             orsSettingsFactory.setWaypoints(waypoints);
+            // fetch addresses afterwards
+            angular.forEach(waypoints, function(wp, idx) {
+                orsSettingsFactory.getAddress(wp._latlng, idx, true);
+            });
         };
     }
 });

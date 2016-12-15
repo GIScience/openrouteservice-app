@@ -12,6 +12,17 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$h
             let action = orsObjectsFactory.createMapAction(2, lists.layers[1], undefined, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
         };
+        orsRouteService.routingRequests = {};
+        orsRouteService.routingRequests.requests = [];
+        orsRouteService.routingRequests.clear = () => {
+            if (orsRouteService.routingRequests.requests.length > 0) {
+                for (let req of orsRouteService.routingRequests.requests) {
+                    console.log(req)
+                    req.cancel("Cancel last request");
+                }
+                orsRouteService.routingRequests.requests = [];
+            }
+        };
         /**
          * Requests route from ORS backend
          * @param {String} requestData: XML for request payload

@@ -83,7 +83,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
                 ctrl.waypoints.splice(idx, 1);
             }
             /** remove this request from request que */
-            orsRequestService.removeRequest(idx);
+            orsRequestService.geocodeRequests.removeRequest(idx);
             orsSettingsFactory.setWaypoints(ctrl.waypoints, toggleRequest);
         };
         /** Reveres waypoints order. */

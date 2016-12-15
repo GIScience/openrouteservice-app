@@ -49,7 +49,7 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
             } else /** fire nominatim */ {
                 const payload = orsUtilsService.generateXml(ctrl.waypoint._address);
                 const request = orsRequestService.geocode(payload);
-                orsRequestService.clearRequests(request, ctrl.idx);
+                orsRequestService.removeRequest(request, ctrl.idx);
                 request.promise.then(function(response) {
                     let data = orsUtilsService.domParser(response);
                     const error = orsErrorhandlerService.parseResponse(data);

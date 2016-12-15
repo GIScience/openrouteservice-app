@@ -24,7 +24,7 @@ angular.module('orsApp.ors-aa-waypoint', []).component('orsAaWaypoint', {
         ctrl.addressChanged = () => {
             const payload = orsUtilsService.generateXml(ctrl.waypoint._address);
             const request = orsRequestService.geocode(payload);
-            orsRequestService.clearRequests(request, ctrl.idx);
+            orsRequestService.clearRequest(request, ctrl.idx);
             request.promise.then(function(response) {
                 let data = orsUtilsService.domParser(response);
                 const error = orsErrorhandlerService.parseResponse(data);

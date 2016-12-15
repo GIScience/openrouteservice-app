@@ -1,11 +1,42 @@
-angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q', '$http', 'orsUtilsService', 'orsErrorhandlerService', 'orsSettingsFactory',
-    function($q, $http, orsUtilsService, orsErrorhandlerService, orsSettingsFactory) {
+angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q', '$http', 'orsUtilsService', 'orsErrorhandlerService',
+    function($q, $http, orsUtilsService, orsErrorhandlerService) {
         /**
          * Requests geocoding from ORS backend
          * @param {String} requestData: XML for request payload
          */
         let orsRequestService = {};
-        orsRequestService.geocodeRequests = [];
+        orsRequestService.geocodeRequests = {};
+        orsRequestService.geocodeRequests.requests = [];
+        /** 
+         * Updates request if new one is fired
+         * @param {Object} request: xhr request
+         * @param {number} idx: WP idx
+         */
+        orsRequestService.geocodeRequests.updateRequest = (request, idx) => {
+            if (typeof orsRequestService.geocodeRequests.requests[idx] === 'undefined') {
+                orsRequestService.geocodeRequests.requests[idx] = request;
+            } else {
+                orsRequestService.geocodeRequests.requests[idx].cancel("Cancel last request");
+                orsRequestService.geocodeRequests.requests[idx] = request;
+            }
+        };
+        /** 
+         * Removes requests from the que 
+         * @param {number} idx: WP idx
+         */
+        orsRequestService.geocodeRequests.removeRequest = (idx) => {
+            orsRequestService.geocodeRequests.requests[idx].cancel("Cancel last request");
+            orsRequestService.geocodeRequests.requests.splice(idx, 1);
+        };
+        /** clears all requests */
+        orsRequestService.geocodeRequests.clear = () => {
+            if (orsRequestService.geocodeRequests.requests.length > 0) {
+                for (let req of orsRequestService.geocodeRequests.requests) {
+                    req.cancel("Cancel last request");
+                }
+                orsRequestService.geocodeRequests.requests = [];
+            }
+        };
         orsRequestService.geocode = function(requestData) {
             var url = namespaces.services.geocoding;
             var canceller = $q.defer();
@@ -30,46 +61,7 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q',
             var data = response.data;
             return data;
         };
-        /** 
-         * Removes requests from the que 
-         * @param {number} idx: WP idx
-         */
-        orsRequestService.removeRequest = (idx) => {
-            orsRequestService.geocodeRequests.splice(idx, 1);
-        };
-        /** 
-         * Cancels or adds request to que
-         * @param {Object} request: xhr request
-         * @param {number} idx: WP idx
-         
-         */
-        orsRequestService.clearRequests = (request, idx) => {
-            if (typeof orsRequestService.geocodeRequests[idx] === 'undefined') {
-                orsRequestService.geocodeRequests[idx] = request;
-            } else {
-                orsRequestService.geocodeRequests[idx].cancel("Cancel last request");
-                orsRequestService.geocodeRequests[idx] = request;
-            }
-        };
-        orsRequestService.getAddress = function(pos, idx, init) {
-            const latLngString = orsUtilsService.parseLatLngString(pos);
-            orsSettingsFactory.updateWaypointAddress(idx, latLngString, init);
-            const payload = orsUtilsService.reverseXml(pos);
-            const request = orsRequestService.geocode(payload);
-            orsRequestService.clearRequests(request, idx);
-            request.promise.then(function(response) {
-                const data = orsUtilsService.domParser(response);
-                const error = orsErrorhandlerService.parseResponse(data);
-                if (!error) {
-                    const addressData = orsUtilsService.processAddresses(data, true);
-                    orsSettingsFactory.updateWaypointAddress(idx, addressData[0].address, init);
-                } else {
-                    console.log('Not able to find address!');
-                }
-            }, function(response) {
-                console.log('It was not possible to get the address of the current waypoint. Sorry for the inconvenience!');
-            });
-        };
+        
         return orsRequestService;
     }
 ]);

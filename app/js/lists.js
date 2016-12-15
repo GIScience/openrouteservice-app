@@ -443,12 +443,9 @@ lists.layers = {
 lists.layerStyles = {
     route: function() {
         return {
-            stroke: true,
             color: '#b5152b',
-            weight: 6,
-            opacity: 0.8,
-            lineCap: 'butt',
-            lineJoin: 'round',
+            weight: 5,
+            opacity: 1
         };
     },
     routePadding: function() {
@@ -458,11 +455,34 @@ lists.layerStyles = {
             opacity: 1
         };
     },
-    routeEmph: function(){
+    routeEmph: function() {
         return {
             color: 'yellow',
             weight: 3,
             opacity: 1
         };
+    },
+    track: function() {
+        return {
+            color: '#FFF',
+            weight: 5,
+            opacity: 1
+        };
+    },
+    trackPadding: function() {
+        return {
+            color: lists.layerStyles.get_random_color(),
+            weight: 9,
+            opacity: 1
+        };
+    },
+    rand: function(min, max) {
+        return parseInt(Math.random() * (max - min + 1), 10) + min;
+    },
+    get_random_color: function() {
+        var h = lists.layerStyles.rand(180, 250);
+        var s = lists.layerStyles.rand(30, 100);
+        var l = lists.layerStyles.rand(20, 70);
+        return 'hsl(' + h + ',' + s + '%,' + l + '%)';
     }
 };

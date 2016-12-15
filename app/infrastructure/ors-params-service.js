@@ -29,6 +29,11 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUti
                     waypoints.push(wp);
                     idx += 1;
                 });
+                /** Add second empty wp if only start is set */
+                if (idx == 1) {
+                    wp = orsObjectsFactory.createWaypoint('', false, 0);
+                    waypoints.push(wp);
+                } 
                 settings.waypoints = waypoints;
             }
             if (key == 'type') {

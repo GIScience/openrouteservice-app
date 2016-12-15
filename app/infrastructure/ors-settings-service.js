@@ -1,17 +1,15 @@
-angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRouteService', 'orsAaService', function(orsObjectsFactory, orsUtilsService, orsRouteService, orsAaService) {
+angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsRouteService', 'orsAaService', 'orsErrorhandlerService', function(orsObjectsFactory, orsUtilsService, orsRequestService, orsRouteService, orsAaService, orsErrorhandlerService) {
     let orsSettingsFactory = {};
     /** Behaviour subjects routing. */
     orsSettingsFactory.routingWaypointsSubject = new Rx.BehaviorSubject({});
     orsSettingsFactory.routingSettingsSubject = new Rx.BehaviorSubject({
         waypoints: []
     });
-    orsSettingsFactory.routingRequests = [];
     /** Behaviour subjects accessibility analysis. */
     orsSettingsFactory.aaWaypointsSubject = new Rx.BehaviorSubject({});
     orsSettingsFactory.aaSettingsSubject = new Rx.BehaviorSubject({
         waypoints: []
     });
-    orsSettingsFactory.aaRequests = [];
     /** Behaviour subject for user options, language and units */
     orsSettingsFactory.userOptionsSubject = new Rx.BehaviorSubject({});
     /** Behaviour subject routing. */
@@ -128,14 +126,9 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         currentWaypointsObj = orsSettingsFactory.getCurrentWaypoints(newRoute);
         /** panels switched, clear the map */
         /** Cancel outstanding requests */
-        if (orsSettingsFactory.aaRequests.length > 0) {
-            orsSettingsFactory.aaRequests[0].cancel("Cancel last request");
-            orsSettingsFactory.aaRequests.splice(0, 1);
-        }
-        if (orsSettingsFactory.routingRequests.length > 0) {
-            orsSettingsFactory.routingRequests[0].cancel("Cancel last request");
-            orsSettingsFactory.routingRequests.splice(0, 1);
-        }
+        orsAaService.aaRequests.clear();
+        orsRouteService.routingRequests.clear();
+        orsRequestService.geocodeRequests.clear();
         orsSettingsFactory.ngRouteSubject.onNext(newRoute);
     });
     /** 
@@ -160,16 +153,12 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         const isRoutePresent = orsSettingsFactory.handleRoutePresent(settings, 2);
         if (isRoutePresent) {
             /** Cancel outstanding requests */
-            if (orsSettingsFactory.routingRequests.length > 0) {
-                orsSettingsFactory.routingRequests[0].cancel("Cancel last request");
-                orsSettingsFactory.routingRequests.splice(0, 1);
-            }
+            orsRouteService.routingRequests.clear();
             orsRouteService.resetRoute();
-            //orsRouteService.clearRoutes();
             const userOptions = orsSettingsFactory.getUserOptions();
             const payload = orsUtilsService.generateRouteXml(userOptions, settings);
             const request = orsRouteService.fetchRoute(payload);
-            orsSettingsFactory.routingRequests.push(request);
+            orsRouteService.routingRequests.requests.push(request);
             request.promise.then(function(response) {
                 const profile = settings.profile.type;
                 orsRouteService.processResponse(response, profile);
@@ -185,13 +174,10 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         const isAaPresent = orsSettingsFactory.handleRoutePresent(settings, 1);
         if (isAaPresent) {
             /** Cancel outstanding requests */
-            if (orsSettingsFactory.aaRequests.length > 0) {
-                orsSettingsFactory.aaRequests[0].cancel("Cancel last request");
-                orsSettingsFactory.aaRequests.splice(0, 1);
-            }
+            orsAaService.aaRequests.clear();
             const payload = orsAaService.generateAnalysisRequest(settings);
             const request = orsAaService.fetchAnalysis(payload);
-            orsSettingsFactory.aaRequests.push(request);
+            orsAaService.aaRequests.requests.push(request);
             request.promise.then(function(response) {
                 orsAaService.processResponse(response);
                 // orsAaService.parseResultsToBounds(response);
@@ -203,6 +189,30 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         // console.log('Not enough waypoints..')
         // }
     });
+    /** Fetches address 
+     * @param {Object} pos - latLng Object 
+     * @param {number} idx - Index of waypoint
+     * @param {boolean} init - What was that again? 
+     */
+    orsSettingsFactory.getAddress = function(pos, idx, init) {
+        const latLngString = orsUtilsService.parseLatLngString(pos);
+        orsSettingsFactory.updateWaypointAddress(idx, latLngString, init);
+        const payload = orsUtilsService.reverseXml(pos);
+        const request = orsRequestService.geocode(payload);
+        orsRequestService.geocodeRequests.updateRequest(request, idx);
+        request.promise.then(function(response) {
+            const data = orsUtilsService.domParser(response);
+            const error = orsErrorhandlerService.parseResponse(data);
+            if (!error) {
+                const addressData = orsUtilsService.processAddresses(data, true);
+                orsSettingsFactory.updateWaypointAddress(idx, addressData[0].address, init);
+            } else {
+                console.log('Not able to find address!');
+            }
+        }, function(response) {
+            console.log('It was not possible to get the address of the current waypoint. Sorry for the inconvenience!');
+        });
+    };
     /** 
      * Updates waypoint address. No need to fire subscription for settings.
      * This is done already when updated latlng.
