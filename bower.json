@@ -7,15 +7,12 @@
   "private": true,
   "dependencies": {
     "angular": "^1.5.3",
-    "angular-mocks": "^1.5.3",
     "jquery": "latest",
     "lodash": "latest",
     "bootstrap": "^3.3.6",
     "leaflet": "latest",
     "angular-route": "^1.5.3",
-    "angular-resource": "^1.5.3",
     "angular-animate": "^1.5.3",
-    "angular-bootstrap": "latest",
     "angular-cookies": "^1.5.3",
     "XMLWriter": "latest",
     "rxjs": "latest",
@@ -34,5 +31,8 @@
     "angular-tooltips": "^1.1.8",
     "angular-translate": "2.13.0",
     "angular-translate-loader-static-files": "2.13.0"
+  },
+  "resolutions": {
+    "angular": "^1.6.0"
   }
 }
