@@ -11,7 +11,6 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
             ctrl.profiles = lists.profiles;
         };
         ctrl.$routerOnActivate = function(next) {
-            console.log(JSON.stringify($location.reload));
             /** the router is always activated on permalink update. This code
                 must be ignored if the permalink is changed, as no waypoints are changed, interacts with app.js line 99 */
             orsSettingsFactory.updateNgRoute(next.urlPath);

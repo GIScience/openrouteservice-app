@@ -321,6 +321,7 @@ button.summary-select {
     font-weight: bold;
     color: #cd6060;
     display: block;
+    outline: none !important;
 }
 
 .bottom-border {
@@ -391,6 +392,22 @@ ors-instructions {
 
 /** Modals appear when settings are clicked */
 
+.fade.ng-hide {
+    opacity: 0;
+}
+
+.fade.ng-hide-remove, .fade.ng-hide-add {
+    display: block !important;
+}
+
+.fade.ng-hide-remove {
+    transition: all ease 0.1s;
+}
+
+.fade.ng-hide-add {
+    transition: all ease 0.1s;
+}
+
 .ors-modal-container {
     position: fixed;
     /* Stay in place */
@@ -408,6 +425,20 @@ ors-instructions {
     /* Fallback color */
     background-color: rgba(0, 0, 0, 0.4);
     /* Black w/ opacity */
+}
+
+.cm-footer {
+    height: 130px;
+    z-index: 1001;
+}
+
+.cm-options {
+    height: 300px;
+    z-index: 1002;
+}
+
+.cm-footer.slide-up.ng-hide {
+    bottom: -130px;
 }
 
 .ors-modal-container .ors-dialog .close {
@@ -601,7 +632,6 @@ input:focus, input:active {
     padding-top: 3px;
 }
 
-
 .ors-nav-menu {
     margin: 0;
     padding: 0;
@@ -680,6 +710,7 @@ tooltip tip {
     padding: 5px 10px !important;
     border-radius: 4px !important;
 }
+
 
 /** font awesome rotate icons */
 

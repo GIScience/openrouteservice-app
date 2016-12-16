@@ -8,7 +8,6 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
     },
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRouteService, orsRequestService, orsErrorhandlerService, orsParamsService) {
         var ctrl = this;
-        console.log(ctrl.activeProfile, ctrl.activeSubgroup)
         ctrl.$onInit = () => {
             /** If waypoints list is empty initialize new waypoints. */
             ctrl.waypoints = orsSettingsFactory.getWaypoints();

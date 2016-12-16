@@ -1,6 +1,6 @@
 angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUtilsService', 'orsObjectsFactory', 'orsRequestService', function(orsUtilsService, orsObjectsFactory, orsRequestService) {
     let orsParamsService = {};
-    orsParamsService.importSettings = (params) => {
+    orsParamsService.importSettings = (params, routing = true) => {
         const settings = {
             waypoints: [],
             profile: {
@@ -29,8 +29,8 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUti
                     waypoints.push(wp);
                     idx += 1;
                 });
-                /** Add second empty wp if only start is set */
-                if (idx == 1) {
+                /** Add second empty wp if only start is set in routing panel */
+                if (idx == 1 && routing === true) {
                     wp = orsObjectsFactory.createWaypoint('', false, 0);
                     waypoints.push(wp);
                 } 
