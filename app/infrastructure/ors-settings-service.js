@@ -56,6 +56,8 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * @return {Object} The options object, may contain both profile options and aa options.
      */
     orsSettingsFactory.getActiveOptions = () => {
+        console.log("getActiveOptions");
+        console.log(orsSettingsFactory[currentSettingsObj].getValue());
         return orsSettingsFactory[currentSettingsObj].getValue().profile.options;
     };
     orsSettingsFactory.setActiveOptions = (options) => {
@@ -150,6 +152,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     };
     /** Subscription function to current routing settings */
     orsSettingsFactory.routingSettingsSubject.subscribe(settings => {
+        console.info("changes in routingSettingsSubject");
         const isRoutePresent = orsSettingsFactory.handleRoutePresent(settings, 2);
         if (isRoutePresent) {
             /** Cancel outstanding requests */
@@ -170,7 +173,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     });
     /** Subscription function to current accessibility settings */
     orsSettingsFactory.aaSettingsSubject.subscribe(settings => {
-        /** get user obtions */
+        /** get user options */
         const isAaPresent = orsSettingsFactory.handleRoutePresent(settings, 1);
         if (isAaPresent) {
             /** Cancel outstanding requests */
@@ -183,8 +186,8 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
                 // orsAaService.parseResultsToBounds(response);
                 // orsAaService.parseResponseToPolygonJSON(response);
             }, function(response) {});
-            orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
         }
+        orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
         // } else {
         // console.log('Not enough waypoints..')
         // }
