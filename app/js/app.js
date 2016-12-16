@@ -12,34 +12,7 @@
  * @author: Timothy Ellersiek, timothy.ellersiek@geog.uni-heidelberg.de, Hendrik Leuschner, hendrik.leuschner@uni-heidelberg.de
  * @version: 1.0
  */
-let orsApp = angular.module('orsApp', [
-    'orsApp.ors-nav', 
-    'orsApp.ors-panel-routing', 
-    'orsApp.ors-panel-accessibilityanalysis', 
-    'orsApp.ors-header', 
-    'orsApp.ors-modal', 
-    'ui.sortable', 
-    'orsApp.error-service', 
-    'orsApp.map-service', 
-    'orsApp.objects-service', 
-    'orsApp.params-service', 
-    'orsApp.request-service', 
-    'orsApp.settings-service', 
-    'orsApp.utils-service', 
-    'orsApp.route-service', 
-    'orsApp.cookies-service', 
-    'orsApp.aa-service', 
-    'orsApp.GeoFileHandler-service', 
-    'ngCookies', 
-    'rzModule', 
-    'ngSanitize', 
-    'ngRoute', 
-    'pascalprecht.translate', 
-    'angular-loading-bar', 
-    '720kb.tooltips', 
-    'orsApp.ors-filters', 
-    'orsApp.ors-route-extras'
-    ]).config(function($locationProvider, $httpProvider) {
+let orsApp = angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.ors-panel-accessibilityanalysis', 'orsApp.ors-header', 'orsApp.ors-modal', 'ui.sortable', 'orsApp.error-service', 'orsApp.map-service', 'orsApp.objects-service', 'orsApp.params-service', 'orsApp.request-service', 'orsApp.settings-service', 'orsApp.utils-service', 'orsApp.route-service', 'orsApp.cookies-service', 'orsApp.aa-service', 'orsApp.GeoFileHandler-service', 'ngCookies', 'rzModule', 'ngSanitize', 'ngRoute', 'pascalprecht.translate', 'angular-loading-bar', '720kb.tooltips', 'orsApp.ors-filters', 'orsApp.ors-route-extras']).config(function($locationProvider, $httpProvider) {
     const ak = '?api_key=0894982ba55b12d3d3e4abd28d1838f2';
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push(function($q, $document) {
@@ -61,29 +34,26 @@ let orsApp = angular.module('orsApp', [
     cfpLoadingBarProvider.includeBar = false;
     cfpLoadingBarProvider.parentSelector = '#loading-bar-container';
     cfpLoadingBarProvider.spinnerTemplate = '<div id="loading-bar-spinner"><div class="spinner-icon"></div></div>';
-}])
-.config(['tooltipsConfProvider', function configConf(tooltipsConfProvider) {
-  tooltipsConfProvider.configure({
-    'smart':true,
-    'size':'small',
-    'speed': 'fast',
-    'tooltipTemplateUrlCache': true
-  });
-}])
-.config(['$translateProvider', '$windowProvider',/* 'storageFactory',*/ 
-    function($translateProvider, $windowProvider/*, storageFactory*/){
+}]).config(['tooltipsConfProvider', function configConf(tooltipsConfProvider) {
+    tooltipsConfProvider.configure({
+        'smart': true,
+        'size': 'small',
+        'speed': 'fast',
+        'tooltipTemplateUrlCache': true
+    });
+}]).config(['$translateProvider', '$windowProvider', /* 'storageFactory',*/
+    function($translateProvider, $windowProvider /*, storageFactory*/ ) {
         var $window = $windowProvider.$get();
         $translateProvider.useSanitizeValueStrategy('sanitize');
         //get the translations local folder
         $translateProvider.useStaticFilesLoader({
-            prefix:'app/languages/',
-            suffix:'.json'
+            prefix: 'app/languages/',
+            suffix: '.json'
         });
         // set the preferred language (default language)
         $translateProvider.preferredLanguage('en-US');
     }
-])
-.controller('RootController', function(orsSettingsFactory, orsObjectsFactory, orsMapFactory, $route) {
+]).controller('RootController', function(orsSettingsFactory, orsObjectsFactory, orsMapFactory, $route) {
     // add map
     let ctrl = this;
     ctrl.myOrsMap = orsMapFactory.initMapA("map");
@@ -92,25 +62,26 @@ let orsApp = angular.module('orsApp', [
 depending on whether we are switching app panes or staying on the same but only
 changing the permalink. If the permalink is changed routerOnActive is fired which
 should not happen, to prevent this we check this variable */
-orsApp.run(['$route', '$rootScope', '$routeParams', '$location',
-    function($route, $rootScope, $routeParams, $location) {
-        var original = $location.path;
-        $location.path = function(path, reload) {
-            if (reload === false) {
-                var lastRoute = $route.current;
-                var un = $rootScope.$on('$locationChangeSuccess', function() {
-                    $location.reload = reload;
-                    $route.current = lastRoute;
-                    un();
-                });
-            } else {
-                $location.reload = !reload;
-
-            }
-            return original.apply($location, [path]);
-        };
-    }
-]);
+// orsApp.run(['$route', '$rootScope', '$routeParams', '$location',
+//     function($route, $rootScope, $routeParams, $location) {
+//         var original = $location.path;
+//         $location.path = function(path, reload) {
+//             if (reload === false) {
+//                 console.info("reload == false");
+//                 var lastRoute = $route.current;
+//                 var un = $rootScope.$on('$locationChangeSuccess', function() {
+//                     $route.current = lastRoute;
+//                     un();
+//                 });
+//             }
+//             console.info(path, reload);
+//             return original.apply($location, [path]);
+//         };
+//         // $location.search = function() {
+//         //     console.info("LOCATION SEARCH");
+//         // };
+//     }
+// ]);
 Array.prototype.move = function(from, to) {
     this.splice(to, 0, this.splice(from, 1)[0]);
     return this;

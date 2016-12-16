@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
     templateUrl: 'app/components/ors-panel-accessibilityanalysis/ors-aa-sliders/ors-aa-sliders.html',
-    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService, $location) {
+    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
         var ctrl = this;
         ctrl.$onInit = function() {
             if (ctrl.isochroneMinutesSlider.value > 1) ctrl.isochroneIntervalSlider.options.ceil = ctrl.isochroneMinutesSlider.value - 1;
@@ -20,7 +20,9 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
                     return value == 0 ? ctrl.optionList.methodOptions.RG.name : ctrl.optionList.methodOptions.TIN.name;
                 },
                 onEnd: function() {
+                    console.log("TEST");
                     ctrl.currentOptions.analysis_options.method = ctrl.isochroneOptionsSlider.value;
+                    console.log("TEST");
                     ctrl.changeOptions();
                 }
             }
@@ -65,6 +67,7 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
             }
         };
         ctrl.changeOptions = function() {
+            console.log("changeOptions");
             orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
         };
     },
