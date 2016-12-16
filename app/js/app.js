@@ -34,7 +34,6 @@ let orsApp = angular.module('orsApp', [
     'rzModule',
     'ngAnimate',
     'ngSanitize', 
-    'ngRoute', 
     'pascalprecht.translate', 
     'angular-loading-bar', 
     '720kb.tooltips', 
@@ -89,29 +88,25 @@ let orsApp = angular.module('orsApp', [
     let ctrl = this;
     ctrl.myOrsMap = orsMapFactory.initMapA("map");
 });
-/** We are additionally saving $location.reload which is set to true or false
-depending on whether we are switching app panes or staying on the same but only
-changing the permalink. If the permalink is changed routerOnActive is fired which
-should not happen, to prevent this we check this variable */
-orsApp.run(['$route', '$rootScope', '$routeParams', '$location',
-    function($route, $rootScope, $routeParams, $location) {
-        var original = $location.path;
-        $location.path = function(path, reload) {
-            if (reload === false) {
-                var lastRoute = $route.current;
-                var un = $rootScope.$on('$locationChangeSuccess', function() {
-                    $location.reload = reload;
-                    $route.current = lastRoute;
-                    un();
-                });
-            } else {
-                $location.reload = !reload;
+// orsApp.run(['$route', '$rootScope', '$location',
+//     function($route, $rootScope, $location) {
+//         var original = $location.path;
+//         $location.path = function(path, reload) {
+//             if (reload === false) {
+//                 var lastRoute = $route.current;
+//                 var un = $rootScope.$on('$locationChangeSuccess', function() {
+//                     $location.reload = reload;
+//                     $route.current = lastRoute;
+//                     un();
+//                 });
+//             } else {
+//                 $location.reload = !reload;
 
-            }
-            return original.apply($location, [path]);
-        };
-    }
-]);
+//             }
+//             return original.apply($location, [path]);
+//         };
+//     }
+// ]);
 Array.prototype.move = function(from, to) {
     this.splice(to, 0, this.splice(from, 1)[0]);
     return this;
