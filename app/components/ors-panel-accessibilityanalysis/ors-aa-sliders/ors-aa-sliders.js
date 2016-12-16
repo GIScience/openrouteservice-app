@@ -48,7 +48,7 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
                 onChange: function() {
                     if (ctrl.isochroneMinutesSlider.value > 1) {
                         ctrl.isochroneIntervalSlider.options.ceil = ctrl.isochroneMinutesSlider.value - 1;
-                        ctrl.isochroneIntervalSlider.options.floor = ctrl.isochroneMinutesSlider.value / 10;
+                        ctrl.isochroneIntervalSlider.options.floor = Math.ceil(ctrl.isochroneMinutesSlider.value / 10);
                     } else {
                         ctrl.isochroneIntervalSlider.options.ceil = 1;
                     }
@@ -61,7 +61,7 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
         ctrl.isochroneIntervalSlider = {
             value: ctrl.currentOptions.analysis_options.interval,
             options: {
-                floor: ctrl.currentOptions.analysis_options.minutes / 10,
+                floor: Math.ceil(ctrl.currentOptions.analysis_options.minutes / 10),
                 ceil: ctrl.optionList.intervalOptions.max,
                 step: ctrl.optionList.intervalOptions.step,
                 translate: function(value) {
