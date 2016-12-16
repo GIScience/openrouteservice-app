@@ -3,12 +3,14 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
         var ctrl = this;
         ctrl.$onInit = function() {
+            ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
             if (ctrl.isochroneMinutesSlider.value > 1) ctrl.isochroneIntervalSlider.options.ceil = ctrl.isochroneMinutesSlider.value - 1;
             else ctrl.isochroneIntervalSlider.options.ceil = 1;
             if (ctrl.isochroneIntervalSlider.value > ctrl.isochroneIntervalSlider.options.ceil) ctrl.isochroneIntervalSlider.value = ctrl.isochroneIntervalSlider.options.ceil;
         };
         ctrl.optionList = lists.isochroneOptionList;
         ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
+        // console.log(ctrl.currentOptions);
         ctrl.currentOptions.analysis_options.method = ctrl.currentOptions.analysis_options.method !== undefined ? ctrl.currentOptions.analysis_options.method : ctrl.optionList.methodOptions.TIME.id;
         ctrl.isochroneOptionsSlider = {
             value: ctrl.currentOptions.analysis_options.method,
@@ -20,9 +22,11 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
                     return value == 0 ? ctrl.optionList.methodOptions.TIME.name : ctrl.optionList.methodOptions.DISTANCE.name;
                 },
                 onEnd: function() {
-                    console.log("TEST");
+                    // console.log("TEST");
+                    // // ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
+                    // console.log(ctrl.currentOptions);
                     ctrl.currentOptions.analysis_options.method = ctrl.isochroneOptionsSlider.value;
-                    console.log("TEST");
+                    // console.log("TEST");
                     ctrl.changeOptions();
                 }
             }
@@ -44,9 +48,8 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
                 onChange: function() {
                     if (ctrl.isochroneMinutesSlider.value > 1) {
                         ctrl.isochroneIntervalSlider.options.ceil = ctrl.isochroneMinutesSlider.value - 1;
-                        ctrl.isochroneIntervalSlider.options.floor = ctrl.isochroneMinutesSlider.value/10;
-                    }
-                    else {
+                        ctrl.isochroneIntervalSlider.options.floor = ctrl.isochroneMinutesSlider.value / 10;
+                    } else {
                         ctrl.isochroneIntervalSlider.options.ceil = 1;
                     }
                     if (ctrl.isochroneIntervalSlider.value > ctrl.isochroneIntervalSlider.options.ceil) ctrl.isochroneIntervalSlider.value = ctrl.isochroneIntervalSlider.options.ceil;
@@ -58,7 +61,7 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
         ctrl.isochroneIntervalSlider = {
             value: ctrl.currentOptions.analysis_options.interval,
             options: {
-                floor: ctrl.currentOptions.analysis_options.minutes/10,
+                floor: ctrl.currentOptions.analysis_options.minutes / 10,
                 ceil: ctrl.optionList.intervalOptions.max,
                 step: ctrl.optionList.intervalOptions.step,
                 translate: function(value) {
