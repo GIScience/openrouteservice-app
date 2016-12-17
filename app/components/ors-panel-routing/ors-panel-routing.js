@@ -3,9 +3,7 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
     controller($location, orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService, orsCookiesFactory) {
         var ctrl = this;
         ctrl.$routerCanReuse = function(next, prev) {
-            console.log(prev);
-            console.log(next);
-            return next.urlPath === prev.urlPath;
+            return next.params.name === prev.params.name;
         };
         ctrl.$onInit = function() {
             ctrl.profiles = lists.profiles;
@@ -13,6 +11,7 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
         ctrl.$routerOnActivate = function(next) {
             /** the router is always activated on permalink update. This code
                 must be ignored if the permalink is changed, as no waypoints are changed, interacts with app.js line 99 */
+            orsSettingsFactory.isInitialized = true;
             orsSettingsFactory.updateNgRoute(next.urlPath);
             /** 
              * check if anything is saved in the settings object
@@ -35,17 +34,12 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
             ctrl.activeProfile = orsSettingsFactory.getActiveProfile().type;
             ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
             ctrl.shouldDisplayRouteDetails = false;
-            // orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
         };
         ctrl.$routerOnReuse = function(next, prev) {
-            // return;
-            //return false;
-            // console.dir(prev);
-            // console.dir(next);
-            // prev.urlParams = next.urlParams.slice(0);
-            // prev.params = angular.copy(next.params);
-            // // prev = next;
-            // orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
+            // update permalink
+            const settings = orsSettingsFactory.getSettings();
+            const userSettings = orsSettingsFactory.getUserOptions();
+            orsUtilsService.parseSettingsToPermalink(settings, userSettings);
         };
         ctrl.showInstructions = () => {
             ctrl.shouldDisplayRouteDetails = ctrl.shouldDisplayRouteDetails == true ? false : true;

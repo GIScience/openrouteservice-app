@@ -4,19 +4,14 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
         var ctrl = this;
         let currentUrl;
         ctrl.$routerCanReuse = function(next, prev) {
-            console.log(prev);
-            console.log(next);
             return next.urlPath === prev.urlPath;
         };
         ctrl.$onInit = function() {
             ctrl.profiles = lists.profiles;
         };
         ctrl.$routerOnActivate = function(next) {
-            console.log(JSON.stringify($location.reload))
-                /** the router is always activated on permalink update. This code
-                    must be ignored if the permalink is changed, as no waypoints are changed, interacts with app.js line 99 */
-            console.log('reload')
-                /** notify the settings that we're now in the aa panel */
+            orsSettingsFactory.isInitialized = true;
+            /** notify the settings that we're now in the aa panel */
             orsSettingsFactory.updateNgRoute(next.urlPath);
             /** 
              * check if anything is saved in the settings object
@@ -42,10 +37,12 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
             ctrl.activeProfile = orsSettingsFactory.getActiveProfile().type;
             ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
-            // orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
         };
         ctrl.$routerOnReuse = function(next, prev) {
-            // orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
+            // Update Permalink 
+            const settings = orsSettingsFactory.getSettings();
+            const userSettings = orsSettingsFactory.getUserOptions();
+            orsUtilsService.parseSettingsToPermalink(settings, userSettings);
         };
     },
     require: {
