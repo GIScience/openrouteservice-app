@@ -5,7 +5,7 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
         showInstructions: '&',
         shouldDisplayRouteDetails: '<'
     },
-    controller($scope, orsRouteService, orsSettingsFactory, orsErrorhandlerService) {
+    controller: ['$scope', 'orsRouteService', 'orsSettingsFactory', 'orsErrorhandlerService', function($scope, orsRouteService, orsSettingsFactory, orsErrorhandlerService) {
         let ctrl = this;
         ctrl.profiles = lists.profiles;
         console.info(orsRouteService.getCurrentRouteIdx())
@@ -83,5 +83,5 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
             const geometry = _.slice(routeString, pair[0], pair[1] + 1);
             orsRouteService.zoomTo(geometry);
         };
-    }
+    }]
 });

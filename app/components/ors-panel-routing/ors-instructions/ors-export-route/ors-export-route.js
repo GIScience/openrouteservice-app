@@ -1,7 +1,7 @@
 angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteControls', {
     templateUrl: '/app/components/ors-panel-routing/ors-instructions/ors-export-route/ors-export-route.html',
-    controller(orsExportFactory, orsRouteService) {
-        var ctrl = this;
+    controller: ['orsExportFactory', 'orsRouteService', function(orsExportFactory, orsRouteService) {
+        let ctrl = this;
         ctrl.gpxOptShow = true;
         ctrl.tcxOptShow = false;
         ctrl.kmlOptShow = false;
@@ -26,7 +26,7 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
         }];
         ctrl.selected_fileformat = ctrl.fileFormat[0]; //this is the default selected value on the dropdown menu
         ctrl.currentFileFormat = ctrl.selected_fileformat.value; //this is the default value for the current selected option
-        ctrl.change_fileFormat = function(fileformat) {
+        ctrl.change_fileFormat = (fileformat) => {
             switch (fileformat.value) {
                 default:
                     case 'gpx':
@@ -91,10 +91,10 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
         ctrl.selected_gpxOpt2 = ctrl.writeGpxRouteOrTrack[1];
         ctrl.current_gpxOpt1 = ctrl.selected_gpxOpt1.value; //this is the default selected value on the dropdown menu
         ctrl.current_gpxOpt2 = ctrl.selected_gpxOpt2.value; //this is the default value for the current selected option
-        ctrl.change_gpxOpt1 = function(gpxOpt) {
+        ctrl.change_gpxOpt1 = (gpxOpt) => {
             ctrl.current_gpxOpt1 = gpxOpt.value;
         };
-        ctrl.change_gpxOpt2 = function(gpxOpt) {
+        ctrl.change_gpxOpt2 = (gpxOpt) => {
             ctrl.current_gpxOpt2 = gpxOpt.value;
         };
         ctrl.kmlAltitudeMode = [{
@@ -115,7 +115,7 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
         }];
         ctrl.selected_kmlAltitudeMode = ctrl.kmlAltitudeMode[1];
         ctrl.current_altitudeMode = ctrl.selected_kmlAltitudeMode.value
-        ctrl.change_kmlOpt = function(kmlOpt) {
+        ctrl.change_kmlOpt = (kmlOpt) => {
             ctrl.current_altitudeMode = kmlOpt.value;
         };
         ctrl.csvGeometry = [{
@@ -136,7 +136,7 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
         }];
         ctrl.selected_csvGeoFormat = ctrl.csvGeometry[0];
         ctrl.current_csvGeometry = ctrl.selected_csvGeoFormat.value;
-        ctrl.change_csvGeomFormat = function(csvGeom) {
+        ctrl.change_csvGeomFormat = (csvGeom) => {
             ctrl.current_csvGeometry = csvGeom.value;
         };
         ctrl.csvSeparator = [{
@@ -151,14 +151,14 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
         }];
         ctrl.selected_csvSeparator = ctrl.csvSeparator[1];
         ctrl.current_csvSeparator = ctrl.selected_csvSeparator.value;
-        ctrl.change_csvSeparator = function(csvSep) {
+        ctrl.change_csvSeparator = (csvSep) => {
             ctrl.current_csvSeparator = csvSep.value;
         };
         ctrl.userDefined = {
             avgSpeed: 15,
             coordPrecision: 10
         };
-        ctrl.exportRoute = function() {
+        ctrl.exportRoute = () => {
             switch (ctrl.currentFileFormat) {
                 default:
                     case 'gpx':
@@ -187,8 +187,7 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
                     break;
             }
             let currentRoute = orsRouteService.routeObj.routes[orsRouteService.getCurrentRouteIdx()].points;
-            console.log(currentRoute);
             orsExportFactory.exportFile(currentRoute, options, ctrl.currentFileFormat, ctrl.userDefined.avgSpeed, ctrl.userDefined.coordPrecision);
         };
-    }
+    }]
 });

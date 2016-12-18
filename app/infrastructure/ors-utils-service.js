@@ -1,6 +1,6 @@
 angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', '$timeout', '$location',
-    function($http, $timeout, $location) {
-        var orsUtilsService = {};
+    ($http, $timeout, $location) => {
+        let orsUtilsService = {};
         /**
          * checks whether position are valid coordinates
          * @param {String} lat: Latitude as string
@@ -837,6 +837,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             getProp(profile);
             if (userOptions.routinglang !== undefined) link = link.concat('&routinglang=' + userOptions.routinglang);
             if (userOptions.units !== undefined) link = link.concat('&units=' + userOptions.units);
+            // This timeout is neccessariliy needed to update the permalink on router reuse !!!
             $timeout(function() {
                 $location.search(link);
             });

@@ -441,45 +441,45 @@ lists.layers = {
     4: 'layerTracks'
 };
 lists.layerStyles = {
-    route: function() {
+    route: () => {
         return {
             color: '#b5152b',
             weight: 5,
             opacity: 1
         };
     },
-    routePadding: function() {
+    routePadding: () => {
         return {
             color: '#fff',
             weight: 9,
             opacity: 1
         };
     },
-    routeEmph: function() {
+    routeEmph: () => {
         return {
             color: 'yellow',
             weight: 3,
             opacity: 1
         };
     },
-    track: function() {
+    track: () => {
         return {
             color: '#FFF',
             weight: 5,
             opacity: 1
         };
     },
-    trackPadding: function() {
+    trackPadding: () => {
         return {
             color: lists.layerStyles.get_random_color(),
             weight: 9,
             opacity: 1
         };
     },
-    rand: function(min, max) {
+    rand: (min, max) => {
         return parseInt(Math.random() * (max - min + 1), 10) + min;
     },
-    get_random_color: function() {
+    get_random_color: () => {
         var h = lists.layerStyles.rand(180, 250);
         var s = lists.layerStyles.rand(30, 100);
         var l = lists.layerStyles.rand(20, 70);

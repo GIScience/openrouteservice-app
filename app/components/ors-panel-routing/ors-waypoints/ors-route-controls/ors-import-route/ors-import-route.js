@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteControls', {
     templateUrl: '/app/components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-import-route/import_route_tpl.html',
-    controller($scope, orsImportFactory, orsObjectsFactory, orsUtilsService, orsMapFactory, orsSettingsFactory) {
+    controller: ['$scope', 'orsImportFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsMapFactory', 'orsSettingsFactory', function($scope, orsImportFactory, orsObjectsFactory, orsUtilsService, orsMapFactory, orsSettingsFactory) {
         let ctrl = this;
         ctrl.showCSVopt = false;
         ctrl.showXY = false;
@@ -8,7 +8,7 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
         ctrl.showWKT = false;
         ctrl.isCsv = false;
         ctrl.loadedPreviewLayers = [];
-        ctrl.fileNameChanged = function(fileName) {
+        ctrl.fileNameChanged = (fileName) => {
             var uploadedFiles = [];
             var fileArrayLength = fileName.files.length;
             // Initialize the global variable preocessedCount. This variable will be responsible to iterate and keep track of the current iteration during the on load event
@@ -18,15 +18,15 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
                 var current_fileObject = fileName.files[i];
                 var reader = new FileReader();
                 //On load event call.  This event is assýnc
-                reader.onload = (function(theFile) {
-                    return function() {
+                reader.onload = ((theFile) => {
+                    return () => {
                         onLoadHandler(this, theFile, processedCount, uploadedFiles); //this will happen during the onload event
                         onLoadEndHandler(); // this happens at the end of the onload event.
                     };
                 })(current_fileObject);
                 reader.readAsText(current_fileObject);
             }
-            var onLoadHandler = function(e, theFile, processedCount, uploadedFiles) {
+            var onLoadHandler = (e, theFile, processedCount, uploadedFiles) => {
                 uploadedFiles[processedCount] = {
                     name: theFile.name,
                     extension: (theFile.name).slice(((theFile.name).lastIndexOf(".") - 1 >>> 0) + 2),
@@ -35,7 +35,7 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
                     preview: false
                 };
             };
-            var onLoadEndHandler = function() {
+            var onLoadEndHandler = () => {
                 processedCount++;
                 if (processedCount == fileArrayLength) {
                     //this code will run after everything has been loaded and processed
@@ -44,7 +44,7 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
                 }
             };
         };
-        ctrl.previewRoute = function(file) {
+        ctrl.previewRoute = (file) => {
             if (file.preview) {
                 //gets the Geometry from the opened file
                 const geometry = orsImportFactory.importFile(file.extension, file.content);
@@ -62,7 +62,7 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
                 orsMapFactory.mapServiceSubject.onNext(action_removeLayer);
             }
         };
-        ctrl.importRoute = function(file) {
+        ctrl.importRoute = (file) => {
             const geometry = orsImportFactory.importFile(file.extension, file.content);
             let linestring = turf.linestring(geometry.geometry.coordinates);
             linestring = turf.simplify(linestring, 0.01, false);
@@ -75,9 +75,9 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
             }
             orsSettingsFactory.setWaypoints(waypoints);
             // fetch addresses afterwards
-            angular.forEach(waypoints, function(wp, idx) {
+            angular.forEach(waypoints, (wp, idx) => {
                 orsSettingsFactory.getAddress(wp._latlng, idx, true);
             });
         };
-    }
+    }]
 });

@@ -1,4 +1,4 @@
-angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', function() {
+angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
     return {
         restrict: 'E',
         replace: true,
@@ -8,17 +8,16 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', function()
             routeIndex: '<'
         },
         template: '<div class="ors-bars"></div>',
-        link: function(scope, element, attrs, fn) {
-        	console.log(scope.routeIndex)
-            let tip = d3.tip().attr('class', 'd3-tip').offset([-10, 0]).html(function(d) {
+        link: (scope, element, attrs, fn)  => {
+            let tip = d3.tip().attr('class', 'd3-tip').offset([-10, 0]).html((d) => {
                 // var dist = util.convertDistanceFormat(d.distance, preferences.distanceUnit);
                 // return d.percentage + '% ' + d.typetranslated + ' (' + dist[1] + ' ' + dist[2] + ')';
-                return d.percentage + '% ' + '(' + d.distance + ')';
+                return d.percentage + '% ' + '(' + scope.distanceFilter(d.distance) + ')';
             });
             data = [];
             let keys = _.keysIn(scope.obj).map(Number);
             keys = _.sortBy(keys);
-            _.forEach(keys, function(key) {
+            _.forEach(keys, (key) => {
                 data.push(scope.obj[key]);
             });
             let margin = {
@@ -36,21 +35,21 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', function()
             var svg = d3.select(element[0]).append("svg").attr("width", width).attr("height", height);
             y.domain([0]);
             x.domain([0, _.last(data).y1]);
-            svg.append("g").selectAll("rect").data(data).enter().append("rect").attr("height", 26).attr("x", function(d) {
+            svg.append("g").selectAll("rect").data(data).enter().append("rect").attr("height", 26).attr("x", (d) => {
                 return x(d.y0) / 1;
-            }).attr("width", function(d) {
+            }).attr("width", (d) => {
                 return x(d.y1) / 1 - x(d.y0) / 1;
-            }).attr("title", function(d) {
+            }).attr("title", (d) => {
                 return (d.y1 - d.y0) + "% : " + d.type;
-            }).style("fill", function(d, i) {
+            }).style("fill", (d, i) => {
                 return d.color;
-            }).on('mouseover', function(d) {
+            }).on('mouseover', (d) => {
                 scope.EmphSegment(d.intervals);
                 tip.show(d);
-            }).on('mouseout', function(d) {
+            }).on('mouseout', (d) => {
                 scope.DeEmphSegment();
                 tip.hide(d);
-            }).on('click', function(d) {
+            }).on('click', (d) => {
                 // not implemented yet
                 scope.ZoomToSegment(d.intervals);
             });
@@ -58,29 +57,29 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', function()
             let legendSpacing = 7;
             let legendTotalHeight = 0;
             let legendContainer = svg.append("g");
-            let legend = legendContainer.selectAll('.legend').data(data).enter().append('g').attr('class', 'legend').attr('transform', function(d, i) {
+            let legend = legendContainer.selectAll('.legend').data(data).enter().append('g').attr('class', 'legend').attr('transform', (d, i) => {
                 let legendHeight = legendRectSize + legendSpacing;
                 let vert = height * 1.1 + i * legendHeight;
                 legendTotalHeight += legendHeight;
                 return 'translate(' + 0 + ',' + vert + ')';
             });
             legend.append('rect') // NEW
-                .attr('width', legendRectSize).attr('height', legendRectSize).style('fill', function(d, i) {
+                .attr('width', legendRectSize).attr('height', legendRectSize).style('fill', (d, i) => {
                     return d.color;
                 });
-            legend.append('text').attr('x', legendRectSize + legendSpacing).attr('y', legendRectSize).text(function(d) {
+            legend.append('text').attr('x', legendRectSize + legendSpacing).attr('y', legendRectSize).text((d) => {
                 return d.type;
             });
-            legend.on('mouseover', function(d) {
+            legend.on('mouseover', (d) => {
                 scope.EmphSegment(d.intervals);
             });
-            legend.on('mouseout', function(d) {
+            legend.on('mouseout', (d) => {
                 scope.DeEmphSegment();
             });
             svg.attr("height", 40);
             if (keys.length > 1) {
                 let show = false;
-                let expandText = svg.append("text").style("text-anchor", "end").attr("x", "310").attr("y", 40).text('show more').on("click", function() {
+                let expandText = svg.append("text").style("text-anchor", "end").attr("x", "310").attr("y", 40).text('show more').on("click", () => {
                     // Determine if current line is visible
                     show = show === false ? true : false;
                     if (show === true) {
@@ -95,10 +94,11 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', function()
             }
             svg.call(tip);
         },
-        controller: ['$scope', 'orsRouteService',
-            function($scope, orsRouteService) {
+        controller: ['$scope', '$filter', 'orsRouteService',
+            ($scope, $filter, orsRouteService)=> {
+                $scope.distanceFilter = $filter('distance');
                 $scope.EmphSegment = (segments) => {
-                    _.forEach(segments, function(pair) {
+                    _.forEach(segments, (pair) => {
                         const routeString = orsRouteService.routeObj.routes[$scope.routeIndex].points;
                         const geometry = _.slice(routeString, pair[0], pair[1] + 1);
                         orsRouteService.Emph(geometry);

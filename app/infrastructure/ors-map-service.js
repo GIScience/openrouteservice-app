@@ -1,5 +1,5 @@
 angular.module('orsApp.map-service', []).factory('orsMapFactory', ['$q',
-    function($q) {
+    ($q) => {
         var deferred = $q.defer();
         var mapServiceSubject = new Rx.Subject();
         /** Subscription function to current route object. */

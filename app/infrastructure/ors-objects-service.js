@@ -1,4 +1,4 @@
-angular.module('orsApp.objects-service', []).factory('orsObjectsFactory', function() {
+angular.module('orsApp.objects-service', []).factory('orsObjectsFactory', () => {
     /** Class representing a waypoint. */
     class waypoint {
         /**

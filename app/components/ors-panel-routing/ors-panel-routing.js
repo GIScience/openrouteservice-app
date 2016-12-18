@@ -1,14 +1,14 @@
 angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-profiles-options', 'orsApp.ors-options', 'orsApp.ors-summary', 'orsApp.ors-instructions']).component('orsRoute', {
     templateUrl: 'app/components/ors-panel-routing/ors-panel-routing.html',
-    controller($location, orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService, orsCookiesFactory) {
-        var ctrl = this;
-        ctrl.$routerCanReuse = function(next, prev) {
+    controller: ['orsSettingsFactory', 'orsParamsService', 'orsUtilsService', 'orsCookiesFactory', function(orsSettingsFactory, orsParamsService, orsUtilsService, orsCookiesFactory) {
+        let ctrl = this;
+        ctrl.$routerCanReuse = (next, prev) => {
             return next.params.name === prev.params.name;
         };
-        ctrl.$onInit = function() {
+        ctrl.$onInit = () => {
             ctrl.profiles = lists.profiles;
         };
-        ctrl.$routerOnActivate = function(next) {
+        ctrl.$routerOnActivate = (next) => {
             /** the router is always activated on permalink update. This code
                 must be ignored if the permalink is changed, as no waypoints are changed, interacts with app.js line 99 */
             orsSettingsFactory.isInitialized = true;
@@ -24,7 +24,7 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
                 const importedParams = orsParamsService.importSettings(ctrl.routeParams);
                 orsSettingsFactory.setSettings(importedParams.settings);
                 // fetch addresses afterwards
-                angular.forEach(importedParams.settings.waypoints, function(wp, idx) {
+                angular.forEach(importedParams.settings.waypoints, (wp, idx) => {
                     if (wp._latlng !== false) orsSettingsFactory.getAddress(wp._latlng, idx, true);
                 });
                 orsSettingsFactory.setUserOptions(orsCookiesFactory.getCookies());
@@ -33,9 +33,13 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
             orsSettingsFactory.updateWaypoints();
             ctrl.activeProfile = orsSettingsFactory.getActiveProfile().type;
             ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
+            console.info(ctrl.activeProfile, ctrl.activeSubgroup)
             ctrl.shouldDisplayRouteDetails = false;
         };
-        ctrl.$routerOnReuse = function(next, prev) {
+        // ctrl.$onChanges = function(changes) {
+        //     console.info(changes)
+        // }
+        ctrl.$routerOnReuse = (next, prev) => {
             // update permalink
             const settings = orsSettingsFactory.getSettings();
             const userSettings = orsSettingsFactory.getUserOptions();
@@ -44,7 +48,7 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
         ctrl.showInstructions = () => {
             ctrl.shouldDisplayRouteDetails = ctrl.shouldDisplayRouteDetails == true ? false : true;
         };
-    },
+    }],
     require: {
         parent: '^orsSidebar'
     }

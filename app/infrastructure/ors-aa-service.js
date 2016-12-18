@@ -1,5 +1,5 @@
 angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', '$q', 'orsUtilsService', 'orsMapFactory', 'orsObjectsFactory',
-    function($http, $q, orsUtilsService, orsMapFactory, orsObjectsFactory) {
+    ($http, $q, orsUtilsService, orsMapFactory, orsObjectsFactory) => {
         /**
          * Requests geocoding from ORS backend
          * @param {String} requestData: XML for request payload
@@ -29,7 +29,7 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', '$q', 
         /**
          * Resets the AaObj
          */
-        orsAaService.initAaObj = function() {
+        orsAaService.initAaObj = () => {
             orsAaService.orsAaObj = {
                 code: 'Ok',
                 bbox: [
@@ -44,7 +44,7 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', '$q', 
          * Coordinates processing of server response
          * @param {String} data: XML response
          */
-        orsAaService.processResponse = function(data) {
+        orsAaService.processResponse = (data) => {
             orsAaService.initAaObj();
             orsAaService.parseResultsToBounds(data);
             orsAaService.parseResponseToPolygonJSON(data);
@@ -54,15 +54,15 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', '$q', 
          * Requests accessiblity analysis from ORS backend
          * @param {String} requestData: XML for request payload
          */
-        orsAaService.fetchAnalysis = function(requestData) {
+        orsAaService.fetchAnalysis = (requestData) => {
             var url = namespaces.services.analyse;
             var canceller = $q.defer();
-            var cancel = function(reason) {
+            var cancel = (reason) => {
                 canceller.resolve(reason);
             };
             var promise = $http.post(url, requestData, {
                 timeout: canceller.promise
-            }).then(function(response) {
+            }).then((response)=> {
                 return response.data;
             });
             return {
@@ -77,7 +77,7 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', '$q', 
          * @param {Object} successCallback: function callback
          * @param {Object} failureCallback: function callback
          */
-        orsAaService.generateAnalysisRequest = function(settings) {
+        orsAaService.generateAnalysisRequest = (settings) => {
             console.log(settings);
             var writer = new XMLWriter('UTF-8', '1.0');
             writer.writeStartDocument();
@@ -164,13 +164,13 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', '$q', 
          * @param {Object} result: the response of the service
          * @return OL.Bounds containing the accessible area; null in case of an error response
          */
-        orsAaService.parseResultsToBounds = function(response) {
+        orsAaService.parseResultsToBounds = (response) => {
             response = orsUtilsService.domParser(response);
             var boundingBox = orsUtilsService.getElementsByTagNameNS(response, namespaces.aas, 'BoundingBox');
             var bounds, latlngs;
             if (boundingBox && boundingBox.length > 0) {
                 latlngs = [];
-                _.each(orsUtilsService.getElementsByTagNameNS(boundingBox[0], namespaces.gml, 'pos'), function(position) {
+                _.each(orsUtilsService.getElementsByTagNameNS(boundingBox[0], namespaces.gml, 'pos'), (position) => {
                     position = orsUtilsService.convertPositionStringToLonLat(position.firstChild.nodeValue);
                     latlngs.push(position);
                 });
@@ -184,7 +184,7 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', '$q', 
          * Parses XML input to JSON object and stores data in orsAaObj
          * @param {String} response: XML response from server
          */
-        orsAaService.parseResponseToPolygonJSON = function(response) {
+        orsAaService.parseResponseToPolygonJSON = (response)  => {
             response = orsUtilsService.domParser(response);
             console.log(response);
             var area = orsUtilsService.getElementsByTagNameNS(response, namespaces.aas, 'AccessibilityGeometry');
@@ -237,11 +237,11 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', '$q', 
         /**
          * Convert element to polygon ring
          */
-        orsAaService.fetchPolygonGeometry = function(elements, ns, tag) {
+        orsAaService.fetchPolygonGeometry = (elements, ns, tag) => {
             var rings = [];
             for (var i = 0; i < elements.length; i++) {
                 var polyPoints = [];
-                _.each(orsUtilsService.getElementsByTagNameNS(elements[i], ns, tag), function(polygonPos) {
+                _.each(orsUtilsService.getElementsByTagNameNS(elements[i], ns, tag), (polygonPos) => {
                     polygonPos = orsUtilsService.convertPositionStringToLonLat(polygonPos.firstChild.nodeValue);
                     polyPoints.push(polygonPos);
                 });
@@ -253,7 +253,7 @@ angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', '$q', 
         /**
          * Clears the map and forwards the polygons to it
          */
-        orsAaService.processResponseToMap = function() {
+        orsAaService.processResponseToMap = () => {
             //clear map
             let action = orsObjectsFactory.createMapAction(2, lists.layers[3], undefined, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);

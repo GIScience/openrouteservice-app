@@ -4,12 +4,12 @@ angular.module('orsApp.ors-nav', ['ngComponentRouter']).component('orsSidebar', 
     bindings: {
         orsMap: '<',
     },
-    controller($location) {
-        var ctrl = this;
+    controller: ['$location', function($location) {
+        let ctrl = this;
         if ($location.path() == '/') {
             ctrl.activeMenu = '/routing';
         } else ctrl.activeMenu = $location.path();
-    },
+    }],
     $routeConfig: [{
         path: '/routing',
         name: 'Routing',

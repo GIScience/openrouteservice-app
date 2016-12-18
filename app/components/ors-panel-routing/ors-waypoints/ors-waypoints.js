@@ -6,8 +6,8 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         activeProfile: '<',
         activeSubgroup: '<',
     },
-    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRouteService, orsRequestService, orsErrorhandlerService, orsParamsService) {
-        var ctrl = this;
+    controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRouteService', 'orsRequestService', 'orsErrorhandlerService', 'orsParamsService', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRouteService, orsRequestService, orsErrorhandlerService, orsParamsService) {
+        let ctrl = this;
         ctrl.$onInit = () => {
             /** If waypoints list is empty initialize new waypoints. */
             ctrl.waypoints = orsSettingsFactory.getWaypoints();
@@ -16,8 +16,11 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
             }
             ctrl.showAdd = true;
         };
+        // ctrl.$onChanges = function(changesObj) {
+        //     console.log(changesObj)
+        // };
         // subscribes to changes in waypoints, this doesnt have to be added though, why? Because of reference?
-        orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
+        orsSettingsFactory.subscribeToWaypoints(onNext = (d) => {
             console.log('waypoints updated!!! panel', d);
             ctrl.waypoints = d;
         });
@@ -110,21 +113,21 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         ctrl.sortableOptions = {
             axis: 'y',
             containment: 'parent',
-            activate: function() {},
-            beforeStop: function() {},
-            change: function() {},
-            create: function() {},
-            deactivate: function() {},
-            out: function() {},
-            over: function() {},
-            receive: function() {},
-            remove: function() {},
-            sort: function() {},
-            start: function() {},
-            update: function(e, ui) {},
-            stop: function(e, ui) {
+            activate: () => {},
+            beforeStop: () => {},
+            change: () => {},
+            create: () => {},
+            deactivate: () => {},
+            out: () => {},
+            over: () => {},
+            receive: () => {},
+            remove: () => {},
+            sort: () => {},
+            start: () => {},
+            update: (e, ui) => {},
+            stop: (e, ui) => {
                 orsSettingsFactory.setWaypoints(ctrl.waypoints, true);
             }
         };
-    }
+    }]
 });

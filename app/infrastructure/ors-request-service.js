@@ -1,5 +1,5 @@
 angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q', '$http', 'orsUtilsService', 'orsErrorhandlerService',
-    function($q, $http, orsUtilsService, orsErrorhandlerService) {
+    ($q, $http, orsUtilsService, orsErrorhandlerService) => {
         /**
          * Requests geocoding from ORS backend
          * @param {String} requestData: XML for request payload
@@ -38,7 +38,7 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q',
                 orsRequestService.geocodeRequests.requests = [];
             }
         };
-        orsRequestService.geocode = function(requestData) {
+        orsRequestService.geocode = (requestData) => {
             var url = namespaces.services.geocoding;
             var canceller = $q.defer();
             var cancel = function(reason) {
@@ -58,7 +58,7 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q',
          * Processes response
          * @param {Object} response: response data
          */
-        orsRequestService.processResponse = function(response) {
+        orsRequestService.processResponse = (response) => {
             var data = response.data;
             return data;
         };

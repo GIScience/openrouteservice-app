@@ -63,5 +63,16 @@
     "LANGROUTING": "Language Routing Instructions",
     "Fastest": "Fastest",
     "Recommended": "Recommended",
-    "Shortest": "Shortest"
+    "Shortest": "Shortest",
+    "BICYCLENORMAL": "Normal",
+    "BICYCLESAFEST": "Safest Route",
+    "BICYCLETOUR": "Touring bike",
+    "BICYCLEMTB": "Mountain bike",
+    "BICYCLERACING": "Road bike",
+    "HEAVYVEHICLENORMAL": "Heavy vehicle",
+    "HEAVYVEHICLEBUS": "Bus",
+    "HEAVYVEHICLEAGRICULTURAL": "Agricultural",
+    "HEAVYVEHICLEFORESTRY": "Forestry",
+    "HEAVYVEHICLEDELIVERY": "Delivery",
+    "HEAVYVEHICLEGOODS": "Goods"
 }

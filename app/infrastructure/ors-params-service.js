@@ -1,4 +1,4 @@
-angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUtilsService', 'orsObjectsFactory', 'orsRequestService', function(orsUtilsService, orsObjectsFactory, orsRequestService) {
+angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUtilsService', 'orsObjectsFactory', 'orsRequestService', (orsUtilsService, orsObjectsFactory, orsRequestService) => {
     let orsParamsService = {};
     orsParamsService.importSettings = (params, routing = true) => {
         const settings = {
@@ -15,13 +15,13 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUti
         console.log("importing param setttings");
         const user_options = {};
         //TODO: Replace with native loop and use break; in each if clause so not all conditions have to be checked all the time
-        angular.forEach(params, function(value, key) {
+        angular.forEach(params, (value, key) => {
             if (key == 'wps') {
                 //TODO Debug, adding does not properly work
                 const wps = value.match(/[^,]+,[^,]+/g);
                 let idx = 0,
                     waypoints = [];
-                angular.forEach(wps, function(wp) {
+                angular.forEach(wps, (wp) => {
                     wp = wp.split(",");
                     const latLng = new L.latLng([parseFloat(wp[0]), parseFloat(wp[1])]);
                     const latLngString = orsUtilsService.parseLatLngString(latLng);
@@ -33,7 +33,7 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUti
                 if (idx == 1 && routing === true) {
                     wp = orsObjectsFactory.createWaypoint('', false, 0);
                     waypoints.push(wp);
-                } 
+                }
                 settings.waypoints = waypoints;
             }
             if (key == 'type') {
