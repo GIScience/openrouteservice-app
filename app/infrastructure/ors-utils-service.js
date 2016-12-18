@@ -1,5 +1,5 @@
-angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', '$location',
-    function($http, $location) {
+angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', '$timeout', '$location',
+    function($http, $timeout, $location) {
         var orsUtilsService = {};
         /**
          * checks whether position are valid coordinates
@@ -837,10 +837,9 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             getProp(profile);
             if (userOptions.routinglang !== undefined) link = link.concat('&routinglang=' + userOptions.routinglang);
             if (userOptions.units !== undefined) link = link.concat('&units=' + userOptions.units);
-            console.log(link)
-                // console.log($location);
-                // $location.path($location.search(link), false);
-            $location.search(link);
+            $timeout(function() {
+                $location.search(link);
+            });
         };
         return orsUtilsService;
     }

@@ -16,6 +16,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     orsSettingsFactory.ngRouteSubject = new Rx.BehaviorSubject(undefined);
     /** Global reference settings, these are switched when panels are changed - default is routing.*/
     let currentSettingsObj, currentWaypointsObj;
+    orsSettingsFactory.isInitialized = false;
     /**
      * Sets the settings from permalink
      * @param {Object} The settings object.
@@ -169,7 +170,9 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
                 console.error(response);
             });
         } else {}
-        orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
+        if (orsSettingsFactory.isInitialized) {
+            orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
+        }
     });
     /** Subscription function to current accessibility settings */
     orsSettingsFactory.aaSettingsSubject.subscribe(settings => {
@@ -187,7 +190,9 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
                 // orsAaService.parseResponseToPolygonJSON(response);
             }, function(response) {});
         }
-        orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
+        if (orsSettingsFactory.isInitialized) {
+            orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
+        }
         // } else {
         // console.log('Not enough waypoints..')
         // }
