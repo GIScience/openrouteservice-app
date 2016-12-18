@@ -62,6 +62,7 @@ let orsApp = angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routi
 //     function($route, $rootScope, $location) {
 //         var original = $location.path;
 //         $location.path = function(path, reload) {
+//             console.log(path, reload);
 //             if (reload === false) {
 //                 var lastRoute = $route.current;
 //                 var un = $rootScope.$on('$locationChangeSuccess', function() {
@@ -69,11 +70,11 @@ let orsApp = angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routi
 //                     $route.current = lastRoute;
 //                     un();
 //                 });
-//             } else {
-//                 $location.reload = !reload;
 //             }
 //             return original.apply($location, [path]);
 //         };
+//     }
+// ]);
 Array.prototype.move = function(from, to) {
     this.splice(to, 0, this.splice(from, 1)[0]);
     return this;

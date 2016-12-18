@@ -18,6 +18,7 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
             console.log('reload')
                 /** notify the settings that we're now in the aa panel */
             orsSettingsFactory.updateNgRoute(next.urlPath);
+            orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
             /** 
              * check if anything is saved in the settings object
              * if there isn't initialize settings object from permalink or provide empty
