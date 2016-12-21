@@ -837,6 +837,10 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             getProp(profile);
             if (userOptions.routinglang !== undefined) link = link.concat('&routinglang=' + userOptions.routinglang);
             if (userOptions.units !== undefined) link = link.concat('&units=' + userOptions.units);
+            // $location.search(link);
+            // $rootScope.$apply(function() {
+            //     $location.search(link);
+            // });
             $timeout(function() {
                 $location.search(link);
             });

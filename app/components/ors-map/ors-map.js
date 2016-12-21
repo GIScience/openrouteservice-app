@@ -111,6 +111,7 @@ angular.module('orsApp').directive('orsMap', function() {
                         orsSettingsFactory.insertWaypointFromMap(idx, waypoint, fireRequest);
                     }
                     orsSettingsFactory.getAddress(pos, idx, updateWp);
+                    //This should be done via settings subject, but aaSettingsSubject is only updated on request thus we need this here (Causes redundancy for routing)
                     orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
                     // close the popup
                     ctrl.mapModel.map.closePopup();

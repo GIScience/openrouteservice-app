@@ -3,7 +3,7 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
     controller($location, orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService, orsCookiesFactory) {
         var ctrl = this;
         ctrl.$routerCanReuse = function(next, prev) {
-            return next.params.name === prev.params.name;
+            return next.urlPath === prev.urlPath;
         };
         ctrl.$onInit = function() {
             ctrl.profiles = lists.profiles;
@@ -34,12 +34,14 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
             ctrl.activeProfile = orsSettingsFactory.getActiveProfile().type;
             ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
             ctrl.shouldDisplayRouteDetails = false;
+            orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
         };
         ctrl.$routerOnReuse = function(next, prev) {
-            // update permalink
-            const settings = orsSettingsFactory.getSettings();
-            const userSettings = orsSettingsFactory.getUserOptions();
-            orsUtilsService.parseSettingsToPermalink(settings, userSettings);
+            // No need to update permalink here, this is done via settings-subject
+            // const settings = orsSettingsFactory.getSettings();
+            // const userSettings = orsSettingsFactory.getUserOptions();
+            // console.log(next, prev);
+            // orsUtilsService.parseSettingsToPermalink(settings, userSettings);
         };
         ctrl.showInstructions = () => {
             ctrl.shouldDisplayRouteDetails = ctrl.shouldDisplayRouteDetails == true ? false : true;

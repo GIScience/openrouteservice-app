@@ -13,7 +13,6 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
             orsSettingsFactory.isInitialized = true;
             /** notify the settings that we're now in the aa panel */
             orsSettingsFactory.updateNgRoute(next.urlPath);
-            orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
             /** 
              * check if anything is saved in the settings object
              * if there isn't initialize settings object from permalink or provide empty
@@ -38,12 +37,13 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
             ctrl.activeProfile = orsSettingsFactory.getActiveProfile().type;
             ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
+            orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
         };
         ctrl.$routerOnReuse = function(next, prev) {
-            // Update Permalink 
-            const settings = orsSettingsFactory.getSettings();
-            const userSettings = orsSettingsFactory.getUserOptions();
-            orsUtilsService.parseSettingsToPermalink(settings, userSettings);
+            // No need to update permalink here, this is done via settings-subject
+            // const settings = orsSettingsFactory.getSettings();
+            // const userSettings = orsSettingsFactory.getUserOptions();
+            // orsUtilsService.parseSettingsToPermalink(settings, userSettings);
         };
     },
     require: {
