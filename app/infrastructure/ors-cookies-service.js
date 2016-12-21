@@ -1,5 +1,5 @@
 angular.module('orsApp.cookies-service', ['ngCookies']).factory('orsCookiesFactory', ['$cookies', '$window', 'orsSettingsFactory',
-    function($cookies, $window, orsSettingsFactory) {
+    ($cookies, $window, orsSettingsFactory) => {
         let orsCookiesFactory = {};
         orsCookiesFactory.getCookies = () => {
             let userOptions = $cookies.getObject('userOptions');

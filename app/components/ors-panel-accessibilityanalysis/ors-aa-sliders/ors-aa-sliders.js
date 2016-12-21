@@ -2,7 +2,7 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
     templateUrl: 'app/components/ors-panel-accessibilityanalysis/ors-aa-sliders/ors-aa-sliders.html',
     controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
         var ctrl = this;
-        ctrl.$onInit = function() {
+        ctrl.$onInit = () => {
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
             if (ctrl.isochroneMinutesSlider.value > 1) ctrl.isochroneIntervalSlider.options.ceil = ctrl.isochroneMinutesSlider.value - 1;
             else ctrl.isochroneIntervalSlider.options.ceil = 1;
@@ -18,10 +18,10 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
                 floor: ctrl.optionList.methodOptions.TIME.id,
                 ceil: ctrl.optionList.methodOptions.DISTANCE.id,
                 step: 1,
-                translate: function(value) {
+                translate: (value) => {
                     return value == 0 ? ctrl.optionList.methodOptions.TIME.name : ctrl.optionList.methodOptions.DISTANCE.name;
                 },
-                onEnd: function() {
+                onEnd: () => {
                     // console.log("TEST");
                     // // ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
                     // console.log(ctrl.currentOptions);
@@ -38,14 +38,14 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
                 floor: ctrl.optionList.minutesOptions.min,
                 ceil: ctrl.optionList.minutesOptions.max,
                 step: ctrl.optionList.minutesOptions.step,
-                translate: function(value) {
+                translate: (value) => {
                     return value + ' <b>min</b>';
                 },
-                onEnd: function() {
+                onEnd: () => {
                     ctrl.currentOptions.analysis_options.minutes = ctrl.isochroneMinutesSlider.value;
                     ctrl.changeOptions();
                 },
-                onChange: function() {
+                onChange: () => {
                     if (ctrl.isochroneMinutesSlider.value > 1) {
                         ctrl.isochroneIntervalSlider.options.ceil = ctrl.isochroneMinutesSlider.value - 1;
                         ctrl.isochroneIntervalSlider.options.floor = Math.ceil(ctrl.isochroneMinutesSlider.value / 10);
@@ -64,17 +64,17 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
                 floor: Math.ceil(ctrl.currentOptions.analysis_options.minutes / 10),
                 ceil: ctrl.optionList.intervalOptions.max,
                 step: ctrl.optionList.intervalOptions.step,
-                translate: function(value) {
+                translate: (value) => {
                     return value + ' <b>min</b>';
                 },
-                onEnd: function() {
+                onEnd: () => {
                     ctrl.currentOptions.analysis_options.interval = ctrl.isochroneIntervalSlider.value;
                     ctrl.changeOptions();
                 },
                 hidePointerLabels: true
             }
         };
-        ctrl.changeOptions = function() {
+        ctrl.changeOptions = () => {
             console.log("changeOptions");
             orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
         };

@@ -1,19 +1,16 @@
 {
-  "name": "OpenRouteService.org",
-  "description": "Angular 1.x version of ORS",
+  "name": "openrouteservice.org",
+  "description": "angular version of openrouteservice.org",
   "version": "1.0.0",
   "homepage": "http://www.uni-heidelberg.de",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "angular": "^1.5.3",
     "jquery": "latest",
     "lodash": "latest",
-    "bootstrap": "^3.3.6",
-    "leaflet": "latest",
-    "angular-route": "^1.5.3",
-    "angular-animate": "^1.5.3",
-    "angular-cookies": "^1.5.3",
+    "leaflet": "~0.7",
+    "angular-animate": "~1.5.8",
+    "angular-cookies": "~1.5.8",
     "XMLWriter": "latest",
     "rxjs": "latest",
     "font-awesome": "fontawesome#^4.6.3",
@@ -21,7 +18,7 @@
     "angular-ui-sortable": "^0.14.3",
     "jquery-ui": "jqueryui#^1.12.0",
     "angularjs-slider": "^5.5.1",
-    "angular-sanitize": "^1.5.8",
+    "angular-sanitize": "1.5.8",
     "angular-file-saver": "^1.1.2",
     "turfjs": "*",
     "angular-jxon": "*",
@@ -30,9 +27,10 @@
     "angular-loading-bar": "^0.9.0",
     "angular-tooltips": "^1.1.8",
     "angular-translate": "2.13.0",
-    "angular-translate-loader-static-files": "2.13.0"
+    "angular-translate-loader-static-files": "2.13.0",
+    "leaflet.markercluster": "leaflet-0.7"
   },
   "resolutions": {
-    "angular": "^1.6.0"
+    "angular": "~1.5.8"
   }
 }

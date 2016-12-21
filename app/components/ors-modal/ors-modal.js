@@ -16,11 +16,5 @@ angular.module('orsApp.ors-modal', []).component('orsModal', {
     },
     controller() {
         let ctrl = this;
-        
     }
 });
-
-
-
-
-

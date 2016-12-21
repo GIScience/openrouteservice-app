@@ -5,13 +5,14 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
         activeProfile: '<',
         showOptions: '<'
     },
-    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService, $scope, $timeout) {
-        var ctrl = this;
+    controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsErrorhandlerService', 'orsParamsService', '$scope', '$timeout', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService, $scope, $timeout) {
+        let ctrl = this;
         ctrl.optionList = lists.optionList;
-        ctrl.$onInit = function() {
+        ctrl.$onInit = () => {
             /** This is a reference of the settings object, if we change here, it is updated in settings */
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
-            // set weight slider from params
+            console.info(ctrl.currentOptions)
+                // set weight slider from params
             ctrl.currentOptions.weight = ctrl.currentOptions.weight !== undefined ? ctrl.currentOptions.weight : ctrl.optionList.weight.Fastest;
             ctrl.weightSlider = {
                 value: ctrl.currentOptions.weight,
@@ -27,7 +28,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                     showTicksValues: false,
                     hidePointerLabels: true,
                     hideLimitLabels: true,
-                    onEnd: function() {
+                    onEnd: () => {
                         ctrl.currentOptions.weight = ctrl.weightSlider.value;
                         ctrl.changeOptions();
                     }
@@ -42,10 +43,10 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                     floor: ctrl.maxspeedOptions.min,
                     ceil: ctrl.maxspeedOptions.max,
                     step: ctrl.maxspeedOptions.step,
-                    translate: function(value) {
+                    translate: (value) => {
                         return value + ' <b>km/h</b>';
                     },
-                    onEnd: function() {
+                    onEnd: () => {
                         ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
                         ctrl.changeOptions();
                     }
@@ -63,10 +64,10 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                     options: {
                         floor: ctrl.optionList.hgvParams.Height.min,
                         ceil: ctrl.optionList.hgvParams.Height.max,
-                        translate: function(value) {
+                        translate: (value) => {
                             return value + ' <b>m</b>';
                         },
-                        onEnd: function() {
+                        onEnd: () => {
                             ctrl.currentOptions.height = ctrl.hgvSliders.Height.value;
                             ctrl.changeOptions();
                         }
@@ -77,10 +78,10 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                     options: {
                         floor: ctrl.optionList.hgvParams.Length.min,
                         ceil: ctrl.optionList.hgvParams.Length.max,
-                        translate: function(value) {
+                        translate: (value) => {
                             return value + ' <b>m</b>';
                         },
-                        onEnd: function() {
+                        onEnd: () => {
                             ctrl.currentOptions.length = ctrl.hgvSliders.Length.value;
                             ctrl.changeOptions();
                         }
@@ -91,10 +92,10 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                     options: {
                         floor: ctrl.optionList.hgvParams.Width.min,
                         ceil: ctrl.optionList.hgvParams.Width.max,
-                        translate: function(value) {
+                        translate: (value) => {
                             return value + ' <b>m</b>';
                         },
-                        onEnd: function() {
+                        onEnd: () => {
                             ctrl.currentOptions.width = ctrl.hgvSliders.Width.value;
                             ctrl.changeOptions();
                         }
@@ -105,10 +106,10 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                     options: {
                         floor: ctrl.optionList.hgvParams.AxleLoad.min,
                         ceil: ctrl.optionList.hgvParams.AxleLoad.max,
-                        translate: function(value) {
+                        translate: (value) => {
                             return value + ' <b>t</b>';
                         },
-                        onEnd: function() {
+                        onEnd: () => {
                             ctrl.currentOptions.axleload = ctrl.hgvSliders.AxleLoad.value;
                             ctrl.changeOptions();
                         }
@@ -119,10 +120,10 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                     options: {
                         floor: ctrl.optionList.hgvParams.Weight.min,
                         ceil: ctrl.optionList.hgvParams.Weight.max,
-                        translate: function(value) {
+                        translate: (value) => {
                             return value + ' <b>t</b>';
                         },
-                        onEnd: function() {
+                        onEnd: () => {
                             ctrl.currentOptions.hgvWeight = ctrl.hgvSliders.Weight.value;
                             ctrl.changeOptions();
                         }
@@ -153,7 +154,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                         showTicksValues: false,
                         hidePointerLabels: true,
                         hideLimitLabels: true,
-                        onEnd: function() {
+                        onEnd: () => {
                             ctrl.currentOptions.fitness = ctrl.difficultySliders.Fitness.value;
                             ctrl.changeOptions();
                             ctrl.avoidHillsCheckbox();
@@ -166,10 +167,10 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                     options: {
                         floor: ctrl.optionList.difficulty.steepness.min,
                         ceil: ctrl.optionList.difficulty.steepness.max,
-                        translate: function(value) {
+                        translate: (value) => {
                             return value + ' <b>%</b>';
                         },
-                        onEnd: function() {
+                        onEnd: () => {
                             ctrl.currentOptions.steepness = ctrl.difficultySliders.Steepness.value;
                             ctrl.changeOptions();
                         }
@@ -199,7 +200,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                         showTicksValues: false,
                         hidePointerLabels: true,
                         hideLimitLabels: true,
-                        onEnd: function() {
+                        onEnd: () => {
                             ctrl.currentOptions.surface = ctrl.wheelchairSliders.Surface.value;
                             ctrl.changeOptions();
                         }
@@ -223,7 +224,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                         showTicksValues: false,
                         hidePointerLabels: true,
                         hideLimitLabels: true,
-                        onEnd: function() {
+                        onEnd: () => {
                             ctrl.currentOptions.incline = ctrl.wheelchairSliders.Incline.value;
                             ctrl.changeOptions();
                         }
@@ -245,7 +246,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                         showTicksValues: false,
                         hidePointerLabels: true,
                         hideLimitLabels: true,
-                        onEnd: function() {
+                        onEnd: () => {
                             ctrl.currentOptions.curb = ctrl.wheelchairSliders.Curb.value;
                             ctrl.changeOptions();
                         }
@@ -264,12 +265,14 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                 avoidhillsCheckboxInput.removeAttr('disabled');
             }
         };
-        ctrl.$onChanges = function(changesObj) {
+        ctrl.$onChanges = (changesObj) => {
+            console.log(changesObj)
             if (changesObj.showOptions) ctrl.refreshSlider();
             if (changesObj.activeSubgroup || changesObj.activeProfile) {
                 ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeProfile];
-                // check if already initiated
-                /** update slider settings */
+                console.error(ctrl.maxspeedOptions)
+                    // check if already initiated
+                    /** update slider settings */
                 if (ctrl.maxspeedSlider) {
                     ctrl.maxspeedSlider.value = ctrl.maxspeedOptions.default;
                     ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
@@ -279,7 +282,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                 }
             }
         };
-        ctrl.changeOptions = function() {
+        ctrl.changeOptions = () => {
             // call setoptions
             if (ctrl.currentOptions.difficulty) ctrl.difficultySliders.Fitness.options.disabled = ctrl.currentOptions.difficulty.avoidhills === true ? true : false;
             orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
@@ -288,18 +291,17 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
             if (bool === true) return "fa fa-fw fa-chevron-down";
             else return "fa fa-fw fa-chevron-right";
         };
-        ctrl.refreshSlider = function() {
-            $timeout(function() {
+        ctrl.refreshSlider = () => {
+            $timeout(() => {
                 $scope.$broadcast('rzSliderForceRender');
-            },1000);
+            }, 1000);
         };
         ctrl.reCalcViewDimensions = () => {
-            $timeout(function() {
+            $timeout(() => {
                 $scope.$broadcast('reCalcViewDimensions');
-            },1000);
+            }, 1000);
         };
         //ctrl.reCalcViewDimensions();
         ctrl.refreshSlider();
-
-    }
+    }]
 });

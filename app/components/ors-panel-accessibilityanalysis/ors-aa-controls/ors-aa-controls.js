@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-aa-controls', []).component('orsAaControls', {
     templateUrl: 'app/components/ors-panel-accessibilityanalysis/ors-aa-controls/ors-aa-controls.html',
-    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsMapFactory) {
+    controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsErrorhandlerService', 'orsMapFactory', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsMapFactory) {
         var ctrl = this;
         ctrl.calculate = () => {
             ctrl.onCalculate();
@@ -13,7 +13,7 @@ angular.module('orsApp.ors-aa-controls', []).component('orsAaControls', {
                 _actionCode: 0
             });
         };
-    },
+    }],
     bindings: {
         onCalculate: '&',
         onReset: '&'

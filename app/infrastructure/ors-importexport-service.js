@@ -1,6 +1,6 @@
 angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
     /* angular-JXON config */
-    .config(['$JXONProvider', function($JXONProvider) {
+    .config(['$JXONProvider', ($JXONProvider) => {
         var jxonConfig = {
             valueKey: '_',
             attrKey: '$',
@@ -18,14 +18,14 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
     /*** Parser Factory
     **/
     .factory('orsParseFactory', ['$JXON',
-        function($JXON) {
+        ($JXON) => {
             var orsParseFactory = {};
             /**
              * Parses GPX 1.1
              * @param {Object} gpxDocument: a GPX file in a XMLDocument object notation
              * @return {Object} geoJSONDoc: a geoJSON object
              */
-            orsParseFactory.parseGpx = function(gpxDocument) {
+            orsParseFactory.parseGpx = (gpxDocument) => {
                 //Get the JXON object
                 var jxon = $JXON.xmlToJs(gpxDocument);
                 // get the metadata information
@@ -81,7 +81,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
              * @param {Object} tcxDocument: a TCX file in a XMLDocument object notation
              * @return {Object} geoJSONDoc: a geoJSON object
              **/
-            orsParseFactory.parseTcx = function(tcxDocument) {
+            orsParseFactory.parseTcx = (tcxDocument) => {
                 //get the EPSG code //must be defined by the user
                 var epsgCode = '4326';
                 //Get the JXON object
@@ -122,7 +122,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
              * @param {Object} kmlDocument: a KML file in a XMLDocument object notation
              * @return {Object} geoJSONDoc: a geoJSON object
              */
-            orsParseFactory.parseKml = function(kmlDocument) {
+            orsParseFactory.parseKml = (kmlDocument) => {
                 //get the EPSG code //must be defined by the user
                 var epsgCode = '4326';
                 //Get the JXON object
@@ -166,7 +166,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
              * @param {Object} gmlDocument: a GML file in a XMLDocument object notation
              * @return {Object} geoJSONDoc: a geoJSON object
              */
-            orsParseFactory.parseGml = function(gmlDocument) {
+            orsParseFactory.parseGml = (gmlDocument) => {
                 //Get the JXON object
                 var jxon = $JXON.xmlToJs(gmlDocument);
                 //Create the GeoJSON object
@@ -191,7 +191,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
              * @param {Object} geoJson: a JSON object with geoJSON structure
              * @return {Object} geoJSONDoc: a GeoJSON object
              */
-            orsParseFactory.parseGeoJson = function(geoJson) {
+            orsParseFactory.parseGeoJson = (geoJson) => {
                 for (var i = 0; i < geoJson.geometry.coordinates.length; i++) {
                     var aux = geoJson.geometry.coordinates[i][0];
                     geoJson.geometry.coordinates[i][0] = geoJson.geometry.coordinates[i][1];
@@ -209,7 +209,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
              *      @param {String} geometryFormat: the format used to represent the geometry
              * @return {Object} geoJSONDoc: a geojson object
              */
-            orsParseFactory.parseCsv = function(csvString, options) {
+            orsParseFactory.parseCsv = (csvString, options) => {
                 //get the options
                 if (options === {} || options === null || options === undefined) {
                     options = {
@@ -338,9 +338,9 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
     /*** Writer Factory
     **/
     .factory('orsWriterFactory', ['$JXON',
-        function($JXON) {
+        ($JXON) => {
             var date = new Date(); //remove
-            var routeGlobalVars = function(route) { //remove
+            var routeGlobalVars = (route) => { //remove
                 route = L.polyline(route);
                 //get the GeoJson object of the geo object
                 var geoJSONRoute = route.toGeoJSON();
@@ -368,7 +368,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
              *      @param {Boolean} gpxTrack: if track should be written [default:false]
              * @return {Object} outputGpx: object containing the GPX document
              */
-            orsWriterFactory.writeGpx = function(route, options, avgSpeed, coordinatePrecision) {
+            orsWriterFactory.writeGpx = (route, options, avgSpeed, coordinatePrecision) => {
                 //get the options
                 if (options === {} || options === null || options === undefined) {
                     options = {
@@ -579,7 +579,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
              *      
              * @return {Object} outputTcx: object containing the TCX document
              */
-            orsWriterFactory.writeTcx = function(route, options, avgSpeed, coordinatePrecision) {
+            orsWriterFactory.writeTcx = (route, options, avgSpeed, coordinatePrecision)  => {
                 //get the options
                 if (options === {} || options === null || options === undefined) {
                     options = {
@@ -684,7 +684,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
              *      @param {String} altitudeMode: altitude mode attributed to the kml file [default: clampedToGround]
              * @return {Object} outputKml: object containing the KML document
              */
-            orsWriterFactory.writeKml = function(route, options, avgSpeed, coordinatePrecision) {
+            orsWriterFactory.writeKml = (route, options, avgSpeed, coordinatePrecision) => {
                 //get the options
                 if (options === {} || options === null || options === undefined) {
                     options = {
@@ -788,7 +788,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
              *     
              * @return {Object} outputGml: object containing the GML document
              */
-            orsWriterFactory.writeGml = function(route, options, avgSpeed, coordinatePrecision) {
+            orsWriterFactory.writeGml = (route, options, avgSpeed, coordinatePrecision) => {
                 //get the options
                 if (options === {} || options === null || options === undefined) {
                     options = {
@@ -809,7 +809,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
              *      
              * @return {Object} geojsonObj: object containing the GeoJSON
              */
-            orsWriterFactory.writeGeoJSON = function(route, options, avgSpeed, coordinatePrecision) {
+            orsWriterFactory.writeGeoJSON = (route, options, avgSpeed, coordinatePrecision) => {
                 //get the options
                 if (options === {} || options === null || options === undefined) {
                     options = {
@@ -833,7 +833,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
              *      @param {String} csvFormat: format used to represent the geometry as text [default: wkt]
              * @return {Object} outputCSV: Object containing the CSV document
              */
-            orsWriterFactory.writeCsv = function(route, options, avgSpeed, coordinatePrecision) {
+            orsWriterFactory.writeCsv = (route, options, avgSpeed, coordinatePrecision) => {
                 //get the options
                 if (options === {} || options === null || options === undefined) {
                     options = {
@@ -880,7 +880,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                             case 'wkt':
                             headerGeometry = ["WKT"];
                         break;
-                };
+                }
                 header = headerProperties.concat(headerGeometry);
                 header = header.join(sep);
                 //create the csv body
@@ -983,7 +983,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
     /*** Export Factory
     **/
     .factory('orsExportFactory', ['FileSaver', 'Blob', 'orsWriterFactory',
-        function(FileSaver, Blob, orsWriterFactory) {
+        (FileSaver, Blob, orsWriterFactory) => {
             var orsExportFactory = {};
             /**
              * Export any vector element on the map to GPX
@@ -993,7 +993,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
              * @param {String} avgSpeed: average speed 
              * @param {String} coordinatePrecision: precision of the coordinates
              */
-            orsExportFactory.exportFile = function(route, options, format, avgSpeed, coordinatePrecision) {
+            orsExportFactory.exportFile = (route, options, format, avgSpeed, coordinatePrecision) => {
                 //get the xml object
                 var xmlObj, xmlType, isCsv, geoJSONstring, extension, xmlDeclaration;
                 extension = '.' + format;
@@ -1070,7 +1070,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
     /*** Import Factory
     **/
     .factory('orsImportFactory', ['orsParseFactory',
-        function(orsParseFactory) {
+        (orsParseFactory) => {
             var orsImportFactory = {};
             /**
              * Import a file and load to the map as a vector element
@@ -1078,7 +1078,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
              * @param {String} fileContent: content of the file
              * @return {Object} LeafletLayer: returns a leaflet layer
              */
-            orsImportFactory.importFile = function(fileExt, fileContent) {
+            orsImportFactory.importFile = (fileExt, fileContent) => {
                 switch (fileExt) {
                     case 'gpx':
                         // convert gpx string to a gpx object

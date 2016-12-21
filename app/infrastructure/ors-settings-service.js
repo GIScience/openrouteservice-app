@@ -1,4 +1,4 @@
-angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsRouteService', 'orsAaService', 'orsErrorhandlerService', function(orsObjectsFactory, orsUtilsService, orsRequestService, orsRouteService, orsAaService, orsErrorhandlerService) {
+angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsRouteService', 'orsAaService', 'orsErrorhandlerService', (orsObjectsFactory, orsUtilsService, orsRequestService, orsRouteService, orsAaService, orsErrorhandlerService) => {
     let orsSettingsFactory = {};
     /** Behaviour subjects routing. */
     orsSettingsFactory.routingWaypointsSubject = new Rx.BehaviorSubject({});

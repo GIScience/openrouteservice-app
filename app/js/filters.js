@@ -1,5 +1,5 @@
-angular.module('orsApp.ors-filters', []).filter('duration', function() {
-    return function(input) {
+angular.module('orsApp.ors-filters', []).filter('duration', () => {
+    return (input) => {
         let date = new Date(input);
         let hours = date.getUTCHours();
         hours = hours.toString().length == 1 ? ("0" + hours) : hours;
@@ -8,7 +8,7 @@ angular.module('orsApp.ors-filters', []).filter('duration', function() {
         date = hours + ":" + minutes;
         return date;
     };
-}).filter('distance', ['orsSettingsFactory', function(orsSettingsFactory) {
+}).filter('distance', ['orsSettingsFactory', (orsSettingsFactory) => {
     function distance(input) {
         input = parseInt(input);
         let units = orsSettingsFactory.getUserOptions().units;
