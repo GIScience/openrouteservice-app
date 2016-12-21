@@ -177,6 +177,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     /** Subscription function to current accessibility settings */
     orsSettingsFactory.aaSettingsSubject.subscribe(settings => {
         /** get user options */
+        console.info("changes in aaSettingsSubject");
         const isAaPresent = orsSettingsFactory.handleRoutePresent(settings, 1);
         if (isAaPresent) {
             /** Cancel outstanding requests */

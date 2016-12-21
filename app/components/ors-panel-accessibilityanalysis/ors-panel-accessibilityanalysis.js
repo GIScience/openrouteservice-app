@@ -36,12 +36,13 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
             ctrl.activeProfile = orsSettingsFactory.getActiveProfile().type;
             ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
+            orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
         };
-        ctrl.$routerOnReuse = (next, prev) => {
-            // Update Permalink 
-            const settings = orsSettingsFactory.getSettings();
-            const userSettings = orsSettingsFactory.getUserOptions();
-            orsUtilsService.parseSettingsToPermalink(settings, userSettings);
+        ctrl.$routerOnReuse = function(next, prev) {
+            // No need to update permalink here, this is done via settings-subject
+            // const settings = orsSettingsFactory.getSettings();
+            // const userSettings = orsSettingsFactory.getUserOptions();
+            // orsUtilsService.parseSettingsToPermalink(settings, userSettings);
         };
     }],
     require: {

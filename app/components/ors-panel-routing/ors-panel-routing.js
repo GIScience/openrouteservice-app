@@ -3,7 +3,7 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
     controller: ['orsSettingsFactory', 'orsParamsService', 'orsUtilsService', 'orsCookiesFactory', function(orsSettingsFactory, orsParamsService, orsUtilsService, orsCookiesFactory) {
         let ctrl = this;
         ctrl.$routerCanReuse = (next, prev) => {
-            return next.params.name === prev.params.name;
+            return next.urlPath === prev.urlPath;
         };
         ctrl.$onInit = () => {
             ctrl.profiles = lists.profiles;
@@ -35,15 +35,14 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
             ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
             console.info(ctrl.activeProfile, ctrl.activeSubgroup);
             ctrl.shouldDisplayRouteDetails = false;
+            orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
         };
-        // ctrl.$onChanges = function(changes) {
-        //     console.info(changes)
-        // }
-        ctrl.$routerOnReuse = (next, prev) => {
-            // update permalink
-            const settings = orsSettingsFactory.getSettings();
-            const userSettings = orsSettingsFactory.getUserOptions();
-            orsUtilsService.parseSettingsToPermalink(settings, userSettings);
+        ctrl.$routerOnReuse = function(next, prev) {
+            // No need to update permalink here, this is done via settings-subject
+            // const settings = orsSettingsFactory.getSettings();
+            // const userSettings = orsSettingsFactory.getUserOptions();
+            // console.log(next, prev);
+            // orsUtilsService.parseSettingsToPermalink(settings, userSettings);
         };
         ctrl.showInstructions = () => {
             ctrl.shouldDisplayRouteDetails = ctrl.shouldDisplayRouteDetails == true ? false : true;

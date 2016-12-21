@@ -58,6 +58,23 @@ let orsApp = angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routi
     let ctrl = this;
     ctrl.myOrsMap = orsMapFactory.initMapA("map");
 });
+// orsApp.run(['$route', '$rootScope', '$location',
+//     function($route, $rootScope, $location) {
+//         var original = $location.path;
+//         $location.path = function(path, reload) {
+//             console.log(path, reload);
+//             if (reload === false) {
+//                 var lastRoute = $route.current;
+//                 var un = $rootScope.$on('$locationChangeSuccess', function() {
+//                     $location.reload = reload;
+//                     $route.current = lastRoute;
+//                     un();
+//                 });
+//             }
+//             return original.apply($location, [path]);
+//         };
+//     }
+// ]);
 Array.prototype.move = function(from, to) {
     this.splice(to, 0, this.splice(from, 1)[0]);
     return this;
