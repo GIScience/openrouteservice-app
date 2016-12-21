@@ -47,7 +47,7 @@ let orsApp = angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routi
         $translateProvider.useSanitizeValueStrategy('sanitize');
         //get the translations local folder
         $translateProvider.useStaticFilesLoader({
-            prefix: 'app/languages/',
+            prefix: 'languages/',
             suffix: '.json'
         });
         // set the preferred language (default language)

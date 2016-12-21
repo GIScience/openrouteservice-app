@@ -1,5 +1,5 @@
 angular.module('orsApp.ors-header', []).component('orsHeader', {
-    templateUrl: 'app/components/ors-header/ors-header.html',
+    templateUrl: 'components/ors-header/ors-header.html',
     controller: ['$translate', 'orsUtilsService', 'orsSettingsFactory', 'orsCookiesFactory', function($translate, orsUtilsService, orsSettingsFactory, orsCookiesFactory) {
         let ctrl = this;
         ctrl.optionList = lists.userOptions;

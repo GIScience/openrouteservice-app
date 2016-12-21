@@ -1,5 +1,5 @@
 angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('orsRouteExtras', {
-    templateUrl: 'app/components/ors-panel-routing/ors-route-extras/ors-route-extras.html',
+    templateUrl: 'components/ors-panel-routing/ors-route-extras/ors-route-extras.html',
     bindings: {
         currentRoute: '<',
         routeIndex: '<'

@@ -116,7 +116,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     };
     /** Used for map update */
     orsSettingsFactory.updateWaypoints = () => {
-        console.log('updating..')
+        console.log('updating..');
         orsSettingsFactory[currentWaypointsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue().waypoints);
     };
     /** 
@@ -142,7 +142,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
     orsSettingsFactory.handleRoutePresent = (settings, num) => {
         let sum = 0,
             routePresent = false;
-        angular.forEach(settings.waypoints, function(waypoint) {
+        angular.forEach(settings.waypoints, (waypoint) => {
             sum += waypoint._set;
             if (sum == num) {
                 routePresent = true;
@@ -163,13 +163,13 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
             const payload = orsUtilsService.generateRouteXml(userOptions, settings);
             const request = orsRouteService.fetchRoute(payload);
             orsRouteService.routingRequests.requests.push(request);
-            request.promise.then(function(response) {
+            request.promise.then((response) => {
                 const profile = settings.profile.type;
                 orsRouteService.processResponse(response, profile);
-            }, function(response) {
+            }, (response) => {
                 console.error(response);
             });
-        } else {}
+        }
         if (orsSettingsFactory.isInitialized) {
             orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
         }
@@ -184,31 +184,28 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
             const payload = orsAaService.generateAnalysisRequest(settings);
             const request = orsAaService.fetchAnalysis(payload);
             orsAaService.aaRequests.requests.push(request);
-            request.promise.then(function(response) {
+            request.promise.then((response) => {
                 orsAaService.processResponse(response);
                 // orsAaService.parseResultsToBounds(response);
                 // orsAaService.parseResponseToPolygonJSON(response);
-            }, function(response) {});
+            }, (response) => {});
         }
         if (orsSettingsFactory.isInitialized) {
             orsUtilsService.parseSettingsToPermalink(settings, orsSettingsFactory.getUserOptions());
         }
-        // } else {
-        // console.log('Not enough waypoints..')
-        // }
     });
     /** Fetches address 
      * @param {Object} pos - latLng Object 
      * @param {number} idx - Index of waypoint
      * @param {boolean} init - What was that again? 
      */
-    orsSettingsFactory.getAddress = function(pos, idx, init) {
+    orsSettingsFactory.getAddress = (pos, idx, init) => {
         const latLngString = orsUtilsService.parseLatLngString(pos);
         orsSettingsFactory.updateWaypointAddress(idx, latLngString, init);
         const payload = orsUtilsService.reverseXml(pos);
         const request = orsRequestService.geocode(payload);
         orsRequestService.geocodeRequests.updateRequest(request, idx);
-        request.promise.then(function(response) {
+        request.promise.then((response) => {
             const data = orsUtilsService.domParser(response);
             const error = orsErrorhandlerService.parseResponse(data);
             if (!error) {
@@ -217,7 +214,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
             } else {
                 console.log('Not able to find address!');
             }
-        }, function(response) {
+        }, (response) => {
             console.log('It was not possible to get the address of the current waypoint. Sorry for the inconvenience!');
         });
     };
@@ -247,7 +244,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      * @param {waypoints.<Object>} List of waypoint objects.
      */
     orsSettingsFactory.setWaypoints = (waypoints, fireRequest = true) => {
-        console.log('setting..', waypoints)
+        console.log('setting..', waypoints);
         orsSettingsFactory[currentSettingsObj].getValue().waypoints = waypoints;
         /** fire a new request */
         if (fireRequest) orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());

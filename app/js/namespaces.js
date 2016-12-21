@@ -44,10 +44,10 @@ namespaces.schemata = {
  * if you want to become an active ORS code contributor please contact us: openrouteserviceATgeog.uni-heidelberg.de
  */
 namespaces.services = {
-    geocoding: 'http://openls.geog.uni-heidelberg.de/geocoding', //for address search requests
-    routing: 'http://openls.geog.uni-heidelberg.de/routing-test', //for routing requests
-    tmc: 'http://openls.geog.uni-heidelberg.de/osm/routing-test?tmc',
-    analyse: 'http://openls.geog.uni-heidelberg.de/analysis-test', //for accessibility analysis requests
+    geocoding: 'http://129.206.7.158/geocoding', //for address search requests
+    routing: 'http://129.206.7.158/routing', //for routing requests
+    tmc: 'http://129.206.228.124/routing?tmc',
+    analyse: 'http://129.206.7.158/analysis', //for accessibility analysis requests
 };
 /**
  * metadata used when generating (export) files on the openrouteservice

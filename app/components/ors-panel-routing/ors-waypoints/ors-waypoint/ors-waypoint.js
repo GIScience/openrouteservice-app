@@ -1,5 +1,5 @@
 angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
-    templateUrl: 'app/components/ors-panel-routing/ors-waypoints/ors-waypoint/ors-waypoint.html',
+    templateUrl: 'components/ors-panel-routing/ors-waypoints/ors-waypoint/ors-waypoint.html',
     bindings: {
         idx: '<',
         waypoint: '<',

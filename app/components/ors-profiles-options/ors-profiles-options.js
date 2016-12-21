@@ -1,5 +1,5 @@
 angular.module('orsApp.ors-profiles-options', []).component('orsProfilesOptions', {
-    templateUrl: 'app/components/ors-profiles-options/ors-profiles-options.html',
+    templateUrl: 'components/ors-profiles-options/ors-profiles-options.html',
     bindings: {
         orsParams: '<',
         activeProfile: '=',
@@ -15,7 +15,6 @@ angular.module('orsApp.ors-profiles-options', []).component('orsProfilesOptions'
             ctrl.currentProfile = orsSettingsFactory.getActiveProfile();
             ctrl.activeSubgroup = ctrl.profiles[ctrl.currentProfile.type].subgroup;
             ctrl.activeProfile = ctrl.currentProfile.type;
-            console.log(ctrl.activeSubgroup, ctrl.activeProfile)
         };
         /**
          * Is called when profile is changed
@@ -24,12 +23,11 @@ angular.module('orsApp.ors-profiles-options', []).component('orsProfilesOptions'
         ctrl.changeProfile = (profile) => {
             if (profile) ctrl.currentProfile.type = profile;
             ctrl.activeProfile = ctrl.currentProfile.type;
-            console.log(ctrl.currentProfile.type)
             ctrl.activeSubgroup = ctrl.profiles[ctrl.currentProfile.type].subgroup;
             orsSettingsFactory.setProfile(ctrl.currentProfile);
         };
         ctrl.$onChanges = (changes) => {
-            console.info(changes)
+            //console.info(changes)
         };
         ctrl.callOptions = () => {
             ctrl.showOptions = ctrl.showOptions == false ? true : false;

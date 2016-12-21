@@ -1,5 +1,5 @@
 angular.module('orsApp.ors-nav', ['ngComponentRouter']).component('orsSidebar', {
-    templateUrl: 'app/components/ors-navigation/ors-nav.html',
+    templateUrl: 'components/ors-navigation/ors-nav.html',
     transclude: true,
     bindings: {
         orsMap: '<',

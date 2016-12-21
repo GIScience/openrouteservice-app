@@ -1,5 +1,5 @@
 angular.module('orsApp.ors-options', []).component('orsOptions', {
-    templateUrl: 'app/components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-options/ors-options.html',
+    templateUrl: 'components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-options/ors-options.html',
     bindings: {
         activeSubgroup: '<',
         activeProfile: '<',
@@ -11,7 +11,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
         ctrl.$onInit = () => {
             /** This is a reference of the settings object, if we change here, it is updated in settings */
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
-            console.info(ctrl.currentOptions)
+            console.info(ctrl.currentOptions);
                 // set weight slider from params
             ctrl.currentOptions.weight = ctrl.currentOptions.weight !== undefined ? ctrl.currentOptions.weight : ctrl.optionList.weight.Fastest;
             ctrl.weightSlider = {

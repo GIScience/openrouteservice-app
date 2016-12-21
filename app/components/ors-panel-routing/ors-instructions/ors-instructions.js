@@ -1,6 +1,6 @@
 let routeSubscriptionInstructions;
 angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).component('orsInstructions', {
-    templateUrl: 'app/components/ors-panel-routing/ors-instructions/ors-instructions.html',
+    templateUrl: 'components/ors-panel-routing/ors-instructions/ors-instructions.html',
     bindings: {
         showInstructions: '&',
         shouldDisplayRouteDetails: '<'
@@ -8,7 +8,6 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
     controller: ['$scope', 'orsRouteService', 'orsSettingsFactory', 'orsErrorhandlerService', function($scope, orsRouteService, orsSettingsFactory, orsErrorhandlerService) {
         let ctrl = this;
         ctrl.profiles = lists.profiles;
-        console.info(orsRouteService.getCurrentRouteIdx())
         /** use scope in order to share same template ng-include with summaries */
         $scope.route = ctrl.route = orsRouteService.routeObj.routes[orsRouteService.getCurrentRouteIdx()];
         ctrl.routeIndex = orsRouteService.getCurrentRouteIdx();
@@ -17,8 +16,8 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
         try {
             routeSubscriptionInstructions.dispose();
         } catch (error) {
-            console.log('dude')
-        }   
+            console.warn(error);
+        }
         routeSubscriptionInstructions = orsRouteService.routesSubject.subscribe(routes => {
             console.info('subscribing to first route', routes);
             ctrl.routeIndex = orsRouteService.getCurrentRouteIdx();

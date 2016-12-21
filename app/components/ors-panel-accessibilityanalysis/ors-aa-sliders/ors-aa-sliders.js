@@ -1,7 +1,7 @@
 angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
-    templateUrl: 'app/components/ors-panel-accessibilityanalysis/ors-aa-sliders/ors-aa-sliders.html',
-    controller(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
-        var ctrl = this;
+    templateUrl: 'components/ors-panel-accessibilityanalysis/ors-aa-sliders/ors-aa-sliders.html',
+    controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsErrorhandlerService', 'orsParamsService', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
+        let ctrl = this;
         ctrl.$onInit = () => {
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
             if (ctrl.isochroneMinutesSlider.value > 1) ctrl.isochroneIntervalSlider.options.ceil = ctrl.isochroneMinutesSlider.value - 1;
@@ -78,7 +78,7 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
             console.log("changeOptions");
             orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
         };
-    },
+    }],
     require: {
         parent: '^orsSidebar'
     },

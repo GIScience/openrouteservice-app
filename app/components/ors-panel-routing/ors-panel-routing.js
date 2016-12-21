@@ -1,5 +1,5 @@
 angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-profiles-options', 'orsApp.ors-options', 'orsApp.ors-summary', 'orsApp.ors-instructions']).component('orsRoute', {
-    templateUrl: 'app/components/ors-panel-routing/ors-panel-routing.html',
+    templateUrl: 'components/ors-panel-routing/ors-panel-routing.html',
     controller: ['orsSettingsFactory', 'orsParamsService', 'orsUtilsService', 'orsCookiesFactory', function(orsSettingsFactory, orsParamsService, orsUtilsService, orsCookiesFactory) {
         let ctrl = this;
         ctrl.$routerCanReuse = (next, prev) => {
@@ -18,7 +18,7 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
              * if there isn't initialize settings object from permalink or provide empty settings object
              */
             if (orsSettingsFactory.getWaypoints().length == 0) {
-                console.log('importing routing settings..')
+                console.log('importing routing settings..');
                 ctrl.routeParams = next.params;
                 orsSettingsFactory.initWaypoints(2);
                 const importedParams = orsParamsService.importSettings(ctrl.routeParams);
@@ -33,7 +33,7 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
             orsSettingsFactory.updateWaypoints();
             ctrl.activeProfile = orsSettingsFactory.getActiveProfile().type;
             ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
-            console.info(ctrl.activeProfile, ctrl.activeSubgroup)
+            console.info(ctrl.activeProfile, ctrl.activeSubgroup);
             ctrl.shouldDisplayRouteDetails = false;
         };
         // ctrl.$onChanges = function(changes) {

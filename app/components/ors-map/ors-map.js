@@ -149,17 +149,17 @@ angular.module('orsApp').directive('orsMap', () => {
             /**
              * Either zooms to feature, geometry or entire layer
              */
-            $scope.zoom = (package) => {
-                if (!(package === undefined)) {
-                    if (!(package.featureId === undefined)) {
-                        $scope.mapModel.geofeatures[package.layerCode].eachLayer((layer) => {
-                            if (layer.options.index == package.featureId) {
+            $scope.zoom = (actionPackage) => {
+                if (typeof actionPackage != 'undefined') {
+                    if (typeof actionPackage.featureId != 'undefined') {
+                        $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
+                            if (layer.options.index == actionPackage.featureId) {
                                 $scope.orsMap.fitBounds(layer.getBounds());
                             }
                         });
-                    } else if (package.featureId === undefined) {
-                        if (package.geometry !== undefined) {
-                            let bounds = new L.LatLngBounds(package.geometry);
+                    } else if (actionPackage.featureId === undefined) {
+                        if (actionPackage.geometry !== undefined) {
+                            let bounds = new L.LatLngBounds(actionPackage.geometry);
                             $scope.orsMap.fitBounds(bounds);
                         } else {
                             $scope.orsMap.fitBounds(new L.featureGroup(Object.keys($scope.mapModel.geofeatures).map((key) => {
@@ -175,11 +175,11 @@ angular.module('orsApp').directive('orsMap', () => {
             };
             /** 
              * Highlights marker on map
-             * @param {Object} package - The action package
+             * @param {Object} actionPackage - The action actionPackage
              */
-            $scope.highlightWaypoint = (package) => {
-                $scope.mapModel.geofeatures[package.layerCode].eachLayer((layer) => {
-                    if (layer.options.idx == package.featureId) {
+            $scope.highlightWaypoint = (actionPackage) => {
+                $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
+                    if (layer.options.idx == actionPackage.featureId) {
                         let waypointIcon;
                         if (layer.options.highlighted === true) {
                             const iconIdx = orsSettingsFactory.getIconIdx(layer.options.idx);
@@ -195,30 +195,30 @@ angular.module('orsApp').directive('orsMap', () => {
             };
             /** 
              * adds features to specific layer
-             * @param {Object} package - The action package
+             * @param {Object} actionPackage - The action actionPackage
              */
-            $scope.add = (package) => {
-                let polyLine = L.polyline(package.geometry, {
-                    index: !(package.featureId === undefined) ? package.featureId : null
-                }).addTo($scope.mapModel.geofeatures[package.layerCode]);
-                polyLine.setStyle(package.style);
+            $scope.add = (actionPackage) => {
+                let polyLine = L.polyline(actionPackage.geometry, {
+                    index: !(actionPackage.featureId === undefined) ? actionPackage.featureId : null
+                }).addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
+                polyLine.setStyle(actionPackage.style);
             };
             /** 
              * adds polygon array to specific layer
-             * @param {Object} package - The action package
+             * @param {Object} actionPackage - The action actionPackage
              */
-            $scope.addPolygons = (package) => {
+            $scope.addPolygons = (actionPackage) => {
                 const getGradientColor = (rangePos) => {
                     hsl = Math.floor(120 - 120 * rangePos);
                     return "hsl(" + hsl + ", 100%, 50%" + ")";
                 };
-                for (var i = package.geometry.length - 1; i >= 0; i--) {
-                    L.polygon(package.geometry[i], {
-                        fillColor: package.geometry.length == 1 ? getGradientColor(1) : getGradientColor(i / (package.geometry.length - 1)),
+                for (var i = actionPackage.geometry.length - 1; i >= 0; i--) {
+                    L.polygon(actionPackage.geometry[i], {
+                        fillColor: actionPackage.geometry.length == 1 ? getGradientColor(1) : getGradientColor(i / (actionPackage.geometry.length - 1)),
                         color: '#000',
                         weight: 1,
                         fillOpacity: 1
-                    }).addTo($scope.mapModel.geofeatures[package.layerCode]);
+                    }).addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                 }
                 // hack to change opacity of entire overlaypane layer but prevent opacity of stroke
                 let svg = d3.select($scope.mapModel.map.getPanes().overlayPane).style("opacity", 0.5);
@@ -227,15 +227,15 @@ angular.module('orsApp').directive('orsMap', () => {
             /** 
              * clears layer entirely or specific layer in layer
              */
-            $scope.clear = (package) => {
-                if (!(package.featureId === undefined)) {
-                    $scope.mapModel.geofeatures[package.layerCode].eachLayer((layer) => {
-                        if (layer.options.index == package.featureId) {
-                            $scope.mapModel.geofeatures[package.layerCode].removeLayer(layer);
+            $scope.clear = (actionPackage) => {
+                if (!(actionPackage.featureId === undefined)) {
+                    $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
+                        if (layer.options.index == actionPackage.featureId) {
+                            $scope.mapModel.geofeatures[actionPackage.layerCode].removeLayer(layer);
                         }
                     });
                 } else {
-                    $scope.mapModel.geofeatures[package.layerCode].clearLayers();
+                    $scope.mapModel.geofeatures[actionPackage.layerCode].clearLayers();
                 }
             };
             orsSettingsFactory.subscribeToNgRoute(onNext = (route) => {
@@ -294,7 +294,7 @@ angular.module('orsApp').directive('orsPopup', ['$compile', '$timeout', 'orsSett
     return {
         restrict: 'E',
         require: '^orsMap', //one directive used,
-        templateUrl: 'app/components/ors-map/directive-templates/ors-popup.html',
+        templateUrl: 'components/ors-map/directive-templates/ors-popup.html',
         link: (scope, elem, attr) => {
             scope.add = (idx) => {
                 scope.processMapWaypoint(idx, scope.displayPos);
@@ -306,7 +306,7 @@ angular.module('orsApp').directive('orsAaPopup', ['$compile', '$timeout', 'orsSe
     return {
         restrict: 'E',
         require: '^orsMap', //one directive used,
-        templateUrl: 'app/components/ors-map/directive-templates/ors-aa-popup.html',
+        templateUrl: 'components/ors-map/directive-templates/ors-aa-popup.html',
         link: (scope, elem, attr) => {
             scope.add = (idx) => {
                 //fourth argument to not fire a request on add waypoint

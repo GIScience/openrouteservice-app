@@ -1,5 +1,5 @@
 angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteControls', {
-    templateUrl: '/app/components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-import-route/import_route_tpl.html',
+    templateUrl: 'components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-import-route/import_route_tpl.html',
     controller: ['$scope', 'orsImportFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsMapFactory', 'orsSettingsFactory', function($scope, orsImportFactory, orsObjectsFactory, orsUtilsService, orsMapFactory, orsSettingsFactory) {
         let ctrl = this;
         ctrl.showCSVopt = false;

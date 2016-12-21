@@ -23,7 +23,6 @@ angular.module('orsApp.ors-filters', []).filter('duration', () => {
         } else if (units == 'mi') {
             /** convert meters to miles */
             input = (input * 0.000621371192).toFixed(2);
-            console.log(input)
             if (input < 0.5 && input > 0.2) {
                 /** yards */
                 input = (input * 1760).toFixed();

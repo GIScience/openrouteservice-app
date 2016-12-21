@@ -1,7 +1,7 @@
 angular.module('orsApp.ors-aa-controls', []).component('orsAaControls', {
-    templateUrl: 'app/components/ors-panel-accessibilityanalysis/ors-aa-controls/ors-aa-controls.html',
+    templateUrl: 'components/ors-panel-accessibilityanalysis/ors-aa-controls/ors-aa-controls.html',
     controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsErrorhandlerService', 'orsMapFactory', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsMapFactory) {
-        var ctrl = this;
+        let ctrl = this;
         ctrl.calculate = () => {
             ctrl.onCalculate();
         };

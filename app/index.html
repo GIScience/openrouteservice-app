@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>OpenRouteService.org</title>
+        <base href="/">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" name="viewport">
+        <meta content="text/html; charset=utf-8" http-equiv="content-type"></meta>
+            <!-- build:css style.min.css -->
+            <link href="lib/angularjs-slider/dist/rzslider.css" rel="stylesheet" ></link>
+            <link href="lib/angular-loading-bar/build/loading-bar.css" rel="stylesheet" ></link>
+            <link href="lib/semantic/dist/components/reset.css" rel="stylesheet" ></link>
+            <link href="lib/semantic/dist/components/input.css" rel="stylesheet" ></link>
+            <link href="lib/semantic/dist/components/button.css" rel="stylesheet" ></link>
+            <link href="lib/semantic/dist/components/divider.css" rel="stylesheet" ></link>
+            <link href="lib/semantic/dist/components/icon.css" rel="stylesheet" ></link>
+            <link href="lib/semantic/dist/components/list.css" rel="stylesheet" ></link>
+            <link href="lib/semantic/dist/components/dropdown.css" rel="stylesheet" ></link>
+            <link href="lib/semantic/dist/components/checkbox.css" rel="stylesheet" ></link>
+            <link href="lib/semantic/dist/components/label.css" rel="stylesheet" ></link>
+            <link href="lib/semantic/dist/components/loader.css" rel="stylesheet" ></link>
+            <link href="lib/semantic/dist/components/form.css" rel="stylesheet" ></link>
+            <link href="lib/angular-tooltips/dist/angular-tooltips.css" rel="stylesheet" type="text/css" />
+            <link href="css/styles.css" rel="stylesheet"></link>
+            <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet"></link>
+            <link href="lib/leaflet/dist/leaflet.css" rel="stylesheet"></link>
+            <link href="lib/leaflet.markercluster/dist/MarkerCluster.css" rel="stylesheet" type="text/css" />
+            <!-- endbuild -->
+        </meta>
+    </head>
+    <body ng-app="orsApp">
+        <div class="ors-main" ng-controller="RootController as root">   
+            <div class="ors-left">
+                <ors-header class="ors-header"></ors-header>
+                <ors-sidebar class="ors-sidebar" ors-map="root.myOrsMap"></ors-sidebar>
+            </div>
+            <ors-map id="map" class="ors-right" ors-map="root.myOrsMap"></ors-map>             
+        </div>
+    </body>
+    <!-- @if DEBUG -->
+    <script src="lib/node_modules/core-js/client/shim.min.js"></script>
+    <script src="lib/node_modules/zone.js/dist/zone.js"></script>
+    <!-- @endif -->
+    <script src="build/js/traceur_runtime.js"></script>
+    
+    <script src="lib/rxjs/dist/rx.all.js"></script>
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="lib/jquery-ui/jquery-ui.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular-cookies/angular-cookies.js"></script>
+    <script src="lib/angular-animate/angular-animate.js"></script>
+    <script src="lib/angular-sanitize/angular-sanitize.js"></script>
+    <script src="lib/angular-translate/angular-translate.js"></script>
+    <script src="lib/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script src="lib/node_modules/@angular/router/angular1/angular_1_router.js"></script>
+    <script src="lib/lodash/dist/lodash.min.js"></script>
+    <script src="lib/XMLWriter/XMLWriter.js"></script>
+    <script src="lib/leaflet/dist/leaflet.js"></script>
+    <script src="lib/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    <script src="lib/angular-ui-sortable/sortable.js"></script>
+    <script src="lib/angularjs-slider/dist/rzslider.js"></script>
+    <script src="lib/angular-loading-bar/build/loading-bar.js"></script>
+    <script src="lib/d3/d3.js"></script>
+    <script src="lib/d3-tip/index.js"></script>
+    <script src="lib/vkBeautify/vkbeautify.js" type="text/javascript"></script>
+    <script src="lib/angular-jxon/dist/module.js" type="text/javascript"></script>
+    <script src="lib/angular-file-saver/dist/angular-file-saver.bundle.js" type="text/javascript"></script>
+    <script src="lib/turfjs/turf.min.js" type="text/javascript"></script>
+    <script src="lib/angular-tooltips/dist/angular-tooltips.js"></script>
+    <!-- build:js site.min.js -->
+    <script src="js/namespaces.js"></script>
+    <script src="js/lists.js"></script>
+    <script src="js/mappings.js"></script>
+    <script src="infrastructure/ors-settings-service.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="infrastructure/ors-objects-service.js"></script>
+    <script src="infrastructure/ors-map-service.js"></script>
+    <script src="infrastructure/ors-request-service.js"></script>
+    <script src="infrastructure/ors-utils-service.js"></script>
+    <script src="infrastructure/ors-error-service.js"></script>
+    <script src="infrastructure/ors-params-service.js"></script>
+    <script src="infrastructure/ors-route-service.js"></script>
+    <script src="infrastructure/ors-aa-service.js"></script>
+    <script src="infrastructure/ors-cookies-service.js"></script>
+    <script src="infrastructure/ors-importexport-service.js"></script>
+    <script src="components/ors-navigation/ors-nav.js"></script>
+    <script src="components/ors-panel-routing/ors-panel-routing.js"></script>
+    <script src="components/ors-panel-routing/ors-waypoints/ors-waypoints.js"></script>
+    <script src="components/ors-panel-routing/ors-waypoints/ors-waypoint/ors-waypoint.js"></script>
+    <script src="components/ors-panel-routing/ors-summary/ors-summary.js"></script>
+    <script src="components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-route-controls.js"></script>
+    <script src="components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-options/ors-options.js"></script>
+    <script src="components/ors-panel-routing/ors-instructions/ors-instructions.js"></script>
+    <script src="components/ors-panel-routing/ors-route-extras/ors-route-extras.js"></script>
+    <script src="components/ors-panel-routing/ors-route-extras/ors-bars-chart/ors-bars-chart.js"></script>
+    <script src="components/ors-profiles-options/ors-profiles-options.js"></script>
+    <script src="components/ors-panel-accessibilityanalysis/ors-panel-accessibilityanalysis.js"></script>
+    <script src="components/ors-panel-accessibilityanalysis/ors-aa-controls/ors-aa-controls.js"></script>
+    <script src="components/ors-panel-accessibilityanalysis/ors-aa-waypoints/ors-aa-waypoints.js"></script>
+    <script src="components/ors-panel-accessibilityanalysis/ors-aa-waypoints/ors-aa-waypoint/ors-aa-waypoint.js"></script>
+    <script src="components/ors-panel-accessibilityanalysis/ors-aa-sliders/ors-aa-sliders.js"></script>
+    <script src="components/ors-header/ors-header.js"></script>
+    <script src="components/ors-modal/ors-modal.js"></script>
+    <script src="components/ors-panel-routing/ors-instructions/ors-export-route/ors-export-route.js"></script>
+    <script src="components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-import-route/ors-import-route.js"></script>
+    <script src="components/ors-map/ors-map.js"></script>
+    <!-- endbuild -->
+</html>

@@ -1,7 +1,7 @@
 /** dirty hack, the subscription will duplicate if we come back to this component */
 let routeSubscription;
 angular.module('orsApp.ors-summary', []).component('orsSummaries', {
-    templateUrl: 'app/components/ors-panel-routing/ors-summary/ors-summary.html',
+    templateUrl: 'components/ors-panel-routing/ors-summary/ors-summary.html',
     bindings: {
         showInstructions: '&',
         shouldDisplayRouteDetails: '<'
