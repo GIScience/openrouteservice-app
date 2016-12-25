@@ -1,0 +1,46 @@
+<ul>
+    <li style="float: left">
+        <a href="www.OpenRouteService.org" target="_blank" ng-bind-html="'<b>OpenRouteService</b>.org'">
+        </a>
+    </li>
+    <li>
+        <div class="ui simple dropdown item">
+            <i class="fa fa-cog fa-lg">
+            </i>
+            <div class="menu">
+                <div class="item" ng-click="$ctrl.showSettings = !$ctrl.showSettings">
+                    <i class="fa fa-fw fa-cog">
+                    </i>
+                    <span ng-bind-html="('SETTINGS' | translate)">
+                    </span>
+                </div>
+                <div class="item" ng-click="$ctrl.showFeedback = !$ctrl.showFeedback">
+                    <i class="fa fa-fw fa-pencil">
+                    </i>
+                    <span ng-bind-html="'Feedback'">
+                    </span>
+                </div>
+                <a href="http://openrouteservice.readthedocs.io/" target="_blank" class="item">
+                    <i class="fa fa-fw fa-code">
+                    </i>
+                    <span ng-bind-html="('DOCUMENTATION' | translate)">
+                    </span>
+                </a>
+                <a href="https://groups.google.com/forum/#!forum/openrouteservice" target="_blank" class="item">
+                    <i class="fa fa-fw fa-google">
+                    </i>
+                    <span ng-bind-html="'Google Groups'">
+                    </span>
+                </a>
+            </div>
+        </div>
+    </li>
+</ul>
+<ors-modal class="fade" data-ng-show="$ctrl.showSettings" show="$ctrl.showSettings">
+    <div ng-include="'includes/settings.html'">
+    </div>
+</ors-modal>
+<ors-modal class="fade" data-ng-show="$ctrl.showFeedback" show="$ctrl.showFeedback">
+    <div ng-include="'includes/feedback.html'">
+    </div>
+</ors-modal>

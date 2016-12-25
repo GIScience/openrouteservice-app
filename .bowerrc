@@ -1,4 +1,4 @@
 {
-    "directory": "app/lib",
+    "directory": "bower_components",
     "interactive": false
 }

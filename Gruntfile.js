@@ -1,18 +1,42 @@
 module.exports = function(grunt) {
+    require('time-grunt')(grunt);
+    var modRewrite = require('connect-modrewrite');
     grunt.initConfig({
         copy: {
-            build: {
+            all: {
                 cwd: 'app',
                 src: ['**'],
                 dest: 'build',
                 expand: true
             },
-            languages: {
-                cwd: 'app/languages/',
-                src: ['**'],
-                dest: 'build/languages',
-                expand: true
+            build: {
+                expand: true,
+                cwd: 'app',
+                dest: 'build',
+                src: ['img', 'includes', 'languages', 'scripts/components/**/*.html', '*.js']
             },
+            views: {
+                cwd: 'app/es6/',
+                src: ['components/**/*.html'],
+                dest: 'app/scripts',
+                expand: true
+            }
+        },
+        watch: {
+            options: {
+                livereload: true,
+            },
+            css: {
+                files: ['app/css/**/*.css'],
+            },
+            js: {
+                files: ['app/es6/**/*.js'],
+                tasks: ['traceur']
+            },
+            html: {
+                files: ['app/es6/**/*.html'],
+                tasks: ['copy:views']
+            }
         },
         // Clean stuff up
         clean: {
@@ -20,7 +44,7 @@ module.exports = function(grunt) {
                 src: ['build/*']
             },
             task_rm_build_unused: {
-                src: ['build/js', 'build/infrastructure', 'build/css', 'build/components/**/*.js', 'build/lib/', '!build/lib/font-awesome/**']
+                src: ['build/js', 'build/globals', 'build/infrastructure', 'build/css', 'build/components/**/*.js', 'build/lib/*', '!build/lib/font-awesome/**', '!build/lib/leaflet/**']
             },
         },
         jshint: {
@@ -54,7 +78,7 @@ module.exports = function(grunt) {
             }
         },
         useminPrepare: {
-            html: 'build/index.html',
+            html: 'app/index.html',
             options: {
                 dest: 'build'
             }
@@ -75,7 +99,9 @@ module.exports = function(grunt) {
         // },
         uglify: {
             options: {
-                preserveComments: 'false', //"some", "all"
+                preserveComments: 'false', //"some", "all",
+                compress: false,
+                mangle: false
             },
         },
         preprocess: {
@@ -105,25 +131,87 @@ module.exports = function(grunt) {
         },
         traceur: {
             options: {
-                // traceur options here 
-                blockBinding: true,
-                experimental: true,
-                // module naming options, 
-                // moduleNaming: {
-                //     stripPrefix: "buil",
-                //     addPrefix: "com/mycompany/project"
-                // },
-                copyRuntime: 'build/js'
+                copyRuntime: 'build/',
+                //includeRuntime: true,
+                //script: false,
+                moduleNames: false,
+                modules: 'inline'
             },
             custom: {
                 files: [{
                     expand: true,
-                    cwd: 'build',
-                    src: ['components/**/*.js', 'infrastructure/**/*.js', 'js/**/*.js'],
-                    dest: 'build'
+                    cwd: 'app/es6',
+                    //src: ['js/**/*.js'],
+                    src: ['**/*.js'],
+                    dest: 'app/scripts'
                 }]
             },
         },
+        connect: {
+            server: {
+                options: {
+                    hostname: 'localhost',
+                    port: 3000,
+                    //base: 'src',
+                    livereload: true,
+                    open: true,
+                    middleware: function(connect) {
+                        return [
+                            modRewrite(['^[^\\.]*$ /index.html [L]']),
+                            connect().use('/bower_components', connect.static('./bower_components')),
+                            connect().use('/node_modules', connect.static('./node_modules')),
+                            connect.static('./app')
+                        ];
+                    }
+                }
+            }
+        }
+        // connect: {
+        //     options: {
+        //         port: 3000,
+        //         // Change this to '0.0.0.0' to access the server from outside.
+        //         hostname: 'localhost',
+        //         //livereload: 35729
+        //     },
+        //     livereload: {
+        //         options: {
+        //             open: true,
+        //             middleware: function(connect) {
+        //                 return [
+        //                     modRewrite(['^[^\\.]*$ /index.html [L]']),
+        //                     connect().use('/bower_components', connect.static('./bower_components')),
+        //                     connect().use('/node_modules', connect.static('./node_modules')),
+        //                     connect.static('./app')
+        //                 ];
+        //             }
+        //         }
+        //     },
+        //     dist: {
+        //         options: {
+        //             open: true,
+        //             base: './build'
+        //         }
+        //     }
+        // }
+        // connect: {
+        //     app: {
+        //         options: {
+        //             port: 3000,
+        //             //base: '/app',
+        //             open: true,
+        //             livereload: true,
+        //             hostname: 'localhost',
+        //             middleware: function(connect) {
+        //                 return [
+        //                     modRewrite(['^[^\\.]*$ /index.html [L]']),
+        //                     connect().use('/bower_components', connect.static('./bower_components')),
+        //                     connect().use('/node_modules', connect.static('./node_modules')),
+        //                     connect.static('./app')
+        //                 ];
+        //             }
+        //         }
+        //     }
+        // }
     });
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-htmlhint');
@@ -137,8 +225,27 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-jsdoc');
     grunt.loadNpmTasks("grunt-remove-logging");
     grunt.loadNpmTasks('grunt-traceur');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     // Clean the .git/hooks/pre-commit file then copy in the latest version 
-    grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['clean:task_rm_build', 'copy:build', 'removelogging', 'traceur', 'preprocess', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'usemin', 'clean:task_rm_build_unused']);
+    //grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['clean:task_rm_build', 'copy:build', 'removelogging', 'preprocess', 'traceur', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'usemin', 'clean:task_rm_build_unused']);
+    //   grunt.registerTask('build', [
+    //   'clean:dist',
+    //   'traceur',
+    //   'useminPrepare',
+    //   'concurrent:dist',
+    //   'autoprefixer',
+    //   'concat',
+    //   'ngAnnotate',
+    //   'copy:dist',
+    //   'cdnify',
+    //   'cssmin',
+    //   'uglify',
+    //   'filerev',
+    //   'usemin',
+    //   'htmlmin'
+    // ]);
+    grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['clean:task_rm_build', 'traceur', 'useminPrepare', 'concat', 'copy:build', 'uglify', 'cssmin', 'usemin', 'clean:task_rm_build_unused', 'removelogging', 'preprocess', 'copy:build']);
     grunt.registerTask('transpile', 'ES6 to ES5', ['traceur']);
-
+    grunt.registerTask('serve', 'Run local server', ['traceur', 'copy:views', 'connect', 'watch']);
 };

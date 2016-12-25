@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="ors-options-menu">
+        <div class="ui label tiny">
+            <span ng-bind-html="('ISOCHRONEMETHOD' | translate)"></span>
+            <div class="detail" ng-bind-html="$ctrl.isochroneOptionsSlider.options.translate($ctrl.isochroneOptionsSlider.value)">
+            </div>
+        </div>
+        <rzslider class="small" rz-slider-model="$ctrl.isochroneOptionsSlider.value" rz-slider-options="$ctrl.isochroneOptionsSlider.options">
+        </rzslider>
+        <div class="ui divider">
+        </div>
+        <div class="ui label tiny">
+            <span ng-bind-html="('TIMEDISTANCE' | translate)"></span>
+            <div class="detail">
+                <span ng-bind-html="$ctrl.isochroneMinutesSlider.value"></span><span ng-bind-html="'min'"></span>
+            </div>
+        </div>
+        <rzslider class="small" rz-slider-model="$ctrl.isochroneMinutesSlider.value" rz-slider-options="$ctrl.isochroneMinutesSlider.options">
+        </rzslider>
+        <div class="ui divider">
+        </div>
+        <div class="ui label tiny">
+            <span ng-bind-html="('ISOCHRONEINTERVAL' | translate)"></span>
+            <div class="detail">
+                <span ng-bind-html="$ctrl.isochroneIntervalSlider.value"></span><span ng-bind-html="'min'"></span>
+            </div>
+        </div>
+        <rzslider class="small" rz-slider-model="$ctrl.isochroneIntervalSlider.value" rz-slider-options="$ctrl.isochroneIntervalSlider.options">
+        </rzslider>
+    </div>
+</div>
