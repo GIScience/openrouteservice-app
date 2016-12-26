@@ -13,19 +13,13 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: 'app',
                 dest: 'build',
-                src: ['img/**/*.png', 'includes/**/*.html', 'languages/**/*.json', 'scripts/components/**/*.html', '*.html', '*.js']
+                src: ['img/**/*.png', 'includes/**/*.html', 'languages/**/*.json', 'components/**/*.html', 'globals/*.js', 'css/*.css', '*.html', '*.js']
             },
             libs: {
                 expand: true,
                 cwd: './',
                 dest: 'build',
                 src: ['bower_components/font-awesome/**', 'bower_components/leaflet/**']
-            },
-            views: {
-                cwd: 'app/partials/',
-                src: ['components/**/*.html'],
-                dest: 'build/partials',
-                expand: true
             }
         },
         watch: {
@@ -36,12 +30,10 @@ module.exports = function(grunt) {
                 files: ['app/css/**/*.css'],
             },
             js: {
-                files: ['app/es6/**/*.js'],
-                tasks: ['traceur']
+                files: ['app/**/*.js']
             },
             html: {
-                files: ['app/es6/**/*.html'],
-                tasks: ['copy:views']
+                files: ['app/**/*.html']
             }
         },
         // Clean stuff up
@@ -50,7 +42,7 @@ module.exports = function(grunt) {
                 src: ['build/*']
             },
             task_rm_build_unused: {
-                src: ['build/js', 'build/globals', 'build/infrastructure', 'build/css', 'build/components/**/*.js', 'build/lib/*', '!build/lib/font-awesome/**', '!build/lib/leaflet/**']
+                src: ['build/components/**/*.js', 'build/infrastructure', 'build/js/', 'build/globals', 'build/css']
             },
         },
         jshint: {
@@ -84,7 +76,7 @@ module.exports = function(grunt) {
             }
         },
         useminPrepare: {
-            html: 'app/index.html',
+            html: 'build/index.html',
             options: {
                 dest: 'build'
             }
@@ -145,10 +137,10 @@ module.exports = function(grunt) {
             custom: {
                 files: [{
                     expand: true,
-                    cwd: 'app/partials',
+                    cwd: 'app/',
                     //src: ['js/**/*.js'],
-                    src: ['**/*.js'],
-                    dest: 'build/partials'
+                    src: ['components/**/*.js', 'infrastructure/**/*.js', 'js/**/*.js'],
+                    dest: 'build/'
                 }]
             },
         },
@@ -160,9 +152,10 @@ module.exports = function(grunt) {
                     //base: 'src',
                     livereload: true,
                     open: true,
-                    middleware: function(connect) {
+                    middleware: function(connect, options, middlewares) {
                         return [
-                            modRewrite(['^[^\\.]*$ /index.html [L]']),
+                            //modRewrite(['^[^\\.]*$ /index.html [L]']),
+                            modRewrite(['!\\.html|\\.js|\\.svg|\\.map|\\.woff2|\\.css|\\.png$ /index.html [L]']),
                             connect().use('/bower_components', connect.static('./bower_components')),
                             connect().use('/node_modules', connect.static('./node_modules')),
                             connect.static('./app')
@@ -183,6 +176,12 @@ module.exports = function(grunt) {
                         ];
                     }
                 }
+            }
+        },
+        tags: {
+            build: {
+                src: ['build/traceur_runtime.js'],
+                dest: 'build/index.html'
             }
         }
         // connect: {
@@ -246,6 +245,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-traceur');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-script-link-tags');
     // Clean the .git/hooks/pre-commit file then copy in the latest version 
     //grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['clean:task_rm_build', 'copy:build', 'removelogging', 'preprocess', 'traceur', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'usemin', 'clean:task_rm_build_unused']);
     //   grunt.registerTask('build', [
@@ -264,6 +264,6 @@ module.exports = function(grunt) {
     //   'usemin',
     //   'htmlmin'
     // ]);
-    grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['clean:task_rm_build', 'traceur', 'useminPrepare', 'concat', 'copy:build', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'connect:build:keepalive']);
-    grunt.registerTask('serve', 'Run local server', ['traceur', 'copy:views', 'connect:dev', 'watch']);
+    grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['clean:task_rm_build', 'copy:build', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'clean:task_rm_build_unused', 'connect:build:keepalive']);
+    grunt.registerTask('serve', 'Run local server', ['connect:dev', 'watch']);
 };
