@@ -13,12 +13,18 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: 'app',
                 dest: 'build',
-                src: ['img', 'includes', 'languages', 'scripts/components/**/*.html', '*.js']
+                src: ['img/**/*.png', 'includes/**/*.html', 'languages/**/*.json', 'scripts/components/**/*.html', '*.html', '*.js']
+            },
+            libs: {
+                expand: true,
+                cwd: './',
+                dest: 'build',
+                src: ['bower_components/font-awesome/**', 'bower_components/leaflet/**']
             },
             views: {
-                cwd: 'app/es6/',
+                cwd: 'app/partials/',
                 src: ['components/**/*.html'],
-                dest: 'app/scripts',
+                dest: 'build/partials',
                 expand: true
             }
         },
@@ -112,7 +118,7 @@ module.exports = function(grunt) {
                 }
             },
             html: {
-                src: ['build/index.html', ]
+                src: ['build/index.html']
             }
         },
         jsdoc: {
@@ -125,30 +131,29 @@ module.exports = function(grunt) {
         },
         removelogging: {
             dist: {
-                src: ["build/components/**/*.js", "build/js/**/*.js", "build/infrastructure/**/*.js"] // Each file will be overwritten with the output! 
+                src: ["build/scripts.js", "build/vendor.js"] // Each file will be overwritten with the output! 
             },
             namespace: ['console', 'console.info', 'console.warn']
         },
         traceur: {
             options: {
                 copyRuntime: 'build/',
-                //includeRuntime: true,
-                //script: false,
+                //script: true,
                 moduleNames: false,
                 modules: 'inline'
             },
             custom: {
                 files: [{
                     expand: true,
-                    cwd: 'app/es6',
+                    cwd: 'app/partials',
                     //src: ['js/**/*.js'],
                     src: ['**/*.js'],
-                    dest: 'app/scripts'
+                    dest: 'build/partials'
                 }]
             },
         },
         connect: {
-            server: {
+            dev: {
                 options: {
                     hostname: 'localhost',
                     port: 3000,
@@ -161,6 +166,20 @@ module.exports = function(grunt) {
                             connect().use('/bower_components', connect.static('./bower_components')),
                             connect().use('/node_modules', connect.static('./node_modules')),
                             connect.static('./app')
+                        ];
+                    }
+                }
+            },
+            build: {
+                options: {
+                    hostname: 'localhost',
+                    port: 3001,
+                    open: true,
+                    base: './build',
+                    middleware: function(connect) {
+                        return [
+                            modRewrite(['^[^\\.]*$ /index.html [L]']),
+                            connect.static('./build')
                         ];
                     }
                 }
@@ -245,7 +264,6 @@ module.exports = function(grunt) {
     //   'usemin',
     //   'htmlmin'
     // ]);
-    grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['clean:task_rm_build', 'traceur', 'useminPrepare', 'concat', 'copy:build', 'uglify', 'cssmin', 'usemin', 'clean:task_rm_build_unused', 'removelogging', 'preprocess', 'copy:build']);
-    grunt.registerTask('transpile', 'ES6 to ES5', ['traceur']);
-    grunt.registerTask('serve', 'Run local server', ['traceur', 'copy:views', 'connect', 'watch']);
+    grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['clean:task_rm_build', 'traceur', 'useminPrepare', 'concat', 'copy:build', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'connect:build:keepalive']);
+    grunt.registerTask('serve', 'Run local server', ['traceur', 'copy:views', 'connect:dev', 'watch']);
 };

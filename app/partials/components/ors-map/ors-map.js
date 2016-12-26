@@ -112,6 +112,7 @@ angular.module('orsApp').directive('orsMap', () => {
                 $scope.mapModel.map.closePopup();
             };
             $scope.addWaypoint = (idx, iconIdx, pos, fireRequest = true, aaIcon = false) => {
+                console.log(pos)
                 let waypointIcon = aaIcon === true ? new L.icon(lists.waypointIcons[3]) : new L.icon(lists.waypointIcons[iconIdx]);
                 // create the waypoint marker
                 let wayPointMarker = new L.marker(pos, {
