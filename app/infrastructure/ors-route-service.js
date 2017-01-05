@@ -14,13 +14,10 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$h
     orsRouteService.routingRequests = {};
     orsRouteService.routingRequests.requests = [];
     orsRouteService.routingRequests.clear = () => {
-        if (orsRouteService.routingRequests.requests.length > 0) {
-            for (let req of orsRouteService.routingRequests.requests) {
-                console.log(req)
-                req.cancel("Cancel last request");
-            }
-            orsRouteService.routingRequests.requests = [];
+        for (let req of orsRouteService.routingRequests.requests) {
+            if ('cancel' in req) req.cancel("Cancel last request");
         }
+        orsRouteService.routingRequests.requests = [];
     };
     /**
      * Requests route from ORS backend
@@ -108,7 +105,7 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$h
             /** extract gradients */
             extras.gradients = [];
             _.each(steepnessXML, (elem, i) => {
-                chunk = {};
+                let chunk = {};
                 let fr = orsUtilsService.getElementsByTagNameNS(elem, orsNamespaces.xls, 'From')[0];
                 chunk.fr = parseInt(fr.textContent);
                 let to = orsUtilsService.getElementsByTagNameNS(elem, orsNamespaces.xls, 'To')[0];

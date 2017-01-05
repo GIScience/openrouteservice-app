@@ -7,17 +7,17 @@ angular.module('orsApp.ors-nav', ['ngComponentRouter']).component('orsSidebar', 
     controller: ['$location', function($location) {
         let ctrl = this;
         if ($location.path() == '/') {
-            ctrl.activeMenu = '/routing';
+            ctrl.activeMenu = '/directions';
         } else ctrl.activeMenu = $location.path();
     }],
     $routeConfig: [{
-        path: '/routing',
-        name: 'Routing',
+        path: '/directions',
+        name: 'Directions',
         component: 'orsRoute',
         useAsDefault: true
     }, {
-        path: '/analysis',
-        name: 'Analysis',
+        path: '/reach',
+        name: 'Reach',
         component: 'orsAnalysis'
     }]
 }).value('$routerRootComponent', 'orsSidebar');

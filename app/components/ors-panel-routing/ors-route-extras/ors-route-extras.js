@@ -4,7 +4,7 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
         currentRoute: '<',
         routeIndex: '<'
     },
-    controller: ['$scope', 'orsErrorhandlerService', function($scope, orsErrorhandlerService) {
+    controller: ['$scope', function($scope) {
         let ctrl = this;
         ctrl.mappings = mappings;
         ctrl.processExtras = (currentRoute, key) => {
@@ -14,7 +14,7 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
                 const fr = parseInt(elem.fr),
                     to = parseInt(elem.to) + 1;
                 if (fr !== to) {
-                    const typeNumber = parseInt(elem.value) + 5;
+                    const typeNumber    = parseInt(elem.value) + 5;
                     const routeSegment = currentRoute.points.slice(fr, to);
                     /** calculate distances */
                     let sumDistance = 0;
@@ -63,6 +63,7 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
                 extras[obj].y0 = y0;
                 extras[obj].y1 = y0 += +extras[obj].percentage;
             }
+            console.log(extras);
             return extras;
         };
         ctrl.routeExtras = [];
@@ -74,6 +75,7 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
                 type: 'gradients',
                 routeIndex: ctrl.routeIndex
             });
+            console.log(ctrl.routeExtras);
             //surfaces: ctrl.processExtras('surfaces'),
             //wayTypes: ctrl.processExtras('wayTypes')
             //ctrl.routeExtras = angular.copy(ctrl.routeExtras);

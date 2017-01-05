@@ -1,4 +1,4 @@
-angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsRouteService', 'orsAaService', 'orsErrorhandlerService', (orsObjectsFactory, orsUtilsService, orsRequestService, orsRouteService, orsAaService, orsErrorhandlerService) => {
+angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$timeout', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsRouteService', 'orsAaService', 'orsMessagingService', ($timeout, orsObjectsFactory, orsUtilsService, orsRequestService, orsRouteService, orsAaService, orsMessagingService) => {
     let orsSettingsFactory = {};
     /** Behaviour subjects routing. */
     orsSettingsFactory.routingWaypointsSubject = new Rx.BehaviorSubject({});
@@ -130,6 +130,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         currentWaypointsObj = orsSettingsFactory.getCurrentWaypoints(newRoute);
         /** panels switched, clear the map */
         /** Cancel outstanding requests */
+        console.log(orsAaService, orsRouteService, orsRequestService)
         orsAaService.aaRequests.clear();
         orsRouteService.routingRequests.clear();
         orsRequestService.geocodeRequests.clear();
@@ -206,15 +207,16 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
         orsSettingsFactory.updateWaypointAddress(idx, latLngString, init);
         const payload = orsUtilsService.reverseXml(pos);
         const request = orsRequestService.geocode(payload);
-        orsRequestService.geocodeRequests.updateRequest(request, idx);
+        const requestsQue = orsSettingsFactory.ngRouteSubject.getValue() == 'directions' ? 'routeRequests' : 'aaRequests';
+        orsRequestService.geocodeRequests.updateRequest(request, idx, requestsQue);
         request.promise.then(function(response) {
             const data = orsUtilsService.domParser(response);
-            const error = orsErrorhandlerService.parseResponse(data);
+            const error = orsUtilsService.parseResponse(data);
             if (!error) {
                 const addressData = orsUtilsService.processAddresses(data, true);
                 orsSettingsFactory.updateWaypointAddress(idx, addressData[0].address, init);
             } else {
-                console.log('Not able to find address!');
+                orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
             }
         }, function(response) {
             console.log('It was not possible to get the address of the current waypoint. Sorry for the inconvenience!');
@@ -277,9 +279,9 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      */
     orsSettingsFactory.getCurrentSettings = (path) => {
         let settingsObject;
-        if (path == 'routing') {
+        if (path == 'directions') {
             settingsObject = 'routingSettingsSubject';
-        } else if (path == 'analysis') {
+        } else if (path == 'reach') {
             settingsObject = 'aaSettingsSubject';
         }
         return settingsObject;
@@ -289,9 +291,9 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['or
      */
     orsSettingsFactory.getCurrentWaypoints = (path) => {
         let waypointsObject;
-        if (path == 'routing') {
+        if (path == 'directions') {
             waypointsObject = 'routingWaypointsSubject';
-        } else if (path == 'analysis') {
+        } else if (path == 'reach') {
             waypointsObject = 'aaWaypointsSubject';
         }
         return waypointsObject;

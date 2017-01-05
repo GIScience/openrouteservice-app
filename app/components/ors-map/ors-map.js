@@ -6,7 +6,7 @@ angular.module('orsApp').directive('orsMap', () => {
             orsMap: '='
         },
         link: (scope, element, attrs) => {},
-        controller: ['$scope', '$compile', '$timeout', 'orsSettingsFactory', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsErrorhandlerService', 'orsCookiesFactory', ($scope, $compile, $timeout, orsSettingsFactory, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsErrorhandlerService, orsCookiesFactory) => {
+        controller: ['$scope', '$compile', '$timeout', 'orsSettingsFactory', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', ($scope, $compile, $timeout, orsSettingsFactory, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsCookiesFactory) => {
             const mapsurfer = L.tileLayer(orsNamespaces.layerMapSurfer.url, {
                 attribution: orsNamespaces.layerMapSurfer.attribution
             });
@@ -241,7 +241,7 @@ angular.module('orsApp').directive('orsMap', () => {
             orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
                 let svg = d3.select($scope.mapModel.map.getPanes().overlayPane);
                 $scope.clearMap();
-                $scope.routing = route == 'routing' ? true : false;
+                $scope.routing = route == 'directions' ? true : false;
                 if ($scope.routing) svg.style("opacity", 1);
             });
             orsSettingsFactory.subscribeToWaypoints(function onNext(d) {

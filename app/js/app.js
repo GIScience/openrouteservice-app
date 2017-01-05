@@ -12,10 +12,13 @@
  * @author: Timothy Ellersiek, timothy.ellersiek@geog.uni-heidelberg.de, Hendrik Leuschner, hendrik.leuschner@uni-heidelberg.de
  * @version: 1.0
  */
-let orsApp = angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.ors-panel-accessibilityanalysis', 'orsApp.ors-header', 'orsApp.ors-modal', 'ui.sortable', 'orsApp.error-service', 'orsApp.map-service', 'orsApp.objects-service', 'orsApp.params-service', 'orsApp.request-service', 'orsApp.settings-service', 'orsApp.utils-service', 'orsApp.route-service', 'orsApp.cookies-service', 'orsApp.aa-service', 'orsApp.GeoFileHandler-service', 'ngCookies', 'rzModule', 'ngAnimate', 'ngSanitize', 'pascalprecht.translate', 'angular-loading-bar', '720kb.tooltips', 'orsApp.ors-filters', 'orsApp.ors-route-extras']).config(function($locationProvider, $httpProvider) {
+angular.element(document).ready(function() {
+    angular.bootstrap(document.body, ['orsApp']);
+});
+angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.ors-panel-accessibilityanalysis', 'orsApp.ors-header', 'orsApp.ors-error', 'orsApp.ors-modal', 'ui.sortable', 'orsApp.messaging-service', 'orsApp.map-service', 'orsApp.objects-service', 'orsApp.params-service', 'orsApp.request-service', 'orsApp.settings-service', 'orsApp.utils-service', 'orsApp.route-service', 'orsApp.cookies-service', 'orsApp.aa-service', 'orsApp.GeoFileHandler-service', 'ngCookies', 'rzModule', 'ngAnimate', 'ngSanitize', 'pascalprecht.translate', 'angular-loading-bar', '720kb.tooltips', 'orsApp.ors-filters', 'orsApp.ors-route-extras']).config(function($locationProvider, $httpProvider) {
     const ak = '?api_key=0894982ba55b12d3d3e4abd28d1838f2';
     $locationProvider.html5Mode(true);
-    $httpProvider.interceptors.push(function($q, $document) {
+    $httpProvider.interceptors.push(function($q, $document, $injector) {
         return {
             'request': function(config) {
                 for (let k in orsNamespaces.services) {
@@ -27,13 +30,26 @@ let orsApp = angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routi
             },
             'response': function(response) {
                 return response;
+            },
+            'requestError': function(rejection) {
+                return $q.reject(rejection);
+            },
+            'responseError': function(rejection) {
+                // do something on error
+                let messagingService = $injector.get('orsMessagingService');
+                if (rejection.status === 404 ||  rejection.status === 503) {
+                    messagingService.messageSubject.onNext(lists.errors.CONNECTION);
+                }
+                if (rejection.status === 500) {
+                    messagingService.messageSubject.onNext(lists.errors.ROUTE);
+                }
+                return $q.reject(rejection);
             }
         };
     });
 }).config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
-    cfpLoadingBarProvider.includeBar = false;
-    cfpLoadingBarProvider.parentSelector = '#loading-bar-container';
-    cfpLoadingBarProvider.spinnerTemplate = '<div id="loading-bar-spinner"><div class="spinner-icon"></div></div>';
+    cfpLoadingBarProvider.includeBar = true;
+    cfpLoadingBarProvider.includeSpinner = false;
 }]).config(['tooltipsConfProvider', function configConf(tooltipsConfProvider) {
     tooltipsConfProvider.configure({
         'smart': true,

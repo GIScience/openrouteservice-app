@@ -10,7 +10,7 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
         showAdd: '=',
         addresses: '<'
     },
-    controller: ['orsSettingsFactory', 'orsMapFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsErrorhandlerService', function(orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService) {
+    controller: ['orsSettingsFactory', 'orsMapFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsMessagingService', function(orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsMessagingService) {
         let ctrl = this;
         ctrl.select = (address) => {
             ctrl.showAddresses = false;
@@ -53,20 +53,21 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
             } else /** fire nominatim */ {
                 const payload = orsUtilsService.generateXml(ctrl.waypoint._address);
                 const request = orsRequestService.geocode(payload);
-                orsRequestService.geocodeRequests.updateRequest(request, ctrl.idx);
+                orsRequestService.geocodeRequests.updateRequest(request, ctrl.idx, 'routeRequests');
                 request.promise.then((response) => {
                     let data = orsUtilsService.domParser(response);
-                    const error = orsErrorhandlerService.parseResponse(data);
+                    const error = orsUtilsService.parseResponse(data, response);
                     if (!error) {
                         ctrl.addresses = orsUtilsService.processAddresses(data);
                         // show 
                         ctrl.showAddresses = true;
                     } else {
-                        console.log('error');
+                        // parsing error
+                        orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
                     }
                 }, (response) => {
+                    // this will be caught my the httpinterceptor
                     console.log(response);
-                    //$scope.errorMessage = orsErrorhandlerService.generalErrors('It was not possible to get the address at this time. Sorry for the inconvenience!');
                 });
             }
         };

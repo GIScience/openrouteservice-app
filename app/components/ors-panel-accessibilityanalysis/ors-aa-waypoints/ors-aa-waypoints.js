@@ -6,7 +6,7 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         activeProfile: '<',
         activeSubgroup: '<'
     },
-    controller($scope, orsSettingsFactory, orsAaService, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
+    controller: ['$scope', 'orsSettingsFactory', 'orsAaService', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', function($scope, orsSettingsFactory, orsAaService, orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService) {
         var ctrl = this;
         ctrl.$onInit = () => {
             ctrl.waypoints = orsSettingsFactory.getWaypoints();
@@ -72,5 +72,5 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         if (angular.isDefined(orsAaService.orsAaObj)) {
             orsAaService.processResponseToMap();
         }
-    }
+    }]
 });

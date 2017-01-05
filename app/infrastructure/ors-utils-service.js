@@ -332,6 +332,21 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
         }
         return dom;
     };
+    orsUtilsService.parseResponse = (data, response) => {
+        var error;
+        if (response == 'Locations not found.') {
+            error = true;
+            return error;
+        }
+        var responseError = orsUtilsService.getElementsByTagNameNS(data, orsNamespaces.xls, 'ErrorList').length;
+        if (parseInt(responseError) > 0) {
+            //if error exists return true
+            error = true;
+        } else {
+            error = false;
+        }
+        return error;
+    };
     /**
      * parses geocoding response to list of address objects
      * @param {Object} data: Response object

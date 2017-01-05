@@ -6,7 +6,7 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
         showInstructions: '&',
         shouldDisplayRouteDetails: '<'
     },
-    controller: ['orsSettingsFactory', 'orsMapFactory', 'orsObjectsFactory', 'orsRouteService', 'orsErrorhandlerService', function(orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsRouteService, orsErrorhandlerService) {
+    controller: ['orsSettingsFactory', 'orsMapFactory', 'orsObjectsFactory', 'orsRouteService', function(orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsRouteService) {
         let ctrl = this;
         ctrl.profiles = lists.profiles;
         ctrl.setIdx = (idx) => {

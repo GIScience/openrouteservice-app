@@ -1,14 +1,14 @@
 <div class="ors-navigation">
     <ul>
         <li>
-            <button tooltips tooltip-template="{{('ROUTING' | translate)}}" tooltip-side="right" class="ors-button" ng-click="$ctrl.activeMenu = '/routing'" ng-link='["Routing"]'>
-                <i class="fa fa-lg fa-road" ng-class="{active : $ctrl.activeMenu === '/routing'}">
+            <button tooltips tooltip-template="{{('ROUTING' | translate)}}" tooltip-side="right" class="ors-button" ng-click="$ctrl.activeMenu = '/directions'" ng-link='["Directions"]'>
+                <i class="fa fa-lg fa-road" ng-class="{active : $ctrl.activeMenu === '/directions'}">
                 </i>
             </button>
         </li>
         <li>
-            <button tooltips tooltip-template="{{('AA' | translate)}}" tooltip-side="right" class="ors-button" ng-click="$ctrl.activeMenu = '/analysis'" ng-link='["Analysis"]'>
-                <i class="fa fa-lg fa-bullseye" ng-class="{active : $ctrl.activeMenu === '/analysis'}">
+            <button tooltips tooltip-template="{{('AA' | translate)}}" tooltip-side="right" class="ors-button" ng-click="$ctrl.activeMenu = '/reach'" ng-link='["Reach"]'>
+                <i class="fa fa-lg fa-bullseye" ng-class="{active : $ctrl.activeMenu === '/reach'}">
                 </i>
             </button>
         </li>
@@ -16,3 +16,5 @@
 </div>
 <ng-outlet class="ors-outlet">
 </ng-outlet>
+<ors-error class="ors-error">
+</ors-error>

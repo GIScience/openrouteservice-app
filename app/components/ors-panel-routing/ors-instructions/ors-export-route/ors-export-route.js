@@ -9,21 +9,23 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
         ctrl.geojsonOptShow = false;
         ctrl.csvOptShow = false;
         ctrl.fileFormat = [{
-            text: "GPS eXchange Format (.gpx)",
-            value: "gpx"
-        }, {
-            text: "Training Center XML (.tcx)",
-            value: "tcx"
-        }, {
-            text: "Keyhole Markup Language (.kml)",
-            value: "kml"
-        }, {
-            text: "GeoJSON (.geojson)",
-            value: "geojson"
-        }, {
-            text: "Comma Separated Value (.csv)",
-            value: "csv"
-        }];
+                text: "GPS eXchange Format (.gpx)",
+                value: "gpx"
+            }, {
+                text: "Training Center XML (.tcx)",
+                value: "tcx"
+            }, {
+                text: "Keyhole Markup Language (.kml)",
+                value: "kml"
+            }, {
+                text: "GeoJSON (.geojson)",
+                value: "geojson"
+            }
+            // , {
+            //     text: "Comma Separated Value (.csv)",
+            //     value: "csv"
+            // }
+        ];
         ctrl.selected_fileformat = ctrl.fileFormat[0]; //this is the default selected value on the dropdown menu
         ctrl.currentFileFormat = ctrl.selected_fileformat.value; //this is the default value for the current selected option
         ctrl.change_fileFormat = (fileformat) => {

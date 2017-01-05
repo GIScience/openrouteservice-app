@@ -12,16 +12,16 @@
             <link href="bower_components/semantic/dist/components/input.css" rel="stylesheet" ></link>
             <link href="bower_components/semantic/dist/components/button.css" rel="stylesheet" ></link>
             <link href="bower_components/semantic/dist/components/divider.css" rel="stylesheet" ></link>
-            <link href="bower_components/semantic/dist/components/icon.css" rel="stylesheet" ></link>
             <link href="bower_components/semantic/dist/components/list.css" rel="stylesheet" ></link>
             <link href="bower_components/semantic/dist/components/dropdown.css" rel="stylesheet" ></link>
             <link href="bower_components/semantic/dist/components/checkbox.css" rel="stylesheet" ></link>
             <link href="bower_components/semantic/dist/components/label.css" rel="stylesheet" ></link>
-            <link href="bower_components/semantic/dist/components/loader.css" rel="stylesheet" ></link>
             <link href="bower_components/semantic/dist/components/form.css" rel="stylesheet" ></link>
+            <link href="bower_components/semantic/dist/components/message.css" rel="stylesheet" ></link>
             <link href="bower_components/angular-tooltips/dist/angular-tooltips.css" rel="stylesheet" type="text/css" />
             <link href="bower_components/leaflet.markercluster/dist/MarkerCluster.css" rel="stylesheet" type="text/css" />
             <!-- endbuild -->
+            <!-- these two scripts remain unbuilt as they contain relative paths -->
             <link href="bower_components/leaflet/dist/leaflet.css" rel="stylesheet"></link>
             <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet"></link>
             <!-- build:css main.css -->
@@ -29,7 +29,7 @@
             <!-- endbuild -->
         </meta>
     </head>
-    <body ng-app="orsApp">
+    <body>
         <div class="ors-main" ng-controller="RootController as root">   
             <div class="ors-left">
                 <ors-header class="ors-header"></ors-header>
@@ -81,7 +81,7 @@
     <script src="infrastructure/ors-map-service.js"></script>
     <script src="infrastructure/ors-request-service.js"></script>
     <script src="infrastructure/ors-utils-service.js"></script>
-    <script src="infrastructure/ors-error-service.js"></script>
+    <script src="infrastructure/ors-messaging-service.js"></script>
     <script src="infrastructure/ors-params-service.js"></script>
     <script src="infrastructure/ors-route-service.js"></script>
     <script src="infrastructure/ors-aa-service.js"></script>
@@ -104,6 +104,7 @@
     <script src="components/ors-panel-accessibilityanalysis/ors-aa-waypoints/ors-aa-waypoint/ors-aa-waypoint.js"></script>
     <script src="components/ors-panel-accessibilityanalysis/ors-aa-sliders/ors-aa-sliders.js"></script>
     <script src="components/ors-header/ors-header.js"></script>
+    <script src="components/ors-error/ors-error.js"></script>
     <script src="components/ors-modal/ors-modal.js"></script>
     <script src="components/ors-panel-routing/ors-instructions/ors-export-route/ors-export-route.js"></script>
     <script src="components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-import-route/ors-import-route.js"></script>

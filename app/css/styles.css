@@ -574,6 +574,16 @@ input:focus, input:active {
 }
 
 
+/* Error messages */
+
+.ors-error {
+    bottom: 10px;
+    width: 320px;
+    margin-left: 55px;
+    position: absolute;
+}
+
+
 /* Extras graphs */
 
 .ors-types {
@@ -623,7 +633,6 @@ input:focus, input:active {
     float: left;
     padding-left: 8px;
     cursor: pointer;
-
 }
 
 .ors-nav-menu>li, .ors-nav-submenu>li, .ors-navigation li, li {
@@ -768,15 +777,9 @@ tooltip tip {
     transform: rotate(315deg);
 }
 
-#loading-bar-spinner {
-    position: relative;
-    top: 11px;
-    left: -10px;
-}
-
-#loading-bar-spinner .spinner-icon {
-    border-top-color: #444;
-    border-left-color: #444;
+#loading-bar .bar {
+    background: #b5152b;
+    height: 3px;
 }
 
 

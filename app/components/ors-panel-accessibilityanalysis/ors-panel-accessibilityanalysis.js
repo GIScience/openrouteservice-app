@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-controls', 'orsApp.ors-aa-waypoints', 'orsApp.ors-aa-sliders']).component('orsAnalysis', {
     templateUrl: 'components/ors-panel-accessibilityanalysis/ors-panel-accessibilityanalysis.html',
-    controller: ['$scope', '$location', 'orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsErrorhandlerService', 'orsParamsService', 'orsCookiesFactory', 'orsMapFactory', function($scope, $location, orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService, orsCookiesFactory, orsMapFactory) {
+    controller: ['$scope', '$location', 'orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', 'orsCookiesFactory', 'orsMapFactory', function($scope, $location, orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService, orsCookiesFactory, orsMapFactory) {
         let ctrl = this;
         ctrl.$routerCanReuse = (next, prev) => {
             return next.urlPath === prev.urlPath;

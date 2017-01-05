@@ -74,5 +74,9 @@
     "HEAVYVEHICLEAGRICULTURAL": "Agricultural",
     "HEAVYVEHICLEFORESTRY": "Forestry",
     "HEAVYVEHICLEDELIVERY": "Delivery",
-    "HEAVYVEHICLEGOODS": "Goods"
+    "HEAVYVEHICLEGOODS": "Goods",
+    "NOTICE": "Error",
+    "CONNECTION": "Please check your internet connection.",
+    "ROUTE": "An error occured. No route could be found for your waypoints.",
+    "GEOCODE": "No address could be found."
 }

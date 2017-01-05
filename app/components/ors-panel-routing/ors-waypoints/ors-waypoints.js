@@ -6,7 +6,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         activeProfile: '<',
         activeSubgroup: '<',
     },
-    controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRouteService', 'orsRequestService', 'orsErrorhandlerService', 'orsParamsService', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRouteService, orsRequestService, orsErrorhandlerService, orsParamsService) {
+    controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRouteService', 'orsRequestService', 'orsParamsService', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRouteService, orsRequestService, orsParamsService) {
         let ctrl = this;
         ctrl.$onInit = () => {
             /** If waypoints list is empty initialize new waypoints. */
@@ -85,7 +85,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
                 ctrl.waypoints.splice(idx, 1);
             }
             /** remove this request from request que */
-            orsRequestService.geocodeRequests.removeRequest(idx);
+            orsRequestService.geocodeRequests.removeRequest(idx, 'routeRequests');
             orsSettingsFactory.setWaypoints(ctrl.waypoints, toggleRequest);
         };
         /** Reveres waypoints order. */

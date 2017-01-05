@@ -486,3 +486,22 @@ lists.layerStyles = {
         return 'hsl(' + h + ',' + s + '%,' + l + '%)';
     }
 };
+// -1 red, 0 orange, 1 blue, 2 green
+lists.errors = {
+    CONNECTION: {
+        translate: 'CONNECTION',
+        color: -1
+    },
+    GEOCODE: {
+        translate: 'GEOCODE',
+        color: 0
+    },
+    ROUTE: {
+        translate: 'ROUTE',
+        color: 0
+    },
+    GENERALERROR: {
+        translate: 'GENERALERROR',
+        color: 1
+    }
+};

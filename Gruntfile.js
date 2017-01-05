@@ -19,7 +19,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: './',
                 dest: 'build',
-                src: ['bower_components/font-awesome/**', 'bower_components/leaflet/**']
+                src: ['bower_components/font-awesome/**', 'bower_components/leaflet/**', ]
             }
         },
         watch: {
@@ -148,14 +148,14 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     hostname: 'localhost',
-                    port: 3000,
+                    port: 3005,
                     //base: 'src',
                     livereload: true,
                     open: true,
                     middleware: function(connect, options, middlewares) {
                         return [
                             //modRewrite(['^[^\\.]*$ /index.html [L]']),
-                            modRewrite(['!\\.html|\\.js|\\.svg|\\.map|\\.woff2|\\.css|\\.png$ /index.html [L]']),
+                            modRewrite(['!\\.html|\\.js|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]']),
                             connect().use('/bower_components', connect.static('./bower_components')),
                             connect().use('/node_modules', connect.static('./node_modules')),
                             connect.static('./app')
@@ -171,7 +171,8 @@ module.exports = function(grunt) {
                     base: './build',
                     middleware: function(connect) {
                         return [
-                            modRewrite(['^[^\\.]*$ /index.html [L]']),
+                            //modRewrite(['^[^\\.]*$ /index.html [L]']),
+                            modRewrite(['!\\.html|\\.js|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]']),
                             connect.static('./build')
                         ];
                     }

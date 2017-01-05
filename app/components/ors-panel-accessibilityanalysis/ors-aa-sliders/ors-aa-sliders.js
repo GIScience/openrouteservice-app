@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
     templateUrl: 'components/ors-panel-accessibilityanalysis/ors-aa-sliders/ors-aa-sliders.html',
-    controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsErrorhandlerService', 'orsParamsService', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsErrorhandlerService, orsParamsService) {
+    controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService) {
         let ctrl = this;
         ctrl.$onInit = () => {
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
