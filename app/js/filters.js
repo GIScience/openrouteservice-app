@@ -9,26 +9,33 @@ angular.module('orsApp.ors-filters', []).filter('duration', () => {
         return date;
     };
 }).filter('distance', ['orsSettingsFactory', (orsSettingsFactory) => {
-    function distance(input) {
+    function distance(input, round) {
         input = parseInt(input);
         let units = orsSettingsFactory.getUserOptions().units;
         if (units == 'km') {
             units = 'm';
-            if (input > 1000) {
-                input = (input / 1000).toFixed(2);
+            if (input >= 1000) {
+                if (round) {
+                    input = (input / 1000).toFixed();
+                } else {
+                    input = (input / 1000).toFixed(2);
+                }
                 units = 'km';
             } else {
                 input = input.toFixed();
             }
         } else if (units == 'mi') {
             /** convert meters to miles */
-            input = (input * 0.000621371192).toFixed(2);
+            if (round) {
+                input = (input * 0.000621371192).toFixed();
+            } else {
+                input = (input * 0.000621371192).toFixed(2);
+            }
             if (input < 0.5 && input > 0.2) {
                 /** yards */
                 input = (input * 1760).toFixed();
                 units = 'yd';
-            }
-            else if (input <= 0.1) {
+            } else if (input <= 0.1) {
                 /** feet */
                 input = (input * 1760 * 3).toFixed();
                 units = 'ft';

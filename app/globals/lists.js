@@ -386,17 +386,24 @@ lists.isochroneOptionList = {
             name: 'Distance'
         }
     },
-    minutesOptions: {
+    valueOptions: {
         min: 1,
-        max: 60,
+        max: 100,
         step: 1,
         default: 30
     },
     intervalOptions: {
         min: 1,
-        max: 59,
+        max: 99,
         step: 1,
         default: 15
+    },
+    velocities: {
+        Pedestrian: 5,
+        Car: 100,
+        Bicycle: 20,
+        Wheelchair: 5,
+        HeavyVehicle: 80,
     }
 };
 lists.userOptions = {
@@ -417,7 +424,7 @@ lists.userOptions = {
 //Whitelist for settings to be stored in permalink
 lists.permalinkFilters = {
     avoidables: ['ferry', 'unpaved', 'paved', 'fords', 'steps', 'highways', 'tollroads', 'tunnels', 'tracks'],
-    analysis: ['method', 'minutes', 'interval'],
+    analysis: ['method', 'isovalue', 'isointerval'],
     Car: ['type', 'weight', 'maxspeed'],
     hgv: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload'],
     goods: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload'],
@@ -438,7 +445,8 @@ lists.layers = {
     1: 'layerRouteLines',
     2: 'layerEmph',
     3: 'layerAccessibilityAnalysis',
-    4: 'layerTracks'
+    4: 'layerTracks',
+    5: 'layerAccessibilityAnalysisNumberedMarkers'
 };
 lists.layerStyles = {
     route: function() {
@@ -458,6 +466,13 @@ lists.layerStyles = {
     routeEmph: function() {
         return {
             color: 'yellow',
+            weight: 3,
+            opacity: 1
+        };
+    },
+    isochroneEmph: function() {
+        return {
+            color: 'black',
             weight: 3,
             opacity: 1
         };

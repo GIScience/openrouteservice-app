@@ -5,17 +5,8 @@ angular.module('orsApp.ors-aa-controls', []).component('orsAaControls', {
         ctrl.calculate = () => {
             ctrl.onCalculate();
         };
-        ctrl.reset = () => {
-            ctrl.onReset();
-        };
-        ctrl.zoomToArea = () => {
-            orsMapFactory.mapServiceSubject.onNext({
-                _actionCode: 0
-            });
-        };
     }],
     bindings: {
-        onCalculate: '&',
-        onReset: '&'
+        onCalculate: '&'
     }
 });

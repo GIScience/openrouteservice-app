@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-header', []).component('orsHeader', {
     templateUrl: 'components/ors-header/ors-header.html',
-    controller: ['$translate', 'orsUtilsService', 'orsSettingsFactory', 'orsCookiesFactory', function($translate, orsUtilsService, orsSettingsFactory, orsCookiesFactory) {
+    controller: ['$rootScope', '$timeout', '$translate', 'orsUtilsService', 'orsSettingsFactory', 'orsCookiesFactory', function($rootScope, $timeout, $translate, orsUtilsService, orsSettingsFactory, orsCookiesFactory) {
         let ctrl = this;
         ctrl.optionList = lists.userOptions;
         /** http://localhost:3000/routing?units=mi&language=de&routinglanguage=en */
@@ -22,6 +22,10 @@ angular.module('orsApp.ors-header', []).component('orsHeader', {
             orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions);
             orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
             // TODO: Reload site if site language is changed, we need this due to translations
+            // update slider units
+            $timeout(() => {
+                $rootScope.$broadcast('rzSliderForceRender');
+            });
         };
     }],
     bindings: {}

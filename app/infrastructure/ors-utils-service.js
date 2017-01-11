@@ -820,7 +820,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
         // Hack to remove angular properties that do not have to be saved
         let profile = angular.fromJson(angular.toJson(settings.profile));
         let waypoints = angular.fromJson(angular.toJson(settings.waypoints));
-
+        console.log(settings.profile)
         function getProp(obj) {
             for (var o in obj) {
                 if (typeof obj[o] == "object") {

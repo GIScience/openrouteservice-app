@@ -7,7 +7,7 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         activeSubgroup: '<'
     },
     controller: ['$scope', 'orsSettingsFactory', 'orsAaService', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', function($scope, orsSettingsFactory, orsAaService, orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService) {
-        var ctrl = this;
+        let ctrl = this;
         ctrl.$onInit = () => {
             ctrl.waypoints = orsSettingsFactory.getWaypoints();
             if (ctrl.waypoints.length == 0) {
@@ -68,9 +68,5 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
             console.log(ctrl.currentOptions);
             orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
         };
-        /** if we are coming back to accessibility panel */
-        if (angular.isDefined(orsAaService.orsAaObj)) {
-            orsAaService.processResponseToMap();
-        }
     }]
 });

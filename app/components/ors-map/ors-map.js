@@ -30,6 +30,7 @@ angular.module('orsApp').directive('orsMap', () => {
                 layerRoutePoints: L.featureGroup(),
                 layerRouteLines: L.featureGroup(),
                 layerAccessibilityAnalysis: L.featureGroup(),
+                layerAccessibilityAnalysisNumberedMarkers: L.featureGroup(),
                 layerEmph: L.featureGroup(),
                 layerTracks: L.featureGroup()
             };
@@ -51,6 +52,7 @@ angular.module('orsApp').directive('orsMap', () => {
                 $scope.mapModel.geofeatures.layerRoutePoints.addTo($scope.orsMap);
                 $scope.mapModel.geofeatures.layerRouteLines.addTo($scope.orsMap);
                 $scope.mapModel.geofeatures.layerAccessibilityAnalysis.addTo($scope.orsMap);
+                $scope.mapModel.geofeatures.layerAccessibilityAnalysisNumberedMarkers.addTo($scope.orsMap);
                 $scope.mapModel.geofeatures.layerEmph.addTo($scope.orsMap);
                 $scope.mapModel.geofeatures.layerTracks.addTo($scope.orsMap);
                 //Add layer control
@@ -137,13 +139,33 @@ angular.module('orsApp').directive('orsMap', () => {
                 $scope.mapModel.geofeatures.layerEmph.clearLayers();
             };
             $scope.reAddWaypoints = (waypoints, fireRequest = true, aaIcon = false) => {
-                console.info("reAddWaypoints");
                 $scope.clearMap();
                 var idx = 0;
                 angular.forEach(waypoints, (waypoint) => {
                     var iconIdx = orsSettingsFactory.getIconIdx(idx);
                     if (waypoint._latlng.lat && waypoint._latlng.lng) $scope.addWaypoint(idx, iconIdx, waypoint._latlng, fireRequest, aaIcon);
                     idx += 1;
+                });
+            };
+            $scope.reshuffleIndices = (actionPackage) => {
+                let i = 0;
+                console.info($scope.mapModel.geofeatures[actionPackage.layerCode])
+                $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
+                    console.warn(layer)
+                    layer.eachLayer((sublayer) => {
+                        sublayer.options.index = i;
+                    });
+                    i++;
+                });
+            };
+            $scope.reshuffleIndicesText = (actionPackage) => {
+                let i = 0;
+                console.info($scope.mapModel.geofeatures[actionPackage.layerCode])
+                $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
+                    let markerIcon = createLabelIcon("textLabelclass", i + 1);
+                    layer.setIcon(markerIcon);
+                    layer.options.index = i;
+                    i++;
                 });
             };
             /**
@@ -203,26 +225,70 @@ angular.module('orsApp').directive('orsMap', () => {
                 }).addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                 polyLine.setStyle(actionPackage.style);
             };
+            /**
+             * adds numbered marker if not yet added 
+             * @param {Object} actionPackage - The action actionPackage
+             */
+            $scope.toggleNumberedMarker = (actionPackage) => {
+                let add = true;
+                $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
+                    if (layer.options.index == actionPackage.featureId) {
+                        $scope.mapModel.geofeatures[actionPackage.layerCode].removeLayer(layer);
+                        add = false;
+                        return;
+                    }
+                });
+                if (add) {
+                    let marker = L.marker(actionPackage.geometry, {
+                        icon: createLabelIcon("textLabelclass", parseInt(actionPackage.featureId) + 1),
+                        index: actionPackage.featureId
+                    });
+                    marker.bindPopup("<b>Position</b><br>" + actionPackage.geometry.lat + ', ' + actionPackage.geometry.lng).openPopup();
+                    marker.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
+                }
+            };
+            createLabelIcon = function(labelClass, labelText) {
+                return L.divIcon({
+                    className: labelClass,
+                    html: labelText
+                });
+            };
             /** 
              * adds polygon array to specific layer
              * @param {Object} actionPackage - The action actionPackage
              */
-            $scope.addPolygons = (actionPackage) => {
-                const getGradientColor = (rangePos) => {
-                    hsl = Math.floor(120 - 120 * rangePos);
-                    return "hsl(" + hsl + ", 100%, 50%" + ")";
-                };
-                for (var i = actionPackage.geometry.length - 1; i >= 0; i--) {
-                    L.polygon(actionPackage.geometry[i], {
-                        fillColor: actionPackage.geometry.length == 1 ? getGradientColor(1) : getGradientColor(i / (actionPackage.geometry.length - 1)),
-                        color: '#000',
-                        weight: 1,
-                        fillOpacity: 1
-                    }).addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
+            $scope.togglePolygons = (actionPackage) => {
+                    // check if isochrones with this index are already on the map, if they are remove them
+                let add = true;
+                $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
+                    layer.eachLayer((isochrone) => {
+                        if (isochrone.options.index == actionPackage.featureId) {
+                            add = false;
+                            $scope.mapModel.geofeatures[actionPackage.layerCode].removeLayer(layer);
+                            return;
+                        }
+                    });
+                });
+                if (add) {
+                    const getGradientColor = (rangePos) => {
+                        hsl = Math.floor(120 - 120 * rangePos);
+                        return "hsl(" + hsl + ", 100%, 50%" + ")";
+                    };
+                    let isochrones = new L.FeatureGroup();
+                    for (var i = actionPackage.geometry.length - 1; i >= 0; i--) {
+                        L.polygon(actionPackage.geometry[i], {
+                            fillColor: actionPackage.geometry.length == 1 ? getGradientColor(1) : getGradientColor(i / (actionPackage.geometry.length - 1)),
+                            color: '#000',
+                            weight: 1,
+                            fillOpacity: 1,
+                            index: actionPackage.featureId
+                        }).addTo(isochrones);
+                    }
+                    isochrones.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
+                    // hack to change opacity of entire overlaypane layer but prevent opacity of stroke
+                    let svg = d3.select($scope.mapModel.map.getPanes().overlayPane).style("opacity", 0.5);
+                    svg.selectAll("path").style("stroke-opacity", 1);
                 }
-                // hack to change opacity of entire overlaypane layer but prevent opacity of stroke
-                let svg = d3.select($scope.mapModel.map.getPanes().overlayPane).style("opacity", 0.5);
-                svg.selectAll("path").style("stroke-opacity", 1);
             };
             /** 
              * clears layer entirely or specific layer in layer
@@ -237,6 +303,19 @@ angular.module('orsApp').directive('orsMap', () => {
                 } else {
                     $scope.mapModel.geofeatures[actionPackage.layerCode].clearLayers();
                 }
+            };
+            /** 
+             * clears featuregroup layer and checks for layers inside with specific index
+             */
+            $scope.clearFeaturegroup = (actionPackage) => {
+                $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
+                    layer.eachLayer((subLayer) => {
+                        if (subLayer.options.index == actionPackage.featureId) {
+                            $scope.mapModel.geofeatures[actionPackage.layerCode].removeLayer(layer);
+                            return;
+                        }
+                    });
+                });
             };
             orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
                 let svg = d3.select($scope.mapModel.map.getPanes().overlayPane);
@@ -277,10 +356,22 @@ angular.module('orsApp').directive('orsMap', () => {
                         $scope.highlightWaypoint(params._package);
                         break;
                     case 4:
-                        $scope.addPolygons(params._package);
+                        $scope.togglePolygons(params._package);
                         break;
                     case 5:
                         $scope.clearMap();
+                        break;
+                    case 6:
+                        $scope.reshuffleIndices(params._package);
+                        break;
+                    case 7:
+                        $scope.clearFeaturegroup(params._package);
+                        break;
+                    case 8:
+                        $scope.toggleNumberedMarker(params._package);
+                        break;
+                    case 9:
+                        $scope.reshuffleIndicesText(params._package);
                         break;
                     default:
                         break;

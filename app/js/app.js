@@ -37,12 +37,23 @@ angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.
             'responseError': function(rejection) {
                 // do something on error
                 let messagingService = $injector.get('orsMessagingService');
-                if (rejection.status === 404 ||  rejection.status === 503) {
-                    messagingService.messageSubject.onNext(lists.errors.CONNECTION);
+                switch (rejection.status) {
+                    case 404:
+                        messagingService.messageSubject.onNext(lists.errors.CONNECTION);
+                        break;
+                    case 500:
+                        messagingService.messageSubject.onNext(lists.errors.ROUTE);
+                        break;
+                    case 503:
+                        messagingService.messageSubject.onNext(lists.errors.CONNECTION);
+                        break;
+                    case 0:
+                        messagingService.messageSubject.onNext(lists.errors.CONNECTION);
+                        break;
+                    default:
+                        //messagingService.messageSubject.onNext(lists.errors.CONNECTION);
                 }
-                if (rejection.status === 500) {
-                    messagingService.messageSubject.onNext(lists.errors.ROUTE);
-                }
+                console.log(rejection.status)
                 return $q.reject(rejection);
             }
         };

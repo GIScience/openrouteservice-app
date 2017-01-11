@@ -1,0 +1,96 @@
+<div class="ors-aa-query">
+    <div class="segment">
+        <div class="summary" ng-mouseout="$ctrl.deEmph();" ng-mouseover="$ctrl.emph();">
+            <div class="ui label tiny block margin-bottom-3" ng-switch="$ctrl.attributes.info.method">
+                <span ng-bind-html="$ctrl.isochroneIdx + 1">
+            	</span>
+            	<span ng-bind-html="'-'">
+            	</span>
+                <span ng-bind-html="('TIMEDISTANCE' | translate)" ng-switch-when="0">
+                </span>
+                <span ng-bind-html="('DISTANCE' | translate)" ng-switch-when="1">
+                </span>
+                <div class="detail">
+                    <span ng-bind-html="($ctrl.attributes.info.isovalue*1000 | distance:true)" ng-switch-when="1">
+                    </span>
+                    <span ng-bind-html="$ctrl.attributes.info.isovalue" ng-switch-when="0">
+                    </span>
+                    <span ng-bind-html="'min'" ng-switch-when="0">
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="controls">
+            <span ng-click="$ctrl.toggle();" tooltip-side="top" tooltip-template="{{('TOGGLESHOW' | translate)}}" tooltips="">
+                <i ng-class="$ctrl.show($ctrl.showOnMap)">
+                </i>
+            </span>
+            <span ng-click="$ctrl.zoomTo();" tooltip-side="top" tooltip-template="{{('EXPAND' | translate)}}" tooltips="">
+                <i class="fa fa-expand">
+                </i>
+            </span>
+            <span ng-click="$ctrl.download();" tooltip-side="top" tooltip-template="{{('DOWNLOAD' | translate)}}" tooltips="">
+                <i class="fa fa-download">
+                </i>
+            </span>
+            <span ng-click="$ctrl.remove();" tooltip-side="top" tooltip-template="{{('REMOVE' | translate)}}" tooltips="">
+                <i class="fa fa-remove">
+                </i>
+            </span>
+        </div>
+    </div>
+    <div class="segment" ng-mouseout="$ctrl.deEmph();" ng-mouseover="$ctrl.emph();">
+        <div class="icon" ng-switch="$ctrl.attributes.info.profile">
+            <div ng-switch-when="Car">
+                <i class="fa fa-lg fa-car">
+                </i>
+            </div>
+            <div ng-switch-when="Bicycle">
+                <i class="fa fa-lg fa-bicycle">
+                </i>
+            </div>
+            <div ng-switch-when="HeavyVehicle">
+                <i class="fa fa-lg fa-bus">
+                </i>
+            </div>
+            <div ng-switch-when="Wheelchair">
+                <i class="fa fa-lg fa-wheelchair">
+                </i>
+            </div>
+            <div ng-switch-when="Pedestrian">
+                <i class="fa fa-lg fa-male">
+                </i>
+            </div>
+        </div>
+        <div class="waypoint">
+            <h4 ng-bind-html="$ctrl.attributes.info.address">
+            </h4>
+        </div>
+    </div>
+    <div class="margin-bottom-10 pointer" ng-click="showIsochrones = !showIsochrones">
+        <i ng-class="$ctrl.getClass(showIsochrones)">
+        </i>
+        <span ng-bind-html="('ISOCHRONES' | translate)">
+        </span>
+    </div>
+    <div class="collapsable" ng-class="{ showMe: showIsochrones }">
+        <div class="segment pointer" ng-class="{highlight: hover}" ng-click="$ctrl.zoomTo(isochroneNumber);" ng-init="isochroneNumber = $index" ng-mouseout="$ctrl.deEmph(); hover=false;" ng-mouseover="$ctrl.emph(isochroneNumber); hover=true;" ng-repeat="isochrone in $ctrl.attributes.isochrones">
+            <div class="summary">
+                <div class="ui label tiny margin-bottom-3" ng-switch="$ctrl.attributes.info.method">
+                    <span ng-bind-html="($ctrl.attributes.info.isointerval*1000*(isochroneNumber+1) | distance:true)" ng-switch-when="1">
+                    </span>
+                    <span ng-bind-html="$ctrl.attributes.info.isointerval*(isochroneNumber+1)" ng-switch-when="0">
+                    </span>
+                    <span ng-bind-html="'min'" ng-switch-when="0">
+                    </span>
+                </div>
+            </div>
+            <div class="waypoint">
+                <h5 ng-bind-html="('AREA' | translate)">
+                </h5>
+                <span ng-bind-html="isochrone.properties.area">
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

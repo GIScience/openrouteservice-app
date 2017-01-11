@@ -1,31 +1,62 @@
 <div class="container">
     <div class="ors-options-menu">
-        <div class="ui label tiny">
-            <span ng-bind-html="('ISOCHRONEMETHOD' | translate)"></span>
-            <div class="detail" ng-bind-html="$ctrl.isochroneOptionsSlider.options.translate($ctrl.isochroneOptionsSlider.value)">
+        <div class="ui label tiny margin-bottom-10">
+            <span ng-bind-html="('ISOCHRONEMETHOD' | translate)">
+            </span>
+        </div>
+        <div class="ui form">
+            <div class="inline fields">
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input id="method-time" name="frequency" ng-click="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.analysis_options.method" ng-value="$ctrl.optionList.methodOptions.TIME.id" type="radio">
+                            <label for="method-time" ng-bind-html="('METHODTIME' | translate)">
+                            </label>
+                        </input>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input id="method-unpaved" name="frequency" ng-click="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.analysis_options.method" ng-value="$ctrl.optionList.methodOptions.DISTANCE.id" type="radio">
+                            <label for="method-unpaved" ng-bind-html="('METHODDISTANCE' | translate)">
+                            </label>
+                        </input>
+                    </div>
+                </div>
             </div>
         </div>
-        <rzslider class="small" rz-slider-model="$ctrl.isochroneOptionsSlider.value" rz-slider-options="$ctrl.isochroneOptionsSlider.options">
+        <div class="ui divider">
+        </div>
+        <div class="ui label tiny" ng-switch="$ctrl.currentOptions.analysis_options.method">
+            <span ng-bind-html="('TIMEDISTANCE' | translate)" ng-switch-when="0">
+            </span>
+            <span ng-bind-html="('DISTANCE' | translate)" ng-switch-when="1">
+            </span>
+            <div class="detail">
+                <span ng-bind-html="($ctrl.isochroneMinutesSlider.value*1000 | distance:true)" ng-switch-when="1">
+                </span>
+                <span ng-bind-html="$ctrl.isochroneMinutesSlider.value" ng-switch-when="0">
+                </span>
+                <span ng-bind-html="'min'" ng-switch-when="0">
+                </span>
+            </div>
+        </div>
+        <rzslider rz-slider-model="$ctrl.isochroneMinutesSlider.value" rz-slider-options="$ctrl.isochroneMinutesSlider.options">
         </rzslider>
         <div class="ui divider">
         </div>
-        <div class="ui label tiny">
-            <span ng-bind-html="('TIMEDISTANCE' | translate)"></span>
+        <div class="ui label tiny" ng-switch="$ctrl.currentOptions.analysis_options.method">
+            <span ng-bind-html="('ISOCHRONEINTERVAL' | translate)">
+            </span>
             <div class="detail">
-                <span ng-bind-html="$ctrl.isochroneMinutesSlider.value"></span><span ng-bind-html="'min'"></span>
+                <span ng-bind-html="($ctrl.isochroneIntervalSlider.value*1000 | distance: true)" ng-switch-when="1">
+                </span>
+                <span ng-bind-html="$ctrl.isochroneIntervalSlider.value" ng-switch-when="0">
+                </span>
+                <span ng-bind-html="'min'" ng-switch-when="0">
+                </span>
             </div>
         </div>
-        <rzslider class="small" rz-slider-model="$ctrl.isochroneMinutesSlider.value" rz-slider-options="$ctrl.isochroneMinutesSlider.options">
-        </rzslider>
-        <div class="ui divider">
-        </div>
-        <div class="ui label tiny">
-            <span ng-bind-html="('ISOCHRONEINTERVAL' | translate)"></span>
-            <div class="detail">
-                <span ng-bind-html="$ctrl.isochroneIntervalSlider.value"></span><span ng-bind-html="'min'"></span>
-            </div>
-        </div>
-        <rzslider class="small" rz-slider-model="$ctrl.isochroneIntervalSlider.value" rz-slider-options="$ctrl.isochroneIntervalSlider.options">
+        <rzslider rz-slider-model="$ctrl.isochroneIntervalSlider.value" rz-slider-options="$ctrl.isochroneIntervalSlider.options">
         </rzslider>
     </div>
 </div>

@@ -78,11 +78,11 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUti
             if (key == 'method') {
                 settings.profile.options.analysis_options.method = value;
             }
-            if (key == 'minutes') {
-                settings.profile.options.analysis_options.minutes = value;
+            if (key == 'isovalue') {
+                settings.profile.options.analysis_options.isovalue = value;
             }
-            if (key == 'interval') {
-                settings.profile.options.analysis_options.interval = value;
+            if (key == 'isointerval') {
+                settings.profile.options.analysis_options.isointerval = value;
             }
             /** not going to be passed in permalink */
             // if (key == 'language') {

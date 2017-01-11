@@ -11,7 +11,7 @@ angular.module('orsApp.ors-aa-waypoint', []).component('orsAaWaypoint', {
         addresses: '<'
     },
     controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsMessagingService', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsMessagingService) {
-        var ctrl = this;
+        let ctrl = this;
         ctrl.select = (address) => {
             ctrl.showAddresses = false;
             ctrl.waypoint._address = address.shortAddress;
@@ -34,11 +34,9 @@ angular.module('orsApp.ors-aa-waypoint', []).component('orsAaWaypoint', {
                     ctrl.showAddresses = true;
                 } else {
                     orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
-                    console.log('error');
                 }
             }, function(response) {
-                console.log(response);
-                //$scope.errorMessage = orsErrorhandlerService.generalErrors('It was not possible to get the address at this time. Sorry for the inconvenience!');
+                // caught by xhr interceptor
             });
         };
         ctrl.getPlaceholder = () => {

@@ -188,7 +188,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
             const request = orsAaService.fetchAnalysis(payload);
             orsAaService.aaRequests.requests.push(request);
             request.promise.then(function(response) {
-                orsAaService.processResponse(response);
+                orsAaService.processResponse(response, settings);
                 // orsAaService.parseResultsToBounds(response);
                 // orsAaService.parseResponseToPolygonJSON(response);
             }, function(response) {});
@@ -321,8 +321,9 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
     orsSettingsFactory.setProfile = (currentProfile) => {
         let set = orsSettingsFactory[currentSettingsObj].getValue();
         set.profile.type = currentProfile.type;
-        /** Fire a new request. */
-        orsSettingsFactory[currentSettingsObj].onNext(set);
+        /** Fire a new request if on route. */
+        const isAaPanel = orsSettingsFactory.ngRouteSubject.getValue() == 'reach' ? true: false;
+        if (!isAaPanel) orsSettingsFactory[currentSettingsObj].onNext(set);
     };
     return orsSettingsFactory;
 }]);

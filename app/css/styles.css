@@ -303,7 +303,7 @@ ors-route, ors-analysis {
     padding: 0 .5rem;
 }
 
-h3 {
+h3, h4, h5 {
     padding: 0;
     margin: 0;
 }
@@ -341,7 +341,7 @@ ors-instructions {
     flex-direction: column;
 }
 
-.ors-instructions-summary {
+.ors-instructions-summary, .ors-analysis-settings {
     flex: 0 0 auto;
     width: 344px;
 }
@@ -352,9 +352,68 @@ ors-instructions {
 }
 
 
+/** Isochrone queries */
+
+.ors-aa-query {
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.ors-aa-query .segment {
+    display: flex;
+    position: relative;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    justify-content: space-between;
+    padding-bottom: 10px;
+}
+
+.ors-aa-query .segment .summary {
+    flex: 0 1 auto;
+}
+
+.ors-aa-query .segment .controls {
+    flex: 0 1 auto;
+}
+
+.ors-aa-query .segment .controls span {
+    float: right;
+    width: 20px;
+    text-align: center;
+}
+
+.ors-aa-query .segment .icon {
+    flex: 0 1 15%;
+}
+
+.ors-aa-query .segment .waypoint {
+    flex: 1 1 50%;
+    padding-left: 10px;
+}
+
+.ors-aa-query .segment.highlight {
+    color: rgb(0, 0, 0);
+    background-color: #FAFAFA;
+}
+
+.textLabelclass {
+    white-space: nowrap;
+    font-weight: 300;
+    text-shadow: 0 0 0.1em black, 0 0 0.1em black, 0 0 0.1em black, 0 0 0.1em black, 0 0 0.1em;
+    color: #FFF;
+    font-size: 18px;
+}
+
+
 /** Route options */
 
-.ors-routing-options .container, .ors-routing-inner .container {
+.ors-routing-options .container, .ors-routing-inner .container, .ors-aa-query {
     background-color: rgb(250, 250, 250);
     padding: 10px;
 }
@@ -425,20 +484,6 @@ ors-instructions {
     /* Fallback color */
     background-color: rgba(0, 0, 0, 0.4);
     /* Black w/ opacity */
-}
-
-.cm-footer {
-    height: 130px;
-    z-index: 1001;
-}
-
-.cm-options {
-    height: 300px;
-    z-index: 1002;
-}
-
-.cm-footer.slide-up.ng-hide {
-    bottom: -130px;
 }
 
 .ors-modal-container .ors-dialog .close {
@@ -712,12 +757,36 @@ input:focus, input:active {
     text-align: left;
 }
 
+.textcenter {
+    text-align: center;
+}
+
 .cm-popup-option {
     cursor: pointer;
 }
 
 .leaflet-top, .leaflet-bottom {
     /*z-index: 0 !important;*/
+}
+
+.block {
+    display: block !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.margin-bottom-3 {
+    margin-bottom: 3px !important;
+}
+
+.margin-bottom-6 {
+    margin-bottom: 6px !important;
+}
+
+.margin-bottom-10 {
+    margin-bottom: 10px !important;
 }
 
 tooltip tip {
