@@ -2,9 +2,11 @@ angular.module('orsApp.ors-aa-query', []).component('orsAaQuery', {
     templateUrl: 'components/ors-panel-accessibilityanalysis/ors-aa-queries/ors-aa-query/ors-aa-query.html',
     bindings: {
         isochroneIdx: '<',
+        isochroneTotal: '<',
         attributes: '<',
         onDelete: '&',
         onToggle: '&',
+        onDownload: '&',
         onEmph: '&',
         onDeEmph: '&',
         onZoom: '&'
@@ -47,7 +49,6 @@ angular.module('orsApp.ors-aa-query', []).component('orsAaQuery', {
             });
         };
         ctrl.emph = (isonum) => {
-            console.log(ctrl.showOnMap);
             if (ctrl.showOnMap) {
                 ctrl.onEmph({
                     isoidx: ctrl.isochroneIdx,

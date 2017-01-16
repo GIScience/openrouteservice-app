@@ -1,5 +1,11 @@
-<div class="container">
-    <div class="ors-options-menu">
+<div class="container top-border">
+    <div class="pointer" ng-click="aaSlidersOptions = !aaSlidersOptions">
+        <i ng-class="$ctrl.getClass(aaSlidersOptions)">
+        </i>
+        <span ng-bind-html="('OPTIONS' | translate)">
+        </span>
+    </div>
+    <div class="collapsable ors-options-menu" ng-class="{ showMe: aaSlidersOptions }">
         <div class="ui label tiny margin-bottom-10">
             <span ng-bind-html="('ISOCHRONEMETHOD' | translate)">
             </span>

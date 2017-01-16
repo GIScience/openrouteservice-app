@@ -88,5 +88,8 @@
     "DISTANCEUNITS": "mi",
     "MINUTES": "min",
     "METHOD": "Method",
-    "AREA": "Area"
+    "AREA": "Area",
+    "DOWNLOAD_ISOCHRONES": "Download Isochrones",
+    "DOWNLOAD_ROUTE": "Download Route",
+    "FILE_FORMAT": "File Format"
 }

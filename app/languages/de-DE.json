@@ -88,5 +88,8 @@
     "DISTANCEUNITS": "km",
     "MINUTES": "min",
     "METHOD": "Methode",
-    "AREA": "Fläche"
+    "AREA": "Fläche",
+    "DOWNLOAD_ISOCHRONES": "Isochronen herunterladen",
+    "DOWNLOAD_ROUTE": "Route herunterladen",
+    "FILE_FORMAT": "Datei Format"
 }

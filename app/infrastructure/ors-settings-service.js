@@ -200,9 +200,20 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
     /** Fetches address 
      * @param {Object} pos - latLng Object 
      * @param {number} idx - Index of waypoint
-     * @param {boolean} init - What was that again? 
+     * @param {boolean} init - Init is true when the service is loaded over permalink with the correct indices of waypoints
      */
     orsSettingsFactory.getAddress = (pos, idx, init) => {
+        // if this function is called from a popup we have to translate the index
+        if (!init) {
+            const set = orsSettingsFactory[currentSettingsObj].getValue();
+            if (idx == 0) {
+                idx = 0;
+            } else if (idx == 2) {
+                idx = set.waypoints.length - 1;
+            } else if (idx == 1) {
+                idx = set.waypoints.length - 2;
+            }
+        }
         const latLngString = orsUtilsService.parseLatLngString(pos);
         orsSettingsFactory.updateWaypointAddress(idx, latLngString, init);
         const payload = orsUtilsService.reverseXml(pos);
@@ -227,21 +238,11 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
      * This is done already when updated latlng.
      * @param {number} idx - Index of waypoint.
      * @param {string} address - Address as string.
-     * @param {boolean} init - When this is true, forgot why I need this fuck.
+     * @param {boolean} init - When this is true, the index is loaded from the loop (idx is correct) and not from the popup (0, 1 or 2)
      */
     orsSettingsFactory.updateWaypointAddress = (idx, address, init) => {
         let set = orsSettingsFactory[currentSettingsObj].getValue();
-        if (init) {
-            set.waypoints[idx]._address = address;
-        } else {
-            if (idx == 0) {
-                set.waypoints[idx]._address = address;
-            } else if (idx == 2) {
-                set.waypoints[set.waypoints.length - 1]._address = address;
-            } else if (idx == 1) {
-                set.waypoints[set.waypoints.length - 2]._address = address;
-            }
-        }
+        set.waypoints[idx]._address = address;
     };
     /**
      * Sets waypoints into settings.
@@ -322,7 +323,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
         let set = orsSettingsFactory[currentSettingsObj].getValue();
         set.profile.type = currentProfile.type;
         /** Fire a new request if on route. */
-        const isAaPanel = orsSettingsFactory.ngRouteSubject.getValue() == 'reach' ? true: false;
+        const isAaPanel = orsSettingsFactory.ngRouteSubject.getValue() == 'reach' ? true : false;
         if (!isAaPanel) orsSettingsFactory[currentSettingsObj].onNext(set);
     };
     return orsSettingsFactory;

@@ -7,25 +7,19 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
         ctrl.kmlOptShow = false;
         ctrl.gmlOptShow = false;
         ctrl.geojsonOptShow = false;
-        ctrl.csvOptShow = false;
         ctrl.fileFormat = [{
-                text: "GPS eXchange Format (.gpx)",
-                value: "gpx"
-            }, {
-                text: "Training Center XML (.tcx)",
-                value: "tcx"
-            }, {
-                text: "Keyhole Markup Language (.kml)",
-                value: "kml"
-            }, {
-                text: "GeoJSON (.geojson)",
-                value: "geojson"
-            }
-            // , {
-            //     text: "Comma Separated Value (.csv)",
-            //     value: "csv"
-            // }
-        ];
+            text: "GPS eXchange Format (.gpx)",
+            value: "gpx"
+        }, {
+            text: "Training Center XML (.tcx)",
+            value: "tcx"
+        }, {
+            text: "Keyhole Markup Language (.kml)",
+            value: "kml"
+        }, {
+            text: "GeoJSON (.geojson)",
+            value: "geojson"
+        }];
         ctrl.selected_fileformat = ctrl.fileFormat[0]; //this is the default selected value on the dropdown menu
         ctrl.currentFileFormat = ctrl.selected_fileformat.value; //this is the default value for the current selected option
         ctrl.change_fileFormat = (fileformat) => {
@@ -37,7 +31,6 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
                 ctrl.kmlOptShow = false;
                 ctrl.gmlOptShow = false;
                 ctrl.geojsonOptShow = false;
-                ctrl.csvOptShow = false;
                 break;
                 case 'tcx':
                         ctrl.gpxOptShow = false;
@@ -45,7 +38,6 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
                     ctrl.kmlOptShow = false;
                     ctrl.gmlOptShow = false;
                     ctrl.geojsonOptShow = false;
-                    ctrl.csvOptShow = false;
                     break;
                 case 'kml':
                         ctrl.gpxOptShow = false;
@@ -53,7 +45,6 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
                     ctrl.kmlOptShow = true;
                     ctrl.gmlOptShow = false;
                     ctrl.geojsonOptShow = false;
-                    ctrl.csvOptShow = false;
                     break;
                 case 'gml':
                         ctrl.gpxOptShow = false;
@@ -61,7 +52,6 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
                     ctrl.kmlOptShow = false;
                     ctrl.gmlOptShow = true;
                     ctrl.geojsonOptShow = false;
-                    ctrl.csvOptShow = false;
                     break;
                 case 'geojson':
                         ctrl.gpxOptShow = false;
@@ -69,7 +59,6 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
                     ctrl.kmlOptShow = false;
                     ctrl.gmlOptShow = false;
                     ctrl.geojsonOptShow = true;
-                    ctrl.csvOptShow = false;
                     break;
                 case 'csv':
                         ctrl.gpxOptShow = false;
@@ -77,7 +66,6 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
                     ctrl.kmlOptShow = false;
                     ctrl.gmlOptShow = false;
                     ctrl.geojsonOptShow = false;
-                    ctrl.csvOptShow = true;
                     break;
             }
             ctrl.currentFileFormat = fileformat.value;
@@ -116,45 +104,9 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
             value: "relativeToSeaFloor"
         }];
         ctrl.selected_kmlAltitudeMode = ctrl.kmlAltitudeMode[1];
-        ctrl.current_altitudeMode = ctrl.selected_kmlAltitudeMode.value
+        ctrl.current_altitudeMode = ctrl.selected_kmlAltitudeMode.value;
         ctrl.change_kmlOpt = (kmlOpt) => {
             ctrl.current_altitudeMode = kmlOpt.value;
-        };
-        ctrl.csvGeometry = [{
-            text: "As XY",
-            value: "xy"
-        }, {
-            text: "As YX",
-            value: "yx"
-        }, {
-            text: "As XYZ",
-            value: "xyz"
-        }, {
-            text: "As WKT",
-            value: "wkt"
-        }, {
-            text: "As WKT Waypoints",
-            value: "wktWaypoints"
-        }];
-        ctrl.selected_csvGeoFormat = ctrl.csvGeometry[0];
-        ctrl.current_csvGeometry = ctrl.selected_csvGeoFormat.value;
-        ctrl.change_csvGeomFormat = (csvGeom) => {
-            ctrl.current_csvGeometry = csvGeom.value;
-        };
-        ctrl.csvSeparator = [{
-            text: "Comma",
-            value: ","
-        }, {
-            text: "Semicolon",
-            value: ";"
-        }, {
-            text: "Tab",
-            value: "tab"
-        }];
-        ctrl.selected_csvSeparator = ctrl.csvSeparator[1];
-        ctrl.current_csvSeparator = ctrl.selected_csvSeparator.value;
-        ctrl.change_csvSeparator = (csvSep) => {
-            ctrl.current_csvSeparator = csvSep.value;
         };
         ctrl.userDefined = {
             avgSpeed: 15,
@@ -182,14 +134,9 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
                 case 'geojson':
                         options = {};
                     break;
-                case 'csv':
-                        options = {};
-                    options.csvSeparator = ctrl.current_csvSeparator;
-                    options.csvFormat = ctrl.current_csvGeometry;
-                    break;
             }
             let currentRoute = orsRouteService.routeObj.routes[orsRouteService.getCurrentRouteIdx()].points;
-            orsExportFactory.exportFile(currentRoute, options, ctrl.currentFileFormat, ctrl.userDefined.avgSpeed, ctrl.userDefined.coordPrecision);
+            orsExportFactory.exportFile(currentRoute, 'linestring', options, ctrl.currentFileFormat, ctrl.userDefined.avgSpeed, ctrl.userDefined.coordPrecision);
         };
     }]
 });

@@ -3,7 +3,6 @@ angular.module('orsApp.ors-header', []).component('orsHeader', {
     controller: ['$rootScope', '$timeout', '$translate', 'orsUtilsService', 'orsSettingsFactory', 'orsCookiesFactory', function($rootScope, $timeout, $translate, orsUtilsService, orsSettingsFactory, orsCookiesFactory) {
         let ctrl = this;
         ctrl.optionList = lists.userOptions;
-        /** http://localhost:3000/routing?units=mi&language=de&routinglanguage=en */
         ctrl.$onInit = () => {};
         /** subscription to settings, when permalink is used with lang params
         we have to update language settings. This is called before panel settings
@@ -22,7 +21,7 @@ angular.module('orsApp.ors-header', []).component('orsHeader', {
             orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions);
             orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
             // TODO: Reload site if site language is changed, we need this due to translations
-            // update slider units
+            // update slider units!
             $timeout(() => {
                 $rootScope.$broadcast('rzSliderForceRender');
             });

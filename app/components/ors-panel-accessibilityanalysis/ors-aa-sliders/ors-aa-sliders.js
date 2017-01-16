@@ -20,6 +20,10 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
                 }
             }
         };
+        ctrl.getClass = (bool) => {
+            if (bool === true) return "fa fa-fw fa-chevron-down";
+            else return "fa fa-fw fa-chevron-right";
+        };
         ctrl.updateSliders = () => {
             // if time is selected multiply distance by factor
             if (ctrl.currentOptions.analysis_options.method == 0) {

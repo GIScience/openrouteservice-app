@@ -131,12 +131,18 @@ angular.module('orsApp').directive('orsMap', () => {
                     $scope.processMapWaypoint(idx, pos, true, fireRequest);
                 });
             };
-            $scope.clearMap = () => {
+            /** Clears the map
+             * @param {boolean} switchApp: Whether accessibility layer should be cleared
+             */
+            $scope.clearMap = (switchApp = false) => {
                 $scope.mapModel.geofeatures.layerLocationMarker.clearLayers();
                 $scope.mapModel.geofeatures.layerRoutePoints.clearLayers();
                 $scope.mapModel.geofeatures.layerRouteLines.clearLayers();
-                $scope.mapModel.geofeatures.layerAccessibilityAnalysis.clearLayers();
                 $scope.mapModel.geofeatures.layerEmph.clearLayers();
+                if (switchApp) {
+                    $scope.mapModel.geofeatures.layerAccessibilityAnalysis.clearLayers();
+                    $scope.mapModel.geofeatures.layerAccessibilityAnalysisNumberedMarkers.clearLayers();
+                }
             };
             $scope.reAddWaypoints = (waypoints, fireRequest = true, aaIcon = false) => {
                 $scope.clearMap();
@@ -258,7 +264,7 @@ angular.module('orsApp').directive('orsMap', () => {
              * @param {Object} actionPackage - The action actionPackage
              */
             $scope.togglePolygons = (actionPackage) => {
-                    // check if isochrones with this index are already on the map, if they are remove them
+                // check if isochrones with this index are already on the map, if they are remove them
                 let add = true;
                 $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
                     layer.eachLayer((isochrone) => {
@@ -319,7 +325,7 @@ angular.module('orsApp').directive('orsMap', () => {
             };
             orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
                 let svg = d3.select($scope.mapModel.map.getPanes().overlayPane);
-                $scope.clearMap();
+                $scope.clearMap(true);
                 $scope.routing = route == 'directions' ? true : false;
                 if ($scope.routing) svg.style("opacity", 1);
             });
@@ -388,6 +394,7 @@ angular.module('orsApp').directive('orsPopup', ['$compile', '$timeout', 'orsSett
         templateUrl: 'components/ors-map/directive-templates/ors-popup.html',
         link: (scope, elem, attr) => {
             scope.add = (idx) => {
+                console.info(idx)
                 scope.processMapWaypoint(idx, scope.displayPos);
             };
         }

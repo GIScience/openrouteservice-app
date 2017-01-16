@@ -178,7 +178,7 @@ ors-route, ors-analysis {
     -ms-flex-direction: column;
     flex-direction: column;
     width: 344px;
-    overflow-x: hidden; // otherwise y-scrollbar will cause x-scrollbar 
+    -overflow-x: hidden; // otherwise y-scrollbar will cause x-scrollbar 
 }
 
 
@@ -324,6 +324,10 @@ button.summary-select {
     outline: none !important;
 }
 
+.top-border {
+    border-top: 1px solid #edf3f5;
+}
+
 .bottom-border {
     height: 1px;
     border-bottom: .1rem solid #edf3f5;
@@ -413,7 +417,7 @@ ors-instructions {
 
 /** Route options */
 
-.ors-routing-options .container, .ors-routing-inner .container, .ors-aa-query {
+.ors-routing-options .container, .ors-routing-inner .container, .ors-aa-query, .container {
     background-color: rgb(250, 250, 250);
     padding: 10px;
 }
@@ -437,7 +441,7 @@ ors-instructions {
 }
 
 .collapsable {
-    display: inline-block;
+    -display: inline-block;
     overflow: hidden;
     height: 0;
 }
@@ -737,7 +741,7 @@ input:focus, input:active {
     outline: none;
 }
 
-.ors-controls-button i:hover {
+.ors-controls-button i:hover, span i:hover {
     color: #cd6060;
 }
 
@@ -790,9 +794,16 @@ input:focus, input:active {
 }
 
 tooltip tip {
-    min-width: 0 !important;
-    padding: 5px 10px !important;
+    min-width: 70px !important;
+    padding: 5px 8px !important;
     border-radius: 4px !important;
+}
+
+
+/** this is needed for position of tooltip on body */
+
+.ors-controls-button tooltip, span tooltip {
+    box-sizing: initial !important;
 }
 
 

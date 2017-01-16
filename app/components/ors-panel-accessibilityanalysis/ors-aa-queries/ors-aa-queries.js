@@ -1,4 +1,4 @@
-angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query']).component('orsAaQueries', {
+angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query', 'orsApp.ors-export-query']).component('orsAaQueries', {
     templateUrl: 'components/ors-panel-accessibilityanalysis/ors-aa-queries/ors-aa-queries.html',
     bindings: {},
     controller: ['orsMessagingService', 'orsAaService', function(orsMessagingService, orsAaService) {
@@ -24,7 +24,10 @@ angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query']).component('orsA
         ctrl.removeQuery = (isoidx) => {
             orsAaService.removeQuery(isoidx);
         };
-        ctrl.downloadQuery = (isoidx) => {};
+        ctrl.downloadQuery = (isoidx) => {
+            ctrl.selectedIsochroneData = ctrl.aaQueries[isoidx];
+            ctrl.showExport = !ctrl.showExport;
+        };
         ctrl.zoomTo = (isoidx, isonum = -1) => {
             let geometry;
             if (isonum == -1) {

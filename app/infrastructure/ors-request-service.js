@@ -35,7 +35,9 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q',
     };
     /** cancels all requests if there are any outstanding */
     orsRequestService.geocodeRequests.clear = () => {
+        console.info(orsRequestService.geocodeRequests.routeRequests)
         for (let req of orsRequestService.geocodeRequests.routeRequests) {
+            console.info(req)
             if ('cancel' in req) req.cancel("Cancel last request");
         }
         for (let req of orsRequestService.geocodeRequests.aaRequests) {

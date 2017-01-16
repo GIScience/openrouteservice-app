@@ -1,0 +1,17 @@
+<header>
+    <h1 ng-bind-html="('DOWNLOAD_ISOCHRONES' | translate)">
+    </h1>
+</header>
+<section>
+    <div>
+        <label ng-bind-html="('FILE_FORMAT' | translate)">
+            File Format
+        </label>
+        <select ng-change="$ctrl.change_fileFormat($ctrl.selected_fileformat)" ng-model="$ctrl.selected_fileformat" ng-options="fileFormatOpt.text for fileFormatOpt in $ctrl.fileFormat">
+        </select>
+    </div>
+    <div class="ui divider">
+    </div>
+    <button ng-bind-html="('DOWNLOAD' | translate)" ng-click="$ctrl.exportRoute()">
+    </button>
+</section>

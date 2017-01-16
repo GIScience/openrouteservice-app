@@ -1,11 +1,10 @@
 <header>
-    <h1 ng-bind-html="'Export Route'">
+    <h1 ng-bind-html="('DOWNLOAD_ROUTE' | translate)">
     </h1>
 </header>
 <section>
     <div>
-        <label>
-            File Format
+        <label ng-bind-html="('FILE_FORMAT' | translate)">
         </label>
         <select ng-change="$ctrl.change_fileFormat($ctrl.selected_fileformat)" ng-model="$ctrl.selected_fileformat" ng-options="fileFormatOpt.text for fileFormatOpt in $ctrl.fileFormat">
         </select>
@@ -27,8 +26,7 @@
     </div> -->
     <div class="ui divider">
     </div>
-    <button ng-click="$ctrl.exportRoute()">
-        Export this route
+    <button ng-bind-html="('DOWNLOAD' | translate)" ng-click="$ctrl.exportRoute()">
     </button>
 </section>
 <!-- <div class="ui divider">

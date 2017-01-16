@@ -3,9 +3,9 @@
         <div class="summary" ng-mouseout="$ctrl.deEmph();" ng-mouseover="$ctrl.emph();">
             <div class="ui label tiny block margin-bottom-3" ng-switch="$ctrl.attributes.info.method">
                 <span ng-bind-html="$ctrl.isochroneIdx + 1">
-            	</span>
-            	<span ng-bind-html="'-'">
-            	</span>
+                </span>
+                <span ng-bind-html="'-'">
+                </span>
                 <span ng-bind-html="('TIMEDISTANCE' | translate)" ng-switch-when="0">
                 </span>
                 <span ng-bind-html="('DISTANCE' | translate)" ng-switch-when="1">
@@ -21,20 +21,20 @@
             </div>
         </div>
         <div class="controls">
-            <span ng-click="$ctrl.toggle();" tooltip-side="top" tooltip-template="{{('TOGGLESHOW' | translate)}}" tooltips="">
-                <i ng-class="$ctrl.show($ctrl.showOnMap)">
+            <span ng-click="$ctrl.toggle();">
+                <i ng-class="$ctrl.show($ctrl.showOnMap)" tooltip-side="top" tooltip-template="{{('TOGGLESHOW' | translate)}}" tooltips="" tooltip-append-to-body="true">
                 </i>
             </span>
-            <span ng-click="$ctrl.zoomTo();" tooltip-side="top" tooltip-template="{{('EXPAND' | translate)}}" tooltips="">
-                <i class="fa fa-expand">
+            <span ng-click="$ctrl.zoomTo();">
+                <i class="fa fa-expand" tooltip-side="top" tooltip-template="{{('EXPAND' | translate)}}" tooltips="" tooltip-append-to-body="true">
                 </i>
             </span>
-            <span ng-click="$ctrl.download();" tooltip-side="top" tooltip-template="{{('DOWNLOAD' | translate)}}" tooltips="">
-                <i class="fa fa-download">
+            <span ng-click="$ctrl.download();">
+                <i class="fa fa-download" tooltip-side="top" tooltip-template="{{('DOWNLOAD' | translate)}}" tooltips="" tooltip-append-to-body="true">
                 </i>
             </span>
-            <span ng-click="$ctrl.remove();" tooltip-side="top" tooltip-template="{{('REMOVE' | translate)}}" tooltips="">
-                <i class="fa fa-remove">
+            <span ng-click="$ctrl.remove();">
+                <i class="fa fa-remove" tooltip-hide-trigger="click mouseleave", tooltip-side="top" tooltip-template="{{('REMOVE' | translate)}}" tooltips="" tooltip-append-to-body="true">
                 </i>
             </span>
         </div>
@@ -77,9 +77,13 @@
         <div class="segment pointer" ng-class="{highlight: hover}" ng-click="$ctrl.zoomTo(isochroneNumber);" ng-init="isochroneNumber = $index" ng-mouseout="$ctrl.deEmph(); hover=false;" ng-mouseover="$ctrl.emph(isochroneNumber); hover=true;" ng-repeat="isochrone in $ctrl.attributes.isochrones">
             <div class="summary">
                 <div class="ui label tiny margin-bottom-3" ng-switch="$ctrl.attributes.info.method">
-                    <span ng-bind-html="($ctrl.attributes.info.isointerval*1000*(isochroneNumber+1) | distance:true)" ng-switch-when="1">
+                    <span ng-bind-html="($ctrl.attributes.info.isointerval*1000*(isochroneNumber+1) | distance:true)" ng-if="isochroneNumber < $ctrl.attributes.isochrones.length - 1" ng-switch-when="1">
                     </span>
-                    <span ng-bind-html="$ctrl.attributes.info.isointerval*(isochroneNumber+1)" ng-switch-when="0">
+                    <span ng-bind-html="$ctrl.attributes.info.isointerval*(isochroneNumber+1)" ng-if="isochroneNumber < $ctrl.attributes.isochrones.length - 1" ng-switch-when="0">
+                    </span>
+                    <span ng-bind-html="($ctrl.attributes.info.isovalue*1000 | distance:true)" ng-if="isochroneNumber == $ctrl.attributes.isochrones.length -1" ng-switch-when="1">
+                    </span>
+                    <span ng-bind-html="$ctrl.attributes.info.isovalue" ng-if="isochroneNumber == $ctrl.attributes.isochrones.length -1" ng-switch-when="0">
                     </span>
                     <span ng-bind-html="'min'" ng-switch-when="0">
                     </span>
