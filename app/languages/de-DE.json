@@ -89,6 +89,9 @@
     "MINUTES": "min",
     "METHOD": "Methode",
     "AREA": "Fläche",
+    "REACHFACTOR": "Erreichbarkeitsfaktor",
+    "REVERSEFLOW": "Erreichbarkeit zum Ziel",
+    "RANGE": "Reichweite",
     "DOWNLOAD_ISOCHRONES": "Isochronen herunterladen",
     "DOWNLOAD_ROUTE": "Route herunterladen",
     "FILE_FORMAT": "Datei Format"

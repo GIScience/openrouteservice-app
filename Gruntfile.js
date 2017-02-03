@@ -166,7 +166,7 @@ module.exports = function(grunt) {
             build: {
                 options: {
                     hostname: 'localhost',
-                    port: 3001,
+                    port: 3035,
                     open: true,
                     base: './build',
                     middleware: function(connect) {

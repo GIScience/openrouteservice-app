@@ -36,9 +36,27 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
             };
             // set maxspeed slider from params
             ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeSubgroup];
-            ctrl.currentOptions.maxspeed = ctrl.currentOptions.maxspeed !== undefined ? ctrl.currentOptions.maxspeed : ctrl.maxspeedOptions.default;
+            // enable or disable checkbox depending on whether maxspeed is set
+            let maxspeedVal;
+            if (ctrl.currentOptions.maxspeed >= "0") {
+                maxspeedVal = ctrl.currentOptions.maxspeed;
+                ctrl.maxspeedCheckbox = true;
+            } else {
+                maxspeedVal = ctrl.maxspeedOptions.default;
+                ctrl.maxspeedCheckbox = false;
+            }
+            ctrl.toggleMaxspeedSlider = () => {
+                if (ctrl.maxspeedCheckbox === true) {
+                    ctrl.maxspeedSlider.options.disabled = false;
+                    ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
+                } else if (ctrl.maxspeedCheckbox === false) {
+                    ctrl.maxspeedSlider.options.disabled = true;
+                    delete ctrl.currentOptions.maxspeed;
+                }
+                ctrl.changeOptions();
+            };
             ctrl.maxspeedSlider = {
-                value: ctrl.currentOptions.maxspeed,
+                value: maxspeedVal,
                 options: {
                     floor: ctrl.maxspeedOptions.min,
                     ceil: ctrl.maxspeedOptions.max,
@@ -52,6 +70,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                     }
                 }
             };
+            ctrl.toggleMaxspeedSlider();
             // set hgv options from params
             ctrl.currentOptions.height = ctrl.currentOptions.height !== undefined ? ctrl.currentOptions.height : ctrl.optionList.hgvParams.Height.min;
             ctrl.currentOptions.width = ctrl.currentOptions.width !== undefined ? ctrl.currentOptions.width : ctrl.optionList.hgvParams.Width.min;

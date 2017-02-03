@@ -9,8 +9,8 @@
     "jquery": "latest",
     "lodash": "latest",
     "leaflet": "~0.7",
-    "angular-animate": "~1.5.8",
-    "angular-cookies": "~1.5.8",
+    "angular-animate": "~1.5.10",
+    "angular-cookies": "~1.5.10",
     "XMLWriter": "latest",
     "rxjs": "latest",
     "font-awesome": "fontawesome#^4.6.3",
@@ -18,7 +18,7 @@
     "angular-ui-sortable": "^0.14.3",
     "jquery-ui": "jqueryui#^1.12.0",
     "angularjs-slider": "^5.5.1",
-    "angular-sanitize": "1.5.8",
+    "angular-sanitize": "1.5.9",
     "angular-file-saver": "^1.1.2",
     "turfjs": "*",
     "angular-jxon": "*",
@@ -31,6 +31,6 @@
     "leaflet.markercluster": "leaflet-0.7"
   },
   "resolutions": {
-    "angular": "~1.5.8"
+    "angular": "~1.5.10"
   }
 }

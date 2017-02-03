@@ -50,7 +50,8 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q',
         var cancel = function(reason) {
             canceller.resolve(reason);
         };
-        var promise = $http.post(url, requestData, {
+        var promise = $http.get(url, {
+            params: requestData,
             timeout: canceller.promise
         }).then(function(response) {
             return response.data;

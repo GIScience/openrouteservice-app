@@ -6,7 +6,6 @@ angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query', 'orsApp.ors-expo
         ctrl.aaQueries = orsAaService.aaQueries;
         orsAaService.subscribeToAaQueries(function onNext(d) {
             ctrl.aaQueries.push(d);
-            console.log(ctrl.aaQueries);
             // add newest isochrone to map with addToMap()
             ctrl.toggleQuery(ctrl.aaQueries.length - 1);
         });
@@ -19,7 +18,7 @@ angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query', 'orsApp.ors-expo
             orsAaService.reshuffle();
         };
         ctrl.toggleQuery = (isoidx) => {
-            orsAaService.toggleQuery(isoidx, ctrl.aaQueries[isoidx].isochrones, ctrl.aaQueries[isoidx].info.latlng);
+            orsAaService.toggleQuery(isoidx, ctrl.aaQueries[isoidx]);
         };
         ctrl.removeQuery = (isoidx) => {
             orsAaService.removeQuery(isoidx);
@@ -30,20 +29,16 @@ angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query', 'orsApp.ors-expo
         };
         ctrl.zoomTo = (isoidx, isonum = -1) => {
             let geometry;
-            if (isonum == -1) {
-                geometry = ctrl.aaQueries[isoidx].bbox;
-            } else {
-                geometry = ctrl.aaQueries[isoidx].isochrones[isonum].geometry.coordinates[0];
-            }
+            geometry = ctrl.aaQueries[isoidx].features[isonum].geometry.coordinates[0];
             orsAaService.zoomTo(geometry);
         };
         ctrl.emph = (isoidx, isonum = -1) => {
             let geometry;
             if (isonum > -1) {
-                geometry = ctrl.aaQueries[isoidx].isochrones[isonum].geometry.coordinates[0];
+                geometry = ctrl.aaQueries[isoidx].features[isonum].geometry.coordinates[0];
             } else {
-                let isolargest = ctrl.aaQueries[isoidx].isochrones.length - 1;
-                geometry = ctrl.aaQueries[isoidx].isochrones[isolargest].geometry.coordinates[0];
+                let isolargest = ctrl.aaQueries[isoidx].features.length - 1;
+                geometry = ctrl.aaQueries[isoidx].features[isolargest].geometry.coordinates[0];
             }
             orsAaService.Emph(geometry);
         };
@@ -53,7 +48,7 @@ angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query', 'orsApp.ors-expo
         // coming back?
         if (ctrl.aaQueries.length > 0) {
             for (let i = 0; i < ctrl.aaQueries.length; i++) {
-                orsAaService.toggleQuery(i, ctrl.aaQueries[i].isochrones, ctrl.aaQueries[i].info.latlng);
+                orsAaService.toggleQuery(i, ctrl.aaQueries[i].features, ctrl.aaQueries[i].info.query.locations[0]);
             }
         }
     }]

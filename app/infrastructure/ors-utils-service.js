@@ -32,54 +32,99 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
      * @return {String} latlng: String latLng representation "lat, lng"
      */
     orsUtilsService.parseLatLngString = function(latlng) {
-        latlng = Math.round(latlng.lat * 1000000) / 1000000 + ', ' + Math.round(latlng.lng * 1000000) / 1000000;
-        return latlng;
+        return Math.round(latlng.lat * 1000000) / 1000000 + ', ' + Math.round(latlng.lng * 1000000) / 1000000;
     };
     /**
-     * generates XML for geocoding
-     * @param {String} str: Free form address
-     * @return {String} xmlRequest: XML document
+     * parses leaflet latlng to string representation
+     * @param {Object} latlng: Leaflet latLng Object
+     * @return {String} latlng: String latLng representation "lat, lng"
      */
-    orsUtilsService.generateXml = function(str) {
-        //build request
-        var writer = new XMLWriter('UTF-8', '1.0');
-        writer.writeStartDocument();
-        //<xls:XLS>
-        writer.writeElementString('xls:XLS');
-        writer.writeAttributeString('xmlns:xls', orsNamespaces.xls);
-        writer.writeAttributeString('xsi:schemaLocation', orsNamespaces.schemata.locationUtilityService);
-        writer.writeAttributeString('xmlns:sch', orsNamespaces.ascc);
-        writer.writeAttributeString('xmlns:gml', orsNamespaces.gml);
-        writer.writeAttributeString('xmlns:xlink', orsNamespaces.xlink);
-        writer.writeAttributeString('xmlns:xsi', orsNamespaces.xsi);
-        writer.writeAttributeString('version', '1.1');
-        writer.writeAttributeString('xls:lang', 'de');
-        //<xls:RequestHeader />
-        writer.writeElementString('xls:RequestHeader');
-        //<xls:Request>
-        writer.writeStartElement('xls:Request');
-        writer.writeAttributeString('methodName', 'GeocodeRequest');
-        writer.writeAttributeString('version', '1.1');
-        writer.writeAttributeString('requestID', '00');
-        // writer.writeAttributeString('maximumResponses', '15');
-        //<xls:GeocodeRequest>
-        writer.writeStartElement('xls:GeocodeRequest');
-        //<xls:Address>
-        writer.writeStartElement('xls:Address');
-        writer.writeAttributeString('countryCode', 'en');
-        //<xls:freeFormAddress />
-        writer.writeElementString('xls:freeFormAddress', str);
-        //</xls:Address>
-        writer.writeEndElement();
-        //</xls:GeocodeRequest>
-        writer.writeEndElement();
-        //</xls:Request>
-        writer.writeEndElement();
-        //</xls:XLS>
-        writer.writeEndDocument();
-        var xmlRequest = writer.flush();
-        writer.close();
-        return xmlRequest;
+    orsUtilsService.parseLngLatString = function(latlng) {
+        return Math.round(latlng.lng * 1000000) / 1000000 + ', ' + Math.round(latlng.lat * 1000000) / 1000000;
+    };
+    /** 
+     * generates object for request and serializes it to http parameters   
+     * @param {String} str: Free form address
+     * @param {boolean} reverse: if reversed geocoding, default false
+     * @param {string} language: Desired language of response
+     * @param {number} limit: To limit the amount of responses
+     * @return {Object} payload: Paylod object used in xhr request
+     */
+    orsUtilsService.geocodingPayload = function(obj, reverse = false, language = 'en', limit = 20) {
+        let payload;
+        if (!reverse) {
+            payload = {
+                query: obj,
+                lang: language,
+                limit: limit
+            };
+        } else {
+            payload = {
+                location: obj,
+                lang: language,
+                limit: limit
+            };
+        }
+        return payload;
+    };
+    /** 
+     * generates object for request and serializes it to http parameters   
+     * @param {Object} settings: Settings object for payload
+     * @return {Object} payload: Paylod object used in xhr request
+     */
+    orsUtilsService.isochronesPayload = function(settings) {
+        console.warn(settings)
+        let payload;
+        payload = {
+            format: 'json',
+            locations: settings.waypoints[0]._latlng.lng + ',' + settings.waypoints[0]._latlng.lat,
+            range_type: settings.profile.options.analysis_options.method == 0 ? 'time' : 'distance',
+            range: settings.profile.options.analysis_options.method == 0 ? settings.profile.options.analysis_options.isovalue * 60 : settings.profile.options.analysis_options.isovalue * 1000,
+            interval: settings.profile.options.analysis_options.method == 0 ? settings.profile.options.analysis_options.isointerval * 60 : settings.profile.options.analysis_options.isointerval * 1000,
+            location_type: settings.profile.options.analysis_options.reverseflow == true ? lists.isochroneOptionList.reverseFlow.destination : lists.isochroneOptionList.reverseFlow.start,
+            profile: lists.profiles[settings.profile.type].request,
+            //attributes: 'area|reachfactor',
+            //options: {}
+
+
+
+        };
+        return payload;
+    };
+    orsUtilsService.addShortAddresses = function(features) {
+        angular.forEach(features, function(feature) {
+            const properties = feature.properties;
+            let shortAddress = '';
+            if ('name' in properties) {
+                shortAddress += properties.name;
+                shortAddress += ', ';
+            }
+            if ('street' in properties) {
+                shortAddress += properties.street;
+                if ('house_number' in properties) {
+                    shortAddress += ' ' + properties.house_number;
+                }
+                shortAddress += ', ';
+            }
+            //if ('postal_code' in properties) shortAddress += properties.postal_code;
+            if ('state' in properties) {
+                shortAddress += properties.state;
+                shortAddress += ', ';
+            } else if ('county' in properties) {
+                shortAddress += properties.county;
+                shortAddress += ', ';
+            } else if ('district' in properties) {
+                shortAddress += properties.district;
+                shortAddress += ', ';
+            }
+            if ('country' in properties) {
+                shortAddress += properties.country;
+                shortAddress += ', ';
+            }
+            shortAddress = shortAddress.slice(0, -2);
+            feature.shortaddress = shortAddress;
+        });
+        return features;
     };
     /**
      * generates XML for route request
@@ -262,59 +307,6 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
         return xmlRequest;
     };
     /**
-     * generates XML for reverse geocoding requests
-     * @param {Object} position: LatLng Object
-     * @return {String} xmlRequest: XML document
-     */
-    orsUtilsService.reverseXml = function(position) {
-        var writer = new XMLWriter('UTF-8', '1.0');
-        writer.writeStartDocument();
-        //<xls:XLS>
-        writer.writeElementString('xls:XLS');
-        writer.writeAttributeString('xmlns:xls', orsNamespaces.xls);
-        writer.writeAttributeString('xsi:schemaLocation', orsNamespaces.schemata.locationUtilityService);
-        writer.writeAttributeString('xmlns:sch', orsNamespaces.ascc);
-        writer.writeAttributeString('xmlns:gml', orsNamespaces.gml);
-        writer.writeAttributeString('xmlns:xlink', orsNamespaces.xlink);
-        writer.writeAttributeString('xmlns:xsi', orsNamespaces.xsi);
-        writer.writeAttributeString('version', '1.1');
-        writer.writeAttributeString('xls:lang', 'de');
-        //<xls:RequestHeader />
-        writer.writeElementString('xls:RequestHeader');
-        //<xls:Request>
-        writer.writeStartElement('xls:Request');
-        writer.writeAttributeString('methodName', 'ReverseGeocodeRequest');
-        writer.writeAttributeString('version', '1.1');
-        writer.writeAttributeString('requestID', '00');
-        writer.writeAttributeString('maximumResponses', '15');
-        //<xls:ReverseGeocodeRequest>
-        writer.writeStartElement('xls:ReverseGeocodeRequest');
-        //<xls.Position>
-        writer.writeStartElement('xls:Position');
-        //<gml:Point>
-        writer.writeStartElement('gml:Point');
-        writer.writeAttributeString('xmlns:gml', orsNamespaces.gml);
-        //<gml:pos>
-        writer.writeStartElement('gml:pos');
-        writer.writeAttributeString('srsName', 'EPSG:4326');
-        writer.writeString(position.lng + ' ' + position.lat);
-        //</gml:pos>
-        writer.writeEndElement();
-        //</gml:Point>
-        writer.writeEndElement();
-        //</xls:Position>
-        writer.writeEndElement();
-        //</xls:ReverseGeocodeRequest>
-        writer.writeEndElement();
-        //</xls:Request>
-        writer.writeEndElement();
-        //</xls:XLS>
-        writer.writeEndDocument();
-        var xmlRequest = writer.flush();
-        writer.close();
-        return xmlRequest;
-    };
-    /**
      * creates DOM parser to parse string to xml
      * @param {Object} data: Response object
      * @return {Array.<Object>} dom: XML object
@@ -346,256 +338,6 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             error = false;
         }
         return error;
-    };
-    /**
-     * parses geocoding response to list of address objects
-     * @param {Object} data: Response object
-     * @param {Boolean} reverse: Is true if we are dealing with a reverse geocoding response 
-     * @return {Array.<Object>} objArray: List of objects containing address and geographic position
-     */
-    orsUtilsService.processAddresses = function(data, reverse) {
-        var outerContainer, innerContainer;
-        if (reverse) {
-            outerContainer = lists.geocodingContainers.reverse.outer;
-            innerContainer = lists.geocodingContainers.reverse.inner;
-        } else {
-            outerContainer = lists.geocodingContainers.geocoding.outer;
-            innerContainer = lists.geocodingContainers.geocoding.inner;
-        }
-        var addressData = [];
-        var geocodeResponseList = orsUtilsService.getElementsByTagNameNS(data, orsNamespaces.xls, outerContainer);
-        angular.forEach(geocodeResponseList, function(geocodeResponse) {
-            var allAddress = orsUtilsService.getElementsByTagNameNS(geocodeResponse, orsNamespaces.xls, innerContainer);
-            angular.forEach(allAddress, function(xmlAddressContainer) {
-                var xmlAddress = orsUtilsService.getElementsByTagNameNS(xmlAddressContainer, orsNamespaces.xls, 'Address')[0];
-                var address = orsUtilsService.parseAddress(xmlAddress);
-                var shortAddress = orsUtilsService.parseAddressShort(xmlAddress)[0];
-                var xmlAddressPosition = orsUtilsService.getElementsByTagNameNS(xmlAddressContainer, orsNamespaces.gml, 'Point')[0];
-                var position = orsUtilsService.parseAddressPosition(xmlAddressPosition);
-                var addressContainer = {
-                    address: address,
-                    position: position,
-                    shortAddress: shortAddress
-                };
-                addressData.push(addressContainer);
-            });
-        });
-        return addressData;
-    };
-    /**
-     * parses geocoding response to address
-     * @param {Object} xmlAddress: Response object
-     * @return {Array.<Object>} objArray: List of objects containig address and geographic position
-     */
-    orsUtilsService.parseAddress = function(xmlAddress) {
-        var streetline;
-        if (!xmlAddress) {
-            return;
-        }
-        var element = '';
-        var v1 = orsUtilsService.getElementsByTagNameNS(xmlAddress, orsNamespaces.xls, 'StreetAddress');
-        var StreetAddress = null;
-        if (v1 !== null && v1 !== undefined) {
-            StreetAddress = v1[0];
-        }
-        var hasStreetElement = false;
-        if (StreetAddress !== null && StreetAddress !== undefined) {
-            var Streets = orsUtilsService.getElementsByTagNameNS(StreetAddress, orsNamespaces.xls, 'Street');
-            var Building = orsUtilsService.getElementsByTagNameNS(StreetAddress, orsNamespaces.xls, 'Building')[0];
-            //Building line
-            if (Building) {
-                var buildingName = Building.getAttribute('buildingName');
-                var buildingSubdivision = Building.getAttribute('subdivision');
-                if (buildingName !== null) {
-                    element = element + buildingName + ', ';
-                }
-                if (buildingSubdivision !== null) {
-                    element = element + buildingSubdivision + ', ';
-                }
-            }
-            //Street line
-            if (Streets) {
-                streetline = 0;
-                angular.forEach(Streets, function(street) {
-                    var officialName = street.getAttribute('officialName');
-                    if (officialName !== null) {
-                        element = element + officialName + ' ';
-                        streetline++;
-                    }
-                });
-            }
-            if (Building) {
-                var buildingNumber = Building.getAttribute('number');
-                if (buildingNumber != null) {
-                    element = element + buildingNumber;
-                    streetline++;
-                }
-            }
-            if (streetline > 0) {
-                hasStreetElement = true;
-            }
-            element = element + ', ';
-        }
-        var separator = ',';
-        var places = orsUtilsService.getElementsByTagNameNS(xmlAddress, orsNamespaces.xls, 'Place');
-        var regionList = ['MunicipalitySubdivision', 'Municipality', 'CountrySecondarySubdivision', 'CountrySubdivision', 'Country'];
-        if (places) {
-            var elemCountry = null;
-            var elemMunicipalitySubdivision = null;
-            var elemMunicipality = null;
-            var elemCountrySecondarySubdivision = null;
-            var elemCountrySubdivision = null;
-            //insert the value of each of the following attributes in order, if they are present
-            angular.forEach(regionList, function(type) {
-                angular.forEach(places, function(place) {
-                    if (place.getAttribute('type') === type) {
-                        //Chrome, Firefox: place.textContent; IE: place.text
-                        var content = place.textContent || place.text;
-                        if (content !== undefined || content !== null) {
-                            if (type == 'MunicipalitySubdivision') elemMunicipalitySubdivision = content;
-                            else if (type == 'Municipality') elemMunicipality = content;
-                            else if (type == 'CountrySecondarySubdivision') elemCountrySecondarySubdivision = content;
-                            else if (type == 'CountrySubdivision') elemCountrySubdivision = content;
-                            else if (type == 'Country') elemCountry = content;
-                        }
-                    }
-                });
-            });
-            var placesText = '';
-            if (hasStreetElement) {
-                var postalCode = orsUtilsService.getElementsByTagNameNS(xmlAddress, orsNamespaces.xls, 'PostalCode');
-                if (postalCode[0]) {
-                    placesText = placesText + postalCode[0].textContent + '  ';
-                }
-                if (elemMunicipality) placesText = placesText + elemMunicipality;
-                if (elemMunicipalitySubdivision && elemMunicipalitySubdivision != elemMunicipality) placesText = placesText + ' (' + elemMunicipalitySubdivision + ') ';
-                placesText = placesText + ', ';
-            } else {
-                if (elemMunicipalitySubdivision) placesText = placesText + elemMunicipalitySubdivision + ', ';
-                if (elemMunicipality && elemMunicipality != elemMunicipalitySubdivision) placesText = placesText + elemMunicipality + ', ';
-            }
-            if (elemCountrySecondarySubdivision && elemCountrySecondarySubdivision != elemMunicipality) placesText = placesText + elemCountrySecondarySubdivision + ', ';
-            if (elemCountrySubdivision && elemCountrySubdivision != elemCountrySecondarySubdivision && elemCountrySubdivision != elemMunicipality) placesText = placesText + elemCountrySubdivision + ', ';
-            element = element + placesText;
-        }
-        if (elemCountry) {
-            element = element + elemCountry;
-        } else {
-            console.log(orsUtilsService.getElementsByTagNameNS(xmlAddress, orsNamespaces.xls, 'countryCode'));
-            var countryCode = xmlAddress[0].getAttribute('countryCode');
-            if (countryCode !== null) {
-                element = element + countryCode.toUpperCase();
-            }
-        }
-        return element;
-    };
-    /**
-     * parses the XML address into short address
-     * @param xmlAddress: XML encoded address result 
-     * @return: address result in short
-     */
-    orsUtilsService.parseAddressShort = function(xmlAddress) {
-        var prevContent, element = [],
-            regionList = ['MunicipalitySubdivision', 'Municipality', 'CountrySecondarySubdivision', 'CountrySubdivision'];
-        //1. Address
-        //2. District, City, Region
-        if (xmlAddress) {
-            var streetAddressElement = orsUtilsService.getElementsByTagNameNS(xmlAddress, orsNamespaces.xls, 'StreetAddress');
-            var streetAddress = null;
-            var placesElement = orsUtilsService.getElementsByTagNameNS(xmlAddress, orsNamespaces.xls, 'Place');
-            if (streetAddressElement !== null) {
-                streetAddress = streetAddressElement[0];
-            }
-            if (streetAddress !== null && streetAddress !== undefined) {
-                element[0] = '';
-                var streets = orsUtilsService.getElementsByTagNameNS(streetAddress, orsNamespaces.xls, 'Street');
-                var building = orsUtilsService.getElementsByTagNameNS(streetAddress, orsNamespaces.xls, 'Building')[0];
-                //Building line
-                if (building) {
-                    var buildingName = building.getAttribute('buildingName');
-                    var buildingSubdivision = building.getAttribute('subdivision');
-                    if (buildingName !== null) {
-                        element[0] += buildingName + ' ';
-                    }
-                    if (buildingSubdivision !== null) {
-                        element[0] += buildingSubdivision + ' ';
-                    }
-                }
-                //Street line
-                angular.forEach(streets, function(street) {
-                    var officialName = street.getAttribute('officialName');
-                    if (officialName !== null) {
-                        element[0] += officialName + ' ';
-                    }
-                });
-                if (building) {
-                    var buildingNumber = building.getAttribute('number');
-                    if (buildingNumber !== null) {
-                        element[0] += buildingNumber + ' ';
-                    }
-                }
-                if (placesElement !== null) {
-                    element[1] = '';
-                    //insert the value of each of the following attributes in order, if they are present
-                    angular.forEach(regionList, function(type) {
-                        angular.forEach(placesElement, function(place) {
-                            if (place.getAttribute('type') === type) {
-                                //Chrome, Firefox: place.textContent; IE: place.text
-                                var content = place.textContent || place.text;
-                                if (content !== undefined || content !== null) {
-                                    // remove doubles, such as city states and cities
-                                    if (content != prevContent) {
-                                        prevContent = content
-                                        element[1] += place.textContent || place.text;
-                                        element[1] += ', ';
-                                    }
-                                }
-                            }
-                        });
-                    });
-                    // remove last comma
-                    element[1] = element[1].substring(0, element[1].length - 2);
-                }
-            } else if (placesElement !== null) {
-                element[0] = '';
-                //insert the value of each of the following attributes in order, if they are present
-                angular.forEach(regionList, function(type) {
-                    angular.forEach(placesElement, function(place) {
-                        if (place.getAttribute('type') === type) {
-                            //Chrome, Firefox: place.textContent; IE: place.text
-                            var content = place.textContent || place.text;
-                            if (content !== undefined || content !== null) {
-                                // remove doubles, such as city states and cities
-                                if (content != prevContent) {
-                                    prevContent = content;
-                                    element[0] += place.textContent || place.text;
-                                    element[0] += ', ';
-                                }
-                            }
-                        }
-                    });
-                });
-                // remove last comma
-                element[0] = element[0].substring(0, element[0].length - 2);
-            }
-        }
-        return element;
-    };
-    /**
-     * extracts the position of an address
-     * @param xmlAddressPosition: XML encoded address result 
-     * @return: address result in short
-     */
-    orsUtilsService.parseAddressPosition = function(xmlAddressPosition) {
-        var element = null;
-        if (xmlAddressPosition) {
-            element = '';
-            var position = orsUtilsService.getElementsByTagNameNS(xmlAddressPosition, orsNamespaces.gml, 'pos')[0];
-            position = position.textContent || position.text;
-            position = position.split(" ");
-            element = L.latLng(position[1], position[0]);
-        }
-        return element;
     };
     /**
      * Calls the Javascript functions getElementsByTagNameNS
@@ -821,6 +563,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
         let profile = angular.fromJson(angular.toJson(settings.profile));
         let waypoints = angular.fromJson(angular.toJson(settings.waypoints));
         console.log(settings.profile)
+
         function getProp(obj) {
             for (var o in obj) {
                 if (typeof obj[o] == "object") {

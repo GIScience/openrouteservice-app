@@ -155,9 +155,7 @@ angular.module('orsApp').directive('orsMap', () => {
             };
             $scope.reshuffleIndices = (actionPackage) => {
                 let i = 0;
-                console.info($scope.mapModel.geofeatures[actionPackage.layerCode])
                 $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
-                    console.warn(layer)
                     layer.eachLayer((sublayer) => {
                         sublayer.options.index = i;
                     });
@@ -166,7 +164,6 @@ angular.module('orsApp').directive('orsMap', () => {
             };
             $scope.reshuffleIndicesText = (actionPackage) => {
                 let i = 0;
-                console.info($scope.mapModel.geofeatures[actionPackage.layerCode])
                 $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
                     let markerIcon = createLabelIcon("textLabelclass", i + 1);
                     layer.setIcon(markerIcon);
@@ -245,15 +242,15 @@ angular.module('orsApp').directive('orsMap', () => {
                     }
                 });
                 if (add) {
-                    let marker = L.marker(actionPackage.geometry, {
+                    let marker = L.marker(L.latLng(actionPackage.geometry[1], actionPackage.geometry[0]), {
                         icon: createLabelIcon("textLabelclass", parseInt(actionPackage.featureId) + 1),
                         index: actionPackage.featureId
                     });
-                    marker.bindPopup("<b>Position</b><br>" + actionPackage.geometry.lat + ', ' + actionPackage.geometry.lng).openPopup();
+                    marker.bindPopup("<b>Position</b><br>" + actionPackage.geometry[1] + ', ' + actionPackage.geometry[0]).openPopup();
                     marker.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                 }
             };
-            createLabelIcon = function(labelClass, labelText) {
+            let createLabelIcon = function(labelClass, labelText) {
                 return L.divIcon({
                     className: labelClass,
                     html: labelText
@@ -277,12 +274,12 @@ angular.module('orsApp').directive('orsMap', () => {
                 });
                 if (add) {
                     const getGradientColor = (rangePos) => {
-                        hsl = Math.floor(120 - 120 * rangePos);
+                        const hsl = Math.floor(120 - 120 * rangePos);
                         return "hsl(" + hsl + ", 100%, 50%" + ")";
                     };
                     let isochrones = new L.FeatureGroup();
-                    for (var i = actionPackage.geometry.length - 1; i >= 0; i--) {
-                        L.polygon(actionPackage.geometry[i], {
+                    for (let i = actionPackage.geometry.length - 1; i >= 0; i--) {
+                        L.polygon(actionPackage.geometry[i].geometry.coordinates[0], {
                             fillColor: actionPackage.geometry.length == 1 ? getGradientColor(1) : getGradientColor(i / (actionPackage.geometry.length - 1)),
                             color: '#000',
                             weight: 1,
@@ -394,7 +391,6 @@ angular.module('orsApp').directive('orsPopup', ['$compile', '$timeout', 'orsSett
         templateUrl: 'components/ors-map/directive-templates/ors-popup.html',
         link: (scope, elem, attr) => {
             scope.add = (idx) => {
-                console.info(idx)
                 scope.processMapWaypoint(idx, scope.displayPos);
             };
         }

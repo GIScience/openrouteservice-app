@@ -84,6 +84,9 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUti
             if (key == 'isointerval') {
                 settings.profile.options.analysis_options.isointerval = value;
             }
+            if (key == 'reverseflow') {
+                settings.profile.options.analysis_options.reverseflow = orsParamsService.parseStringToBool(value);
+            }
             /** not going to be passed in permalink */
             // if (key == 'language') {
             //     settings.user_options.language = value;
@@ -94,7 +97,6 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUti
             if (key == 'units') {
                 user_options.units = value;
             }
-            //http://localhost:3000/routing?type=Car&weight=Fastest&maxspeed=200&ferry=true&unpaved=true&paved=true&fords=true&highways=true&tollroads=true&tunnels=true&tracks=true&routinglang=en&units=km
             if (key == 'ferry') {
                 settings.profile.options.avoidables.ferry = orsParamsService.parseStringToBool(value);
             }
@@ -120,7 +122,6 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUti
                 settings.profile.options.avoidables.tracks = orsParamsService.parseStringToBool(value);
             }
         });
-        //console.warn(JSON.stringify(globalSettings));
         return {
             settings: settings,
             user_options: user_options

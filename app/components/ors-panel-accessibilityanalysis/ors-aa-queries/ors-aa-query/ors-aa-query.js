@@ -14,7 +14,6 @@ angular.module('orsApp.ors-aa-query', []).component('orsAaQuery', {
     controller: ['orsMessagingService', 'orsAaService', function(orsMessagingService, orsAaService) {
         let ctrl = this;
         ctrl.showOnMap = true;
-        console.log(ctrl.attributes);
         ctrl.getClass = (bool) => {
             if (bool === true) return "fa fa-fw fa-chevron-down";
             else return "fa fa-fw fa-chevron-right";
@@ -38,7 +37,6 @@ angular.module('orsApp.ors-aa-query', []).component('orsAaQuery', {
             });
         };
         ctrl.download = () => {
-            console.log('download')
             ctrl.onDownload({
                 isoidx: ctrl.isochroneIdx
             });

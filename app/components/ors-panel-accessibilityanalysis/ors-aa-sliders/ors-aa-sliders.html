@@ -32,6 +32,14 @@
         </div>
         <div class="ui divider">
         </div>
+        <div class="ui checkbox">
+            <input id="reverse-flow" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.analysis_options.reverseflow" type="checkbox">
+                <label for="reverse-flow" ng-bind-html="('REVERSEFLOW' | translate)">
+                </label>
+            </input>
+        </div>
+        <div class="ui divider">
+        </div>
         <div class="ui label tiny" ng-switch="$ctrl.currentOptions.analysis_options.method">
             <span ng-bind-html="('TIMEDISTANCE' | translate)" ng-switch-when="0">
             </span>

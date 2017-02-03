@@ -21,14 +21,13 @@ angular.module('orsApp.ors-export-query', []).component('orsExportQuery', {
             ctrl.currentFileFormat = fileformat.value;
         };
         ctrl.exportRoute = () => {
+            let options;
             switch (ctrl.currentFileFormat) {
                 case 'geojson':
                     options = {};
                     break;
             }
-            console.log(ctrl.isochroneData);
-
-            orsExportFactory.exportFile(ctrl.isochroneData.isochrones, 'polygon', options, ctrl.currentFileFormat);
+            orsExportFactory.exportFile(ctrl.isochroneData.features, 'polygon', options, ctrl.currentFileFormat);
         };
     }]
 });

@@ -22,22 +22,40 @@ angular.module('orsApp.ors-aa-waypoint', []).component('orsAaWaypoint', {
             if (ctrl.addresses) ctrl.showAddresses = true;
         };
         ctrl.addressChanged = () => {
-            const payload = orsUtilsService.generateXml(ctrl.waypoint._address);
-            const request = orsRequestService.geocode(payload);
-            orsRequestService.geocodeRequests.updateRequest(request, ctrl.idx, 'aaRequests');
-            request.promise.then(function(response) {
-                let data = orsUtilsService.domParser(response);
-                const error = orsUtilsService.parseResponse(data, response);
-                if (!error) {
-                    ctrl.addresses = orsUtilsService.processAddresses(data);
-                    // show 
+            // is this a coordinate?
+            let inputCoordinates = ctrl.waypoint._address;
+            // split at "," ";" and " "
+            inputCoordinates = inputCoordinates.split(/[\s,;]+/);
+            if (inputCoordinates.length == 2) {
+                var lat = inputCoordinates[0];
+                var lng = inputCoordinates[1];
+                if (orsUtilsService.isCoordinate(lat, lng)) {
+                    let position = L.latLng(lat, lng);
+                    let positionString = orsUtilsService.parseLatLngString(position);
+                    ctrl.addresses = [{
+                        geometry: {
+                            coordinates: [lng, lat]
+                        },
+                        shortaddress: positionString
+                    }];
                     ctrl.showAddresses = true;
-                } else {
-                    orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
                 }
-            }, function(response) {
-                // caught by xhr interceptor
-            });
+            } else {
+                const payload = orsUtilsService.geocodingPayload(ctrl.waypoint._address);
+                const request = orsRequestService.geocode(payload);
+                orsRequestService.geocodeRequests.updateRequest(request, ctrl.idx, 'routeRequests');
+                request.promise.then((data) => {
+                    if (data.features.length > 0) {
+                        ctrl.addresses = orsUtilsService.addShortAddresses(data.features);
+                        ctrl.showAddresses = true;
+                    } else {
+                        orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
+                    }
+                }, (response) => {
+                    // this will be caught my the httpinterceptor
+                    console.log(response);
+                });
+            }
         };
         ctrl.getPlaceholder = () => {
             let placeholder = 'Area center';

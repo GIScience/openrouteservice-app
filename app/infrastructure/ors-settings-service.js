@@ -184,8 +184,8 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
         if (isAaPresent) {
             /** Cancel outstanding requests */
             orsAaService.aaRequests.clear();
-            const payload = orsAaService.generateAnalysisRequest(settings);
-            const request = orsAaService.fetchAnalysis(payload);
+            const payload = orsUtilsService.isochronesPayload(settings);
+            const request = orsAaService.getIsochrones(payload);
             orsAaService.aaRequests.requests.push(request);
             request.promise.then(function(response) {
                 orsAaService.processResponse(response, settings);
@@ -214,23 +214,21 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
                 idx = set.waypoints.length - 2;
             }
         }
-        const latLngString = orsUtilsService.parseLatLngString(pos);
-        orsSettingsFactory.updateWaypointAddress(idx, latLngString, init);
-        const payload = orsUtilsService.reverseXml(pos);
+        const lngLatString = orsUtilsService.parseLngLatString(pos);
+        orsSettingsFactory.updateWaypointAddress(idx, lngLatString, init);
+        const payload = orsUtilsService.geocodingPayload(lngLatString, true);
         const request = orsRequestService.geocode(payload);
         const requestsQue = orsSettingsFactory.ngRouteSubject.getValue() == 'directions' ? 'routeRequests' : 'aaRequests';
         orsRequestService.geocodeRequests.updateRequest(request, idx, requestsQue);
-        request.promise.then(function(response) {
-            const data = orsUtilsService.domParser(response);
-            const error = orsUtilsService.parseResponse(data);
-            if (!error) {
-                const addressData = orsUtilsService.processAddresses(data, true);
-                orsSettingsFactory.updateWaypointAddress(idx, addressData[0].address, init);
+        request.promise.then((data) => {
+            if (data.features.length > 0) {
+                const addressData = orsUtilsService.addShortAddresses(data.features);
+                orsSettingsFactory.updateWaypointAddress(idx, addressData[0].shortaddress, init);
             } else {
                 orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
             }
-        }, function(response) {
-            console.log('It was not possible to get the address of the current waypoint. Sorry for the inconvenience!');
+        }, (response) => {
+            orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
         });
     };
     /** 

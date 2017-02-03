@@ -14,8 +14,8 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
         let ctrl = this;
         ctrl.select = (address) => {
             ctrl.showAddresses = false;
-            ctrl.waypoint._address = address.shortAddress;
-            ctrl.waypoint._latlng = address.position;
+            ctrl.waypoint._address = address.shortaddress;
+            ctrl.waypoint._latlng = L.latLng(address.geometry.coordinates[1], address.geometry.coordinates[0]);
             ctrl.waypoint._set = 1;
             ctrl.onAddressChanged(ctrl.waypoint);
         };
@@ -43,26 +43,22 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
                     let position = L.latLng(lat, lng);
                     let positionString = orsUtilsService.parseLatLngString(position);
                     ctrl.addresses = [{
-                        address: positionString,
-                        position: position,
-                        shortAddress: positionString
+                        geometry: {
+                            coordinates: [lng, lat]
+                        },
+                        shortaddress: positionString
                     }];
                     ctrl.showAddresses = true;
-                    //49.44045, 8.686752
                 }
-            } else /** fire nominatim */ {
-                const payload = orsUtilsService.generateXml(ctrl.waypoint._address);
+            } else {
+                const payload = orsUtilsService.geocodingPayload(ctrl.waypoint._address);
                 const request = orsRequestService.geocode(payload);
                 orsRequestService.geocodeRequests.updateRequest(request, ctrl.idx, 'routeRequests');
-                request.promise.then((response) => {
-                    let data = orsUtilsService.domParser(response);
-                    const error = orsUtilsService.parseResponse(data, response);
-                    if (!error) {
-                        ctrl.addresses = orsUtilsService.processAddresses(data);
-                        // show 
+                request.promise.then((data) => {
+                    if (data.features.length > 0) {
+                        ctrl.addresses = orsUtilsService.addShortAddresses(data.features);
                         ctrl.showAddresses = true;
                     } else {
-                        // parsing error
                         orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
                     }
                 }, (response) => {

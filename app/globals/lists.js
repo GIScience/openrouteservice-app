@@ -56,72 +56,86 @@ lists.profiles = {
     Car: {
         name: 'Car',
         elevation: false,
-        subgroup: 'Car'
+        subgroup: 'Car',
+        request: 'driving-car'
     },
     Bicycle: {
         name: 'Bicycle',
         elevation: true,
-        subgroup: 'Bicycle'
+        subgroup: 'Bicycle',
+        request: 'cycling-regular'
     },
     BicycleMTB: {
         name: 'BicycleMTB',
         elevation: true,
-        subgroup: 'Bicycle'
+        subgroup: 'Bicycle',
+        request: 'cycling-mountain'
     },
     BicycleRacer: {
         name: 'BicycleRacer',
         elevation: true,
-        subgroup: 'Bicycle'
+        subgroup: 'Bicycle',
+        request: 'cycling-road'
     },
     BicycleTour: {
         name: 'BicycleTour',
         elevation: true,
-        subgroup: 'Bicycle'
+        subgroup: 'Bicycle',
+        request: 'cycling-tour'
     },
     BicycleSafety: {
         name: 'BicycleSafety',
         elevation: true,
-        subgroup: 'Bicycle'
+        subgroup: 'Bicycle',
+        request: 'cycling-safe'
     },
     Pedestrian: {
         name: 'Pedestrian',
         elevation: true,
-        subgroup: 'Pedestrian'
+        subgroup: 'Pedestrian',
+        request: 'foot-walking'
     },
     Wheelchair: {
         name: 'Wheelchair',
         elevation: true,
-        subgroup: 'Wheelchair'
+        subgroup: 'Wheelchair',
+        request: 'foot-walking'
     },
     hgv: {
         name: 'hgv',
         elevation: false,
-        subgroup: 'HeavyVehicle'
+        subgroup: 'HeavyVehicle',
+        request: 'driving-hgv'
     },
     goods: {
         name: 'goods',
         elevation: false,
-        subgroup: 'HeavyVehicle'
+        subgroup: 'HeavyVehicle',
+        request: 'driving-hgv'
     },
     bus: {
         name: 'bus',
         elevation: false,
-        subgroup: 'HeavyVehicle'
+        subgroup: 'HeavyVehicle',
+        request: 'driving-hgv'
     },
     agricultural: {
         name: 'agricultural',
         elevation: false,
-        subgroup: 'HeavyVehicle'
+        subgroup: 'HeavyVehicle',
+        request: 'driving-hgv'
     },
     forestry: {
         name: 'forestry',
         elevation: false,
-        subgroup: 'HeavyVehicle'
+        subgroup: 'HeavyVehicle',
+        request: 'driving-hgv'
     },
     delivery: {
         name: 'delivery',
         elevation: false,
-        subgroup: 'HeavyVehicle'
+        subgroup: 'HeavyVehicle',
+        request: 'driving-hgv'
     }
 };
 lists.optionList = {
@@ -386,6 +400,10 @@ lists.isochroneOptionList = {
             name: 'Distance'
         }
     },
+    reverseFlow: {
+        start: 'start',
+        destination: 'destination'
+    },
     valueOptions: {
         min: 1,
         max: 100,
@@ -394,7 +412,6 @@ lists.isochroneOptionList = {
     },
     intervalOptions: {
         min: 1,
-        max: 99,
         step: 1,
         default: 15
     },
@@ -424,7 +441,7 @@ lists.userOptions = {
 //Whitelist for settings to be stored in permalink
 lists.permalinkFilters = {
     avoidables: ['ferry', 'unpaved', 'paved', 'fords', 'steps', 'highways', 'tollroads', 'tunnels', 'tracks'],
-    analysis: ['method', 'isovalue', 'isointerval'],
+    analysis: ['method', 'isovalue', 'isointerval', 'reverseflow'],
     Car: ['type', 'weight', 'maxspeed'],
     hgv: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload'],
     goods: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload'],
