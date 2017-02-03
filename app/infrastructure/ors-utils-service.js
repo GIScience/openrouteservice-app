@@ -73,7 +73,6 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
      * @return {Object} payload: Paylod object used in xhr request
      */
     orsUtilsService.isochronesPayload = function(settings) {
-        console.warn(settings)
         let payload;
         payload = {
             format: 'json',
@@ -85,9 +84,6 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             profile: lists.profiles[settings.profile.type].request,
             //attributes: 'area|reachfactor',
             //options: {}
-
-
-
         };
         return payload;
     };

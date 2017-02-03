@@ -11,7 +11,7 @@
                 <span ng-bind-html="('DISTANCE' | translate)" ng-switch-when="distance">
                 </span>
                 <div class="detail">
-                    <span ng-bind-html="($ctrl.attributes.info.query.ranges[$ctrl.attributes.info.query.ranges.length-1]*1000 | distance:true)" ng-switch-when="distance">
+                    <span ng-bind-html="($ctrl.attributes.info.query.ranges[$ctrl.attributes.info.query.ranges.length-1] | distance:true)" ng-switch-when="distance">
                     </span>
                     <span ng-bind-html="$ctrl.attributes.info.query.ranges[$ctrl.attributes.info.query.ranges.length-1]/60" ng-switch-when="time">
                     </span>
@@ -74,45 +74,43 @@
         </span>
     </div>
     <div class="collapsable" ng-class="{ showMe: showIsochrones }">
-        <div class="segment pointer" ng-class="{highlight: hover}" ng-click="$ctrl.zoomTo($index);" ng-mouseout="$ctrl.deEmph(); hover=false;" ng-mouseover="$ctrl.emph($index); hover=true;" ng-repeat="isochrone in $ctrl.attributes.info.query.ranges">
-            <table class="ui celled table">
-                <thead>
-                    <tr>
-                        <th>
-                            <span ng-bind-html="('RANGE' | translate)">
-                            </span>
-                        </th>
-                        <th>
-                            <span ng-bind-html="('AREA' | translate)">
-                            </span>
-                        </th>
-                         <th>
-                            <span ng-bind-html="('REACHFACTOR' | translate)">
-                            </span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td ng-switch="$ctrl.attributes.info.query.range_type">
-                            <span ng-bind-html="(isochrone*1000 | distance:true)" ng-switch-when="distance">
-                            </span>
-                            <span ng-bind-html="(isochrone/60)" ng-switch-when="time">
-                            </span>
-                            <span ng-bind-html="'min'" ng-switch-when="time">
-                            </span>
-                        </td>
-                        <td>
-                            <span ng-bind-html="$ctrl.attributes.features[$index].properties.area">
-                            </span>
-                        </td>
-                        <td>
-                            <span ng-bind-html="$ctrl.attributes.features[$index].properties.reachfactor">
-                            </span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <table class="ui celled table">
+            <thead>
+                <tr>
+                    <th>
+                        <span ng-bind-html="('RANGE' | translate)">
+                        </span>
+                    </th>
+                    <th>
+                        <span ng-bind-html="('AREA' | translate)">
+                        </span>
+                    </th>
+                    <th>
+                        <span ng-bind-html="('REACHFACTOR' | translate)">
+                        </span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="pointer" ng-class="{highlight: hover}" ng-click="$ctrl.zoomTo($index);" ng-mouseout="$ctrl.deEmph(); hover=false;" ng-mouseover="$ctrl.emph($index); hover=true;" ng-repeat="isochrone in $ctrl.attributes.info.query.ranges">
+                    <td ng-switch="$ctrl.attributes.info.query.range_type">
+                        <span ng-bind-html="(isochrone | distance:true)" ng-switch-when="distance">
+                        </span>
+                        <span ng-bind-html="(isochrone/60)" ng-switch-when="time">
+                        </span>
+                        <span ng-bind-html="'min'" ng-switch-when="time">
+                        </span>
+                    </td>
+                    <td>
+                        <span ng-bind-html="$ctrl.attributes.features[$index].properties.area">
+                        </span>
+                    </td>
+                    <td>
+                        <span ng-bind-html="$ctrl.attributes.features[$index].properties.reachfactor">
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
