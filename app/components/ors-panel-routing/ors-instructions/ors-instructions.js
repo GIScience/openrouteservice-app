@@ -9,8 +9,9 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
         let ctrl = this;
         ctrl.profiles = lists.profiles;
         /** use scope in order to share same template ng-include with summaries */
-        $scope.route = ctrl.route = orsRouteService.routeObj.routes[orsRouteService.getCurrentRouteIdx()];
         ctrl.routeIndex = orsRouteService.getCurrentRouteIdx();
+        ctrl.data = orsRouteService.data;
+        $scope.route = ctrl.route = ctrl.data.routes[ctrl.routeIndex];
         /** subscribe to route object if instructions are already open */
         /** if we are returning to this panel, dispose all old subscriptions */
         try {
@@ -21,7 +22,8 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
         routeSubscriptionInstructions = orsRouteService.routesSubject.subscribe(routes => {
             console.info('subscribing to first route', routes);
             ctrl.routeIndex = orsRouteService.getCurrentRouteIdx();
-            $scope.route = ctrl.route = routes[ctrl.routeIndex];
+            ctrl.data = orsRouteService.data;
+            $scope.route = ctrl.route = ctrl.data.routes[ctrl.routeIndex];
         });
         ctrl.waypoints = orsSettingsFactory.getWaypoints();
         ctrl.getClass = (bool) => {
@@ -29,36 +31,47 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
             else return "fa fa-2x fa-fw fa-angle-right";
         };
         ctrl.getIcon = (code) => {
-            let direction = 'fa fa-arrow-up ';
+            let arrow = 'fa fa-arrow-up ';
+            const enterRoundabout = '';
+            const exitRoundabout = '';
+            const uTurn = '';
+            const finish = '';
             switch (code) {
-                case -3:
-                    direction += 'fa-rotate-225';
-                    break;
-                case 3:
-                    direction += 'fa-rotate-135';
-                    break;
-                case -2:
-                    direction += 'fa-rotate-270';
-                    break;
-                case 2:
-                    direction += 'fa-rotate-90';
-                    break;
-                case -1:
-                    direction += 'fa-rotate-315';
+                case 0:
+                    arrow += 'fa-rotate-270';
                     break;
                 case 1:
-                    direction += 'fa-rotate-45';
+                    arrow += 'fa-rotate-90';
                     break;
-                case 0:
-                    direction += '';
+                case 2:
+                    arrow += 'fa-rotate-225';
+                    break;
+                case 3:
+                    arrow += 'fa-rotate-135';
+                    break;
+                case 4:
+                    arrow += 'fa-rotate-270';
+                    break;
+                case 5:
+                    arrow += 'fa-rotate-45';
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
+                case 10:
                     break;
             }
-            return direction;
+            return arrow;
         };
         ctrl.EmphSegment = (idx) => {
-            const segmentStart = $scope.route.wayPoints[idx];
-            const segmentEnd = $scope.route.wayPoints[idx + 1];
-            const routeString = orsRouteService.routeObj.routes[ctrl.routeIndex].points;
+            const segmentStart = $scope.route.way_points[idx];
+            const segmentEnd = $scope.route.way_points[idx + 1];
+            const routeString = $scope.route.geometry;
             const geometry = _.slice(routeString, segmentStart, segmentEnd + 1);
             orsRouteService.Emph(geometry);
         };
@@ -66,19 +79,20 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
             orsRouteService.DeEmph();
         };
         ctrl.EmphStep = (pair) => {
-            const routeString = orsRouteService.routeObj.routes[ctrl.routeIndex].points;
+            const routeString = $scope.route.geometry;
             const geometry = _.slice(routeString, pair[0], pair[1] + 1);
             orsRouteService.Emph(geometry);
         };
         ctrl.zoomTo = (idx) => {
-            const segmentStart = $scope.route.wayPoints[idx];
-            const segmentEnd = $scope.route.wayPoints[idx + 1];
-            const routeString = orsRouteService.routeObj.routes[ctrl.routeIndex].points;
+            const segmentStart = $scope.route.way_points[idx];
+            const segmentEnd = $scope.route.way_points[idx + 1];
+            const routeString = $scope.route.geometry;
             const geometry = _.slice(routeString, segmentStart, segmentEnd + 1);
             orsRouteService.zoomTo(geometry);
         };
         ctrl.zoomToStep = (pair) => {
-            const routeString = orsRouteService.routeObj.routes[ctrl.routeIndex].points;
+            console.log(pair)
+            const routeString = $scope.route.geometry;
             const geometry = _.slice(routeString, pair[0], pair[1] + 1);
             orsRouteService.zoomTo(geometry);
         };

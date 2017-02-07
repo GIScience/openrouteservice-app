@@ -57,8 +57,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
      * @return {Object} The options object, may contain both profile options and aa options.
      */
     orsSettingsFactory.getActiveOptions = () => {
-        console.log("getActiveOptions");
-        console.log(orsSettingsFactory[currentSettingsObj].getValue());
         return orsSettingsFactory[currentSettingsObj].getValue().profile.options;
     };
     orsSettingsFactory.setActiveOptions = (options) => {
@@ -130,7 +128,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
         currentWaypointsObj = orsSettingsFactory.getCurrentWaypoints(newRoute);
         /** panels switched, clear the map */
         /** Cancel outstanding requests */
-        console.log(orsAaService, orsRouteService, orsRequestService)
         orsAaService.aaRequests.clear();
         orsRouteService.routingRequests.clear();
         orsRequestService.geocodeRequests.clear();
@@ -155,14 +152,14 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
     };
     /** Subscription function to current routing settings */
     orsSettingsFactory.routingSettingsSubject.subscribe(settings => {
-        console.info("changes in routingSettingsSubject");
+        console.info("changes in routingSettingsSubject", JSON.stringify(settings));
         const isRoutePresent = orsSettingsFactory.handleRoutePresent(settings, 2);
         if (isRoutePresent) {
             /** Cancel outstanding requests */
             orsRouteService.routingRequests.clear();
             orsRouteService.resetRoute();
             const userOptions = orsSettingsFactory.getUserOptions();
-            const payload = orsUtilsService.generateRouteXml(userOptions, settings);
+            const payload = orsUtilsService.routingPayload(settings, userOptions);
             const request = orsRouteService.fetchRoute(payload);
             orsRouteService.routingRequests.requests.push(request);
             request.promise.then(function(response) {

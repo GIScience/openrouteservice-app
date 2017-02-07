@@ -102,11 +102,11 @@
                         </span>
                     </td>
                     <td>
-                        <span ng-bind-html="$ctrl.attributes.features[$index].properties.area">
+                        <span ng-bind-html="($ctrl.attributes.features[$index].properties.area | area)">
                         </span>
                     </td>
                     <td>
-                        <span ng-bind-html="$ctrl.attributes.features[$index].properties.reachfactor">
+                        <span ng-bind-html="($ctrl.attributes.features[$index].properties.reachfactor | number: 2)">
                         </span>
                     </td>
                 </tr>

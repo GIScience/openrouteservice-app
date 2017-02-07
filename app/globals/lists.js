@@ -180,39 +180,39 @@ lists.optionList = {
     },
     avoidables: {
         ferry: {
-            name: 'Ferry',
+            name: 'ferries',
             subgroups: ['Car', 'Bicycle', 'HeavyVehicle', 'Wheelchair', 'Pedestrian']
         },
         unpaved: {
-            name: 'Unpavedroads',
+            name: 'unpavedroads',
             subgroups: ['Car', 'Bicycle', 'HeavyVehicle']
         },
         paved: {
-            name: 'Pavedroads',
+            name: 'pavedroads',
             subgroups: ['Car', 'Bicycle', 'HeavyVehicle']
         },
         fords: {
-            name: 'Fords',
+            name: 'fords',
             subgroups: ['Car', 'Bicycle', 'HeavyVehicle', 'Wheelchair', 'Pedestrian']
         },
         steps: {
-            name: 'Steps',
+            name: 'steps',
             subgroups: ['Wheelchair', 'Pedestrian']
         },
         highways: {
-            name: 'Highways',
+            name: 'highways',
             subgroups: ['Car', 'HeavyVehicle']
         },
         tollroads: {
-            name: 'Tollroads',
+            name: 'tollways',
             subgroups: ['Car', 'HeavyVehicle']
         },
         tunnels: {
-            name: 'Tunnels',
+            name: 'tunnels',
             subgroups: ['Car', 'HeavyVehicle']
         },
         tracks: {
-            name: 'Tracks',
+            name: 'tracks',
             subgroups: ['Car', 'HeavyVehicle']
         }
     },

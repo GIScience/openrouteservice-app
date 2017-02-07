@@ -1,6 +1,6 @@
 <div class="ors-summary">
     <ul>
-        <li data-ng-repeat="route in $ctrl.routes">
+        <li data-ng-repeat="route in $ctrl.data.routes">
             <div ng-include="'includes/route-summary.html'" ng-mouseout="$ctrl.DeEmphRoute()" ng-mouseover="$ctrl.EmphRoute($index)">
             </div>
             <ors-route-extras ng-if="route.extras" current-route="route" route-index="$index">

@@ -99,7 +99,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
                 $scope.distanceFilter = $filter('distance');
                 $scope.EmphSegment = (segments) => {
                     _.forEach(segments, (pair) => {
-                        const routeString = orsRouteService.routeObj.routes[$scope.routeIndex].points;
+                        const routeString = orsRouteService.data.routes[$scope.routeIndex].geometry;
                         const geometry = _.slice(routeString, pair[0], pair[1] + 1);
                         orsRouteService.Emph(geometry);
                     });

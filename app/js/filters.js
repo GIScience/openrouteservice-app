@@ -1,12 +1,6 @@
 angular.module('orsApp.ors-filters', []).filter('duration', () => {
     return (input) => {
-        let date = new Date(input);
-        let hours = date.getUTCHours();
-        hours = hours.toString().length == 1 ? ("0" + hours) : hours;
-        let minutes = date.getUTCMinutes();
-        minutes = minutes.toString().length == 1 ? ("0" + minutes) : minutes;
-        date = hours + ":" + minutes;
-        return date;
+        return new Date(input * 1000).toISOString().substr(11, 5);
     };
 }).filter('distance', ['orsSettingsFactory', (orsSettingsFactory) => {
     function distance(input, round) {
@@ -42,6 +36,20 @@ angular.module('orsApp.ors-filters', []).filter('duration', () => {
             }
         }
         input = input + units;
+        return input;
+    }
+    distance.$stateful = true;
+    return distance;
+}]).filter('area', ['orsSettingsFactory', (orsSettingsFactory) => {
+    function distance(input, round) {
+        input = parseInt(input);
+        let units = orsSettingsFactory.getUserOptions().units;
+        if (units == 'km') {
+            input = (input / 1000000).toFixed(2);
+        } else if (units == 'mi') {
+            input = (input / 2589988.11034).toFixed(2);
+        }
+        input = input + ' ' + units + '<sup>2</sup>';
         return input;
     }
     distance.$stateful = true;

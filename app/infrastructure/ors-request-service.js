@@ -14,7 +14,6 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q',
      * @param {string} panel: Current requests que
      */
     orsRequestService.geocodeRequests.updateRequest = (request, idx, requestsQue) => {
-        console.log(request, idx, requestsQue, orsRequestService.geocodeRequests)
         if (typeof orsRequestService.geocodeRequests[requestsQue][idx] === 'undefined') {
             orsRequestService.geocodeRequests[requestsQue][idx] = request;
         } else {
@@ -37,7 +36,6 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q',
     orsRequestService.geocodeRequests.clear = () => {
         console.info(orsRequestService.geocodeRequests.routeRequests)
         for (let req of orsRequestService.geocodeRequests.routeRequests) {
-            console.info(req)
             if ('cancel' in req) req.cancel("Cancel last request");
         }
         for (let req of orsRequestService.geocodeRequests.aaRequests) {

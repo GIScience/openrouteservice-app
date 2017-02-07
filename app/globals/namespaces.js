@@ -44,8 +44,8 @@ orsNamespaces.schemata = {
  */
 orsNamespaces.services = {
     geocoding: 'http://129.206.7.158/geocoding-test', //for address search requests
-    routing: 'http://129.206.7.158/routing', //for routing requests
-    tmc: 'http://129.206.228.124/routing?tmc',
+    routing: 'http://129.206.7.158/routing-test', //for routing requests
+    tmc: 'http://129.206.228.124/routing-test?tmc',
     analyse: 'http://129.206.7.158/analysis-test' //for accessibility analysis requests
 };
 /**

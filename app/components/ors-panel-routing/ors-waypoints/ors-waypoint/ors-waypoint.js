@@ -32,6 +32,7 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
             if (ctrl.addresses) ctrl.showAddresses = true;
         };
         ctrl.addressChanged = () => {
+            console.log(true)
             // is this a coordinate?
             let inputCoordinates = ctrl.waypoint._address;
             // split at "," ";" and " "

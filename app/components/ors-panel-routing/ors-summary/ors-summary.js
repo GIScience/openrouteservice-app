@@ -31,12 +31,13 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
         } catch (error) {
             console.warn(error);
         }
-        routeSubscription = orsRouteService.routesSubject.subscribe(routes => {
-            ctrl.routes = routes;
+        routeSubscription = orsRouteService.routesSubject.subscribe(data => {
+            ctrl.data = data;
+            console.log(ctrl.data)
             orsRouteService.setCurrentRouteIdx(0);
         });
         ctrl.EmphRoute = (idx) => {
-            const geometry = orsRouteService.routeObj.routes[idx].points;
+            const geometry = ctrl.data.routes[idx].geometry;
             orsRouteService.Emph(geometry);
         };
         ctrl.DeEmphRoute = () => {

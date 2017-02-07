@@ -10,12 +10,12 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
         ctrl.processExtras = (currentRoute, key) => {
             let totalDistance = currentRoute.summary.distance;
             let extras = {};
-            _.forEach(currentRoute.extras[key], (elem, i) => {
-                const fr = parseInt(elem.fr),
-                    to = parseInt(elem.to) + 1;
+            _.forEach(currentRoute.extras[key].values, (elem, i) => {
+                const fr = elem[0],
+                    to = elem[1];
                 if (fr !== to) {
-                    const typeNumber    = parseInt(elem.value) + 5;
-                    const routeSegment = currentRoute.points.slice(fr, to);
+                    const typeNumber = parseInt(elem[2]) + 5;
+                    const routeSegment = currentRoute.geometry.slice(fr, to);
                     /** calculate distances */
                     let sumDistance = 0;
                     for (let i = 0; i < routeSegment.length - 1; i++) {
@@ -63,21 +63,18 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
                 extras[obj].y0 = y0;
                 extras[obj].y1 = y0 += +extras[obj].percentage;
             }
-            console.log(extras);
             return extras;
         };
         ctrl.routeExtras = [];
         $scope.$watch('$ctrl.currentRoute', (route) => {
             ctrl.routeExtras = [];
-            console.log(true);
-            ctrl.routeExtras.push({
-                data: ctrl.processExtras(route, 'gradients'),
-                type: 'gradients',
-                routeIndex: ctrl.routeIndex
-            });
-            console.log(ctrl.routeExtras);
-            //surfaces: ctrl.processExtras('surfaces'),
-            //wayTypes: ctrl.processExtras('wayTypes')
+            for (let key in route.extras) {
+                ctrl.routeExtras.push({
+                    data: ctrl.processExtras(route, key),
+                    type: key,
+                    routeIndex: ctrl.routeIndex
+                });
+            }    
             //ctrl.routeExtras = angular.copy(ctrl.routeExtras);
         });
     }]

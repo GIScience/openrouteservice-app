@@ -38,13 +38,13 @@
         </div>
         <div class="steps">
             <div class="collapsable" ng-class="{ showMe: steps }">
-                <div class="step" data-ng-repeat="step in segment.steps" ng-class="{highlight: hoverStep}" ng-click="$ctrl.zoomToStep(step.interval);" ng-mouseout="$ctrl.DeEmph(); hoverStep=false;" ng-mouseover="$ctrl.EmphStep(step.interval); hoverStep=true;">
+                <div class="step" data-ng-repeat="step in segment.steps" ng-class="{highlight: hoverStep}" ng-click="$ctrl.zoomToStep(step.way_points);" ng-mouseout="$ctrl.DeEmph(); hoverStep=false;" ng-mouseover="$ctrl.EmphStep(step.way_points); hoverStep=true;">
                     <div class="header">
                         <div class="icon">
-                            <i ng-class="$ctrl.getIcon(step.code)">
+                            <i ng-class="$ctrl.getIcon(step.type)">
                             </i>
                         </div>
-                        <div class="text" ng-bind-html="step.text">
+                        <div class="text" ng-bind-html="step.instruction">
                         </div>
                     </div>
                     <div class="summary">

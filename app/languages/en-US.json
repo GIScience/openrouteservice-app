@@ -90,7 +90,7 @@
     "METHOD": "Method",
     "AREA": "Area",
     "RANGE": "Range",
-    "REACHFACTOR": "Reachability score",
+    "REACHFACTOR": "Reach score",
     "REVERSEFLOW": "Reverse direction",
     "DOWNLOAD_ISOCHRONES": "Download Isochrones",
     "DOWNLOAD_ROUTE": "Download Route",

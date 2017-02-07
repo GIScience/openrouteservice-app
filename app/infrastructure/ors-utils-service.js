@@ -42,6 +42,144 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
     orsUtilsService.parseLngLatString = function(latlng) {
         return Math.round(latlng.lng * 1000000) / 1000000 + ', ' + Math.round(latlng.lat * 1000000) / 1000000;
     };
+    /**
+     * Decodes to a [latitude, longitude] coordinates array.
+     * @param {String} str
+     * @param {Number} precision
+     * @returns {Array}
+     */
+    orsUtilsService.decodePolyline = function(str, precision) {
+        var index = 0,
+            lat = 0,
+            lng = 0,
+            coordinates = [],
+            shift = 0,
+            result = 0,
+            byte = null,
+            latitude_change,
+            longitude_change,
+            factor = Math.pow(10, precision || 5);
+        // Coordinates have variable length when encoded, so just keep
+        // track of whether we've hit the end of the string. In each
+        // loop iteration, a single coordinate is decoded.
+        while (index < str.length) {
+            // Reset shift, result, and byte
+            byte = null;
+            shift = 0;
+            result = 0;
+            do {
+                byte = str.charCodeAt(index++) - 63;
+                result |= (byte & 0x1f) << shift;
+                shift += 5;
+            } while (byte >= 0x20);
+            latitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
+            shift = result = 0;
+            do {
+                byte = str.charCodeAt(index++) - 63;
+                result |= (byte & 0x1f) << shift;
+                shift += 5;
+            } while (byte >= 0x20);
+            longitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
+            lat += latitude_change;
+            lng += longitude_change;
+            coordinates.push([lat / factor, lng / factor]);
+        }
+        return coordinates;
+    };
+    /** 
+     * generates object for request and serializes it to http parameters   
+     * @param {Object} settings: route settings object
+     * @param {Object} userSettings: To limit the amount of responses
+     * @return {Object} payload: Paylod object used in xhr request
+     */
+    orsUtilsService.routingPayload = (settings, userSettings) => {
+        console.log(settings, userSettings);
+        let payload;
+        payload = {
+            profile: lists.profiles[settings.profile.type].request,
+            preference: settings.profile.options.weight.toLowerCase(),
+            language: userSettings.routinglang,
+            geometry_format: 'encodedpolyline',
+            instructions: true,
+            geometry: true,
+            units: 'm',
+            prettify_instructions: true,
+            elevation: true,
+            options: {
+                profile_params: {}
+            }
+        };
+        /** prepare waypoints */
+        let waypoints = [];
+        angular.forEach(settings.waypoints, function(waypoint) {
+            if (waypoint._set == 1) waypoints.push(waypoint);
+        });
+        payload.coordinates = '';
+        for (let j = 0, i = 0; i < waypoints.length; i++) {
+            payload.coordinates += waypoints[i]._latlng.lng + ',' + waypoints[i]._latlng.lat + '|';
+        }
+        payload.coordinates = payload.coordinates.slice(0, -1);
+        /** loop through avoidable objects in settings and check if they can
+        be used by selected routepref */
+        const subgroup = lists.profiles[settings.profile.type].subgroup;
+        payload.options.avoid_features = '';
+        angular.forEach(settings.profile.options.avoidables, function(value, key) {
+            if (value === true) {
+                const avSubgroups = lists.optionList.avoidables[key].subgroups;
+                if (_.includes(avSubgroups, subgroup)) {
+                    payload.options.avoid_features += lists.optionList.avoidables[key].name + '|';
+                }
+            }
+        });
+        if (lists.profiles[settings.profile.type].subgroup == 'Bicycle') {
+            if (!angular.isUndefined(settings.profile.options.difficulty)) {
+                if (settings.profile.options.difficulty.avoidhills === true) payload.options.avoid_features += 'hills' + '|';
+            }
+        }
+        if (payload.options.avoid_features.length == 0) {
+            delete payload.options.avoid_features;
+        } else {
+            payload.options.avoid_features = payload.options.avoid_features.slice(0, -1);
+        }
+        if (subgroup == 'HeavyVehicle') {
+            payload.options.modeType = settings.profile.type;
+            if (!angular.isUndefined(settings.profile.options.width)) payload.options.profile_params.width = settings.profile.options.width.toString();
+            if (!angular.isUndefined(settings.profile.options.height)) payload.options.profile_params.height = settings.profile.options.height.toString();
+            if (!angular.isUndefined(settings.profile.options.weight)) payload.options.profile_params.weight = settings.profile.options.hgvWeight.toString();
+            if (!angular.isUndefined(settings.profile.options.length)) payload.options.profile_params.length = settings.profile.options.length.toString();
+            if (!angular.isUndefined(settings.profile.options.axleload)) payload.options.profile_params.axleload = settings.profile.options.axleload.toString();
+            if (!angular.isUndefined(settings.profile.options.hazardous)) payload.options.profile_params.hazmat = true;
+        }
+        if (settings.profile.options.maxspeed) payload.options.maxSpeed = settings.profile.options.maxspeed.toString();
+        //  extras
+        if (subgroup == 'Bicycle' || subgroup == 'Pedestrian' || subgroup == 'Wheelchair') {
+            if (lists.profiles[settings.profile.type].elevation === true) {
+                //payload.extra_info = 'gradients|surface|waytypes|priority';
+                payload.extra_info = 'surface';
+            }
+        }
+        // fitness
+        if (subgroup == 'Bicycle') {
+            if (settings.profile.options.steepness >= 0 & settings.profile.options.steepness <= 15) {
+                payload.options.profile_params.maximumGradient = settings.profile.options.steepness.toString();
+            }
+            if (settings.profile.options.fitness >= 0 & settings.profile.options.fitness <= 3) {
+                payload.options.profile_params.level = settings.profile.options.fitness.toString();
+            }
+        }
+        // if avoid area polygon
+        //payload.options.avoidPolygons
+        if (lists.profiles[settings.profile.type].subgroup == 'Wheelchair') {
+            payload.options.profile_params.surface_type = settings.profile.options.surface.toString();
+            payload.options.profile_params.track_type = '';
+            payload.options.profile_params.smoothness_type = '';
+            payload.options.profile_params.maximum_sloped_curb = settings.profile.options.curb.toString();
+            payload.options.profile_params.maximum_incline = settings.profile.options.incline.toString();
+        }
+        payload.options = JSON.stringify(payload.options);
+        console.log(payload)
+        return payload;
+    };
     /** 
      * generates object for request and serializes it to http parameters   
      * @param {String} str: Free form address
@@ -82,7 +220,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             interval: settings.profile.options.analysis_options.method == 0 ? settings.profile.options.analysis_options.isointerval * 60 : settings.profile.options.analysis_options.isointerval * 1000,
             location_type: settings.profile.options.analysis_options.reverseflow == true ? lists.isochroneOptionList.reverseFlow.destination : lists.isochroneOptionList.reverseFlow.start,
             profile: lists.profiles[settings.profile.type].request,
-            //attributes: 'area|reachfactor',
+            attributes: 'area|reachfactor',
             //options: {}
         };
         return payload;
@@ -121,219 +259,6 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             feature.shortaddress = shortAddress;
         });
         return features;
-    };
-    /**
-     * generates XML for route request
-     * @param {Array.<Object>} routePoints: List of latLng objects
-     * @return {String} xmlRequest: XML document
-     */
-    orsUtilsService.generateRouteXml = function(userOptions, settings) {
-        var writer = new XMLWriter('UTF-8', '1.0');
-        writer.writeStartDocument();
-        //<xls:XLS>
-        writer.writeElementString('xls:XLS');
-        writer.writeAttributeString('xmlns:xls', orsNamespaces.xls);
-        writer.writeAttributeString('xsi:schemaLocation', orsNamespaces.schemata.routeService);
-        writer.writeAttributeString('xmlns:sch', orsNamespaces.ascc);
-        writer.writeAttributeString('xmlns:gml', orsNamespaces.gml);
-        writer.writeAttributeString('xmlns:xlink', orsNamespaces.xlink);
-        writer.writeAttributeString('xmlns:xsi', orsNamespaces.xsi);
-        writer.writeAttributeString('version', '1.1');
-        writer.writeAttributeString('xls:lang', userOptions.routinglang);
-        //<xls:RequestHeader />
-        writer.writeElementString('xls:RequestHeader');
-        //<xls:Request>
-        writer.writeStartElement('xls:Request');
-        writer.writeAttributeString('methodName', 'RouteRequest');
-        writer.writeAttributeString('version', '1.1');
-        writer.writeAttributeString('requestID', '00');
-        writer.writeAttributeString('maximumResponses', '15');
-        //<xls:DetermineRouteRequest>
-        writer.writeStartElement('xls:DetermineRouteRequest');
-        //<xls:RoutePlan>
-        writer.writeStartElement('xls:RoutePlan');
-        //<xls:RoutePreference />
-        writer.writeElementString('xls:RoutePreference', lists.profiles[settings.profile.type].subgroup);
-        writer.writeStartElement('xls:ExtendedRoutePreference');
-        writer.writeElementString('xls:WeightingMethod', settings.profile.options.weight);
-        if (lists.profiles[settings.profile.type].elevation === true) {
-            writer.writeElementString('xls:SurfaceInformation', 'true');
-            writer.writeElementString('xls:ElevationInformation', 'true');
-        }
-        if (settings.profile.options.maxspeed > 0) {
-            writer.writeElementString('xls:MaxSpeed', settings.profile.options.maxspeed.toString());
-        }
-        if (lists.profiles[settings.profile.type].subgroup == 'HeavyVehicle') {
-            writer.writeElementString('xls:VehicleType', settings.profile.type);
-            if (!angular.isUndefined(settings.profile.options.width)) writer.writeElementString('xls:Width', settings.profile.options.width.toString());
-            if (!angular.isUndefined(settings.profile.options.height)) writer.writeElementString('xls:Height', settings.profile.options.height.toString());
-            if (!angular.isUndefined(settings.profile.options.weight)) writer.writeElementString('xls:Weight', settings.profile.options.hgvWeight.toString());
-            if (!angular.isUndefined(settings.profile.options.length)) writer.writeElementString('xls:Length', settings.profile.options.length.toString());
-            if (!angular.isUndefined(settings.profile.options.axleload)) writer.writeElementString('xls:AxleLoad', settings.profile.options.axleload.toString());
-            // TODO :truck hazardous
-            if (!angular.isUndefined(settings.profile.options.hazardous)) {
-                writer.writeStartElement('xls:LoadCharacteristics');
-                writer.writeElementString('xls:LoadCharacteristic', settings.profile.options.hazardous.toString());
-                writer.writeEndElement();
-            }
-        }
-        if (lists.profiles[settings.profile.type].subgroup == 'Wheelchair') {
-            //surface
-            writer.writeStartElement('xls:SurfaceTypes');
-            writer.writeElementString('xls:SurfaceType', settings.profile.options.surface.toString());
-            writer.writeEndElement();
-            //incline
-            writer.writeElementString('xls:Incline', settings.profile.options.incline.toString());
-            //sloped curb
-            writer.writeElementString('xls:SlopedCurb', settings.profile.options.curb.toString());
-        }
-        if (lists.profiles[settings.profile.type].subgroup == 'Bicycle' || lists.profiles[settings.profile.type].subgroup == 'Pedestrian' || lists.profiles[settings.profile.type].subgroup == 'Wheelchair') {
-            if (settings.profile.options.steepness >= 0 & settings.profile.options.steepness <= 15) {
-                writer.writeElementString('xls:MaxSteepness', settings.profile.options.steepness.toString());
-            }
-            if (settings.profile.options.fitness >= 0 & settings.profile.options.fitness <= 3) {
-                writer.writeElementString('xls:DifficultyLevel', settings.profile.options.fitness.toString());
-            }
-        }
-        //</xls:ExtendedRoutePreference>            
-        writer.writeEndElement();
-        //<xls:WayPointList>
-        writer.writeStartElement('xls:WayPointList');
-        /** prepare waypoints */
-        let waypoints = [];
-        angular.forEach(settings.waypoints, function(waypoint) {
-            if (waypoint._set == 1) waypoints.push(waypoint);
-        });
-        for (let j = 0, i = 0; i < waypoints.length; i++) {
-            if (i === 0) {
-                writer.writeStartElement('xls:StartPoint');
-            } else if (i == (waypoints.length - 1)) {
-                writer.writeStartElement('xls:EndPoint');
-            } else {
-                writer.writeStartElement('xls:ViaPoint');
-            }
-            //<xls:Position>
-            writer.writeStartElement('xls:Position');
-            //<gml:Point>
-            writer.writeStartElement('gml:Point');
-            writer.writeAttributeString('xmlns:gml', orsNamespaces.gml);
-            //<gml:pos />
-            writer.writeStartElement('gml:pos');
-            writer.writeAttributeString('srsName', 'EPSG:4326');
-            writer.writeString(waypoints[i]._latlng.lng + ' ' + waypoints[i]._latlng.lat);
-            writer.writeEndElement();
-            //</gml:Point>
-            writer.writeEndElement();
-            //</xls:Position>
-            writer.writeEndElement();
-            writer.writeEndElement();
-        }
-        //</xls:WayPointList>
-        writer.writeEndElement();
-        //<xls:AvoidList>
-        writer.writeStartElement('xls:AvoidList');
-        // if (avoidAreas) {
-        //     //avoidAreas contains an array of Leaflet latLngs
-        //     for (var i = 0; i < avoidAreas.length; i++) {
-        //         var currentArea = avoidAreas[i];
-        //         var corners = currentArea.getLatLngs()[0];
-        //         // ignore lines
-        //         if (corners.length > 2) {
-        //             //<xls:AOI>
-        //             writer.writeStartElement('xls:AOI');
-        //             //<gml:Polygon>
-        //             writer.writeStartElement('gml:Polygon');
-        //             //<gml:exterior>
-        //             writer.writeStartElement('gml:exterior');
-        //             //<gml:LinearRing>
-        //             writer.writeStartElement('gml:LinearRing');
-        //             for (var j = 0; j < corners.length; j++) {
-        //                 writer.writeStartElement('gml:pos');
-        //                 writer.writeString(corners[j].lng + ' ' + corners[j].lat);
-        //                 writer.writeEndElement();
-        //                 // close polygon
-        //                 if (j == corners.length - 1) {
-        //                     writer.writeStartElement('gml:pos');
-        //                     writer.writeString(corners[0].lng + ' ' + corners[0].lat);
-        //                     writer.writeEndElement();
-        //                 }
-        //             }
-        //             writer.writeEndElement();
-        //             //</gml:exterior>
-        //             writer.writeEndElement();
-        //             //</gml:Polygon>
-        //             writer.writeEndElement();
-        //             //</xls:AOI>
-        //             writer.writeEndElement();
-        //         }
-        //     }
-        // }
-        /** loop through avoidable objects in settings and check if they can
-        be used by selected routepref */
-        const subgroup = lists.profiles[settings.profile.type].subgroup;
-        angular.forEach(settings.profile.options.avoidables, function(value, key) {
-            if (value === true) {
-                const avSubgroups = lists.optionList.avoidables[key].subgroups;
-                if (_.includes(avSubgroups, subgroup)) writer.writeElementString('xls:AvoidFeature', lists.optionList.avoidables[key].name);
-            }
-        });
-        if (!angular.isUndefined(settings.profile.options.difficulty)) {
-            if (settings.profile.options.difficulty.avoidhills === true) writer.writeElementString('xls:AvoidFeature', 'Hills');
-        }
-        //</xls:AvoidList>
-        //</xls:AvoidList>
-        writer.writeEndElement();
-        //</xls:RoutePlan>
-        writer.writeEndElement();
-        //<xls:RouteInstructionsRequest>
-        writer.writeStartElement('xls:RouteInstructionsRequest');
-        writer.writeAttributeString('provideGeometry', 'true');
-        //</xls:RouteInstructionsRequest>
-        writer.writeEndElement();
-        //</xls:RouteGeometryRequest>
-        writer.writeElementString('xls:RouteGeometryRequest');
-        //</xls:DetermineRouteRequest>
-        writer.writeEndElement();
-        //</xls:Request>
-        writer.writeEndElement();
-        //</xls:XLS>
-        writer.writeEndDocument();
-        var xmlRequest = writer.flush();
-        writer.close();
-        return xmlRequest;
-    };
-    /**
-     * creates DOM parser to parse string to xml
-     * @param {Object} data: Response object
-     * @return {Array.<Object>} dom: XML object
-     */
-    orsUtilsService.domParser = function(data) {
-        // parse the XML string
-        var dom;
-        if (typeof DOMParser != "undefined") {
-            var parser = new DOMParser();
-            dom = parser.parseFromString(data, "text/xml");
-        } else {
-            var doc = new ActiveXObject("Microsoft.XMLDOM");
-            doc.async = false;
-            dom = doc.loadXML(data);
-        }
-        return dom;
-    };
-    orsUtilsService.parseResponse = (data, response) => {
-        var error;
-        if (response == 'Locations not found.') {
-            error = true;
-            return error;
-        }
-        var responseError = orsUtilsService.getElementsByTagNameNS(data, orsNamespaces.xls, 'ErrorList').length;
-        if (parseInt(responseError) > 0) {
-            //if error exists return true
-            error = true;
-        } else {
-            error = false;
-        }
-        return error;
     };
     /**
      * Calls the Javascript functions getElementsByTagNameNS

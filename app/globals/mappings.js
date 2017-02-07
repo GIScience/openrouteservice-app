@@ -91,7 +91,7 @@ mappings.wayTypes = {
         color: '#ade8ed'
     }
 };
-mappings.surfaces = {
+mappings.surface = {
     '0': {
         text: 'Other',
         color: '#ddcdeb'
