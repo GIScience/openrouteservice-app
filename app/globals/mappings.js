@@ -1,5 +1,5 @@
 var mappings = {};
-mappings.gradients = {
+mappings.steepness = {
     '0': {
         text: '16%+',
         color: '#028306'
@@ -45,7 +45,7 @@ mappings.gradients = {
         color: '#AD0F0C'
     }
 };
-mappings.wayTypes = {
+mappings.waytypes = {
     '0': {
         text: 'Other',
         color: '#30959e'
@@ -92,80 +92,114 @@ mappings.wayTypes = {
     }
 };
 mappings.surface = {
-    '0': {
+    '-5': {
         text: 'Other',
         color: '#ddcdeb'
     },
-    '1': {
+    '-4': {
         text: 'Paved',
         color: '#cdb8df'
     },
-    '2': {
+    '-3': {
         text: 'Unpaved',
         color: '#d2c0e3'
     },
-    '3': {
+    '-2': {
         text: 'Asphalt',
         color: '#bca4d3'
     },
-    '4': {
+    '-1': {
         text: 'Concrete',
         color: '#c1abd7'
     },
-    '5': {
+    '0': {
         text: 'Cobblestone',
         color: '#c7b2db'
     },
-    '6': {
+    '1': {
         text: 'Metal',
         color: '#e8dcf3'
     },
-    '7': {
+    '2': {
         text: 'Wood',
         color: '#eee3f7'
     },
-    '8': {
+    '3': {
         text: 'Compacted Gravel',
         color: '#d8c6e7'
     },
-    '9': {
+    '4': {
         text: 'Fine Gravel',
         color: '#8f9de4'
     },
-    '10': {
+    '5': {
         text: 'Gravel',
         color: '#e3d4ef'
     },
-    '11': {
+    '6': {
         text: 'Dirt',
         color: '#99a6e7'
     },
-    '12': {
+    '7': {
         text: 'Ground',
         color: '#a3aeeb'
     },
-    '13': {
+    '8': {
         text: 'Ice',
         color: '#acb6ee'
     },
-    '14': {
+    '9': {
         text: 'Salt',
         color: '#b6c0f2'
     },
-    '15': {
+    '10': {
         text: 'Sand',
         color: '#c9d1f8'
     },
-    '16': {
+    '11': {
         text: 'Woodchips',
         color: '#c0c8f5'
     },
-    '17': {
+    '12': {
         text: 'Grass',
         color: '#d2dafc'
     },
-    '18': {
+    '13': {
         text: 'Grass Paver',
         color: '#dbe3ff'
+    }
+};
+mappings.suitability = {
+    '3': {
+        text: '0.125',
+        color: '#3D3D3D'
+    },
+    '4': {
+        text: '0.25',
+        color: '#4D4D4D'
+    },
+    '5': {
+        text: '0.375',
+        color: '#5D5D5D'
+    },
+    '6': {
+        text: '0.5',
+        color: '#6D6D6D'
+    },
+    '7': {
+        text: '0.625',
+        color: '#7C7C7C'
+    },
+    '8': {
+        text: '0.75',
+        color: '#8D8D8D'
+    },
+    '9': {
+        text: '0.875',
+        color: '#9D9D9D'
+    },
+    '10': {
+        text: '1',
+        color: '#ADADAD'
     }
 };

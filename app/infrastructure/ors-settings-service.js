@@ -118,6 +118,11 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
         console.log('updating..');
         orsSettingsFactory[currentWaypointsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue().waypoints);
     };
+    /** Sets avoidable regions in settings object */
+    orsSettingsFactory.setAvoidableAreas = (avoidablePolygons) => {
+        orsSettingsFactory[currentSettingsObj].getValue().avoidable_polygons = avoidablePolygons;
+        orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
+    };
     /** 
      * This is basically the heart of navigation. If the panels are switched between
      * routing and accessibility analysis the subject references are updated.

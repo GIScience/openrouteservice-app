@@ -17,7 +17,8 @@ angular.module('orsApp.map-service', []).factory('orsMapFactory', ['$q',
                 return new L.Map(element, {
                     zoomControl: true,
                     layerControl: true,
-                    tap: true
+                    tap: true,
+                    editable: true
                 });
             }
         };

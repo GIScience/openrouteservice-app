@@ -29,6 +29,7 @@ angular.module('orsApp').directive('orsMap', () => {
                 layerLocationMarker: L.featureGroup(),
                 layerRoutePoints: L.featureGroup(),
                 layerRouteLines: L.featureGroup(),
+                layerAvoid: L.featureGroup(),
                 layerAccessibilityAnalysis: L.featureGroup(),
                 layerAccessibilityAnalysisNumberedMarkers: L.featureGroup(),
                 layerEmph: L.featureGroup(),
@@ -37,6 +38,57 @@ angular.module('orsApp').directive('orsMap', () => {
             $scope.mapModel = {
                 map: $scope.orsMap,
                 geofeatures: $scope.geofeatures
+            };
+            $scope.mapModel.map.createPane('isochronesPane');
+            /* AVOID AREA CONTROLLER */
+            L.NewPolygonControl = L.Control.extend({
+                options: {
+                    position: 'topright'
+                },
+                onAdd: function(map) {
+                    var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control', container),
+                        link = L.DomUtil.create('a', 'leaflet-avoidArea', container);
+                    link.href = '#';
+                    link.title = 'Create a new area avoid polygon';
+                    link.innerHTML = '<i class="fa fa-square-o"></i>';
+                    //return container;
+                    L.DomEvent.on(link, 'click', L.DomEvent.stop).on(link, 'click', function() {
+                        map.editTools.startPolygon();
+                    });
+                    return container;
+                }
+            });
+            $scope.mapModel.map.addControl(new L.NewPolygonControl());
+            const deleteShape = function(e) {
+                if ((e.originalEvent.altKey || e.originalEvent.metaKey) && this.editEnabled()) {
+                    this.editor.deleteShapeAt(e.latlng);
+                    $scope.mapModel.geofeatures.layerAvoid.removeLayer(e.target._leaflet_id);
+                    // remove overlay in controls if no regions left
+                    if ($scope.geofeatures.layerAvoid.getLayers().length === 0) $scope.layerControls.removeLayer($scope.geofeatures.layerAvoid);
+                    setSettings();
+                }
+            };
+            const deleteVertex = function(e) {
+                e.vertex.delete();
+            };
+            const setSettings = function() {
+                const polygons = $scope.geofeatures.layerAvoid.toGeoJSON();
+                let avoidPolygons = {
+                    type: polygons.features.length > 1 ? 'MultiPolygon' : 'Polygon'
+                };
+                if (polygons.features.length == 1) {
+                    avoidPolygons.coordinates = [orsUtilsService.trimCoordinates(polygons.features[0].geometry.coordinates[0], 5)];
+                } else {
+                    avoidPolygons.coordinates = [];
+                    for (let i = 0; i < polygons.features.length; i++) {
+                        avoidPolygons.coordinates.push([orsUtilsService.trimCoordinates(polygons.features[i].geometry.coordinates[0], 5)]);
+                    }
+                }
+                orsSettingsFactory.setAvoidableAreas(avoidPolygons);
+            };
+            const shapeDrawn = function(e) {
+                $scope.layerControls.addOverlay($scope.geofeatures.layerAvoid, 'Avoidable regions');
+                setSettings();
             };
             $scope.baseLayers = {
                 "MapSurfer": mapsurfer,
@@ -49,14 +101,25 @@ angular.module('orsApp').directive('orsMap', () => {
             };
             $scope.mapModel.map.on("load", (evt) => {
                 mapsurfer.addTo($scope.orsMap);
-                $scope.mapModel.geofeatures.layerRoutePoints.addTo($scope.orsMap);
-                $scope.mapModel.geofeatures.layerRouteLines.addTo($scope.orsMap);
-                $scope.mapModel.geofeatures.layerAccessibilityAnalysis.addTo($scope.orsMap);
-                $scope.mapModel.geofeatures.layerAccessibilityAnalysisNumberedMarkers.addTo($scope.orsMap);
-                $scope.mapModel.geofeatures.layerEmph.addTo($scope.orsMap);
-                $scope.mapModel.geofeatures.layerTracks.addTo($scope.orsMap);
-                //Add layer control
-                L.control.layers($scope.baseLayers, $scope.overlays).addTo($scope.orsMap);
+                $scope.mapModel.geofeatures.layerRoutePoints.addTo($scope.mapModel.map);
+                $scope.mapModel.geofeatures.layerRouteLines.addTo($scope.mapModel.map);
+                $scope.mapModel.geofeatures.layerAvoid.addTo($scope.mapModel.map);
+                $scope.mapModel.geofeatures.layerAccessibilityAnalysis.addTo($scope.mapModel.map);
+                $scope.mapModel.geofeatures.layerAccessibilityAnalysisNumberedMarkers.addTo($scope.mapModel.map);
+                $scope.mapModel.geofeatures.layerEmph.addTo($scope.mapModel.map);
+                $scope.mapModel.geofeatures.layerTracks.addTo($scope.mapModel.map);
+                // add layer control
+                $scope.layerControls = L.control.layers($scope.baseLayers, $scope.overlays).addTo($scope.mapModel.map);
+                $scope.mapModel.map.editTools.featuresLayer = $scope.geofeatures.layerAvoid;
+                // add eventlisteners for layeravoidables only
+                $scope.mapModel.geofeatures.layerAvoid.on('layeradd', function(e) {
+                    if (e.layer instanceof L.Path) e.layer.on('click', L.DomEvent.stop).on('click', deleteShape, e.layer);
+                    if (e.layer instanceof L.Path) e.layer.on('dblclick', L.DomEvent.stop).on('dblclick', e.layer.toggleEdit);
+                });
+                $scope.mapModel.map.on('editable:drawing:commit', shapeDrawn);
+                $scope.mapModel.map.on('editable:vertex:deleted', setSettings);
+                $scope.mapModel.map.on('editable:vertex:dragend', setSettings);
+                $scope.mapModel.map.on('editable:vertex:altclick', deleteVertex);
             });
             // Check if map options set in cookies
             const mapOptions = orsCookiesFactory.getMapOptions();
@@ -139,6 +202,7 @@ angular.module('orsApp').directive('orsMap', () => {
                 $scope.mapModel.geofeatures.layerRoutePoints.clearLayers();
                 $scope.mapModel.geofeatures.layerRouteLines.clearLayers();
                 $scope.mapModel.geofeatures.layerEmph.clearLayers();
+                $scope.mapModel.geofeatures.layerAvoid.clearLayers();
                 if (switchApp) {
                     $scope.mapModel.geofeatures.layerAccessibilityAnalysis.clearLayers();
                     $scope.mapModel.geofeatures.layerAccessibilityAnalysisNumberedMarkers.clearLayers();
@@ -284,12 +348,13 @@ angular.module('orsApp').directive('orsMap', () => {
                             color: '#000',
                             weight: 1,
                             fillOpacity: 1,
-                            index: actionPackage.featureId
+                            index: actionPackage.featureId,
+                            pane: 'isochronesPane'
                         }).addTo(isochrones);
                     }
                     isochrones.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     // hack to change opacity of entire overlaypane layer but prevent opacity of stroke
-                    let svg = d3.select($scope.mapModel.map.getPanes().overlayPane).style("opacity", 0.5);
+                    let svg = d3.select($scope.mapModel.map.getPanes().isochronesPane).style("opacity", 0.5);
                     svg.selectAll("path").style("stroke-opacity", 1);
                 }
             };

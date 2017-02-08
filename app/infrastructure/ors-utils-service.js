@@ -1,6 +1,24 @@
 angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', '$timeout', '$location', ($http, $timeout, $location) => {
     let orsUtilsService = {};
     /**
+     * trims coordinates
+     * @param {Array} coords: List of untrimmed coords
+     * @param {number} length: Amount of decimals
+     * @return {list} coordsTrimmed: List of trimmed coords
+     */
+    orsUtilsService.trimCoordinates = (coords, length) => {
+        let coordsTrimmed = [];
+        for (let i = 0; i < coords.length; i++) {
+            let pair = coords[i];
+            let ptA = pair[0].toString().split('.');
+            let ptB = pair[1].toString().split('.');
+            ptA = ptA[0] + '.' + ptA[1].substr(0, 5);
+            ptB = ptB[0] + '.' + ptB[1].substr(0, 5);
+            coordsTrimmed.push([ptA, ptB]);
+        }
+        return coordsTrimmed;
+    };
+    /**
      * checks whether position are valid coordinates
      * @param {String} lat: Latitude as string
      * @param {String} lng: Longitude as string
@@ -150,25 +168,26 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             if (!angular.isUndefined(settings.profile.options.axleload)) payload.options.profile_params.axleload = settings.profile.options.axleload.toString();
             if (!angular.isUndefined(settings.profile.options.hazardous)) payload.options.profile_params.hazmat = true;
         }
-        if (settings.profile.options.maxspeed) payload.options.maxSpeed = settings.profile.options.maxspeed.toString();
+        if (settings.profile.options.maxspeed) payload.options.maximum_speed = settings.profile.options.maxspeed.toString();
         //  extras
         if (subgroup == 'Bicycle' || subgroup == 'Pedestrian' || subgroup == 'Wheelchair') {
             if (lists.profiles[settings.profile.type].elevation === true) {
-                //payload.extra_info = 'gradients|surface|waytypes|priority';
-                payload.extra_info = 'surface';
+                payload.extra_info = 'surface|waytypes|suitability|steepness';
             }
         }
         // fitness
         if (subgroup == 'Bicycle') {
             if (settings.profile.options.steepness >= 0 & settings.profile.options.steepness <= 15) {
-                payload.options.profile_params.maximumGradient = settings.profile.options.steepness.toString();
+                payload.options.profile_params.maximum_gradient = settings.profile.options.steepness.toString();
             }
             if (settings.profile.options.fitness >= 0 & settings.profile.options.fitness <= 3) {
-                payload.options.profile_params.level = settings.profile.options.fitness.toString();
+                payload.options.profile_params.difficulty_level = settings.profile.options.fitness.toString();
             }
         }
         // if avoid area polygon
-        //payload.options.avoidPolygons
+        if (settings.avoidable_polygons && settings.avoidable_polygons.coordinates.length > 0) {
+            payload.options.avoid_polygons = settings.avoidable_polygons;
+        }
         if (lists.profiles[settings.profile.type].subgroup == 'Wheelchair') {
             payload.options.profile_params.surface_type = settings.profile.options.surface.toString();
             payload.options.profile_params.track_type = '';
@@ -221,8 +240,15 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             location_type: settings.profile.options.analysis_options.reverseflow == true ? lists.isochroneOptionList.reverseFlow.destination : lists.isochroneOptionList.reverseFlow.start,
             profile: lists.profiles[settings.profile.type].request,
             attributes: 'area|reachfactor',
-            //options: {}
+            options: {
+                profile_params: {}
+            }
         };
+        // if avoid area polygon
+        if (settings.avoidable_polygons && settings.avoidable_polygons.coordinates.length > 0) {
+            payload.options.avoid_polygons = settings.avoidable_polygons;
+        }
+        payload.options = JSON.stringify(payload.options);
         return payload;
     };
     orsUtilsService.addShortAddresses = function(features) {

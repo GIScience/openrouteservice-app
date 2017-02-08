@@ -135,7 +135,7 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
                         options = {};
                     break;
             }
-            let currentRoute = orsRouteService.routeObj.routes[orsRouteService.getCurrentRouteIdx()].points;
+            let currentRoute = orsRouteService.data.routes[orsRouteService.getCurrentRouteIdx()].geometry;
             orsExportFactory.exportFile(currentRoute, 'linestring', options, ctrl.currentFileFormat, ctrl.userDefined.avgSpeed, ctrl.userDefined.coordPrecision);
         };
     }]

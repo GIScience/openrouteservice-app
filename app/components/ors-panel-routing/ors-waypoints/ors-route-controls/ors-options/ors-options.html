@@ -52,7 +52,7 @@
                         </input>
                     </div>
                 </li>
-                <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'HeavyVehicle'">
+                <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Pedestrian' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'HeavyVehicle'">
                     <div class="ui checkbox">
                         <input id="fords" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.fords" type="checkbox">
                             <label for="fords" ng-bind-html="('FORDS' | translate)">
@@ -180,18 +180,14 @@
         </div>
         <div class="collapsable" ng-class="{ showMe: maxspeedOptions }">
             <div class="ors-options-menu">
-                    
-                    <div class="ui checkbox">
-                        <input id="maximumspeed" name="orsRouteMaximumspeedInput" ng-change="$ctrl.toggleMaxspeedSlider()" ng-model="$ctrl.maxspeedCheckbox" type="checkbox">
-                            <label for="maximumspeed" ng-bind-html="('MAXIMUMSPEED' | translate)">
-                            </label>
-                        </input>
-                    </div>
-                    <rzslider rz-slider-model="$ctrl.maxspeedSlider.value" rz-slider-options="$ctrl.maxspeedSlider.options">
-                    </rzslider>
-
-        
-             
+                <div class="ui checkbox">
+                    <input id="maximumspeed" name="orsRouteMaximumspeedInput" ng-change="$ctrl.toggleMaxspeedSlider(true)" ng-model="$ctrl.maxspeedCheckbox" type="checkbox">
+                        <label for="maximumspeed" ng-bind-html="('MAXIMUMSPEED' | translate)">
+                        </label>
+                    </input>
+                </div>
+                <rzslider rz-slider-model="$ctrl.maxspeedSlider.value" rz-slider-options="$ctrl.maxspeedSlider.options">
+                </rzslider>
             </div>
         </div>
     </div>

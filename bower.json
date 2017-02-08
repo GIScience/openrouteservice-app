@@ -8,7 +8,7 @@
   "dependencies": {
     "jquery": "latest",
     "lodash": "latest",
-    "leaflet": "~0.7",
+    "leaflet": "latest",
     "angular-animate": "~1.5.10",
     "angular-cookies": "~1.5.10",
     "rxjs": "latest",
@@ -27,7 +27,8 @@
     "angular-tooltips": "^1.1.8",
     "angular-translate": "2.13.0",
     "angular-translate-loader-static-files": "2.13.0",
-    "leaflet.markercluster": "leaflet-0.7"
+    "leaflet.editable": "^1.0.0",
+    "leaflet.markercluster": "^1.0.3"
   },
   "resolutions": {
     "angular": "~1.5.10"

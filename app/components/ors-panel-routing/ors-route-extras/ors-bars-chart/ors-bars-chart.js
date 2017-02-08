@@ -12,7 +12,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
             let tip = d3.tip().attr('class', 'd3-tip').offset([-10, 0]).html((d) => {
                 // var dist = util.convertDistanceFormat(d.distance, preferences.distanceUnit);
                 // return d.percentage + '% ' + d.typetranslated + ' (' + dist[1] + ' ' + dist[2] + ')';
-                return d.percentage + '% ' + '(' + scope.distanceFilter(d.distance) + ')';
+                return d.percentage + '% ' + d.type + ' (' + scope.distanceFilter(d.distance) + ')';
             });
             let data = [];
             let keys = _.keysIn(scope.obj).map(Number);
@@ -68,7 +68,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
                     return d.color;
                 });
             legend.append('text').attr('x', legendRectSize + legendSpacing).attr('y', legendRectSize).text((d) => {
-                return d.type;
+                return d.type + ' (' + d.percentage + '%)';
             });
             legend.on('mouseover', (d) => {
                 scope.EmphSegment(d.intervals);
