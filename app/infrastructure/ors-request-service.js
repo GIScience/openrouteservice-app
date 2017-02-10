@@ -1,4 +1,4 @@
-angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q', '$http', 'orsUtilsService', ($q, $http, orsUtilsService) => {
+angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q', '$http', 'orsUtilsService', 'orsObjectsFactory', 'orsMapFactory', ($q, $http, orsUtilsService, orsObjectsFactory, orsMapFactory) => {
     /**
      * Requests geocoding from ORS backend
      * @param {String} requestData: XML for request payload
@@ -42,6 +42,11 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q',
             if ('cancel' in req) req.cancel("Cancel last request");
         }
     };
+    orsRequestService.zoomTo = (geom) => {
+        let action = orsObjectsFactory.createMapAction(0, lists.layers[0], geom, undefined);
+        orsMapFactory.mapServiceSubject.onNext(action);
+    };
+
     orsRequestService.geocode = (requestData) => {
         var url = orsNamespaces.services.geocoding;
         var canceller = $q.defer();

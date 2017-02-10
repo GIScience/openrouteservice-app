@@ -6,6 +6,54 @@
         </button>
     </li>
     <li>
+        <button tooltips tooltip-template="{{('HGV' | translate)}}" tooltip-side="bottom"  class="ors-button flleft" ng-click="$ctrl.changeProfile($ctrl.profiles.hgv.name)">
+            <i class="fa fa-lg fa-bus" ng-class="{active : $ctrl.activeSubgroup === $ctrl.profiles.hgv.subgroup}">
+            </i>
+        </button>
+        <span>
+            <i class="fa fa-caret-down" style="margin-top: 20px;">
+            </i>
+            <ul class="ors-nav-submenu">
+                <li>
+                    <div class="ui radio checkbox">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.hgv.name" type="radio" id="hgv">
+                        <label for="hgv" ng-bind-html="('HEAVYVEHICLENORMAL' | translate)"></label>
+                    </div>
+                </li>
+                <li>
+                    <div class="ui radio checkbox">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.goods.name" type="radio" id="goods">
+                        <label for="goods" ng-bind-html="('HEAVYVEHICLEGOODS' | translate)"></label>
+                    </div>
+                </li>
+                <li>
+                    <div class="ui radio checkbox">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.bus.name" type="radio" id="bus">
+                        <label for="bus" ng-bind-html="('HEAVYVEHICLEBUS' | translate)"></label>
+                    </div>
+                </li>
+                <li>
+                    <div class="ui radio checkbox">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.agricultural.name" type="radio" id="agricultural">
+                        <label for="agricultural" ng-bind-html="('HEAVYVEHICLEAGRICULTURAL' | translate)">Agricultural</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="ui radio checkbox">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.forestry.name" type="radio" id="forestry">
+                        <label for="forestry" ng-bind-html="('HEAVYVEHICLEFORESTRY' | translate)"></label>
+                    </div>
+                </li>
+                <li>
+                    <div class="ui radio checkbox">
+                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.delivery.name" type="radio" id="delivery">
+                        <label for="delivery" ng-bind-html="('HEAVYVEHICLEDELIVERY' | translate)"></label>
+                    </div>
+                </li>
+            </ul>
+        </span>
+    </li>
+    <li>
         <button tooltips tooltip-template="{{('BICYCLE' | translate)}}" tooltip-side="bottom" class="ors-button flleft" ng-click="$ctrl.changeProfile($ctrl.profiles.Bicycle.name)">
             <i class="fa fa-lg fa-bicycle" ng-class="{active : $ctrl.activeSubgroup === $ctrl.profiles.Bicycle.name}">
             </i>
@@ -58,53 +106,5 @@
             <i class="fa fa-lg fa-wheelchair" ng-class="{active : $ctrl.activeSubgroup === $ctrl.profiles.Wheelchair.name}">
             </i>
         </button>
-    </li>
-    <li>
-        <button tooltips tooltip-template="{{('HGV' | translate)}}" tooltip-side="bottom"  class="ors-button flleft" ng-click="$ctrl.changeProfile($ctrl.profiles.hgv.name)">
-            <i class="fa fa-lg fa-bus" ng-class="{active : $ctrl.activeSubgroup === $ctrl.profiles.hgv.subgroup}">
-            </i>
-        </button>
-        <span>
-            <i class="fa fa-caret-down" style="margin-top: 20px;">
-            </i>
-            <ul class="ors-nav-submenu">
-                <li>
-                    <div class="ui radio checkbox">
-                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.hgv.name" type="radio" id="hgv">
-                        <label for="hgv" ng-bind-html="('HEAVYVEHICLENORMAL' | translate)"></label>
-                    </div>
-                </li>
-                <li>
-                    <div class="ui radio checkbox">
-                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.goods.name" type="radio" id="goods">
-                        <label for="goods" ng-bind-html="('HEAVYVEHICLEGOODS' | translate)"></label>
-                    </div>
-                </li>
-                <li>
-                    <div class="ui radio checkbox">
-                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.bus.name" type="radio" id="bus">
-                        <label for="bus" ng-bind-html="('HEAVYVEHICLEBUS' | translate)"></label>
-                    </div>
-                </li>
-                <li>
-                    <div class="ui radio checkbox">
-                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.agricultural.name" type="radio" id="agricultural">
-                        <label for="agricultural" ng-bind-html="('HEAVYVEHICLEAGRICULTURAL' | translate)">Agricultural</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="ui radio checkbox">
-                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.forestry.name" type="radio" id="forestry">
-                        <label for="forestry" ng-bind-html="('HEAVYVEHICLEFORESTRY' | translate)"></label>
-                    </div>
-                </li>
-                <li>
-                    <div class="ui radio checkbox">
-                        <input name="orsProfileHGV" ng-change="$ctrl.changeProfile()" ng-model="$ctrl.currentProfile.type" ng-value="$ctrl.profiles.delivery.name" type="radio" id="delivery">
-                        <label for="delivery" ng-bind-html="('HEAVYVEHICLEDELIVERY' | translate)"></label>
-                    </div>
-                </li>
-            </ul>
-        </span>
     </li>
 </ul>

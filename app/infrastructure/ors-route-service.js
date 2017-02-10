@@ -63,6 +63,8 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$h
         orsMapFactory.mapServiceSubject.onNext(routePadding);
         const routeLine = orsObjectsFactory.createMapAction(1, lists.layers[1], geometry, undefined, lists.layerStyles.route());
         orsMapFactory.mapServiceSubject.onNext(routeLine);
+        const zoomTo = orsObjectsFactory.createMapAction(0, lists.layers[1], geometry, undefined, undefined);
+        orsMapFactory.mapServiceSubject.onNext(zoomTo);
     };
     /** prepare route to json */
     orsRouteService.processResponse = (data, profile) => {

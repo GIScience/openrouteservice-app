@@ -19,37 +19,30 @@ lists.wpColors = {
     0: '#9e9e9e',
     1: '#707070'
 };
-lists.geocodingContainers = {
-    reverse: {
-        inner: 'ReverseGeocodedLocation',
-        outer: 'ReverseGeocodeResponse'
-    },
-    geocoding: {
-        inner: 'GeocodedAddress',
-        outer: 'GeocodeResponseList'
-    }
-};
 lists.waypointIcons = {
     0: {
-        iconUrl: 'img/start.png',
-        iconSize: [30, 70], // size of the icon
-        iconAnchor: [15, 35] // point of the icon which will correspond to marker's location
+        className: "ors-marker-start",
+        iconSize: [36, 36],
+        iconAnchor: [18, 36],
+        html: '<i class="fa fa-map-marker"></i>'
+    },
+    1: {
+        className: "ors-marker-via",
+        iconSize: [36, 36],
+        iconAnchor: [18, 36],
+        html: '<i class="fa fa-map-marker"></i>'
     },
     2: {
-        iconUrl: 'img/end.png',
-        iconSize: [30, 70], // size of the icon
-        iconAnchor: [15, 35] // point of the icon which will correspond to marker's location
-    },
-    // anything else
-    1: {
-        iconUrl: 'img/via.png',
-        iconSize: [30, 70], // size of the icon
-        iconAnchor: [15, 35] // point of the icon which will correspond to marker's location
+        className: "ors-marker-end",
+        iconSize: [36, 36],
+        iconAnchor: [18, 36],
+        html: '<i class="fa fa-map-marker"></i>'
     },
     3: {
-        iconUrl: 'img/center.png',
-        iconSize: [30, 70], // size of the icon
-        iconAnchor: [15, 35] // point of the icon which will correspond to marker's location
+        className: "ors-marker-location",
+        iconSize: [36, 36],
+        iconAnchor: [18, 36],
+        html: '<i class="fa fa-map-marker"></i>'
     }
 };
 lists.profiles = {
@@ -489,7 +482,7 @@ lists.layerStyles = {
     },
     isochroneEmph: function() {
         return {
-            color: 'black',
+            color: '#FFF',
             weight: 3,
             opacity: 1
         };

@@ -11,6 +11,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
         ctrl.$onInit = () => {
             /** This is a reference of the settings object, if we change here, it is updated in settings */
             ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
+            console.log(ctrl.currentOptions)
             // set weight slider from params
             ctrl.currentOptions.weight = ctrl.currentOptions.weight !== undefined ? ctrl.currentOptions.weight : ctrl.optionList.weight.Fastest;
             ctrl.weightSlider = {
@@ -298,10 +299,14 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                 }
             }
         };
-        ctrl.changeOptions = (fireRequest = true) => {
+        // Get the app route, we need this to know whether to fire a request when the options change
+        orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
+            ctrl.fireRequest = route == 'directions' ? true : false;
+        });
+        ctrl.changeOptions = () => {
             // call setoptions
             if (ctrl.currentOptions.difficulty) ctrl.difficultySliders.Fitness.options.disabled = ctrl.currentOptions.difficulty.avoidhills === true ? true : false;
-            if (fireRequest) orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
+            orsSettingsFactory.setActiveOptions(ctrl.currentOptions, ctrl.fireRequest);
         };
         ctrl.getClass = (bool) => {
             if (bool === true) return "fa fa-fw fa-chevron-down";

@@ -24,8 +24,10 @@
         </i>
     </button>
 </div>
-<div class="ors-routing-options" ng-show="$ctrl.showOptions">
-    <ors-options active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup" show-options="$ctrl.showOptions"> </ors-options>
+<div class="container">
+    <div class="ors-routing-options" ng-show="$ctrl.showOptions">
+        <ors-options active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup" show-options="$ctrl.showOptions"> </ors-options>
+    </div>
 </div>
 <ors-modal data-ng-show="$ctrl.showImport" show="$ctrl.showImport">
     <ors-import-route-controls></ors-import-route-controls>

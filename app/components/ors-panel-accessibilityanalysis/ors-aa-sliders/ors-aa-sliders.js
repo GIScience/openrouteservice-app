@@ -34,8 +34,7 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
                 ctrl.isochroneMaxValue = ctrl.optionList.valueOptions.max / ctrl.optionList.velocities[ctrl.activeSubgroup] * 60;
                 if (ctrl.isochroneMinutesSlider && changedProfile) {
                     ctrl.isochroneMinutesSlider.value = ctrl.isochroneMaxValue;
-                    ctrl.currentOptions.analysis_options.isointerval = ctrl.isochroneIntervalSlider.value;
-                    ctrl.currentOptions.analysis_options.isovalue = ctrl.isochroneMinutesSlider.value;
+
                     ctrl.isochroneIntervalSlider.options.ceil = ctrl.isochroneMinutesSlider.value;
                     ctrl.isochroneIntervalSlider.options.floor = Math.ceil(ctrl.isochroneMinutesSlider.value / 10);
                     if (ctrl.isochroneIntervalSlider.value < ctrl.isochroneIntervalSlider.options.floor) {
@@ -43,6 +42,8 @@ angular.module('orsApp.ors-aa-sliders', []).component('orsAaSliders', {
                     } else if (ctrl.isochroneIntervalSlider.value > ctrl.isochroneIntervalSlider.options.ceil) {
                         ctrl.isochroneIntervalSlider.value = ctrl.isochroneIntervalSlider.options.ceil;
                     }
+                    ctrl.currentOptions.analysis_options.isointerval = ctrl.isochroneIntervalSlider.value;
+                    ctrl.currentOptions.analysis_options.isovalue = ctrl.isochroneMinutesSlider.value;
                 }
             } else if (ctrl.currentOptions.analysis_options.method == 1) {
                 ctrl.isochroneMaxValue = ctrl.optionList.valueOptions.max;

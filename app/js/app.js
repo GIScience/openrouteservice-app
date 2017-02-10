@@ -38,6 +38,9 @@ angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.
                 // do something on error
                 let messagingService = $injector.get('orsMessagingService');
                 switch (rejection.status) {
+                    case 400:
+                        messagingService.messageSubject.onNext(lists.errors.CONNECTION);
+                        break;
                     case 404:
                         messagingService.messageSubject.onNext(lists.errors.CONNECTION);
                         break;

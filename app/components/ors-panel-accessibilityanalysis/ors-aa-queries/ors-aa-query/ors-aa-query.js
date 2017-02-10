@@ -26,8 +26,8 @@ angular.module('orsApp.ors-aa-query', []).component('orsAaQuery', {
             else return "fa fa-fw fa-chevron-right";
         };
         ctrl.show = () => {
-            if (ctrl.showOnMap === true) return "fa fa-eye";
-            else return "fa fa-eye-slash";
+            if (ctrl.showOnMap === true) return "fa fa-toggle-on";
+            else return "fa fa-toggle-off";
         };
         ctrl.zoomTo = (isonum) => {
             if (ctrl.showOnMap) {

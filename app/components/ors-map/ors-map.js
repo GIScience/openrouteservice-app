@@ -177,7 +177,12 @@ angular.module('orsApp').directive('orsMap', () => {
                 $scope.mapModel.map.closePopup();
             };
             $scope.addWaypoint = (idx, iconIdx, pos, fireRequest = true, aaIcon = false) => {
-                let waypointIcon = aaIcon === true ? new L.icon(lists.waypointIcons[3]) : new L.icon(lists.waypointIcons[iconIdx]);
+                
+
+         
+
+
+                let waypointIcon = aaIcon === true ?  L.divIcon(lists.waypointIcons[3]) :  L.divIcon(lists.waypointIcons[iconIdx]);
                 // create the waypoint marker
                 let wayPointMarker = new L.marker(pos, {
                     icon: waypointIcon,
@@ -190,7 +195,6 @@ angular.module('orsApp').directive('orsMap', () => {
                     // idx of waypoint
                     const idx = event.target.options.idx;
                     const pos = event.target._latlng;
-                    console.log(fireRequest);
                     $scope.processMapWaypoint(idx, pos, true, fireRequest);
                 });
             };
@@ -345,7 +349,7 @@ angular.module('orsApp').directive('orsMap', () => {
                     for (let i = actionPackage.geometry.length - 1; i >= 0; i--) {
                         L.polygon(actionPackage.geometry[i].geometry.coordinates[0], {
                             fillColor: actionPackage.geometry.length == 1 ? getGradientColor(1) : getGradientColor(i / (actionPackage.geometry.length - 1)),
-                            color: '#000',
+                            color: '#FFF',
                             weight: 1,
                             fillOpacity: 1,
                             index: actionPackage.featureId,
@@ -386,10 +390,10 @@ angular.module('orsApp').directive('orsMap', () => {
                 });
             };
             orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
-                let svg = d3.select($scope.mapModel.map.getPanes().overlayPane);
+                //let svg = d3.select($scope.mapModel.map.getPanes().overlayPane);
                 $scope.clearMap(true);
                 $scope.routing = route == 'directions' ? true : false;
-                if ($scope.routing) svg.style("opacity", 1);
+                //if ($scope.routing) svg.style("opacity", 1);
             });
             orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
                 console.log('changes in routing waypoints detected..', d);

@@ -18,6 +18,7 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
             ctrl.waypoint._latlng = L.latLng(address.geometry.coordinates[1], address.geometry.coordinates[0]);
             ctrl.waypoint._set = 1;
             ctrl.onAddressChanged(ctrl.waypoint);
+            orsRequestService.zoomTo([[address.geometry.coordinates[1], address.geometry.coordinates[0]]])
         };
         ctrl.getIdx = () => {
             if (ctrl.idx == 0) return 'A';

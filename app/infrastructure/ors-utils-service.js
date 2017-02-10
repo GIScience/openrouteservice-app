@@ -123,10 +123,9 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             units: 'm',
             prettify_instructions: true,
             elevation: true,
-            options: {
-                profile_params: {}
-            }
+            options: JSON.stringify(orsUtilsService.generateOptions(settings))
         };
+        const subgroup = lists.profiles[settings.profile.type].subgroup;
         /** prepare waypoints */
         let waypoints = [];
         angular.forEach(settings.waypoints, function(waypoint) {
@@ -139,64 +138,12 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
         payload.coordinates = payload.coordinates.slice(0, -1);
         /** loop through avoidable objects in settings and check if they can
         be used by selected routepref */
-        const subgroup = lists.profiles[settings.profile.type].subgroup;
-        payload.options.avoid_features = '';
-        angular.forEach(settings.profile.options.avoidables, function(value, key) {
-            if (value === true) {
-                const avSubgroups = lists.optionList.avoidables[key].subgroups;
-                if (_.includes(avSubgroups, subgroup)) {
-                    payload.options.avoid_features += lists.optionList.avoidables[key].name + '|';
-                }
-            }
-        });
-        if (lists.profiles[settings.profile.type].subgroup == 'Bicycle') {
-            if (!angular.isUndefined(settings.profile.options.difficulty)) {
-                if (settings.profile.options.difficulty.avoidhills === true) payload.options.avoid_features += 'hills' + '|';
-            }
-        }
-        if (payload.options.avoid_features.length == 0) {
-            delete payload.options.avoid_features;
-        } else {
-            payload.options.avoid_features = payload.options.avoid_features.slice(0, -1);
-        }
-        if (subgroup == 'HeavyVehicle') {
-            payload.options.modeType = settings.profile.type;
-            if (!angular.isUndefined(settings.profile.options.width)) payload.options.profile_params.width = settings.profile.options.width.toString();
-            if (!angular.isUndefined(settings.profile.options.height)) payload.options.profile_params.height = settings.profile.options.height.toString();
-            if (!angular.isUndefined(settings.profile.options.weight)) payload.options.profile_params.weight = settings.profile.options.hgvWeight.toString();
-            if (!angular.isUndefined(settings.profile.options.length)) payload.options.profile_params.length = settings.profile.options.length.toString();
-            if (!angular.isUndefined(settings.profile.options.axleload)) payload.options.profile_params.axleload = settings.profile.options.axleload.toString();
-            if (!angular.isUndefined(settings.profile.options.hazardous)) payload.options.profile_params.hazmat = true;
-        }
-        if (settings.profile.options.maxspeed) payload.options.maximum_speed = settings.profile.options.maxspeed.toString();
         //  extras
         if (subgroup == 'Bicycle' || subgroup == 'Pedestrian' || subgroup == 'Wheelchair') {
             if (lists.profiles[settings.profile.type].elevation === true) {
                 payload.extra_info = 'surface|waytypes|suitability|steepness';
             }
         }
-        // fitness
-        if (subgroup == 'Bicycle') {
-            if (settings.profile.options.steepness >= 0 & settings.profile.options.steepness <= 15) {
-                payload.options.profile_params.maximum_gradient = settings.profile.options.steepness.toString();
-            }
-            if (settings.profile.options.fitness >= 0 & settings.profile.options.fitness <= 3) {
-                payload.options.profile_params.difficulty_level = settings.profile.options.fitness.toString();
-            }
-        }
-        // if avoid area polygon
-        if (settings.avoidable_polygons && settings.avoidable_polygons.coordinates.length > 0) {
-            payload.options.avoid_polygons = settings.avoidable_polygons;
-        }
-        if (subgroup == 'Wheelchair') {
-            payload.options.profile_params.surface_type = settings.profile.options.surface.toString();
-            payload.options.profile_params.track_type = '';
-            payload.options.profile_params.smoothness_type = '';
-            payload.options.profile_params.maximum_sloped_curb = settings.profile.options.curb.toString();
-            payload.options.profile_params.maximum_incline = settings.profile.options.incline.toString();
-        }
-        if (angular.equals(payload.options.profile_params, {})) delete payload.options.profile_params;
-        payload.options = JSON.stringify(payload.options);
         console.log(payload)
         return payload;
     };
@@ -225,6 +172,63 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
         }
         return payload;
     };
+    orsUtilsService.generateOptions = (settings) => {
+        const subgroup = lists.profiles[settings.profile.type].subgroup;
+        let options = {
+            avoid_features: '',
+            profile_params: {}
+        };
+        angular.forEach(settings.profile.options.avoidables, function(value, key) {
+            if (value === true) {
+                const avSubgroups = lists.optionList.avoidables[key].subgroups;
+                if (_.includes(avSubgroups, subgroup)) {
+                    options.avoid_features += lists.optionList.avoidables[key].name + '|';
+                }
+            }
+        });
+        if (subgroup == 'Bicycle') {
+            if (!angular.isUndefined(settings.profile.options.difficulty)) {
+                if (settings.profile.options.difficulty.avoidhills === true) options.avoid_features += 'hills' + '|';
+            }
+        }
+        if (options.avoid_features.length == 0) {
+            delete options.avoid_features;
+        } else {
+            options.avoid_features = options.avoid_features.slice(0, -1);
+        }
+        if (subgroup == 'HeavyVehicle') {
+            options.vehicle_type = settings.profile.type;
+            if (!angular.isUndefined(settings.profile.options.width)) options.profile_params.width = settings.profile.options.width.toString();
+            if (!angular.isUndefined(settings.profile.options.height)) options.profile_params.height = settings.profile.options.height.toString();
+            if (!angular.isUndefined(settings.profile.options.weight)) options.profile_params.weight = settings.profile.options.hgvWeight.toString();
+            if (!angular.isUndefined(settings.profile.options.length)) options.profile_params.length = settings.profile.options.length.toString();
+            if (!angular.isUndefined(settings.profile.options.axleload)) options.profile_params.axleload = settings.profile.options.axleload.toString();
+            if (!angular.isUndefined(settings.profile.options.hazardous)) options.profile_params.hazmat = true;
+        }
+        if (settings.profile.options.maxspeed) options.maximum_speed = settings.profile.options.maxspeed.toString();
+        // fitness
+        if (subgroup == 'Bicycle') {
+            if (settings.profile.options.steepness >= 0 & settings.profile.options.steepness <= 15) {
+                options.profile_params.maximum_gradient = settings.profile.options.steepness.toString();
+            }
+            if (settings.profile.options.fitness >= 0 & settings.profile.options.fitness <= 3) {
+                options.profile_params.difficulty_level = settings.profile.options.fitness.toString();
+            }
+        }
+        // if avoid area polygon
+        if (settings.avoidable_polygons && settings.avoidable_polygons.coordinates.length > 0) {
+            options.avoid_polygons = settings.avoidable_polygons;
+        }
+        if (subgroup == 'Wheelchair') {
+            options.profile_params.surface_type = settings.profile.options.surface.toString();
+            options.profile_params.track_type = '';
+            options.profile_params.smoothness_type = '';
+            options.profile_params.maximum_sloped_curb = settings.profile.options.curb.toString();
+            options.profile_params.maximum_incline = settings.profile.options.incline.toString();
+        }
+        if (angular.equals(options.profile_params, {})) delete options.profile_params;
+        return options;
+    };
     /** 
      * generates object for request and serializes it to http parameters   
      * @param {Object} settings: Settings object for payload
@@ -241,15 +245,13 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             location_type: settings.profile.options.analysis_options.reverseflow == true ? lists.isochroneOptionList.reverseFlow.destination : lists.isochroneOptionList.reverseFlow.start,
             profile: lists.profiles[settings.profile.type].request,
             attributes: 'area|reachfactor',
-            options: {
-                profile_params: {}
-            }
+            options: JSON.stringify(orsUtilsService.generateOptions(settings))
         };
         // if avoid area polygon
         if (settings.avoidable_polygons && settings.avoidable_polygons.coordinates.length > 0) {
             payload.options.avoid_polygons = settings.avoidable_polygons;
         }
-        payload.options = JSON.stringify(payload.options);
+        console.log(payload)
         return payload;
     };
     orsUtilsService.addShortAddresses = function(features) {

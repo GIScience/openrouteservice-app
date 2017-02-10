@@ -66,7 +66,7 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         };
         ctrl.calculate = function() {
             console.log(ctrl.currentOptions);
-            orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
+            orsSettingsFactory.setActiveOptions(ctrl.currentOptions, true);
         };
     }]
 });
