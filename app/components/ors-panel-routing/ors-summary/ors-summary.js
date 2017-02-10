@@ -16,13 +16,12 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
             return orsRouteService.getCurrentRouteIdx();
         };
         /** if we are coming back to route panel */
-        if (angular.isDefined(orsRouteService.routeObj) && angular.isDefined(orsRouteService.routeObj.routes)) {
-            if (orsRouteService.routeObj.routes.length > 0) {
-                ctrl.routes = orsRouteService.routeObj.routes;
-                let idx = ctrl.getIdx() === undefined ? 0 : ctrl.getIdx();
-                // let action = orsObjectsFactory.createMapAction(2, lists.layers[1], undefined, undefined);
-                // orsMapFactory.mapServiceSubject.onNext(action);
-                orsRouteService.addRoute(ctrl.routes[idx].points);
+        if (angular.isDefined(orsRouteService.data) && angular.isDefined(orsRouteService.data.routes)) {
+            if (orsRouteService.data.routes.length > 0) {
+                ctrl.data = orsRouteService.data;
+                const idx = ctrl.getIdx() === undefined ? 0 : ctrl.getIdx();
+                ctrl.route = ctrl.data.routes[idx];
+                orsRouteService.addRoute(ctrl.route.geometry);
             }
         }
         /** if we are returning to this panel, dispose all old subscriptions */
@@ -33,7 +32,6 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
         }
         routeSubscription = orsRouteService.routesSubject.subscribe(data => {
             ctrl.data = data;
-            console.log(ctrl.data)
             orsRouteService.setCurrentRouteIdx(0);
         });
         ctrl.EmphRoute = (idx) => {

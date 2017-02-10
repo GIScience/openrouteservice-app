@@ -188,13 +188,14 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
         if (settings.avoidable_polygons && settings.avoidable_polygons.coordinates.length > 0) {
             payload.options.avoid_polygons = settings.avoidable_polygons;
         }
-        if (lists.profiles[settings.profile.type].subgroup == 'Wheelchair') {
+        if (subgroup == 'Wheelchair') {
             payload.options.profile_params.surface_type = settings.profile.options.surface.toString();
             payload.options.profile_params.track_type = '';
             payload.options.profile_params.smoothness_type = '';
             payload.options.profile_params.maximum_sloped_curb = settings.profile.options.curb.toString();
             payload.options.profile_params.maximum_incline = settings.profile.options.incline.toString();
         }
+        if (angular.equals(payload.options.profile_params, {})) delete payload.options.profile_params;
         payload.options = JSON.stringify(payload.options);
         console.log(payload)
         return payload;

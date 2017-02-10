@@ -83,7 +83,7 @@ angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.
 ]).controller('RootController', function(orsSettingsFactory, orsObjectsFactory, orsMapFactory, $route) {
     // add map
     let ctrl = this;
-    ctrl.myOrsMap = orsMapFactory.initMapA("map");
+    ctrl.myOrsMap = orsMapFactory.initMap("map");
 });
 Array.prototype.move = function(from, to) {
     this.splice(to, 0, this.splice(from, 1)[0]);

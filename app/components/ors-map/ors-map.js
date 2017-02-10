@@ -129,7 +129,7 @@ angular.module('orsApp').directive('orsMap', () => {
             } else {
                 // Heidelberg
                 $scope.orsMap.setView([49.409445, 8.692953], 13);
-            }
+            } 
             /**
              * Listens to left mouse click on map
              * @param {Object} e: Click event

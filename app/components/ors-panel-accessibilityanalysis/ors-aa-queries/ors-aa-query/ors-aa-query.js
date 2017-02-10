@@ -13,13 +13,20 @@ angular.module('orsApp.ors-aa-query', []).component('orsAaQuery', {
     },
     controller: ['orsMessagingService', 'orsAaService', function(orsMessagingService, orsAaService) {
         let ctrl = this;
-        ctrl.showOnMap = true;
+        
+        ctrl.$onInit = () => {
+            ctrl.showOnMap = true;
+            ctrl.onToggle({
+                isoidx: ctrl.isochroneIdx
+            });
+        };
+
         ctrl.getClass = (bool) => {
             if (bool === true) return "fa fa-fw fa-chevron-down";
             else return "fa fa-fw fa-chevron-right";
         };
-        ctrl.show = (bool) => {
-            if (bool === true) return "fa fa-eye";
+        ctrl.show = () => {
+            if (ctrl.showOnMap === true) return "fa fa-eye";
             else return "fa fa-eye-slash";
         };
         ctrl.zoomTo = (isonum) => {

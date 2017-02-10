@@ -6,8 +6,6 @@ angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query', 'orsApp.ors-expo
         ctrl.aaQueries = orsAaService.aaQueries;
         orsAaService.subscribeToAaQueries(function onNext(d) {
             ctrl.aaQueries.push(d);
-            // add newest isochrone to map with addToMap()
-            ctrl.toggleQuery(ctrl.aaQueries.length - 1);
         });
         ctrl.deleteQuery = (isoidx) => {
             // turn off isochrones with this index

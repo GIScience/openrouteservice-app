@@ -769,8 +769,28 @@ input:focus, input:active {
     cursor: pointer;
 }
 
-.leaflet-top, .leaflet-bottom {
-    /*z-index: 0 !important;*/
+a.leaflet-control-layers-toggle {
+    width: 30px !important;
+    height: 30px !important;
+    position: relative;
+    text-align: center;
+    line-height: 24px;
+    background-image: none;
+    color: #70707D;
+}
+
+a.leaflet-control-layers-toggle:before {
+    content: "\f039";
+    font-family: FontAwesome;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 12px;
+    color: #444;
+    vertical-align: bottom;
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+    text-align: center;
 }
 
 .block {
