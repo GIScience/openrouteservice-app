@@ -419,11 +419,11 @@ lists.isochroneOptionList = {
 lists.userOptions = {
     languages: {
         default: 'en-US',
-        all: ['de-DE', 'en-US']
+        all: ['de-DE', 'en-US', 'zh-CN']
     },
     routinglanguages: {
         default: 'en',
-        all: ['de', 'en', 'es', 'fr', 'it', 'nl', 'hu', 'ru', 'ua', 'cz', 'pl', 'cnsimple', 'cn', 'bg', 'hr', 'nl_BE', 'eo', 'fi', 'fr', 'pl', 'pt_BR', 'ro', 'se', 'dk', 'tr', 'ca', 'ja', 'no', 'vi', 'nb', 'de-rheinl', 'de-opplat', 'de-berlin', 'de-swabia', 'de-ruhrpo', 'de-at-ooe', 'de-bay']
+        all: ['de', 'en', 'es', 'pt', 'ru']
     },
     units: {
         default: 'km',

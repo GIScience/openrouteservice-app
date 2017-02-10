@@ -15,8 +15,8 @@ angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query', 'orsApp.ors-expo
             // re-add all indices as custom indices won't correspond anymore
             orsAaService.reshuffle();
         };
-        ctrl.toggleQuery = (isoidx) => {
-            orsAaService.toggleQuery(isoidx, ctrl.aaQueries[isoidx]);
+        ctrl.toggleQuery = (obj) => {
+            orsAaService.toggleQuery(obj.isoidx, ctrl.aaQueries[obj.isoidx], obj.zoom);
         };
         ctrl.removeQuery = (isoidx) => {
             orsAaService.removeQuery(isoidx);

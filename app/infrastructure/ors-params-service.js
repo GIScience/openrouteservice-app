@@ -6,7 +6,6 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUti
             profile: {
                 type: 'Car',
                 options: {
-                    weight: 'Fastest',
                     analysis_options: {},
                     avoidables: {}
                 }

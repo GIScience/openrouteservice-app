@@ -4,9 +4,10 @@
 </div>
 <div class="ors-addresses" ng-show="$ctrl.showAddresses">
     <div class="ui divided list">
-        <div class="item" ng-repeat="address in $ctrl.addresses">
-            <div ng-bind-html="address.shortAddress" ng-click="$ctrl.select(address)">
+        <div class="item" ng-repeat="feature in $ctrl.addresses">
+            <div ng-bind-html="feature.shortaddress" ng-click="$ctrl.select(feature)">
             </div>
         </div>
     </div>
 </div>
+

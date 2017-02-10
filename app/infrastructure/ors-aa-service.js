@@ -37,12 +37,16 @@
         /**
          * Clears the map and forwards the polygons to it
          */
-        orsAaService.toggleQuery = (idx, isochronesObj) => {
+        orsAaService.toggleQuery = (idx, isochronesObj, zoomTo = false) => {
             let action;
             action = orsObjectsFactory.createMapAction(4, lists.layers[3], isochronesObj.features, idx);
             orsMapFactory.mapServiceSubject.onNext(action);
             action = orsObjectsFactory.createMapAction(8, lists.layers[5], isochronesObj.info.query.locations[0], idx);
             orsMapFactory.mapServiceSubject.onNext(action);
+            if (zoomTo) {
+                action = orsObjectsFactory.createMapAction(0, lists.layers[5], isochronesObj.features[isochronesObj.features.length - 1].geometry.coordinates, undefined, undefined);
+                orsMapFactory.mapServiceSubject.onNext(action);
+            }
         };
         orsAaService.removeQuery = (idx) => {
             let action;

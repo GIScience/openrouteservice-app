@@ -14,9 +14,11 @@ angular.module('orsApp.ors-aa-waypoint', []).component('orsAaWaypoint', {
         let ctrl = this;
         ctrl.select = (address) => {
             ctrl.showAddresses = false;
-            ctrl.waypoint._address = address.shortAddress;
-            ctrl.waypoint._latlng = address.position;
+            ctrl.waypoint._address = address.shortaddress;
+            ctrl.waypoint._latlng = L.latLng(address.geometry.coordinates[1], address.geometry.coordinates[0]);
+            ctrl.waypoint._set = 1;
             ctrl.onAddressChanged(ctrl.waypoint);
+            orsRequestService.zoomTo([[address.geometry.coordinates[1], address.geometry.coordinates[0]]])
         };
         ctrl.checkForAddresses = () => {
             if (ctrl.addresses) ctrl.showAddresses = true;
