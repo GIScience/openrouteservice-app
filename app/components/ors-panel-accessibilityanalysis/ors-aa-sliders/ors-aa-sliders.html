@@ -15,7 +15,7 @@
                 <div class="inline fields">
                     <div class="field">
                         <div class="ui radio checkbox">
-                            <input id="method-time" name="frequency" ng-click="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.analysis_options.method" ng-value="$ctrl.optionList.methodOptions.TIME.id" type="radio">
+                            <input id="method-time" name="frequency" ng-click="$ctrl.changeOptions(true)" ng-model="$ctrl.currentOptions.analysis_options.method" ng-value="$ctrl.optionList.methodOptions.TIME.id" type="radio">
                                 <label for="method-time" ng-bind-html="('METHODTIME' | translate)">
                                 </label>
                             </input>
@@ -23,7 +23,7 @@
                     </div>
                     <div class="field">
                         <div class="ui radio checkbox">
-                            <input id="method-unpaved" name="frequency" ng-click="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.analysis_options.method" ng-value="$ctrl.optionList.methodOptions.DISTANCE.id" type="radio">
+                            <input id="method-unpaved" name="frequency" ng-click="$ctrl.changeOptions(true)" ng-model="$ctrl.currentOptions.analysis_options.method" ng-value="$ctrl.optionList.methodOptions.DISTANCE.id" type="radio">
                                 <label for="method-unpaved" ng-bind-html="('METHODDISTANCE' | translate)">
                                 </label>
                             </input>
