@@ -94,5 +94,11 @@
     "REVERSEFLOW": "切换起止点",
     "DOWNLOAD_ISOCHRONES": "下载等值线",
     "DOWNLOAD_ROUTE": "下载路线",
-    "FILE_FORMAT": "文件格式"
+    "FILE_FORMAT": "文件格式",
+    "SELECT_FILES": "TO_DO",
+    "FILE_NAME": "TO_DO",
+    "PREVIEW": "TO_DO",
+    "IMPORT_TRACK": "TO_DO",
+    "IMPORT": "TO_DO",
+    "IMPORT_ROUTE": "TO_DO"
 }

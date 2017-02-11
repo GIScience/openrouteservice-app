@@ -14,6 +14,7 @@ angular.module('orsApp.ors-aa-query', []).component('orsAaQuery', {
     controller: ['orsMessagingService', 'orsAaService', function(orsMessagingService, orsAaService) {
         let ctrl = this;
         ctrl.$onInit = () => {
+            console.log('INIT')
             ctrl.showOnMap = true;
             ctrl.onToggle({
                 obj: {

@@ -93,7 +93,7 @@ html {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    background-color: rgba(219, 40, 40, 0.62);
+    background-color: #cf5f5f;
 }
 
 .ors-header li {
@@ -102,16 +102,20 @@ html {
 
 .ors-header li a {
     display: block;
-    color: #FFF;
+    color: rgba(255,255,255,0.75);
     text-align: center;
     padding: 12px 16px;
     text-decoration: none;
 }
 
 .ors-header li div {
-    color: white;
+    color: rgba(255,255,255,0.75);
     text-align: left;
     padding: 13px 16px;
+}
+
+.ors-header li div:hover, .ors-header li a:hover {
+    color: #FFF;
 }
 
 .ui.dropdown .menu {
@@ -187,7 +191,6 @@ ors-route, ors-analysis {
 .ors-profiles-options {
     border-bottom: 1px solid #CCC;
     width: 344px;
-    background: #F0F0F0;
     flex: 0 1 39px;
     z-index: 1;
 }
@@ -730,7 +733,7 @@ input:focus, input:active {
 .ors-button {
     width: 40px;
     height: 37px;
-    background-color: #F0F0F0;
+    background-color: transparent;
     border: none;
     color: #444;
     outline: none;

@@ -129,7 +129,7 @@ angular.module('orsApp').directive('orsMap', () => {
             } else {
                 // Heidelberg
                 $scope.orsMap.setView([49.409445, 8.692953], 13);
-            } 
+            }
             /**
              * Listens to left mouse click on map
              * @param {Object} e: Click event
@@ -177,12 +177,7 @@ angular.module('orsApp').directive('orsMap', () => {
                 $scope.mapModel.map.closePopup();
             };
             $scope.addWaypoint = (idx, iconIdx, pos, fireRequest = true, aaIcon = false) => {
-                
-
-         
-
-
-                let waypointIcon = aaIcon === true ?  L.divIcon(lists.waypointIcons[3]) :  L.divIcon(lists.waypointIcons[iconIdx]);
+                let waypointIcon = aaIcon === true ? L.divIcon(lists.waypointIcons[3]) : L.divIcon(lists.waypointIcons[iconIdx]);
                 // create the waypoint marker
                 let wayPointMarker = new L.marker(pos, {
                     icon: waypointIcon,
@@ -206,8 +201,9 @@ angular.module('orsApp').directive('orsMap', () => {
                 $scope.mapModel.geofeatures.layerRoutePoints.clearLayers();
                 $scope.mapModel.geofeatures.layerRouteLines.clearLayers();
                 $scope.mapModel.geofeatures.layerEmph.clearLayers();
-                $scope.mapModel.geofeatures.layerAvoid.clearLayers();
                 if (switchApp) {
+                    console.log('clearing isochrones')
+                    $scope.mapModel.geofeatures.layerAvoid.clearLayers();
                     $scope.mapModel.geofeatures.layerAccessibilityAnalysis.clearLayers();
                     $scope.mapModel.geofeatures.layerAccessibilityAnalysisNumberedMarkers.clearLayers();
                 }
@@ -276,10 +272,10 @@ angular.module('orsApp').directive('orsMap', () => {
                         let waypointIcon;
                         if (layer.options.highlighted === true) {
                             const iconIdx = orsSettingsFactory.getIconIdx(layer.options.idx);
-                            waypointIcon = new L.icon(lists.waypointIcons[iconIdx]);
+                            waypointIcon = new L.divIcon(lists.waypointIcons[iconIdx]);
                             layer.options.highlighted = false;
                         } else {
-                            waypointIcon = new L.icon(lists.waypointIcons[3]);
+                            waypointIcon = new L.divIcon(lists.waypointIcons[3]);
                             layer.options.highlighted = true;
                         }
                         layer.setIcon(waypointIcon);

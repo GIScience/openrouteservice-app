@@ -95,5 +95,11 @@
     "RANGE": "Reichweite",
     "DOWNLOAD_ISOCHRONES": "Isochronen herunterladen",
     "DOWNLOAD_ROUTE": "Route herunterladen",
-    "FILE_FORMAT": "Datei Format"
+    "FILE_FORMAT": "Datei Format",
+    "SELECT_FILES": "Datei(en) auswählen (geojson, gpx, kml oder tcx)",
+    "FILE_NAME": "Dateiname",
+    "PREVIEW": "Vorschau",
+    "IMPORT_TRACK": "Strecke als Route",
+    "IMPORT": "Importieren",
+    "IMPORT_ROUTE": "Strecken importieren"
 }

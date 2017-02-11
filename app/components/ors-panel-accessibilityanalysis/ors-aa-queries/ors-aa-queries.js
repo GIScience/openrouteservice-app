@@ -43,11 +43,5 @@ angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query', 'orsApp.ors-expo
         ctrl.deEmph = () => {
             orsAaService.DeEmph();
         };
-        // coming back?
-        if (ctrl.aaQueries.length > 0) {
-            for (let i = 0; i < ctrl.aaQueries.length; i++) {
-                orsAaService.toggleQuery(i, ctrl.aaQueries[i].features, ctrl.aaQueries[i].info.query.locations[0]);
-            }
-        }
     }]
 });

@@ -15,23 +15,24 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
             var processedCount = 0;
             //This will loop through all the opened files
             for (var i = 0; i < fileArrayLength; i++) {
-                var current_fileObject = fileName.files[i];
-                var reader = new FileReader();
-                //On load event call.  This event is assýnc
-                reader.onload = ((theFile) => {
-                    return () => {
-                        onLoadHandler(this, theFile, processedCount, uploadedFiles); //this will happen during the onload event
-                        onLoadEndHandler(); // this happens at the end of the onload event.
-                    };
-                })(current_fileObject);
-                reader.readAsText(current_fileObject);
+                setupReader(fileName.files[i]);
             }
-            var onLoadHandler = (e, theFile, processedCount, uploadedFiles) => {
+
+            function setupReader(file) {
+                var reader = new FileReader();
+                //On load event call.  This event is assync
+                reader.onload = function(e) {
+                    onLoadHandler(reader.result, file.name, processedCount, uploadedFiles); //this will happen during the onload event
+                    onLoadEndHandler(); // this happens at the end of the onload event.
+                };
+                reader.readAsText(file, "UTF-8");
+            }
+            var onLoadHandler = (result, name, processedCount, uploadedFiles) => {
                 uploadedFiles[processedCount] = {
-                    name: theFile.name,
-                    extension: (theFile.name).slice(((theFile.name).lastIndexOf(".") - 1 >>> 0) + 2),
+                    name: name,
+                    extension: name.slice(((name).lastIndexOf(".") - 1 >>> 0) + 2),
                     index: processedCount,
-                    content: e.result,
+                    content: result,
                     preview: false
                 };
             };

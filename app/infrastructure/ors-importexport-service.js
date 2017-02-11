@@ -25,6 +25,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
          * @return {Object} geoJSONDoc: a geoJSON object
          */
         orsParseFactory.parseGpx = (gpxDocument) => {
+            console.log(gpxDocument)
             //Get the JXON object
             var jxon = $JXON.xmlToJs(gpxDocument);
             // get the metadata information

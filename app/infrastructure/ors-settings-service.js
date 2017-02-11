@@ -255,6 +255,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
         if (fireRequest) orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
         /** For map to update */
         if (fireRequest) orsSettingsFactory[currentWaypointsObj].onNext(waypoints);
+        orsUtilsService.parseSettingsToPermalink(orsSettingsFactory[currentSettingsObj].getValue(), orsSettingsFactory.getUserOptions());
     };
     /**
      * Inserts waypoint to settings waypoints when added on map. This can
