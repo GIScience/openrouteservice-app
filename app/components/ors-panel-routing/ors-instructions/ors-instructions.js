@@ -91,7 +91,6 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
             orsRouteService.zoomTo(geometry);
         };
         ctrl.zoomToStep = (pair) => {
-            console.log(pair)
             const routeString = $scope.route.geometry;
             const geometry = _.slice(routeString, pair[0], pair[1] + 1);
             orsRouteService.zoomTo(geometry);

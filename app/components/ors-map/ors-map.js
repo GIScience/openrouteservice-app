@@ -151,9 +151,20 @@ angular.module('orsApp').directive('orsMap', () => {
             //$scope.mapModel.map.on('baselayerchange', emitMapChangeBaseMap);
             //$scope.mapModel.map.on('overlayadd', emitMapChangeOverlay);
             //$scope.mapModel.map.on('overlayremove', emitMapChangeOverlay);
-            //$scope.mapModel.map.on('zoomend', emitMapChangedEvent);
-            //$scope.mapModel.map.on('zoomend', emitMapChangedZoom);
+            $scope.mapModel.map.on('zoomend', (e) => {
+                let layerRouteLines = $scope.mapModel.geofeatures.layerRouteLines;
+                const currentZoom = $scope.mapModel.map.getZoom();
+                if (currentZoom >= 15) {
+                    d3.select($scope.mapModel.map.getPanes().overlayPane).style("opacity", 0.5);
+                } else {
+                    d3.select($scope.mapModel.map.getPanes().overlayPane).style("opacity", 1);
+                }
+                $scope.setMapOptions();
+            });
             $scope.mapModel.map.on('moveend', (e) => {
+                $scope.setMapOptions();
+            });
+            $scope.setMapOptions = () => {
                 const mapCenter = $scope.mapModel.map.getCenter();
                 const mapZoom = $scope.mapModel.map.getZoom();
                 const options = {
@@ -161,7 +172,7 @@ angular.module('orsApp').directive('orsMap', () => {
                     mapZoom: mapZoom
                 };
                 orsCookiesFactory.setMapOptions(options);
-            });
+            };
             $scope.processMapWaypoint = (idx, pos, updateWp = false, fireRequest = true) => {
                 // add waypoint to map
                 // get the address from the response

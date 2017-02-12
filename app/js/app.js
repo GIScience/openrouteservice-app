@@ -74,7 +74,7 @@ angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.
 }]).config(['$translateProvider', '$windowProvider', /* 'storageFactory',*/
     function($translateProvider, $windowProvider /*, storageFactory*/ ) {
         var $window = $windowProvider.$get();
-        $translateProvider.useSanitizeValueStrategy('sanitize');
+        $translateProvider.useSanitizeValueStrategy('sanitizeParameters');
         //get the translations local folder
         $translateProvider.useStaticFilesLoader({
             prefix: 'languages/',

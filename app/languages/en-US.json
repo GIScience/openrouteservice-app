@@ -101,5 +101,50 @@
     "PREVIEW": "Preview",
     "IMPORT_TRACK": "Track to route",
     "IMPORT": "Import",
-    "IMPORT_ROUTE": "Import your Tracks"
+    "IMPORT_ROUTE": "Import your Tracks",
+    "Cobblestone": "Cobblestone",
+    "Other": "Other",
+    "StateRoad": "State road",
+    "Road": "Road",
+    "Street": "Street",
+    "Path": "Path",
+    "Track": "Track",
+    "Cycleway": "Cycleway",
+    "Footway": "Footway",
+    "Steps": "Steps",
+    "Ferry": "Ferry",
+    "Construction": "Construction",
+    "Paved": "Paved",
+    "Unpaved": "Unpaved",
+    "Asphalt": "Asphalt",
+    "Concrete": "Concrete",
+    "Metal": "Metal",
+    "Wood": "Wood",
+    "Compacted Gravel": "Compacted Gravel",
+    "Fine Gravel": "Fine Gravel",
+    "Gravel": "Gravel",
+    "Dirt": "Dirt",
+    "Ground": "Ground",
+    "Ice": "Ice",
+    "Salt": "Salt",
+    "Sand": "Sand",
+    "Woodchips": "Woodchips",
+    "Grass": "Grass",
+    "Grass Paver": "Grass Paver"
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

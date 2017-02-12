@@ -8,11 +8,11 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
             routeIndex: '<'
         },
         template: '<div class="ors-bars"></div>',
-        link: (scope, element, attrs, fn)  => {
+        link: (scope, element, attrs, fn) => {
             let tip = d3.tip().attr('class', 'd3-tip').offset([-10, 0]).html((d) => {
                 // var dist = util.convertDistanceFormat(d.distance, preferences.distanceUnit);
                 // return d.percentage + '% ' + d.typetranslated + ' (' + dist[1] + ' ' + dist[2] + ')';
-                return d.percentage + '% ' + d.type + ' (' + scope.distanceFilter(d.distance) + ')';
+                return d.percentage + '% ' + scope.translateFilter(d.type) + ' (' + scope.distanceFilter(d.distance) + ')';
             });
             let data = [];
             let keys = _.keysIn(scope.obj).map(Number);
@@ -63,12 +63,11 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
                 legendTotalHeight += legendHeight;
                 return 'translate(' + 0 + ',' + vert + ')';
             });
-            legend.append('rect') // NEW
-                .attr('width', legendRectSize).attr('height', legendRectSize).style('fill', (d, i) => {
-                    return d.color;
-                });
-            legend.append('text').attr('x', legendRectSize + legendSpacing).attr('y', legendRectSize).text((d) => {
-                return d.type + ' (' + d.percentage + '%)';
+            legend.append('rect').attr('width', legendRectSize).attr('height', legendRectSize).style('fill', (d, i) => {
+                return d.color;
+            });
+            legend.append('text').style("font-size", "11px").attr('x', legendRectSize + legendSpacing).attr('y', legendRectSize).text((d) => {
+                return scope.translateFilter(d.type) + ' (' + d.percentage + '%)';
             });
             legend.on('mouseover', (d) => {
                 scope.EmphSegment(d.intervals);
@@ -76,41 +75,40 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
             legend.on('mouseout', (d) => {
                 scope.DeEmphSegment();
             });
-            svg.attr("height", 40);
+            svg.attr("height", 45);
             if (keys.length > 1) {
                 let show = false;
-                let expandText = svg.append("text").style("text-anchor", "end").attr("x", "310").attr("y", 40).text('show more').on("click", () => {
+                let expand = svg.append('path').attr("transform", "translate(300,35) rotate(90)").attr("class", "pointer").style("fill", "#444").attr("d", d3.symbol().type(d3.symbolTriangle).size(35)).style("font-size", "11px").on("click", () => {
                     // Determine if current line is visible
                     show = show === false ? true : false;
                     if (show === true) {
                         svg.attr("height", legendTotalHeight + height);
-                        expandText.text('show less');
+                        expand.attr("transform", "translate(300,35) rotate(180)");
                     } else {
-                        svg.attr("height", 40);
-                        expandText.text('show more');
+                        svg.attr("height", 45);
+                        expand.attr("transform", "translate(300,35) rotate(90)");
                     }
                     // Hide or show the elements
                 });
             }
             svg.call(tip);
         },
-        controller: ['$scope', '$filter', 'orsRouteService',
-            ($scope, $filter, orsRouteService)=> {
-                $scope.distanceFilter = $filter('distance');
-                $scope.EmphSegment = (segments) => {
-                    _.forEach(segments, (pair) => {
-                        const routeString = orsRouteService.data.routes[$scope.routeIndex].geometry;
-                        const geometry = _.slice(routeString, pair[0], pair[1] + 1);
-                        orsRouteService.Emph(geometry);
-                    });
-                };
-                $scope.DeEmphSegment = () => {
-                    orsRouteService.DeEmph();
-                };
-                $scope.ZoomToSegment = () => {
-                    console.log('TO DO!')
-                };
-            }
-        ]
+        controller: ['$scope', '$filter', 'orsRouteService', ($scope, $filter, orsRouteService) => {
+            $scope.distanceFilter = $filter('distance');
+            $scope.translateFilter = $filter('translate');
+            $scope.EmphSegment = (segments) => {
+                _.forEach(segments, (pair) => {
+                    const routeString = orsRouteService.data.routes[$scope.routeIndex].geometry;
+                    const geometry = _.slice(routeString, pair[0], pair[1] + 1);
+                    orsRouteService.Emph(geometry);
+                });
+            };
+            $scope.DeEmphSegment = () => {
+                orsRouteService.DeEmph();
+            };
+            $scope.ZoomToSegment = () => {
+                console.log('TO DO!')
+            };
+        }]
     };
 });

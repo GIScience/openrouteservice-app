@@ -321,6 +321,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
      * @param {Object} currentProfile - current profile.
      */
     orsSettingsFactory.setProfile = (currentProfile) => {
+        orsUtilsService.parseSettingsToPermalink(orsSettingsFactory[currentSettingsObj].getValue(), orsSettingsFactory.getUserOptions());
         let set = orsSettingsFactory[currentSettingsObj].getValue();
         set.profile.type = currentProfile.type;
         /** Fire a new request if on route. */
