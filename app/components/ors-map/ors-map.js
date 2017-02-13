@@ -187,6 +187,15 @@ angular.module('orsApp').directive('orsMap', () => {
                 // close the popup
                 $scope.mapModel.map.closePopup();
             };
+            $scope.addNumberedMarker = (geom, featureId, layerCode = false) => {
+                console.log(geom, featureId, layerCode)
+                let marker = L.marker(L.latLng(geom[1] || geom.lat, geom[0] ||  geom.lng), {
+                    icon: createLabelIcon("textLabelclass", parseInt(featureId) + 1),
+                    index: featureId
+                });
+                marker.bindPopup("<b>Position</b><br>" + geom[1] || geom.lat + ', ' + geom[0] ||  geom.lng).openPopup();
+                marker.addTo($scope.mapModel.geofeatures[layerCode]);
+            };
             $scope.addWaypoint = (idx, iconIdx, pos, fireRequest = true, aaIcon = false) => {
                 let waypointIcon = aaIcon === true ? L.divIcon(lists.waypointIcons[3]) : L.divIcon(lists.waypointIcons[iconIdx]);
                 // create the waypoint marker
@@ -224,7 +233,16 @@ angular.module('orsApp').directive('orsMap', () => {
                 var idx = 0;
                 angular.forEach(waypoints, (waypoint) => {
                     var iconIdx = orsSettingsFactory.getIconIdx(idx);
-                    if (waypoint._latlng.lat && waypoint._latlng.lng) $scope.addWaypoint(idx, iconIdx, waypoint._latlng, fireRequest, aaIcon);
+                    if (waypoint._latlng.lat && waypoint._latlng.lng) {
+                        $scope.addWaypoint(idx, iconIdx, waypoint._latlng, fireRequest, aaIcon);
+                        // only add numbered markers if on app panel routing
+                        if (fireRequest) {
+                            if (idx > 0 && idx < waypoints.length - 1) {
+                                wpTag = idx - 1;
+                                $scope.addNumberedMarker(waypoint._latlng, wpTag, lists.layers[0]);
+                            }
+                        }
+                    }
                     idx += 1;
                 });
             };
@@ -317,12 +335,8 @@ angular.module('orsApp').directive('orsMap', () => {
                     }
                 });
                 if (add) {
-                    let marker = L.marker(L.latLng(actionPackage.geometry[1], actionPackage.geometry[0]), {
-                        icon: createLabelIcon("textLabelclass", parseInt(actionPackage.featureId) + 1),
-                        index: actionPackage.featureId
-                    });
-                    marker.bindPopup("<b>Position</b><br>" + actionPackage.geometry[1] + ', ' + actionPackage.geometry[0]).openPopup();
-                    marker.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
+                    console.log(actionPackage.geometry, actionPackage.featureId, actionPackage.layerCode)
+                    $scope.addNumberedMarker(actionPackage.geometry, actionPackage.featureId, actionPackage.layerCode);
                 }
             };
             let createLabelIcon = function(labelClass, labelText) {
