@@ -9,64 +9,8 @@
         <select ng-change="$ctrl.change_fileFormat($ctrl.selected_fileformat)" ng-model="$ctrl.selected_fileformat" ng-options="fileFormatOpt.text for fileFormatOpt in $ctrl.fileFormat">
         </select>
     </div>
-    <!-- <div>
-        <label>
-            Average speed
-        </label>
-        <input name="Average Speed" ng-model="$ctrl.userDefined.avgSpeed" type="number"/>
-        <span>
-            km/h
-        </span>
-    </div>
-    <div>
-        <label>
-            Coordinate precision
-        </label>
-        <input name="Coordinate Precision" ng-model="$ctrl.userDefined.coordPrecision" type="number"/>
-    </div> -->
     <div class="ui divider">
     </div>
-    <button ng-bind-html="('DOWNLOAD' | translate)" ng-click="$ctrl.exportRoute()">
+    <button class="ui mini button" ng-bind-html="('DOWNLOAD' | translate)" ng-click="$ctrl.exportRoute()">
     </button>
 </section>
-<!-- <div class="ui divider">
-</div>
-<section>
-    <h2 ng-bind-html="'Additional Options'">
-    </h2>
-    <div ng-show="gpxOptShow">
-        <label>
-            Write GPX Route
-        </label>
-        <select ng-change="$ctrl.change_gpxOpt1($ctrl.selected_gpxOpt1)" ng-model="$ctrl.selected_gpxOpt1" ng-options="gpxOpt1.text for gpxOpt1 in $ctrl.writeGpxRouteOrTrack">
-        </select>
-    </div>
-    <div ng-show="gpxOptShow">
-        <label>
-            Write GPX Track
-        </label>
-        <select ng-change="$ctrl.change_gpxOpt2($ctrl.selected_gpxOpt2)" ng-model="$ctrl.selected_gpxOpt2" ng-options="gpxOpt2.text for gpxOpt2 in $ctrl.writeGpxRouteOrTrack">
-        </select>
-    </div>
-    <div ng-show="kmlOptShow">
-        <label>
-            Altitude Mode
-        </label>
-        <select ng-change="$ctrl.change_kmlOpt($ctrl.selected_kmlAltitudeMode)" ng-model="$ctrl.selected_kmlAltitudeMode" ng-options="altitudeMode.text for altitudeMode in $ctrl.kmlAltitudeMode">
-        </select>
-    </div>
-    <div ng-show="csvOptShow">
-        <label>
-            CSV separator
-        </label>
-        <select ng-change="$ctrl.change_csvSeparator($ctrl.selected_csvSeparator)" ng-model="$ctrl.selected_csvSeparator" ng-options="sep.text for sep in $ctrl.csvSeparator">
-        </select>
-    </div>
-    <div ng-show="csvOptShow">
-        <label>
-            CSV Geometry Format
-        </label>
-        <select ng-change="$ctrl.change_csvGeomFormat($ctrl.selected_csvGeoFormat)" ng-model="$ctrl.selected_csvGeoFormat" ng-options="csvGeom.text for csvGeom in $ctrl.csvGeometry">
-        </select>
-    </div>
-</section> -->

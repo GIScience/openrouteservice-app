@@ -203,7 +203,6 @@ ors-route, ors-analysis {
 .ors-route-controls, .ors-instruction-controls {
     height: 39px;
     border-top: 1px solid #F0F0F0;
-    border-bottom: 1px solid #F0F0F0;
 }
 
 .ors-summary {
@@ -230,13 +229,13 @@ ors-route, ors-analysis {
 }
 
 .ors-route-card .left {
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.7);
     padding: 1rem;
     flex: 0 0 15%;
 }
 
 .ors-route-card .right {
-    color: rgba(0, 0, 0, 0.8);
+    color: rgba(0, 0, 0, 0.7);
     flex: 1 1 85%;
     padding: 1rem;
 }
@@ -246,7 +245,7 @@ ors-route, ors-analysis {
 }
 
 .ors-segment-card .heading, .ors-segment-card .summary, .ors-segment-card .steps {
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.7);
     padding-left: 1rem;
     padding-right: 1rem;
     flex: 0 1 100%;
@@ -263,11 +262,13 @@ ors-route, ors-analysis {
 }
 
 .ors-segment-card .heading .icon {
-    flex: 0 1 25%;
+    flex: 0 1 10%;
+    text-align: center;
 }
 
 .ors-segment-card .heading .waypoint {
-    flex: 0 1 auto;
+    flex: 0 1 70%;
+    padding-left: 30px;
 }
 
 .ors-segment-card .step {
@@ -776,7 +777,7 @@ input:focus, input:active {
     width: 40px;
     height: 37px;
     border: none;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.7);
     background-color: #FFF;
     outline: none;
 }

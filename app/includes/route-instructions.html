@@ -1,12 +1,18 @@
 <div class="ors-route-segments">
     <div class="ors-segment-card" data-ng-repeat="segment in route.segments" ng-class="{highlight: hover}" ng-mouseenter="$ctrl.EmphSegment($index); hover=true;" ng-mouseleave="$ctrl.DeEmph(); hover=false;">
         <div class="heading">
-            <div class="icon" ng-click="steps = !steps;">
+            <div class="icon pointer" ng-click="steps = !steps;">
                 <i ng-class="$ctrl.getClass(steps)">
                 </i>
             </div>
+            <div class="icon">
+                <i class="fa fa-2x fa-home" ng-if="$index == 0">
+                </i>
+                <i class="fa fa-2x fa-map-marker" ng-if="$index > 0">
+                </i>
+            </div>
             <div class="waypoint">
-                <h3 ng-bind-html="$ctrl.waypoints[$index]._address" ng-click="$ctrl.zoomTo($index);">
+                <h3 class="pointer" ng-bind-html="$ctrl.waypoints[$index]._address" ng-click="$ctrl.zoomTo($index);">
                 </h3>
             </div>
         </div>
@@ -64,6 +70,10 @@
     </div>
     <div class="ors-segment-card" ng-class="{highlight: hover}" ng-mouseenter="hover=true;" ng-mouseleave="hover=false;">
         <div class="heading">
+            <div class="icon">
+                <i class="fa fa-2x fa-flag">
+                </i>
+            </div>
             <div class="waypoint">
                 <h3 ng-bind-html="$ctrl.waypoints[$ctrl.waypoints.length-1]._address">
                 </h3>

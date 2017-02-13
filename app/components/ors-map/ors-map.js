@@ -326,12 +326,12 @@ angular.module('orsApp').directive('orsMap', () => {
                 $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
                     if (layer.options.idx == actionPackage.featureId) {
                         let waypointIcon;
+                        const iconIdx = orsSettingsFactory.getIconIdx(layer.options.idx);
                         if (layer.options.highlighted === true) {
-                            const iconIdx = orsSettingsFactory.getIconIdx(layer.options.idx);
                             waypointIcon = new L.divIcon(lists.waypointIcons[iconIdx]);
                             layer.options.highlighted = false;
                         } else {
-                            waypointIcon = new L.divIcon(lists.waypointIcons[4 + layer.options.idx]);
+                            waypointIcon = new L.divIcon(lists.waypointIcons[4 + iconIdx]);
                             layer.options.highlighted = true;
                         }
                         layer.setIcon(waypointIcon);
