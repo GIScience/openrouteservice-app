@@ -22,26 +22,26 @@ lists.wpColors = {
 lists.waypointIcons = {
     0: {
         className: "ors-marker-start",
-        iconSize: [36, 36],
-        iconAnchor: [18, 36],
+        iconSize: [45, 45],
+        iconAnchor: [22, 45],
         html: '<i class="fa fa-map-marker"></i>'
     },
     1: {
         className: "ors-marker-via",
-        iconSize: [36, 36],
-        iconAnchor: [18, 36],
+        iconSize: [45, 45],
+        iconAnchor: [22, 45],
         html: '<i class="fa fa-map-marker"></i>'
     },
     2: {
         className: "ors-marker-end",
-        iconSize: [36, 36],
-        iconAnchor: [18, 36],
+        iconSize: [45, 45],
+        iconAnchor: [22, 45],
         html: '<i class="fa fa-map-marker"></i>'
     },
     3: {
         className: "ors-marker-location",
-        iconSize: [36, 36],
-        iconAnchor: [18, 36],
+        iconSize: [45, 45],
+        iconAnchor: [22, 45],
         html: '<i class="fa fa-map-marker"></i>'
     }
 };
@@ -456,7 +456,8 @@ lists.layers = {
     2: 'layerEmph',
     3: 'layerAccessibilityAnalysis',
     4: 'layerTracks',
-    5: 'layerAccessibilityAnalysisNumberedMarkers'
+    5: 'layerAccessibilityAnalysisNumberedMarkers',
+    6: 'layerRouteNumberedMarkers'
 };
 lists.layerStyles = {
     route: function() {

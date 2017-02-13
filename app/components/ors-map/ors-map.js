@@ -33,7 +33,8 @@ angular.module('orsApp').directive('orsMap', () => {
                 layerAccessibilityAnalysis: L.featureGroup(),
                 layerAccessibilityAnalysisNumberedMarkers: L.featureGroup(),
                 layerEmph: L.featureGroup(),
-                layerTracks: L.featureGroup()
+                layerTracks: L.featureGroup(),
+                layerRouteNumberedMarkers: L.featureGroup()
             };
             $scope.mapModel = {
                 map: $scope.orsMap,
@@ -103,6 +104,7 @@ angular.module('orsApp').directive('orsMap', () => {
                 mapsurfer.addTo($scope.orsMap);
                 $scope.mapModel.geofeatures.layerRoutePoints.addTo($scope.mapModel.map);
                 $scope.mapModel.geofeatures.layerRouteLines.addTo($scope.mapModel.map);
+                $scope.mapModel.geofeatures.layerRouteNumberedMarkers.addTo($scope.mapModel.map);
                 $scope.mapModel.geofeatures.layerAvoid.addTo($scope.mapModel.map);
                 $scope.mapModel.geofeatures.layerAccessibilityAnalysis.addTo($scope.mapModel.map);
                 $scope.mapModel.geofeatures.layerAccessibilityAnalysisNumberedMarkers.addTo($scope.mapModel.map);
@@ -187,14 +189,22 @@ angular.module('orsApp').directive('orsMap', () => {
                 // close the popup
                 $scope.mapModel.map.closePopup();
             };
-            $scope.addNumberedMarker = (geom, featureId, layerCode = false) => {
-                console.log(geom, featureId, layerCode)
-                let marker = L.marker(L.latLng(geom[1] || geom.lat, geom[0] ||  geom.lng), {
-                    icon: createLabelIcon("textLabelclass", parseInt(featureId) + 1),
+            $scope.addNumberedMarker = (geom, featureId, layerCode, isIsochrones = false) => {
+                const lat = geom[1] || geom.lat;
+                const lng = geom[0] ||  geom.lng;
+                
+                let textLabelclass = 'textLabelclass';
+                if (isIsochrones) {
+                    textLabelclass = 'textLabelclass-isochrones';
+                }
+
+                let marker = L.marker(L.latLng(lat, lng), {
+                    icon: createLabelIcon(textLabelclass, parseInt(featureId) + 1),
                     index: featureId
                 });
-                marker.bindPopup("<b>Position</b><br>" + geom[1] || geom.lat + ', ' + geom[0] ||  geom.lng).openPopup();
+                marker.bindPopup("<b>Position</b><br>" + lat + ', ' + lng).openPopup();
                 marker.addTo($scope.mapModel.geofeatures[layerCode]);
+                //$scope.mapModel.geofeatures.layerRouteNumberedMarkers.bringToFront();
             };
             $scope.addWaypoint = (idx, iconIdx, pos, fireRequest = true, aaIcon = false) => {
                 let waypointIcon = aaIcon === true ? L.divIcon(lists.waypointIcons[3]) : L.divIcon(lists.waypointIcons[iconIdx]);
@@ -206,11 +216,25 @@ angular.module('orsApp').directive('orsMap', () => {
                 });
                 wayPointMarker.addTo($scope.mapModel.geofeatures.layerRoutePoints);
                 // If the waypoint is dragged
+                wayPointMarker.on('dragstart', (event) => {
+                    $scope.mapModel.geofeatures.layerRouteNumberedMarkers.clearLayers();
+                });
                 wayPointMarker.on('dragend', (event) => {
                     // idx of waypoint
                     const idx = event.target.options.idx;
                     const pos = event.target._latlng;
                     $scope.processMapWaypoint(idx, pos, true, fireRequest);
+                    const waypoints = orsSettingsFactory.getWaypoints();
+                    let cnt = 0;
+                    angular.forEach(waypoints, (waypoint) => {
+                        if (waypoint._latlng.lat && waypoint._latlng.lng) {
+                            if (cnt > 0 && cnt < waypoints.length - 1) {
+                                const wpTag = cnt - 1;
+                                $scope.addNumberedMarker(waypoint._latlng, wpTag, lists.layers[6]);
+                            }
+                        }
+                        cnt += 1;
+                    });
                 });
             };
             /** Clears the map
@@ -219,6 +243,7 @@ angular.module('orsApp').directive('orsMap', () => {
             $scope.clearMap = (switchApp = false) => {
                 $scope.mapModel.geofeatures.layerLocationMarker.clearLayers();
                 $scope.mapModel.geofeatures.layerRoutePoints.clearLayers();
+                $scope.mapModel.geofeatures.layerRouteNumberedMarkers.clearLayers();
                 $scope.mapModel.geofeatures.layerRouteLines.clearLayers();
                 $scope.mapModel.geofeatures.layerEmph.clearLayers();
                 if (switchApp) {
@@ -238,8 +263,8 @@ angular.module('orsApp').directive('orsMap', () => {
                         // only add numbered markers if on app panel routing
                         if (fireRequest) {
                             if (idx > 0 && idx < waypoints.length - 1) {
-                                wpTag = idx - 1;
-                                $scope.addNumberedMarker(waypoint._latlng, wpTag, lists.layers[0]);
+                                const wpTag = idx - 1;
+                                $scope.addNumberedMarker(waypoint._latlng, wpTag, lists.layers[6]);
                             }
                         }
                     }
@@ -335,14 +360,14 @@ angular.module('orsApp').directive('orsMap', () => {
                     }
                 });
                 if (add) {
-                    console.log(actionPackage.geometry, actionPackage.featureId, actionPackage.layerCode)
-                    $scope.addNumberedMarker(actionPackage.geometry, actionPackage.featureId, actionPackage.layerCode);
+                    $scope.addNumberedMarker(actionPackage.geometry, actionPackage.featureId, actionPackage.layerCode, true);
                 }
             };
             let createLabelIcon = function(labelClass, labelText) {
                 return L.divIcon({
                     className: labelClass,
-                    html: labelText
+                    html: labelText,
+                    iconSize: L.point(17, 17)
                 });
             };
             /** 
