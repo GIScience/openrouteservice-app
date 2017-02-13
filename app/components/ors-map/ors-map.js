@@ -193,18 +193,20 @@ angular.module('orsApp').directive('orsMap', () => {
                 const lat = geom[1] || geom.lat;
                 const lng = geom[0] ||  geom.lng;
                 
-                let textLabelclass = 'textLabelclass';
+                let textLabelclass;
                 if (isIsochrones) {
                     textLabelclass = 'textLabelclass-isochrones';
+                } else if (featureId + 1 > 9) {
+                    textLabelclass = 'textLabelclass';
+                } else {
+                    textLabelclass = 'textLabelclass-onedigit';
                 }
-
                 let marker = L.marker(L.latLng(lat, lng), {
                     icon: createLabelIcon(textLabelclass, parseInt(featureId) + 1),
                     index: featureId
                 });
                 marker.bindPopup("<b>Position</b><br>" + lat + ', ' + lng).openPopup();
                 marker.addTo($scope.mapModel.geofeatures[layerCode]);
-                //$scope.mapModel.geofeatures.layerRouteNumberedMarkers.bringToFront();
             };
             $scope.addWaypoint = (idx, iconIdx, pos, fireRequest = true, aaIcon = false) => {
                 let waypointIcon = aaIcon === true ? L.divIcon(lists.waypointIcons[3]) : L.divIcon(lists.waypointIcons[iconIdx]);

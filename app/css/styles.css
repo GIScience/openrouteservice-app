@@ -423,7 +423,6 @@ ors-instructions {
 
 .textLabelclass {
     white-space: nowrap;
-    -text-shadow: 0 0 0.1em #FFF, 0 0 0.1em #FFF, 0 0 0.1em #FFF, 0 0 0.1em #FFF, 0 0 0.1em;
     font-weight: 500;
     pointer-events: none !important;
     color: #FFF;
@@ -431,8 +430,22 @@ ors-instructions {
     margin-left: -8px !important;
     margin-top: -38px !important;
     background-color: orange;
+    text-align: center;
+    border-radius: 5px;
 }
 
+.textLabelclass-onedigit {
+    white-space: nowrap;
+    font-weight: 500;
+    pointer-events: none !important;
+    color: #FFF;
+    font-size: 14px;
+    margin-left: -8px !important;
+    margin-top: -38px !important;
+    background-color: orange;
+    text-align: center;
+    border-radius: 5px;
+}
 
 /** Route options */
 
