@@ -331,7 +331,7 @@ angular.module('orsApp').directive('orsMap', () => {
                             waypointIcon = new L.divIcon(lists.waypointIcons[iconIdx]);
                             layer.options.highlighted = false;
                         } else {
-                            waypointIcon = new L.divIcon(lists.waypointIcons[3]);
+                            waypointIcon = new L.divIcon(lists.waypointIcons[4 + layer.options.idx]);
                             layer.options.highlighted = true;
                         }
                         layer.setIcon(waypointIcon);

@@ -43,7 +43,25 @@ lists.waypointIcons = {
         iconSize: [45, 45],
         iconAnchor: [22, 45],
         html: '<i class="fa fa-map-marker"></i>'
-    }
+    },
+    4: {
+        className: "ors-marker-start-highlight",
+        iconSize: [45, 45],
+        iconAnchor: [22, 45],
+        html: '<i class="fa fa-map-marker"></i>'
+    },
+    5: {
+        className: "ors-marker-via-highlight",
+        iconSize: [45, 45],
+        iconAnchor: [22, 45],
+        html: '<i class="fa fa-map-marker"></i>'
+    },
+    6: {
+        className: "ors-marker-end-highlight",
+        iconSize: [45, 45],
+        iconAnchor: [22, 45],
+        html: '<i class="fa fa-map-marker"></i>'
+    },
 };
 lists.profiles = {
     Car: {
