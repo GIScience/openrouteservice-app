@@ -19,16 +19,16 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
         } catch (error) {
             console.warn(error);
         }
-        routeSubscriptionInstructions = orsRouteService.routesSubject.subscribe(routes => {
-            console.info('subscribing to first route', routes);
+        routeSubscriptionInstructions = orsRouteService.routesSubject.subscribe(data => {
             ctrl.routeIndex = orsRouteService.getCurrentRouteIdx();
-            ctrl.data = orsRouteService.data;
-            $scope.route = ctrl.route = ctrl.data.routes[ctrl.routeIndex];
+            if (data.routes) {
+                $scope.route = ctrl.route = data.routes[ctrl.routeIndex];
+            } 
         });
         ctrl.waypoints = orsSettingsFactory.getWaypoints();
         ctrl.getClass = (bool) => {
-            if (bool === true) return "fa fa-2x fa-fw fa-angle-down";
-            else return "fa fa-2x fa-fw fa-angle-right";
+            if (bool === true) return "fa fa-lg fa-fw fa-angle-down";
+            else return "fa fa-lg fa-fw fa-angle-right";
         };
         ctrl.getIcon = (code) => {
             let arrow = 'fa fa-arrow-up ';
@@ -83,12 +83,22 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
             const geometry = _.slice(routeString, pair[0], pair[1] + 1);
             orsRouteService.Emph(geometry);
         };
-        ctrl.zoomTo = (idx) => {
-            const segmentStart = $scope.route.way_points[idx];
-            const segmentEnd = $scope.route.way_points[idx + 1];
+        ctrl.zoomTo = (idx, destination = false) => {
+            
             const routeString = $scope.route.geometry;
-            const geometry = _.slice(routeString, segmentStart, segmentEnd + 1);
+            let geometry;
+            if (destination) {
+                const segmentEnd = $scope.route.way_points[idx];
+                geometry = [routeString[segmentEnd]];
+
+            } else {
+                const segmentStart = $scope.route.way_points[idx];
+                const segmentEnd = $scope.route.way_points[idx + 1];
+                geometry = _.slice(routeString, segmentStart, segmentEnd + 1);
+                
+            }
             orsRouteService.zoomTo(geometry);
+
         };
         ctrl.zoomToStep = (pair) => {
             const routeString = $scope.route.geometry;

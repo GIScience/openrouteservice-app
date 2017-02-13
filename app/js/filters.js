@@ -1,6 +1,8 @@
 angular.module('orsApp.ors-filters', []).filter('duration', () => {
     return (input) => {
-        return new Date(input * 1000).toISOString().substr(11, 5);
+        let duration = new Date(input * 1000).toISOString().substr(11, 5);
+        if (duration == '00:00') return '< 1min';
+        else return duration;
     };
 }).filter('distance', ['orsSettingsFactory', (orsSettingsFactory) => {
     function distance(input, round) {

@@ -28,12 +28,12 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         ctrl.collapsed = false;
         ctrl.collapseIcon = "fa fa-chevron-down";
         ctrl.collapse = () => {
-            ctrl.collapsed = ctrl.collapsed == true ? false : true;
-            if (ctrl.collapsed == true) {
+            ctrl.collapsed = ctrl.collapsed === true ? false : true;
+            if (ctrl.collapsed === true) {
                 ctrl.sortableOptions.disabled = true;
                 ctrl.collapseIcon = "fa fa-chevron-right";
             }
-            if (ctrl.collapsed == false) {
+            if (ctrl.collapsed === false) {
                 ctrl.sortableOptions.disabled = false;
                 ctrl.collapseIcon = "fa fa-chevron-down";
             }
@@ -43,7 +43,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
          * @param {number} The idx.
          */
         ctrl.showViapoints = (idx) => {
-            if (ctrl.collapsed == true) {
+            if (ctrl.collapsed === true) {
                 if (ctrl.waypoints.length > 2) {
                     if (idx == 0) {
                         return true;
@@ -124,9 +124,11 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
             remove: () => {},
             sort: () => {},
             start: () => {},
-            update: (e, ui) => {},
-            stop: (e, ui) => {
+            update: (e, ui) => {
                 orsSettingsFactory.setWaypoints(ctrl.waypoints, true);
+            },
+            stop: (e, ui) => {
+                //orsSettingsFactory.setWaypoints(ctrl.waypoints, true);
             }
         };
     }]
