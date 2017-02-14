@@ -226,6 +226,11 @@ ors-route, ors-analysis {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    cursor: pointer;
+}
+
+.ors-segment-card {
+    overflow-y: scroll;
 }
 
 .ors-route-card .left {
@@ -243,6 +248,7 @@ ors-route, ors-analysis {
 .ors-segment-card .info, .ors-segment-card .step {
     border-left: 2px solid transparent;
     border-right: 2px solid transparent;
+    width: 100%;
 }
 
 .ors-segment-card .info.highlight, .ors-segment-card .step.highlight {
@@ -254,6 +260,7 @@ ors-route, ors-analysis {
     color: rgba(0, 0, 0, 0.7);
     flex: 0 1 100%;
     display: flex;
+    margin-right: 20px;
 }
 
 .ors-segment-card .heading {
@@ -266,17 +273,17 @@ ors-route, ors-analysis {
 .ors-segment-card .summary {
     padding-bottom: 1rem;
     border-bottom: .1rem solid #edf3f5;
-    padding-left: 1rem;
+    padding-left: 5rem;
     padding-right: 1rem;
 }
 
 .ors-segment-card .info .heading .icon {
-    flex: 0 1 10%;
+    flex: 0 1 auto;
+    width: 2rem;
 }
 
 .ors-segment-card .heading .waypoint {
     flex: 0 1 80%;
-    padding-left: 10px;
 }
 
 .ors-segment-card .step {
@@ -287,7 +294,7 @@ ors-route, ors-analysis {
 .ors-segment-card .step .header {
     display: flex;
     flex-direction: row;
-    padding-left: 1rem;
+    padding-left: 3rem;
     padding-right: 1rem;
 }
 

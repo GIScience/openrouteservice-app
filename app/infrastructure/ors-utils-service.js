@@ -121,7 +121,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             instructions: true,
             geometry: true,
             units: 'm',
-            prettify_instructions: true,
+            instructions_format: 'html',
             elevation: true,
             options: JSON.stringify(orsUtilsService.generateOptions(settings))
         };
@@ -280,10 +280,10 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
                 shortAddress += properties.district;
                 shortAddress += ', ';
             }
-            if ('country' in properties) {
-                shortAddress += properties.country;
-                shortAddress += ', ';
-            }
+            // if ('country' in properties) {
+            //     shortAddress += properties.country;
+            //     shortAddress += ', ';
+            // }
             shortAddress = shortAddress.slice(0, -2);
             feature.shortaddress = shortAddress;
         });
