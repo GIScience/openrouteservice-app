@@ -1,7 +1,7 @@
 {
     "BICYCLE": "Fahrrad",
-    "CAR": "Auto",
-    "HGV": "Schwertkraftwagen",
+    "CAR": "Coche",
+    "HGV": "Schwerkraftwagen",
     "PEDESTRIAN": "Fußgänger",
     "WHEELCHAIR": "Rollstuhl",
     "DISTANCE": "Entfernung",
