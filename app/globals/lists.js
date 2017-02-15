@@ -208,7 +208,7 @@ lists.optionList = {
         },
         steps: {
             name: 'steps',
-            subgroups: ['Wheelchair', 'Pedestrian']
+            subgroups: ['Wheelchair', 'Pedestrian', 'Bicycle']
         },
         highways: {
             name: 'highways',

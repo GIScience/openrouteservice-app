@@ -192,6 +192,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             }
         }
         if (options.avoid_features.length == 0) {
+            console.info(options.avoid_features.length, typeof(options.avoid_features))
             delete options.avoid_features;
         } else {
             options.avoid_features = options.avoid_features.slice(0, -1);
@@ -208,7 +209,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
         if (settings.profile.options.maxspeed) options.maximum_speed = settings.profile.options.maxspeed.toString();
         // fitness
         if (subgroup == 'Bicycle') {
-            if (settings.profile.options.steepness >= 0 & settings.profile.options.steepness <= 15) {
+            if (settings.profile.options.steepness > 0 & settings.profile.options.steepness <= 15) {
                 options.profile_params.maximum_gradient = settings.profile.options.steepness.toString();
             }
             if (settings.profile.options.fitness >= 0 & settings.profile.options.fitness <= 3) {
@@ -236,6 +237,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
      */
     orsUtilsService.isochronesPayload = function(settings) {
         let payload;
+        console.log(settings)
         payload = {
             format: 'json',
             locations: settings.waypoints[0]._latlng.lng + ',' + settings.waypoints[0]._latlng.lat,
@@ -512,7 +514,6 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
         // Hack to remove angular properties that do not have to be saved
         let profile = angular.fromJson(angular.toJson(settings.profile));
         let waypoints = angular.fromJson(angular.toJson(settings.waypoints));
-        console.log(settings.profile)
 
         function getProp(obj) {
             for (var o in obj) {

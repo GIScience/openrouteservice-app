@@ -38,7 +38,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
             ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeSubgroup];
             // enable or disable checkbox depending on whether maxspeed is set
             let maxspeedVal;
-            if (ctrl.currentOptions.maxspeed >= "0") {
+            if (ctrl.currentOptions.maxspeed >= 0) {
                 maxspeedVal = ctrl.currentOptions.maxspeed;
                 ctrl.maxspeedCheckbox = true;
             } else {
@@ -46,6 +46,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                 ctrl.maxspeedCheckbox = false;
             }
             ctrl.toggleMaxspeedSlider = (fireRequest = true) => {
+                console.log('TOGGLED')
                 if (ctrl.maxspeedCheckbox === true) {
                     ctrl.maxspeedSlider.options.disabled = false;
                     ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
@@ -65,6 +66,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                         return value + ' <b>km/h</b>';
                     },
                     onEnd: () => {
+                        console.log('ON END')
                         ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
                         ctrl.changeOptions();
                     }
@@ -292,10 +294,12 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                 /** update slider settings */
                 if (ctrl.maxspeedSlider) {
                     ctrl.maxspeedSlider.value = ctrl.maxspeedOptions.default;
-                    ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
                     ctrl.maxspeedSlider.options.floor = ctrl.maxspeedOptions.min;
                     ctrl.maxspeedSlider.options.ceil = ctrl.maxspeedOptions.max;
                     ctrl.maxspeedSlider.options.step = ctrl.maxspeedOptions.step;
+                    if (ctrl.currentOptions.maxspeed) {
+                        ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
+                    }
                 }
             }
         };
@@ -305,6 +309,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
         });
         ctrl.changeOptions = () => {
             // call setoptions
+            console.log(ctrl.currentOptions)
             if (ctrl.currentOptions.difficulty) ctrl.difficultySliders.Fitness.options.disabled = ctrl.currentOptions.difficulty.avoidhills === true ? true : false;
             orsSettingsFactory.setActiveOptions(ctrl.currentOptions, ctrl.routing);
         };
