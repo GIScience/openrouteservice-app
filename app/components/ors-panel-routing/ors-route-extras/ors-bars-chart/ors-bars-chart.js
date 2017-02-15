@@ -4,21 +4,18 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
         replace: true,
         scope: {
             key: '<',
+            typesOrder: '<',
             obj: '<',
             routeIndex: '<'
         },
         template: '<div class="ors-bars"></div>',
         link: (scope, element, attrs, fn) => {
             let tip = d3.tip().attr('class', 'd3-tip').offset([-10, 0]).html((d) => {
-                // var dist = util.convertDistanceFormat(d.distance, preferences.distanceUnit);
-                // return d.percentage + '% ' + d.typetranslated + ' (' + dist[1] + ' ' + dist[2] + ')';
                 return d.percentage + '% ' + scope.translateFilter(d.type) + ' (' + scope.distanceFilter(d.distance) + ')';
             });
             let data = [];
-            let keys = _.keysIn(scope.obj).map(Number);
-            keys = _.sortBy(keys);
-            _.forEach(keys, (key) => {
-                data.push(scope.obj[key]);
+            _.forEach(scope.typesOrder, (type) => {
+                data.push(scope.obj[type]);
             });
             let margin = {
                     top: 0,
@@ -76,7 +73,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
                 scope.DeEmphSegment();
             });
             svg.attr("height", 45);
-            if (keys.length > 1) {
+            if (scope.typesOrder.length > 1) {
                 let show = false;
                 let expand = svg.append('path').attr("transform", "translate(300,35) rotate(90)").attr("class", "pointer").style("fill", "#444").attr("d", d3.symbol().type(d3.symbolTriangle).size(35)).style("font-size", "11px").on("click", () => {
                     // Determine if current line is visible
@@ -88,7 +85,6 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
                         svg.attr("height", 45);
                         expand.attr("transform", "translate(300,35) rotate(90)");
                     }
-                    // Hide or show the elements
                 });
             }
             svg.call(tip);
@@ -107,7 +103,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
                 orsRouteService.DeEmph();
             };
             $scope.ZoomToSegment = () => {
-                console.log('TO DO!')
+                console.log('TO DO!');
             };
         }]
     };

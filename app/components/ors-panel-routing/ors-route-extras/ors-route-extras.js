@@ -19,17 +19,10 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
                     if (typeNumber in extras) {
                         extras[typeNumber].intervals.push([fr, to]);
                     } else {
+                        
                         let text = ctrl.mappings[key][typeNumber].text;
                         let color = ctrl.mappings[key][typeNumber].color;
-                        if (key == 'gradients') {
-                            if (typeNumber > 5) {
-                                text = ctrl.mappings[key][typeNumber].text;
-                            } else if (typeNumber < 5) {
-                                text = ctrl.mappings[key][typeNumber].text;
-                            } else if (typeNumber == 5) {
-                                text = ctrl.mappings[key][typeNumber].text;
-                            }
-                        }
+                      
                         extras[typeNumber] = {
                             type: text,
                             intervals: [
@@ -41,21 +34,30 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
                 }
             });
             let y0 = 0;
+            let typesOrder = [];
             for (let i = 0; i < currentRoute.extras[key].summary.length; i++) {
                 const extra = currentRoute.extras[key].summary[i];
                 extras[extra.value].distance = extra.distance;
                 extras[extra.value].percentage = extra.amount;
                 extras[extra.value].y0 = y0;
                 extras[extra.value].y1 = y0 += +extra.amount;
+                typesOrder.push(extra.value);
             }
-            return extras;
+            
+            return {
+                extras: extras,
+                typesOrder: typesOrder
+            };
         };
         ctrl.routeExtras = [];
         $scope.$watch('$ctrl.currentRoute', (route) => {
             ctrl.routeExtras = [];
             for (let key in route.extras) {
+                const data = ctrl.processExtras(route, key);
+                
                 ctrl.routeExtras.push({
-                    data: ctrl.processExtras(route, key),
+                    data: data.extras,
+                    typesOrder: data.typesOrder,
                     type: key,
                     routeIndex: ctrl.routeIndex
                 });

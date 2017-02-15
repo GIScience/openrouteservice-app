@@ -229,10 +229,6 @@ ors-route, ors-analysis {
     cursor: pointer;
 }
 
-.ors-segment-card {
-    overflow-y: scroll;
-}
-
 .ors-route-card .left {
     color: rgba(0, 0, 0, 0.7);
     padding: 1rem;
