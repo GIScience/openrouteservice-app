@@ -241,10 +241,15 @@ ors-route, ors-analysis {
     padding: 1rem;
 }
 
+.ors-segment-card .steps {
+    margin-right: 20px;
+}
+
 .ors-segment-card .info, .ors-segment-card .step {
     border-left: 2px solid transparent;
     border-right: 2px solid transparent;
     width: 100%;
+    margin-right: 20px;
 }
 
 .ors-segment-card .info.highlight, .ors-segment-card .step.highlight {
@@ -256,7 +261,6 @@ ors-route, ors-analysis {
     color: rgba(0, 0, 0, 0.7);
     flex: 0 1 100%;
     display: flex;
-    margin-right: 20px;
 }
 
 .ors-segment-card .heading {
