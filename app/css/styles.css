@@ -267,23 +267,22 @@ ors-route, ors-analysis {
     padding-top: 1rem;
     padding-bottom: 1rem;
     padding-left: 1rem;
-    padding-right: 1rem;
 }
 
 .ors-segment-card .summary {
     padding-bottom: 1rem;
     border-bottom: .1rem solid #edf3f5;
     padding-left: 5rem;
-    padding-right: 1rem;
 }
 
 .ors-segment-card .info .heading .icon {
     flex: 0 1 auto;
-    width: 2rem;
+    width: 1.5rem;
 }
 
 .ors-segment-card .heading .waypoint {
     flex: 0 1 80%;
+    padding-left: 1rem;
 }
 
 .ors-segment-card .step {
@@ -295,7 +294,6 @@ ors-route, ors-analysis {
     display: flex;
     flex-direction: row;
     padding-left: 3rem;
-    padding-right: 1rem;
 }
 
 .ors-segment-card .step .header .icon {

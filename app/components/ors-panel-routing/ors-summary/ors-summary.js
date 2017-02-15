@@ -32,6 +32,7 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
         }
         routeSubscription = orsRouteService.routesSubject.subscribe(data => {
             ctrl.data = data;
+            console.log(ctrl.data)
             orsRouteService.setCurrentRouteIdx(0);
         });
         ctrl.EmphRoute = (idx) => {

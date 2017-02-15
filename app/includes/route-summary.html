@@ -34,10 +34,10 @@
             <span ng-bind-html="(route.summary.distance | distance)">
             </span>
         </div>
-        <div class="summary-item" ng-if="route.summary.actualDistance" tooltip-side="top" tooltip-template="{{('ACTUALDISTANCE' | translate)}}" tooltips="">
+        <div class="summary-item" ng-if="route.summary.distance_actual" tooltip-side="top" tooltip-template="{{('ACTUALDISTANCE' | translate)}}" tooltips="">
             <i class="fa fa-ellipsis-h">
             </i>
-            <span ng-bind-html="(route.summary.actualDistance | distance)">
+            <span ng-bind-html="(route.summary.distance_actual | distance)">
             </span>
         </div>
         <div class="summary-item" ng-if="route.summary.ascent" tooltip-side="top" tooltip-template="{{('ASCENT' | translate)}}" tooltips="">
