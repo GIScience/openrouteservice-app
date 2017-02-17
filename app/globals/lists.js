@@ -437,7 +437,7 @@ lists.isochroneOptionList = {
 lists.userOptions = {
     languages: {
         default: 'en-US',
-        all: ['de-DE', 'en-US', 'zh-CN', 'pt-PT']
+        all: ['de-DE', 'en-US', 'zh-CN', 'pt-PT', 'es-ES']
     },
     routinglanguages: {
         default: 'en',

@@ -37,7 +37,7 @@ html {
     order: 1;
     z-index: 1;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    flex: 0 1 388px;
+    flex: 0 1 38px;
     height: 100%;
     display: -webkit-box;
     display: -webkit-flex;
@@ -845,6 +845,19 @@ a.leaflet-control-layers-toggle:before {
     width: 14px;
     height: 14px;
     text-align: center;
+}
+
+/** button size fix */
+
+a.leaflet-avoidArea {
+    width: 30px;
+    height: 30px;
+    font-size: 165%;
+}
+
+a.leaflet-avoidArea:hover {
+    width: 30px;
+    height: 30px;  
 }
 
 .block {
