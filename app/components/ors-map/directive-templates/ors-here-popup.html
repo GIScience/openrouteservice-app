@@ -1,10 +1,8 @@
-<div class="cm-here-popup" >
-<span ng-if="heremsg.name">Name : {{heremsg.name}}</span>
-<span ng-if="heremsg.pos">Position : {{heremsg.pos}}</span>
-<span ng-if="heremsg.street">Street : {{heremsg.street}}</span>
-<span ng-if="heremsg.state">State : {{heremsg.state}}</span>
-<span ng-if="heremsg.county">Country : {{heremsg.country}}</span>
-<span ng-if="heremsg.zip">Postal Code : {{heremsg.zip}}</span>
-<!-- <span ng-if="heremsg.dist">Distance : {{heremsg.dist}}</span>
-<span ng-if="heremsg.score">Score : {{heremsg.score}}</span> -->
+<div class=cm-here-popup>
+<span class="cm-here-popup-loading" ng-if="!heremsg.name"> ... loading </span>
+<span class="cm-here-popup-name" ng-if="heremsg.name">{{heremsg.name}}</span><br>
+<span class="cm-here-popup-pos" ng-if="heremsg.pos" ng-model="heremsg.pos" ng-click="copyToClipboard(heremsg.pos)">{{heremsg.pos}}</span>
+</div>
+<div class="cm-here-popup-option" ng-if="heremsg.name">
+<span class="cm-here-start"><a ng-click="add(0)">start</a></span><span class="cm-here-via"><a ng-click="add(1)">via</a></span><span class="cm-here-dest"><a ng-click="add(2)">dest</a></span>
 </div>

@@ -823,6 +823,44 @@ input:focus, input:active {
     cursor: pointer;
 }
 
+.cm-here-popup {
+    text-align: center;
+}
+
+.cm-here-popup-name {
+    font-weight: bold;
+}
+
+.cm-here-popup-pos:hover {
+    color: #cd6060;
+    cursor:pointer;
+}
+
+.cm-here-popup-option {
+    text-align: center;
+}
+.cm-here-start a:hover, .cm-here-via a:hover, .cm-here-dest a:hover {
+        color: #cd6060;
+}
+
+.cm-here-start {
+    cursor: pointer;
+    padding-left: 30px;
+    float: left;
+}
+
+.cm-here-via {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+}
+
+.cm-here-dest {
+    cursor: pointer;
+    padding-right: 30px;
+    float: right;
+}
+
 a.leaflet-control-layers-toggle {
     width: 30px !important;
     height: 30px !important;

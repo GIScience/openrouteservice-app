@@ -510,7 +510,7 @@ angular.module('orsApp').directive('orsPopup', ['$compile', '$timeout', 'orsSett
             scope.add = (idx) => {
                 scope.processMapWaypoint(idx, scope.displayPos);
             };
-            //what is here request
+            //what's here request
             scope.here = () => {
                 scope.heremsg = {};
                 const lngLatString = orsUtilsService.parseLngLatString(scope.displayPos);
@@ -519,31 +519,29 @@ angular.module('orsApp').directive('orsPopup', ['$compile', '$timeout', 'orsSett
                 request.promise.then((data) => {
                     if (data.features.length > 0) {
                         const addressData = orsUtilsService.addShortAddresses(data.features);
-                        let info = addressData[0].properties;
-
-                        scope.heremsg = {
-                            name: info.name ,
-                            pos : scope.displayPos.lat + " , " + scope.displayPos.lng ,
-                            street: info.street,
-                            state: info.state,
-                            country: info.country,
-                            zip: info.postal_code,
-                            dist: info.distance,
-                            score: info.confidence
-                        }
+                        //waits for loading of the site
+                        $timeout(function() {
+                            scope.heremsg = {
+                                name: addressData[0].shortaddress,
+                                pos : scope.displayPos.lat + " , " + scope.displayPos.lng ,
+                            }
+                        }, 300);
                     } else {
                         orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
                     }
                 }, (response) => {
                     orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
                 });
-
+                scope.copyToClipboard = (text) => {
+                   window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+                }
+                //
                 let popupEvent = $compile('<ors-here-popup></ors-here-popup>')(scope);
                 const pophere = L.popup({
+                    minWidth: 245,
                     closeButton: true,
-                    className: 'cm-popup'
-                }).setContent(popupEvent[0]).setLatLng(scope.displayPos);
-                scope.mapModel.map.openPopup(pophere);
+                    className: 'cm-here-popup'
+                }).setContent(popupEvent[0]).setLatLng(scope.displayPos).openOn(scope.mapModel.map);
             };
 
         }
