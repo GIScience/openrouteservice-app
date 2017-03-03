@@ -41,6 +41,21 @@ angular.module('orsApp').directive('orsMap', () => {
                 geofeatures: $scope.geofeatures
             };
             $scope.mapModel.map.createPane('isochronesPane');
+            /* HEIGHTGRAPH CONTROLLER */
+            $scope.hg = L.control.heightgraph({
+                width: 800,
+                height: 280,
+                margins: {
+                    top: 10,
+                    right: 30,
+                    bottom: 55,
+                    left: 50
+                },
+                position: "bottomright",
+                mappings: mappings
+            });
+
+            console.log(lists.colorMappings)
             /* AVOID AREA CONTROLLER */
             L.NewPolygonControl = L.Control.extend({
                 options: {
@@ -192,7 +207,6 @@ angular.module('orsApp').directive('orsMap', () => {
             $scope.addNumberedMarker = (geom, featureId, layerCode, isIsochrones = false) => {
                 const lat = geom[1] || geom.lat;
                 const lng = geom[0] ||  geom.lng;
-                
                 let textLabelclass;
                 if (isIsochrones) {
                     textLabelclass = 'textLabelclass-isochrones';
@@ -460,7 +474,19 @@ angular.module('orsApp').directive('orsMap', () => {
              * Dispatches all commands sent by Mapservice by using id and then performing the corresponding function
              */
             orsMapFactory.subscribeToMapFunctions(function onNext(params) {
+                
+
                 switch (params._actionCode) {
+                    case -1:
+                        $scope.mapModel.map.addControl($scope.hg);
+                        console.log(params._package.geometry)
+                        if (params._package.geometry) {
+                            $scope.hg.addData(params._package.geometry);
+                        } 
+                        else {
+                            $scope.hg.remove();
+                        }
+                        break;
                     /** zoom to features */
                     case 0:
                         $scope.zoom(params._package);

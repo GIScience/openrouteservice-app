@@ -19,7 +19,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: './',
                 dest: 'build',
-                src: ['bower_components/font-awesome/**', 'bower_components/leaflet/**', ]
+                src: ['bower_components/font-awesome/**', 'bower_components/leaflet/**', 'bower_components/leaflet.heightgraph/**']
             }
         },
         watch: {

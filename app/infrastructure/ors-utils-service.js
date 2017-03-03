@@ -63,10 +63,11 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
     /**
      * Decodes to a [latitude, longitude] coordinates array.
      * @param {String} str
+     * @param {Boolean} elevation
      * @param {Number} precision
      * @returns {Array}
      */
-    orsUtilsService.decodePolyline = function(str, precision) {
+    orsUtilsService.decodePolyline = function(str, elevation, precision) {
         var index = 0,
             lat = 0,
             lng = 0,
@@ -117,12 +118,12 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             profile: lists.profiles[settings.profile.type].request,
             preference: settings.profile.options.weight.toLowerCase(),
             language: userSettings.routinglang,
-            geometry_format: 'encodedpolyline',
+            geometry_format: 'geojson',
             instructions: true,
             geometry: true,
             units: 'm',
             instructions_format: 'html',
-            elevation: true,
+            elevation: lists.profiles[settings.profile.type].elevation,
             options: JSON.stringify(orsUtilsService.generateOptions(settings))
         };
         const subgroup = lists.profiles[settings.profile.type].subgroup;
@@ -141,10 +142,9 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
         //  extras
         if (subgroup == 'Bicycle' || subgroup == 'Pedestrian' || subgroup == 'Wheelchair') {
             if (lists.profiles[settings.profile.type].elevation === true) {
-                payload.extra_info = 'surface|waytypes|suitability|steepness';
+                payload.extra_info = 'surface|waytype|suitability|steepness';
             }
         }
-        console.log(payload)
         return payload;
     };
     /** 
@@ -192,7 +192,6 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             }
         }
         if (options.avoid_features.length == 0) {
-            console.info(options.avoid_features.length, typeof(options.avoid_features))
             delete options.avoid_features;
         } else {
             options.avoid_features = options.avoid_features.slice(0, -1);
@@ -237,7 +236,6 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
      */
     orsUtilsService.isochronesPayload = function(settings) {
         let payload;
-        console.log(settings)
         payload = {
             format: 'json',
             locations: settings.waypoints[0]._latlng.lng + ',' + settings.waypoints[0]._latlng.lat,
@@ -253,7 +251,6 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
         if (settings.avoidable_polygons && settings.avoidable_polygons.coordinates.length > 0) {
             payload.options.avoid_polygons = settings.avoidable_polygons;
         }
-        console.log(payload)
         return payload;
     };
     orsUtilsService.addShortAddresses = function(features) {
@@ -272,6 +269,10 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
                 shortAddress += ', ';
             }
             //if ('postal_code' in properties) shortAddress += properties.postal_code;
+            if ('city' in properties) {
+                shortAddress += properties.city;
+                shortAddress += ', ';
+            }            
             if ('state' in properties) {
                 shortAddress += properties.state;
                 shortAddress += ', ';
@@ -308,142 +309,6 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             }
             return element.getElementsByTagNameNS(ns, tagName);
         }
-    };
-    /**
-     * parses the routing results of the service to a single 'path'
-     * @param results: response of the service
-     * @param routeString: Leaflet LineString representing the whole route
-     */
-    orsUtilsService.writeRouteToSingleLineString = function(results) {
-        var routeString = [];
-        var routeGeometry = orsUtilsService.getElementsByTagNameNS(results, orsNamespaces.xls, 'RouteGeometry')[0];
-        angular.forEach(orsUtilsService.getElementsByTagNameNS(routeGeometry, orsNamespaces.gml, 'pos'), function(point) {
-            point = point.text || point.textContent;
-            point = point.split(' ');
-            // if elevation contained
-            if (point.length == 2) {
-                point = L.latLng(point[1], point[0]);
-            } else {
-                point = L.latLng(point[1], point[0], point[2]);
-            }
-            routeString.push(point);
-        });
-        return routeString;
-    };
-    /**
-     * the line strings represent a part of the route when driving on one street (e.g. 7km on autoroute A7)
-     * we examine the lineStrings from the instruction list to get one lineString-ID per route segment so that we can support mouseover/mouseout events on the route and the instructions
-     * @param {Object} results: XML response
-     */
-    orsUtilsService.parseResultsToLineStrings = function(results) {
-        var listOfLineStrings = [];
-        var heightIdx = 0;
-        var routeInstructions = orsUtilsService.getElementsByTagNameNS(results, orsNamespaces.xls, 'RouteInstructionsList')[0];
-        if (routeInstructions) {
-            routeInstructions = orsUtilsService.getElementsByTagNameNS(routeInstructions, orsNamespaces.xls, 'RouteInstruction');
-            $A(routeInstructions).each(function(instructionElement) {
-                var directionCode = orsUtilsService.getElementsByTagNameNS(instructionElement, orsNamespaces.xls, 'DirectionCode')[0];
-                directionCode = directionCode.textContent;
-                //skip directionCode 100 for now
-                if (directionCode == '100') {
-                    return;
-                }
-                var segment = [];
-                $A(orsUtilsService.getElementsByTagNameNS(instructionElement, orsNamespaces.gml, 'pos')).each(function(point) {
-                    point = point.text || point.textContent;
-                    point = point.split(' ');
-                    point = L.latLng(point[1], point[0]);
-                    segment.push(point);
-                });
-                listOfLineStrings.push(segment);
-            });
-        }
-        return listOfLineStrings;
-    };
-    /**
-     * corner points are points in the route where the direction changes (turn right at street xy...)
-     * @param {Object} results: XML response
-     * @param {Object} converterFunction
-     */
-    orsUtilsService.parseResultsToCornerPoints = function(results, converterFunction) {
-        var listOfCornerPoints = [];
-        var routeInstructions = orsUtilsService.getElementsByTagNameNS(results, orsNamespaces.xls, 'RouteInstructionsList')[0];
-        if (routeInstructions) {
-            routeInstructions = orsUtilsService.getElementsByTagNameNS(routeInstructions, orsNamespaces.xls, 'RouteInstruction');
-            $A(routeInstructions).each(function(instructionElement) {
-                var directionCode = orsUtilsService.getElementsByTagNameNS(instructionElement, orsNamespaces.xls, 'DirectionCode')[0];
-                directionCode = directionCode.textContent;
-                //skip directionCode 100 for now
-                if (directionCode == '100') {
-                    return;
-                }
-                var point = orsUtilsService.getElementsByTagNameNS(instructionElement, orsNamespaces.gml, 'pos')[0];
-                point = point.text || point.textContent;
-                point = point.split(' ');
-                point = L.latLng(point[1], point[0]);
-                // point = converterFunction(point);
-                listOfCornerPoints.push(point);
-            });
-        }
-        return listOfCornerPoints;
-    };
-    /**
-     * Returns summary of the route
-     * @param {Object} results: XML response
-     */
-    orsUtilsService.parseRouteSummary = function(results) {
-        var yardsUnit, ascentValue, ascentUnit, descentValue, descentUnit, ascentArr, descentArr, totalTimeArr = [],
-            distArr = [],
-            actualdistArr = [],
-            routeSummary = {};
-        var summaryElement = orsUtilsService.getElementsByTagNameNS(results, orsNamespaces.xls, 'RouteSummary')[0];
-        var totalTime = orsUtilsService.getElementsByTagNameNS(summaryElement, orsNamespaces.xls, 'TotalTime')[0];
-        totalTime = totalTime.textContent || totalTime.text;
-        //<period>PT 5Y 2M 10D 15H 18M 43S</period>
-        //The example above indicates a period of five years, two months, 10 days, 15 hours, a8 minutes and 43 seconds
-        totalTime = totalTime.replace('P', '');
-        totalTime = totalTime.replace('T', '');
-        totalTime = totalTime.replace('D', 'days');
-        totalTime = totalTime.replace('H', 'hr');
-        totalTime = totalTime.replace('M', 'min');
-        totalTime = totalTime.replace('S', 'seconds');
-        totalTime = totalTime.match(/(\d+|[^\d]+)/g).join(',');
-        totalTime = totalTime.split(',');
-        routeSummary.time = totalTime;
-        // get distance
-        var distance = orsUtilsService.getElementsByTagNameNS(summaryElement, orsNamespaces.xls, 'TotalDistance')[0];
-        var distanceValue = distance.getAttribute('value');
-        var distanceUnit = distance.getAttribute('uom');
-        //use mixture of km and m
-        distArr = orsUtilsService.convertDistanceFormat(distanceValue, lists.distanceUnits[0]);
-        routeSummary.distance = distArr;
-        // get actual distance
-        var actualDistance = orsUtilsService.getElementsByTagNameNS(summaryElement, orsNamespaces.xls, 'ActualDistance')[0];
-        if (actualDistance !== undefined) {
-            var actualDistanceValue = actualDistance.getAttribute('value');
-            var actualDistanceUnit = actualDistance.getAttribute('uom');
-            //use mixture of km and m
-            actualdistArr = orsUtilsService.convertDistanceFormat(actualDistanceValue, lists.distanceUnits[0]);
-            routeSummary.actualDistance = actualdistArr;
-        }
-        // get ascent descent summary
-        var ascent = orsUtilsService.getElementsByTagNameNS(results, orsNamespaces.xls, 'Ascent')[0];
-        var descent = orsUtilsService.getElementsByTagNameNS(results, orsNamespaces.xls, 'Descent')[0];
-        if (ascent !== undefined) {
-            ascentValue = ascent.getAttribute('value');
-            ascentUnit = ascent.getAttribute('uom');
-            //use mixture of km and m
-            ascentArr = orsUtilsService.convertDistanceFormat(ascentValue, lists.distanceUnits[0]);
-            routeSummary.ascent = ascentArr;
-        }
-        if (descent !== undefined) {
-            descentValue = descent.getAttribute('value');
-            descentUnit = descent.getAttribute('uom');
-            //use mixture of km and m
-            descentArr = orsUtilsService.convertDistanceFormat(descentValue, lists.distanceUnits[0]);
-            routeSummary.descent = descentArr;
-        }
-        return routeSummary;
     };
     /**
      * convert a distance to an easy to read format.

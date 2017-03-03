@@ -549,3 +549,14 @@ lists.errors = {
         color: 1
     }
 };
+lists.avoidFlags = {
+    Highways: 1, // 1 << 0;
+    Tollways: 2, // 1 << 1;
+    Steps: 2, // 1 << 1;
+    Ferries: 4, // 1 << 2;
+    UnpavedRoads: 8, // 1 << 3;
+    Tracks: 16, // 1 << 4;
+    Tunnels: 32, // 1 << 5;
+    PavedRoads: 64, // 1 << 6;
+    Fords: 128, // 1 << 7;
+};

@@ -266,13 +266,13 @@ ors-route, ors-analysis {
 .ors-segment-card .heading {
     padding-top: 1rem;
     padding-bottom: 1rem;
-    padding-left: 1rem;
+    padding-left: 0.5rem;
 }
 
 .ors-segment-card .summary {
     padding-bottom: 1rem;
     border-bottom: .1rem solid #edf3f5;
-    padding-left: 5rem;
+    padding-left: 4.5rem;
 }
 
 .ors-segment-card .info .heading .icon {
