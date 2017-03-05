@@ -19,10 +19,21 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
         } catch (error) {
             console.warn(error);
         }
+
+        orsSettingsFactory.subscribeToRouteRequest(function onNext(bool) {
+            if (bool === true) {
+                $scope.route = ctrl.route = [];
+                ctrl.data = undefined;
+                ctrl.isLoading = bool;
+            }
+        });
+
         routeSubscriptionInstructions = orsRouteService.routesSubject.subscribe(data => {
             ctrl.routeIndex = orsRouteService.getCurrentRouteIdx();
             if (data.routes) {
                 $scope.route = ctrl.route = data.routes[ctrl.routeIndex];
+                ctrl.data = orsRouteService.data;
+                ctrl.isLoading = false;
             } 
         });
         ctrl.waypoints = orsSettingsFactory.getWaypoints();

@@ -130,7 +130,7 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$h
                     'summary': key
                 }
             });
-            console.log(JSON.stringify(extra))
+            // console.log(JSON.stringify(extra))
             hgData.push(extra);
         }
         return hgData;

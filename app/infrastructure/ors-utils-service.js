@@ -386,8 +386,13 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
                     getProp(obj[o]);
                 } else {
                     // Filter functions and properties of other types
-                    if (typeof obj[o] != "function" && o.toString().charAt(0) != '_' && (lists.permalinkFilters[settings.profile.type].includes(o) || lists.permalinkFilters.avoidables.includes(o) || lists.permalinkFilters.analysis.includes(o))) {
+                    if (typeof obj[o] != "function" && o.toString().charAt(0) != '_' && (lists.permalinkFilters[settings.profile.type].includes(o) || lists.permalinkFilters.analysis.includes(o))) {
                         link = link.concat('&' + o + '=' + obj[o]);
+                    }
+                    if (lists.optionList.avoidables[o]) {
+                        if (lists.optionList.avoidables[o].subgroups.includes(settings.profile.type)) {
+                            link = link.concat('&' + o + '=' + obj[o]);       
+                        }
                     }
                 }
             }

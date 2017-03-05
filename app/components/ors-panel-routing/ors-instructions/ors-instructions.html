@@ -3,9 +3,10 @@
         <i class="fa fa-lg fa-arrow-left">
         </i>
     </button>
+    <ors-loading></ors-loading>
     <div ng-include="'includes/route-summary.html'">
     </div>
-    <div class="ors-instruction-controls">
+    <div class="ors-instruction-controls" ng-show="!$ctrl.isLoading">
 	    <button tooltips tooltip-template="{{('EXPORT' | translate)}}" tooltip-side="top" class="ors-controls-button flright" data-ng-click="$ctrl.showExport = !$ctrl.showExport">
 	        <i class="fa fa-download">
 	        </i>

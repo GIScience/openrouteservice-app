@@ -373,7 +373,7 @@ ors-instructions {
 
 /** Isochrone queries */
 
-.ors-aa-query {
+.ors-aa-query, .ors-loading {
     margin: 10px;
     padding: 10px;
     border-radius: 5px;
