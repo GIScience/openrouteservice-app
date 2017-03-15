@@ -54,8 +54,15 @@ angular.module('orsApp').directive('orsMap', () => {
                 position: "bottomright",
                 mappings: mappings
             });
-
-            console.log(lists.colorMappings)
+            $scope.brand = L.control({
+                position: 'bottomleft'
+            });
+            $scope.brand.onAdd = function(map) {
+                var div = L.DomUtil.create('div', 'ors-brand');
+                div.innerHTML = '<a href="http://www.geog.uni-heidelberg.de/gis/heigit.html" target="_blank"><img src="img/brand.png"></a>';
+                return div;
+            };
+            $scope.mapModel.map.addControl($scope.brand);
             /* AVOID AREA CONTROLLER */
             L.NewPolygonControl = L.Control.extend({
                 options: {
@@ -205,6 +212,7 @@ angular.module('orsApp').directive('orsMap', () => {
                 $scope.mapModel.map.closePopup();
             };
             $scope.addNumberedMarker = (geom, featureId, layerCode, isIsochrones = false) => {
+                console.log('adding num', isIsochrones)
                 const lat = geom[1] || geom.lat;
                 const lng = geom[0] ||  geom.lng;
                 let textLabelclass;
@@ -299,7 +307,8 @@ angular.module('orsApp').directive('orsMap', () => {
             $scope.reshuffleIndicesText = (actionPackage) => {
                 let i = 0;
                 $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
-                    let markerIcon = createLabelIcon("textLabelclass", i + 1);
+                    let markerIcon;
+                    markerIcon = actionPackage.layerCode == lists.layers[5] ? createLabelIcon("textLabelclass-isochrones", i + 1) : createLabelIcon("textLabelclass", i + 1);
                     layer.setIcon(markerIcon);
                     layer.options.index = i;
                     i++;
@@ -380,6 +389,7 @@ angular.module('orsApp').directive('orsMap', () => {
                 }
             };
             let createLabelIcon = function(labelClass, labelText) {
+                console.log(labelClass, labelText)
                 return L.divIcon({
                     className: labelClass,
                     html: labelText,
@@ -474,20 +484,17 @@ angular.module('orsApp').directive('orsMap', () => {
              * Dispatches all commands sent by Mapservice by using id and then performing the corresponding function
              */
             orsMapFactory.subscribeToMapFunctions(function onNext(params) {
-                
-
                 switch (params._actionCode) {
                     case -1:
                         $scope.mapModel.map.addControl($scope.hg);
                         console.log(params._package.geometry)
                         if (params._package.geometry) {
                             $scope.hg.addData(params._package.geometry);
-                        } 
-                        else {
+                        } else {
                             $scope.hg.remove();
                         }
                         break;
-                    /** zoom to features */
+                        /** zoom to features */
                     case 0:
                         $scope.zoom(params._package);
                         break;
