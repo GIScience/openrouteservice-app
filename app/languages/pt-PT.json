@@ -130,7 +130,11 @@
     "Sand": "Areia",
     "Woodchips": "Lascas de madeira",
     "Grass": "Relva",
-    "Grass Paver": "Pavimento com relva"
+    "Grass Paver": "Pavimento com relva",
+    "DESTINATION": "Directions to here",
+    "START": "Directions from here",
+    "VIA": "Add as via point",
+    "CENTER": "Use as center"
 }
 
 
