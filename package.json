@@ -9,6 +9,7 @@
   "dependencies": {
     "@angular/router": "0.2.0",
     "core-js": "2.4.0",
+    "geojson": "^0.4.1",
     "grunt-contrib-connect": "0.8.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-remove-logging": "^0.2.0",

@@ -130,5 +130,9 @@
     "Sand": "Sand",
     "Woodchips": "Woodchips",
     "Grass": "Grass",
-    "Grass Paver": "Grass Paver"
+    "Grass Paver": "Grass Paver",
+    "DESTINATION": "Directions to here",
+    "START": "Directions from here",
+    "VIA": "Add as via point",
+    "CENTER": "Use as center"
 }

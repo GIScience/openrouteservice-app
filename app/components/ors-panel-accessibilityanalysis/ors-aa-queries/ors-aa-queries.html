@@ -1,4 +1,4 @@
-<div ng-repeat="isochroneResponse in $ctrl.aaQueries;">
+<div ng-repeat="isochroneResponse in $ctrl.aaQueries track by isochroneResponse.info.timestamp;">
     <ors-aa-query isochrone-idx="$index" attributes="isochroneResponse" on-delete="$ctrl.deleteQuery(isoidx)" on-emph="$ctrl.emph(isoidx,isonum)" on-de-emph="$ctrl.deEmph()" on-toggle="$ctrl.toggleQuery(obj)" on-download="$ctrl.downloadQuery(isoidx)" on-zoom="$ctrl.zoomTo(isoidx, isonum)">
     </ors-aa-query>
 </div>

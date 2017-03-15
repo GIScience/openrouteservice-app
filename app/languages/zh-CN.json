@@ -95,6 +95,7 @@
     "DOWNLOAD_ISOCHRONES": "下载等值线",
     "DOWNLOAD_ROUTE": "下载路线",
     "FILE_FORMAT": "文件格式",
+<<<<<<< HEAD
     "SELECT_FILES": "选择文件",
     "FILE_NAME": "文件名",
     "PREVIEW": "预览",
@@ -130,4 +131,8 @@
     "Woodchips": "木屑路面",
     "Grass": "草坪路面",
     "Grass Paver": "平草路面"
+    "DESTINATION": "到这里的路线",
+    "START": "从这里出发的路线",
+    "VIA": "作为途经点",
+    "CENTER": "作为中心点"
 }

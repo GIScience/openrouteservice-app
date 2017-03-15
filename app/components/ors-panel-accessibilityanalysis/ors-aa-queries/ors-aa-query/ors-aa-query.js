@@ -14,7 +14,6 @@ angular.module('orsApp.ors-aa-query', []).component('orsAaQuery', {
     controller: ['orsMessagingService', 'orsAaService', function(orsMessagingService, orsAaService) {
         let ctrl = this;
         ctrl.$onInit = () => {
-            console.log('INIT')
             ctrl.showOnMap = true;
             ctrl.onToggle({
                 obj: {
@@ -23,6 +22,21 @@ angular.module('orsApp.ors-aa-query', []).component('orsAaQuery', {
                 }
             });
         };
+        // ctrl.$onChanges = (changesObj) => {
+        //     console.log(changesObj)
+        //     if (changesObj.isochroneIdx) {
+        //         if (changesObj.isochroneIdx.currentValue !== changesObj.isochroneIdx.previousValue && changesObj.isochroneIdx.previousValue >= 0) {
+        //             if (ctrl.showOnMap === false) {
+        //             ctrl.onToggle({
+        //                 obj: {
+        //                     isoidx: ctrl.isochroneIdx,
+        //                     zoom: false
+        //                 }
+        //             });
+        //             }
+        //         }
+        //     }
+        // };
         ctrl.getClass = (bool) => {
             if (bool === true) return "fa fa-fw fa-chevron-down";
             else return "fa fa-fw fa-chevron-right";
