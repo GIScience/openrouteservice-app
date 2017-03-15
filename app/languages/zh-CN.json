@@ -129,5 +129,9 @@
     "Sand": "TO_DO",
     "Woodchips": "TO_DO",
     "Grass": "TO_DO",
-    "Grass Paver": "TO_DO"
+    "Grass Paver": "TO_DO",
+    "DESTINATION": "Directions to here",
+    "START": "Directions from here",
+    "VIA": "Add as via point",
+    "CENTER": "Use as center"
 }

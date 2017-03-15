@@ -130,5 +130,9 @@
     "Sand": "Sand",
     "Woodchips": "Hackgut",
     "Grass": "Gras",
-    "Grass Paver": "Rasengitterstein"
+    "Grass Paver": "Rasengitterstein",
+    "DESTINATION": "Route hierher",
+    "START": "Route von hier",
+    "VIA": "Als Wegpunkt hinzufügen",
+    "CENTER": "Als Zentrum nutzen"
 }
