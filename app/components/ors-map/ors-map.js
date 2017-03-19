@@ -167,10 +167,16 @@ angular.module('orsApp').directive('orsMap', () => {
                     popupEvent = $compile('<ors-aa-popup></ors-aa-popup>')($scope);
                 }
                 const popup = L.popup({
-                    closeButton: true,
+                    maxWidth: 200,
+                    minWidth: 150,
+                    closeButton: false,
                     className: 'cm-popup'
                 }).setContent(popupEvent[0]).setLatLng(e.latlng);
                 $scope.mapModel.map.openPopup(popup);
+                // has to wait for compile, update checks if popup within map
+                $timeout(function() {
+                    popup.update();
+                },300);
             });
             //$scope.mapModel.map.on('baselayerchange', emitMapChangeBaseMap);
             //$scope.mapModel.map.on('overlayadd', emitMapChangeOverlay);
