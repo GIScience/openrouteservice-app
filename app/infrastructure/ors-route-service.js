@@ -78,12 +78,11 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$h
     orsRouteService.processResponse = (data, profile) => {
         orsRouteService.data = data;
         let cnt = 0;
-        _.each(orsRouteService.data.routes, (route) => {
+        angular.forEach(orsRouteService.data.routes, function(route) {
             console.info(route)
             //const geometry = orsUtilsService.decodePolyline(route.geometry, route.elevation);
             route.geometryRaw = angular.copy(route.geometry.coordinates);
             let geometry = route.geometry.coordinates;
-
             // reverse order, needed as leaflet ISO 6709
             for (let i = 0; i < geometry.length; i++) {
                 let lng = geometry[i][0];
@@ -116,7 +115,7 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$h
                 let chunk = {};
                 const from = item[0];
                 const to = item[1];
-                const geometry = _.slice(routeString, from, to + 1);
+                const geometry = routeString.slice(from, to + 1);
                 chunk.line = geometry;
                 const typenumber = item[2];
                 chunk.attributeType = typenumber;

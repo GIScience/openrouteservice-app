@@ -10,7 +10,7 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
         ctrl.processExtras = (currentRoute, key) => {
             let totalDistance = currentRoute.summary.distance;
             let extras = {};
-            _.forEach(currentRoute.extras[key].values, (elem, i) => {
+            angular.forEach(currentRoute.extras[key].values, function(elem, i) {
                 const fr = elem[0],
                     to = elem[1];
                 if (fr !== to) {

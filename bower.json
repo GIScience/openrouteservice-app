@@ -7,7 +7,6 @@
   "private": true,
   "dependencies": {
     "jquery": "latest",
-    "lodash": "latest",
     "leaflet": "latest",
     "angular-animate": "~1.5.10",
     "angular-cookies": "~1.5.10",

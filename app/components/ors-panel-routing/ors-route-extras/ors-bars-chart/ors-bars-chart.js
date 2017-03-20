@@ -14,7 +14,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
                 return d.percentage + '% ' + scope.translateFilter(d.type) + ' (' + scope.distanceFilter(d.distance) + ')';
             });
             let data = [];
-            _.forEach(scope.typesOrder, (type) => {
+            angular.forEach(scope.typesOrder, function(type) {
                 data.push(scope.obj[type]);
             });
             let margin = {
@@ -31,7 +31,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
             let yAxis = d3.axisLeft().scale(y);
             var svg = d3.select(element[0]).append("svg").attr("width", width).attr("height", height);
             y.domain([0]);
-            x.domain([0, _.last(data).y1]);
+            x.domain([0, data[data.length - 1].y1]);
             svg.append("g").selectAll("rect").data(data).enter().append("rect").attr("height", 26).attr("x", (d) => {
                 return x(d.y0) / 1;
             }).attr("width", (d) => {
@@ -93,9 +93,9 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
             $scope.distanceFilter = $filter('distance');
             $scope.translateFilter = $filter('translate');
             $scope.EmphSegment = (segments) => {
-                _.forEach(segments, (pair) => {
+                angular.forEach(segments, function(pair) {
                     const routeString = orsRouteService.data.routes[$scope.routeIndex].geometry;
-                    const geometry = _.slice(routeString, pair[0], pair[1] + 1);
+                    const geometry = routeString.slice(pair[0], pair[1] + 1);
                     orsRouteService.Emph(geometry);
                 });
             };

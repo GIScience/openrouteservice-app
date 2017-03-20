@@ -181,8 +181,8 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
         angular.forEach(settings.profile.options.avoidables, function(value, key) {
             if (value === true) {
                 const avSubgroups = lists.optionList.avoidables[key].subgroups;
-                if (_.includes(avSubgroups, subgroup)) {
-                    options.avoid_features += lists.optionList.avoidables[key].name + '|';
+                if (avSubgroups.indexOf(subgroup) !== -1) {
+                    options.avoid_features += lists.optionList.avoidables[key].name + '|'   ;
                 }
             }
         });
@@ -272,7 +272,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             if ('city' in properties) {
                 shortAddress += properties.city;
                 shortAddress += ', ';
-            }            
+            }
             if ('state' in properties) {
                 shortAddress += properties.state;
                 shortAddress += ', ';
@@ -391,7 +391,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
                     }
                     if (lists.optionList.avoidables[o]) {
                         if (lists.optionList.avoidables[o].subgroups.includes(settings.profile.type)) {
-                            link = link.concat('&' + o + '=' + obj[o]);       
+                            link = link.concat('&' + o + '=' + obj[o]);
                         }
                     }
                 }
