@@ -12,6 +12,7 @@
  * @author: Timothy Ellersiek, timothy.ellersiek@geog.uni-heidelberg.de, Hendrik Leuschner, hendrik.leuschner@uni-heidelberg.de
  * @version: 1.0
  */
+ console.info(turf)
 angular.element(document).ready(function() {
     angular.bootstrap(document.body, ['orsApp']);
 });

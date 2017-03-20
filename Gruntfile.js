@@ -184,6 +184,17 @@ module.exports = function(grunt) {
                 src: ['build/traceur_runtime.js'],
                 dest: 'build/index.html'
             }
+        },
+        browserify: {
+            turf: {
+                src: 'main.js',
+                dest: 'node_modules/turf.js',
+                options: {
+                    browserifyOptions: {
+                        standalone: 'turf'
+                    }
+                }
+            }
         }
         // connect: {
         //     options: {
@@ -247,6 +258,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-script-link-tags');
+    grunt.loadNpmTasks('grunt-browserify');
     // Clean the .git/hooks/pre-commit file then copy in the latest version 
     //grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['clean:task_rm_build', 'copy:build', 'removelogging', 'preprocess', 'traceur', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'usemin', 'clean:task_rm_build_unused']);
     //   grunt.registerTask('build', [
@@ -265,6 +277,6 @@ module.exports = function(grunt) {
     //   'usemin',
     //   'htmlmin'
     // ]);
-    grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['clean:task_rm_build', 'copy:build', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'clean:task_rm_build_unused', 'connect:build:keepalive']);
-    grunt.registerTask('serve', 'Run local server', ['connect:dev', 'watch']);
+    grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'clean:task_rm_build', 'copy:build', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'clean:task_rm_build_unused', 'connect:build:keepalive']);
+    grunt.registerTask('serve', 'Run local server', ['browserify:turf', 'connect:dev', 'watch']);
 };
