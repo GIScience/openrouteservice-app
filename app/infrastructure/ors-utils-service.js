@@ -397,11 +397,11 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
                     }
                     if (lists.optionList.avoidables[o]) {
                         if (lists.optionList.avoidables[o].subgroups.includes(settings.profile.type)) {
-                            let val;
-                            if (obj[o] === true) val = 1;
-                            else if (obj[o] === false) val = 0;
-                            else val = obj[o];
-                            link = link.concat('&' + lists.permalinkKeys[o] + '=' + val);
+                            if (obj[o] === true) {
+                                link = link.concat('&' + lists.permalinkKeys[o] + '=1');
+                            } else if (obj[o] === false) {} else {
+                                link = link.concat('&' + lists.permalinkKeys[o] + '=' + obj[o]);
+                            }
                         }
                     }
                 }

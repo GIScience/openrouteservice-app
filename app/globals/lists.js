@@ -519,7 +519,7 @@ lists.permalinkKeysReversed = swap(lists.permalinkKeys);
 
 function swap(obj) {
     var rev = {};
-    for (let key in obj) {
+    for (var key in obj) {
         rev[obj[key]] = key;
     }
     return rev;
