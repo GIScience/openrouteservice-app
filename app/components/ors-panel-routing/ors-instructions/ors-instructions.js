@@ -1,11 +1,10 @@
-let routeSubscriptionInstructions;
 angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).component('orsInstructions', {
     templateUrl: 'components/ors-panel-routing/ors-instructions/ors-instructions.html',
     bindings: {
         showInstructions: '&',
         shouldDisplayRouteDetails: '<'
     },
-    controller: ['$scope', 'orsRouteService', 'orsSettingsFactory', function($scope, orsRouteService, orsSettingsFactory) {
+    controller: ['$rootScope', '$scope', 'orsRouteService', 'orsSettingsFactory', function($rootScope, $scope, orsRouteService, orsSettingsFactory) {
         let ctrl = this;
         ctrl.profiles = lists.profiles;
         /** use scope in order to share same template ng-include with summaries */
@@ -15,23 +14,23 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
         /** subscribe to route object if instructions are already open */
         /** if we are returning to this panel, dispose all old subscriptions */
         try {
-            routeSubscriptionInstructions.dispose();
+            $rootScope.routeSubscriptionInstructions.dispose();
         } catch (error) {
             console.warn(error);
         }
-        orsSettingsFactory.subscribeToRouteRequest(function onNext(bool) {
-            if (bool === true) {
-                $scope.route = ctrl.route = [];
-                ctrl.data = undefined;
-                ctrl.isLoading = bool;
-            }
-        });
-        routeSubscriptionInstructions = orsRouteService.routesSubject.subscribe(data => {
+        $rootScope.routeSubscriptionInstructions = orsRouteService.routesSubject.subscribe(data => {
             ctrl.routeIndex = orsRouteService.getCurrentRouteIdx();
             if (data.routes) {
                 $scope.route = ctrl.route = data.routes[ctrl.routeIndex];
                 ctrl.data = orsRouteService.data;
                 ctrl.isLoading = false;
+            }
+        });
+        orsSettingsFactory.subscribeToRouteRequest(function onNext(bool) {
+            if (bool === true) {
+                $scope.route = ctrl.route = [];
+                ctrl.data = undefined;
+                ctrl.isLoading = bool;
             }
         });
         ctrl.waypoints = orsSettingsFactory.getWaypoints();

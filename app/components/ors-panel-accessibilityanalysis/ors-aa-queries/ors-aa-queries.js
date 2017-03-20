@@ -1,16 +1,15 @@
-let isochronesSubscription;
 angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query', 'orsApp.ors-export-query']).component('orsAaQueries', {
     templateUrl: 'components/ors-panel-accessibilityanalysis/ors-aa-queries/ors-aa-queries.html',
     bindings: {},
-    controller: ['orsMessagingService', 'orsAaService', function(orsMessagingService, orsAaService) {
+    controller: ['$rootScope', 'orsMessagingService', 'orsAaService', function($rootScope, orsMessagingService, orsAaService) {
         let ctrl = this;
         ctrl.aaQueries = orsAaService.aaQueries;
         try {
-            isochronesSubscription.dispose();
+            $rootScope.isochronesSubscription.dispose();
         } catch (error) {
             console.warn(error);
         }
-        isochronesSubscription = orsAaService.subscribeToAaQueries(function onNext(d) {
+        $rootScope.isochronesSubscription = orsAaService.subscribeToAaQueries(function onNext(d) {
             ctrl.aaQueries.push(d);
         });
         ctrl.deleteQuery = (isoidx) => {

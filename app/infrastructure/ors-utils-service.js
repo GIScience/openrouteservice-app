@@ -182,7 +182,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             if (value === true) {
                 const avSubgroups = lists.optionList.avoidables[key].subgroups;
                 if (avSubgroups.indexOf(subgroup) !== -1) {
-                    options.avoid_features += lists.optionList.avoidables[key].name + '|'   ;
+                    options.avoid_features += lists.optionList.avoidables[key].name + '|';
                 }
             }
         });
@@ -375,23 +375,33 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
     orsUtilsService.parseSettingsToPermalink = function(settings, userOptions) {
         console.info("parseSettingsToPermalink", settings);
         if (settings.profile === undefined) return;
-        var link = '';
+        let link = '';
         // Hack to remove angular properties that do not have to be saved
         let profile = angular.fromJson(angular.toJson(settings.profile));
         let waypoints = angular.fromJson(angular.toJson(settings.waypoints));
 
         function getProp(obj) {
-            for (var o in obj) {
+            for (let o in obj) {
                 if (typeof obj[o] == "object") {
                     getProp(obj[o]);
                 } else {
                     // Filter functions and properties of other types
                     if (typeof obj[o] != "function" && o.toString().charAt(0) != '_' && (lists.permalinkFilters[settings.profile.type].includes(o) || lists.permalinkFilters.analysis.includes(o))) {
-                        link = link.concat('&' + o + '=' + obj[o]);
+                        if (obj[o] in lists.profiles) {
+                            link = link.concat('&' + lists.permalinkKeys[o] + '=' + lists.profiles[obj[o]].shortValue);
+                        } else if (obj[o] in lists.optionList.weight) {
+                            link = link.concat('&' + lists.permalinkKeys[o] + '=' + lists.optionList.weight[obj[o]].shortValue);
+                        } else {
+                            link = link.concat('&' + lists.permalinkKeys[o] + '=' + obj[o]);
+                        }
                     }
                     if (lists.optionList.avoidables[o]) {
                         if (lists.optionList.avoidables[o].subgroups.includes(settings.profile.type)) {
-                            link = link.concat('&' + o + '=' + obj[o]);
+                            let val;
+                            if (obj[o] === true) val = 1;
+                            else if (obj[o] === false) val = 0;
+                            else val = obj[o];
+                            link = link.concat('&' + lists.permalinkKeys[o] + '=' + val);
                         }
                     }
                 }
@@ -399,7 +409,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
         }
         if (waypoints[0] !== undefined) {
             if (waypoints[0]._latlng.lat !== undefined) {
-                link = link.concat("wps=");
+                link = link.concat(lists.permalinkKeys["wps"] + '=');
                 for (let waypoint of waypoints) {
                     if (waypoint._latlng.lng == undefined) continue;
                     link = link.concat(Math.round(waypoint._latlng.lat * 1000000) / 1000000);
@@ -411,8 +421,8 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             }
         }
         getProp(profile);
-        if (userOptions.routinglang !== undefined) link = link.concat('&routinglang=' + userOptions.routinglang);
-        if (userOptions.units !== undefined) link = link.concat('&units=' + userOptions.units);
+        if (userOptions.routinglang !== undefined) link = link.concat('&' + lists.permalinkKeys["routinglang"] + '=' + userOptions.routinglang);
+        if (userOptions.units !== undefined) link = link.concat('&' + lists.permalinkKeys["units"] + '=' + userOptions.units);
         // This timeout is neccessariliy needed to update the permalink on router reuse !!!
         $timeout(function() {
             $location.search(link);

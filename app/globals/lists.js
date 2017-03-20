@@ -68,97 +68,114 @@ lists.profiles = {
         name: 'Car',
         elevation: false,
         subgroup: 'Car',
-        request: 'driving-car'
+        request: 'driving-car',
+        shortValue: '0'
     },
     Bicycle: {
         name: 'Bicycle',
         elevation: true,
         subgroup: 'Bicycle',
-        request: 'cycling-regular'
+        request: 'cycling-regular',
+        shortValue: '1a'
     },
     BicycleMTB: {
         name: 'BicycleMTB',
         elevation: true,
         subgroup: 'Bicycle',
-        request: 'cycling-mountain'
+        request: 'cycling-mountain',
+        shortValue: '1b'
     },
     BicycleRacer: {
         name: 'BicycleRacer',
         elevation: true,
         subgroup: 'Bicycle',
-        request: 'cycling-road'
+        request: 'cycling-road',
+        shortValue: '1c'
     },
     BicycleTour: {
         name: 'BicycleTour',
         elevation: true,
         subgroup: 'Bicycle',
-        request: 'cycling-tour'
+        request: 'cycling-tour',
+        shortValue: '1d'
     },
     BicycleSafety: {
         name: 'BicycleSafety',
         elevation: true,
         subgroup: 'Bicycle',
-        request: 'cycling-safe'
+        request: 'cycling-safe',
+        shortValue: '1e'
     },
     Pedestrian: {
         name: 'Pedestrian',
         elevation: true,
         subgroup: 'Pedestrian',
-        request: 'foot-walking'
+        request: 'foot-walking',
+        shortValue: '2'
     },
     Wheelchair: {
         name: 'Wheelchair',
         elevation: true,
         subgroup: 'Wheelchair',
-        request: 'foot-walking'
+        request: 'foot-walking',
+        shortValue: '3'
     },
     hgv: {
         name: 'hgv',
         elevation: false,
         subgroup: 'HeavyVehicle',
-        request: 'driving-hgv'
+        request: 'driving-hgv',
+        shortValue: '4a'
     },
     goods: {
         name: 'goods',
         elevation: false,
         subgroup: 'HeavyVehicle',
-        request: 'driving-hgv'
+        request: 'driving-hgv',
+        shortValue: '4b'
     },
     bus: {
         name: 'bus',
         elevation: false,
         subgroup: 'HeavyVehicle',
-        request: 'driving-hgv'
+        request: 'driving-hgv',
+        shortValue: '4c'
     },
     agricultural: {
         name: 'agricultural',
         elevation: false,
         subgroup: 'HeavyVehicle',
-        request: 'driving-hgv'
+        request: 'driving-hgv',
+        shortValue: '4d'
     },
     forestry: {
         name: 'forestry',
         elevation: false,
         subgroup: 'HeavyVehicle',
-        request: 'driving-hgv'
+        request: 'driving-hgv',
+        shortValue: '4e'
     },
     delivery: {
         name: 'delivery',
         elevation: false,
         subgroup: 'HeavyVehicle',
-        request: 'driving-hgv'
+        request: 'driving-hgv',
+        shortValue: '4f'
     }
 };
 lists.optionList = {
     weight: {
         Fastest: {
-            value: 'Fastest'
+            value: 'Fastest',
+            shortValue: '0'
         },
         Shortest: {
-            value: 'Shortest'
+            value: 'Shortest',
+            shortValue: '1'
         },
         Recommended: {
-            value: 'Recommended'
+            value: 'Recommended',
+            shortValue: '2'
         }
     },
     difficulty: {
@@ -468,6 +485,45 @@ lists.permalinkFilters = {
     Pedestrian: ['type', 'weight', 'maxspeed', 'fitness', 'steepness'],
     Wheelchair: ['type', 'weight', 'maxspeed', 'incline', 'curb', 'surface']
 };
+lists.permalinkKeys = {
+    wps: 'a',
+    type: 'b',
+    weight: 'c',
+    maxspeed: 'd',
+    hgvWeight: 'f1',
+    width: 'f2',
+    height: 'f3',
+    axleload: 'f4',
+    length: 'f5',
+    fitness: 'g1',
+    steepness: 'g2',
+    surface: 'h1',
+    incline: 'h2',
+    curb: 'h3',
+    method: 'i',
+    isovalue: 'j1',
+    isointerval: 'j2',
+    reverseflow: 'j3',
+    routinglang: 'k1',
+    units: 'k2',
+    ferry: 'l1',
+    unpaved: 'l2',
+    paved: 'l3',
+    fords: 'l4',
+    highways: 'l5',
+    tollroads: 'l6',
+    tunnels: 'l7',
+    tracks: 'l8'
+};
+lists.permalinkKeysReversed = swap(lists.permalinkKeys);
+
+function swap(obj) {
+    var rev = {};
+    for (let key in obj) {
+        rev[obj[key]] = key;
+    }
+    return rev;
+}
 lists.layers = {
     0: 'layerRoutePoints',
     1: 'layerRouteLines',
