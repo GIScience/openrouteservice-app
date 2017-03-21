@@ -4,6 +4,8 @@ angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query', 'orsApp.ors-expo
     controller: ['$rootScope', 'orsMessagingService', 'orsAaService', function($rootScope, orsMessagingService, orsAaService) {
         let ctrl = this;
         ctrl.aaQueries = orsAaService.aaQueries;
+        ctrl.showExport = false;
+        
         try {
             $rootScope.isochronesSubscription.dispose();
         } catch (error) {

@@ -73,7 +73,7 @@ angular.module('orsApp').directive('orsMap', () => {
                         link = L.DomUtil.create('a', 'leaflet-avoidArea', container);
                     link.href = '#';
                     link.title = 'Create a new area avoid polygon';
-                    link.innerHTML = '<i class="fa fa-square-o"></i>';
+                    link.innerHTML = '<i class="fa fa-lg fa-object-ungroup"></i>';
                     //return container;
                     L.DomEvent.on(link, 'click', L.DomEvent.stop).on(link, 'click', function() {
                         map.editTools.startPolygon();

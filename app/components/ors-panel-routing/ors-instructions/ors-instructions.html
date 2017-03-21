@@ -3,18 +3,31 @@
         <i class="fa fa-lg fa-arrow-left">
         </i>
     </button>
-    <ors-loading></ors-loading>
+    <ors-loading>
+    </ors-loading>
     <div ng-include="'includes/route-summary.html'">
     </div>
     <div class="ors-instruction-controls" ng-show="!$ctrl.isLoading">
-	    <button tooltips tooltip-template="{{('EXPORT' | translate)}}" tooltip-side="top" class="ors-controls-button flright" data-ng-click="$ctrl.showExport = !$ctrl.showExport">
-	        <i class="fa fa-download">
-	        </i>
-	    </button>
-	</div>
-    <ors-route-extras ng-if="$ctrl.route.extras" current-route="$ctrl.route" route-index="$ctrl.routeIndex">
-    </ors-route-extras>
+        <button class="ors-controls-button flright" data-ng-click="$ctrl.showExport = !$ctrl.showExport" tooltip-side="top" tooltip-template="{{('EXPORT' | translate)}}" tooltips="">
+            <i class="fa fa-download">
+            </i>
+        </button>
+    </div>
     <div class="bottom-border">
+    </div>
+    <div class="options-box" ng-if="$ctrl.route.extras">
+        <div class="pointer margin-bottom-6" ng-click="showRouteExtras = !showRouteExtras">
+            <i ng-class="$ctrl.getClass(showRouteExtras)">
+            </i>
+            <span ng-bind-html="('EXTRAS' | translate)">
+            </span>
+        </div>
+        <div class="collapsable" ng-class="{ showMe: showRouteExtras }">
+            <ors-route-extras current-route="$ctrl.route" ng-if="$ctrl.route.extras" route-index="$ctrl.routeIndex">
+            </ors-route-extras>
+        </div>
+    </div>
+    <div class="bottom-border" ng-if="$ctrl.route.extras">
     </div>
 </div>
 <div class="ors-routing-inner">
@@ -22,5 +35,6 @@
     </div>
 </div>
 <ors-modal data-ng-show="$ctrl.showExport" show="$ctrl.showExport">
-   	<ors-export-route-controls></ors-export-route-controls>
+    <ors-export-route-controls>
+    </ors-export-route-controls>
 </ors-modal>

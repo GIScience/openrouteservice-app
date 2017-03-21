@@ -9,7 +9,7 @@
     "SETTINGS": "Einstellungen",
     "DOCUMENTATION": "API-Dokumentation",
     "ROUTING": "Routing",
-    "AA": "Erreichbarkeitsanalyse",
+    "AA": "Isochronen",
     "ADD": "Hinzufügen",
     "RESET": "Zurücksetzen",
     "REVERSE": "Vertauschen",
@@ -136,5 +136,6 @@
     "VIA": "Als Wegpunkt hinzufügen",
     "CENTER": "Als Zentrum nutzen",
     "WELCOME": "Willkommen bei OpenRouteService.org!",
-    "WELCOME_MESSAGE": "Oben rechts kannst du vermeidbare Polygone zeichnen. Im linken Menü findest du eine Vielzahl von Optionen zum Individualisieren deiner Route. Unsere neue Service API für Erreichbarkeitsanalysen findest du ebenfalls im linken Menü."
+    "WELCOME_MESSAGE": "Oben rechts kannst du vermeidbare Polygone zeichnen. Im linken Menü findest du eine Vielzahl von Optionen zum Individualisieren deiner Route. Unsere neue Service API für Erreichbarkeitsanalysen findest du ebenfalls im linken Menü.",
+    "EXTRAS": "Weitere Informationen"
 }
