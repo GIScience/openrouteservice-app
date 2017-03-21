@@ -106,6 +106,13 @@ lists.profiles = {
         request: 'cycling-safe',
         shortValue: '1e'
     },
+    BicycleElectro: {
+        name: 'BicycleElectro',
+        elevation: true,
+        subgroup: 'Bicycle',
+        request: 'cycling-electro',
+        shortValue: '1f'
+    },
     Pedestrian: {
         name: 'Pedestrian',
         elevation: true,
@@ -367,6 +374,12 @@ lists.optionList = {
             default: 20,
             step: 1
         },
+        BicycleElectro: {
+            min: 5,
+            max: 50,
+            default: 20,
+            step: 1
+        },
         Pedestrian: {
             min: 3,
             max: 15,
@@ -481,6 +494,7 @@ lists.permalinkFilters = {
     BicycleSafety: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
     BicycleMTB: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
     BicycleRacer: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
+    BicycleElectro: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
     BicycleTour: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
     Pedestrian: ['type', 'weight', 'maxspeed', 'fitness', 'steepness'],
     Wheelchair: ['type', 'weight', 'maxspeed', 'incline', 'curb', 'surface']
