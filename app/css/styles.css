@@ -688,6 +688,10 @@ input:focus, input:active {
     z-index: 999;
 }
 
+.ors-map-message {
+    max-width: 300px; 
+}
+
 
 /* Extras graphs */
 

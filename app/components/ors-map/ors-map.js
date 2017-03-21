@@ -153,6 +153,17 @@ angular.module('orsApp').directive('orsMap', () => {
             } else {
                 // Heidelberg
                 $scope.orsMap.setView([49.409445, 8.692953], 13);
+                // Welcome box
+                $scope.welcomeMsgBox = L.control({
+                    position: 'topright'
+                });
+                $scope.welcomeMsgBox.onAdd = function(map) {
+                    var div = $compile('<ors-welcome-box></ors-welcome-box>')($scope)[0];
+                    return div;
+                };
+                $timeout(function() {
+                    $scope.mapModel.map.addControl($scope.welcomeMsgBox);
+                }, 500);
             }
             /**
              * Listens to left mouse click on map
@@ -176,7 +187,7 @@ angular.module('orsApp').directive('orsMap', () => {
                 // has to wait for compile, update checks if popup within map
                 $timeout(function() {
                     popup.update();
-                },300);
+                }, 300);
             });
             //$scope.mapModel.map.on('baselayerchange', emitMapChangeBaseMap);
             //$scope.mapModel.map.on('overlayadd', emitMapChangeOverlay);
@@ -562,6 +573,23 @@ angular.module('orsApp').directive('orsAaPopup', ['$compile', '$timeout', 'orsSe
                 //fourth argument to not fire a request on add waypoint
                 scope.processMapWaypoint(idx, scope.displayPos, false, false);
             };
+        }
+    };
+}]);
+angular.module('orsApp').directive('orsWelcomeBox', ['$translate', ($translate) => {
+    return {
+        restrict: 'E',
+        template: `<div ng-attr-class="{{ 'ui message ors-map-message fade blue' }}" ng-show="show">
+            <i class="fa fa-close flright" data-ng-click="show = !show"></i>
+            <div class="header" ng-bind-html="('WELCOME' | translate)">
+            </div>
+            <div class="list">
+                <span ng-bind-html="('WELCOME_MESSAGE' | translate)">
+                </span>
+            </div>
+        </div>`,
+        link: (scope, elem, attr) => {
+            scope.show = true;
         }
     };
 }]);
