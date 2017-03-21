@@ -2,23 +2,7 @@
  * various keyword lists used in the client
  */
 var lists = {};
-lists.geolocationOptions = {
-    maximumAge: 3000,
-    timeout: 10000,
-    enableHighAccuracy: true
-};
-lists.circleMarkerOptions = {
-    radius: 8,
-    fillColor: "#4285f4",
-    color: "#4285f4",
-    weight: 10,
-    opacity: 0.3,
-    fillOpacity: 0.9
-};
-lists.wpColors = {
-    0: '#9e9e9e',
-    1: '#707070'
-};
+
 lists.waypointIcons = {
     0: {
         className: "ors-marker-start",
@@ -110,7 +94,7 @@ lists.profiles = {
         name: 'BicycleElectro',
         elevation: true,
         subgroup: 'Bicycle',
-        request: 'cycling-electro',
+        request: 'cycling-electric',
         shortValue: '1f'
     },
     Pedestrian: {
