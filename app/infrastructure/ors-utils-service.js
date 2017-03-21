@@ -391,7 +391,9 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
                             link = link.concat('&' + lists.permalinkKeys[o] + '=' + lists.profiles[obj[o]].shortValue);
                         } else if (obj[o] in lists.optionList.weight) {
                             link = link.concat('&' + lists.permalinkKeys[o] + '=' + lists.optionList.weight[obj[o]].shortValue);
-                        } else {
+                        } else if (obj[o] === true) {
+                            link = link.concat('&' + lists.permalinkKeys[o] + '=1');
+                        } else if (obj[o] === false) {} else {
                             link = link.concat('&' + lists.permalinkKeys[o] + '=' + obj[o]);
                         }
                     }
