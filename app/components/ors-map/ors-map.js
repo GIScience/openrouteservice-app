@@ -505,6 +505,7 @@ angular.module('orsApp').directive('orsMap', () => {
             });
             $scope.hereControl.onAdd = (map) => {
                 let div = $compile('<ors-here-popup></ors-here-popup>')($scope)[0];
+                L.DomEvent.disableClickPropagation(div);
                 return div;
             };
             $scope.showHereMessage = (pos) => {
