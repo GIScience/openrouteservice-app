@@ -4,7 +4,8 @@ angular.module('orsApp.cookies-service', ['ngCookies']).factory('orsCookiesFacto
         let userOptions = $cookies.getObject('userOptions');
         let lang = $window.navigator.language || $window.navigator.userLanguage;
         lang = lang.split('-');
-        lang = lang[0] + '-' + lang[1].toUpperCase();
+        if (lang.length == 1) lang = lang[0] + '-' + lang[0].toUpperCase();
+        else lang = lang[0] + '-' + lang[1].toUpperCase();
         if (userOptions === undefined) userOptions = {
             language: lang
         };

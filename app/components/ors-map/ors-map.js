@@ -6,7 +6,10 @@ angular.module('orsApp').directive('orsMap', () => {
             orsMap: '='
         },
         link: (scope, element, attrs) => {},
-        controller: ['$scope', '$compile', '$timeout', 'orsSettingsFactory', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', ($scope, $compile, $timeout, orsSettingsFactory, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsCookiesFactory) => {
+        controller: ['$scope', '$filter', '$compile', '$timeout', 'orsSettingsFactory', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', ($scope, $filter, $compile, $timeout, orsSettingsFactory, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsCookiesFactory) => {
+            
+            $scope.translateFilter = $filter('translate');
+
             const mapsurfer = L.tileLayer(orsNamespaces.layerMapSurfer.url, {
                 attribution: orsNamespaces.layerMapSurfer.attribution
             });
@@ -497,6 +500,33 @@ angular.module('orsApp').directive('orsMap', () => {
                 if (waypoints.length > 0) $scope.reAddWaypoints(waypoints, $scope.routing, true);
                 // $scope.addWaypoint(idx, iconIdx, waypoint._latlng, fireRequest);
             });
+            $scope.hereControl = L.control({
+                position: 'bottomright'
+            });
+            $scope.hereControl.onAdd = (map) => {
+                let div = $compile('<ors-here-popup></ors-here-popup>')($scope)[0];
+                return div;
+            };
+            $scope.showHereMessage = (pos) => {
+                $scope.mapModel.map.closePopup();
+                const lngLatString = orsUtilsService.parseLngLatString(pos);
+                // get the information of the rightclick location 
+                const payload = orsUtilsService.geocodingPayload(lngLatString, true);
+                const request = orsRequestService.geocode(payload);
+                request.promise.then((data) => {
+                    $scope.address = {}
+                    if (data.features.length > 0) {
+                        const addressObj = orsUtilsService.addShortAddresses(data.features)[0];
+                        $scope.address.info = addressObj.shortaddress;
+                    } else {
+                        $scope.address.info = $scope.translateFilter('NO_ADDRESS')
+                    }
+                    $scope.address.position = lngLatString;
+                    $scope.mapModel.map.addControl($scope.hereControl);
+                }, (response) => {
+                    orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
+                });
+            };
             /**
              * Dispatches all commands sent by Mapservice by using id and then performing the corresponding function
              */
@@ -562,36 +592,7 @@ angular.module('orsApp').directive('orsPopup', ['$compile', '$timeout', 'orsSett
             };
             //what's here request
             scope.here = () => {
-                scope.heremsg = {};
-                const lngLatString = orsUtilsService.parseLngLatString(scope.displayPos);
-                const payload = orsUtilsService.geocodingPayload(lngLatString, true);
-                const request = orsRequestService.geocode(payload);
-                request.promise.then((data) => {
-                    if (data.features.length > 0) {
-                        const addressData = orsUtilsService.addShortAddresses(data.features);
-                        //waits for loading of the site
-                        $timeout(function() {
-                            scope.heremsg = {
-                                name: addressData[0].shortaddress,
-                                pos: scope.displayPos.lat + " , " + scope.displayPos.lng,
-                            }
-                        }, 300);
-                    } else {
-                        orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
-                    }
-                }, (response) => {
-                    orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
-                });
-                scope.copyToClipboard = (text) => {
-                    window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
-                }
-                //
-                let popupEvent = $compile('<ors-here-popup></ors-here-popup>')(scope);
-                const pophere = L.popup({
-                    minWidth: 245,
-                    closeButton: true,
-                    className: 'cm-here-popup'
-                }).setContent(popupEvent[0]).setLatLng(scope.displayPos).openOn(scope.mapModel.map);
+                scope.showHereMessage(scope.displayPos)
             };
         }
     };
@@ -609,9 +610,15 @@ angular.module('orsApp').directive('orsAaPopup', ['$compile', '$timeout', 'orsSe
         }
     };
 }]);
-angular.module('orsApp').directive('orsHerePopup', ['$compile', '$timeout', 'orsSettingsFactory', ($compile, $timeout, orsSettingsFactory) => {
+angular.module('orsApp').directive('orsHerePopup', ['$translate', ($translate) => {
     return {
-        templateUrl: 'components/ors-map/directive-templates/ors-here-popup.html'
+        restrict: 'E',
+        scope: false,
+        templateUrl: 'components/ors-map/directive-templates/ors-here-popup.html',
+        link: (scope, elem, attr) => {
+            scope.show = true;
+            console.log(scope)
+        }
     }
 }]);
 angular.module('orsApp').directive('orsWelcomeBox', ['$translate', ($translate) => {

@@ -1,8 +1,10 @@
-<div class=cm-here-popup>
-<span class="cm-here-popup-loading" ng-if="!heremsg.name"> ... loading </span>
-<span class="cm-here-popup-name" ng-if="heremsg.name">{{heremsg.name}}</span><br>
-<span class="cm-here-popup-pos" ng-if="heremsg.pos" ng-model="heremsg.pos" ng-click="copyToClipboard(heremsg.pos)">{{heremsg.pos}}</span>
-</div>
-<div class="cm-here-popup-option" ng-if="heremsg.name">
-<span class="cm-here-start"><a ng-click="add(0)">start</a></span><span class="cm-here-via"><a ng-click="add(1)">via</a></span><span class="cm-here-dest"><a ng-click="add(2)">dest</a></span>
+<div ng-attr-class="{{ 'ui message ors-map-message fade white' }}" ng-show="show">
+    <i class="fa fa-close flright" data-ng-click="show = !show">
+    </i>
+    <div class="header" ng-bind-html="address.info">
+    </div>
+    <div class="list">
+        <span ng-bind-html="address.position">
+        </span>
+    </div>
 </div>

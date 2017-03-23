@@ -138,5 +138,7 @@
     "CENTER": "Als Zentrum nutzen",
     "WELCOME": "Willkommen bei OpenRouteService.org!",
     "WELCOME_MESSAGE": "Oben rechts kannst du vermeidbare Polygone zeichnen. Im linken Menü findest du eine Vielzahl von Optionen zum Individualisieren deiner Route. Unsere neue Service API für Erreichbarkeitsanalysen findest du ebenfalls im linken Menü.",
-    "EXTRAS": "Weitere Informationen"
+    "EXTRAS": "Weitere Informationen",
+    "WHATSHERE": "Was ist hier?",
+    "NO_ADDRESS": "Es konnte keine Adresse gefunden werden."
 }
