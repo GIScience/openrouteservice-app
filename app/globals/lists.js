@@ -2,23 +2,7 @@
  * various keyword lists used in the client
  */
 var lists = {};
-lists.geolocationOptions = {
-    maximumAge: 3000,
-    timeout: 10000,
-    enableHighAccuracy: true
-};
-lists.circleMarkerOptions = {
-    radius: 8,
-    fillColor: "#4285f4",
-    color: "#4285f4",
-    weight: 10,
-    opacity: 0.3,
-    fillOpacity: 0.9
-};
-lists.wpColors = {
-    0: '#9e9e9e',
-    1: '#707070'
-};
+
 lists.waypointIcons = {
     0: {
         className: "ors-marker-start",
@@ -68,97 +52,121 @@ lists.profiles = {
         name: 'Car',
         elevation: false,
         subgroup: 'Car',
-        request: 'driving-car'
+        request: 'driving-car',
+        shortValue: '0'
     },
     Bicycle: {
         name: 'Bicycle',
         elevation: true,
         subgroup: 'Bicycle',
-        request: 'cycling-regular'
+        request: 'cycling-regular',
+        shortValue: '1a'
     },
     BicycleMTB: {
         name: 'BicycleMTB',
         elevation: true,
         subgroup: 'Bicycle',
-        request: 'cycling-mountain'
+        request: 'cycling-mountain',
+        shortValue: '1b'
     },
     BicycleRacer: {
         name: 'BicycleRacer',
         elevation: true,
         subgroup: 'Bicycle',
-        request: 'cycling-road'
+        request: 'cycling-road',
+        shortValue: '1c'
     },
     BicycleTour: {
         name: 'BicycleTour',
         elevation: true,
         subgroup: 'Bicycle',
-        request: 'cycling-tour'
+        request: 'cycling-tour',
+        shortValue: '1d'
     },
     BicycleSafety: {
         name: 'BicycleSafety',
         elevation: true,
         subgroup: 'Bicycle',
-        request: 'cycling-safe'
+        request: 'cycling-safe',
+        shortValue: '1e'
+    },
+    BicycleElectro: {
+        name: 'BicycleElectro',
+        elevation: true,
+        subgroup: 'Bicycle',
+        request: 'cycling-electric',
+        shortValue: '1f'
     },
     Pedestrian: {
         name: 'Pedestrian',
         elevation: true,
         subgroup: 'Pedestrian',
-        request: 'foot-walking'
+        request: 'foot-walking',
+        shortValue: '2'
     },
     Wheelchair: {
         name: 'Wheelchair',
         elevation: true,
         subgroup: 'Wheelchair',
-        request: 'foot-walking'
+        request: 'foot-walking',
+        shortValue: '3'
     },
     hgv: {
         name: 'hgv',
         elevation: false,
         subgroup: 'HeavyVehicle',
-        request: 'driving-hgv'
+        request: 'driving-hgv',
+        shortValue: '4a'
     },
     goods: {
         name: 'goods',
         elevation: false,
         subgroup: 'HeavyVehicle',
-        request: 'driving-hgv'
+        request: 'driving-hgv',
+        shortValue: '4b'
     },
     bus: {
         name: 'bus',
         elevation: false,
         subgroup: 'HeavyVehicle',
-        request: 'driving-hgv'
+        request: 'driving-hgv',
+        shortValue: '4c'
     },
     agricultural: {
         name: 'agricultural',
         elevation: false,
         subgroup: 'HeavyVehicle',
-        request: 'driving-hgv'
+        request: 'driving-hgv',
+        shortValue: '4d'
     },
     forestry: {
         name: 'forestry',
         elevation: false,
         subgroup: 'HeavyVehicle',
-        request: 'driving-hgv'
+        request: 'driving-hgv',
+        shortValue: '4e'
     },
     delivery: {
         name: 'delivery',
         elevation: false,
         subgroup: 'HeavyVehicle',
-        request: 'driving-hgv'
+        request: 'driving-hgv',
+        shortValue: '4f'
     }
 };
 lists.optionList = {
     weight: {
         Fastest: {
-            value: 'Fastest'
+            value: 'Fastest',
+            shortValue: '0'
         },
         Shortest: {
-            value: 'Shortest'
+            value: 'Shortest',
+            shortValue: '1'
         },
         Recommended: {
-            value: 'Recommended'
+            value: 'Recommended',
+            shortValue: '2'
         }
     },
     difficulty: {
@@ -208,7 +216,7 @@ lists.optionList = {
         },
         steps: {
             name: 'steps',
-            subgroups: ['Wheelchair', 'Pedestrian']
+            subgroups: ['Wheelchair', 'Pedestrian', 'Bicycle']
         },
         highways: {
             name: 'highways',
@@ -350,6 +358,12 @@ lists.optionList = {
             default: 20,
             step: 1
         },
+        BicycleElectro: {
+            min: 5,
+            max: 50,
+            default: 20,
+            step: 1
+        },
         Pedestrian: {
             min: 3,
             max: 15,
@@ -464,10 +478,50 @@ lists.permalinkFilters = {
     BicycleSafety: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
     BicycleMTB: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
     BicycleRacer: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
+    BicycleElectro: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
     BicycleTour: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
     Pedestrian: ['type', 'weight', 'maxspeed', 'fitness', 'steepness'],
     Wheelchair: ['type', 'weight', 'maxspeed', 'incline', 'curb', 'surface']
 };
+lists.permalinkKeys = {
+    wps: 'a',
+    type: 'b',
+    weight: 'c',
+    maxspeed: 'd',
+    hgvWeight: 'f1',
+    width: 'f2',
+    height: 'f3',
+    axleload: 'f4',
+    length: 'f5',
+    fitness: 'g1',
+    steepness: 'g2',
+    surface: 'h1',
+    incline: 'h2',
+    curb: 'h3',
+    method: 'i',
+    isovalue: 'j1',
+    isointerval: 'j2',
+    reverseflow: 'j3',
+    routinglang: 'k1',
+    units: 'k2',
+    ferry: 'l1',
+    unpaved: 'l2',
+    paved: 'l3',
+    fords: 'l4',
+    highways: 'l5',
+    tollroads: 'l6',
+    tunnels: 'l7',
+    tracks: 'l8'
+};
+lists.permalinkKeysReversed = swap(lists.permalinkKeys);
+
+function swap(obj) {
+    var rev = {};
+    for (var key in obj) {
+        rev[obj[key]] = key;
+    }
+    return rev;
+}
 lists.layers = {
     0: 'layerRoutePoints',
     1: 'layerRouteLines',
@@ -548,4 +602,15 @@ lists.errors = {
         translate: 'GENERALERROR',
         color: 1
     }
+};
+lists.avoidFlags = {
+    Highways: 1, // 1 << 0;
+    Tollways: 2, // 1 << 1;
+    Steps: 2, // 1 << 1;
+    Ferries: 4, // 1 << 2;
+    UnpavedRoads: 8, // 1 << 3;
+    Tracks: 16, // 1 << 4;
+    Tunnels: 32, // 1 << 5;
+    PavedRoads: 64, // 1 << 6;
+    Fords: 128, // 1 << 7;
 };

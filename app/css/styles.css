@@ -56,6 +56,11 @@ html {
     z-index: 0;
 }
 
+.ors-brand img {
+    width: 150px;
+    height: auto;
+}
+
 
 /** Responsive flex styles */
 
@@ -229,10 +234,6 @@ ors-route, ors-analysis {
     cursor: pointer;
 }
 
-.ors-segment-card {
-    overflow-y: scroll;
-}
-
 .ors-route-card .left {
     color: rgba(0, 0, 0, 0.7);
     padding: 1rem;
@@ -245,10 +246,15 @@ ors-route, ors-analysis {
     padding: 1rem;
 }
 
+.ors-segment-card .steps {
+    margin-right: 20px;
+}
+
 .ors-segment-card .info, .ors-segment-card .step {
     border-left: 2px solid transparent;
     border-right: 2px solid transparent;
     width: 100%;
+    margin-right: 20px;
 }
 
 .ors-segment-card .info.highlight, .ors-segment-card .step.highlight {
@@ -260,30 +266,28 @@ ors-route, ors-analysis {
     color: rgba(0, 0, 0, 0.7);
     flex: 0 1 100%;
     display: flex;
-    margin-right: 20px;
 }
 
 .ors-segment-card .heading {
     padding-top: 1rem;
     padding-bottom: 1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 0.5rem;
 }
 
 .ors-segment-card .summary {
     padding-bottom: 1rem;
     border-bottom: .1rem solid #edf3f5;
-    padding-left: 5rem;
-    padding-right: 1rem;
+    padding-left: 4.5rem;
 }
 
 .ors-segment-card .info .heading .icon {
     flex: 0 1 auto;
-    width: 2rem;
+    width: 1.5rem;
 }
 
 .ors-segment-card .heading .waypoint {
     flex: 0 1 80%;
+    padding-left: 1rem;
 }
 
 .ors-segment-card .step {
@@ -295,7 +299,6 @@ ors-route, ors-analysis {
     display: flex;
     flex-direction: row;
     padding-left: 3rem;
-    padding-right: 1rem;
 }
 
 .ors-segment-card .step .header .icon {
@@ -375,7 +378,7 @@ ors-instructions {
 
 /** Isochrone queries */
 
-.ors-aa-query {
+.ors-aa-query, .ors-loading {
     margin: 10px;
     padding: 10px;
     border-radius: 5px;
@@ -470,8 +473,9 @@ ors-instructions {
 }
 
 .options-box {
-    padding-bottom: 15px;
-    padding-left: 15px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.7rem;
     cursor: pointer;
 }
 
@@ -686,6 +690,10 @@ input:focus, input:active {
     z-index: 999;
 }
 
+.ors-map-message {
+    max-width: 300px;
+}
+
 
 /* Extras graphs */
 
@@ -823,42 +831,19 @@ input:focus, input:active {
     cursor: pointer;
 }
 
-.cm-here-popup {
-    text-align: center;
+.leaflet-popup-content {
+    margin: 10px 10px !important;
+    line-height: 2 !important;
 }
 
-.cm-here-popup-name {
-    font-weight: bold;
+.leaflet-popup-tip {
+    border-radius: 50px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2) !important;
 }
 
-.cm-here-popup-pos:hover {
-    color: #cd6060;
-    cursor:pointer;
-}
-
-.cm-here-popup-option {
-    text-align: center;
-}
-.cm-here-start a:hover, .cm-here-via a:hover, .cm-here-dest a:hover {
-        color: #cd6060;
-}
-
-.cm-here-start {
-    cursor: pointer;
-    padding-left: 30px;
-    float: left;
-}
-
-.cm-here-via {
-    cursor: pointer;
-    position: relative;
-    display: inline-block;
-}
-
-.cm-here-dest {
-    cursor: pointer;
-    padding-right: 30px;
-    float: right;
+.leaflet-popup-content-wrapper {
+    border-radius: 0px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2) !important;
 }
 
 a.leaflet-control-layers-toggle {
@@ -872,10 +857,10 @@ a.leaflet-control-layers-toggle {
 }
 
 a.leaflet-control-layers-toggle:before {
-    content: "\f039";
+    content: "\f278";
     font-family: FontAwesome;
     display: inline-block;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 12px;
     color: #444;
     vertical-align: bottom;

@@ -9,7 +9,7 @@
     "SETTINGS": "Settings",
     "DOCUMENTATION": "API Documentation",
     "ROUTING": "Routing",
-    "AA": "Accessibility Analysis",
+    "AA": "Isochrones",
     "ADD": "Add Waypoint",
     "RESET": "Reset Route",
     "REVERSE": "Reverse Waypoints",
@@ -74,6 +74,7 @@
     "BICYCLETOUR": "Touring bike",
     "BICYCLEMTB": "Mountain bike",
     "BICYCLERACING": "Road bike",
+    "BICYCLEELECTRO": "e-bike",
     "HEAVYVEHICLENORMAL": "Heavy vehicle",
     "HEAVYVEHICLEBUS": "Bus",
     "HEAVYVEHICLEAGRICULTURAL": "Agricultural",
@@ -130,21 +131,12 @@
     "Sand": "Sand",
     "Woodchips": "Woodchips",
     "Grass": "Grass",
-    "Grass Paver": "Grass Paver"
+    "Grass Paver": "Grass Paver",
+    "DESTINATION": "Directions to here",
+    "START": "Directions from here",
+    "VIA": "Add as via point",
+    "CENTER": "Use as center",
+    "WELCOME": "Welcome to OpenRouteService.org",
+    "WELCOME_MESSAGE": "To add avoidable areas please use the control in the top right of the map. Otherwise feel free to browse through the plethora of options in the left panel. Also check out our new sochrones functionalities in the left menu panel.",
+    "EXTRAS": "Additional information"
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

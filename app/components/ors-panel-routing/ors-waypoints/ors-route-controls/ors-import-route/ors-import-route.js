@@ -65,11 +65,11 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
         };
         ctrl.importRoute = (file) => {
             const geometry = orsImportFactory.importFile(file.extension, file.content);
-            let linestring = turf.linestring(geometry.geometry.coordinates);
+            let linestring = L.polyline(geometry.geometry.coordinates).toGeoJSON();
             linestring = turf.simplify(linestring, 0.01, false);
             let waypoints = [];
             for (let coord of linestring.geometry.coordinates) {
-                const latLng = new L.latLng([parseFloat(coord[0]), parseFloat(coord[1])]);
+                const latLng = new L.latLng([parseFloat(coord[1]), parseFloat(coord[0])]);
                 const latLngString = orsUtilsService.parseLatLngString(latLng);
                 const wpObj = orsObjectsFactory.createWaypoint(latLngString, latLng, 1);
                 waypoints.push(wpObj);

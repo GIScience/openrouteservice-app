@@ -5,6 +5,7 @@
 <div class="ors-routing-inner" ng-show="!$ctrl.shouldDisplayRouteDetails">
     <ors-waypoints active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup" ors-map="$ctrl.parent.orsMap" ors-params="$ctrl.routeParams" show-options="$ctrl.showOptions">
     </ors-waypoints>
+    <ors-loading></ors-loading>
     <ors-summaries should-display-route-details="$ctrl.shouldDisplayRouteDetails" show-instructions="$ctrl.showInstructions()">
     </ors-summaries>
 </div>

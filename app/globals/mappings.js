@@ -1,46 +1,46 @@
 var mappings = {};
 mappings.steepness = {
-    '0': {
+    '-5': {
         text: '16%+',
         color: '#028306'
     },
-    '1': {
+    '-4': {
         text: '10-15%',
         color: '#2AA12E'
     },
-    '2': {
+    '-3': {
         text: '7-9%',
         color: '#53BF56'
     },
-    '3': {
+    '-2': {
         text: '4-6%',
         color: '#7BDD7E'
     },
-    '4': {
+    '-1': {
         text: '1-3%',
         color: '#A4FBA6'
     },
-    '5': {
+    '0': {
         text: '0%',
         color: '#ffcc99'
     },
-    '6': {
+    '1': {
         text: '1-3%',
         color: '#F29898'
     },
-    '7': {
+    '2': {
         text: '4-6%',
         color: '#E07575'
     },
-    '8': {
+    '3': {
         text: '7-9%',
         color: '#CF5352'
     },
-    '9': {
+    '4': {
         text: '10-15%',
         color: '#BE312F'
     },
-    '10': {
+    '5': {
         text: '16%+',
         color: '#AD0F0C'
     }
@@ -92,79 +92,79 @@ mappings.waytypes = {
     }
 };
 mappings.surface = {
-    '-5': {
+    '0': {
         text: 'Other',
         color: '#ddcdeb'
     },
-    '-4': {
+    '1': {
         text: 'Paved',
         color: '#cdb8df'
     },
-    '-3': {
+    '2': {
         text: 'Unpaved',
         color: '#d2c0e3'
     },
-    '-2': {
+    '3': {
         text: 'Asphalt',
         color: '#bca4d3'
     },
-    '-1': {
+    '4': {
         text: 'Concrete',
         color: '#c1abd7'
     },
-    '0': {
+    '5': {
         text: 'Cobblestone',
         color: '#c7b2db'
     },
-    '1': {
+    '6': {
         text: 'Metal',
         color: '#e8dcf3'
     },
-    '2': {
+    '7': {
         text: 'Wood',
         color: '#eee3f7'
     },
-    '3': {
+    '8': {
         text: 'Compacted Gravel',
         color: '#d8c6e7'
     },
-    '4': {
+    '9': {
         text: 'Fine Gravel',
         color: '#8f9de4'
     },
-    '5': {
+    '10': {
         text: 'Gravel',
         color: '#e3d4ef'
     },
-    '6': {
+    '11': {
         text: 'Dirt',
         color: '#99a6e7'
     },
-    '7': {
+    '12': {
         text: 'Ground',
         color: '#a3aeeb'
     },
-    '8': {
+    '13': {
         text: 'Ice',
         color: '#acb6ee'
     },
-    '9': {
+    '14': {
         text: 'Salt',
         color: '#b6c0f2'
     },
-    '10': {
+    '15': {
         text: 'Sand',
         color: '#c9d1f8'
     },
-    '11': {
+    '16': {
         text: 'Woodchips',
         color: '#c0c8f5'
     },
-    '12': {
+    '17': {
         text: 'Grass',
         color: '#d2dafc'
     },
-    '13': {
+    '18': {
         text: 'Grass Paver',
         color: '#dbe3ff'
     }
