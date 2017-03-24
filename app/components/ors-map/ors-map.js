@@ -614,13 +614,11 @@ angular.module('orsApp').directive('orsAaPopup', ['$compile', '$timeout', 'orsSe
 angular.module('orsApp').directive('orsHerePopup', ['$translate', ($translate) => {
     return {
         restrict: 'E',
-        scope: false,
         templateUrl: 'components/ors-map/directive-templates/ors-here-popup.html',
         link: (scope, elem, attr) => {
-            scope.show = true;
-            console.log(scope)
+            scope.hereShow = true;
         }
-    }
+    };
 }]);
 angular.module('orsApp').directive('orsWelcomeBox', ['$translate', ($translate) => {
     return {
