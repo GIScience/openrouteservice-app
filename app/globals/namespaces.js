@@ -5,37 +5,6 @@
  * orsNamespaces and schemata e.g. for XML requests to services
  */
 var orsNamespaces = {};
-orsNamespaces.xls = 'http://www.opengis.net/xls';
-orsNamespaces.sch = 'http://www.ascc.net/xml/schematron';
-orsNamespaces.gml = 'http://www.opengis.net/gml';
-orsNamespaces.wps = 'http://www.opengis.net/wps/1.0.0';
-orsNamespaces.ows = 'http://www.opengis.net/ows/1.1';
-orsNamespaces.xlink = 'http://www.w3.org/1999/xlink';
-orsNamespaces.xsi = 'http://www.w3.org/2001/XMLSchema-instance';
-orsNamespaces.ascc = 'http://www.ascc.net/xml/schematron';
-orsNamespaces.aas = 'http://www.geoinform.fh-mainz.de/aas';
-orsNamespaces.gpx = 'http://www.topografix.com/GPX/1/1';
-orsNamespaces.xml = 'http://www.w3.org/XML/1998/namespace';
-orsNamespaces.xsd = 'http://www.w3.org/2001/XMLSchema';
-orsNamespaces.tcx = 'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2';
-orsNamespaces.gml32 = 'http://www.opengis.net/gml/3.2';
-orsNamespaces.xs = 'http://www.w3.org/2001/XMLSchema';
-orsNamespaces.kml = 'http://www.opengis.net/kml/2.2';
-orsNamespaces.atom = 'http://www.w3.org/2005/Atom';
-orsNamespaces.xal = 'urn:oasis:names:tc:ciq:xsdschema:xAL:2.0';
-orsNamespaces.schemata = {
-    directoryService: 'http://www.opengis.net/xls http://schemas.opengis.net/ols/1.1.0/DirectoryService.xsd',
-    analyseService: 'http://www.geoinform.fh-mainz.de/aas',
-    gatewayService: 'http://www.opengis.net/xls http://schemas.opengis.net/ols/1.1.0/GatewayService.xsd',
-    locationUtilityService: 'http://www.opengis.net/xls http://schemas.opengis.net/ols/1.1.0/LocationUtilityService.xsd',
-    presentationService: 'http://www.opengis.net/xls http://schemas.opengis.net/ols/1.1.0/PresentationService.xsd',
-    routeService: 'http://www.opengis.net/xls http://schemas.opengis.net/ols/1.1.0/RouteService.xsd',
-    wpsService: 'http://www.opengis.net/xls http://schemas.opengis.net/wps/1.0.0/wpsExecute_request.xsd',
-    lineStringService: 'http://www.opengis.net/gml http://schemas.opengis.net/gml/3.1.1/base/geometryBasic0d1d.xsd',
-    gpxService: 'http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd',
-    tcxService: 'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd',
-    kmlService: 'http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd'
-};
 /**
  * services that are called by openrouteservice, e.g. to determine the route between two waypoints
  * important note: all these URLs must be listed in the cgi-bin/proxy.cgi script of the server running ORS!

@@ -180,7 +180,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
             request.promise.then(function(response) {
                 orsSettingsFactory.requestSubject.onNext(false);
                 const profile = settings.profile.type;
-                orsRouteService.processResponse(response, profile);
+                orsRouteService.processResponse(response, profile, orsSettingsFactory.focusIdx);
             }, function(response) {
                 console.error(response);
                 orsSettingsFactory.requestSubject.onNext(false);
@@ -276,12 +276,14 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
      * @param {Object} wp - The waypoint object to be inserted to wp list.
      */
     orsSettingsFactory.insertWaypointFromMap = (idx, wp, fireRequest = true) => {
+        orsSettingsFactory.focusIdx = true;
         if (idx == 0) {
             orsSettingsFactory[currentSettingsObj].value.waypoints[idx] = wp;
         } else if (idx == 2) {
             orsSettingsFactory[currentSettingsObj].value.waypoints[orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1] = wp;
         } else if (idx == 1) {
             orsSettingsFactory[currentSettingsObj].value.waypoints.splice(orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1, 0, wp);
+            orsSettingsFactory.focusIdx = false;
         }
         /** Update Map. */
         orsSettingsFactory[currentWaypointsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue().waypoints);

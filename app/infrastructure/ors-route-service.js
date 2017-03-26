@@ -58,13 +58,15 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$h
         let action = orsObjectsFactory.createMapAction(0, lists.layers[2], geom, undefined);
         orsMapFactory.mapServiceSubject.onNext(action);
     };
-    orsRouteService.addRoute = (geometry) => {
+    orsRouteService.addRoute = (geometry, focusIdx) => {
         const routePadding = orsObjectsFactory.createMapAction(1, lists.layers[1], geometry, undefined, lists.layerStyles.routePadding());
         orsMapFactory.mapServiceSubject.onNext(routePadding);
         const routeLine = orsObjectsFactory.createMapAction(1, lists.layers[1], geometry, undefined, lists.layerStyles.route());
         orsMapFactory.mapServiceSubject.onNext(routeLine);
-        const zoomTo = orsObjectsFactory.createMapAction(0, lists.layers[1], geometry, undefined, undefined);
-        orsMapFactory.mapServiceSubject.onNext(zoomTo);
+        if (focusIdx) {
+            const zoomTo = orsObjectsFactory.createMapAction(0, lists.layers[1], geometry, undefined, undefined);
+            orsMapFactory.mapServiceSubject.onNext(zoomTo);
+        }
     };
     orsRouteService.addHeightgraph = (geometry) => {
         const heightgraph = orsObjectsFactory.createMapAction(-1, undefined, geometry, undefined, undefined);
@@ -75,11 +77,10 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$h
         orsMapFactory.mapServiceSubject.onNext(heightgraph);
     };
     /** prepare route to json */
-    orsRouteService.processResponse = (data, profile) => {
+    orsRouteService.processResponse = (data, profile, focusIdx) => {
         orsRouteService.data = data;
         let cnt = 0;
         angular.forEach(orsRouteService.data.routes, function(route) {
-            console.info(route)
             //const geometry = orsUtilsService.decodePolyline(route.geometry, route.elevation);
             route.geometryRaw = angular.copy(route.geometry.coordinates);
             let geometry = route.geometry.coordinates;
@@ -99,7 +100,7 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$h
                 } else {
                     orsRouteService.removeHeightgraph();
                 }
-                orsRouteService.addRoute(geometry);
+                orsRouteService.addRoute(geometry, focusIdx);
             }
             cnt += 1;
         });

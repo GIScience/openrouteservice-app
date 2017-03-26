@@ -37,7 +37,7 @@ html {
     order: 1;
     z-index: 1;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    flex: 0 1 38px;
+    flex: 0 1 388px;
     height: 100%;
     display: -webkit-box;
     display: -webkit-flex;
@@ -195,7 +195,6 @@ ors-route, ors-analysis {
 
 .ors-profiles-options {
     border-bottom: 1px solid #CCC;
-    width: 344px;
     flex: 0 1 39px;
     z-index: 1;
 }
@@ -208,10 +207,6 @@ ors-route, ors-analysis {
 .ors-route-controls, .ors-instruction-controls {
     height: 39px;
     border-top: 1px solid #F0F0F0;
-}
-
-.ors-summary {
-    width: 344px;
 }
 
 .ors-summary ul, .ors-navigation ul {
@@ -367,7 +362,6 @@ ors-instructions {
 
 .ors-instructions-summary, .ors-analysis-settings {
     flex: 0 0 auto;
-    width: 344px;
 }
 
 .ors-bars {

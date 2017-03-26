@@ -7,9 +7,7 @@ angular.module('orsApp').directive('orsMap', () => {
         },
         link: (scope, element, attrs) => {},
         controller: ['$scope', '$filter', '$compile', '$timeout', 'orsSettingsFactory', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', ($scope, $filter, $compile, $timeout, orsSettingsFactory, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsCookiesFactory) => {
-            
             $scope.translateFilter = $filter('translate');
-
             const mapsurfer = L.tileLayer(orsNamespaces.layerMapSurfer.url, {
                 attribution: orsNamespaces.layerMapSurfer.attribution
             });
@@ -172,24 +170,18 @@ angular.module('orsApp').directive('orsMap', () => {
              * Listens to left mouse click on map
              * @param {Object} e: Click event
              */
+            $scope.popup = L.popup({
+                minWidth: 150,
+                closeButton: false,
+                className: 'cm-popup'
+            });
             $scope.mapModel.map.on('contextmenu', (e) => {
                 $scope.displayPos = e.latlng;
-                let popupEvent;
-                if ($scope.routing) {
-                    popupEvent = $compile('<ors-popup></ors-popup>')($scope);
-                } else {
-                    popupEvent = $compile('<ors-aa-popup></ors-aa-popup>')($scope);
-                }
-                const popup = L.popup({
-                    maxWidth: 200,
-                    minWidth: 150,
-                    closeButton: false,
-                    className: 'cm-popup'
-                }).setContent(popupEvent[0]).setLatLng(e.latlng);
-                $scope.mapModel.map.openPopup(popup);
-                // has to wait for compile, update checks if popup within map
+                const popupDirective = $scope.routing === true ? '<ors-popup></ors-popup>' : '<ors-aa-popup></ors-aa-popup>';
+                const popupContent = $compile(popupDirective)($scope);
+                $scope.popup.setContent(popupContent[0]).setLatLng($scope.displayPos).openOn($scope.mapModel.map);
                 $timeout(function() {
-                    popup.update();
+                    $scope.popup.update();
                 }, 300);
             });
             //$scope.mapModel.map.on('baselayerchange', emitMapChangeBaseMap);
@@ -585,7 +577,6 @@ angular.module('orsApp').directive('orsMap', () => {
 angular.module('orsApp').directive('orsPopup', ['$compile', '$timeout', 'orsSettingsFactory', 'orsUtilsService', 'orsRequestService', 'orsRouteService', ($compile, $timeout, orsSettingsFactory, orsUtilsService, orsRequestService, orsRouteService) => {
     return {
         restrict: 'E',
-        require: '^orsMap', //one directive used,
         templateUrl: 'components/ors-map/directive-templates/ors-popup.html',
         link: (scope, elem, attr) => {
             scope.add = (idx) => {
@@ -593,7 +584,7 @@ angular.module('orsApp').directive('orsPopup', ['$compile', '$timeout', 'orsSett
             };
             //what's here request
             scope.here = () => {
-                scope.showHereMessage(scope.displayPos)
+                scope.showHereMessage(scope.displayPos);
             };
         }
     };
@@ -601,7 +592,6 @@ angular.module('orsApp').directive('orsPopup', ['$compile', '$timeout', 'orsSett
 angular.module('orsApp').directive('orsAaPopup', ['$compile', '$timeout', 'orsSettingsFactory', ($compile, $timeout, orsSettingsFactory) => {
     return {
         restrict: 'E',
-        require: '^orsMap', //one directive used,
         templateUrl: 'components/ors-map/directive-templates/ors-aa-popup.html',
         link: (scope, elem, attr) => {
             scope.add = (idx) => {
