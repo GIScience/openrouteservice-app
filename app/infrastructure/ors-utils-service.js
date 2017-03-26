@@ -410,17 +410,16 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             }
         }
         if (waypoints[0] !== undefined) {
-            if (waypoints[0]._latlng.lat !== undefined) {
-                link = link.concat(lists.permalinkKeys["wps"] + '=');
-                for (let waypoint of waypoints) {
-                    if (waypoint._latlng.lng == undefined) continue;
-                    link = link.concat(Math.round(waypoint._latlng.lat * 1000000) / 1000000);
-                    link = link.concat(',');
-                    link = link.concat(Math.round(waypoint._latlng.lng * 1000000) / 1000000);
-                    link = link.concat(',');
-                }
-                link = link.slice(0, -1);
+            link = link.concat(lists.permalinkKeys["wps"] + '=');
+            for (let waypoint of waypoints) {
+                let lat = typeof(waypoint._latlng.lat) === 'number' ? (Math.round(waypoint._latlng.lat * 1000000) / 1000000) : 'null';
+                let lng = typeof(waypoint._latlng.lng) === 'number' ? (Math.round(waypoint._latlng.lng * 1000000) / 1000000) : 'null';
+                link = link.concat(lat);
+                link = link.concat(',');
+                link = link.concat(lng);
+                link = link.concat(',');
             }
+            link = link.slice(0, -1);
         }
         getProp(profile);
         if (userOptions.routinglang !== undefined) link = link.concat('&' + lists.permalinkKeys["routinglang"] + '=' + userOptions.routinglang);
