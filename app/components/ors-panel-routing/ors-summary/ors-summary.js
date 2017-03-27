@@ -1,12 +1,10 @@
-/** dirty hack, the subscription will duplicate if we come back to this component */
-let routeSubscription;
 angular.module('orsApp.ors-summary', []).component('orsSummaries', {
     templateUrl: 'components/ors-panel-routing/ors-summary/ors-summary.html',
     bindings: {
         showInstructions: '&',
         shouldDisplayRouteDetails: '<'
     },
-    controller: ['orsSettingsFactory', 'orsMapFactory', 'orsObjectsFactory', 'orsRouteService', function(orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsRouteService) {
+    controller: ['$rootScope', 'orsSettingsFactory', 'orsMapFactory', 'orsObjectsFactory', 'orsRouteService', function($rootScope, orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsRouteService) {
         let ctrl = this;
         ctrl.profiles = lists.profiles;
         ctrl.setIdx = (idx) => {
@@ -26,11 +24,11 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
         }
         /** if we are returning to this panel, dispose all old subscriptions */
         try {
-            routeSubscription.dispose();
+            $rootScope.routeSubscription.dispose();
         } catch (error) {
             console.warn(error);
         }
-        routeSubscription = orsRouteService.routesSubject.subscribe(data => {
+        $rootScope.routeSubscription = orsRouteService.routesSubject.subscribe(data => {
             ctrl.data = data;
             console.log(ctrl.data)
             orsRouteService.setCurrentRouteIdx(0);

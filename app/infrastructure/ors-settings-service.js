@@ -14,6 +14,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
     orsSettingsFactory.userOptionsSubject = new Rx.BehaviorSubject({});
     /** Behaviour subject routing. */
     orsSettingsFactory.ngRouteSubject = new Rx.BehaviorSubject(undefined);
+    orsSettingsFactory.requestSubject = new Rx.Subject();
     /** Global reference settings, these are switched when panels are changed - default is routing.*/
     let currentSettingsObj, currentWaypointsObj;
     orsSettingsFactory.isInitialized = false;
@@ -85,6 +86,10 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
     /** Subscription function to current route object. */
     orsSettingsFactory.subscribeToNgRoute = (o) => {
         return orsSettingsFactory.ngRouteSubject.subscribe(o);
+    };
+    /** Subscription function to current route object. */
+    orsSettingsFactory.subscribeToRouteRequest = (o) => {
+        return orsSettingsFactory.requestSubject.subscribe(o);
     };
     /** Returns waypoints in settings. If none are set then returns empty list. */
     orsSettingsFactory.getWaypoints = () => {
@@ -164,6 +169,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
         console.info("changes in routingSettingsSubject", JSON.stringify(settings));
         const isRoutePresent = orsSettingsFactory.handleRoutePresent(settings, 2);
         if (isRoutePresent) {
+            orsSettingsFactory.requestSubject.onNext(true);
             /** Cancel outstanding requests */
             orsRouteService.routingRequests.clear();
             orsRouteService.resetRoute();
@@ -172,10 +178,12 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
             const request = orsRouteService.fetchRoute(payload);
             orsRouteService.routingRequests.requests.push(request);
             request.promise.then(function(response) {
+                orsSettingsFactory.requestSubject.onNext(false);
                 const profile = settings.profile.type;
-                orsRouteService.processResponse(response, profile);
+                orsRouteService.processResponse(response, profile, orsSettingsFactory.focusIdx);
             }, function(response) {
                 console.error(response);
+                orsSettingsFactory.requestSubject.onNext(false);
             });
         }
         
@@ -186,6 +194,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
         console.info("changes in aaSettingsSubject");
         const isAaPresent = orsSettingsFactory.handleRoutePresent(settings, 1);
         if (isAaPresent) {
+            orsSettingsFactory.requestSubject.onNext(true);
             /** Cancel outstanding requests */
             orsAaService.aaRequests.clear();
             const payload = orsUtilsService.isochronesPayload(settings);
@@ -193,9 +202,12 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
             orsAaService.aaRequests.requests.push(request);
             request.promise.then(function(response) {
                 orsAaService.processResponse(response, settings);
+                orsSettingsFactory.requestSubject.onNext(false);
                 // orsAaService.parseResultsToBounds(response);
                 // orsAaService.parseResponseToPolygonJSON(response);
-            }, function(response) {});
+            }, function(response) {
+                orsSettingsFactory.requestSubject.onNext(false);
+            });
         }
         
     });
@@ -264,12 +276,14 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
      * @param {Object} wp - The waypoint object to be inserted to wp list.
      */
     orsSettingsFactory.insertWaypointFromMap = (idx, wp, fireRequest = true) => {
+        orsSettingsFactory.focusIdx = true;
         if (idx == 0) {
             orsSettingsFactory[currentSettingsObj].value.waypoints[idx] = wp;
         } else if (idx == 2) {
             orsSettingsFactory[currentSettingsObj].value.waypoints[orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1] = wp;
         } else if (idx == 1) {
             orsSettingsFactory[currentSettingsObj].value.waypoints.splice(orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1, 0, wp);
+            orsSettingsFactory.focusIdx = false;
         }
         /** Update Map. */
         orsSettingsFactory[currentWaypointsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue().waypoints);

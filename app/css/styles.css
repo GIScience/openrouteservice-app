@@ -56,6 +56,11 @@ html {
     z-index: 0;
 }
 
+.ors-brand img {
+    width: 150px;
+    height: auto;
+}
+
 
 /** Responsive flex styles */
 
@@ -190,7 +195,6 @@ ors-route, ors-analysis {
 
 .ors-profiles-options {
     border-bottom: 1px solid #CCC;
-    width: 344px;
     flex: 0 1 39px;
     z-index: 1;
 }
@@ -203,10 +207,6 @@ ors-route, ors-analysis {
 .ors-route-controls, .ors-instruction-controls {
     height: 39px;
     border-top: 1px solid #F0F0F0;
-}
-
-.ors-summary {
-    width: 344px;
 }
 
 .ors-summary ul, .ors-navigation ul {
@@ -266,13 +266,13 @@ ors-route, ors-analysis {
 .ors-segment-card .heading {
     padding-top: 1rem;
     padding-bottom: 1rem;
-    padding-left: 1rem;
+    padding-left: 0.5rem;
 }
 
 .ors-segment-card .summary {
     padding-bottom: 1rem;
     border-bottom: .1rem solid #edf3f5;
-    padding-left: 5rem;
+    padding-left: 4.5rem;
 }
 
 .ors-segment-card .info .heading .icon {
@@ -362,7 +362,6 @@ ors-instructions {
 
 .ors-instructions-summary, .ors-analysis-settings {
     flex: 0 0 auto;
-    width: 344px;
 }
 
 .ors-bars {
@@ -373,7 +372,7 @@ ors-instructions {
 
 /** Isochrone queries */
 
-.ors-aa-query {
+.ors-aa-query, .ors-loading {
     margin: 10px;
     padding: 10px;
     border-radius: 5px;
@@ -468,8 +467,9 @@ ors-instructions {
 }
 
 .options-box {
-    padding-bottom: 15px;
-    padding-left: 15px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.7rem;
     cursor: pointer;
 }
 
@@ -684,6 +684,10 @@ input:focus, input:active {
     z-index: 999;
 }
 
+.ors-map-message {
+    max-width: 300px;
+}
+
 
 /* Extras graphs */
 
@@ -821,6 +825,21 @@ input:focus, input:active {
     cursor: pointer;
 }
 
+.leaflet-popup-content {
+    margin: 10px 10px !important;
+    line-height: 2 !important;
+}
+
+.leaflet-popup-tip {
+    border-radius: 50px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 0px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
 a.leaflet-control-layers-toggle {
     width: 30px !important;
     height: 30px !important;
@@ -832,10 +851,10 @@ a.leaflet-control-layers-toggle {
 }
 
 a.leaflet-control-layers-toggle:before {
-    content: "\f039";
+    content: "\f278";
     font-family: FontAwesome;
     display: inline-block;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 12px;
     color: #444;
     vertical-align: bottom;
@@ -843,6 +862,19 @@ a.leaflet-control-layers-toggle:before {
     width: 14px;
     height: 14px;
     text-align: center;
+}
+
+/** button size fix */
+
+a.leaflet-avoidArea {
+    width: 30px;
+    height: 30px;
+    font-size: 165%;
+}
+
+a.leaflet-avoidArea:hover {
+    width: 30px;
+    height: 30px;  
 }
 
 .block {

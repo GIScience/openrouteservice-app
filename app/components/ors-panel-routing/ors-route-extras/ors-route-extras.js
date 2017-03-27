@@ -10,7 +10,7 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
         ctrl.processExtras = (currentRoute, key) => {
             let totalDistance = currentRoute.summary.distance;
             let extras = {};
-            _.forEach(currentRoute.extras[key].values, (elem, i) => {
+            angular.forEach(currentRoute.extras[key].values, function(elem, i) {
                 const fr = elem[0],
                     to = elem[1];
                 if (fr !== to) {
@@ -19,10 +19,8 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
                     if (typeNumber in extras) {
                         extras[typeNumber].intervals.push([fr, to]);
                     } else {
-                        
                         let text = ctrl.mappings[key][typeNumber].text;
                         let color = ctrl.mappings[key][typeNumber].color;
-                      
                         extras[typeNumber] = {
                             type: text,
                             intervals: [
@@ -35,6 +33,10 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
             });
             let y0 = 0;
             let typesOrder = [];
+            // sort by value to maintain color ordering
+            currentRoute.extras[key].summary.sort(function(a, b) {
+                return parseFloat(a.value) - parseFloat(b.value);
+            });
             for (let i = 0; i < currentRoute.extras[key].summary.length; i++) {
                 const extra = currentRoute.extras[key].summary[i];
                 extras[extra.value].distance = extra.distance;
@@ -43,7 +45,6 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
                 extras[extra.value].y1 = y0 += +extra.amount;
                 typesOrder.push(extra.value);
             }
-            
             return {
                 extras: extras,
                 typesOrder: typesOrder
@@ -54,7 +55,6 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
             ctrl.routeExtras = [];
             for (let key in route.extras) {
                 const data = ctrl.processExtras(route, key);
-                
                 ctrl.routeExtras.push({
                     data: data.extras,
                     typesOrder: data.typesOrder,

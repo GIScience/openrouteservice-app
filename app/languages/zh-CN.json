@@ -73,6 +73,7 @@
     "BICYCLETOUR": "休闲自行车",
     "BICYCLEMTB": "山地自行车",
     "BICYCLERACING": "公路自行车",
+    "BICYCLEELECTRO": "TO_DO",
     "HEAVYVEHICLENORMAL": "重型车辆",
     "HEAVYVEHICLEBUS": "公交巴士",
     "HEAVYVEHICLEAGRICULTURAL": "农用车",
@@ -129,5 +130,9 @@
     "Sand": "TO_DO",
     "Woodchips": "TO_DO",
     "Grass": "TO_DO",
-    "Grass Paver": "TO_DO"
+    "Grass Paver": "TO_DO",
+    "DESTINATION": "Directions to here",
+    "START": "Directions from here",
+    "VIA": "Add as via point",
+    "CENTER": "Use as center"
 }
