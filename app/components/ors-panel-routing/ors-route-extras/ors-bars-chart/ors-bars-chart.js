@@ -54,7 +54,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
             let legendSpacing = 7;
             let legendTotalHeight = 0;
             let legendContainer = svg.append("g");
-            let legend = legendContainer.selectAll('.legend').data(data).enter().append('g').attr('class', 'legend').attr('transform', (d, i) => {
+            let legend = legendContainer.selectAll('.chart-legend').data(data).enter().append('g').attr('class', '.chart-legend').attr('transform', (d, i) => {
                 let legendHeight = legendRectSize + legendSpacing;
                 let vert = height * 1.1 + i * legendHeight;
                 legendTotalHeight += legendHeight;

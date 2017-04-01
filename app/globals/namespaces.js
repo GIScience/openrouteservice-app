@@ -12,10 +12,10 @@ var orsNamespaces = {};
  * if you want to become an active ORS code contributor please contact us: openrouteserviceATgeog.uni-heidelberg.de
  */
 orsNamespaces.services = {
-    geocoding: 'http://129.206.7.158/geocoding-test', //for address search requests
-    routing: 'http://129.206.7.158/routing-test', //for routing requests
+    geocoding: 'http://129.206.7.188:8080/ors/geocode', //for address search requests
+    routing: 'http://129.206.7.188:8080/ors/routes', //for routing requests
     tmc: 'http://129.206.228.124/routing-test?tmc',
-    analyse: 'http://129.206.7.158/analysis-test' //for accessibility analysis requests
+    analyse: 'http://129.206.7.188:8080/ors/isochrones' //for accessibility analysis requests
 };
 /**
  * metadata used when generating (export) files on the openrouteservice

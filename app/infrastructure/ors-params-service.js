@@ -22,7 +22,7 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUti
                     waypoints = [];
                 angular.forEach(wps, (wp) => {
                     wp = wp.split(",");
-                    let latLngString,latLng
+                    let latLngString,latLng;
                     if (isNaN(wp[0]) && isNaN(wp[1])) {
                         wp = orsObjectsFactory.createWaypoint('', false, 0);
                     } else {
@@ -32,7 +32,6 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUti
                     }
                     waypoints.push(wp);
                     idx += 1;
-                    //}
                 });
                 /** Add second empty wp if only start is set in routing panel */
                 if (idx == 1 && routing === true) {
