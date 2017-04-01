@@ -306,6 +306,7 @@ angular.module('orsApp').directive('orsMap', () => {
                     }
                     idx += 1;
                 });
+                console.log('all added')
             };
             $scope.reshuffleIndices = (actionPackage) => {
                 let i = 0;

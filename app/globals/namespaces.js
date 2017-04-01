@@ -21,7 +21,6 @@ orsNamespaces.services = {
     routing: 'http://129.206.7.188:8080/ors/routes', //for routing requests
     tmc: 'http://129.206.228.124/routing-test?tmc',
     analyse: 'http://129.206.7.188:8080/ors/isochrones' //for accessibility analysis requests
-
 };
 /**
  * metadata used when generating (export) files on the openrouteservice
