@@ -5,6 +5,11 @@
  * orsNamespaces and schemata e.g. for XML requests to services
  */
 var orsNamespaces = {};
+orsNamespaces.schemata = {
+    gpxService: 'http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd',
+    tcxService: 'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd',
+    kmlService: 'http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd'
+};
 /**
  * services that are called by openrouteservice, e.g. to determine the route between two waypoints
  * important note: all these URLs must be listed in the cgi-bin/proxy.cgi script of the server running ORS!
@@ -12,10 +17,11 @@ var orsNamespaces = {};
  * if you want to become an active ORS code contributor please contact us: openrouteserviceATgeog.uni-heidelberg.de
  */
 orsNamespaces.services = {
-    geocoding: 'http://129.206.7.158/geocoding-test', //for address search requests
-    routing: 'http://129.206.7.158/routing-test', //for routing requests
+    geocoding: 'http://129.206.7.188:8080/ors/geocode', //for address search requests
+    routing: 'http://129.206.7.188:8080/ors/routes', //for routing requests
     tmc: 'http://129.206.228.124/routing-test?tmc',
-    analyse: 'http://129.206.7.158/analysis-test' //for accessibility analysis requests
+    analyse: 'http://129.206.7.188:8080/ors/isochrones' //for accessibility analysis requests
+
 };
 /**
  * metadata used when generating (export) files on the openrouteservice
@@ -35,8 +41,6 @@ orsNamespaces.metadata = {
 /**
  * map layers used on the openlayers map
  */
-//url to ORS-WMS map layer
-orsNamespaces.layerWms = 'http://129.206.228.72/cached/osm?';
 //url to Open Map Surfer layer
 orsNamespaces.layerMapSurfer = {};
 orsNamespaces.layerMapSurfer.url = 'http://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}';
