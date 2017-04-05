@@ -64,6 +64,9 @@ angular.module('orsApp').directive('orsMap', () => {
                 return div;
             };
             $scope.mapModel.map.addControl($scope.brand);
+            $scope.zoomControl = new L.Control.Zoom({
+                position: 'topright'
+            }).addTo($scope.mapModel.map);
             /* AVOID AREA CONTROLLER */
             L.NewPolygonControl = L.Control.extend({
                 options: {
@@ -71,11 +74,9 @@ angular.module('orsApp').directive('orsMap', () => {
                 },
                 onAdd: function(map) {
                     var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control', container),
-                        link = L.DomUtil.create('a', 'leaflet-avoidArea', container);
+                        link = L.DomUtil.create('a', 'leaflet-avoid-area', container);
                     link.href = '#';
                     link.title = 'Create a new area avoid polygon';
-                    link.innerHTML = '<i class="fa fa-object-ungroup"></i>';
-                    //return container;
                     L.DomEvent.on(link, 'click', L.DomEvent.stop).on(link, 'click', function() {
                         map.editTools.startPolygon();
                     });

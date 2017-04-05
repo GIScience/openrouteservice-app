@@ -834,6 +834,24 @@ input:focus, input:active {
     cursor: pointer;
 }
 
+.leaflet-bar, .leaflet-bar a:last-child, .leaflet-bar a:first-child, .leaflet-control-layers {
+    /* For general elements on map */
+    border-radius: 0px;
+    background-color: #FAFAFA;
+}
+
+.leaflet-control a, .leaflet-control-layers-toggle {
+    width: 30px !important;
+    height: 30px;
+    color: #444 !important;
+}
+
+. .leaflet-control a:link, .leaflet-control a:visited, .leaflet-control a:hover {
+    /* for all controllers */
+    text-decoration: none;
+    color: #444 !important;
+}
+
 .leaflet-popup-content {
     margin: 10px 10px !important;
     line-height: 2 !important;
@@ -849,42 +867,37 @@ input:focus, input:active {
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2) !important;
 }
 
-a.leaflet-control-layers-toggle {
-    width: 30px !important;
-    height: 30px !important;
+a.leaflet-control-layers-toggle, a.leaflet-avoid-area {
     position: relative;
     text-align: center;
-    line-height: 24px;
     background-image: none !important;
-    color: #70707D;
+    height: 30px !important;
+    line-height: 30px;
+    color: #444 !important;
 }
 
 a.leaflet-control-layers-toggle:before {
     content: "\f278";
     font-family: FontAwesome;
     display: inline-block;
-    font-size: 13px;
-    line-height: 12px;
-    color: #444;
-    vertical-align: bottom;
+    vertical-align: center;
     cursor: pointer;
-    width: 14px;
     height: 14px;
     text-align: center;
 }
 
-/** button size fix */
 
-a.leaflet-avoidArea {
-    width: 30px;
-    height: 30px;
-    font-size: 165%;
+a.leaflet-avoid-area:before {
+    content: "\f248";
+    font-family: FontAwesome;
+    vertical-align: center;
+    display: inline-block;
+    cursor: pointer;
+    height: 14px;
+    text-align: center;
 }
 
-a.leaflet-avoidArea:hover {
-    width: 30px;
-    height: 30px;  
-}
+
 
 .block {
     display: block !important;

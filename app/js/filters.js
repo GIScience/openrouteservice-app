@@ -1,8 +1,8 @@
 angular.module('orsApp.ors-filters', []).filter('duration', () => {
     return (input) => {
         let duration = new Date(input * 1000).toISOString().substr(11, 5);
-        if (duration == '00:00') return '< 1min';
-        else return duration;
+        if (duration == '00:00') return '<b>' + '< 1min' + '</b>';
+        else return '<b>' + duration + '</b>';
     };
 }).filter('distance', ['orsSettingsFactory', (orsSettingsFactory) => {
     function distance(input, round) {
@@ -37,7 +37,7 @@ angular.module('orsApp.ors-filters', []).filter('duration', () => {
                 units = ' ft';
             }
         }
-        input = input + units;
+        input = '<b>' + input + '</b>' + units;
         return input;
     }
     distance.$stateful = true;

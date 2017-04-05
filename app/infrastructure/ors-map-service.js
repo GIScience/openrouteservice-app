@@ -10,7 +10,7 @@ angular.module('orsApp.map-service', []).factory('orsMapFactory', [
             mapServiceSubject: mapServiceSubject,
             initMap: (element) => {
                 return L.map(element, {
-                    zoomControl: true,
+                    zoomControl: false,
                     layerControl: true,
                     tap: true,
                     editable: true

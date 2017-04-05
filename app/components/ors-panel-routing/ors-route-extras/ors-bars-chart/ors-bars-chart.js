@@ -56,7 +56,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
             let legendContainer = svg.append("g");
             // make a copy of data for legend and sort by percentage of type
             const legendData = data.sort(function(a, b) {
-                return a.percentage > b.percentage;
+                return a.percentage < b.percentage;
             });
             let legend = legendContainer.selectAll('.chart-legend').data(legendData).enter().append('g').attr('class', '.chart-legend').attr('transform', (d, i) => {
                 let legendHeight = legendRectSize + legendSpacing;
