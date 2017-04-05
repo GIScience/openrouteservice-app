@@ -9,14 +9,14 @@ angular.module('orsApp.ors-filters', []).filter('duration', () => {
         input = parseInt(input);
         let units = orsSettingsFactory.getUserOptions().units;
         if (units == 'km') {
-            units = 'm';
+            units = ' m';
             if (input >= 1000) {
                 if (round) {
                     input = (input / 1000).toFixed();
                 } else {
                     input = (input / 1000).toFixed(2);
                 }
-                units = 'km';
+                units = ' km';
             } else {
                 input = input.toFixed();
             }
@@ -30,11 +30,11 @@ angular.module('orsApp.ors-filters', []).filter('duration', () => {
             if (input < 0.5 && input > 0.2) {
                 /** yards */
                 input = (input * 1760).toFixed();
-                units = 'yd';
+                units = ' yd';
             } else if (input <= 0.1) {
                 /** feet */
                 input = (input * 1760 * 3).toFixed();
-                units = 'ft';
+                units = ' ft';
             }
         }
         input = input + units;

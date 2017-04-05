@@ -108,7 +108,7 @@ lists.profiles = {
         name: 'Wheelchair',
         elevation: true,
         subgroup: 'Wheelchair',
-        request: 'foot-walking',
+        request: 'wheelchair',
         shortValue: '3'
     },
     hgv: {
@@ -237,65 +237,65 @@ lists.optionList = {
     },
     wheelchair: {
         Surface: {
-            '0': {
+            'concrete': {
                 name: 'Concrete, asphalt',
-                value: 0
+                value: 'concrete'
             },
-            '1': {
+            'cobblestone:flattened': {
                 name: 'Flattened Cobblestone and better',
-                value: 1
+                value: 'cobblestone:flattened'
             },
-            '2': {
+            'cobblestone': {
                 name: 'Cobblestone and better',
-                value: 2
+                value: 'cobblestone'
             },
-            '3': {
+            'compacted': {
                 name: 'Compacted',
-                value: 3
+                value: 'compacted'
             },
-            '4': {
+            'any': {
                 name: 'All traversable surfaces',
-                value: 4
+                value: 'any'
             }
         },
         Incline: {
-            '0': {
-                name: 'Up to 3%',
-                value: 0
-            },
-            '1': {
-                name: 'Up to 6%',
-                value: 1
-            },
-            '2': {
-                name: 'Up to 10%',
-                value: 2
-            },
             '3': {
-                name: 'Up to 15%',
-                value: 4
+                name: 'Up to 3%',
+                value: 3
             },
-            '4': {
+            '6': {
+                name: 'Up to 6%',
+                value: 6
+            },
+            '10': {
+                name: 'Up to 10%',
+                value: 10
+            },
+            '15': {
+                name: 'Up to 15%',
+                value: 15
+            },
+            '31': {
                 name: 'Flexible',
-                value: 5
+                value: 31
             }
         },
         Curb: {
-            '0': {
+            '0.03': {
                 name: 'Up to 3cm',
-                value: 0
+                value: 0.03
             },
-            '1': {
+            '0.06': {
                 name: 'Up to 6cm',
-                value: 1
+                value: 0.06
             },
-            '2': {
+            '0.1': {
                 name: 'Up to 10cm',
-                value: 2
+                value: 0.1
             },
-            '3': {
+            '0.31': {
                 name: 'Flexible',
-                value: 3
+                value: 0.31
             }
         },
     },

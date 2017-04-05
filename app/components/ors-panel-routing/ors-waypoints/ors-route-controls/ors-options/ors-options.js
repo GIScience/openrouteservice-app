@@ -199,23 +199,23 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                 }
             };
             // wheelchair sliders
-            ctrl.currentOptions.surface = ctrl.currentOptions.surface !== undefined ? ctrl.optionList.wheelchair.Surface[ctrl.currentOptions.surface].value : ctrl.optionList.wheelchair.Surface['0'].value;
-            ctrl.currentOptions.incline = ctrl.currentOptions.incline !== undefined ? ctrl.optionList.wheelchair.Incline[ctrl.currentOptions.incline].value : ctrl.optionList.wheelchair.Incline['0'].value;
-            ctrl.currentOptions.curb = ctrl.currentOptions.curb !== undefined ? ctrl.optionList.wheelchair.Curb[ctrl.currentOptions.curb].value : ctrl.optionList.wheelchair.Curb['0'].value;
+            ctrl.currentOptions.surface = ctrl.currentOptions.surface !== undefined ? ctrl.optionList.wheelchair.Surface[ctrl.currentOptions.surface].value : ctrl.optionList.wheelchair.Surface['concrete'].value;
+            ctrl.currentOptions.incline = ctrl.currentOptions.incline !== undefined ? ctrl.optionList.wheelchair.Incline[ctrl.currentOptions.incline].value : ctrl.optionList.wheelchair.Incline['3'].value;
+            ctrl.currentOptions.curb = ctrl.currentOptions.curb !== undefined ? ctrl.optionList.wheelchair.Curb[ctrl.currentOptions.curb].value : ctrl.optionList.wheelchair.Curb['0.03'].value;
             ctrl.wheelchairSliders = {
                 Surface: {
                     value: ctrl.currentOptions.surface,
                     options: {
                         stepsArray: [{
-                            value: ctrl.optionList.wheelchair.Surface['0'].value
+                            value: ctrl.optionList.wheelchair.Surface['concrete'].value
                         }, {
-                            value: ctrl.optionList.wheelchair.Surface['1'].value
+                            value: ctrl.optionList.wheelchair.Surface['cobblestone:flattened'].value
                         }, {
-                            value: ctrl.optionList.wheelchair.Surface['2'].value
+                            value: ctrl.optionList.wheelchair.Surface['cobblestone'].value
                         }, {
-                            value: ctrl.optionList.wheelchair.Surface['3'].value
+                            value: ctrl.optionList.wheelchair.Surface['compacted'].value
                         }, {
-                            value: ctrl.optionList.wheelchair.Surface['4'].value
+                            value: ctrl.optionList.wheelchair.Surface['any'].value
                         }],
                         showTicks: true,
                         showTicksValues: false,
@@ -231,15 +231,15 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                     value: ctrl.currentOptions.incline,
                     options: {
                         stepsArray: [{
-                            value: ctrl.optionList.wheelchair.Incline['0'].value
-                        }, {
-                            value: ctrl.optionList.wheelchair.Incline['1'].value
-                        }, {
-                            value: ctrl.optionList.wheelchair.Incline['2'].value
-                        }, {
                             value: ctrl.optionList.wheelchair.Incline['3'].value
                         }, {
-                            value: ctrl.optionList.wheelchair.Incline['4'].value
+                            value: ctrl.optionList.wheelchair.Incline['6'].value
+                        }, {
+                            value: ctrl.optionList.wheelchair.Incline['10'].value
+                        }, {
+                            value: ctrl.optionList.wheelchair.Incline['15'].value
+                        }, {
+                            value: ctrl.optionList.wheelchair.Incline['31'].value
                         }],
                         showTicks: true,
                         showTicksValues: false,
@@ -255,13 +255,13 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
                     value: ctrl.currentOptions.curb,
                     options: {
                         stepsArray: [{
-                            value: ctrl.optionList.wheelchair.Curb['0'].value
+                            value: ctrl.optionList.wheelchair.Curb['0.03'].value
                         }, {
-                            value: ctrl.optionList.wheelchair.Curb['1'].value
+                            value: ctrl.optionList.wheelchair.Curb['0.06'].value
                         }, {
-                            value: ctrl.optionList.wheelchair.Curb['2'].value
+                            value: ctrl.optionList.wheelchair.Curb['0.1'].value
                         }, {
-                            value: ctrl.optionList.wheelchair.Curb['3'].value
+                            value: ctrl.optionList.wheelchair.Curb['0.31'].value
                         }],
                         showTicks: true,
                         showTicksValues: false,

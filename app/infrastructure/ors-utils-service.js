@@ -220,11 +220,25 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             options.avoid_polygons = settings.avoidable_polygons;
         }
         if (subgroup == 'Wheelchair') {
-            options.profile_params.surface_type = settings.profile.options.surface.toString();
-            options.profile_params.track_type = '';
-            options.profile_params.smoothness_type = '';
-            options.profile_params.maximum_sloped_curb = settings.profile.options.curb.toString();
-            options.profile_params.maximum_incline = settings.profile.options.incline.toString();
+            console.log(options.profile_params)
+
+            // <xls:TrackTypes>
+            //                         <xls:TrackType>grade1</xls:TrackType>
+            //                     </xls:TrackTypes>
+            //                     <xls:SurfaceTypes>
+            //                         <xls:SurfaceType>cobblestone:flattened</xls:SurfaceType>
+            //                     </xls:SurfaceTypes>
+            //                     <xls:SmoothnessTypes>
+            //                         <xls:SmoothnessType>good</xls:SmoothnessType>
+            //                     </xls:SmoothnessTypes>
+            //                     <xls:Incline>6</xls:Incline>
+            //                     <xls:SlopedCurb>0.06</xls:SlopedCurb>
+
+            if (settings.profile.options.surface) options.profile_params.surface_type =  settings.profile.options.surface.toString();
+            //options.profile_params.track_type = '';
+            //options.profile_params.smoothness_type = '';
+            if (settings.profile.options.curb) options.profile_params.maximum_sloped_curb = settings.profile.options.curb.toString();
+            if (settings.profile.options.incline) options.profile_params.maximum_incline = settings.profile.options.incline.toString();
         }
         if (angular.equals(options.profile_params, {})) delete options.profile_params;
         return options;

@@ -24,7 +24,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
                     left: 10
                 },
                 width = 330 - margin.left - margin.right,
-                height = 30 - margin.top - margin.bottom;
+                height = 50 - margin.top - margin.bottom;
             let y = d3.scaleLinear().rangeRound([height, 0]);
             let x = d3.scaleLinear().rangeRound([0, width]);
             let xAxis = d3.axisBottom().scale(x);
@@ -54,7 +54,11 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
             let legendSpacing = 7;
             let legendTotalHeight = 0;
             let legendContainer = svg.append("g");
-            let legend = legendContainer.selectAll('.chart-legend').data(data).enter().append('g').attr('class', '.chart-legend').attr('transform', (d, i) => {
+            // make a copy of data for legend and sort by percentage of type
+            const legendData = data.sort(function(a, b) {
+                return a.percentage > b.percentage;
+            });
+            let legend = legendContainer.selectAll('.chart-legend').data(legendData).enter().append('g').attr('class', '.chart-legend').attr('transform', (d, i) => {
                 let legendHeight = legendRectSize + legendSpacing;
                 let vert = height * 1.1 + i * legendHeight;
                 legendTotalHeight += legendHeight;
@@ -63,6 +67,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
             legend.append('rect').attr('width', legendRectSize).attr('height', legendRectSize).style('fill', (d, i) => {
                 return d.color;
             });
+            legendContainer.append('text').style("font-size", "12px").attr('x', 0).attr('y', 40).text(scope.translateFilter(scope.key));
             legend.append('text').style("font-size", "11px").attr('x', legendRectSize + legendSpacing).attr('y', legendRectSize).text((d) => {
                 return scope.translateFilter(d.type) + ' (' + d.percentage + '%)';
             });

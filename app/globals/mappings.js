@@ -171,35 +171,35 @@ mappings.surface = {
 };
 mappings.suitability = {
     '3': {
-        text: '0.125',
+        text: '3/10',
         color: '#3D3D3D'
     },
     '4': {
-        text: '0.25',
+        text: '4/10',
         color: '#4D4D4D'
     },
     '5': {
-        text: '0.375',
+        text: '5/10',
         color: '#5D5D5D'
     },
     '6': {
-        text: '0.5',
+        text: '6/10',
         color: '#6D6D6D'
     },
     '7': {
-        text: '0.625',
+        text: '7/10',
         color: '#7C7C7C'
     },
     '8': {
-        text: '0.75',
+        text: '8/10',
         color: '#8D8D8D'
     },
     '9': {
-        text: '0.875',
+        text: '9/10',
         color: '#9D9D9D'
     },
     '10': {
-        text: '1',
+        text: '10/10',
         color: '#ADADAD'
     }
 };

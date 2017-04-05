@@ -273,6 +273,7 @@ ors-route, ors-analysis {
     padding-bottom: 1rem;
     border-bottom: .1rem solid #edf3f5;
     padding-left: 4.5rem;
+    flex-wrap: wrap;
 }
 
 .ors-segment-card .info .heading .icon {
@@ -324,9 +325,14 @@ h3, h4, h5 {
 }
 
 .summary-item {
-    display: inline-block;
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
-    margin-right: 12px;
+    margin-right: 10px;
+}
+
+.summary-item span {
+    padding-right: 5px;
 }
 
 button.summary-select {
@@ -904,6 +910,10 @@ tooltip tip {
     min-width: 70px !important;
     padding: 5px 8px !important;
     border-radius: 4px !important;
+}
+
+tooltip._multiline {
+    display: inline-block !important;
 }
 
 
