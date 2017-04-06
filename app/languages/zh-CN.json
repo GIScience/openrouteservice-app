@@ -143,5 +143,10 @@
     "suitability": "Suitability of ways",
     "steepness": "Steepness",
     "waytypes": "Way types",
-    "surface": "Surfaces"
+    "surface": "Surfaces",
+    "FROM": "from",
+    "TO": "to",
+    "SHARE_LINK": "Share link",
+    "SHORTEN": "Short URL",
+    "SHORTEN_HINT": "You can also copy the link from your browser's address bar."
 }

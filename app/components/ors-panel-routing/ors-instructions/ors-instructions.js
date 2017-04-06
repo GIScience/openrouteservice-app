@@ -1,4 +1,4 @@
-angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).component('orsInstructions', {
+angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls', 'orsApp.ors-share']).component('orsInstructions', {
     templateUrl: 'components/ors-panel-routing/ors-instructions/ors-instructions.html',
     bindings: {
         showInstructions: '&',

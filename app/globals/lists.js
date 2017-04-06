@@ -614,3 +614,9 @@ lists.avoidFlags = {
     PavedRoads: 64, // 1 << 6;
     Fords: 128, // 1 << 7;
 };
+
+
+
+
+
+

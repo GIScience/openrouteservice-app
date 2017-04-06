@@ -29,8 +29,18 @@
             </div>
         </div>
     </li>
+    <li>
+        <div class="ui dropdown">
+            <i class="fa fa-lg fa-info-circle" ng-click="$ctrl.showInfo = !$ctrl.showInfo">
+            </i>
+        </div>
+    </li>
 </ul>
 <ors-modal show="$ctrl.showSettings">
     <div ng-include="'includes/settings.html'">
+    </div>
+</ors-modal>
+<ors-modal show="$ctrl.showInfo">
+    <div ng-include="'includes/info.html'">
     </div>
 </ors-modal>

@@ -1,4 +1,4 @@
-angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', '$timeout', '$location', ($http, $timeout, $location) => {
+angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$q', '$http', '$timeout', '$location', ($q, $http, $timeout, $location) => {
     let orsUtilsService = {};
     /**
      * trims coordinates
@@ -104,6 +104,31 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             coordinates.push([lat / factor, lng / factor]);
         }
         return coordinates;
+    };
+    /**
+     * Requests shorten link
+     * @param {String} requestData: XML for request payload
+     */
+    orsUtilsService.getShortenlink = (location) => {
+        let requestData = {
+            access_token: 'd9c484e2c240975de02bfd2f2f4211ad3a0bab6d',
+            longUrl: location
+        };
+        var url = orsNamespaces.services.shortenlink;
+        var canceller = $q.defer();
+        var cancel = (reason) => {
+            canceller.resolve(reason);
+        };
+        var promise = $http.get(url, {
+            params: requestData,
+            timeout: canceller.promise
+        }).then((response) => {
+            return response.data;
+        });
+        return {
+            promise: promise,
+            cancel: cancel
+        };
     };
     /** 
      * generates object for request and serializes it to http parameters   
@@ -220,21 +245,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             options.avoid_polygons = settings.avoidable_polygons;
         }
         if (subgroup == 'Wheelchair') {
-            console.log(options.profile_params)
-
-            // <xls:TrackTypes>
-            //                         <xls:TrackType>grade1</xls:TrackType>
-            //                     </xls:TrackTypes>
-            //                     <xls:SurfaceTypes>
-            //                         <xls:SurfaceType>cobblestone:flattened</xls:SurfaceType>
-            //                     </xls:SurfaceTypes>
-            //                     <xls:SmoothnessTypes>
-            //                         <xls:SmoothnessType>good</xls:SmoothnessType>
-            //                     </xls:SmoothnessTypes>
-            //                     <xls:Incline>6</xls:Incline>
-            //                     <xls:SlopedCurb>0.06</xls:SlopedCurb>
-
-            if (settings.profile.options.surface) options.profile_params.surface_type =  settings.profile.options.surface.toString();
+            if (settings.profile.options.surface) options.profile_params.surface_type = settings.profile.options.surface.toString();
             //options.profile_params.track_type = '';
             //options.profile_params.smoothness_type = '';
             if (settings.profile.options.curb) options.profile_params.maximum_sloped_curb = settings.profile.options.curb.toString();
@@ -276,7 +287,10 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
                 shortAddress += ', ';
             }
             if ('street' in properties) {
-                shortAddress += properties.street;
+                // street and name can be the same, just needed once
+                if (properties.street && properties.street !== properties.name) {
+                    shortAddress += properties.street;
+                }
                 if ('house_number' in properties) {
                     shortAddress += ' ' + properties.house_number;
                 }

@@ -370,6 +370,29 @@ ors-instructions {
     flex: 0 0 auto;
 }
 
+.ors-instructions-summary .header {
+    display: flex;
+    flex-direction: row;
+    flex: 0 0 auto;
+    flex-basis: 30px;
+    border-bottom: .1rem solid #edf3f5;
+}
+
+.ors-instructions-summary .header .left {
+    color: rgba(0, 0, 0, 0.7);
+    padding: 1rem;
+    flex: 0 0 10%;
+}
+
+.ors-instructions-summary .header .right {
+    color: rgba(0, 0, 0, 0.7);
+    flex: 1 1 auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .ors-bars {
     padding: 0px 15px 15px 15px;
     cursor: default;
@@ -834,7 +857,7 @@ input:focus, input:active {
     cursor: pointer;
 }
 
-.leaflet-bar, .leaflet-bar a:last-child, .leaflet-bar a:first-child, .leaflet-control-layers {
+.leaflet-bar, .leaflet-bar a:last-child, .leaflet-bar a:first-child, .leaflet-control-layers, .heightgraph-toggle-icon {
     /* For general elements on map */
     border-radius: 0px;
     background-color: #FAFAFA;
@@ -886,7 +909,6 @@ a.leaflet-control-layers-toggle:before {
     text-align: center;
 }
 
-
 a.leaflet-avoid-area:before {
     content: "\f248";
     font-family: FontAwesome;
@@ -896,8 +918,6 @@ a.leaflet-avoid-area:before {
     height: 14px;
     text-align: center;
 }
-
-
 
 .block {
     display: block !important;

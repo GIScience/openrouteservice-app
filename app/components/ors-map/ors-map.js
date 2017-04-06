@@ -55,15 +55,6 @@ angular.module('orsApp').directive('orsMap', () => {
                 position: "bottomright",
                 mappings: mappings
             });
-            $scope.brand = L.control({
-                position: 'bottomleft'
-            });
-            $scope.brand.onAdd = function(map) {
-                var div = L.DomUtil.create('div', 'ors-brand');
-                div.innerHTML = '<a href="http://www.geog.uni-heidelberg.de/gis/heigit.html" target="_blank"><img src="img/brand.png"></a>';
-                return div;
-            };
-            $scope.mapModel.map.addControl($scope.brand);
             $scope.zoomControl = new L.Control.Zoom({
                 position: 'topright'
             }).addTo($scope.mapModel.map);
@@ -112,7 +103,7 @@ angular.module('orsApp').directive('orsMap', () => {
                 orsSettingsFactory.setAvoidableAreas(avoidPolygons);
             };
             const shapeDrawn = function(e) {
-                $scope.layerControls.addOverlay($scope.geofeatures.layerAvoid, 'Avoidable regions');
+                //$scope.layerControls.addOverlay($scope.geofeatures.layerAvoid, 'Avoidable regions');
                 setSettings();
             };
             $scope.baseLayers = {
@@ -283,6 +274,7 @@ angular.module('orsApp').directive('orsMap', () => {
                 $scope.mapModel.geofeatures.layerRouteNumberedMarkers.clearLayers();
                 $scope.mapModel.geofeatures.layerRouteLines.clearLayers();
                 $scope.mapModel.geofeatures.layerEmph.clearLayers();
+                if ($scope.hg) $scope.hg.remove();
                 if (switchApp) {
                     console.log('clearing isochrones')
                     $scope.mapModel.geofeatures.layerAvoid.clearLayers();
@@ -307,7 +299,6 @@ angular.module('orsApp').directive('orsMap', () => {
                     }
                     idx += 1;
                 });
-                console.log('all added')
             };
             $scope.reshuffleIndices = (actionPackage) => {
                 let i = 0;
@@ -509,12 +500,12 @@ angular.module('orsApp').directive('orsMap', () => {
                 const payload = orsUtilsService.geocodingPayload(lngLatString, true);
                 const request = orsRequestService.geocode(payload);
                 request.promise.then((data) => {
-                    $scope.address = {}
+                    $scope.address = {};
                     if (data.features.length > 0) {
                         const addressObj = orsUtilsService.addShortAddresses(data.features)[0];
                         $scope.address.info = addressObj.shortaddress;
                     } else {
-                        $scope.address.info = $scope.translateFilter('NO_ADDRESS')
+                        $scope.address.info = $scope.translateFilter('NO_ADDRESS');
                     }
                     $scope.address.position = lngLatString;
                     $scope.mapModel.map.addControl($scope.hereControl);

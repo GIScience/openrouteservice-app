@@ -20,6 +20,11 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
                 const idx = ctrl.getIdx() === undefined ? 0 : ctrl.getIdx();
                 ctrl.route = ctrl.data.routes[idx];
                 orsRouteService.addRoute(ctrl.route.geometry);
+                if (ctrl.route.elevation) {
+                    // process heightgraph data
+                    const hgGeojson = orsRouteService.processHeightgraphData(ctrl.route);
+                    orsRouteService.addHeightgraph(hgGeojson);
+                }
             }
         }
         /** if we are returning to this panel, dispose all old subscriptions */
