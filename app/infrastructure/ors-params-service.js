@@ -1,4 +1,4 @@
-angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUtilsService', 'orsObjectsFactory', 'orsRequestService', (orsUtilsService, orsObjectsFactory, orsRequestService) => {
+angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUtilsService', 'orsObjectsFactory', 'orsRequestService', 'lists', (orsUtilsService, orsObjectsFactory, orsRequestService, lists) => {
     let orsParamsService = {};
     orsParamsService.importSettings = (params, routing = true) => {
         const settings = {
@@ -40,98 +40,99 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUti
                 }
                 settings.waypoints = waypoints;
             }
-            if (key in lists.permalinkKeysReversed) {
-                if (lists.permalinkKeysReversed[key] == 'type') {
+            let permalinkKeysReversed = lists.reversePermalinkKeys(lists.permalinkKeys);
+            if (key in permalinkKeysReversed) {
+                if (permalinkKeysReversed[key] == 'type') {
                     for (let type in lists.profiles) {
                         if (lists.profiles[type].shortValue == value) {
                             settings.profile.type = lists.profiles[type].name;
                         }
                     }
                 }
-                if (lists.permalinkKeysReversed[key] == 'weight') {
+                if (permalinkKeysReversed[key] == 'weight') {
                     for (let weightType in lists.optionList.weight) {
                         if (lists.optionList.weight[weightType].shortValue == value) {
                             settings.profile.options.weight = lists.optionList.weight[weightType].value;
                         }
                     }
                 }
-                if (lists.permalinkKeysReversed[key] == 'maxspeed') {
+                if (permalinkKeysReversed[key] == 'maxspeed') {
                     settings.profile.options.maxspeed = value;
                 }
-                if (lists.permalinkKeysReversed[key] == 'hgvWeight') {
+                if (permalinkKeysReversed[key] == 'hgvWeight') {
                     settings.profile.options.hgvWeight = value;
                 }
-                if (lists.permalinkKeysReversed[key] == 'width') {
+                if (permalinkKeysReversed[key] == 'width') {
                     settings.profile.options.width = value;
                 }
-                if (lists.permalinkKeysReversed[key] == 'height') {
+                if (permalinkKeysReversed[key] == 'height') {
                     settings.profile.options.height = value;
                 }
-                if (lists.permalinkKeysReversed[key] == 'axleload') {
+                if (permalinkKeysReversed[key] == 'axleload') {
                     settings.profile.options.axleload = value;
                 }
-                if (lists.permalinkKeysReversed[key] == 'length') {
+                if (permalinkKeysReversed[key] == 'length') {
                     settings.profile.options.length = value;
                 }
-                if (lists.permalinkKeysReversed[key] == 'fitness') {
+                if (permalinkKeysReversed[key] == 'fitness') {
                     settings.profile.options.fitness = value;
                 }
-                if (lists.permalinkKeysReversed[key] == 'steepness') {
+                if (permalinkKeysReversed[key] == 'steepness') {
                     settings.profile.options.steepness = value;
                 }
-                if (lists.permalinkKeysReversed[key] == 'surface') {
+                if (permalinkKeysReversed[key] == 'surface') {
                     settings.profile.options.surface = value;
                 }
-                if (lists.permalinkKeysReversed[key] == 'incline') {
+                if (permalinkKeysReversed[key] == 'incline') {
                     settings.profile.options.incline = value;
                 }
-                if (lists.permalinkKeysReversed[key] == 'curb') {
+                if (permalinkKeysReversed[key] == 'curb') {
                     settings.profile.options.curb = value;
                 }
-                if (lists.permalinkKeysReversed[key] == 'method') {
+                if (permalinkKeysReversed[key] == 'method') {
                     settings.profile.options.analysis_options.method = value;
                 }
-                if (lists.permalinkKeysReversed[key] == 'isovalue') {
+                if (permalinkKeysReversed[key] == 'isovalue') {
                     settings.profile.options.analysis_options.isovalue = value;
                 }
-                if (lists.permalinkKeysReversed[key] == 'isointerval') {
+                if (permalinkKeysReversed[key] == 'isointerval') {
                     settings.profile.options.analysis_options.isointerval = value;
                 }
-                if (lists.permalinkKeysReversed[key] == 'reverseflow') {
+                if (permalinkKeysReversed[key] == 'reverseflow') {
                     settings.profile.options.analysis_options.reverseflow = orsParamsService.parseStringToBool(value);
                 }
                 /** not going to be passed in permalink */
                 // if (lists.permalinkKeysReversed[key] == 'language') {
                 //     settings.user_options.language = value;
                 // }
-                if (lists.permalinkKeysReversed[key] == 'routinglang') {
+                if (permalinkKeysReversed[key] == 'routinglang') {
                     user_options.routinglang = value;
                 }
-                if (lists.permalinkKeysReversed[key] == 'units') {
+                if (permalinkKeysReversed[key] == 'units') {
                     user_options.units = value;
                 }
-                if (lists.permalinkKeysReversed[key] == 'ferry') {
+                if (permalinkKeysReversed[key] == 'ferry') {
                     settings.profile.options.avoidables.ferry = orsParamsService.parseStringToBool(value);
                 }
-                if (lists.permalinkKeysReversed[key] == 'unpaved') {
+                if (permalinkKeysReversed[key] == 'unpaved') {
                     settings.profile.options.avoidables.unpaved = orsParamsService.parseStringToBool(value);
                 }
-                if (lists.permalinkKeysReversed[key] == 'paved') {
+                if (permalinkKeysReversed[key] == 'paved') {
                     settings.profile.options.avoidables.paved = orsParamsService.parseStringToBool(value);
                 }
-                if (lists.permalinkKeysReversed[key] == 'fords') {
+                if (permalinkKeysReversed[key] == 'fords') {
                     settings.profile.options.avoidables.fords = orsParamsService.parseStringToBool(value);
                 }
-                if (lists.permalinkKeysReversed[key] == 'highways') {
+                if (permalinkKeysReversed[key] == 'highways') {
                     settings.profile.options.avoidables.highways = orsParamsService.parseStringToBool(value);
                 }
-                if (lists.permalinkKeysReversed[key] == 'tollroads') {
+                if (permalinkKeysReversed[key] == 'tollroads') {
                     settings.profile.options.avoidables.tollroads = orsParamsService.parseStringToBool(value);
                 }
-                if (lists.permalinkKeysReversed[key] == 'tunnels') {
+                if (permalinkKeysReversed[key] == 'tunnels') {
                     settings.profile.options.avoidables.tunnels = orsParamsService.parseStringToBool(value);
                 }
-                if (lists.permalinkKeysReversed[key] == 'tracks') {
+                if (permalinkKeysReversed[key] == 'tracks') {
                     settings.profile.options.avoidables.tracks = orsParamsService.parseStringToBool(value);
                 }
             }

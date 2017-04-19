@@ -4,7 +4,7 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart']).component('
         currentRoute: '<',
         routeIndex: '<'
     },
-    controller: ['$scope', function($scope) {
+    controller: ['$scope', 'mappings', function($scope, mappings) {
         let ctrl = this;
         ctrl.mappings = mappings;
         ctrl.processExtras = (currentRoute, key) => {

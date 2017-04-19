@@ -17,7 +17,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
     /**
     /*** Parser Factory
     **/
-    .factory('orsParseFactory', ['$JXON', ($JXON) => {
+    .factory('orsParseFactory', ['$JXON', 'orsNamespaces', ($JXON, orsNamespaces) => {
         var orsParseFactory = {};
         /**
          * Parses GPX 1.1

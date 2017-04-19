@@ -1,4 +1,4 @@
-angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$q', '$http', '$timeout', '$location', ($q, $http, $timeout, $location) => {
+angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$q', '$http', '$timeout', '$location', 'lists', 'orsNamespaces', ($q, $http, $timeout, $location, lists, orsNamespaces) => {
     let orsUtilsService = {};
     /**
      * trims coordinates

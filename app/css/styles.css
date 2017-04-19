@@ -113,6 +113,10 @@ html {
     text-decoration: none;
 }
 
+.ors-header .brand {
+    letter-spacing: 1px;
+}
+
 .ors-header li div {
     color: rgba(255, 255, 255, 0.75);
     text-align: left;
@@ -239,6 +243,8 @@ ors-route, ors-analysis {
     color: rgba(0, 0, 0, 0.7);
     flex: 1 1 85%;
     padding: 1rem;
+    -display: flex;
+    flex-direction: column;
 }
 
 .ors-segment-card .steps {

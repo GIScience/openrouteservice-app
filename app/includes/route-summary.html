@@ -22,45 +22,49 @@
         </div>
     </div>
     <div class="right">
-        <div class="summary-item" ng-if="route.summary.duration" tooltip-side="top" tooltip-template="{{('DURATION' | translate)}}" tooltips="">
-            <span>
-                <i class="fa fa-clock-o">
-                </i>
-            </span>
-            <span ng-bind-html="(route.summary.duration | duration)">
-            </span>
+        <div>
+            <div class="summary-item" ng-if="route.summary.duration" tooltip-side="top" tooltip-template="{{('DURATION' | translate)}}" tooltips="">
+                <span>
+                    <i class="fa fa-clock-o">
+                    </i>
+                </span>
+                <span ng-bind-html="(route.summary.duration | duration)">
+                </span>
+            </div>
+            <div class="summary-item" ng-if="route.summary.distance" tooltip-side="top" tooltip-template="{{('DISTANCE' | translate)}}" tooltips="">
+                <span>
+                    <i class="fa fa-arrows-h">
+                    </i>
+                </span>
+                <span ng-bind-html="(route.summary.distance | distance)">
+                </span>
+            </div>
+            <div class="summary-item" ng-if="route.summary.distance_actual" tooltip-side="top" tooltip-template="{{('ACTUALDISTANCE' | translate)}}" tooltips="">
+                <span>
+                    <i class="fa fa-ellipsis-h">
+                    </i>
+                </span>
+                <span ng-bind-html="(route.summary.distance_actual | distance)">
+                </span>
+            </div>
         </div>
-        <div class="summary-item" ng-if="route.summary.distance" tooltip-side="top" tooltip-template="{{('DISTANCE' | translate)}}" tooltips="">
-            <span>
-                <i class="fa fa-arrows-h">
-                </i>
-            </span>
-            <span ng-bind-html="(route.summary.distance | distance)">
-            </span>
-        </div>
-        <div class="summary-item" ng-if="route.summary.distance_actual" tooltip-side="top" tooltip-template="{{('ACTUALDISTANCE' | translate)}}" tooltips="">
-            <span>
-                <i class="fa fa-ellipsis-h">
-                </i>
-            </span>
-            <span ng-bind-html="(route.summary.distance_actual | distance)">
-            </span>
-        </div>
-        <div class="summary-item" ng-if="route.summary.ascent" tooltip-side="top" tooltip-template="{{('ASCENT' | translate)}}" tooltips="">
-            <span>
-                <i class="fa fa-long-arrow-up">
-                </i>
-            </span>
-            <span ng-bind-html="(route.summary.ascent | distance)">
-            </span>
-        </div>
-        <div class="summary-item" ng-if="route.summary.descent" tooltip-side="top" tooltip-template="{{('DESCENT' | translate)}}" tooltips="">
-            <span>
-                <i class="fa fa-long-arrow-down">
-                </i>
-            </span>
-            <span ng-bind-html="(route.summary.descent | distance)">
-            </span>
+        <div>
+            <div class="summary-item" ng-if="route.summary.ascent" tooltip-side="top" tooltip-template="{{('ASCENT' | translate)}}" tooltips="">
+                <span>
+                    <i class="fa fa-long-arrow-up">
+                    </i>
+                </span>
+                <span ng-bind-html="(route.summary.ascent | distance)">
+                </span>
+            </div>
+            <div class="summary-item" ng-if="route.summary.descent" tooltip-side="top" tooltip-template="{{('DESCENT' | translate)}}" tooltips="">
+                <span>
+                    <i class="fa fa-long-arrow-down">
+                    </i>
+                </span>
+                <span ng-bind-html="(route.summary.descent | distance)">
+                </span>
+            </div>
         </div>
         <button class="summary-select" data-ng-click="$ctrl.setIdx($index); $ctrl.showInstructions();" ng-bind-html="('DETAILS' | translate)" ng-show="!$ctrl.shouldDisplayRouteDetails">
             >

@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-profiles-options', 'orsApp.ors-options', 'orsApp.ors-summary', 'orsApp.ors-instructions']).component('orsRoute', {
     templateUrl: 'components/ors-panel-routing/ors-panel-routing.html',
-    controller: ['orsSettingsFactory', 'orsParamsService', 'orsUtilsService', 'orsCookiesFactory', function(orsSettingsFactory, orsParamsService, orsUtilsService, orsCookiesFactory) {
+    controller: ['orsSettingsFactory', 'orsParamsService', 'orsUtilsService', 'orsCookiesFactory', 'lists', function(orsSettingsFactory, orsParamsService, orsUtilsService, orsCookiesFactory, lists) {
         let ctrl = this;
         ctrl.$routerCanReuse = (next, prev) => {
             return next.urlPath === prev.urlPath;

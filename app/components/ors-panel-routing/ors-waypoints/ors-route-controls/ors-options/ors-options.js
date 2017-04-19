@@ -5,7 +5,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
         activeProfile: '<',
         showOptions: '<'
     },
-    controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', '$scope', '$timeout', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService, $scope, $timeout) {
+    controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', '$scope', '$timeout', 'lists', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService, $scope, $timeout, lists) {
         let ctrl = this;
         ctrl.optionList = lists.optionList;
         ctrl.$onInit = () => {

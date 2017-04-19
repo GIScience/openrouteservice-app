@@ -1,4 +1,4 @@
-    angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', '$q', 'orsUtilsService', 'orsMapFactory', 'orsObjectsFactory', ($http, $q, orsUtilsService, orsMapFactory, orsObjectsFactory) => {
+    angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', '$q', 'orsUtilsService', 'orsMapFactory', 'orsObjectsFactory', 'lists', 'orsNamespaces', ($http, $q, orsUtilsService, orsMapFactory, orsObjectsFactory, lists, orsNamespaces) => {
         /**
          * Requests geocoding from ORS backend
          * @param {String} requestData: XML for request payload

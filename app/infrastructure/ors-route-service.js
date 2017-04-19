@@ -1,4 +1,4 @@
-angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$http', 'orsUtilsService', 'orsMapFactory', 'orsObjectsFactory', ($q, $http, orsUtilsService, orsMapFactory, orsObjectsFactory) => {
+angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$http', 'orsUtilsService', 'orsMapFactory', 'orsObjectsFactory', 'lists', 'orsNamespaces', ($q, $http, orsUtilsService, orsMapFactory, orsObjectsFactory, lists, orsNamespaces) => {
     /**
      * Requests geocoding from ORS backend
      * @param {String} requestData: XML for request payload
