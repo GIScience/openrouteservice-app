@@ -58,6 +58,8 @@ angular.module('orsApp').directive('orsMap', () => {
             $scope.zoomControl = new L.Control.Zoom({
                 position: 'topright'
             }).addTo($scope.mapModel.map);
+            L.control.scale().addTo($scope.mapModel.map);
+
             /* AVOID AREA CONTROLLER */
             L.NewPolygonControl = L.Control.extend({
                 options: {
@@ -222,10 +224,6 @@ angular.module('orsApp').directive('orsMap', () => {
                 let textLabelclass;
                 if (isIsochrones) {
                     textLabelclass = 'textLabelclass-isochrones';
-                } else if (featureId + 1 > 9) {
-                    textLabelclass = 'textLabelclass';
-                } else {
-                    textLabelclass = 'textLabelclass-onedigit';
                 }
                 let marker = L.marker(L.latLng(lat, lng), {
                     icon: createLabelIcon(textLabelclass, parseInt(featureId) + 1),
@@ -236,6 +234,11 @@ angular.module('orsApp').directive('orsMap', () => {
             };
             $scope.addWaypoint = (idx, iconIdx, pos, fireRequest = true, aaIcon = false) => {
                 let waypointIcon = aaIcon === true ? L.divIcon(lists.waypointIcons[3]) : L.divIcon(lists.waypointIcons[iconIdx]);
+                const waypointsLength = orsSettingsFactory.getWaypoints().length;
+                if (idx > 0 && idx < waypointsLength - 1) {
+                    console.log(waypointIcon, idx);
+                    waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="via-number-circle"><div class="via-number-text">' + idx + '</div></div></i>';
+                }
                 // create the waypoint marker
                 let wayPointMarker = new L.marker(pos, {
                     icon: waypointIcon,
@@ -243,26 +246,11 @@ angular.module('orsApp').directive('orsMap', () => {
                     idx: idx
                 });
                 wayPointMarker.addTo($scope.mapModel.geofeatures.layerRoutePoints);
-                // If the waypoint is dragged
-                wayPointMarker.on('dragstart', (event) => {
-                    $scope.mapModel.geofeatures.layerRouteNumberedMarkers.clearLayers();
-                });
                 wayPointMarker.on('dragend', (event) => {
                     // idx of waypoint
                     const idx = event.target.options.idx;
                     const pos = event.target._latlng;
                     $scope.processMapWaypoint(idx, pos, true, fireRequest);
-                    const waypoints = orsSettingsFactory.getWaypoints();
-                    let cnt = 0;
-                    angular.forEach(waypoints, (waypoint) => {
-                        if (waypoint._latlng.lat && waypoint._latlng.lng) {
-                            if (cnt > 0 && cnt < waypoints.length - 1) {
-                                const wpTag = cnt - 1;
-                                $scope.addNumberedMarker(waypoint._latlng, wpTag, lists.layers[6]);
-                            }
-                        }
-                        cnt += 1;
-                    });
                 });
             };
             /** Clears the map
@@ -271,7 +259,6 @@ angular.module('orsApp').directive('orsMap', () => {
             $scope.clearMap = (switchApp = false) => {
                 $scope.mapModel.geofeatures.layerLocationMarker.clearLayers();
                 $scope.mapModel.geofeatures.layerRoutePoints.clearLayers();
-                $scope.mapModel.geofeatures.layerRouteNumberedMarkers.clearLayers();
                 $scope.mapModel.geofeatures.layerRouteLines.clearLayers();
                 $scope.mapModel.geofeatures.layerEmph.clearLayers();
                 if ($scope.hg) $scope.hg.remove();
@@ -289,13 +276,6 @@ angular.module('orsApp').directive('orsMap', () => {
                     var iconIdx = orsSettingsFactory.getIconIdx(idx);
                     if (waypoint._latlng.lat && waypoint._latlng.lng) {
                         $scope.addWaypoint(idx, iconIdx, waypoint._latlng, fireRequest, aaIcon);
-                        // only add numbered markers if on app panel routing
-                        if (fireRequest) {
-                            if (idx > 0 && idx < waypoints.length - 1) {
-                                const wpTag = idx - 1;
-                                $scope.addNumberedMarker(waypoint._latlng, wpTag, lists.layers[6]);
-                            }
-                        }
                     }
                     idx += 1;
                 });

@@ -15,7 +15,7 @@
 angular.element(document).ready(function() {
     angular.bootstrap(document.body, ['orsApp']);
 });
-angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.ors-panel-accessibilityanalysis', 'orsApp.ors-header', 'orsApp.ors-error', 'orsApp.ors-loading', 'orsApp.ors-modal', 'ui.sortable', 'orsApp.messaging-service', 'orsApp.map-service', 'orsApp.objects-service', 'orsApp.params-service', 'orsApp.request-service', 'orsApp.settings-service', 'orsApp.utils-service', 'orsApp.route-service', 'orsApp.cookies-service', 'orsApp.aa-service', 'orsApp.GeoFileHandler-service', 'ngCookies', 'rzModule', 'ngAnimate', 'ngSanitize', 'pascalprecht.translate', 'angular-loading-bar', '720kb.tooltips', 'orsApp.ors-filters', 'orsApp.ors-route-extras']).config(function($locationProvider, $httpProvider) {
+let app = angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.ors-panel-accessibilityanalysis', 'orsApp.ors-header', 'orsApp.ors-error', 'orsApp.ors-loading', 'orsApp.ors-modal', 'ui.sortable', 'orsApp.messaging-service', 'orsApp.map-service', 'orsApp.objects-service', 'orsApp.params-service', 'orsApp.request-service', 'orsApp.settings-service', 'orsApp.utils-service', 'orsApp.route-service', 'orsApp.cookies-service', 'orsApp.aa-service', 'orsApp.GeoFileHandler-service', 'ngCookies', 'rzModule', 'ngAnimate', 'ngSanitize', 'pascalprecht.translate', 'angular-loading-bar', '720kb.tooltips', 'orsApp.ors-filters', 'orsApp.ors-route-extras']).config(function($locationProvider, $httpProvider) {
     const ak = '?api_key=0894982ba55b12d3d3e4abd28d1838f2';
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push(function($q, $document, $injector, lists, orsNamespaces) {
@@ -57,7 +57,7 @@ angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.
                     default:
                         //messagingService.messageSubject.onNext(lists.errors.CONNECTION);
                 }
-                console.log(rejection.status)
+                console.log(rejection.status);
                 return $q.reject(rejection);
             }
         };
@@ -88,9 +88,10 @@ angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.
     // add map
     let ctrl = this;
     ctrl.myOrsMap = orsMapFactory.initMap("map");
+}).run(function($animate) {
+    $animate.enabled(true);
 });
 Array.prototype.move = function(from, to) {
     this.splice(to, 0, this.splice(from, 1)[0]);
     return this;
 };
-

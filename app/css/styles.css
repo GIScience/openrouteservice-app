@@ -22,6 +22,47 @@ html {
     -font-size: 90% !important;
 }
 
+div.ors-app-loading {
+    position: fixed;
+    z-index: 999;
+}
+
+div.ors-app-loading div.animated-container {
+    background-color: #FFF;
+    bottom: 0px;
+    left: 0px;
+    opacity: 1.0;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+}
+
+
+/* Used to initialize the ng-leave animation state. */
+
+div.ors-app-loading div.animated-container.ng-leave {
+    opacity: 1.0;
+    transition: all linear 100ms;
+    -webkit-transition: all linear 100ms;
+}
+
+
+/* Used to set the end properties of the ng-leave animation state. */
+
+div.ors-app-loading div.animated-container.ng-leave-active {
+    opacity: 0;
+}
+
+div.ors-app-loading div.messaging {
+    color: #444;
+    left: 0px;
+    margin-top: -37px;
+    position: absolute;
+    right: 0px;
+    text-align: center;
+    top: 50%;
+}
+
 
 /**
  * Flex layout
@@ -609,6 +650,10 @@ ors-instructions {
     text-align: center;
 }
 
+.ors-modal-container .ors-dialog section p {
+    text-align: left;
+}
+
 .ors-modal-container .ors-dialog header {
     margin-top: 50px;
     padding-bottom: 10px;
@@ -993,6 +1038,25 @@ tooltip._multiline {
 
 .ors-marker-location i {
     -webkit-text-fill-color: blue;
+}
+
+.via-number-circle {
+    border: 1px solid #FFF;
+    border-radius: 19px;
+    margin-left: 27px !important;
+    margin-top: -50px !important;
+    height: 17px;
+    width: 17px;
+    background-color: #FFA500;
+    position: absolute;
+    padding-top: 3px;
+    z-index: -1;
+}
+
+.via-number-text {
+    background-color: transparent;
+    font-size: 9px;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
 
