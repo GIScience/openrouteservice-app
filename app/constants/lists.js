@@ -46,10 +46,6 @@ angular.module('orsApp').constant('lists', {
             html: '<i class="fa fa-map-marker"></i>'
         }
     },
-
-
-
-
     profiles: {
         Car: {
             name: 'Car',

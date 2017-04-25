@@ -59,7 +59,6 @@ angular.module('orsApp').directive('orsMap', () => {
                 position: 'topright'
             }).addTo($scope.mapModel.map);
             L.control.scale().addTo($scope.mapModel.map);
-
             /* AVOID AREA CONTROLLER */
             L.NewPolygonControl = L.Control.extend({
                 options: {
@@ -331,20 +330,16 @@ angular.module('orsApp').directive('orsMap', () => {
              * @param {Object} actionPackage - The action actionPackage
              */
             $scope.highlightWaypoint = (actionPackage) => {
-                $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
-                    if (layer.options.idx == actionPackage.featureId) {
-                        let waypointIcon;
-                        const iconIdx = orsSettingsFactory.getIconIdx(layer.options.idx);
-                        if (layer.options.highlighted === true) {
-                            waypointIcon = new L.divIcon(lists.waypointIcons[iconIdx]);
-                            layer.options.highlighted = false;
-                        } else {
-                            waypointIcon = new L.divIcon(lists.waypointIcons[4 + iconIdx]);
-                            layer.options.highlighted = true;
-                        }
-                        layer.setIcon(waypointIcon);
-                    }
+                const iconIdx = orsSettingsFactory.getIconIdx(actionPackage.featureId);
+                let waypointIcon = L.divIcon(lists.waypointIcons[4 + iconIdx]);
+                const waypointsLength = orsSettingsFactory.getWaypoints().length;
+                if (actionPackage.featureId > 0 && actionPackage.featureId < waypointsLength - 1) {
+                    waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="via-number-circle-highlight"><div class="via-number-text">' + actionPackage.featureId + '</div></div></i>';
+                }
+                let wayPointMarker = new L.marker(actionPackage.geometry, {
+                    icon: waypointIcon
                 });
+                wayPointMarker.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
             };
             /** 
              * adds features to specific layer

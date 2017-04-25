@@ -6,7 +6,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         activeProfile: '<',
         activeSubgroup: '<',
     },
-    controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRouteService', 'orsRequestService', 'orsParamsService', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRouteService, orsRequestService, orsParamsService) {
+    controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRouteService', 'orsRequestService', 'orsParamsService', '$timeout', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRouteService, orsRequestService, orsParamsService, $timeout) {
         let ctrl = this;
         ctrl.$onInit = () => {
             /** If waypoints list is empty initialize new waypoints. */
@@ -125,7 +125,9 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
             sort: () => {},
             start: () => {},
             update: (e, ui) => {
-                orsSettingsFactory.setWaypoints(ctrl.waypoints, true);
+                $timeout(function() {
+                    orsSettingsFactory.setWaypoints(ctrl.waypoints, true);
+                }, 100);
             },
             stop: (e, ui) => {
                 //orsSettingsFactory.setWaypoints(ctrl.waypoints, true);

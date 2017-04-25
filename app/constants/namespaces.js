@@ -23,6 +23,12 @@ angular.module('orsApp').constant('orsNamespaces', {
         analyse: 'http://129.206.7.188:8080/ors/isochrones',
         shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
     },
+    // services: {
+    //     geocoding: 'https://api.openrouteservice.org/geocoding',
+    //     routing: 'https://api.openrouteservice.org/directions',
+    //     tmc: 'http://129.206.228.124/routing-test?tmc',
+    //     analyse: 'https://api.openrouteservice.org/isochrones'
+    // },
     /**
      * metadata used when generating (export) files on the openrouteservice
      */

@@ -1053,6 +1053,19 @@ tooltip._multiline {
     z-index: -1;
 }
 
+.via-number-circle-highlight {
+    border: 1px solid #000;
+    border-radius: 19px;
+    margin-left: 27px !important;
+    margin-top: -50px !important;
+    height: 17px;
+    width: 17px;
+    background-color: #FFA500;
+    position: absolute;
+    padding-top: 3px;
+    z-index: -1;
+}
+
 .via-number-text {
     background-color: transparent;
     font-size: 9px;
