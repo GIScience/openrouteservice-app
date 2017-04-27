@@ -920,10 +920,11 @@ input:focus, input:active {
     color: #444 !important;
 }
 
-. .leaflet-control a:link, .leaflet-control a:visited, .leaflet-control a:hover {
+.leaflet-control a:link, .leaflet-control a:visited, .leaflet-control a:hover {
     /* for all controllers */
     text-decoration: none;
     color: #444 !important;
+    height: 30px !important;
 }
 
 .leaflet-popup-content {
@@ -946,7 +947,6 @@ a.leaflet-control-layers-toggle, a.leaflet-avoid-area {
     text-align: center;
     background-image: none !important;
     height: 30px !important;
-    line-height: 30px;
     color: #444 !important;
 }
 
@@ -954,19 +954,16 @@ a.leaflet-control-layers-toggle:before {
     content: "\f278";
     font-family: FontAwesome;
     display: inline-block;
-    vertical-align: center;
     cursor: pointer;
-    height: 14px;
     text-align: center;
+    padding-top: 5px;
 }
 
 a.leaflet-avoid-area:before {
     content: "\f248";
     font-family: FontAwesome;
-    vertical-align: center;
     display: inline-block;
     cursor: pointer;
-    height: 14px;
     text-align: center;
 }
 
@@ -1003,7 +1000,7 @@ tooltip._multiline {
 
 /** markers */
 
-.ors-marker-start, .ors-marker-via, .ors-marker-end, .ors-marker-location, .ors-marker-start-highlight, .ors-marker-via-highlight, .ors-marker-end-highlight {
+.ors-marker-start, .ors-marker-via, .ors-marker-end, .ors-marker-location, .ors-marker-highlight {
     text-align: center;
     line-height: 100%;
 }
@@ -1011,67 +1008,106 @@ tooltip._multiline {
 .ors-marker-start i, .ors-marker-via i, .ors-marker-end i, .ors-marker-location i {
     width: 100%;
     height: 100%;
-    font-size: 45px;
+    font-size: 40px;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: #FFF;
 }
 
-.ors-marker-start-highlight i, .ors-marker-via-highlight i, .ors-marker-end-highlight i {
+.ors-marker-highlight i {
     width: 100%;
     height: 100%;
-    font-size: 45px;
+    font-size: 40px;
     -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: #000;
+    -webkit-text-stroke-color: #FFF;
+    color: #444;
 }
 
-.ors-marker-start i, .ors-marker-start-highlight i {
-    -webkit-text-fill-color: green;
+.ors-marker-start i {
+    -webkit-text-fill-color: #638E26;
 }
 
-.ors-marker-via i, .ors-marker-via-highlight i {
+.ors-marker-via i {
     -webkit-text-fill-color: orange;
 }
 
-.ors-marker-end i, .ors-marker-end-highlight i {
-    -webkit-text-fill-color: red;
+.ors-marker-end i {
+    -webkit-text-fill-color: #D83F31;
 }
 
 .ors-marker-location i {
     -webkit-text-fill-color: blue;
 }
 
-.via-number-circle {
-    border: 1px solid #FFF;
-    border-radius: 19px;
-    margin-left: 27px !important;
-    margin-top: -50px !important;
-    height: 17px;
-    width: 17px;
-    background-color: #FFA500;
+.location-number-circle {
+    border-radius: 50%;
+    margin-left: 13px !important;
+    margin-top: -35px !important;
+    height: 18px;
+    width: 18px;
+    background-color: blue;
     position: absolute;
-    padding-top: 3px;
-    z-index: -1;
+    padding-top: 5px;
+    text-align: center;
+    z-index: 1;
 }
 
-.via-number-circle-highlight {
-    border: 1px solid #000;
-    border-radius: 19px;
-    margin-left: 27px !important;
-    margin-top: -50px !important;
-    height: 17px;
-    width: 17px;
+
+.via-number-circle {
+    border-radius: 50%;
+    margin-left: 13px !important;
+    margin-top: -35px !important;
+    height: 18px;
+    width: 18px;
     background-color: #FFA500;
     position: absolute;
-    padding-top: 3px;
-    z-index: -1;
+    padding-top: 5px;
+    text-align: center;
+    z-index: 1;
+}
+
+.start-number-circle {
+    border-radius: 50%;
+    margin-left: 13px !important;
+    margin-top: -35px !important;
+    height: 18px;
+    width: 18px;
+    background-color: #638E26;
+    position: absolute;
+    padding-top: 5px;
+    text-align: center;
+    z-index: 1;
+}
+
+.end-number-circle {
+    border-radius: 50%;
+    margin-left: 13px !important;
+    margin-top: -35px !important;
+    height: 18px;
+    width: 18px;
+    background-color: #D83F31;
+    position: absolute;
+    padding-top: 5px;
+    text-align: center;
+    z-index: 1;
+}
+
+.highlight-number-circle {
+    border-radius: 50%;
+    margin-left: 13px !important;
+    margin-top: -35px !important;
+    height: 18px;
+    width: 18px;
+    background-color: #444;
+    position: absolute;
+    padding-top: 5px;
+    text-align: center;
+    z-index: 1;
 }
 
 .via-number-text {
-    background-color: transparent;
-    font-size: 9px;
+    font-size: 10px;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
-
 
 /** this is needed for position of tooltip on body */
 

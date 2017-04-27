@@ -11,25 +11,6 @@ angular.module('orsApp').constant('orsNamespaces', {
         kmlService: 'http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd'
     },
     /**
-     * services that are called by openrouteservice, e.g. to determine the route between two waypoints
-     * important note: all these URLs must be listed in the cgi-bin/proxy.cgi script of the server running ORS!
-     * important note: all URLs have been blanked out for security reasons
-     * if you want to become an active ORS code contributor please contact us: openrouteserviceATgeog.uni-heidelberg.de
-     */
-    services: {
-        geocoding: 'http://129.206.7.188:8080/ors/geocode',
-        routing: 'http://129.206.7.188:8080/ors/routes',
-        tmc: 'http://129.206.228.124/routing-test?tmc',
-        analyse: 'http://129.206.7.188:8080/ors/isochrones',
-        shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
-    },
-    // services: {
-    //     geocoding: 'https://api.openrouteservice.org/geocoding',
-    //     routing: 'https://api.openrouteservice.org/directions',
-    //     tmc: 'http://129.206.228.124/routing-test?tmc',
-    //     analyse: 'https://api.openrouteservice.org/isochrones'
-    // },
-    /**
      * metadata used when generating (export) files on the openrouteservice
      */
     metadata: {

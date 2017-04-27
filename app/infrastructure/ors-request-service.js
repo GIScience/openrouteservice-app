@@ -1,4 +1,4 @@
-angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q', '$http', 'orsUtilsService', 'orsObjectsFactory', 'orsMapFactory', 'lists', 'orsNamespaces', ($q, $http, orsUtilsService, orsObjectsFactory, orsMapFactory, lists, orsNamespaces) => {
+angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q', '$http', 'orsUtilsService', 'orsObjectsFactory', 'orsMapFactory', 'lists', 'orsNamespaces', 'ENV', ($q, $http, orsUtilsService, orsObjectsFactory, orsMapFactory, lists, orsNamespaces, ENV) => {
     /**
      * Requests geocoding from ORS backend
      * @param {String} requestData: XML for request payload
@@ -47,7 +47,7 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q',
     };
 
     orsRequestService.geocode = (requestData) => {
-        var url = orsNamespaces.services.geocoding;
+        var url = ENV.geocoding;
         var canceller = $q.defer();
         var cancel = function(reason) {
             canceller.resolve(reason);

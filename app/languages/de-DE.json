@@ -81,6 +81,8 @@
     "HEAVYVEHICLEFORESTRY": "Forstfahrzeug",
     "HEAVYVEHICLEDELIVERY": "Lieferfahrzeug",
     "HEAVYVEHICLEGOODS": "Güterfahrzeug",
+    "PEDESTRIANNORMAL": "Spazieren",
+    "PEDESTRIANHIKING": "Wandern",
     "NOTICE": "Hinweis",
     "CONNECTION": "Es besteht keine Internetverbindung.",
     "ROUTE": "Es ist ein Fehler aufgetreten. Für diese Wegpunkte konnte keine Route gefunden werden.",

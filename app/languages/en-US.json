@@ -81,6 +81,8 @@
     "HEAVYVEHICLEFORESTRY": "Forestry",
     "HEAVYVEHICLEDELIVERY": "Delivery",
     "HEAVYVEHICLEGOODS": "Goods",
+    "PEDESTRIANNORMAL": "Walking",
+    "PEDESTRIANHIKING": "Hiking",
     "NOTICE": "Error",
     "CONNECTION": "Please check your internet connection.",
     "ROUTE": "An error occured. No route could be found for your waypoints.",

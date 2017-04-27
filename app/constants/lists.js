@@ -6,44 +6,27 @@ angular.module('orsApp').constant('lists', {
         0: {
             className: "ors-marker-start",
             iconSize: [45, 45],
-            iconAnchor: [22, 45],
-            html: '<i class="fa fa-map-marker"></i>'
+            iconAnchor: [22, 45]
         },
         1: {
             className: "ors-marker-via",
             iconSize: [45, 45],
-            iconAnchor: [22, 45],
-            html: '<i class="fa fa-map-marker"></i>'
+            iconAnchor: [22, 45]
         },
         2: {
             className: "ors-marker-end",
             iconSize: [45, 45],
-            iconAnchor: [22, 45],
-            html: '<i class="fa fa-map-marker"></i>'
+            iconAnchor: [22, 45]
         },
         3: {
             className: "ors-marker-location",
             iconSize: [45, 45],
-            iconAnchor: [22, 45],
-            html: '<i class="fa fa-map-marker"></i>'
+            iconAnchor: [22, 45]
         },
         4: {
-            className: "ors-marker-start-highlight",
+            className: "ors-marker-highlight",
             iconSize: [45, 45],
-            iconAnchor: [22, 45],
-            html: '<i class="fa fa-map-marker"></i>'
-        },
-        5: {
-            className: "ors-marker-via-highlight",
-            iconSize: [45, 45],
-            iconAnchor: [22, 45],
-            html: '<i class="fa fa-map-marker"></i>'
-        },
-        6: {
-            className: "ors-marker-end-highlight",
-            iconSize: [45, 45],
-            iconAnchor: [22, 45],
-            html: '<i class="fa fa-map-marker"></i>'
+            iconAnchor: [22, 45]
         }
     },
     profiles: {
@@ -102,6 +85,13 @@ angular.module('orsApp').constant('lists', {
             subgroup: 'Pedestrian',
             request: 'foot-walking',
             shortValue: '2'
+        },
+        PedestrianHiking: {
+            name: 'PedestrianHiking',
+            elevation: true,
+            subgroup: 'Pedestrian',
+            request: 'foot-hiking',
+            shortValue: '2b'
         },
         Wheelchair: {
             name: 'Wheelchair',
@@ -479,6 +469,7 @@ angular.module('orsApp').constant('lists', {
         BicycleElectro: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
         BicycleTour: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
         Pedestrian: ['type', 'weight', 'maxspeed', 'fitness', 'steepness'],
+        PedestrianHiking: ['type', 'weight', 'maxspeed', 'fitness', 'steepness'],
         Wheelchair: ['type', 'weight', 'maxspeed', 'incline', 'curb', 'surface']
     },
     //Whitelist for settings to be stored in permalink

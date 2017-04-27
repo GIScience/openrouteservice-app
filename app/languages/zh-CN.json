@@ -80,6 +80,8 @@
     "HEAVYVEHICLEFORESTRY": "林业用车",
     "HEAVYVEHICLEDELIVERY": "快递货车",
     "HEAVYVEHICLEGOODS": "货车",
+    "PEDESTRIANNORMAL": "TO_TRANSLATE",
+    "PEDESTRIANHIKING": "TO_TRANSLATE",
     "NOTICE": "有点小问题",
     "CONNECTION": "请确认一下您的网络还通吗？",
     "ROUTE": "没找到合适的路线",

@@ -38,6 +38,7 @@
     "grunt-ng-constant": "^1.1.0",
     "grunt-preprocess": "^5.0.1",
     "grunt-script-link-tags": "^1.0.2",
+    "grunt-strip-debug": "^1.1.0",
     "grunt-traceur": "^0.5.5",
     "grunt-usemin": "^3.0.0",
     "lite-server": "^2.2.0",

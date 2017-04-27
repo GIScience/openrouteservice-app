@@ -1,4 +1,4 @@
-angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$q', '$http', '$timeout', '$location', 'lists', 'orsNamespaces', ($q, $http, $timeout, $location, lists, orsNamespaces) => {
+angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$q', '$http', '$timeout', '$location', 'lists', 'ENV', ($q, $http, $timeout, $location, lists, ENV) => {
     let orsUtilsService = {};
     /**
      * trims coordinates
@@ -40,8 +40,9 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$q', '$h
      * @param {String} coord: Coordinate
      * @return {String} latlng: String latLng representation "lat, lng"
      */
-    orsUtilsService.roundCoordinate = function(coord) {
+    orsUtilsService.roundCoordinate = (coord) => {
         coord = Math.round(coord * 1000000) / 1000000;
+        console.log(coord)
         return coord;
     };
     /**
@@ -114,7 +115,7 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$q', '$h
             access_token: 'd9c484e2c240975de02bfd2f2f4211ad3a0bab6d',
             longUrl: location
         };
-        var url = orsNamespaces.services.shortenlink;
+        var url = ENV.shortenlink;
         var canceller = $q.defer();
         var cancel = (reason) => {
             canceller.resolve(reason);
@@ -159,16 +160,14 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$q', '$h
         });
         payload.coordinates = '';
         for (let j = 0, i = 0; i < waypoints.length; i++) {
-            payload.coordinates += waypoints[i]._latlng.lng + ',' + waypoints[i]._latlng.lat + '|';
+            payload.coordinates += orsUtilsService.roundCoordinate(waypoints[i]._latlng.lng) + ',' + orsUtilsService.roundCoordinate(waypoints[i]._latlng.lat) + '|';
         }
         payload.coordinates = payload.coordinates.slice(0, -1);
-        /** loop through avoidable objects in settings and check if they can
-        be used by selected routepref */
         //  extras
-        if (subgroup == 'Bicycle' || subgroup == 'Pedestrian' || subgroup == 'Wheelchair') {
-            if (lists.profiles[settings.profile.type].elevation === true) {
-                payload.extra_info = 'surface|waytype|suitability|steepness';
-            }
+        if (lists.profiles[settings.profile.type].elevation === true) {
+            payload.extra_info = 'surface|waytype|suitability|steepness';
+        } else {
+            payload.extra_info = 'surface|waytype|suitability';
         }
         return payload;
     };

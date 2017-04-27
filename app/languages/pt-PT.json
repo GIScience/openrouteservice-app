@@ -81,6 +81,8 @@
     "HEAVYVEHICLEFORESTRY": "Florestal",
     "HEAVYVEHICLEDELIVERY": "Entregas",
     "HEAVYVEHICLEGOODS": "Bens e servicos",
+    "PEDESTRIANNORMAL": "TO_TRANSLATE",
+    "PEDESTRIANHIKING": "TO_TRANSLATE",
     "NOTICE": "Erro",
     "CONNECTION": "Por favor, verifique a sua conecção à Internet.",
     "ROUTE": "Ocorreu um erro. Nenhuma rota foi encontrada para os pontos seleccionados.",

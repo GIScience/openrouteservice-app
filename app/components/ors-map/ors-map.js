@@ -234,9 +234,14 @@ angular.module('orsApp').directive('orsMap', () => {
             $scope.addWaypoint = (idx, iconIdx, pos, fireRequest = true, aaIcon = false) => {
                 let waypointIcon = aaIcon === true ? L.divIcon(lists.waypointIcons[3]) : L.divIcon(lists.waypointIcons[iconIdx]);
                 const waypointsLength = orsSettingsFactory.getWaypoints().length;
-                if (idx > 0 && idx < waypointsLength - 1) {
-                    console.log(waypointIcon, idx);
+                if (aaIcon) {
+                    waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="location-number-circle"><div class="via-number-text"></div></div></i>';
+                } else if (idx > 0 && idx < waypointsLength - 1) {
                     waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="via-number-circle"><div class="via-number-text">' + idx + '</div></div></i>';
+                } else if (idx == 0) {
+                    waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="start-number-circle"><div class="via-number-text"> ' + 'A' + ' </div></div></i>';
+                } else {
+                    waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="end-number-circle"><div class="via-number-text"> ' + 'B' + ' </div></div></i>';
                 }
                 // create the waypoint marker
                 let wayPointMarker = new L.marker(pos, {
@@ -330,11 +335,14 @@ angular.module('orsApp').directive('orsMap', () => {
              * @param {Object} actionPackage - The action actionPackage
              */
             $scope.highlightWaypoint = (actionPackage) => {
-                const iconIdx = orsSettingsFactory.getIconIdx(actionPackage.featureId);
-                let waypointIcon = L.divIcon(lists.waypointIcons[4 + iconIdx]);
+                let waypointIcon = L.divIcon(lists.waypointIcons[4]);
                 const waypointsLength = orsSettingsFactory.getWaypoints().length;
                 if (actionPackage.featureId > 0 && actionPackage.featureId < waypointsLength - 1) {
-                    waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="via-number-circle-highlight"><div class="via-number-text">' + actionPackage.featureId + '</div></div></i>';
+                    waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="highlight-number-circle"><div class="via-number-text">' + actionPackage.featureId + '</div></div></i>';
+                } else if (actionPackage.featureId == 0) {
+                    waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="highlight-number-circle"><div class="via-number-text">' + 'A' + '</div></div></i>';
+                } else {
+                    waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="highlight-number-circle"><div class="via-number-text">' + 'B' + '</div></div></i>';
                 }
                 let wayPointMarker = new L.marker(actionPackage.geometry, {
                     icon: waypointIcon
