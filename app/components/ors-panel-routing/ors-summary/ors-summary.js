@@ -1,4 +1,4 @@
-angular.module('orsApp.ors-summary', []).component('orsSummaries', {
+angular.module('orsApp.ors-summary', ['orsApp.ors-exportRoute-controls', 'orsApp.ors-share']).component('orsSummaries', {
     templateUrl: 'components/ors-panel-routing/ors-summary/ors-summary.html',
     bindings: {
         showInstructions: '&',

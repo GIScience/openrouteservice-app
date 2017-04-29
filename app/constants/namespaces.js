@@ -6,6 +6,24 @@
  */
 angular.module('orsApp').constant('orsNamespaces', {
     schemata: {
+        xls: 'http://www.opengis.net/xls',
+        sch: 'http://www.ascc.net/xml/schematron',
+        gml: 'http://www.opengis.net/gml',
+        wps: 'http://www.opengis.net/wps/1.0.0',
+        ows: 'http://www.opengis.net/ows/1.1',
+        xlink: 'http://www.w3.org/1999/xlink',
+        xsi: 'http://www.w3.org/2001/XMLSchema-instance',
+        ascc: 'http://www.ascc.net/xml/schematron',
+        aas: 'http://www.geoinform.fh-mainz.de/aas',
+        gpx: 'http://www.topografix.com/GPX/1/1',
+        xml: 'http://www.w3.org/XML/1998/namespace',
+        xsd: 'http://www.w3.org/2001/XMLSchema',
+        tcx: 'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2',
+        gml32: 'http://www.opengis.net/gml/3.2',
+        xs: 'http://www.w3.org/2001/XMLSchema',
+        kml: 'http://www.opengis.net/kml/2.2',
+        atom: 'http://www.w3.org/2005/Atom',
+        xal: 'urn:oasis:names:tc:ciq:xsdschema:xAL:2.0',
         gpxService: 'http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd',
         tcxService: 'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd',
         kmlService: 'http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd'

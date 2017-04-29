@@ -70,4 +70,14 @@
             >
         </button>
     </div>
+    <div class="right-2">
+        <button class="ors-controls-button flright" data-ng-click="$ctrl.showShare = !$ctrl.showShare">
+            <i class="fa fa-share-alt" tooltip-append-to-body="true" tooltip-side="top" tooltip-template="{{('SHARE_LINK' | translate)}}" tooltips="">
+            </i>
+        </button>
+        <button class="ors-controls-button flright" data-ng-click="$ctrl.showExport = !$ctrl.showExport">
+            <i class="fa fa-download" tooltip-append-to-body="true" tooltip-side="top" tooltip-template="{{('EXPORT' | translate)}}" tooltips="">
+            </i>
+        </button>
+    </div>
 </div>

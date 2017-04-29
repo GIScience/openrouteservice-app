@@ -25,18 +25,6 @@
     </ors-loading>
     <div ng-include="'includes/route-summary.html'">
     </div>
-    <div class="ors-instruction-controls" ng-show="!$ctrl.isLoading">
-        <button class="ors-controls-button flright" data-ng-click="$ctrl.showExport = !$ctrl.showExport" tooltip-side="top" tooltip-template="{{('EXPORT' | translate)}}" tooltips="">
-            <i class="fa fa-download">
-            </i>
-        </button>
-        <button class="ors-controls-button flright" data-ng-click="$ctrl.showShare = !$ctrl.showShare" tooltip-side="top" tooltip-template="{{('SHARE_LINK' | translate)}}" tooltips="">
-            <i class="fa fa-share-alt">
-            </i>
-        </button>
-    </div>
-    <div class="bottom-border">
-    </div>
     <div class="options-box" ng-if="$ctrl.route.extras">
         <div class="pointer margin-bottom-6" ng-click="showRouteExtras = !showRouteExtras">
             <i ng-class="$ctrl.getClass(showRouteExtras)">

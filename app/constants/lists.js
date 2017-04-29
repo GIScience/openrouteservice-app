@@ -557,7 +557,7 @@ angular.module('orsApp').constant('lists', {
         },
         trackPadding: function() {
             return {
-                color: lists.layerStyles.get_random_color(),
+                color: this.get_random_color(),
                 weight: 9,
                 opacity: 1
             };
@@ -566,9 +566,9 @@ angular.module('orsApp').constant('lists', {
             return parseInt(Math.random() * (max - min + 1), 10) + min;
         },
         get_random_color: function() {
-            var h = lists.layerStyles.rand(180, 250);
-            var s = lists.layerStyles.rand(30, 100);
-            var l = lists.layerStyles.rand(20, 70);
+            var h = this.rand(180, 250);
+            var s = this.rand(30, 100);
+            var l = this.rand(20, 70);
             return 'hsl(' + h + ',' + s + '%,' + l + '%)';
         }
     },

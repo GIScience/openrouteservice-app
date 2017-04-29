@@ -30,9 +30,9 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
             var jxon = $JXON.xmlToJs(gpxDocument);
             // get the metadata information
             var metadataObj = jxon.gpx.metadata;
-            if (metadataObj != undefined) {
+            if (metadataObj !== undefined) {
                 var propertiesObj = {
-                    "bounds": "Minimum Latitude: " + metadataObj.bounds.$minlat + +", Maximum Latitude: " + metadataObj.bounds.$maxlat + +", Minimum Longitude: " + metadataObj.bounds.$minlon + +", Maximum Longitude: " + metadataObj.bounds.$maxlon
+                    "bounds": "Minimum Latitude: " + metadataObj.bounds.$minlat + ", Maximum Latitude: " + metadataObj.bounds.$maxlat + ", Minimum Longitude: " + metadataObj.bounds.$minlon + ", Maximum Longitude: " + metadataObj.bounds.$maxlon
                 };
             } else {
                 propertiesObj = {};
@@ -61,7 +61,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
             //Create the GeoJSON object
             var geoJSONDoc = {
                 "type": "Feature",
-                "properties": propertiesObj,
+                //"properties": propertiesObj,
                 "geometry": {
                     "coordinates": gpxCoordinates,
                     "type": "LineString"
@@ -74,6 +74,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                     }
                 }
             };
+            console.log(geoJSONDoc)
             return geoJSONDoc;
         };
         /**
@@ -336,7 +337,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
     /**
     /*** Writer Factory
     **/
-    .factory('orsWriterFactory', ['$JXON', ($JXON) => {
+    .factory('orsWriterFactory', ['$JXON', 'orsNamespaces', ($JXON, orsNamespaces) => {
         var date = new Date(); //remove
         var routeGlobalVars = (route) => { //remove
             route = L.polyline(route);
@@ -388,8 +389,8 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                     "trk": [],
                     "$version": "1.1",
                     "$creator": orsNamespaces.metadata.authorName,
-                    "$xmlns:gpx": orsNamespaces.gpx,
-                    "$xmlns:xsi": orsNamespaces.xsi,
+                    "$xmlns:gpx": orsNamespaces.schemata.gpx,
+                    "$xmlns:xsi": orsNamespaces.schemata.xsi,
                     "$xsi:schemaLocation": orsNamespaces.schemata.gpxService,
                 },
             };
@@ -480,19 +481,19 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                     altitude = altitude.toFixed(3);
                 }
                 var rtept_pt = {
-                        "ele": i,
-                        "time": date.toISOString(),
-                        "name": "Route point #" + i,
-                        "extensions": {
-                            "TrackPointExtension": {
-                                "cad": altitude,
-                            },
-                            "distance": (distanceCovered).toFixed(3),
+                    "ele": i,
+                    "time": date.toISOString(),
+                    "name": "Route point #" + i,
+                    "extensions": {
+                        "TrackPointExtension": {
+                            "cad": altitude,
                         },
-                        "$lat": (routeVars.routeCoords[i].lat).toFixed(coordinatePrecision),
-                        "$lon": (routeVars.routeCoords[i].lng).toFixed(coordinatePrecision),
-                    }
-                    //set the date to each point based on the distance between points and average speed do reach from one point to the next one
+                        "distance": (distanceCovered).toFixed(3),
+                    },
+                    "$lat": (routeVars.routeCoords[i].lat).toFixed(coordinatePrecision),
+                    "$lon": (routeVars.routeCoords[i].lng).toFixed(coordinatePrecision),
+                }
+                //set the date to each point based on the distance between points and average speed do reach from one point to the next one
                 if (i < (routeVars.routeCoords.length) - 1) {
                     var from = new L.marker([routeVars.routeCoords[i].lat, routeVars.routeCoords[i].lng]).toGeoJSON();
                     var to = new L.marker([routeVars.routeCoords[i + 1].lat, routeVars.routeCoords[i + 1].lng]).toGeoJSON();
@@ -523,19 +524,19 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
                     altitude = altitude.toFixed(3);
                 }
                 var trkpt_pt = {
-                        "ele": i,
-                        "time": date.toISOString(),
-                        "name": "Track point #" + i,
-                        "extensions": {
-                            "TrackPointExtension": {
-                                "cad": altitude,
-                            },
-                            "distance": (distanceCovered).toFixed(3),
+                    "ele": i,
+                    "time": date.toISOString(),
+                    "name": "Track point #" + i,
+                    "extensions": {
+                        "TrackPointExtension": {
+                            "cad": altitude,
                         },
-                        "$lat": (routeVars.routeCoords[i].lat).toFixed(coordinatePrecision),
-                        "$lon": (routeVars.routeCoords[i].lng).toFixed(coordinatePrecision),
-                    }
-                    //set the date to each point based on the distance between points and average speed do reach from one point to the next one
+                        "distance": (distanceCovered).toFixed(3),
+                    },
+                    "$lat": (routeVars.routeCoords[i].lat).toFixed(coordinatePrecision),
+                    "$lon": (routeVars.routeCoords[i].lng).toFixed(coordinatePrecision),
+                }
+                //set the date to each point based on the distance between points and average speed do reach from one point to the next one
                 if (i < (routeVars.routeCoords.length) - 1) {
                     var from = new L.marker([routeVars.routeCoords[i].lat, routeVars.routeCoords[i].lng]).toGeoJSON();
                     var to = new L.marker([routeVars.routeCoords[i + 1].lat, routeVars.routeCoords[i + 1].lng]).toGeoJSON();
@@ -988,7 +989,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
     /**
     /*** Export Factory
     **/
-    .factory('orsExportFactory', ['FileSaver', 'Blob', 'orsWriterFactory', (FileSaver, Blob, orsWriterFactory) => {
+    .factory('orsExportFactory', ['FileSaver', 'Blob', 'orsWriterFactory', 'orsNamespaces', (FileSaver, Blob, orsWriterFactory, orsNamespaces) => {
         var orsExportFactory = {};
         /**
          * Export any vector element on the map to GPX
@@ -1074,7 +1075,7 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
     /**
     /*** Import Factory
     **/
-    .factory('orsImportFactory', ['orsParseFactory', (orsParseFactory) => {
+    .factory('orsImportFactory', ['orsParseFactory', 'orsNamespaces', (orsParseFactory, orsNamespaces) => {
         var orsImportFactory = {};
         /**
          * Import a file and load to the map as a vector element
@@ -1086,25 +1087,25 @@ angular.module('orsApp.GeoFileHandler-service', ['angular-jxon', 'ngFileSaver'])
             switch (fileExt) {
                 case 'gpx':
                     // convert gpx string to a gpx object
-                    var responseObj = new DOMParser().parseFromString(fileContent, 'application/xml');
+                    var responseObj = new DOMParser().parseFromString(fileContent, 'text/xml');
                     //Call the orsParseFactory to convert the XML object to geojson
                     var geoJSONImportDoc = orsParseFactory.parseGpx(responseObj);
                     break;
                 case 'tcx':
                     // convert tcx string to a tcx object
-                    var responseObj = new DOMParser().parseFromString(fileContent, 'application/xml');
+                    var responseObj = new DOMParser().parseFromString(fileContent, 'text/xml');
                     //Call the orsParseFactory to convert the XML object to geojson
                     var geoJSONImportDoc = orsParseFactory.parseTcx(responseObj);
                     break;
                 case 'kml':
                     // convert kml string to a kml object
-                    var responseObj = new DOMParser().parseFromString(fileContent, 'application/xml');
+                    var responseObj = new DOMParser().parseFromString(fileContent, 'text/xml');
                     //Call the orsParseFactory to convert the XML object to geojson
                     var geoJSONImportDoc = orsParseFactory.parseKml(responseObj);
                     break;
                 case 'gml':
                     // convert gml string to a gml object
-                    var responseObj = new DOMParser().parseFromString(fileContent, 'application/xml');
+                    var responseObj = new DOMParser().parseFromString(fileContent, 'text/xml');
                     //Call the orsParseFactory to convert the XML object to geojson
                     var geoJSONImportDoc = orsParseFactory.parseGml(responseObj);
                     break;

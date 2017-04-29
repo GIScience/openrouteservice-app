@@ -10,13 +10,21 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$q', '$h
         let coordsTrimmed = [];
         for (let i = 0; i < coords.length; i++) {
             let pair = coords[i];
-            let ptA = pair[0].toString().split('.');
-            let ptB = pair[1].toString().split('.');
-            ptA = ptA[0] + '.' + ptA[1].substr(0, 5);
-            ptB = ptB[0] + '.' + ptB[1].substr(0, 5);
-            coordsTrimmed.push([ptA, ptB]);
+            if (pair !== undefined) {
+                let ptA = pair[0].toString().split('.');
+                let ptB = pair[1].toString().split('.');
+                ptA = ptA[0] + '.' + ptA[1].substr(0, 5);
+                ptB = ptB[0] + '.' + ptB[1].substr(0, 5);
+                coordsTrimmed.push([ptA, ptB]);
+            }
         }
         return coordsTrimmed;
+    };
+    orsUtilsService.isInt = (n) => {
+        return Number(n) === n && n % 1 === 0;
+    };
+    orsUtilsService.isFloat = (n) => {
+        return Number(n) === n && n % 1 !== 0;
     };
     /**
      * checks whether position are valid coordinates

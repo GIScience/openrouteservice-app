@@ -59,23 +59,6 @@ angular.module('orsApp').directive('orsMap', () => {
                 position: 'topright'
             }).addTo($scope.mapModel.map);
             L.control.scale().addTo($scope.mapModel.map);
-            /* AVOID AREA CONTROLLER */
-            L.NewPolygonControl = L.Control.extend({
-                options: {
-                    position: 'topright'
-                },
-                onAdd: function(map) {
-                    var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control', container),
-                        link = L.DomUtil.create('a', 'leaflet-avoid-area', container);
-                    link.href = '#';
-                    link.title = 'Create a new area avoid polygon';
-                    L.DomEvent.on(link, 'click', L.DomEvent.stop).on(link, 'click', function() {
-                        map.editTools.startPolygon();
-                    });
-                    return container;
-                }
-            });
-            $scope.mapModel.map.addControl(new L.NewPolygonControl());
             const deleteShape = function(e) {
                 if ((e.originalEvent.altKey || e.originalEvent.metaKey) && this.editEnabled()) {
                     this.editor.deleteShapeAt(e.latlng);
@@ -129,6 +112,35 @@ angular.module('orsApp').directive('orsMap', () => {
                 // add layer control
                 $scope.layerControls = L.control.layers($scope.baseLayers, $scope.overlays).addTo($scope.mapModel.map);
                 $scope.mapModel.map.editTools.featuresLayer = $scope.geofeatures.layerAvoid;
+                /* AVOID AREA CONTROLLER */
+                L.EditControl = L.Control.extend({
+                    options: {
+                        position: 'topright',
+                        callback: null,
+                        kind: '',
+                        html: ''
+                    },
+                    onAdd: function(map) {
+                        var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control', container),
+                            link = L.DomUtil.create('a', 'leaflet-avoid-area', container);
+                        link.href = '#';
+                        link.title = 'Create a new area avoid polygon';
+                        L.DomEvent.on(link, 'click', L.DomEvent.stop).on(link, 'click', function() {
+                            window.LAYER = this.options.callback.call(map.editTools);
+                            console.log(map.editTools)
+                        }, this);
+                        return container;
+                    }
+                });
+                L.NewPolygonControl = L.EditControl.extend({
+                    options: {
+                        position: 'topright',
+                        callback: $scope.mapModel.map.editTools.startPolygon,
+                        kind: 'polygon'
+                        //html: '▰'
+                    }
+                });
+                $scope.mapModel.map.addControl(new L.NewPolygonControl());
                 // add eventlisteners for layeravoidables only
                 $scope.mapModel.geofeatures.layerAvoid.on('layeradd', function(e) {
                     if (e.layer instanceof L.Path) e.layer.on('click', L.DomEvent.stop).on('click', deleteShape, e.layer);
@@ -138,6 +150,7 @@ angular.module('orsApp').directive('orsMap', () => {
                 $scope.mapModel.map.on('editable:vertex:deleted', setSettings);
                 $scope.mapModel.map.on('editable:vertex:dragend', setSettings);
                 $scope.mapModel.map.on('editable:vertex:altclick', deleteVertex);
+                console.log($scope.mapModel.map.editTools)
             });
             // Check if map options set in cookies
             const mapOptions = orsCookiesFactory.getMapOptions();

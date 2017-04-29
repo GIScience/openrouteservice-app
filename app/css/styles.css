@@ -217,10 +217,10 @@ div.ors-app-loading div.messaging {
 /** Inside outlet */
 
 ors-route, ors-analysis {
-    -webkit-box-flex: 1;
+   /* -webkit-box-flex: 1;
     -webkit-flex: 1;
     -ms-flex: 1;
-    flex: 1;
+    flex: 1;*/
     box-sizing: border-box;
     display: -webkit-box;
     display: -webkit-flex;
@@ -249,9 +249,13 @@ ors-route, ors-analysis {
     overflow-y: auto;
 }
 
+.ors-summary {
+    width: 340px;
+}
+
 .ors-route-controls, .ors-instruction-controls {
     height: 39px;
-    border-top: 1px solid #F0F0F0;
+    width: 340px;
 }
 
 .ors-summary ul, .ors-navigation ul {
@@ -282,11 +286,20 @@ ors-route, ors-analysis {
 
 .ors-route-card .right {
     color: rgba(0, 0, 0, 0.7);
-    flex: 1 1 85%;
+    flex: 1 1 auto;
     padding: 1rem;
     -display: flex;
     flex-direction: column;
 }
+
+.ors-route-card .right-2 {
+    color: rgba(0, 0, 0, 0.7);
+    flex: 1 1 auto;
+    text-align: right;
+    padding-top: 0.2rem;
+    padding-right: 0rem;
+}
+
 
 .ors-segment-card .steps {
     margin-right: 20px;
@@ -685,7 +698,18 @@ ors-instructions {
 
 .restrict-height-200 {
     max-height: 200px;
-    overflow: auto;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, .5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }
 
 .small {
@@ -846,6 +870,28 @@ input:focus, input:active {
 
 
 /** General styles */
+
+a {
+    transition: color .4s;
+    color: #265C83;
+}
+
+a:link, a:visited {
+    color: #265C83;
+}
+
+a:hover {
+    color: #7FDBFF;
+}
+
+a:active {
+    transition: color .3s;
+    color: #007BE6;
+}
+
+.link {
+    text-decoration: none;
+}
 
 .ors-control-button {
     padding: 0 !important;
@@ -1051,7 +1097,6 @@ tooltip._multiline {
     z-index: 1;
 }
 
-
 .via-number-circle {
     border-radius: 50%;
     margin-left: 13px !important;
@@ -1108,6 +1153,7 @@ tooltip._multiline {
     font-size: 10px;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
+
 
 /** this is needed for position of tooltip on body */
 
