@@ -99,7 +99,7 @@
     "DOWNLOAD_ISOCHRONES": "Download Isochrones",
     "DOWNLOAD_ROUTE": "Download Route",
     "FILE_FORMAT": "File Format",
-    "SELECT_FILES": "Select files (geojson, gpx, kml or tcx)",
+    "SELECT_FILES": "Select files (geojson, gpx or kml)",
     "FILE_NAME": "Filename",
     "PREVIEW": "Preview",
     "IMPORT_TRACK": "Track to route",

@@ -49,11 +49,10 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
             if (file.preview) {
                 //gets the Geometry from the opened file
                 const geometry = orsImportFactory.importFile(file.extension, file.content);
-                console.log(geometry)
                 // create map action and add geom to layer tracks. Adds the track when checkbox is checked
-                let trackPadding = orsObjectsFactory.createMapAction(1, lists.layers[4], geometry.geometry.coordinates, file.index, lists.layerStyles.trackPadding());
+                let trackPadding = orsObjectsFactory.createMapAction(1, lists.layers[4], geometry, file.index, lists.layerStyles.trackPadding());
                 orsMapFactory.mapServiceSubject.onNext(trackPadding);
-                let track = orsObjectsFactory.createMapAction(1, lists.layers[4], geometry.geometry.coordinates, file.index, lists.layerStyles.track());
+                let track = orsObjectsFactory.createMapAction(1, lists.layers[4], geometry, file.index, lists.layerStyles.track());
                 orsMapFactory.mapServiceSubject.onNext(track);
                 // create the zoom to layer action. Zooms to layer when checkbox is checked
                 let action_zoomToLayer = orsObjectsFactory.createMapAction(0, lists.layers[4], undefined, file.index);
@@ -66,7 +65,7 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
         };
         ctrl.importRoute = (file) => {
             const geometry = orsImportFactory.importFile(file.extension, file.content);
-            let linestring = L.polyline(geometry.geometry.coordinates).toGeoJSON();
+            let linestring = L.polyline(geometry).toGeoJSON();
             linestring = turf.simplify(linestring, 0.01, false);
             let waypoints = [];
             for (let coord of linestring.geometry.coordinates) {
