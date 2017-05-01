@@ -232,7 +232,7 @@ ors-route, ors-analysis {
     -ms-flex-direction: column;
     flex-direction: column;
     width: 344px;
-    -overflow-x: hidden; // otherwise y-scrollbar will cause x-scrollbar 
+    -overflow-x: hidden; /* otherwise y-scrollbar will cause x-scrollbar */
 }
 
 
@@ -246,7 +246,8 @@ ors-route, ors-analysis {
 
 .ors-routing-inner {
     flex: 1 1 auto;
-    overflow-y: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .ors-summary {

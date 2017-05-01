@@ -17,7 +17,9 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
             switch (format) {
                 case 'gpx':
                     geojsonData = L.polyline(geometry).toGeoJSON();
-                    exportData = togpx(geojsonData);
+                    exportData = togpx(geojsonData, {
+                        creator: "OpenRouteService.org"
+                    });
                     break;
                 case 'kml':
                     geojsonData = L.polyline(geometry).toGeoJSON();
@@ -55,7 +57,7 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
          * @return {Object} geometry: returns the geometry
          */
         orsImportFactory.importFile = (fileExt, fileContent) => {
-            let geometry, i;
+            let latlngs, features, geometry, i;
             switch (fileExt) {
                 case 'gpx':
                     features = omnivore.gpx.parse(fileContent);
