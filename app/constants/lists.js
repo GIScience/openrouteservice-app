@@ -551,14 +551,14 @@ angular.module('orsApp').constant('lists', {
         track: function() {
             return {
                 color: '#FFF',
-                weight: 5,
+                weight: 3,
                 opacity: 1
             };
         },
         trackPadding: function() {
             return {
                 color: this.get_random_color(),
-                weight: 9,
+                weight: 6,
                 opacity: 1
             };
         },
