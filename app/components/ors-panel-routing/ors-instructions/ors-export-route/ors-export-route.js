@@ -21,49 +21,49 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
         ctrl.currentFileFormat = ctrl.selected_fileformat.value; //this is the default value for the current selected option
         ctrl.change_fileFormat = (fileformat) => {
             switch (fileformat.value) {
-                default:
-                    case 'gpx':
+                case 'gpx':
                     ctrl.gpxOptShow = true;
-                ctrl.tcxOptShow = false;
-                ctrl.kmlOptShow = false;
-                ctrl.gmlOptShow = false;
-                ctrl.geojsonOptShow = false;
-                break;
+                    ctrl.tcxOptShow = false;
+                    ctrl.kmlOptShow = false;
+                    ctrl.gmlOptShow = false;
+                    ctrl.geojsonOptShow = false;
+                    break;
                 case 'tcx':
-                        ctrl.gpxOptShow = false;
+                    ctrl.gpxOptShow = false;
                     ctrl.tcxOptShow = true;
                     ctrl.kmlOptShow = false;
                     ctrl.gmlOptShow = false;
                     ctrl.geojsonOptShow = false;
                     break;
                 case 'kml':
-                        ctrl.gpxOptShow = false;
+                    ctrl.gpxOptShow = false;
                     ctrl.tcxOptShow = false;
                     ctrl.kmlOptShow = true;
                     ctrl.gmlOptShow = false;
                     ctrl.geojsonOptShow = false;
                     break;
                 case 'gml':
-                        ctrl.gpxOptShow = false;
+                    ctrl.gpxOptShow = false;
                     ctrl.tcxOptShow = false;
                     ctrl.kmlOptShow = false;
                     ctrl.gmlOptShow = true;
                     ctrl.geojsonOptShow = false;
                     break;
                 case 'geojson':
-                        ctrl.gpxOptShow = false;
+                    ctrl.gpxOptShow = false;
                     ctrl.tcxOptShow = false;
                     ctrl.kmlOptShow = false;
                     ctrl.gmlOptShow = false;
                     ctrl.geojsonOptShow = true;
                     break;
                 case 'csv':
-                        ctrl.gpxOptShow = false;
+                    ctrl.gpxOptShow = false;
                     ctrl.tcxOptShow = false;
                     ctrl.kmlOptShow = false;
                     ctrl.gmlOptShow = false;
                     ctrl.geojsonOptShow = false;
                     break;
+                default:
             }
             ctrl.currentFileFormat = fileformat.value;
         };
