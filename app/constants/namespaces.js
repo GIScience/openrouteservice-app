@@ -55,17 +55,17 @@ angular.module('orsApp').constant('orsNamespaces', {
     layerHs: 'http://korona.geog.uni-heidelberg.de/tiles/asterh/x={x}&y={y}&z={z}',
     //url to OSM layer
     layerOSM: {
-        url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         attribution: 'Map data &copy; <a href="http://www.openstreetmap.org/">OpenStreetMap</a> contributors'
     },
     //url to OpenCycleMap
     layerOSMCycle: {
-        url: 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+        url: 'https://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
         attribution: 'Map data &copy; <a href="http://www.openstreetmap.org/">OpenStreetMap</a> contributors'
     },
     //url to stamen maps
     layerStamen: {
-        url: 'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png',
+        url: 'https://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png',
         attribution: 'Map data &copy; <a href="http://www.openstreetmap.org/">OpenStreetMap</a> contributors'
     },
     overlayHillshade: {

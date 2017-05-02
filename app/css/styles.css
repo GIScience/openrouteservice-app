@@ -246,7 +246,7 @@ ors-route, ors-analysis {
 
 .ors-routing-inner {
     flex: 1 1 auto;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
@@ -953,7 +953,13 @@ a:active {
 
 .cm-popup-option {
     cursor: pointer;
+    padding: 5px 5px 0 5px;
 }
+
+.cm-popup-option:hover {
+    background: #F0F0F0;
+}
+
 
 .leaflet-bar, .leaflet-bar a:last-child, .leaflet-bar a:first-child, .leaflet-control-layers, .heightgraph-toggle-icon {
     /* For general elements on map */
@@ -975,7 +981,7 @@ a:active {
 }
 
 .leaflet-popup-content {
-    margin: 10px 10px !important;
+    margin: 5px 0 5px 0 !important;
     line-height: 2 !important;
 }
 

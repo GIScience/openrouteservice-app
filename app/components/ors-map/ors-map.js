@@ -275,14 +275,18 @@ angular.module('orsApp').directive('orsMap', () => {
             };
             $scope.reAddWaypoints = (waypoints, fireRequest = true, aaIcon = false) => {
                 $scope.clearMap();
-                var idx = 0;
-                angular.forEach(waypoints, (waypoint) => {
+                let validWaypoints = 0;
+                angular.forEach(waypoints, (waypoint, idx) => {
+
+                    console.log(waypoint, idx)
                     var iconIdx = orsSettingsFactory.getIconIdx(idx);
                     if (waypoint._latlng.lat && waypoint._latlng.lng) {
                         $scope.addWaypoint(idx, iconIdx, waypoint._latlng, fireRequest, aaIcon);
+                        validWaypoints += 1;
                     }
-                    idx += 1;
                 });
+                // if only one waypoint available zoom to it
+                if (validWaypoints == 1) $scope.zoom();
             };
             $scope.reshuffleIndices = (actionPackage) => {
                 let i = 0;
