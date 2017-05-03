@@ -1,6 +1,6 @@
 <div class="ors-route-segments">
     <div class="ors-segment-card" data-ng-repeat="segment in route.segments">
-        <div class="info" ng-click="$ctrl.zoomTo($index);" ng-class="{highlight: hover}" ng-mouseenter="$ctrl.EmphSegment($index); hover=true;" ng-mouseleave="$ctrl.DeEmph(); hover=false;">
+        <div class="info" ng-class="{highlight: hover}" ng-click="$ctrl.zoomTo($index);" ng-mouseenter="$ctrl.EmphSegment($index); hover=true;" ng-mouseleave="$ctrl.DeEmph(); hover=false;">
             <div class="heading">
                 <div class="icon pointer" ng-click="steps = !steps; $event.stopPropagation();">
                     <i ng-class="$ctrl.getClass(steps)">
@@ -13,32 +13,40 @@
                     </i>
                 </div>
                 <div class="waypoint">
-                    <h4 class="pointer" ng-bind-html="$ctrl.waypoints[$index]._address" >
+                    <h4 class="pointer" ng-bind-html="$ctrl.waypoints[$index]._address">
                     </h4>
                 </div>
             </div>
             <div class="summary">
                 <div class="summary-item">
-                    <i class="fa fa-clock-o">
-                    </i>
+                    <span>
+                        <i class="fa fa-clock-o">
+                        </i>
+                    </span>
                     <span ng-bind-html="(segment.duration | duration)">
                     </span>
                 </div>
                 <div class="summary-item">
-                    <i class="fa fa-arrows-h">
-                    </i>
+                    <span>
+                        <i class="fa fa-arrows-h">
+                        </i>
+                    </span>
                     <span ng-bind-html="(segment.distance | distance)">
                     </span>
                 </div>
                 <div class="summary-item" ng-if="segment.ascent">
-                    <i class="fa fa-long-arrow-up">
-                    </i>
+                    <span>
+                        <i class="fa fa-long-arrow-up">
+                        </i>
+                    </span>
                     <span ng-bind-html="(segment.ascent | distance)">
                     </span>
                 </div>
                 <div class="summary-item" ng-if="segment.descent">
-                    <i class="fa fa-long-arrow-down">
-                    </i>
+                    <span>
+                        <i class="fa fa-long-arrow-down">
+                        </i>
+                    </span>
                     <span ng-bind-html="(segment.descent | distance)">
                     </span>
                 </div>
@@ -69,7 +77,7 @@
         </div>
     </div>
     <div class="ors-segment-card" ng-show="route.segments">
-        <div class="info" ng-click="$ctrl.zoomTo(route.segments.length, true);" ng-class="{highlight: hover}" ng-mouseenter="hover=true;" ng-mouseleave="hover=false;">
+        <div class="info" ng-class="{highlight: hover}" ng-click="$ctrl.zoomTo(route.segments.length, true);" ng-mouseenter="hover=true;" ng-mouseleave="hover=false;">
             <div class="heading">
                 <div class="icon">
                     <i class="fa fa-lg fa-flag">

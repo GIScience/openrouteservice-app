@@ -1,4 +1,4 @@
-angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$timeout', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsRouteService', 'orsAaService', 'orsMessagingService', ($timeout, orsObjectsFactory, orsUtilsService, orsRequestService, orsRouteService, orsAaService, orsMessagingService) => {
+angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$timeout', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsRouteService', 'orsAaService', 'orsMessagingService', 'lists', ($timeout, orsObjectsFactory, orsUtilsService, orsRequestService, orsRouteService, orsAaService, orsMessagingService, lists) => {
     let orsSettingsFactory = {};
     /** Behaviour subjects routing. */
     orsSettingsFactory.routingWaypointsSubject = new Rx.BehaviorSubject({});
@@ -18,9 +18,11 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
     /** Global reference settings, these are switched when panels are changed - default is routing.*/
     let currentSettingsObj, currentWaypointsObj;
     orsSettingsFactory.isInitialized = false;
+    orsSettingsFactory.focusIdx = true;
     /**
      * Sets the settings from permalink
-     * @param {Object} The settings object.
+     * @param {Object} set - The settings object.
+     * @param {boolean} focus - If only one waypoint is set zoom to it.
      */
     orsSettingsFactory.setSettings = (set) => {
         /** Fire request */
@@ -116,6 +118,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
      * @param {Object} pos - Which is the latlng object.
      */
     orsSettingsFactory.updateWaypoint = (idx, address, pos, fireRequest = true) => {
+        orsSettingsFactory.focusIdx = false;
         orsSettingsFactory[currentSettingsObj].getValue().waypoints[idx]._latlng = pos;
         orsSettingsFactory[currentSettingsObj].getValue().waypoints[idx]._address = address;
         /** Fire a new request. */
@@ -276,7 +279,6 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
      * @param {Object} wp - The waypoint object to be inserted to wp list.
      */
     orsSettingsFactory.insertWaypointFromMap = (idx, wp, fireRequest = true) => {
-        orsSettingsFactory.focusIdx = true;
         if (idx == 0) {
             orsSettingsFactory[currentSettingsObj].value.waypoints[idx] = wp;
         } else if (idx == 2) {

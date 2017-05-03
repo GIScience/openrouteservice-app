@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-header', []).component('orsHeader', {
     templateUrl: 'components/ors-header/ors-header.html',
-    controller: ['$rootScope', '$timeout', '$translate', 'orsUtilsService', 'orsSettingsFactory', 'orsCookiesFactory', function($rootScope, $timeout, $translate, orsUtilsService, orsSettingsFactory, orsCookiesFactory) {
+    controller: ['$rootScope', '$timeout', '$translate', 'orsUtilsService', 'orsSettingsFactory', 'orsCookiesFactory', 'lists', function($rootScope, $timeout, $translate, orsUtilsService, orsSettingsFactory, orsCookiesFactory, lists) {
         let ctrl = this;
         ctrl.optionList = lists.userOptions;
         ctrl.$onInit = () => {};

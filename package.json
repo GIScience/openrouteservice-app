@@ -18,6 +18,9 @@
     "grunt-contrib-connect": "0.8.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-remove-logging": "^0.2.0",
+    "leaflet-omnivore": "^0.3.4",
+    "togpx": "^0.5.3",
+    "tokml": "^0.4.0",
     "zone.js": "0.6.12"
   },
   "devDependencies": {
@@ -38,6 +41,7 @@
     "grunt-ng-constant": "^1.1.0",
     "grunt-preprocess": "^5.0.1",
     "grunt-script-link-tags": "^1.0.2",
+    "grunt-strip-debug": "^1.1.0",
     "grunt-traceur": "^0.5.5",
     "grunt-usemin": "^3.0.0",
     "lite-server": "^2.2.0",

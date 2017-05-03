@@ -1,4 +1,4 @@
-angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', '$timeout', '$location', ($http, $timeout, $location) => {
+angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$q', '$http', '$timeout', '$location', 'lists', 'ENV', ($q, $http, $timeout, $location, lists, ENV) => {
     let orsUtilsService = {};
     /**
      * trims coordinates
@@ -10,13 +10,21 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
         let coordsTrimmed = [];
         for (let i = 0; i < coords.length; i++) {
             let pair = coords[i];
-            let ptA = pair[0].toString().split('.');
-            let ptB = pair[1].toString().split('.');
-            ptA = ptA[0] + '.' + ptA[1].substr(0, 5);
-            ptB = ptB[0] + '.' + ptB[1].substr(0, 5);
-            coordsTrimmed.push([ptA, ptB]);
+            if (pair !== undefined) {
+                let ptA = pair[0].toString().split('.');
+                let ptB = pair[1].toString().split('.');
+                ptA = ptA[0] + '.' + ptA[1].substr(0, 5);
+                ptB = ptB[0] + '.' + ptB[1].substr(0, 5);
+                coordsTrimmed.push([ptA, ptB]);
+            }
         }
         return coordsTrimmed;
+    };
+    orsUtilsService.isInt = (n) => {
+        return Number(n) === n && n % 1 === 0;
+    };
+    orsUtilsService.isFloat = (n) => {
+        return Number(n) === n && n % 1 !== 0;
     };
     /**
      * checks whether position are valid coordinates
@@ -40,8 +48,9 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
      * @param {String} coord: Coordinate
      * @return {String} latlng: String latLng representation "lat, lng"
      */
-    orsUtilsService.roundCoordinate = function(coord) {
+    orsUtilsService.roundCoordinate = (coord) => {
         coord = Math.round(coord * 1000000) / 1000000;
+        console.log(coord)
         return coord;
     };
     /**
@@ -105,6 +114,31 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
         }
         return coordinates;
     };
+    /**
+     * Requests shorten link
+     * @param {String} requestData: XML for request payload
+     */
+    orsUtilsService.getShortenlink = (location) => {
+        let requestData = {
+            access_token: 'd9c484e2c240975de02bfd2f2f4211ad3a0bab6d',
+            longUrl: location
+        };
+        var url = ENV.shortenlink;
+        var canceller = $q.defer();
+        var cancel = (reason) => {
+            canceller.resolve(reason);
+        };
+        var promise = $http.get(url, {
+            params: requestData,
+            timeout: canceller.promise
+        }).then((response) => {
+            return response.data;
+        });
+        return {
+            promise: promise,
+            cancel: cancel
+        };
+    };
     /** 
      * generates object for request and serializes it to http parameters   
      * @param {Object} settings: route settings object
@@ -134,16 +168,14 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
         });
         payload.coordinates = '';
         for (let j = 0, i = 0; i < waypoints.length; i++) {
-            payload.coordinates += waypoints[i]._latlng.lng + ',' + waypoints[i]._latlng.lat + '|';
+            payload.coordinates += orsUtilsService.roundCoordinate(waypoints[i]._latlng.lng) + ',' + orsUtilsService.roundCoordinate(waypoints[i]._latlng.lat) + '|';
         }
         payload.coordinates = payload.coordinates.slice(0, -1);
-        /** loop through avoidable objects in settings and check if they can
-        be used by selected routepref */
         //  extras
-        if (subgroup == 'Bicycle' || subgroup == 'Pedestrian' || subgroup == 'Wheelchair') {
-            if (lists.profiles[settings.profile.type].elevation === true) {
-                payload.extra_info = 'surface|waytype|suitability|steepness';
-            }
+        if (lists.profiles[settings.profile.type].elevation === true) {
+            payload.extra_info = 'surface|waytype|suitability|steepness';
+        } else {
+            payload.extra_info = 'surface|waytype|suitability';
         }
         return payload;
     };
@@ -220,11 +252,11 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
             options.avoid_polygons = settings.avoidable_polygons;
         }
         if (subgroup == 'Wheelchair') {
-            options.profile_params.surface_type = settings.profile.options.surface.toString();
-            options.profile_params.track_type = '';
-            options.profile_params.smoothness_type = '';
-            options.profile_params.maximum_sloped_curb = settings.profile.options.curb.toString();
-            options.profile_params.maximum_incline = settings.profile.options.incline.toString();
+            if (settings.profile.options.surface) options.profile_params.surface_type = settings.profile.options.surface.toString();
+            //options.profile_params.track_type = '';
+            //options.profile_params.smoothness_type = '';
+            if (settings.profile.options.curb) options.profile_params.maximum_sloped_curb = settings.profile.options.curb.toString();
+            if (settings.profile.options.incline) options.profile_params.maximum_incline = settings.profile.options.incline.toString();
         }
         if (angular.equals(options.profile_params, {})) delete options.profile_params;
         return options;
@@ -262,7 +294,10 @@ angular.module('orsApp.utils-service', []).factory('orsUtilsService', ['$http', 
                 shortAddress += ', ';
             }
             if ('street' in properties) {
-                shortAddress += properties.street;
+                // street and name can be the same, just needed once
+                if (properties.street && properties.street !== properties.name) {
+                    shortAddress += properties.street;
+                }
                 if ('house_number' in properties) {
                     shortAddress += ' ' + properties.house_number;
                 }

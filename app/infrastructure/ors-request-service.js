@@ -1,4 +1,4 @@
-angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q', '$http', 'orsUtilsService', 'orsObjectsFactory', 'orsMapFactory', ($q, $http, orsUtilsService, orsObjectsFactory, orsMapFactory) => {
+angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q', '$http', 'orsUtilsService', 'orsObjectsFactory', 'orsMapFactory', 'lists', 'orsNamespaces', 'ENV', ($q, $http, orsUtilsService, orsObjectsFactory, orsMapFactory, lists, orsNamespaces, ENV) => {
     /**
      * Requests geocoding from ORS backend
      * @param {String} requestData: XML for request payload
@@ -34,7 +34,6 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q',
     };
     /** cancels all requests if there are any outstanding */
     orsRequestService.geocodeRequests.clear = () => {
-        console.info(orsRequestService.geocodeRequests.routeRequests)
         for (let req of orsRequestService.geocodeRequests.routeRequests) {
             if ('cancel' in req) req.cancel("Cancel last request");
         }
@@ -48,7 +47,7 @@ angular.module('orsApp.request-service', []).factory('orsRequestService', ['$q',
     };
 
     orsRequestService.geocode = (requestData) => {
-        var url = orsNamespaces.services.geocoding;
+        var url = ENV.geocoding;
         var canceller = $q.defer();
         var cancel = function(reason) {
             canceller.resolve(reason);

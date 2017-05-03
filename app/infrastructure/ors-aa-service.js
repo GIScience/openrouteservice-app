@@ -1,4 +1,4 @@
-    angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', '$q', 'orsUtilsService', 'orsMapFactory', 'orsObjectsFactory', ($http, $q, orsUtilsService, orsMapFactory, orsObjectsFactory) => {
+    angular.module('orsApp.aa-service', []).factory('orsAaService', ['$http', '$q', 'orsUtilsService', 'orsMapFactory', 'orsObjectsFactory', 'lists', 'ENV', ($http, $q, orsUtilsService, orsMapFactory, orsObjectsFactory, lists, ENV) => {
         /**
          * Requests geocoding from ORS backend
          * @param {String} requestData: XML for request payload
@@ -86,7 +86,7 @@
          */
         orsAaService.getIsochrones = (requestData) => {
             console.log(requestData)
-            var url = orsNamespaces.services.analyse;
+            var url = ENV.analyse;
             var canceller = $q.defer();
             var cancel = (reason) => {
                 canceller.resolve(reason);

@@ -21,6 +21,7 @@ angular.module('orsApp.ors-profiles-options', []).component('orsProfilesOptions'
          * @param {String} profile: profile name is passed if button is clicked
          */
         ctrl.changeProfile = (profile) => {
+            console.log(true)
             if (profile) ctrl.currentProfile.type = profile;
             ctrl.activeProfile = ctrl.currentProfile.type;
             ctrl.activeSubgroup = ctrl.profiles[ctrl.currentProfile.type].subgroup;

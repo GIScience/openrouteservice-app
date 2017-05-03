@@ -4,7 +4,7 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
         showInstructions: '&',
         shouldDisplayRouteDetails: '<'
     },
-    controller: ['$rootScope', '$scope', 'orsRouteService', 'orsSettingsFactory', function($rootScope, $scope, orsRouteService, orsSettingsFactory) {
+    controller: ['$rootScope', '$scope', 'orsRouteService', 'orsSettingsFactory', 'lists', function($rootScope, $scope, orsRouteService, orsSettingsFactory, lists) {
         let ctrl = this;
         ctrl.profiles = lists.profiles;
         /** use scope in order to share same template ng-include with summaries */

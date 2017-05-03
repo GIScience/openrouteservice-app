@@ -22,6 +22,47 @@ html {
     -font-size: 90% !important;
 }
 
+div.ors-app-loading {
+    position: fixed;
+    z-index: 999;
+}
+
+div.ors-app-loading div.animated-container {
+    background-color: #FFF;
+    bottom: 0px;
+    left: 0px;
+    opacity: 1.0;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+}
+
+
+/* Used to initialize the ng-leave animation state. */
+
+div.ors-app-loading div.animated-container.ng-leave {
+    opacity: 1.0;
+    transition: all linear 100ms;
+    -webkit-transition: all linear 100ms;
+}
+
+
+/* Used to set the end properties of the ng-leave animation state. */
+
+div.ors-app-loading div.animated-container.ng-leave-active {
+    opacity: 0;
+}
+
+div.ors-app-loading div.messaging {
+    color: #444;
+    left: 0px;
+    margin-top: -37px;
+    position: absolute;
+    right: 0px;
+    text-align: center;
+    top: 50%;
+}
+
 
 /**
  * Flex layout
@@ -113,6 +154,10 @@ html {
     text-decoration: none;
 }
 
+.ors-header .brand {
+    letter-spacing: 1px;
+}
+
 .ors-header li div {
     color: rgba(255, 255, 255, 0.75);
     text-align: left;
@@ -172,10 +217,10 @@ html {
 /** Inside outlet */
 
 ors-route, ors-analysis {
-    -webkit-box-flex: 1;
+   /* -webkit-box-flex: 1;
     -webkit-flex: 1;
     -ms-flex: 1;
-    flex: 1;
+    flex: 1;*/
     box-sizing: border-box;
     display: -webkit-box;
     display: -webkit-flex;
@@ -187,7 +232,7 @@ ors-route, ors-analysis {
     -ms-flex-direction: column;
     flex-direction: column;
     width: 344px;
-    -overflow-x: hidden; // otherwise y-scrollbar will cause x-scrollbar 
+    -overflow-x: hidden; /* otherwise y-scrollbar will cause x-scrollbar */
 }
 
 
@@ -202,11 +247,16 @@ ors-route, ors-analysis {
 .ors-routing-inner {
     flex: 1 1 auto;
     overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.ors-summary {
+    width: 340px;
 }
 
 .ors-route-controls, .ors-instruction-controls {
     height: 39px;
-    border-top: 1px solid #F0F0F0;
+    width: 340px;
 }
 
 .ors-summary ul, .ors-navigation ul {
@@ -237,9 +287,20 @@ ors-route, ors-analysis {
 
 .ors-route-card .right {
     color: rgba(0, 0, 0, 0.7);
-    flex: 1 1 85%;
+    flex: 1 1 auto;
     padding: 1rem;
+    -display: flex;
+    flex-direction: column;
 }
+
+.ors-route-card .right-2 {
+    color: rgba(0, 0, 0, 0.7);
+    flex: 1 1 auto;
+    text-align: right;
+    padding-top: 0.2rem;
+    padding-right: 0rem;
+}
+
 
 .ors-segment-card .steps {
     margin-right: 20px;
@@ -273,6 +334,7 @@ ors-route, ors-analysis {
     padding-bottom: 1rem;
     border-bottom: .1rem solid #edf3f5;
     padding-left: 4.5rem;
+    flex-wrap: wrap;
 }
 
 .ors-segment-card .info .heading .icon {
@@ -324,9 +386,14 @@ h3, h4, h5 {
 }
 
 .summary-item {
-    display: inline-block;
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
-    margin-right: 12px;
+    margin-right: 10px;
+}
+
+.summary-item span {
+    padding-right: 5px;
 }
 
 button.summary-select {
@@ -362,6 +429,29 @@ ors-instructions {
 
 .ors-instructions-summary, .ors-analysis-settings {
     flex: 0 0 auto;
+}
+
+.ors-instructions-summary .header {
+    display: flex;
+    flex-direction: row;
+    flex: 0 0 auto;
+    flex-basis: 30px;
+    border-bottom: .1rem solid #edf3f5;
+}
+
+.ors-instructions-summary .header .left {
+    color: rgba(0, 0, 0, 0.7);
+    padding: 1rem;
+    flex: 0 0 10%;
+}
+
+.ors-instructions-summary .header .right {
+    color: rgba(0, 0, 0, 0.7);
+    flex: 1 1 auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .ors-bars {
@@ -423,39 +513,42 @@ ors-instructions {
 
 .textLabelclass-isochrones {
     white-space: nowrap;
-    text-shadow: 0 0 0.1em #444, 0 0 0.1em #444, 0 0 0.1em #444, 0 0 0.1em #444, 0 0 0.1em;
-    font-weight: 500;
+    font-weight: 400;
     pointer-events: none !important;
     color: #FFF;
-    font-size: 24px;
-    margin-left: -8px !important;
-    margin-top: -38px !important;
+    font-size: 9px;
+    background-color: #444;
+    text-align: center;
+    border-radius: 50%;
+    padding-top: 2px;
 }
 
 .textLabelclass {
     white-space: nowrap;
-    font-weight: 500;
+    font-weight: 400;
     pointer-events: none !important;
     color: #FFF;
-    font-size: 14px;
-    margin-left: -8px !important;
-    margin-top: -38px !important;
-    background-color: orange;
+    font-size: 9px;
+    margin-left: 5px !important;
+    margin-top: -50px !important;
+    background-color: #444;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 50%;
+    padding-top: 2px;
 }
 
 .textLabelclass-onedigit {
     white-space: nowrap;
-    font-weight: 500;
+    font-weight: 400;
     pointer-events: none !important;
     color: #FFF;
-    font-size: 14px;
-    margin-left: -8px !important;
-    margin-top: -38px !important;
-    background-color: orange;
+    font-size: 9px;
+    margin-left: 5px !important;
+    margin-top: -50px !important;
+    background-color: #444;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 50%;
+    padding-top: 2px;
 }
 
 
@@ -571,6 +664,10 @@ ors-instructions {
     text-align: center;
 }
 
+.ors-modal-container .ors-dialog section p {
+    text-align: left;
+}
+
 .ors-modal-container .ors-dialog header {
     margin-top: 50px;
     padding-bottom: 10px;
@@ -602,7 +699,18 @@ ors-instructions {
 
 .restrict-height-200 {
     max-height: 200px;
-    overflow: auto;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, .5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }
 
 .small {
@@ -764,6 +872,28 @@ input:focus, input:active {
 
 /** General styles */
 
+a {
+    transition: color .4s;
+    color: #265C83;
+}
+
+a:link, a:visited {
+    color: #265C83;
+}
+
+a:hover {
+    color: #7FDBFF;
+}
+
+a:active {
+    transition: color .3s;
+    color: #007BE6;
+}
+
+.link {
+    text-decoration: none;
+}
+
 .ors-control-button {
     padding: 0 !important;
     border: none;
@@ -823,10 +953,35 @@ input:focus, input:active {
 
 .cm-popup-option {
     cursor: pointer;
+    padding: 5px 5px 0 5px;
+}
+
+.cm-popup-option:hover {
+    background: #F0F0F0;
+}
+
+
+.leaflet-bar, .leaflet-bar a:last-child, .leaflet-bar a:first-child, .leaflet-control-layers, .heightgraph-toggle-icon {
+    /* For general elements on map */
+    border-radius: 0px;
+    background-color: #FAFAFA;
+}
+
+.leaflet-control a, .leaflet-control-layers-toggle {
+    width: 30px !important;
+    height: 30px;
+    color: #444 !important;
+}
+
+.leaflet-control a:link, .leaflet-control a:visited, .leaflet-control a:hover {
+    /* for all controllers */
+    text-decoration: none;
+    color: #444 !important;
+    height: 30px !important;
 }
 
 .leaflet-popup-content {
-    margin: 10px 10px !important;
+    margin: 5px 0 5px 0 !important;
     line-height: 2 !important;
 }
 
@@ -840,41 +995,29 @@ input:focus, input:active {
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2) !important;
 }
 
-a.leaflet-control-layers-toggle {
-    width: 30px !important;
-    height: 30px !important;
+a.leaflet-control-layers-toggle, a.leaflet-avoid-area {
     position: relative;
     text-align: center;
-    line-height: 24px;
     background-image: none !important;
-    color: #70707D;
+    height: 30px !important;
+    color: #444 !important;
 }
 
 a.leaflet-control-layers-toggle:before {
     content: "\f278";
     font-family: FontAwesome;
     display: inline-block;
-    font-size: 13px;
-    line-height: 12px;
-    color: #444;
-    vertical-align: bottom;
     cursor: pointer;
-    width: 14px;
-    height: 14px;
     text-align: center;
+    padding-top: 5px;
 }
 
-/** button size fix */
-
-a.leaflet-avoidArea {
-    width: 30px;
-    height: 30px;
-    font-size: 165%;
-}
-
-a.leaflet-avoidArea:hover {
-    width: 30px;
-    height: 30px;  
+a.leaflet-avoid-area:before {
+    content: "\f248";
+    font-family: FontAwesome;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
 }
 
 .block {
@@ -903,10 +1046,14 @@ tooltip tip {
     border-radius: 4px !important;
 }
 
+tooltip._multiline {
+    display: inline-block !important;
+}
+
 
 /** markers */
 
-.ors-marker-start, .ors-marker-via, .ors-marker-end, .ors-marker-location, .ors-marker-start-highlight, .ors-marker-via-highlight, .ors-marker-end-highlight {
+.ors-marker-start, .ors-marker-via, .ors-marker-end, .ors-marker-location, .ors-marker-highlight {
     text-align: center;
     line-height: 100%;
 }
@@ -914,33 +1061,104 @@ tooltip tip {
 .ors-marker-start i, .ors-marker-via i, .ors-marker-end i, .ors-marker-location i {
     width: 100%;
     height: 100%;
-    font-size: 45px;
+    font-size: 40px;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: #FFF;
 }
 
-.ors-marker-start-highlight i, .ors-marker-via-highlight i, .ors-marker-end-highlight i {
+.ors-marker-highlight i {
     width: 100%;
     height: 100%;
-    font-size: 45px;
+    font-size: 40px;
     -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: #000;
+    -webkit-text-stroke-color: #FFF;
+    color: #444;
 }
 
-.ors-marker-start i, .ors-marker-start-highlight i {
-    -webkit-text-fill-color: green;
+.ors-marker-start i {
+    -webkit-text-fill-color: #638E26;
 }
 
-.ors-marker-via i, .ors-marker-via-highlight i {
+.ors-marker-via i {
     -webkit-text-fill-color: orange;
 }
 
-.ors-marker-end i, .ors-marker-end-highlight i {
-    -webkit-text-fill-color: red;
+.ors-marker-end i {
+    -webkit-text-fill-color: #D83F31;
 }
 
 .ors-marker-location i {
     -webkit-text-fill-color: blue;
+}
+
+.location-number-circle {
+    border-radius: 50%;
+    margin-left: 13px !important;
+    margin-top: -35px !important;
+    height: 18px;
+    width: 18px;
+    background-color: blue;
+    position: absolute;
+    padding-top: 5px;
+    text-align: center;
+    z-index: 1;
+}
+
+.via-number-circle {
+    border-radius: 50%;
+    margin-left: 13px !important;
+    margin-top: -35px !important;
+    height: 18px;
+    width: 18px;
+    background-color: #FFA500;
+    position: absolute;
+    padding-top: 5px;
+    text-align: center;
+    z-index: 1;
+}
+
+.start-number-circle {
+    border-radius: 50%;
+    margin-left: 13px !important;
+    margin-top: -35px !important;
+    height: 18px;
+    width: 18px;
+    background-color: #638E26;
+    position: absolute;
+    padding-top: 5px;
+    text-align: center;
+    z-index: 1;
+}
+
+.end-number-circle {
+    border-radius: 50%;
+    margin-left: 13px !important;
+    margin-top: -35px !important;
+    height: 18px;
+    width: 18px;
+    background-color: #D83F31;
+    position: absolute;
+    padding-top: 5px;
+    text-align: center;
+    z-index: 1;
+}
+
+.highlight-number-circle {
+    border-radius: 50%;
+    margin-left: 13px !important;
+    margin-top: -35px !important;
+    height: 18px;
+    width: 18px;
+    background-color: #444;
+    position: absolute;
+    padding-top: 5px;
+    text-align: center;
+    z-index: 1;
+}
+
+.via-number-text {
+    font-size: 10px;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
 

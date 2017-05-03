@@ -10,7 +10,7 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
         showAdd: '=',
         addresses: '<'
     },
-    controller: ['orsSettingsFactory', 'orsMapFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsMessagingService', function(orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsMessagingService) {
+    controller: ['orsSettingsFactory', 'orsMapFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsMessagingService', 'lists', function(orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsMessagingService, lists) {
         let ctrl = this;
         ctrl.select = (address) => {
             ctrl.showAddresses = false;
@@ -26,14 +26,17 @@ angular.module('orsApp.ors-waypoint', []).component('orsWaypoint', {
             else return ctrl.idx;
         };
         ctrl.emph = () => {
-            const highlightWaypoint = orsObjectsFactory.createMapAction(3, lists.layers[0], undefined, ctrl.idx, undefined);
+            const highlightWaypoint = orsObjectsFactory.createMapAction(3, lists.layers[2], ctrl.waypoint._latlng, ctrl.idx, undefined);
             orsMapFactory.mapServiceSubject.onNext(highlightWaypoint);
+        };
+        ctrl.deEmph = () => {
+            const clearHighlightWaypoints = orsObjectsFactory.createMapAction(2, lists.layers[2], undefined, undefined, undefined);
+            orsMapFactory.mapServiceSubject.onNext(clearHighlightWaypoints);
         };
         ctrl.checkForAddresses = () => {
             if (ctrl.addresses) ctrl.showAddresses = true;
         };
         ctrl.addressChanged = () => {
-            console.log(true)
             // is this a coordinate?
             let inputCoordinates = ctrl.waypoint._address;
             // split at "," ";" and " "

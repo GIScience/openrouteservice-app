@@ -1,10 +1,10 @@
-angular.module('orsApp.ors-summary', []).component('orsSummaries', {
+angular.module('orsApp.ors-summary', ['orsApp.ors-exportRoute-controls', 'orsApp.ors-share']).component('orsSummaries', {
     templateUrl: 'components/ors-panel-routing/ors-summary/ors-summary.html',
     bindings: {
         showInstructions: '&',
         shouldDisplayRouteDetails: '<'
     },
-    controller: ['$rootScope', 'orsSettingsFactory', 'orsMapFactory', 'orsObjectsFactory', 'orsRouteService', function($rootScope, orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsRouteService) {
+    controller: ['$rootScope', 'orsSettingsFactory', 'orsMapFactory', 'orsObjectsFactory', 'orsRouteService', 'lists', function($rootScope, orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsRouteService, lists) {
         let ctrl = this;
         ctrl.profiles = lists.profiles;
         ctrl.setIdx = (idx) => {
@@ -20,6 +20,11 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
                 const idx = ctrl.getIdx() === undefined ? 0 : ctrl.getIdx();
                 ctrl.route = ctrl.data.routes[idx];
                 orsRouteService.addRoute(ctrl.route.geometry);
+                if (ctrl.route.elevation) {
+                    // process heightgraph data
+                    const hgGeojson = orsRouteService.processHeightgraphData(ctrl.route);
+                    orsRouteService.addHeightgraph(hgGeojson);
+                }
             }
         }
         /** if we are returning to this panel, dispose all old subscriptions */

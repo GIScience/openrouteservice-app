@@ -6,7 +6,7 @@ angular.module('orsApp').directive('orsMap', () => {
             orsMap: '='
         },
         link: (scope, element, attrs) => {},
-        controller: ['$scope', '$filter', '$compile', '$timeout', 'orsSettingsFactory', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', ($scope, $filter, $compile, $timeout, orsSettingsFactory, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsCookiesFactory) => {
+        controller: ['$scope', '$filter', '$compile', '$timeout', 'orsSettingsFactory', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', 'lists', 'mappings', 'orsNamespaces', ($scope, $filter, $compile, $timeout, orsSettingsFactory, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsCookiesFactory, lists, mappings, orsNamespaces) => {
             $scope.translateFilter = $filter('translate');
             const mapsurfer = L.tileLayer(orsNamespaces.layerMapSurfer.url, {
                 attribution: orsNamespaces.layerMapSurfer.attribution
@@ -55,15 +55,10 @@ angular.module('orsApp').directive('orsMap', () => {
                 position: "bottomright",
                 mappings: mappings
             });
-            $scope.brand = L.control({
-                position: 'bottomleft'
-            });
-            $scope.brand.onAdd = function(map) {
-                var div = L.DomUtil.create('div', 'ors-brand');
-                div.innerHTML = '<a href="http://www.geog.uni-heidelberg.de/gis/heigit.html" target="_blank"><img src="img/brand.png"></a>';
-                return div;
-            };
-            $scope.mapModel.map.addControl($scope.brand);
+            $scope.zoomControl = new L.Control.Zoom({
+                position: 'topright'
+            }).addTo($scope.mapModel.map);
+            L.control.scale().addTo($scope.mapModel.map);
             /* AVOID AREA CONTROLLER */
             L.NewPolygonControl = L.Control.extend({
                 options: {
@@ -71,11 +66,9 @@ angular.module('orsApp').directive('orsMap', () => {
                 },
                 onAdd: function(map) {
                     var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control', container),
-                        link = L.DomUtil.create('a', 'leaflet-avoidArea', container);
+                        link = L.DomUtil.create('a', 'leaflet-avoid-area', container);
                     link.href = '#';
                     link.title = 'Create a new area avoid polygon';
-                    link.innerHTML = '<i class="fa fa-object-ungroup"></i>';
-                    //return container;
                     L.DomEvent.on(link, 'click', L.DomEvent.stop).on(link, 'click', function() {
                         map.editTools.startPolygon();
                     });
@@ -111,7 +104,7 @@ angular.module('orsApp').directive('orsMap', () => {
                 orsSettingsFactory.setAvoidableAreas(avoidPolygons);
             };
             const shapeDrawn = function(e) {
-                $scope.layerControls.addOverlay($scope.geofeatures.layerAvoid, 'Avoidable regions');
+                //$scope.layerControls.addOverlay($scope.geofeatures.layerAvoid, 'Avoidable regions');
                 setSettings();
             };
             $scope.baseLayers = {
@@ -124,7 +117,7 @@ angular.module('orsApp').directive('orsMap', () => {
                 "Hillshade": hillshade
             };
             $scope.mapModel.map.on("load", (evt) => {
-                mapsurfer.addTo($scope.orsMap);
+                openstreetmap.addTo($scope.orsMap);
                 $scope.mapModel.geofeatures.layerRoutePoints.addTo($scope.mapModel.map);
                 $scope.mapModel.geofeatures.layerRouteLines.addTo($scope.mapModel.map);
                 $scope.mapModel.geofeatures.layerRouteNumberedMarkers.addTo($scope.mapModel.map);
@@ -230,10 +223,6 @@ angular.module('orsApp').directive('orsMap', () => {
                 let textLabelclass;
                 if (isIsochrones) {
                     textLabelclass = 'textLabelclass-isochrones';
-                } else if (featureId + 1 > 9) {
-                    textLabelclass = 'textLabelclass';
-                } else {
-                    textLabelclass = 'textLabelclass-onedigit';
                 }
                 let marker = L.marker(L.latLng(lat, lng), {
                     icon: createLabelIcon(textLabelclass, parseInt(featureId) + 1),
@@ -244,6 +233,16 @@ angular.module('orsApp').directive('orsMap', () => {
             };
             $scope.addWaypoint = (idx, iconIdx, pos, fireRequest = true, aaIcon = false) => {
                 let waypointIcon = aaIcon === true ? L.divIcon(lists.waypointIcons[3]) : L.divIcon(lists.waypointIcons[iconIdx]);
+                const waypointsLength = orsSettingsFactory.getWaypoints().length;
+                if (aaIcon) {
+                    waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="location-number-circle"><div class="via-number-text"></div></div></i>';
+                } else if (idx > 0 && idx < waypointsLength - 1) {
+                    waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="via-number-circle"><div class="via-number-text">' + idx + '</div></div></i>';
+                } else if (idx == 0) {
+                    waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="start-number-circle"><div class="via-number-text"> ' + 'A' + ' </div></div></i>';
+                } else {
+                    waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="end-number-circle"><div class="via-number-text"> ' + 'B' + ' </div></div></i>';
+                }
                 // create the waypoint marker
                 let wayPointMarker = new L.marker(pos, {
                     icon: waypointIcon,
@@ -251,26 +250,11 @@ angular.module('orsApp').directive('orsMap', () => {
                     idx: idx
                 });
                 wayPointMarker.addTo($scope.mapModel.geofeatures.layerRoutePoints);
-                // If the waypoint is dragged
-                wayPointMarker.on('dragstart', (event) => {
-                    $scope.mapModel.geofeatures.layerRouteNumberedMarkers.clearLayers();
-                });
                 wayPointMarker.on('dragend', (event) => {
                     // idx of waypoint
                     const idx = event.target.options.idx;
                     const pos = event.target._latlng;
                     $scope.processMapWaypoint(idx, pos, true, fireRequest);
-                    const waypoints = orsSettingsFactory.getWaypoints();
-                    let cnt = 0;
-                    angular.forEach(waypoints, (waypoint) => {
-                        if (waypoint._latlng.lat && waypoint._latlng.lng) {
-                            if (cnt > 0 && cnt < waypoints.length - 1) {
-                                const wpTag = cnt - 1;
-                                $scope.addNumberedMarker(waypoint._latlng, wpTag, lists.layers[6]);
-                            }
-                        }
-                        cnt += 1;
-                    });
                 });
             };
             /** Clears the map
@@ -279,9 +263,9 @@ angular.module('orsApp').directive('orsMap', () => {
             $scope.clearMap = (switchApp = false) => {
                 $scope.mapModel.geofeatures.layerLocationMarker.clearLayers();
                 $scope.mapModel.geofeatures.layerRoutePoints.clearLayers();
-                $scope.mapModel.geofeatures.layerRouteNumberedMarkers.clearLayers();
                 $scope.mapModel.geofeatures.layerRouteLines.clearLayers();
                 $scope.mapModel.geofeatures.layerEmph.clearLayers();
+                if ($scope.hg) $scope.hg.remove();
                 if (switchApp) {
                     console.log('clearing isochrones')
                     $scope.mapModel.geofeatures.layerAvoid.clearLayers();
@@ -291,21 +275,18 @@ angular.module('orsApp').directive('orsMap', () => {
             };
             $scope.reAddWaypoints = (waypoints, fireRequest = true, aaIcon = false) => {
                 $scope.clearMap();
-                var idx = 0;
-                angular.forEach(waypoints, (waypoint) => {
+                let validWaypoints = 0;
+                angular.forEach(waypoints, (waypoint, idx) => {
+
+                    console.log(waypoint, idx)
                     var iconIdx = orsSettingsFactory.getIconIdx(idx);
                     if (waypoint._latlng.lat && waypoint._latlng.lng) {
                         $scope.addWaypoint(idx, iconIdx, waypoint._latlng, fireRequest, aaIcon);
-                        // only add numbered markers if on app panel routing
-                        if (fireRequest) {
-                            if (idx > 0 && idx < waypoints.length - 1) {
-                                const wpTag = idx - 1;
-                                $scope.addNumberedMarker(waypoint._latlng, wpTag, lists.layers[6]);
-                            }
-                        }
+                        validWaypoints += 1;
                     }
-                    idx += 1;
                 });
+                // if only one waypoint available zoom to it
+                if (validWaypoints == 1) $scope.zoom();
             };
             $scope.reshuffleIndices = (actionPackage) => {
                 let i = 0;
@@ -358,20 +339,19 @@ angular.module('orsApp').directive('orsMap', () => {
              * @param {Object} actionPackage - The action actionPackage
              */
             $scope.highlightWaypoint = (actionPackage) => {
-                $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
-                    if (layer.options.idx == actionPackage.featureId) {
-                        let waypointIcon;
-                        const iconIdx = orsSettingsFactory.getIconIdx(layer.options.idx);
-                        if (layer.options.highlighted === true) {
-                            waypointIcon = new L.divIcon(lists.waypointIcons[iconIdx]);
-                            layer.options.highlighted = false;
-                        } else {
-                            waypointIcon = new L.divIcon(lists.waypointIcons[4 + iconIdx]);
-                            layer.options.highlighted = true;
-                        }
-                        layer.setIcon(waypointIcon);
-                    }
+                let waypointIcon = L.divIcon(lists.waypointIcons[4]);
+                const waypointsLength = orsSettingsFactory.getWaypoints().length;
+                if (actionPackage.featureId > 0 && actionPackage.featureId < waypointsLength - 1) {
+                    waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="highlight-number-circle"><div class="via-number-text">' + actionPackage.featureId + '</div></div></i>';
+                } else if (actionPackage.featureId == 0) {
+                    waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="highlight-number-circle"><div class="via-number-text">' + 'A' + '</div></div></i>';
+                } else {
+                    waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="highlight-number-circle"><div class="via-number-text">' + 'B' + '</div></div></i>';
+                }
+                let wayPointMarker = new L.marker(actionPackage.geometry, {
+                    icon: waypointIcon
                 });
+                wayPointMarker.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
             };
             /** 
              * adds features to specific layer
@@ -507,12 +487,12 @@ angular.module('orsApp').directive('orsMap', () => {
                 const payload = orsUtilsService.geocodingPayload(lngLatString, true);
                 const request = orsRequestService.geocode(payload);
                 request.promise.then((data) => {
-                    $scope.address = {}
+                    $scope.address = {};
                     if (data.features.length > 0) {
                         const addressObj = orsUtilsService.addShortAddresses(data.features)[0];
                         $scope.address.info = addressObj.shortaddress;
                     } else {
-                        $scope.address.info = $scope.translateFilter('NO_ADDRESS')
+                        $scope.address.info = $scope.translateFilter('NO_ADDRESS');
                     }
                     $scope.address.position = lngLatString;
                     $scope.mapModel.map.addControl($scope.hereControl);

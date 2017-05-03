@@ -19,7 +19,7 @@
     </div>
 </div>
 <div class="options-box" ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Wheelchair' || $ctrl.activeSubgroup == 'HeavyVehicle' || $ctrl.activeSubgroup == 'Pedestrian'">
-    <div  class="pointer" ng-click="avoidablesOptions = !avoidablesOptions">
+    <div class="pointer" ng-click="avoidablesOptions = !avoidablesOptions">
         <i ng-class="$ctrl.getClass(avoidablesOptions)">
         </i>
         <span ng-bind-html="('AVOIDTYPES' | translate)">
@@ -102,7 +102,7 @@
         </ul>
     </div>
 </div>
-<div class="options-box" ng-show="$ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Pedestrian'">
+<div class="options-box" ng-show="$ctrl.activeSubgroup == 'Bicycle'">
     <div class="pointer" ng-click="difficultyOptions = !difficultyOptions">
         <i ng-class="$ctrl.getClass(difficultyOptions)">
         </i>
@@ -205,8 +205,7 @@
                     </span>
                     <span ng-bind-html="':'">
                     </span>
-                    <div class="detail">
-                        {{$ctrl.optionList.wheelchair.Surface[$ctrl.wheelchairSliders.Surface.value].name}}
+                    <div class="detail" ng-bind="$ctrl.optionList.wheelchair.Surface[$ctrl.wheelchairSliders.Surface.value].name">
                     </div>
                 </div>
                 <rzslider rz-slider-model="$ctrl.wheelchairSliders.Surface.value" rz-slider-options="$ctrl.wheelchairSliders.Surface.options">
@@ -218,8 +217,7 @@
                     </span>
                     <span ng-bind-html="':'">
                     </span>
-                    <div class="detail">
-                        {{$ctrl.optionList.wheelchair.Incline[$ctrl.wheelchairSliders.Incline.value].name}}
+                    <div class="detail" ng-bind="$ctrl.optionList.wheelchair.Incline[$ctrl.wheelchairSliders.Incline.value].name">
                     </div>
                 </div>
                 <rzslider rz-slider-model="$ctrl.wheelchairSliders.Incline.value" rz-slider-options="$ctrl.wheelchairSliders.Incline.options">
@@ -231,8 +229,7 @@
                     </span>
                     <span ng-bind-html="':'">
                     </span>
-                    <div class="detail">
-                        {{$$ctrl.optionList.wheelchair.Curb[$ctrl.wheelchairSliders.Curb.value].name}}
+                    <div class="detail" ng-bind="$ctrl.optionList.wheelchair.Curb[$ctrl.wheelchairSliders.Curb.value].name">
                     </div>
                 </div>
                 <rzslider rz-slider-model="$ctrl.wheelchairSliders.Curb.value" rz-slider-options="$ctrl.wheelchairSliders.Curb.options">
