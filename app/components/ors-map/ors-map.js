@@ -109,15 +109,15 @@ angular.module('orsApp').directive('orsMap', () => {
             };
             $scope.baseLayers = {
                 "MapSurfer": mapsurfer,
-                "OpenStreetMap": openstreetmap,
-                "OpenCycleMap": opencyclemap,
-                "Stamen": stamen
+                "OpenStreetMap": openstreetmap
+                // removed because no https "OpenCycleMap": opencyclemap,
+                // removed because no https "Stamen": stamen
             };
             $scope.overlays = {
                 "Hillshade": hillshade
             };
             $scope.mapModel.map.on("load", (evt) => {
-                openstreetmap.addTo($scope.orsMap);
+                mapsurfer.addTo($scope.orsMap);
                 $scope.mapModel.geofeatures.layerRoutePoints.addTo($scope.mapModel.map);
                 $scope.mapModel.geofeatures.layerRouteLines.addTo($scope.mapModel.map);
                 $scope.mapModel.geofeatures.layerRouteNumberedMarkers.addTo($scope.mapModel.map);
@@ -275,18 +275,12 @@ angular.module('orsApp').directive('orsMap', () => {
             };
             $scope.reAddWaypoints = (waypoints, fireRequest = true, aaIcon = false) => {
                 $scope.clearMap();
-                let validWaypoints = 0;
                 angular.forEach(waypoints, (waypoint, idx) => {
-
-                    console.log(waypoint, idx)
                     var iconIdx = orsSettingsFactory.getIconIdx(idx);
                     if (waypoint._latlng.lat && waypoint._latlng.lng) {
                         $scope.addWaypoint(idx, iconIdx, waypoint._latlng, fireRequest, aaIcon);
-                        validWaypoints += 1;
                     }
                 });
-                // if only one waypoint available zoom to it
-                if (validWaypoints == 1) $scope.zoom();
             };
             $scope.reshuffleIndices = (actionPackage) => {
                 let i = 0;
@@ -320,8 +314,13 @@ angular.module('orsApp').directive('orsMap', () => {
                         });
                     } else if (actionPackage.featureId === undefined) {
                         if (actionPackage.geometry !== undefined) {
-                            let bounds = new L.LatLngBounds(actionPackage.geometry);
-                            $scope.orsMap.fitBounds(bounds);
+                            if (actionPackage.geometry.lat && actionPackage.geometry.lng) {
+                                $scope.mapModel.map.panTo(actionPackage.geometry);
+                                $scope.mapModel.map.setZoom(13);
+                            } else {
+                                let bounds = new L.LatLngBounds(actionPackage.geometry);
+                                $scope.orsMap.fitBounds(bounds);
+                            }
                         } else {
                             $scope.orsMap.fitBounds(new L.featureGroup(Object.keys($scope.mapModel.geofeatures).map((key) => {
                                 return $scope.mapModel.geofeatures[key];
