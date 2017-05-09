@@ -75,6 +75,16 @@ angular.module('orsApp').directive('orsMap', () => {
                     return container;
                 }
             });
+            $scope.measureControl = new L.control.measure({
+                position: 'topright',
+                primaryLengthUnit: 'meters',
+                secondaryLengthUnit: 'kilometers',
+                primaryAreaUnit: 'squaremeters',
+                secondaryAreaUnit: 'hectares',
+                activeColor: '#cf5f5f',
+                completedColor: '#e29f9f',
+                background: '#444'
+            }).addTo($scope.mapModel.map);
             $scope.mapModel.map.addControl(new L.NewPolygonControl());
             const deleteShape = function(e) {
                 if ((e.originalEvent.altKey || e.originalEvent.metaKey) && this.editEnabled()) {
