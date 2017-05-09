@@ -961,7 +961,7 @@ a:active {
 }
 
 
-.leaflet-bar, .leaflet-bar a:last-child, .leaflet-bar a:first-child, .leaflet-control-layers, .heightgraph-toggle-icon {
+.leaflet-bar, .leaflet-bar a:last-child, .leaflet-bar a:first-child, .leaflet-control-layers, .heightgraph-toggle-icon, .leaflet-control-measure {
     /* For general elements on map */
     border-radius: 0px;
     background-color: #FAFAFA;
@@ -995,7 +995,7 @@ a:active {
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2) !important;
 }
 
-a.leaflet-control-layers-toggle, a.leaflet-avoid-area {
+a.leaflet-control-layers-toggle, a.leaflet-avoid-area a.leaflet-control-measure{
     position: relative;
     text-align: center;
     background-image: none !important;

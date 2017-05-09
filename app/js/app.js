@@ -33,7 +33,6 @@
     let orsApp = angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.ors-panel-accessibilityanalysis', 'orsApp.ors-header', 'orsApp.ors-error', 'orsApp.ors-loading', 'orsApp.ors-modal', 'ui.sortable', 'orsApp.messaging-service', 'orsApp.map-service', 'orsApp.objects-service', 'orsApp.params-service', 'orsApp.request-service', 'orsApp.settings-service', 'orsApp.utils-service', 'orsApp.route-service', 'orsApp.cookies-service', 'orsApp.aa-service', 'orsApp.GeoFileHandler-service', 'ngCookies', 'rzModule', 'ngAnimate', 'ngSanitize', 'pascalprecht.translate', 'angular-loading-bar', '720kb.tooltips', 'orsApp.ors-filters', 'orsApp.ors-route-extras', 'config']).config(function($locationProvider, $httpProvider) {
         $locationProvider.html5Mode(true);
         $httpProvider.interceptors.push(function($q, $document, $injector, lists, orsNamespaces, ENV, weathercheck) {
-            // ak = 58d904a497c67e00015b45fc8b03cba238e54c864262a4ee9c356a7b
             let ak = '?api_key=' + weathercheck;
             return {
                 'request': function(config) {
