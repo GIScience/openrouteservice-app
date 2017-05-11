@@ -1005,12 +1005,22 @@ div.leaflet-control-measure.leaflet-control {
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2) !important;
 }
 
-a.leaflet-control-layers-toggle, a.leaflet-avoid-area a.leaflet-control-measure {
+a.leaflet-control-layers-toggle, a.leaflet-avoid-area, div.leaflet-control-measure>a {
     position: relative;
     text-align: center;
     background-image: none !important;
     height: 30px !important;
     color: #444 !important;
+    text-indent: inherit !important;
+}
+
+div.leaflet-control-measure.leaflet-control>a:before {
+    content: "\f040";
+    font-family: FontAwesome;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    padding-top: 5px;
 }
 
 a.leaflet-control-layers-toggle:before {

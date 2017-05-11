@@ -83,12 +83,14 @@ angular.module('orsApp').directive('orsMap', () => {
                 secondaryAreaUnit: 'sqmeters',
                 activeColor: '#cf5f5f',
                 completedColor: '#e29f9f',
-                background: '#444',
+                background: '#FFF',
                 popupOptions: {
                     className: 'leaflet-measure-resultpopup',
                     autoPanPadding: [10, 10]
                 }
             }).addTo($scope.mapModel.map);
+            // hack to remove measure string from box
+            const el = angular.element(document.querySelector('.js-toggle')).empty();
             $scope.mapModel.map.addControl(new L.NewPolygonControl());
             const deleteShape = function(e) {
                 if ((e.originalEvent.altKey || e.originalEvent.metaKey) && this.editEnabled()) {
