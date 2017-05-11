@@ -76,14 +76,18 @@ angular.module('orsApp').directive('orsMap', () => {
                 }
             });
             $scope.measureControl = new L.control.measure({
-                position: 'topright',
+                position: 'bottomleft',
                 primaryLengthUnit: 'meters',
                 secondaryLengthUnit: 'kilometers',
-                primaryAreaUnit: 'squaremeters',
-                secondaryAreaUnit: 'hectares',
+                primaryAreaUnit: 'hectares',
+                secondaryAreaUnit: 'sqmeters',
                 activeColor: '#cf5f5f',
                 completedColor: '#e29f9f',
-                background: '#444'
+                background: '#444',
+                popupOptions: {
+                    className: 'leaflet-measure-resultpopup',
+                    autoPanPadding: [10, 10]
+                }
             }).addTo($scope.mapModel.map);
             $scope.mapModel.map.addControl(new L.NewPolygonControl());
             const deleteShape = function(e) {
