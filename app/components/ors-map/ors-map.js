@@ -17,6 +17,12 @@ angular.module('orsApp').directive('orsMap', () => {
             const opencyclemap = L.tileLayer(orsNamespaces.layerOSMCycle.url, {
                 attribution: orsNamespaces.layerOSMCycle.attribution
             });
+            const transportdark = L.tileLayer(orsNamespaces.layerOSMDark.url, {
+                attribution: orsNamespaces.layerOSMDark.attribution
+            });
+            const outdoors = L.tileLayer(orsNamespaces.layerOutdoors.url, {
+                attribution: orsNamespaces.layerOutdoors.attribution
+            });
             const stamen = L.tileLayer(orsNamespaces.layerStamen.url, {
                 attribution: orsNamespaces.layerStamen.attribution
             });
@@ -125,8 +131,10 @@ angular.module('orsApp').directive('orsMap', () => {
             };
             $scope.baseLayers = {
                 "MapSurfer": mapsurfer,
-                "OpenStreetMap": openstreetmap
-                // removed because no https "OpenCycleMap": opencyclemap,
+                "OpenStreetMap": openstreetmap,
+                "OpenCycleMap": opencyclemap,
+                "Transport Dark": transportdark,
+                "Outdoors": outdoors
                 // removed because no https "Stamen": stamen
             };
             $scope.overlays = {

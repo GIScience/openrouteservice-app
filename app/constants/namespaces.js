@@ -60,8 +60,18 @@ angular.module('orsApp').constant('orsNamespaces', {
     },
     //url to OpenCycleMap
     layerOSMCycle: {
-        url: 'https://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
-        attribution: 'Map data &copy; <a href="http://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+        url: "https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=13efc496ac0b486ea05691c820824f5f",
+        attribution: 'Maps &copy; <a href="http://thunderforest.com/">Thunderforest</a>, Data &copy; <a href="http://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    },
+    //url to Transport Dark map
+    layerOSMDark: {
+        url: "https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png?apikey=13efc496ac0b486ea05691c820824f5f",
+        attribution: 'Maps &copy; <a href="http://thunderforest.com/">Thunderforest</a>, Data &copy; <a href="http://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    },
+    //url to Outdoors map
+    layerOutdoors: {
+        url: "https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=13efc496ac0b486ea05691c820824f5f",
+        attribution: 'Maps &copy; <a href="http://thunderforest.com/">Thunderforest</a>, Data &copy; <a href="http://www.openstreetmap.org/">OpenStreetMap</a> contributors'
     },
     //url to stamen maps
     layerStamen: {
