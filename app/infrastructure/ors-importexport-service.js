@@ -50,7 +50,8 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
                             };
                             isochrones.push(geojsonpolygon);
                         }
-                        exportData = JSON.stringify(L.geoJSON(isochrones).toGeoJSON());
+                        exportData = JSON.stringify(isochrones);
+                        exportData = "{\"type\":\"FeatureCollection\",\"features\":"+exportData+"}";
                     }
                     break;
                 default:
