@@ -19,7 +19,7 @@
         var initInjector = angular.injector(["ng"]);
         var $http = initInjector.get("$http");
         return $http.get("weathercheck.txt").then(function(response) {
-            angular.module('orsApp').constant("weathercheck", response.data);
+            angular.module('orsApp').value("weathercheck", response.data);
         }, function(errorResponse) {
             console.log(errorResponse);
         });
@@ -104,7 +104,7 @@
         // this is where a new api key is called every 12 hours
         $interval(function() {
             return $http.get("weathercheck.txt").then(function(response) {
-                angular.module('orsApp').constant("weathercheck", response.data);
+                angular.module('orsApp').value("weathercheck", response.data);
             }, function(errorResponse) {
                 console.log(errorResponse);
             });

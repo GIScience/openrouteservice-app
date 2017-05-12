@@ -1,4 +1,4 @@
-angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUtilsService', 'orsObjectsFactory', 'orsRequestService', 'lists', (orsUtilsService, orsObjectsFactory, orsRequestService, lists) => {
+angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUtilsService', 'orsObjectsFactory', 'orsRequestService', 'orsMapFactory', 'lists', (orsUtilsService, orsObjectsFactory, orsRequestService, orsMapFactory, lists) => {
     let orsParamsService = {};
     orsParamsService.importSettings = (params, routing = true) => {
         const settings = {
@@ -18,25 +18,34 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUti
             if (key == 'a') {
                 //TODO Debug, adding does not properly work
                 const wps = value.match(/[^,]+,[^,]+/g);
-                let idx = 0,
-                    waypoints = [];
+                let validWpCnt = 0,
+                    idx = 0,
+                    waypoints = [],
+                    latLngString, latLng;
                 angular.forEach(wps, (wp) => {
                     wp = wp.split(",");
-                    let latLngString,latLng;
                     if (isNaN(wp[0]) && isNaN(wp[1])) {
                         wp = orsObjectsFactory.createWaypoint('', false, 0);
                     } else {
                         latLng = new L.latLng([parseFloat(wp[0]), parseFloat(wp[1])]);
                         latLngString = orsUtilsService.parseLatLngString(latLng);
                         wp = orsObjectsFactory.createWaypoint(latLngString, latLng, 1);
+                        validWpCnt += 1;
                     }
-                    waypoints.push(wp);
                     idx += 1;
+                    console.log(wp)
+                    waypoints.push(wp);
                 });
+                console.log(false, validWpCnt)
                 /** Add second empty wp if only start is set in routing panel */
                 if (idx == 1 && routing === true) {
                     wp = orsObjectsFactory.createWaypoint('', false, 0);
                     waypoints.push(wp);
+                }
+                if (validWpCnt == 1) {
+                    console.log(latLng)
+                    const action = orsObjectsFactory.createMapAction(0, undefined, latLng, undefined);
+                    orsMapFactory.mapServiceSubject.onNext(action);
                 }
                 settings.waypoints = waypoints;
             }

@@ -48,11 +48,11 @@ angular.module('orsApp').constant('orsNamespaces', {
      */
     //url to Open Map Surfer layer
     layerMapSurfer: {
-        url: 'http://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}',
+        url: 'https://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}',
         attribution: 'Map data &copy; <a href="http://www.openstreetmap.org/">OpenStreetMap</a> contributors, powered by <a href="http://mapsurfernet.com/">MapSurfer.NET</a>'
     },
     //url to hillshade overlay
-    layerHs: 'http://korona.geog.uni-heidelberg.de/tiles/asterh/x={x}&y={y}&z={z}',
+    layerHs: 'https://korona.geog.uni-heidelberg.de/tiles/asterh/x={x}&y={y}&z={z}',
     //url to OSM layer
     layerOSM: {
         url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -65,10 +65,10 @@ angular.module('orsApp').constant('orsNamespaces', {
     },
     //url to stamen maps
     layerStamen: {
-        url: 'https://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png',
+        url: 'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png',
         attribution: 'Map data &copy; <a href="http://www.openstreetmap.org/">OpenStreetMap</a> contributors'
     },
     overlayHillshade: {
-        url: 'http://korona.geog.uni-heidelberg.de/tiles/asterh/x={x}&y={y}&z={z}'
+        url: 'https://korona.geog.uni-heidelberg.de/tiles/asterh/x={x}&y={y}&z={z}'
     }
 });
