@@ -29,11 +29,29 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
                     if (geomType == 'linestring') {
                         exportData = JSON.stringify(L.polyline(geometry).toGeoJSON());
                     } else if (geomType == 'polygon') {
-                        let isochrones = new L.FeatureGroup();
+                        let isochrones = [];
                         for (let i = 0; i < geometry.length; i++) {
-                            L.polygon(geometry[i].geometry.coordinates).addTo(isochrones);
+                            console.log(geometry[i]);
+                            let properties = geometry[i].properties;
+                            properties.id = i;
+                            let c = geometry[i].geometry.coordinates;
+                            for (let k = 0; k < c[0].length; k++) {
+                                let store = c[0][k][0];
+                                c[0][k][0] = c[0][k][1];
+                                c[0][k][1] = store;
+                            }
+                            geojsonpolygon = {
+                                "type": "Feature",
+                                "properties": properties,
+                                "geometry": {
+                                    "type": "Polygon",
+                                    "coordinates": c
+                                }
+                            };
+                            isochrones.push(geojsonpolygon);
                         }
-                        exportData = JSON.stringify(isochrones.toGeoJSON());
+                        exportData = JSON.stringify(isochrones);
+                        exportData = "{\"type\":\"FeatureCollection\",\"features\":"+exportData+"}";
                     }
                     break;
                 default:
