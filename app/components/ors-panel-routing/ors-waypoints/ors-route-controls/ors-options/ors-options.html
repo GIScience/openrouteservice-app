@@ -19,7 +19,7 @@
     </div>
 </div>
 <div class="options-box" ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Wheelchair' || $ctrl.activeSubgroup == 'HeavyVehicle' || $ctrl.activeSubgroup == 'Pedestrian'">
-    <div  class="pointer" ng-click="avoidablesOptions = !avoidablesOptions">
+    <div class="pointer" ng-click="avoidablesOptions = !avoidablesOptions">
         <i ng-class="$ctrl.getClass(avoidablesOptions)">
         </i>
         <span ng-bind-html="('AVOIDTYPES' | translate)">
@@ -102,7 +102,7 @@
         </ul>
     </div>
 </div>
-<div class="options-box" ng-show="$ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Pedestrian'">
+<div class="options-box" ng-show="$ctrl.activeSubgroup == 'Bicycle'">
     <div class="pointer" ng-click="difficultyOptions = !difficultyOptions">
         <i ng-class="$ctrl.getClass(difficultyOptions)">
         </i>
@@ -171,13 +171,21 @@
     </div>
 </div>
 <div class="options-box" ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Wheelchair' || $ctrl.activeSubgroup == 'HeavyVehicle' || $ctrl.activeSubgroup == 'Pedestrian'">
-    <div class="pointer" ng-click="maxspeedOptions = !maxspeedOptions">
+    <div class="pointer" ng-click="additionalOptions = !additionalOptions">
         <i ng-class="$ctrl.getClass(maxspeedOptions)">
         </i>
         <span ng-bind-html="('ADDITIONALSETTINGS' | translate)">
         </span>
     </div>
-    <div class="collapsable" ng-class="{ showMe: maxspeedOptions }">
+    <div class="collapsable" ng-class="{ showMe: additionalOptions }">
+        <div class="ors-options-menu">
+            <div class="ui checkbox">
+                <input id="greenrouting" name="orsRouteGreenRoutingInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.green" type="checkbox">
+                    <label for="greenrouting" ng-bind-html="('GREEN_ROUTING' | translate)">
+                    </label>
+                </input>
+            </div>
+        </div>
         <div class="ors-options-menu">
             <div class="ui checkbox">
                 <input id="maximumspeed" name="orsRouteMaximumspeedInput" ng-change="$ctrl.toggleMaxspeedSlider()" ng-model="$ctrl.maxspeedCheckbox" type="checkbox">
@@ -205,8 +213,7 @@
                     </span>
                     <span ng-bind-html="':'">
                     </span>
-                    <div class="detail">
-                        {{$ctrl.optionList.wheelchair.Surface[$ctrl.wheelchairSliders.Surface.value].name}}
+                    <div class="detail" ng-bind="$ctrl.optionList.wheelchair.Surface[$ctrl.wheelchairSliders.Surface.value].name">
                     </div>
                 </div>
                 <rzslider rz-slider-model="$ctrl.wheelchairSliders.Surface.value" rz-slider-options="$ctrl.wheelchairSliders.Surface.options">
@@ -218,8 +225,7 @@
                     </span>
                     <span ng-bind-html="':'">
                     </span>
-                    <div class="detail">
-                        {{$ctrl.optionList.wheelchair.Incline[$ctrl.wheelchairSliders.Incline.value].name}}
+                    <div class="detail" ng-bind="$ctrl.optionList.wheelchair.Incline[$ctrl.wheelchairSliders.Incline.value].name">
                     </div>
                 </div>
                 <rzslider rz-slider-model="$ctrl.wheelchairSliders.Incline.value" rz-slider-options="$ctrl.wheelchairSliders.Incline.options">
@@ -231,8 +237,7 @@
                     </span>
                     <span ng-bind-html="':'">
                     </span>
-                    <div class="detail">
-                        {{$$ctrl.optionList.wheelchair.Curb[$ctrl.wheelchairSliders.Curb.value].name}}
+                    <div class="detail" ng-bind="$ctrl.optionList.wheelchair.Curb[$ctrl.wheelchairSliders.Curb.value].name">
                     </div>
                 </div>
                 <rzslider rz-slider-model="$ctrl.wheelchairSliders.Curb.value" rz-slider-options="$ctrl.wheelchairSliders.Curb.options">

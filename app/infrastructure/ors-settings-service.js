@@ -1,4 +1,4 @@
-angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$timeout', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsRouteService', 'orsAaService', 'orsMessagingService', ($timeout, orsObjectsFactory, orsUtilsService, orsRequestService, orsRouteService, orsAaService, orsMessagingService) => {
+angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$timeout', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsRouteService', 'orsAaService', 'orsMessagingService', 'lists', ($timeout, orsObjectsFactory, orsUtilsService, orsRequestService, orsRouteService, orsAaService, orsMessagingService, lists) => {
     let orsSettingsFactory = {};
     /** Behaviour subjects routing. */
     orsSettingsFactory.routingWaypointsSubject = new Rx.BehaviorSubject({});
@@ -18,9 +18,11 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
     /** Global reference settings, these are switched when panels are changed - default is routing.*/
     let currentSettingsObj, currentWaypointsObj;
     orsSettingsFactory.isInitialized = false;
+    orsSettingsFactory.focusIdx = true;
     /**
      * Sets the settings from permalink
-     * @param {Object} The settings object.
+     * @param {Object} set - The settings object.
+     * @param {boolean} focus - If only one waypoint is set zoom to it.
      */
     orsSettingsFactory.setSettings = (set) => {
         /** Fire request */
@@ -116,6 +118,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
      * @param {Object} pos - Which is the latlng object.
      */
     orsSettingsFactory.updateWaypoint = (idx, address, pos, fireRequest = true) => {
+        orsSettingsFactory.focusIdx = false;
         orsSettingsFactory[currentSettingsObj].getValue().waypoints[idx]._latlng = pos;
         orsSettingsFactory[currentSettingsObj].getValue().waypoints[idx]._address = address;
         /** Fire a new request. */
@@ -180,7 +183,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
             request.promise.then(function(response) {
                 orsSettingsFactory.requestSubject.onNext(false);
                 const profile = settings.profile.type;
-                orsRouteService.processResponse(response, profile);
+                orsRouteService.processResponse(response, profile, orsSettingsFactory.focusIdx);
             }, function(response) {
                 console.error(response);
                 orsSettingsFactory.requestSubject.onNext(false);
@@ -242,7 +245,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
                 orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
             }
         }, (response) => {
-            orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
+            //orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
         });
     };
     /** 
@@ -282,6 +285,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
             orsSettingsFactory[currentSettingsObj].value.waypoints[orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1] = wp;
         } else if (idx == 1) {
             orsSettingsFactory[currentSettingsObj].value.waypoints.splice(orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1, 0, wp);
+            orsSettingsFactory.focusIdx = false;
         }
         /** Update Map. */
         orsSettingsFactory[currentWaypointsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue().waypoints);

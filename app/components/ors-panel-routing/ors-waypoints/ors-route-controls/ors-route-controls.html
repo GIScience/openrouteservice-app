@@ -1,32 +1,34 @@
 <div class="ors-route-controls">
-    <button  class="ors-controls-button flleft" ng-click="$ctrl.add()" ng-show="$ctrl.showAdd">
-        <i class="fa fa-plus" tooltips tooltip-template="{{('ADD' | translate)}}" tooltip-side="top"  tooltip-append-to-body="true">
+    <button class="ors-controls-button flleft" ng-click="$ctrl.add()" ng-show="$ctrl.showAdd">
+        <i class="fa fa-plus" tooltip-append-to-body="true" tooltip-side="top" tooltip-template="{{('ADD' | translate)}}" tooltips="">
         </i>
     </button>
-    <button  class="ors-controls-button flleft" ng-click="$ctrl.reset()">
-        <i class="fa fa-remove" tooltips tooltip-template="{{('RESET' | translate)}}" tooltip-side="top" tooltip-append-to-body="true">
+    <button class="ors-controls-button flleft" ng-click="$ctrl.reset()">
+        <i class="fa fa-remove" tooltip-append-to-body="true" tooltip-side="top" tooltip-template="{{('RESET' | translate)}}" tooltips="">
         </i>
     </button>
-    <button  class="ors-controls-button flleft" ng-click="$ctrl.reversing()">
-        <i class="fa fa-retweet" tooltips tooltip-template="{{('REVERSE' | translate)}}" tooltip-side="top" tooltip-append-to-body="true">
+    <button class="ors-controls-button flleft" ng-click="$ctrl.reversing()">
+        <i class="fa fa-retweet" tooltip-append-to-body="true" tooltip-side="top" tooltip-template="{{('REVERSE' | translate)}}" tooltips="">
         </i>
     </button>
-    <button  class="ors-controls-button flleft" ng-click="$ctrl.zoom()">
-        <i class="fa fa-expand" tooltips tooltip-template="{{('EXPAND' | translate)}}" tooltip-side="top" tooltip-append-to-body="true">
+    <button class="ors-controls-button flleft" ng-click="$ctrl.zoom()">
+        <i class="fa fa-expand" tooltip-append-to-body="true" tooltip-side="top" tooltip-template="{{('EXPAND' | translate)}}" tooltips="">
         </i>
     </button>
-    <button  class="ors-controls-button flleft" data-ng-click="$ctrl.showImport = !$ctrl.showImport">
-        <i class="fa fa-upload" tooltips tooltip-template="{{('UPLOAD' | translate)}}" tooltip-side="top" tooltip-append-to-body="true">
+    <button class="ors-controls-button flleft" data-ng-click="$ctrl.showImport = !$ctrl.showImport">
+        <i class="fa fa-upload" tooltip-append-to-body="true" tooltip-side="top" tooltip-template="{{('UPLOAD' | translate)}}" tooltips="">
         </i>
     </button>
-    <button  class="ors-controls-button flleft" ng-click="$ctrl.callOptions()">
-        <i class="fa fa-sliders" tooltips tooltip-template="{{('OPTIONS' | translate)}}" tooltip-side="top" tooltip-append-to-body="true">
+    <button class="ors-controls-button flright" ng-click="$ctrl.callOptions()">
+        <i class="fa fa-sliders" tooltip-append-to-body="true" tooltip-side="top" tooltip-template="{{('OPTIONS' | translate)}}" tooltips="">
         </i>
     </button>
 </div>
 <div class="ors-routing-options container" ng-show="$ctrl.showOptions">
-    <ors-options active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup" show-options="$ctrl.showOptions"> </ors-options>
+    <ors-options active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup" show-options="$ctrl.showOptions">
+    </ors-options>
 </div>
 <ors-modal data-ng-show="$ctrl.showImport" show="$ctrl.showImport">
-    <ors-import-route-controls></ors-import-route-controls>
+    <ors-import-route-controls>
+    </ors-import-route-controls>
 </ors-modal>

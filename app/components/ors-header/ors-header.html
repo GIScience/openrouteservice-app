@@ -1,6 +1,6 @@
 <ul>
     <li style="float: left">
-        <a href="www.OpenRouteService.org" ng-bind-html="'<b>OpenRouteService</b>.org'" target="_blank">
+        <a class="brand" href="https://developers.openrouteservice.org/portal/" ng-bind-html="'<b>OpenRouteService</b>'" target="_blank">
         </a>
     </li>
     <li>
@@ -14,10 +14,24 @@
                     <span ng-bind-html="('SETTINGS' | translate)">
                     </span>
                 </div>
-                <a class="item" href="http://openrouteservice.readthedocs.io/" target="_blank">
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="ui simple dropdown item">
+            <i class="fa fa-lg fa-info-circle">
+            </i>
+            <div class="menu">
+                <a class="item" ng-click="$ctrl.showInfo = !$ctrl.showInfo">
+                    <i class="fa fa-fw fa-info">
+                    </i>
+                    <span ng-bind-html="'About <strong>OpenRouteService.org</strong>'">
+                    </span>
+                </a>
+                <a class="item" href="https://developers.openrouteservice.org/portal/" target="_blank">
                     <i class="fa fa-fw fa-code">
                     </i>
-                    <span ng-bind-html="('DOCUMENTATION' | translate)">
+                    <span ng-bind-html="'OpenRouteService API'">
                     </span>
                 </a>
                 <a class="item" href="https://groups.google.com/forum/#!forum/openrouteservice" target="_blank">
@@ -32,5 +46,9 @@
 </ul>
 <ors-modal show="$ctrl.showSettings">
     <div ng-include="'includes/settings.html'">
+    </div>
+</ors-modal>
+<ors-modal show="$ctrl.showInfo">
+    <div ng-include="'includes/info.html'">
     </div>
 </ors-modal>

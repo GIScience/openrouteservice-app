@@ -14,7 +14,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
                 return d.percentage + '% ' + scope.translateFilter(d.type) + ' (' + scope.distanceFilter(d.distance) + ')';
             });
             let data = [];
-            _.forEach(scope.typesOrder, (type) => {
+            angular.forEach(scope.typesOrder, function(type) {
                 data.push(scope.obj[type]);
             });
             let margin = {
@@ -24,14 +24,14 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
                     left: 10
                 },
                 width = 330 - margin.left - margin.right,
-                height = 30 - margin.top - margin.bottom;
+                height = 50 - margin.top - margin.bottom;
             let y = d3.scaleLinear().rangeRound([height, 0]);
             let x = d3.scaleLinear().rangeRound([0, width]);
             let xAxis = d3.axisBottom().scale(x);
             let yAxis = d3.axisLeft().scale(y);
             var svg = d3.select(element[0]).append("svg").attr("width", width).attr("height", height);
             y.domain([0]);
-            x.domain([0, _.last(data).y1]);
+            x.domain([0, data[data.length - 1].y1]);
             svg.append("g").selectAll("rect").data(data).enter().append("rect").attr("height", 26).attr("x", (d) => {
                 return x(d.y0) / 1;
             }).attr("width", (d) => {
@@ -54,7 +54,11 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
             let legendSpacing = 7;
             let legendTotalHeight = 0;
             let legendContainer = svg.append("g");
-            let legend = legendContainer.selectAll('.legend').data(data).enter().append('g').attr('class', 'legend').attr('transform', (d, i) => {
+            // make a copy of data for legend and sort by percentage of type
+            const legendData = data.sort(function(a, b) {
+                return a.percentage < b.percentage;
+            });
+            let legend = legendContainer.selectAll('.chart-legend').data(legendData).enter().append('g').attr('class', '.chart-legend').attr('transform', (d, i) => {
                 let legendHeight = legendRectSize + legendSpacing;
                 let vert = height * 1.1 + i * legendHeight;
                 legendTotalHeight += legendHeight;
@@ -63,6 +67,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
             legend.append('rect').attr('width', legendRectSize).attr('height', legendRectSize).style('fill', (d, i) => {
                 return d.color;
             });
+            legendContainer.append('text').style("font-size", "12px").attr('x', 0).attr('y', 40).text(scope.translateFilter(scope.key));
             legend.append('text').style("font-size", "11px").attr('x', legendRectSize + legendSpacing).attr('y', legendRectSize).text((d) => {
                 return scope.translateFilter(d.type) + ' (' + d.percentage + '%)';
             });
@@ -93,9 +98,9 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
             $scope.distanceFilter = $filter('distance');
             $scope.translateFilter = $filter('translate');
             $scope.EmphSegment = (segments) => {
-                _.forEach(segments, (pair) => {
+                angular.forEach(segments, function(pair) {
                     const routeString = orsRouteService.data.routes[$scope.routeIndex].geometry;
-                    const geometry = _.slice(routeString, pair[0], pair[1] + 1);
+                    const geometry = routeString.slice(pair[0], pair[1] + 1);
                     orsRouteService.Emph(geometry);
                 });
             };

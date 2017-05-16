@@ -10,7 +10,7 @@ angular.module('orsApp.ors-aa-waypoint', []).component('orsAaWaypoint', {
         showAdd: '=',
         addresses: '<'
     },
-    controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsMessagingService', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsMessagingService) {
+    controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsMessagingService', 'lists', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsMessagingService, lists) {
         let ctrl = this;
         ctrl.select = (address) => {
             ctrl.showAddresses = false;

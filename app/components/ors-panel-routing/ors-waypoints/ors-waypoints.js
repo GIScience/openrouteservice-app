@@ -6,7 +6,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         activeProfile: '<',
         activeSubgroup: '<',
     },
-    controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRouteService', 'orsRequestService', 'orsParamsService', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRouteService, orsRequestService, orsParamsService) {
+    controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRouteService', 'orsRequestService', 'orsParamsService', '$timeout', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRouteService, orsRequestService, orsParamsService, $timeout) {
         let ctrl = this;
         ctrl.$onInit = () => {
             /** If waypoints list is empty initialize new waypoints. */
@@ -102,7 +102,7 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         /** Adds waypoint to the end. */
         ctrl.addWaypoint = () => {
             let wp = orsObjectsFactory.createWaypoint('', new L.latLng());
-            ctrl.waypoints.push(wp);
+            ctrl.waypoints.splice(ctrl.waypoints.length - 1, 0, wp);
             orsSettingsFactory.setWaypoints(ctrl.waypoints, false);
         };
         /** If dropdown of addresses is openend once again and address is changed. */
@@ -125,7 +125,9 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
             sort: () => {},
             start: () => {},
             update: (e, ui) => {
-                orsSettingsFactory.setWaypoints(ctrl.waypoints, true);
+                $timeout(function() {
+                    orsSettingsFactory.setWaypoints(ctrl.waypoints, true);
+                }, 100);
             },
             stop: (e, ui) => {
                 //orsSettingsFactory.setWaypoints(ctrl.waypoints, true);

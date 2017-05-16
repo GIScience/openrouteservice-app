@@ -1,11 +1,10 @@
-let routeSubscriptionInstructions;
 angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).component('orsInstructions', {
     templateUrl: 'components/ors-panel-routing/ors-instructions/ors-instructions.html',
     bindings: {
         showInstructions: '&',
         shouldDisplayRouteDetails: '<'
     },
-    controller: ['$scope', 'orsRouteService', 'orsSettingsFactory', function($scope, orsRouteService, orsSettingsFactory) {
+    controller: ['$rootScope', '$scope', 'orsRouteService', 'orsSettingsFactory', 'lists', function($rootScope, $scope, orsRouteService, orsSettingsFactory, lists) {
         let ctrl = this;
         ctrl.profiles = lists.profiles;
         /** use scope in order to share same template ng-include with summaries */
@@ -15,26 +14,24 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
         /** subscribe to route object if instructions are already open */
         /** if we are returning to this panel, dispose all old subscriptions */
         try {
-            routeSubscriptionInstructions.dispose();
+            $rootScope.routeSubscriptionInstructions.dispose();
         } catch (error) {
             console.warn(error);
         }
-
+        $rootScope.routeSubscriptionInstructions = orsRouteService.routesSubject.subscribe(data => {
+            ctrl.routeIndex = orsRouteService.getCurrentRouteIdx();
+            if (data.routes) {
+                $scope.route = ctrl.route = data.routes[ctrl.routeIndex];
+                ctrl.data = orsRouteService.data;
+                ctrl.isLoading = false;
+            }
+        });
         orsSettingsFactory.subscribeToRouteRequest(function onNext(bool) {
             if (bool === true) {
                 $scope.route = ctrl.route = [];
                 ctrl.data = undefined;
                 ctrl.isLoading = bool;
             }
-        });
-
-        routeSubscriptionInstructions = orsRouteService.routesSubject.subscribe(data => {
-            ctrl.routeIndex = orsRouteService.getCurrentRouteIdx();
-            if (data.routes) {
-                $scope.route = ctrl.route = data.routes[ctrl.routeIndex];
-                ctrl.data = orsRouteService.data;
-                ctrl.isLoading = false;
-            } 
         });
         ctrl.waypoints = orsSettingsFactory.getWaypoints();
         ctrl.getClass = (bool) => {
@@ -83,7 +80,7 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
             const segmentStart = $scope.route.way_points[idx];
             const segmentEnd = $scope.route.way_points[idx + 1];
             const routeString = $scope.route.geometry;
-            const geometry = _.slice(routeString, segmentStart, segmentEnd + 1);
+            const geometry = routeString.slice(segmentStart, segmentEnd + 1);
             orsRouteService.Emph(geometry);
         };
         ctrl.DeEmph = () => {
@@ -91,29 +88,25 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
         };
         ctrl.EmphStep = (pair) => {
             const routeString = $scope.route.geometry;
-            const geometry = _.slice(routeString, pair[0], pair[1] + 1);
+            const geometry = routeString.slice(pair[0], pair[1] + 1);
             orsRouteService.Emph(geometry);
         };
         ctrl.zoomTo = (idx, destination = false) => {
-            
             const routeString = $scope.route.geometry;
             let geometry;
             if (destination) {
                 const segmentEnd = $scope.route.way_points[idx];
                 geometry = [routeString[segmentEnd]];
-
             } else {
                 const segmentStart = $scope.route.way_points[idx];
                 const segmentEnd = $scope.route.way_points[idx + 1];
-                geometry = _.slice(routeString, segmentStart, segmentEnd + 1);
-                
+                geometry = routeString.slice(segmentStart, segmentEnd + 1);
             }
             orsRouteService.zoomTo(geometry);
-
         };
         ctrl.zoomToStep = (pair) => {
             const routeString = $scope.route.geometry;
-            const geometry = _.slice(routeString, pair[0], pair[1] + 1);
+            const geometry = routeString.slice(pair[0], pair[1] + 1);
             orsRouteService.zoomTo(geometry);
         };
     }]

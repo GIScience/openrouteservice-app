@@ -1,4 +1,4 @@
-angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$http', 'orsUtilsService', 'orsMapFactory', 'orsObjectsFactory', ($q, $http, orsUtilsService, orsMapFactory, orsObjectsFactory) => {
+angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$http', 'orsUtilsService', 'orsMapFactory', 'orsObjectsFactory', 'lists', 'ENV', ($q, $http, orsUtilsService, orsMapFactory, orsObjectsFactory, lists, ENV) => {
     /**
      * Requests geocoding from ORS backend
      * @param {String} requestData: XML for request payload
@@ -24,7 +24,7 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$h
      * @param {String} requestData: XML for request payload
      */
     orsRouteService.fetchRoute = (requestData) => {
-        var url = orsNamespaces.services.routing;
+        var url = ENV.routing;
         var canceller = $q.defer();
         var cancel = (reason) => {
             canceller.resolve(reason);
@@ -58,13 +58,15 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$h
         let action = orsObjectsFactory.createMapAction(0, lists.layers[2], geom, undefined);
         orsMapFactory.mapServiceSubject.onNext(action);
     };
-    orsRouteService.addRoute = (geometry) => {
+    orsRouteService.addRoute = (geometry, focusIdx) => {
         const routePadding = orsObjectsFactory.createMapAction(1, lists.layers[1], geometry, undefined, lists.layerStyles.routePadding());
         orsMapFactory.mapServiceSubject.onNext(routePadding);
         const routeLine = orsObjectsFactory.createMapAction(1, lists.layers[1], geometry, undefined, lists.layerStyles.route());
         orsMapFactory.mapServiceSubject.onNext(routeLine);
-        const zoomTo = orsObjectsFactory.createMapAction(0, lists.layers[1], geometry, undefined, undefined);
-        orsMapFactory.mapServiceSubject.onNext(zoomTo);
+        if (focusIdx) {
+            const zoomTo = orsObjectsFactory.createMapAction(0, lists.layers[1], geometry, undefined, undefined);
+            orsMapFactory.mapServiceSubject.onNext(zoomTo);
+        }
     };
     orsRouteService.addHeightgraph = (geometry) => {
         const heightgraph = orsObjectsFactory.createMapAction(-1, undefined, geometry, undefined, undefined);
@@ -75,15 +77,13 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$h
         orsMapFactory.mapServiceSubject.onNext(heightgraph);
     };
     /** prepare route to json */
-    orsRouteService.processResponse = (data, profile) => {
+    orsRouteService.processResponse = (data, profile, focusIdx) => {
         orsRouteService.data = data;
         let cnt = 0;
-        _.each(orsRouteService.data.routes, (route) => {
-            console.info(route)
+        angular.forEach(orsRouteService.data.routes, function(route) {
             //const geometry = orsUtilsService.decodePolyline(route.geometry, route.elevation);
             route.geometryRaw = angular.copy(route.geometry.coordinates);
             let geometry = route.geometry.coordinates;
-
             // reverse order, needed as leaflet ISO 6709
             for (let i = 0; i < geometry.length; i++) {
                 let lng = geometry[i][0];
@@ -100,7 +100,7 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$h
                 } else {
                     orsRouteService.removeHeightgraph();
                 }
-                orsRouteService.addRoute(geometry);
+                orsRouteService.addRoute(geometry, focusIdx);
             }
             cnt += 1;
         });
@@ -116,7 +116,7 @@ angular.module('orsApp.route-service', []).factory('orsRouteService', ['$q', '$h
                 let chunk = {};
                 const from = item[0];
                 const to = item[1];
-                const geometry = _.slice(routeString, from, to + 1);
+                const geometry = routeString.slice(from, to + 1);
                 chunk.line = geometry;
                 const typenumber = item[2];
                 chunk.attributeType = typenumber;

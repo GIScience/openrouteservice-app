@@ -1,12 +1,10 @@
-/** dirty hack, the subscription will duplicate if we come back to this component */
-let routeSubscription;
-angular.module('orsApp.ors-summary', []).component('orsSummaries', {
+angular.module('orsApp.ors-summary', ['orsApp.ors-exportRoute-controls', 'orsApp.ors-share']).component('orsSummaries', {
     templateUrl: 'components/ors-panel-routing/ors-summary/ors-summary.html',
     bindings: {
         showInstructions: '&',
         shouldDisplayRouteDetails: '<'
     },
-    controller: ['orsSettingsFactory', 'orsMapFactory', 'orsObjectsFactory', 'orsRouteService', function(orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsRouteService) {
+    controller: ['$rootScope', 'orsSettingsFactory', 'orsMapFactory', 'orsObjectsFactory', 'orsRouteService', 'lists', function($rootScope, orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsRouteService, lists) {
         let ctrl = this;
         ctrl.profiles = lists.profiles;
         ctrl.setIdx = (idx) => {
@@ -22,15 +20,20 @@ angular.module('orsApp.ors-summary', []).component('orsSummaries', {
                 const idx = ctrl.getIdx() === undefined ? 0 : ctrl.getIdx();
                 ctrl.route = ctrl.data.routes[idx];
                 orsRouteService.addRoute(ctrl.route.geometry);
+                if (ctrl.route.elevation) {
+                    // process heightgraph data
+                    const hgGeojson = orsRouteService.processHeightgraphData(ctrl.route);
+                    orsRouteService.addHeightgraph(hgGeojson);
+                }
             }
         }
         /** if we are returning to this panel, dispose all old subscriptions */
         try {
-            routeSubscription.dispose();
+            $rootScope.routeSubscription.dispose();
         } catch (error) {
             console.warn(error);
         }
-        routeSubscription = orsRouteService.routesSubject.subscribe(data => {
+        $rootScope.routeSubscription = orsRouteService.routesSubject.subscribe(data => {
             ctrl.data = data;
             console.log(ctrl.data)
             orsRouteService.setCurrentRouteIdx(0);

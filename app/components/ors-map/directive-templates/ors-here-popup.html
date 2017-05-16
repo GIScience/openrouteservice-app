@@ -1,0 +1,10 @@
+<div ng-attr-class="{{ 'ui message ors-map-message fade white' }}" ng-show="hereShow">
+    <i class="fa fa-close flright" data-ng-click="hereShow = !hereShow">
+    </i>
+    <div class="header" ng-bind-html="address.info">
+    </div>
+    <div class="list">
+        <span ng-bind-html="address.position">
+        </span>
+    </div>
+</div>

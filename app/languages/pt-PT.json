@@ -74,12 +74,15 @@
     "BICYCLETOUR": "Bicicleta para passeio",
     "BICYCLEMTB": "Bicicleta de montanha",
     "BICYCLERACING": "Bicicleta de estrada",
+    "BICYCLEELECTRO": "e-bike",
     "HEAVYVEHICLENORMAL": "Veículo pesado",
     "HEAVYVEHICLEBUS": "Autocarro",
     "HEAVYVEHICLEAGRICULTURAL": "Agrícola",
     "HEAVYVEHICLEFORESTRY": "Florestal",
     "HEAVYVEHICLEDELIVERY": "Entregas",
     "HEAVYVEHICLEGOODS": "Bens e servicos",
+    "PEDESTRIANNORMAL": "Passeio",
+    "PEDESTRIANHIKING": "Caminhada",
     "NOTICE": "Erro",
     "CONNECTION": "Por favor, verifique a sua conecção à Internet.",
     "ROUTE": "Ocorreu um erro. Nenhuma rota foi encontrada para os pontos seleccionados.",
@@ -91,7 +94,7 @@
     "METHOD": "Método",
     "AREA": "Área",
     "RANGE": "Alcance",
-    "REACHFACTOR": "Reach score",
+    "REACHFACTOR": "Factor de alcance",
     "REVERSEFLOW": "Inverter direcção",
     "DOWNLOAD_ISOCHRONES": "Transferir Isocronas",
     "DOWNLOAD_ROUTE": "Transferir rota",
@@ -112,7 +115,7 @@
     "Cycleway": "Ciclovia",
     "Footway": "Passeio",
     "Steps": "Degraus",
-    "Ferry": "Ferryboat",
+    "Ferry": "Ferry / Barco de travessia",
     "Construction": "Construção",
     "Paved": "Pavimentado",
     "Unpaved": "Não pavimentado",
@@ -131,23 +134,23 @@
     "Woodchips": "Lascas de madeira",
     "Grass": "Relva",
     "Grass Paver": "Pavimento com relva",
-    "DESTINATION": "Directions to here",
-    "START": "Directions from here",
-    "VIA": "Add as via point",
-    "CENTER": "Use as center"
+    "DESTINATION": "Direcções para aqui",
+    "START": "Direcções a partir daqui",
+    "VIA": "Adicionar como ponto de via",
+    "CENTER": "Usar como centro",
+    "WELCOME": "Bem-vindo ao OpenRouteService.org",
+    "WELCOME_MESSAGE": "Para adicionar áreas a evitar, use o controlo disponível no canto superior direito do mapa. Explore também as restantes funcionalidades disponibilizadas no painel esquerdo, com destaque para o novo método de cálculo de Isocronas.",
+    "EXTRAS": "Informação adicional",
+    "WHATSHERE": "O que se encontra aqui?",
+    "NO_ADDRESS": "Nenhum endereço foi encontrado.",
+    "suitability": "Adequação do caminho à rota seleccionada",
+    "steepness": "Inclinação",
+    "waytypes": "Tipos de caminho",
+    "surface": "Superfícies",
+    "FROM": "de",
+    "TO": "para",
+    "SHARE_LINK": "Partilhar link",
+    "SHORTEN": "URL curto",
+    "SHORTEN_HINT": "Pode também copiar o link a partir da barra de endereço do seu navegador Web.",
+    "GREEN_ROUTING": "Prefer green areas"
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

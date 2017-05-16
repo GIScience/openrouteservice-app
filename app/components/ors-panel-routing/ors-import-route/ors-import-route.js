@@ -1,6 +1,6 @@
 angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteControls', {
-    templateUrl: 'components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-import-route/import_route_tpl.html',
-    controller: ['$scope', 'orsImportFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsMapFactory', 'orsSettingsFactory', function($scope, orsImportFactory, orsObjectsFactory, orsUtilsService, orsMapFactory, orsSettingsFactory) {
+    templateUrl: 'components/ors-panel-routing/ors-import-route/import_route_tpl.html',
+    controller: ['$scope', 'orsImportFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsMapFactory', 'orsSettingsFactory', 'lists', function($scope, orsImportFactory, orsObjectsFactory, orsUtilsService, orsMapFactory, orsSettingsFactory, lists) {
         let ctrl = this;
         ctrl.showCSVopt = false;
         ctrl.showXY = false;
@@ -50,9 +50,9 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
                 //gets the Geometry from the opened file
                 const geometry = orsImportFactory.importFile(file.extension, file.content);
                 // create map action and add geom to layer tracks. Adds the track when checkbox is checked
-                let trackPadding = orsObjectsFactory.createMapAction(1, lists.layers[4], geometry.geometry.coordinates, file.index, lists.layerStyles.trackPadding());
+                let trackPadding = orsObjectsFactory.createMapAction(1, lists.layers[4], geometry, file.index, lists.layerStyles.trackPadding());
                 orsMapFactory.mapServiceSubject.onNext(trackPadding);
-                let track = orsObjectsFactory.createMapAction(1, lists.layers[4], geometry.geometry.coordinates, file.index, lists.layerStyles.track());
+                let track = orsObjectsFactory.createMapAction(1, lists.layers[4], geometry, file.index, lists.layerStyles.track());
                 orsMapFactory.mapServiceSubject.onNext(track);
                 // create the zoom to layer action. Zooms to layer when checkbox is checked
                 let action_zoomToLayer = orsObjectsFactory.createMapAction(0, lists.layers[4], undefined, file.index);
@@ -65,11 +65,11 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
         };
         ctrl.importRoute = (file) => {
             const geometry = orsImportFactory.importFile(file.extension, file.content);
-            let linestring = turf.linestring(geometry.geometry.coordinates);
+            let linestring = L.polyline(geometry).toGeoJSON();
             linestring = turf.simplify(linestring, 0.01, false);
             let waypoints = [];
             for (let coord of linestring.geometry.coordinates) {
-                const latLng = new L.latLng([parseFloat(coord[0]), parseFloat(coord[1])]);
+                const latLng = new L.latLng([parseFloat(coord[1]), parseFloat(coord[0])]);
                 const latLngString = orsUtilsService.parseLatLngString(latLng);
                 const wpObj = orsObjectsFactory.createWaypoint(latLngString, latLng, 1);
                 waypoints.push(wpObj);

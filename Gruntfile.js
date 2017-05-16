@@ -13,7 +13,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: 'app',
                 dest: 'build',
-                src: ['img/**/*.png', 'includes/**/*.html', 'languages/**/*.json', 'components/**/*.html', 'globals/*.js', 'css/*.css', '*.html', '*.js']
+                src: ['img/**/*.png', 'includes/**/*.html', 'languages/**/*.json', 'components/**/*.html', 'css/*.css', '*.html', '*.js', 'favicon.ico']
             },
             libs: {
                 expand: true,
@@ -42,7 +42,7 @@ module.exports = function(grunt) {
                 src: ['build/*']
             },
             task_rm_build_unused: {
-                src: ['build/components/**/*.js', 'build/infrastructure', 'build/js/', 'build/globals', 'build/css']
+                src: ['build/components/**/*.js', 'build/infrastructure', 'build/js/', 'build/constants', 'build/css']
             },
         },
         jshint: {
@@ -139,7 +139,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: 'app/',
                     //src: ['js/**/*.js'],
-                    src: ['components/**/*.js', 'infrastructure/**/*.js', 'js/**/*.js'],
+                    src: ['components/**/*.js', 'constants/**/*.js', 'infrastructure/**/*.js', 'js/**/*.js'],
                     dest: 'build/'
                 }]
             },
@@ -155,7 +155,7 @@ module.exports = function(grunt) {
                     middleware: function(connect, options, middlewares) {
                         return [
                             //modRewrite(['^[^\\.]*$ /index.html [L]']),
-                            modRewrite(['!\\.html|\\.js|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]']),
+                            modRewrite(['!\\.html|\\.js|\\.txt|\\.ico|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]']),
                             connect().use('/bower_components', connect.static('./bower_components')),
                             connect().use('/node_modules', connect.static('./node_modules')),
                             connect.static('./app')
@@ -172,7 +172,7 @@ module.exports = function(grunt) {
                     middleware: function(connect) {
                         return [
                             //modRewrite(['^[^\\.]*$ /index.html [L]']),
-                            modRewrite(['!\\.html|\\.js|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]']),
+                            modRewrite(['!\\.html|\\.js|\\.txt|\\.ico|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]']),
                             connect.static('./build')
                         ];
                     }
@@ -183,6 +183,65 @@ module.exports = function(grunt) {
             build: {
                 src: ['build/traceur_runtime.js'],
                 dest: 'build/index.html'
+            }
+        },
+        browserify: {
+            turf: {
+                src: 'main.js',
+                dest: 'node_modules/turf.js',
+                options: {
+                    browserifyOptions: {
+                        standalone: 'turf'
+                    }
+                }
+            }
+        },
+        ngconstant: {
+            // Options for all targets
+            options: {
+                space: '  ',
+                wrap: '"use strict";\n\n {\%= __ngModule %}',
+                name: 'config',
+            },
+            // Environment targets
+            development: {
+                options: {
+                    dest: 'app/js/config.js'
+                },
+                constants: {
+                    ENV: {
+                        name: 'development',
+                        geocoding: 'http://129.206.7.188:8080/ors/geocode',
+                        routing: 'http://129.206.7.188:8080/ors/routes',
+                        tmc: 'http://129.206.228.188:8080/ors/routes?tmc',
+                        analyse: 'http://129.206.7.188:8080/ors/isochrones',
+                        places: 'http://129.206.7.188:8080/ors/locations',
+                        shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
+                    }
+                },
+            },
+            production: {
+                options: {
+                    dest: 'app/js/config.js'
+                },
+                constants: {
+                    ENV: {
+                        name: 'production',
+                        geocoding: 'https://api.openrouteservice.org/pgeocoding',
+                        routing: 'https://api.openrouteservice.org/pdirections',
+                        tmc: 'http://129.206.228.124/routing-test?tmc',
+                        analyse: 'https://api.openrouteservice.org/pisochrones',
+                        places: 'https://api.openrouteservice.org/pplaces',
+                        shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
+                    }
+                }
+            }
+        },
+        stripDebug: {
+            dist: {
+                files: {
+                    'build/scripts.js': 'build/scripts.js'
+                }
             }
         }
         // connect: {
@@ -247,6 +306,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-script-link-tags');
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-ng-constant');
+    grunt.loadNpmTasks('grunt-strip-debug');
     // Clean the .git/hooks/pre-commit file then copy in the latest version 
     //grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['clean:task_rm_build', 'copy:build', 'removelogging', 'preprocess', 'traceur', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'usemin', 'clean:task_rm_build_unused']);
     //   grunt.registerTask('build', [
@@ -265,6 +327,6 @@ module.exports = function(grunt) {
     //   'usemin',
     //   'htmlmin'
     // ]);
-    grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['clean:task_rm_build', 'copy:build', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'clean:task_rm_build_unused', 'connect:build:keepalive']);
-    grunt.registerTask('serve', 'Run local server', ['connect:dev', 'watch']);
+    grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'clean:task_rm_build', 'copy:build', 'ngconstant:production', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'connect:build:keepalive']);
+    grunt.registerTask('serve', 'Run local server', ['browserify:turf', 'ngconstant:development', 'connect:dev', 'watch']);
 };
