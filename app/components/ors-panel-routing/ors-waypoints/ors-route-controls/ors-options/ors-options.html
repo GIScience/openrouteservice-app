@@ -171,13 +171,21 @@
     </div>
 </div>
 <div class="options-box" ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Wheelchair' || $ctrl.activeSubgroup == 'HeavyVehicle' || $ctrl.activeSubgroup == 'Pedestrian'">
-    <div class="pointer" ng-click="maxspeedOptions = !maxspeedOptions">
+    <div class="pointer" ng-click="additionalOptions = !additionalOptions">
         <i ng-class="$ctrl.getClass(maxspeedOptions)">
         </i>
         <span ng-bind-html="('ADDITIONALSETTINGS' | translate)">
         </span>
     </div>
-    <div class="collapsable" ng-class="{ showMe: maxspeedOptions }">
+    <div class="collapsable" ng-class="{ showMe: additionalOptions }">
+        <div class="ors-options-menu">
+            <div class="ui checkbox">
+                <input id="greenrouting" name="orsRouteGreenRoutingInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.green" type="checkbox">
+                    <label for="greenrouting" ng-bind-html="('GREEN_ROUTING' | translate)">
+                    </label>
+                </input>
+            </div>
+        </div>
         <div class="ors-options-menu">
             <div class="ui checkbox">
                 <input id="maximumspeed" name="orsRouteMaximumspeedInput" ng-change="$ctrl.toggleMaxspeedSlider()" ng-model="$ctrl.maxspeedCheckbox" type="checkbox">

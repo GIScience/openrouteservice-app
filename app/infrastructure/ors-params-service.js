@@ -144,6 +144,9 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUti
                 if (permalinkKeysReversed[key] == 'tracks') {
                     settings.profile.options.avoidables.tracks = orsParamsService.parseStringToBool(value);
                 }
+                if (permalinkKeysReversed[key] == 'green') {
+                    settings.profile.options.green = orsParamsService.parseStringToBool(value);
+                }
             }
         });
         return {

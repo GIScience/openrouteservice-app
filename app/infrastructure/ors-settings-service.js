@@ -245,7 +245,7 @@ angular.module('orsApp.settings-service', []).factory('orsSettingsFactory', ['$t
                 orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
             }
         }, (response) => {
-            orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
+            //orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
         });
     };
     /** 
