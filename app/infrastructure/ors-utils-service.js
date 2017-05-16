@@ -205,7 +205,7 @@ angular.module('orsApp.utils-service', [])
                 payload = {
                     location: obj,
                     lang: language,
-                    limit: limit
+                    limit: 1
                 };
             }
             return payload;
