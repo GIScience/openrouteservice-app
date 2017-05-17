@@ -31,7 +31,6 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
                     } else if (geomType == 'polygon') {
                         let isochrones = [];
                         for (let i = 0; i < geometry.length; i++) {
-                            console.log(geometry[i]);
                             let properties = geometry[i].properties;
                             properties.id = i;
                             let c = geometry[i].geometry.coordinates;
@@ -40,7 +39,7 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
                                 c[0][k][0] = c[0][k][1];
                                 c[0][k][1] = store;
                             }
-                            geojsonpolygon = {
+                            const geojsonpolygon = {
                                 "type": "Feature",
                                 "properties": properties,
                                 "geometry": {
@@ -51,7 +50,7 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
                             isochrones.push(geojsonpolygon);
                         }
                         exportData = JSON.stringify(isochrones);
-                        exportData = "{\"type\":\"FeatureCollection\",\"features\":"+exportData+"}";
+                        exportData = "{\"type\":\"FeatureCollection\",\"features\":" + exportData + "}";
                     }
                     break;
                 default:

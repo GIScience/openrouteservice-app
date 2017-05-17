@@ -84,14 +84,16 @@ angular.module('orsApp').constant('lists', {
             elevation: true,
             subgroup: 'Pedestrian',
             request: 'foot-walking',
-            shortValue: '2'
+            shortValue: '2',
+            green: true
         },
         PedestrianHiking: {
             name: 'PedestrianHiking',
             elevation: true,
             subgroup: 'Pedestrian',
             request: 'foot-hiking',
-            shortValue: '2b'
+            shortValue: '2b',
+            green: true
         },
         Wheelchair: {
             name: 'Wheelchair',
@@ -443,7 +445,7 @@ angular.module('orsApp').constant('lists', {
             all: ['de-DE', 'en-US', 'en-GB', 'zh-CN', 'pt-PT', 'es-ES', 'ru-RU', 'fr-FR']
         },
         routinglanguages: {
-            default: 'en',
+            default: 'en-US',
             all: ['de', 'en-US', 'pt', 'ru', 'hu', 'fr', 'it', 'nl', 'zh-CN']
         },
         units: {
@@ -468,8 +470,8 @@ angular.module('orsApp').constant('lists', {
         BicycleRacer: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
         BicycleElectro: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
         BicycleTour: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
-        Pedestrian: ['type', 'weight', 'maxspeed', 'fitness', 'steepness'],
-        PedestrianHiking: ['type', 'weight', 'maxspeed', 'fitness', 'steepness'],
+        Pedestrian: ['type', 'weight', 'maxspeed', 'fitness', 'steepness', 'green'],
+        PedestrianHiking: ['type', 'weight', 'maxspeed', 'fitness', 'steepness', 'green'],
         Wheelchair: ['type', 'weight', 'maxspeed', 'incline', 'curb', 'surface']
     },
     //Whitelist for settings to be stored in permalink
@@ -501,7 +503,8 @@ angular.module('orsApp').constant('lists', {
         highways: 'l5',
         tollroads: 'l6',
         tunnels: 'l7',
-        tracks: 'l8'
+        tracks: 'l8',
+        green: 'm1'
     },
     reversePermalinkKeys: function(obj) {
         var rev = {};
@@ -550,14 +553,14 @@ angular.module('orsApp').constant('lists', {
         },
         track: function() {
             return {
-                color: '#FFF',
+                color: this.get_random_color(),
                 weight: 3,
                 opacity: 1
             };
         },
         trackPadding: function() {
             return {
-                color: this.get_random_color(),
+                color: '#FFF',
                 weight: 6,
                 opacity: 1
             };
@@ -566,7 +569,7 @@ angular.module('orsApp').constant('lists', {
             return parseInt(Math.random() * (max - min + 1), 10) + min;
         },
         get_random_color: function() {
-            var h = this.rand(180, 250);
+            var h = this.rand(150, 250);
             var s = this.rand(30, 100);
             var l = this.rand(20, 70);
             return 'hsl(' + h + ',' + s + '%,' + l + '%)';

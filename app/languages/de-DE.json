@@ -151,5 +151,6 @@
     "TO": "to",
     "SHARE_LINK": "Link teilen",
     "SHORTEN": "Kurz-URL",
-    "SHORTEN_HINT": "Du kannst den Link auch aus der Adressleiste deines Browsers kopieren."
+    "SHORTEN_HINT": "Du kannst den Link auch aus der Adressleiste deines Browsers kopieren.",
+    "GREEN_ROUTING": "Grünfächen bevorzugen"
 }

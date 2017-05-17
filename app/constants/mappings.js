@@ -202,5 +202,39 @@ angular.module('orsApp').constant('mappings', {
             text: '10/10',
             color: '#ADADAD'
         }
+    },
+    green: {
+        '3': {
+            text: '10/10',
+            color: '#9acd32'
+        },
+        '4': {
+            text: '9/10',
+            color: '#97c12c'
+        },
+        '5': {
+            text: '8/10',
+            color: '#93b725'
+        },
+        '6': {
+            text: '7/10',
+            color: '#90ac1f'
+        },
+        '7': {
+            text: '6/10',
+            color: '#8ca018'
+        },
+        '8': {
+            text: '5/10',
+            color: '#889511'
+        },
+        '9': {
+            text: '4/10',
+            color: '#848b08'
+        },
+        '10': {
+            text: '3/10',
+            color: '#808000'
+        }
     }
 });

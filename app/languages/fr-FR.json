@@ -151,5 +151,6 @@
     "TO": "vers",
     "SHARE_LINK": "Partager le lien",
     "SHORTEN": "URL raccourcie",
-    "SHORTEN_HINT": "Vous pouvez également copier le lien depuis la barre d'adresse de votre navigateur."
+    "SHORTEN_HINT": "Vous pouvez également copier le lien depuis la barre d'adresse de votre navigateur.",
+    "GREEN_ROUTING": "Prefer green areas"
 }

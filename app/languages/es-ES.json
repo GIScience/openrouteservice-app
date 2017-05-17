@@ -148,6 +148,7 @@
     "FROM": "desde",
     "TO": "a",
     "SHARE_LINK": "compartir enlace",
-    "SHORTEN": "acortar URL",
-    "SHORTEN_HINT": "Usted puede copiar el enlace desde su navegador Internet"
+    "SHORTEN": "Acortar URL",
+    "SHORTEN_HINT": "Usted puede copiar el enlace desde su navegador Internet",
+    "GREEN_ROUTING": "Prefirir zona verde"
 }
