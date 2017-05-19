@@ -147,6 +147,7 @@
     "steepness": "Крутизна",
     "waytypes": "Типы дорог",
     "surface": "Типы покрытия",
+    "green": "Green index",
     "FROM": "из",
     "TO": "в",
     "SHARE_LINK": "Поделиться ссылкой",

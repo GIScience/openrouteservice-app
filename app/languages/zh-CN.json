@@ -146,6 +146,7 @@
     "steepness": "陡峭程度",
     "waytypes": "道路类型",
     "surface": "路面类型",
+    "green": "Green index",
     "FROM": "从",
     "TO": "至",
     "SHARE_LINK": "分享链接",

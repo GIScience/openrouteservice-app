@@ -164,8 +164,10 @@ angular.module('orsApp.utils-service', [])
                 elevation: lists.profiles[settings.profile.type].elevation,
                 options: JSON.stringify(orsUtilsService.generateOptions(settings))
             };
+            // remove options if empty
+            if (payload.options.length == 2) delete payload.options;
             const subgroup = lists.profiles[settings.profile.type].subgroup;
-            /** prepare waypoints */
+            // prepare waypoints
             let waypoints = [];
             angular.forEach(settings.waypoints, function(waypoint) {
                 if (waypoint._set == 1) waypoints.push(waypoint);
@@ -291,6 +293,8 @@ angular.module('orsApp.utils-service', [])
                 attributes: 'area|reachfactor',
                 options: JSON.stringify(orsUtilsService.generateOptions(settings))
             };
+            // remove options if empty
+            if (payload.options.length == 2) delete payload.options;
             // if avoid area polygon
             if (settings.avoidable_polygons && settings.avoidable_polygons.coordinates.length > 0) {
                 payload.options.avoid_polygons = settings.avoidable_polygons;
@@ -458,7 +462,7 @@ angular.module('orsApp.utils-service', [])
                 }
             }
             if (waypoints[0] !== undefined) {
-                link = link.concat(lists.permalinkKeys["wps"] + '=');
+                link = link.concat(lists.permalinkKeys.wps + '=');
                 for (let waypoint of waypoints) {
                     let lat = typeof(waypoint._latlng.lat) === 'number' ? (Math.round(waypoint._latlng.lat * 1000000) / 1000000) : 'null';
                     let lng = typeof(waypoint._latlng.lng) === 'number' ? (Math.round(waypoint._latlng.lng * 1000000) / 1000000) : 'null';
@@ -470,8 +474,8 @@ angular.module('orsApp.utils-service', [])
                 link = link.slice(0, -1);
             }
             getProp(profile);
-            if (userOptions.routinglang !== undefined) link = link.concat('&' + lists.permalinkKeys["routinglang"] + '=' + userOptions.routinglang);
-            if (userOptions.units !== undefined) link = link.concat('&' + lists.permalinkKeys["units"] + '=' + userOptions.units);
+            if (userOptions.routinglang !== undefined) link = link.concat('&' + lists.permalinkKeys.routinglang + '=' + userOptions.routinglang);
+            if (userOptions.units !== undefined) link = link.concat('&' + lists.permalinkKeys.units + '=' + userOptions.units);
             // This timeout is neccessariliy needed to update the permalink on router reuse !!!
             $timeout(function() {
                 $location.search(link);

@@ -147,6 +147,7 @@
     "steepness": "Steigung",
     "waytypes": "Wegtypen",
     "surface": "Oberflächenbeschaffenheit",
+    "green": "Grünflächen index",
     "FROM": "from",
     "TO": "to",
     "SHARE_LINK": "Link teilen",

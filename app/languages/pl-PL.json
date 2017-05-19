@@ -147,6 +147,7 @@
     "steepness": "Nachylenie",
     "waytypes": "Typy dróg",
     "surface": "Nawierzchnie",
+    "green": "Green index",
     "FROM": "od",
     "TO": "do",
     "SHARE_LINK": "Udostępnij",
