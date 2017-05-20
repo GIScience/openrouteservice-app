@@ -304,7 +304,8 @@ angular.module('orsApp.utils-service', [])
         orsUtilsService.addShortAddresses = function(features) {
             angular.forEach(features, function(feature) {
                 const properties = feature.properties;
-                let shortAddress = '';
+                let shortAddress = '',
+                    streetAddress = '';
                 if ('name' in properties) {
                     shortAddress += properties.name;
                     shortAddress += ', ';
@@ -312,12 +313,15 @@ angular.module('orsApp.utils-service', [])
                 if ('street' in properties) {
                     // street and name can be the same, just needed once
                     if (properties.street && properties.street !== properties.name) {
-                        shortAddress += properties.street;
+                        streetAddress += properties.street;
                     }
                     if ('house_number' in properties) {
-                        shortAddress += ' ' + properties.house_number;
+                        streetAddress += ' ' + properties.house_number;
                     }
-                    shortAddress += ', ';
+                    // street address with house number can also be the same as name
+                    if (streetAddress.length > 0 && streetAddress !== properties.name) {
+                        shortAddress += streetAddress + ', ';
+                    }
                 }
                 //if ('postal_code' in properties) shortAddress += properties.postal_code;
                 if ('city' in properties) {
