@@ -57,7 +57,6 @@
                     'responseError': function(rejection) {
                         // do something on error
                         let messagingService = $injector.get('orsMessagingService');
-                        console.log(rejection.status)
                         switch (rejection.status) {
                             case 400:
                                 messagingService.messageSubject.onNext(lists.errors.CONNECTION);
@@ -116,6 +115,7 @@
         })
         .run(function($animate, $injector) {
             $animate.enabled(true);
+            console.log('setting..')
             $injector.get('orsApikeyFactory')
                 .setApiKeyInterval();
         });

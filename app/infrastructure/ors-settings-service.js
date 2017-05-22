@@ -279,8 +279,7 @@ angular.module('orsApp.settings-service', [])
                 .waypoints = waypoints;
             /** fire a new request */
             if (fireRequest) orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
-            /** For map to update */
-            if (fireRequest) orsSettingsFactory[currentWaypointsObj].onNext(waypoints);
+            orsSettingsFactory[currentWaypointsObj].onNext(waypoints);
             orsUtilsService.parseSettingsToPermalink(orsSettingsFactory[currentSettingsObj].getValue(), orsSettingsFactory.getUserOptions());
         };
         /**

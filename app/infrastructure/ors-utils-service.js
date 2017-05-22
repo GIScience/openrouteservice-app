@@ -177,7 +177,7 @@ angular.module('orsApp.utils-service', [])
                 payload.coordinates += orsUtilsService.roundCoordinate(waypoints[i]._latlng.lng) + ',' + orsUtilsService.roundCoordinate(waypoints[i]._latlng.lat) + '|';
             }
             payload.coordinates = payload.coordinates.slice(0, -1);
-            //  extras
+            // extras
             if (lists.profiles[settings.profile.type].green === true) {
                 payload.extra_info = 'surface|waytype|suitability|steepness|green';
             } else if (lists.profiles[settings.profile.type].elevation === true) {

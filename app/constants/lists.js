@@ -442,11 +442,11 @@ angular.module('orsApp').constant('lists', {
     userOptions: {
         languages: {
             default: 'en-US',
-            all: ['de-DE', 'en-US', 'en-GB', 'zh-CN', 'pt-PT', 'es-ES', 'ru-RU', 'fr-FR']
+            all: ['de-DE', 'en-US', 'en-GB', 'zh-CN', 'pt-PT', 'es-ES', 'ru-RU', 'fr-FR', 'pl-PL']
         },
         routinglanguages: {
             default: 'en-US',
-            all: ['de', 'en-US', 'pt', 'ru', 'hu', 'fr', 'it', 'nl', 'zh-CN']
+            all: ['de', 'en-US', 'pt', 'gr', 'ru', 'hu', 'fr', 'it', 'nl', 'zh-CN']
         },
         units: {
             default: 'km',
@@ -539,7 +539,7 @@ angular.module('orsApp').constant('lists', {
         },
         routeEmph: function() {
             return {
-                color: 'yellow',
+                color: '#FFF',
                 weight: 3,
                 opacity: 1
             };
