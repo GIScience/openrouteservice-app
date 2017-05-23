@@ -65,8 +65,10 @@
                                 messagingService.messageSubject.onNext(lists.errors.CONNECTION);
                                 break;
                             case 500:
-                                console.log(rejection.data.error.message);
-                                messagingService.messageSubject.onNext(lists.errors.ROUTE);
+                                messagingService.messageSubject.onNext({
+                                    text: 'Code ' + rejection.data.error.code +  ': ' + rejection.data.error.message,
+                                    color: 0
+                                });
                                 break;
                             case 503:
                                 messagingService.messageSubject.onNext(lists.errors.CONNECTION);

@@ -4,7 +4,9 @@
     <div class="header" ng-bind-html="('NOTICE' | translate)">
     </div>
     <div class="list">
-        <span ng-bind-html="($ctrl.message.translate | translate)">
+        <span ng-if="$ctrl.message.translate" ng-bind-html="($ctrl.message.translate | translate)">
+        </span>
+        <span ng-if="$ctrl.message.text" ng-bind-html="$ctrl.message.text">
         </span>
     </div>
 </div>
