@@ -11,7 +11,7 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
          * @param {Object} options: export options 
          * @param {String} format: the file format to export
          */
-        orsExportFactory.exportFile = (geometry, geomType, options, format) => {
+        orsExportFactory.exportFile = (geometry, geomType, options, format, filename) => {
             let exportData, geojsonData, extension;
             extension = '.' + format;
             switch (format) {
@@ -58,7 +58,7 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
             exportData = new Blob([exportData], {
                 type: 'application/xml;charset=utf-8'
             });
-            FileSaver.saveAs(exportData, 'ors-export-' + geomType + extension);
+            FileSaver.saveAs(exportData, filename + extension);
         };
         return orsExportFactory;
     }])

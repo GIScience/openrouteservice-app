@@ -4,6 +4,14 @@
 </header>
 <section>
     <div>
+        <label ng-bind-html="('FILE_NAME' | translate)">
+        </label>
+        <div class="ui input">
+            <input ng-model="$ctrl.filename" required="" select-on-click="">
+            </input>
+        </div>
+    </div>
+    <div>
         <label ng-bind-html="('FILE_FORMAT' | translate)">
             File Format
         </label>

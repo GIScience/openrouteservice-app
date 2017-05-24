@@ -2,6 +2,7 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
     templateUrl: 'components/ors-panel-routing/ors-export-route/ors-export-route.html',
     controller: ['orsExportFactory', 'orsRouteService', function(orsExportFactory, orsRouteService) {
         let ctrl = this;
+        ctrl.filename = "ors-export-linestring";
         ctrl.gpxOptShow = true;
         ctrl.tcxOptShow = false;
         ctrl.kmlOptShow = false;
@@ -81,7 +82,7 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
                 default:
             }
             let currentRoute = orsRouteService.data.routes[orsRouteService.getCurrentRouteIdx()].geometry;
-            orsExportFactory.exportFile(currentRoute, 'linestring', options, ctrl.currentFileFormat);
+            orsExportFactory.exportFile(currentRoute, 'linestring', options, ctrl.currentFileFormat, ctrl.filename);
         };
     }]
 });

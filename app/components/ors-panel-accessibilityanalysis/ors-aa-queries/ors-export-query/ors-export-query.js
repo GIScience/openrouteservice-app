@@ -5,6 +5,7 @@ angular.module('orsApp.ors-export-query', []).component('orsExportQuery', {
     },
     controller: ['orsExportFactory', 'orsAaService', function(orsExportFactory, orsRouteService) {
         let ctrl = this;
+        ctrl.filename = 'ors-export-polygon';
         ctrl.geojsonOptShow = false;
         ctrl.fileFormat = [{
             text: "GeoJSON (.geojson)",
@@ -27,7 +28,7 @@ angular.module('orsApp.ors-export-query', []).component('orsExportQuery', {
                     options = {};
                     break;
             }
-            orsExportFactory.exportFile(ctrl.isochroneData.features, 'polygon', options, ctrl.currentFileFormat);
+            orsExportFactory.exportFile(ctrl.isochroneData.features, 'polygon', options, ctrl.currentFileFormat, ctrl.filename);
         };
     }]
 });
