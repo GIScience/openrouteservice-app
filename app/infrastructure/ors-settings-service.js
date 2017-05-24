@@ -250,6 +250,7 @@ angular.module('orsApp.settings-service', [])
             request.promise.then((data) => {
                 if (data.features.length > 0) {
                     const addressData = orsUtilsService.addShortAddresses(data.features);
+                    console.log(addressData)
                     orsSettingsFactory.updateWaypointAddress(idx, addressData[0].shortaddress, init);
                 } else {
                     orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);

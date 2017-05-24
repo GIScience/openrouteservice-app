@@ -9,7 +9,8 @@ angular.module('orsApp.ors-error', []).component('orsError', {
             if (message.color >= -1) {
                 ctrl.show = true;
                 ctrl.message = {};
-                ctrl.message.translate = message.translate;
+                if (message.translate) ctrl.message.translate = message.translate;
+                if (message.text) ctrl.message.text = message.text;
                 switch (message.color) {
                     case -1:
                         ctrl.message.color = 'red';
