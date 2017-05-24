@@ -904,6 +904,11 @@ a:active {
     font-weight: normal;
 }
 
+.ors-addresses .item .ng-binding:hover {
+    color: black;
+    cursor: pointer;
+}
+
 .ors-button {
     width: 40px;
     height: 37px;

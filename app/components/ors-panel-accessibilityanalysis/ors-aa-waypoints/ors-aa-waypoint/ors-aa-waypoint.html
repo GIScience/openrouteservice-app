@@ -1,6 +1,8 @@
 <div class="ui fluid left icon input ors-input">
-    <i class="fa fa-search icon"></i>
-    <input ng-change="$ctrl.addressChanged()" ng-click="$ctrl.checkForAddresses()" ng-model="$ctrl.waypoint._address" ng-model-options="{debounce: 1000}" placeholder={{$ctrl.getPlaceholder()}} type="text">
+    <i class="fa fa-search icon">
+    </i>
+    <input ng-change="$ctrl.addressChanged()" ng-click="$ctrl.checkForAddresses()" ng-model="$ctrl.waypoint._address" ng-model-options="{debounce: 1000}" placeholder="{{$ctrl.getPlaceholder()}}" select-on-click="" type="text">
+    </input>
 </div>
 <div class="ors-addresses" ng-show="$ctrl.showAddresses">
     <div class="ui divided list">
@@ -10,4 +12,3 @@
         </div>
     </div>
 </div>
-
