@@ -666,3 +666,22 @@ angular.module('orsApp')
             }
         };
     }]);
+/**
+ * Directive to one-click-select all text in input fields
+ * apply to <input> as attribute "select-on-click"
+ */
+angular.module('orsApp')
+    .directive('selectOnClick', ['$window', function($window) {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs) {
+                element.focus(function(){
+                    if (!$window.getSelection()
+                        .toString()) {
+                        // Required for mobile Safari
+                        this.setSelectionRange(0, this.value.length);
+                    }
+                });
+            }
+        };
+    }]);
