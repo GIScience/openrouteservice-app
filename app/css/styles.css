@@ -955,6 +955,10 @@ a:active {
     text-align: center;
 }
 
+.textjustify {
+    text-align: justify !important;
+}
+
 .cm-popup-option {
     cursor: pointer;
     padding: 5px 5px 0 5px;
