@@ -59,14 +59,35 @@
                         let messagingService = $injector.get('orsMessagingService');
                         switch (rejection.status) {
                             case 400:
-                                messagingService.messageSubject.onNext(lists.errors.CONNECTION);
+                                messagingService.messageSubject.onNext({
+                                    text: 'Code ' + rejection.data.error.code + ': ' + rejection.data.error.message,
+                                    color: 0
+                                });
+                                break;
+                            case 401:
+                                messagingService.messageSubject.onNext({
+                                    text: 'Code ' + rejection.data.error.code + ': ' + rejection.data.error.message,
+                                    color: 0
+                                });
                                 break;
                             case 404:
                                 messagingService.messageSubject.onNext(lists.errors.CONNECTION);
                                 break;
+                            case 405:
+                                messagingService.messageSubject.onNext({
+                                    text: 'Code ' + rejection.data.error.code + ': ' + rejection.data.error.message,
+                                    color: 0
+                                });
+                                break;
+                            case 413:
+                                messagingService.messageSubject.onNext({
+                                    text: 'Code ' + rejection.data.error.code + ': ' + rejection.data.error.message,
+                                    color: 0
+                                });
+                                break;
                             case 500:
                                 messagingService.messageSubject.onNext({
-                                    text: 'Code ' + rejection.data.error.code +  ': ' + rejection.data.error.message,
+                                    text: 'Code ' + rejection.data.error.code + ': ' + rejection.data.error.message,
                                     color: 0
                                 });
                                 break;
