@@ -48,6 +48,7 @@
     "HGVHEIGHT": "Altura de HGV",
     "HGVAXLELOAD": "Carga por eje",
     "HGVWEIGHT": "Peso",
+    "HGVHAZMAT": "Material peligroso",
     "ADDITIONALSETTINGS": "Opciones Adicionales",
     "MAXIMUMSPEED": "Velocidad máxima",
     "WHEELCHAIRSETTINGS": "Opciones de silla de ruedas",

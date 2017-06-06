@@ -168,7 +168,17 @@
             <div class="ui mini label" ng-bind-html="('HGVAXLELOAD' | translate)">
             </div>
         </div>
-    </div>
+        <ul class="ors-options-menu">
+            <li>
+                <div class="ui checkbox">
+                    <input id="hazmat" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.hazmat" type="checkbox">
+                        <label for="hazmat" ng-bind-html="('HGVHAZMAT' | translate)">
+                        </label>
+                    </input>
+                </div>
+            </li>
+        </ul>
+    </div>  
 </div>
 <div class="options-box" ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Wheelchair' || $ctrl.activeSubgroup == 'HeavyVehicle' || $ctrl.activeSubgroup == 'Pedestrian'">
     <div class="pointer" ng-click="additionalOptions = !additionalOptions">
