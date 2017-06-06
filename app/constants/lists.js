@@ -446,7 +446,7 @@ angular.module('orsApp').constant('lists', {
         },
         routinglanguages: {
             default: 'en-US',
-            all: ['de', 'en-US', 'pt', 'gr', 'ru', 'hu', 'fr', 'it', 'nl', 'zh-CN']
+            all: ['de', 'en-US', 'pt', 'gr', 'ru', 'hu', 'fr', 'it', 'nl', 'zh-CN', 'es']
         },
         units: {
             default: 'km',

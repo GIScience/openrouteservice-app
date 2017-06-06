@@ -16,18 +16,21 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
             extension = '.' + format;
             switch (format) {
                 case 'gpx':
-                    geojsonData = L.polyline(geometry).toGeoJSON();
+                    geojsonData = L.polyline(geometry)
+                        .toGeoJSON();
                     exportData = togpx(geojsonData, {
                         creator: "OpenRouteService.org"
                     });
                     break;
                 case 'kml':
-                    geojsonData = L.polyline(geometry).toGeoJSON();
+                    geojsonData = L.polyline(geometry)
+                        .toGeoJSON();
                     exportData = tokml(geojsonData);
                     break;
                 case 'geojson':
                     if (geomType == 'linestring') {
-                        exportData = JSON.stringify(L.polyline(geometry).toGeoJSON());
+                        exportData = JSON.stringify(L.polyline(geometry)
+                            .toGeoJSON());
                     } else if (geomType == 'polygon') {
                         let isochrones = [];
                         for (let i = 0; i < geometry.length; i++) {
@@ -78,6 +81,7 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
             switch (fileExt) {
                 case 'gpx':
                     features = omnivore.gpx.parse(fileContent);
+                    console.log(features)
                     break;
                 case 'kml':
                     features = omnivore.kml.parse(fileContent);
@@ -96,10 +100,20 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
                 default:
                     alert("Error: file extension not is valid");
             }
+            // TODO check here for multidimensional arrays and flatten them
             latlngs = features.getLayers()[0]._latlngs;
             geometry = [];
-            for (i = 0; i < latlngs.length; i++) {
-                geometry.push([latlngs[i].lat, latlngs[i].lng]);
+            // multi dimensional
+            if (latlngs[0].constructor === Array) {
+                for (i = 0; i < latlngs.length; i++) {
+                    for (j = 0; j < latlngs[i].length; j++) {
+                        geometry.push([latlngs[i][j].lat, latlngs[i][j].lng]);
+                    }
+                }
+            } else {
+                for (i = 0; i < latlngs.length; i++) {
+                    geometry.push([latlngs[i].lat, latlngs[i].lng]);
+                }
             }
             return geometry;
         };

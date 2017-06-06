@@ -49,6 +49,7 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
             if (file.preview) {
                 //gets the Geometry from the opened file
                 const geometry = orsImportFactory.importFile(file.extension, file.content);
+                console.log(geometry)
                 // create map action and add geom to layer tracks. Adds the track when checkbox is checked
                 let trackPadding = orsObjectsFactory.createMapAction(1, lists.layers[4], geometry, file.index, lists.layerStyles.trackPadding());
                 orsMapFactory.mapServiceSubject.onNext(trackPadding);
@@ -65,6 +66,7 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
         };
         ctrl.importRoute = (file) => {
             const geometry = orsImportFactory.importFile(file.extension, file.content);
+            console.log(geometry)
             let linestring = L.polyline(geometry).toGeoJSON();
             linestring = turf.simplify(linestring, 0.01, false);
             let waypoints = [];

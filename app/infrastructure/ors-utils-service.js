@@ -178,13 +178,15 @@ angular.module('orsApp.utils-service', [])
             }
             payload.coordinates = payload.coordinates.slice(0, -1);
             // extras
-            if (lists.profiles[settings.profile.type].green === true) {
-                payload.extra_info = 'surface|waytype|suitability|steepness|green';
-            } else if (lists.profiles[settings.profile.type].elevation === true) {
+            // if (lists.profiles[settings.profile.type].green === true) {
+            //     payload.extra_info = 'surface|waytype|suitability|steepness|green';
+            //} else
+            if (lists.profiles[settings.profile.type].elevation === true) {
                 payload.extra_info = 'surface|waytype|suitability|steepness';
             } else {
                 payload.extra_info = 'surface|waytype|suitability';
             }
+            console.log(payload)
             return payload;
         };
         /** 
@@ -272,6 +274,7 @@ angular.module('orsApp.utils-service', [])
                 if (settings.profile.options.curb) options.profile_params.maximum_sloped_curb = settings.profile.options.curb.toString();
                 if (settings.profile.options.incline) options.profile_params.maximum_incline = settings.profile.options.incline.toString();
             }
+            console.log(settings.profile.options)
             if (angular.equals(options.profile_params, {})) delete options.profile_params;
             return options;
         };
@@ -284,7 +287,7 @@ angular.module('orsApp.utils-service', [])
             let payload;
             payload = {
                 format: 'json',
-                locations: settings.waypoints[0]._latlng.lng + ',' + settings.waypoints[0]._latlng.lat,
+                locations: orsUtilsService.roundCoordinate(settings.waypoints[0]._latlng.lng) + ',' + orsUtilsService.roundCoordinate(settings.waypoints[0]._latlng.lat),
                 range_type: settings.profile.options.analysis_options.method == 0 ? 'time' : 'distance',
                 range: settings.profile.options.analysis_options.method == 0 ? settings.profile.options.analysis_options.isovalue * 60 : settings.profile.options.analysis_options.isovalue * 1000,
                 interval: settings.profile.options.analysis_options.method == 0 ? settings.profile.options.analysis_options.isointerval * 60 : settings.profile.options.analysis_options.isointerval * 1000,
