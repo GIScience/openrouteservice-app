@@ -904,6 +904,11 @@ a:active {
     font-weight: normal;
 }
 
+.ors-addresses .item .ng-binding:hover {
+    color: black;
+    cursor: pointer;
+}
+
 .ors-button {
     width: 40px;
     height: 37px;
@@ -948,6 +953,10 @@ a:active {
 
 .textcenter {
     text-align: center;
+}
+
+.textjustify {
+    text-align: justify !important;
 }
 
 .cm-popup-option {

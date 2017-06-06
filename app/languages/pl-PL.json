@@ -50,6 +50,7 @@
     "HGVHEIGHT": "Wysokość",
     "HGVAXLELOAD": "Nacisk na oś",
     "HGVWEIGHT": "Waga",
+    "HGVHAZMAT": "Niebezpiecznego materiału",
     "ADDITIONALSETTINGS": "Dodatkowe ustawienia",
     "MAXIMUMSPEED": "Maksymalna prędkość",
     "WHEELCHAIRSETTINGS": "Ustawienia dla wózków",
@@ -152,5 +153,11 @@
     "TO": "do",
     "SHARE_LINK": "Udostępnij",
     "SHORTEN": "Krótki URL",
-    "SHORTEN_HINT": "Możesz też skopiować odnośnik z paska adresu przeglądarki."
+    "SHORTEN_HINT": "Możesz też skopiować odnośnik z paska adresu przeglądarki.",
+    "DONATE": "Donate!",
+    "DONATE_TEXT": "Please donate your geographic data to",
+    "INFO_I": "OpenRouteService.org as offers Routing services by using user-generated, collaboratively collected free geographic data from OpenStreetMap. Please donate your geographic data to openstreetmap.org!",
+    "INFO_II": "We use cookies, system logs and other data storage technologies to (a) preserve information so you will not have to re-enter it during your visit or in subsequent visits; (b) maintain sessions for authenticated users; and (c) monitor aggregate metrics such as total number of visitors and pages viewed. If you disable cookies parts of OpenRouteService.org main website may not work as intended. We do not collect or store any personal information about you or personally identifiable information about you, except what you voluntarily provide through direct contact. We do not share analytic data with any service providers or partners.",
+    "INFO_III": "In case you have any further questions, concerns or feedback, please contact us via e-mail:",
+    "INFO_IV": "OpenRouteService cares about your inquiries, problems, questions etc. As there will always be a stream of inquiries, we take strong responsibility to respond to you in short time. After you have received our automatic response email to let you know we have received your inquiry, we will usually respond shortly. Please give us time to look into your reported issue properly before getting back."
 }

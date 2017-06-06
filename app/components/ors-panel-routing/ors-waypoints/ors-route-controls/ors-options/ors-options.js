@@ -74,6 +74,7 @@ angular.module('orsApp.ors-options', []).component('orsOptions', {
             };
             ctrl.toggleMaxspeedSlider(false);
             // set hgv options from params
+            ctrl.currentOptions.hazmat = ctrl.currentOptions.hazmat !== undefined ? true : false;
             ctrl.currentOptions.height = ctrl.currentOptions.height !== undefined ? ctrl.currentOptions.height : ctrl.optionList.hgvParams.Height.min;
             ctrl.currentOptions.width = ctrl.currentOptions.width !== undefined ? ctrl.currentOptions.width : ctrl.optionList.hgvParams.Width.min;
             ctrl.currentOptions.length = ctrl.currentOptions.length !== undefined ? ctrl.currentOptions.length : ctrl.optionList.hgvParams.Length.min;
