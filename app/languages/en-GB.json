@@ -50,6 +50,7 @@
     "HGVHEIGHT": "Height",
     "HGVAXLELOAD": "Axle Load",
     "HGVWEIGHT": "Weight",
+    "HGVHAZMAT": "Hazardous Goods",
     "ADDITIONALSETTINGS": "Additional settings",
     "MAXIMUMSPEED": "Maximum speed",
     "WHEELCHAIRSETTINGS": "Wheelchair settings",
