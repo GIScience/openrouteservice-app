@@ -83,6 +83,9 @@ angular.module('orsApp.params-service', []).factory('orsParamsService', ['orsUti
                 if (permalinkKeysReversed[key] == 'length') {
                     settings.profile.options.length = value;
                 }
+                if (permalinkKeysReversed[key] == 'hazmat') {
+                    settings.profile.options.hazmat = value;
+                }
                 if (permalinkKeysReversed[key] == 'fitness') {
                     settings.profile.options.fitness = value;
                 }
