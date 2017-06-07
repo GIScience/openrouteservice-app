@@ -81,7 +81,6 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
             switch (fileExt) {
                 case 'gpx':
                     features = omnivore.gpx.parse(fileContent);
-                    console.log(features)
                     break;
                 case 'kml':
                     features = omnivore.kml.parse(fileContent);
@@ -100,16 +99,16 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
                 default:
                     alert("Error: file extension not is valid");
             }
-            // TODO check here for multidimensional arrays and flatten them
             latlngs = features.getLayers()[0]._latlngs;
             geometry = [];
             // multi dimensional
             if (latlngs[0].constructor === Array) {
                 for (i = 0; i < latlngs.length; i++) {
-                    for (j = 0; j < latlngs[i].length; j++) {
+                    for (let j = 0; j < latlngs[i].length; j++) {
                         geometry.push([latlngs[i][j].lat, latlngs[i][j].lng]);
                     }
                 }
+                // one dimensional
             } else {
                 for (i = 0; i < latlngs.length; i++) {
                     geometry.push([latlngs[i].lat, latlngs[i].lng]);

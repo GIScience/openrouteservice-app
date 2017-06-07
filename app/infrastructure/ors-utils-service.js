@@ -164,6 +164,7 @@ angular.module('orsApp.utils-service', [])
                 elevation: lists.profiles[settings.profile.type].elevation,
                 options: JSON.stringify(orsUtilsService.generateOptions(settings))
             };
+            console.warn(JSON.stringify(orsUtilsService.generateOptions(settings)))
             // remove options if empty
             if (payload.options.length == 2) delete payload.options;
             const subgroup = lists.profiles[settings.profile.type].subgroup;
@@ -245,7 +246,7 @@ angular.module('orsApp.utils-service', [])
                 if (!angular.isUndefined(settings.profile.options.weight)) options.profile_params.weight = settings.profile.options.hgvWeight.toString();
                 if (!angular.isUndefined(settings.profile.options.length)) options.profile_params.length = settings.profile.options.length.toString();
                 if (!angular.isUndefined(settings.profile.options.axleload)) options.profile_params.axleload = settings.profile.options.axleload.toString();
-                if (!angular.isUndefined(settings.profile.options.hazmat)) options.profile_params.hazmat = true;
+                if (!angular.isUndefined(settings.profile.options.hazmat)) options.profile_params.hazmat = settings.profile.options.hazmat;
             }
             if (settings.profile.options.maxspeed) options.maximum_speed = settings.profile.options.maxspeed.toString();
             // fitness
