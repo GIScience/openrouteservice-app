@@ -138,8 +138,74 @@
         })
         .run(function($animate, $injector) {
             $animate.enabled(true);
-            console.log('setting..')
             $injector.get('orsApikeyFactory')
                 .setApiKeyInterval();
         });
+    /**
+     * Directive to one-click-select all text in input fields
+     * apply to <input> as attribute "select-on-click"
+     */
+    angular.module('orsApp')
+        .directive('selectOnClick', ['$window', function($window) {
+            return {
+                restrict: 'A',
+                link: function(scope, element, attrs) {
+                    element.focus(function() {
+                        if (!$window.getSelection()
+                            .toString()) {
+                            // Required for mobile Safari
+                            this.setSelectionRange(0, this.value.length);
+                        }
+                    });
+                }
+            };
+        }]);
+    /**
+     * Directive to add a tri-state checkbox
+     */
+    angular.module('orsApp')
+        .directive('indeterminate', [function() {
+            return {
+                require: '?ngModel',
+                link: function(scope, el, attrs, ctrl) {
+                    var truthy = true;
+                    var falsy = false;
+                    var nully = null;
+                    ctrl.$formatters = [];
+                    ctrl.$parsers = [];
+                    ctrl.$render = function() {
+                        var d = ctrl.$viewValue;
+                        el.data('checked', d);
+                        switch (d) {
+                            case truthy:
+                                el.prop('indeterminate', false);
+                                el.prop('checked', true);
+                                break;
+                            case falsy:
+                                el.prop('indeterminate', false);
+                                el.prop('checked', false);
+                                break;
+                            default:
+                                el.prop('indeterminate', true);
+                                el.prop('checked', false);
+                        }
+                    };
+                    el.bind('click', function() {
+                        var d;
+                        switch (el.data('checked')) {
+                            case falsy:
+                                d = truthy;
+                                break;
+                                // case truthy:
+                                //     d = nully;
+                                //     break;
+                            default:
+                                d = falsy;
+                        }
+                        ctrl.$setViewValue(d);
+                        scope.$apply(ctrl.$render);
+                    });
+                }
+            };
+        }]);
 }());

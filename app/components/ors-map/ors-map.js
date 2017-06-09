@@ -193,6 +193,8 @@ angular.module('orsApp')
                         $scope.mapModel.map.addControl($scope.welcomeMsgBox);
                     }, 500);
                 }
+                // add locations control
+                $scope.mapModel.map.addControl(locationsControl);
                 /**
                  * Listens to left mouse click on map
                  * @param {Object} e: Click event
@@ -257,7 +259,6 @@ angular.module('orsApp')
                     $scope.mapModel.map.closePopup();
                 };
                 $scope.addNumberedMarker = (geom, featureId, layerCode, isIsochrones = false) => {
-                    console.log('adding num', isIsochrones)
                     const lat = geom[1] || geom.lat;
                     const lng = geom[0] ||  geom.lng;
                     let textLabelclass;
@@ -663,25 +664,6 @@ angular.module('orsApp')
         </div>`,
             link: (scope, elem, attr) => {
                 scope.show = true;
-            }
-        };
-    }]);
-/**
- * Directive to one-click-select all text in input fields
- * apply to <input> as attribute "select-on-click"
- */
-angular.module('orsApp')
-    .directive('selectOnClick', ['$window', function($window) {
-        return {
-            restrict: 'A',
-            link: function(scope, element, attrs) {
-                element.focus(function(){
-                    if (!$window.getSelection()
-                        .toString()) {
-                        // Required for mobile Safari
-                        this.setSelectionRange(0, this.value.length);
-                    }
-                });
             }
         };
     }]);
