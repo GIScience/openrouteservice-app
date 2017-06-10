@@ -1053,6 +1053,10 @@ a.leaflet-avoid-area:before {
     text-align: center;
 }
 
+.angular-control-leaflet {
+    cursor: pointer;
+}
+
 .block {
     display: block !important;
 }
