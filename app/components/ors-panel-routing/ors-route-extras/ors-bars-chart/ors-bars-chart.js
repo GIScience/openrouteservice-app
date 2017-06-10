@@ -14,7 +14,6 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
                 return d.percentage + '% ' + scope.translateFilter(d.type) + ' (' + scope.distanceFilter(d.distance) + ')';
             });
             let data = [];
-            console.log(data)
             angular.forEach(scope.typesOrder, function(type) {
                 data.push(scope.obj[type]);
             });

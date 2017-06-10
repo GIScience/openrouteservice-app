@@ -521,7 +521,8 @@ angular.module('orsApp').constant('lists', {
         3: 'layerAccessibilityAnalysis',
         4: 'layerTracks',
         5: 'layerAccessibilityAnalysisNumberedMarkers',
-        6: 'layerRouteNumberedMarkers'
+        6: 'layerRouteNumberedMarkers',
+        7: 'layerRouteExtras'
     },
     layerStyles: {
         route: function() {
@@ -574,6 +575,13 @@ angular.module('orsApp').constant('lists', {
             var s = this.rand(30, 100);
             var l = this.rand(20, 70);
             return 'hsl(' + h + ',' + s + '%,' + l + '%)';
+        },
+        getStyle: function(c,w,o) {
+            return {
+                color: c,
+                weight: w,
+                opacity: o
+            };
         }
     },
     errors: {

@@ -52,8 +52,17 @@ angular.module('orsApp.route-service', [])
             let action = orsObjectsFactory.createMapAction(2, lists.layers[2], undefined, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
         };
+        orsRouteService.DeColor = () => {
+            let action = orsObjectsFactory.createMapAction(2, lists.layers[7], undefined, undefined);
+            orsMapFactory.mapServiceSubject.onNext(action);
+        };
         orsRouteService.Emph = (geom) => {
             let action = orsObjectsFactory.createMapAction(1, lists.layers[2], geom, undefined, lists.layerStyles.routeEmph());
+            orsMapFactory.mapServiceSubject.onNext(action);
+        };
+        orsRouteService.Color = (geom, color) => {
+            let style = lists.layerStyles.getStyle(color,6,1);
+            let action = orsObjectsFactory.createMapAction(1, lists.layers[7], geom, undefined, style);
             orsMapFactory.mapServiceSubject.onNext(action);
         };
         orsRouteService.zoomTo = (geom) => {
