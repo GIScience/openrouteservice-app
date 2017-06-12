@@ -240,10 +240,11 @@ angular.module('orsApp.utils-service', [])
                 options.avoid_features = options.avoid_features.slice(0, -1);
             }
             if (subgroup == 'HeavyVehicle') {
+                console.log(settings.profile.options)
                 options.vehicle_type = settings.profile.type;
                 if (!angular.isUndefined(settings.profile.options.width)) options.profile_params.width = settings.profile.options.width.toString();
                 if (!angular.isUndefined(settings.profile.options.height)) options.profile_params.height = settings.profile.options.height.toString();
-                if (!angular.isUndefined(settings.profile.options.weight)) options.profile_params.weight = settings.profile.options.hgvWeight.toString();
+                if (!angular.isUndefined(settings.profile.options.hgvWeight)) options.profile_params.weight = settings.profile.options.hgvWeight.toString();
                 if (!angular.isUndefined(settings.profile.options.length)) options.profile_params.length = settings.profile.options.length.toString();
                 if (!angular.isUndefined(settings.profile.options.axleload)) options.profile_params.axleload = settings.profile.options.axleload.toString();
                 if (!angular.isUndefined(settings.profile.options.hazmat)) options.profile_params.hazmat = settings.profile.options.hazmat;
