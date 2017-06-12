@@ -1,10 +1,6 @@
 <div ng-repeat="obj in $ctrl.routeExtras">
-    <div class="ui checkbox">
-        <input id="color-{{$index}}" name="orsRouteColor" ng-click="$ctrl.changeColor($index)" ng-model="$ctrl.extrasCheck[$index]" type="checkbox">
-            <label class="checkbox-label" for="color-{{$index}}" ng-bind="('COLOR_ROUTE' | translate) + ' ' + ('{{$ctrl.routeExtras[$index].type}}' | translate)">
-            </label>
-        </input>
-    </div>
+    <ors-route-extras-map key="obj">{{$index}}
+    </ors-route-extras-map>
     <ors-bars-chart key="obj.type" obj="obj.data" route-index="obj.routeIndex" types-order="obj.typesOrder">
     </ors-bars-chart>
 </div>
