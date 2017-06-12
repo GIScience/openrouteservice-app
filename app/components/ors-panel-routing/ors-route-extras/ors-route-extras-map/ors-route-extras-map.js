@@ -1,15 +1,14 @@
 angular.module('orsApp.ors-route-extras-map', [])
     .component('orsRouteExtrasMap', {
-    	replace: true,
+        replace: true,
         templateUrl: 'components/ors-panel-routing/ors-route-extras/ors-route-extras-map/ors-route-extras-map.html',
-	    bindings: {
-	    	key: "<"
-	    },
-	    controller: ['$scope', 'orsRouteService' ,'orsRouteExtras', function(scope, orsRouteService, orsRouteExtras) {
-	    	let ctrl = this;
-	    	console.log(key)
-	    	console.log(ctrl)
-
-	    }]
-
+        bindings: {
+            key: "<"
+        },
+        controller: ['orsRouteService', function(orsRouteService) {
+            let ctrl = this;
+            console.log(ctrl.key)
+            console.log(ctrl)
+        }]
     });
+

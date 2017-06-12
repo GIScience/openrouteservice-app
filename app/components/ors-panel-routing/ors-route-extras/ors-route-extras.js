@@ -1,4 +1,4 @@
-angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart', 'orsApp.ors-route-extras-map'])
+angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart','orsApp.ors-route-extras-map'])
     .component('orsRouteExtras', {
         templateUrl: 'components/ors-panel-routing/ors-route-extras/ors-route-extras.html',
         bindings: {
