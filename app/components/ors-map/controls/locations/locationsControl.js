@@ -61,7 +61,7 @@ let locationsControl = L.control.angular({
                         </div>
                         <div class="search-input">
                            <div class="ui right labeled fluid input ors-input">
-                                <input ng-model="$ctrl.waypoint._address" placeholder="{{$ctrl.getPlaceholder()}}" select-on-click="" type="text">
+                                <input ng-model="$ctrl.waypoint._address" placeholder="{{getPlaceholder()}}" select-on-click="" type="text">
                                     <div class="ui basic label">
                                         <button class="tiny ui basic button ors-control-button" ng-click="$ctrl.delete()">
                                             <i class="fa fa-search">
@@ -91,18 +91,22 @@ let locationsControl = L.control.angular({
             130: '<i class="fa fa-lg fa-paint-brush"></i>',
             150: '<i class="fa fa-lg fa-university"></i>',
             160: '<i class="fa fa-lg fa-building"></i>',
-            190: '<i class="fa fa-lg fa-bank"></i>',
+            190: '<i class="fa fa-lg fa-dollar"></i>',
             200: '<i class="fa fa-lg fa-hospital-o"></i>',
-            220: '<i class="fa fa-lg fa-history"></i>',
-            260: '<i class="fa fa-lg fa-video-camera"></i>',
+            220: '<i class="fa fa-lg fa-fort-awesome"></i>',
+            260: '<i class="fa fa-lg fa-film"></i>',
             330: '<i class="fa fa-lg fa-tree"></i>',
             360: '<i class="fa fa-lg fa-map-signs"></i>',
-            390: '<i class="fa fa-lg fa-shield"></i>',
+            390: '<i class="fa fa-lg fa-camera"></i>',
             420: '<i class="fa fa-lg fa-shopping-cart"></i>',
-            560: '<i class="fa fa-lg fa-map-marker"></i>',
+            560: '<i class="fa fa-lg fa-cutlery"></i>',
             580: '<i class="fa fa-lg fa-bus"></i>',
             620: '<i class="fa fa-lg fa-suitcase"></i>',
         };
+        $scope.getPlaceholder = () => {
+            // get set lang
+            return 'Optional poi filter, e.g. shell or she* ..';
+        };  
         $scope.selectCategory  = (id) => {
             $scope.selectedCategoryId = id;
         };
