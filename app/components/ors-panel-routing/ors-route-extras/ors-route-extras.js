@@ -52,6 +52,7 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart','orsApp.ors-r
                 };
             };
             ctrl.routeExtras = [];
+            ctrl.checkboxes = [false, false, false, false];
             $scope.$watch('$ctrl.currentRoute', (route) => {
                 ctrl.routeExtras = [];
                 for (let key in route.extras) {
@@ -60,7 +61,8 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart','orsApp.ors-r
                         data: data.extras,
                         typesOrder: data.typesOrder,
                         type: key,
-                        routeIndex: ctrl.routeIndex
+                        routeIndex: ctrl.routeIndex,
+                        checkboxes: ctrl.checkboxes
                     });
                 }
                 //ctrl.routeExtras = angular.copy(ctrl.routeExtras);
