@@ -6,32 +6,22 @@ angular.module('orsApp.ors-route-extras-map', [])
             routeIndex: "<",
             i: "<",
             extra: "<", //needed for translation in the template
-            types: "<",
-            extrasCheck:"<",
+            types: "<"
         },
         controller: ['orsRouteService', function(orsRouteService) {
             let ctrl = this;
             let currentRoute = orsRouteService.data.routes;
-           
+            ctrl.checkboxBool = false;
             ctrl.updateExtrasColor = () => {
-                orsRouteService.DeColor();
-                // only one checkbox allowed at a time
-                if (ctrl.extrasCheck[ctrl.i]) {
-                    for (let val = 0; val < ctrl.extrasCheck.length; val++) {
-                        if (val != ctrl.i) {
-                        	ctrl.extrasCheck[val] = false;
-                        }
-                    }
-                    angular.forEach(ctrl.types, function(value,key){
+                if (ctrl.checkboxBool) {
+                    angular.forEach(ctrl.types, function(value, key) {
                         const color = value.color;
-                        angular.forEach(ctrl.types[key].intervals, function(v,k){
-                            const geom = currentRoute[ctrl.routeIndex].geometry.slice(v[0],v[1]+1);
-
+                        angular.forEach(ctrl.types[key].intervals, function(v, k) {
+                            const geom = currentRoute[ctrl.routeIndex].geometry.slice(v[0], v[1] + 1);
                             orsRouteService.Color(geom, color);
                         });
                     });
-                }
-                else {
+                } else {
                     orsRouteService.DeColor();
                 }
             };

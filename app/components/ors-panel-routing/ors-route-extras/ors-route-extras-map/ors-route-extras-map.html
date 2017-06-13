@@ -1,5 +1,5 @@
 <div class="ui checkbox">
-    <input id="color-{{$ctrl.i}}" name="orsRouteColor"  ng-model="$ctrl.extrasCheck[$ctrl.i]" ng-click="$ctrl.updateExtrasColor()" type="checkbox">
+    <input id="color-{{$ctrl.i}}" name="orsRouteColor"  ng-model="$ctrl.checkboxBool" ng-click="$ctrl.updateExtrasColor()" type="checkbox">
         <label class="checkbox-label" for="color-{{$ctrl.i}}" ng-bind="('COLOR_ROUTE' | translate) + ' ' + ('{{$ctrl.extra}}' | translate)">
         </label>
     </input>

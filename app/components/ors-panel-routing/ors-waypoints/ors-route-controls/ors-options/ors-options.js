@@ -136,7 +136,7 @@ angular.module('orsApp.ors-options', [])
                     }
                     if (fireRequest) ctrl.changeOptions();
                 };
-                ctrl.toggleHgvOptSlider('');
+                ctrl.toggleHgvOptSlider('', false);
                 if (ctrl.currentOptions.hazmat !== undefined) ctrl.currentOptions.hazmat = true;
                 ctrl.hgvSliders = {
                     Height: {

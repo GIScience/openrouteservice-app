@@ -454,7 +454,7 @@ ors-instructions {
     justify-content: space-between;
 }
 
-.ors-bars {
+.ors-bars, ors-route-extras-map {
     padding: 0px 15px 15px 15px;
     cursor: default;
 }
