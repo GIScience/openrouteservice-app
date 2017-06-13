@@ -147,27 +147,52 @@
     </div>
     <div class="collapsable" ng-class="{ showMe: hgvOptions }">
         <div class="ors-options-menu">
-            <rzslider rz-slider-model="$ctrl.hgvSliders.Length.value" rz-slider-options="$ctrl.hgvSliders.Length.options">
+           <rzslider rz-slider-model="$ctrl.hgvSliders.Length.value" rz-slider-options="$ctrl.hgvSliders.Length.options">
             </rzslider>
-            <div class="ui mini label" ng-bind-html="('HGVLENGTH' | translate)">
+            <div class="ui checkbox">
+                <input id="hgv-length-cb" name="orsRouteHgvOpts" ng-change="$ctrl.toggleHgvOptSlider('length')" ng-model="$ctrl.hgvLengthCb" type="checkbox">
+                    <label for="hgv-length-cb" ng-bind-html="('HGVLENGTH' | translate)">
+                    </label>
+                </input>
             </div>
+            <div class="ui divider"></div>
             <rzslider rz-slider-model="$ctrl.hgvSliders.Width.value" rz-slider-options="$ctrl.hgvSliders.Width.options">
             </rzslider>
-            <div class="ui mini label" ng-bind-html="('HGVWIDTH' | translate)">
+            <div class="ui checkbox">
+                <input id="hgv-width-cb" name="orsRouteHgvOpts" ng-change="$ctrl.toggleHgvOptSlider('width')" ng-model="$ctrl.hgvWidthCb" type="checkbox">
+                    <label for="hgv-width-cb" ng-bind-html="('HGVWIDTH' | translate)">
+                    </label>
+                </input>
             </div>
+            <div class="ui divider"></div>
             <rzslider rz-slider-model="$ctrl.hgvSliders.Height.value" rz-slider-options="$ctrl.hgvSliders.Height.options">
             </rzslider>
-            <div class="ui mini label" ng-bind-html="('HGVHEIGHT' | translate)">
+            <div class="ui checkbox">
+                <input id="hgv-height-cb" name="orsRouteHgvOpts" ng-change="$ctrl.toggleHgvOptSlider('height')" ng-model="$ctrl.hgvHeightCb" type="checkbox">
+                    <label for="hgv-weight-cb" ng-bind-html="('HGVHEIGHT' | translate)">
+                    </label>
+                </input>
             </div>
+            <div class="ui divider"></div>
             <rzslider rz-slider-model="$ctrl.hgvSliders.Weight.value" rz-slider-options="$ctrl.hgvSliders.Weight.options">
             </rzslider>
-            <div class="ui mini label" ng-bind-html="('HGVWEIGHT' | translate)">
+            <div class="ui checkbox">
+                <input id="hgv-weight-cb" name="orsRouteHgvOpts" ng-change="$ctrl.toggleHgvOptSlider('hgvWeight')" ng-model="$ctrl.hgvWeightCb" type="checkbox">
+                    <label for="hgv-weight-cb" ng-bind-html="('HGVWEIGHT' | translate)">
+                    </label>
+                </input>
             </div>
-            <rzslider rz-slider-model="$ctrl.hgvSliders.AxleLoad.value" rz-slider-options="$ctrl.hgvSliders.AxleLoad.options">
+            <div class="ui divider"></div>
+             <rzslider rz-slider-model="$ctrl.hgvSliders.AxleLoad.value" rz-slider-options="$ctrl.hgvSliders.AxleLoad.options">
             </rzslider>
-            <div class="ui mini label" ng-bind-html="('HGVAXLELOAD' | translate)">
+            <div class="ui checkbox">
+                <input id="hgv-axleload-cb" name="orsRouteHgvOpts" ng-change="$ctrl.toggleHgvOptSlider('axleload')" ng-model="$ctrl.hgvAxleloadCb" type="checkbox">
+                    <label for="hgv-axleload-cb" ng-bind-html="('HGVAXLELOAD' | translate)">
+                    </label>
+                </input>
             </div>
         </div>
+        <div class="ui divider"></div>
         <ul class="ors-options-menu">
             <li>
                 <div class="ui checkbox">
@@ -178,7 +203,7 @@
                 </div>
             </li>
         </ul>
-    </div>  
+    </div>
 </div>
 <div class="options-box" ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Wheelchair' || $ctrl.activeSubgroup == 'HeavyVehicle' || $ctrl.activeSubgroup == 'Pedestrian'">
     <div class="pointer" ng-click="additionalOptions = !additionalOptions">

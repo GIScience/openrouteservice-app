@@ -73,6 +73,10 @@ a.leaflet-locations {
 	font-weight: bold;
 }
 
+.sub-categories .sc-nav .ui.dropdown .menu > .item {
+	padding: 0.4rem 0.4rem !important;
+}
+
 .sub-categories .sc-list ul {
     padding-left: 10px;
     max-height: 200px;

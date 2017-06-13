@@ -33,7 +33,17 @@ let locationsControl = L.control.angular({
                                     <div ng-click="toggleSubcategories()">
                                         <i class="fa fa-arrow-left"></i>
                                     </div>
-                                    <div>info</div>
+                                    <div>
+                                        <div class="ui compact menu">
+                                          <div class="ui simple dropdown item">
+                                            Categories
+                                            <i class="dropdown icon"></i>
+                                            <div class="menu">
+                                              <div class="item" ng-repeat="(category, obj) in categories" ng-click="selectCategory(category);">{{obj.name}}</div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="sc-list">
                                     <ul>
@@ -92,6 +102,9 @@ let locationsControl = L.control.angular({
             560: '<i class="fa fa-lg fa-map-marker"></i>',
             580: '<i class="fa fa-lg fa-bus"></i>',
             620: '<i class="fa fa-lg fa-suitcase"></i>',
+        };
+        $scope.selectCategory  = (id) => {
+            $scope.selectedCategoryId = id;
         };
         $scope.verifySubcategory = (selectedCategoryId) => {
             let cnt = 0;
