@@ -15,13 +15,11 @@ let locationsControl = L.control.angular({
                                 </div>
                                 <div class="c-list">
                                     <div class="ui grid">
-                                      <div class="four wide column category" ng-repeat="(category, obj) in categories">
-                                        <div ng-click="toggleSubcategories(category)">
-                                            <span tooltip-side="top" tooltip-template="{{(obj.name | translate)}}" tooltips="" ng-bind-html="categoryIcons[category]">
-                                            </span>
+                                      <div class="four wide column category" ng-repeat="(category, obj) in categories" ng-click="toggleSubcategories(category)">
+                                        <div tooltip-side="top" tooltip-template="{{(obj.name | translate)}}" tooltips="" ng-bind-html="categoryIcons[category]">
                                         </div>
                                         <div class="category-checkbox">
-                                            <input type="checkbox" ng-model="obj.selected" ng-click="setSubcategories(category)" indeterminate/>
+                                            <input type="checkbox" ng-model="obj.selected" ng-click="setSubcategories(category); $event.stopPropagation();" indeterminate/>
                                             <!--{{obj.selected}}-->    
                                         </div>
                                       </div>
