@@ -7,6 +7,7 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart','orsApp.ors-r
         },
         controller: ['$scope', 'mappings', 'orsRouteService', function($scope, mappings, orsRouteService) {
             let ctrl = this;
+            ctrl.extrasCheck = [];
             ctrl.mappings = mappings;
             ctrl.processExtras = (currentRoute, key) => {
                 let totalDistance = currentRoute.summary.distance;
@@ -51,29 +52,29 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart','orsApp.ors-r
                     typesOrder: typesOrder
                 };
             };
-            ctrl.extrasCheck = [];
-            ctrl.changeColor = (i) => {
-                orsRouteService.DeColor();
-                // only one checkbox allowed at a time
-                if (ctrl.extrasCheck[i]) {
-                    for (let val = 0; val < ctrl.extrasCheck.length; val++) {
-                        if (val != i) {
-                            ctrl.extrasCheck[val] = false;
-                        }
-                    }
-                    angular.forEach(ctrl.routeExtras[i].data, function(value,key){
-                        const color = value.color;
-                        angular.forEach(ctrl.routeExtras[i].data[key].intervals, function(v,k){
-                            const geom = ctrl.currentRoute.geometry.slice(v[0],v[1]+1);
+            // ctrl.extrasCheck = [];
+            // ctrl.changeColor = (i) => {
+            //     orsRouteService.DeColor();
+            //     // only one checkbox allowed at a time
+            //     if (ctrl.extrasCheck[i]) {
+            //         for (let val = 0; val < ctrl.extrasCheck.length; val++) {
+            //             if (val != i) {
+            //                 ctrl.extrasCheck[val] = false;
+            //             }
+            //         }
+            //         angular.forEach(ctrl.routeExtras[i].data, function(value,key){
+            //             const color = value.color;
+            //             angular.forEach(ctrl.routeExtras[i].data[key].intervals, function(v,k){
+            //                 const geom = ctrl.currentRoute.geometry.slice(v[0],v[1]+1);
 
-                            orsRouteService.Color(geom, color);
-                        });
-                    });
-                }
-                else {
-                    orsRouteService.DeColor();
-                }
-            };
+            //                 orsRouteService.Color(geom, color);
+            //             });
+            //         });
+            //     }
+            //     else {
+            //         orsRouteService.DeColor();
+            //     }
+            // };
             ctrl.routeExtras = [];
             $scope.$watch('$ctrl.currentRoute', (route) => {
                 ctrl.routeExtras = [];

@@ -309,6 +309,7 @@ angular.module('orsApp')
                     $scope.mapModel.geofeatures.layerLocationMarker.clearLayers();
                     $scope.mapModel.geofeatures.layerRouteLines.clearLayers();
                     $scope.mapModel.geofeatures.layerEmph.clearLayers();
+                    $scope.mapModel.geofeatures.layerRouteExtras.clearLayers();
                     if ($scope.hg) $scope.hg.remove();
                     if (switchApp) {
                         $scope.mapModel.geofeatures.layerRoutePoints.clearLayers();

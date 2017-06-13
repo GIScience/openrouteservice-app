@@ -11,6 +11,7 @@ angular.module('orsApp.route-service', [])
             orsRouteService.routesSubject.onNext([]);
             let action = orsObjectsFactory.createMapAction(2, lists.layers[1], undefined, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
+            orsRouteService.DeColor();
         };
         orsRouteService.routingRequests = {};
         orsRouteService.routingRequests.requests = [];
