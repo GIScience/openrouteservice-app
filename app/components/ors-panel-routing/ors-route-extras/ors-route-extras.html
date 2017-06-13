@@ -1,3 +1,6 @@
 <div ng-repeat="obj in $ctrl.routeExtras">
-	<ors-bars-chart key="obj.type" obj="obj.data" types-order="obj.typesOrder" route-index="obj.routeIndex" ></ors-bars-chart>
+    <ors-route-extras-map extra="obj.type" route-index="obj.routeIndex" types="obj.data" i="$index" extras-check="$ctrl.extrasCheck" >
+    </ors-route-extras-map>
+    <ors-bars-chart key="obj.type" obj="obj.data" route-index="obj.routeIndex" types-order="obj.typesOrder">
+    </ors-bars-chart>
 </div>

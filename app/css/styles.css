@@ -459,6 +459,11 @@ ors-instructions {
     cursor: default;
 }
 
+.checkbox-label {
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
 
 /** Isochrone queries */
 

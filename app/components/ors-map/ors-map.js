@@ -42,7 +42,8 @@ angular.module('orsApp')
                     layerAccessibilityAnalysisNumberedMarkers: L.featureGroup(),
                     layerEmph: L.featureGroup(),
                     layerTracks: L.featureGroup(),
-                    layerRouteNumberedMarkers: L.featureGroup()
+                    layerRouteNumberedMarkers: L.featureGroup(),
+                    layerRouteExtras: L.featureGroup()
                 };
                 $scope.mapModel = {
                     map: $scope.orsMap,
@@ -157,6 +158,7 @@ angular.module('orsApp')
                     $scope.mapModel.geofeatures.layerAccessibilityAnalysisNumberedMarkers.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerEmph.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerTracks.addTo($scope.mapModel.map);
+                    $scope.mapModel.geofeatures.layerRouteExtras.addTo($scope.mapModel.map);
                     // add layer control
                     $scope.layerControls = L.control.layers($scope.baseLayers, $scope.overlays)
                         .addTo($scope.mapModel.map);
@@ -307,6 +309,7 @@ angular.module('orsApp')
                     $scope.mapModel.geofeatures.layerLocationMarker.clearLayers();
                     $scope.mapModel.geofeatures.layerRouteLines.clearLayers();
                     $scope.mapModel.geofeatures.layerEmph.clearLayers();
+                    $scope.mapModel.geofeatures.layerRouteExtras.clearLayers();
                     if ($scope.hg) $scope.hg.remove();
                     if (switchApp) {
                         $scope.mapModel.geofeatures.layerRoutePoints.clearLayers();
