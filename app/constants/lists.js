@@ -3,6 +3,11 @@
  */
 angular.module('orsApp')
     .constant('lists', {
+        locationsIcon: {
+            className: "ors-icon-locations",
+            iconSize: [25, 25],
+            iconAnchor: [22, 45]
+        },
         waypointIcons: {
             0: {
                 className: "ors-marker-start",
@@ -523,7 +528,8 @@ angular.module('orsApp')
             4: 'layerTracks',
             5: 'layerAccessibilityAnalysisNumberedMarkers',
             6: 'layerRouteNumberedMarkers',
-            7: 'layerRouteExtras'
+            7: 'layerRouteExtras',
+            8: 'layerLocations'
         },
         layerStyles: {
             route: function() {
@@ -577,7 +583,7 @@ angular.module('orsApp')
                 var l = this.rand(20, 70);
                 return 'hsl(' + h + ',' + s + '%,' + l + '%)';
             },
-            getStyle: function(c,w,o) {
+            getStyle: function(c, w, o) {
                 return {
                     color: c,
                     weight: w,
@@ -613,6 +619,24 @@ angular.module('orsApp')
             Tunnels: 32, // 1 << 5;
             PavedRoads: 64, // 1 << 6;
             Fords: 128, // 1 << 7;
+        },
+        locations_icons: {
+            100: '<i class="fa fa-lg fa-hotel"></i>',
+            120: '<i class="fa fa-lg fa-paw"></i>',
+            130: '<i class="fa fa-lg fa-paint-brush"></i>',
+            150: '<i class="fa fa-lg fa-university"></i>',
+            160: '<i class="fa fa-lg fa-building"></i>',
+            190: '<i class="fa fa-lg fa-dollar"></i>',
+            200: '<i class="fa fa-lg fa-hospital-o"></i>',
+            220: '<i class="fa fa-lg fa-fort-awesome"></i>',
+            260: '<i class="fa fa-lg fa-film"></i>',
+            330: '<i class="fa fa-lg fa-tree"></i>',
+            360: '<i class="fa fa-lg fa-map-signs"></i>',
+            390: '<i class="fa fa-lg fa-camera"></i>',
+            420: '<i class="fa fa-lg fa-shopping-cart"></i>',
+            560: '<i class="fa fa-lg fa-cutlery"></i>',
+            580: '<i class="fa fa-lg fa-bus"></i>',
+            620: '<i class="fa fa-lg fa-suitcase"></i>',
         },
         locations: {
             "categories": {

@@ -43,7 +43,8 @@ angular.module('orsApp')
                     layerEmph: L.featureGroup(),
                     layerTracks: L.featureGroup(),
                     layerRouteNumberedMarkers: L.featureGroup(),
-                    layerRouteExtras: L.featureGroup()
+                    layerRouteExtras: L.featureGroup(),
+                    layerLocations: L.featureGroup(),
                 };
                 $scope.mapModel = {
                     map: $scope.orsMap,
@@ -143,7 +144,6 @@ angular.module('orsApp')
                     "OpenCycleMap": opencyclemap,
                     "Transport Dark": transportdark,
                     "Outdoors": outdoors
-                    // removed because no https "Stamen": stamen
                 };
                 $scope.overlays = {
                     "Hillshade": hillshade
@@ -159,6 +159,7 @@ angular.module('orsApp')
                     $scope.mapModel.geofeatures.layerEmph.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerTracks.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerRouteExtras.addTo($scope.mapModel.map);
+                    $scope.mapModel.geofeatures.layerLocations.addTo($scope.mapModel.map);
                     // add layer control
                     $scope.layerControls = L.control.layers($scope.baseLayers, $scope.overlays)
                         .addTo($scope.mapModel.map);
@@ -409,6 +410,30 @@ angular.module('orsApp')
                     });
                     wayPointMarker.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                 };
+                $scope.addLocations = (actionPackage) => {
+                    $scope.mapModel.geofeatures[actionPackage.layerCode].clearLayers();
+                    const zoomToFeature = (e) => {
+                        $scope.mapModel.map.panTo(e.latlng);
+                    };
+                    const onEachFeature = (feature, layer) => {
+                        layer.on({
+                            click: zoomToFeature
+                        });
+                        const popupContent = feature.properties.name + ' ' + feature.properties.osm_id;
+                        layer.bindPopup(popupContent);
+                    };
+                    const geojson = L.geoJson(actionPackage.geometry, {
+                            pointToLayer: function(feature, latlng) {
+                                return L.marker(latlng, {
+                                    icon: L.divIcon(lists.locationsIcon, {
+                                        html: feature.properties.group_id
+                                    })
+                                });
+                            },
+                            onEachFeature: onEachFeature
+                        })
+                        .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
+                };
                 /** 
                  * adds features to specific layer
                  * @param {Object} actionPackage - The action actionPackage
@@ -604,6 +629,9 @@ angular.module('orsApp')
                             break;
                         case 9:
                             $scope.reshuffleIndicesText(params._package);
+                            break;
+                        case 10:
+                            $scope.addLocations(params._package);
                             break;
                         default:
                             break;

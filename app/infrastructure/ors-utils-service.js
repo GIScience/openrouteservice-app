@@ -306,6 +306,25 @@ angular.module('orsApp.utils-service', [])
             }
             return payload;
         };
+        /** 
+         * generates object for request and serializes it to http parameters   
+         * @param {Object} settings: Settings object for payload
+         * @param {string} nameFilter: filter for name
+         
+         * @return {Object} payload: Paylod object used in xhr request
+         */
+        orsUtilsService.locationsPayload = (settings) => {
+            let payload;
+            payload = {
+                request: 'pois',
+                bbox: settings.bbox,
+                limit: 200
+            };
+            if (settings.nameFilter) payload.name = settings.nameFilter;
+            if (settings.categories.length > 0) payload.category_group_ids = settings.categories.join(',');
+            if (settings.subCategories.length > 0) payload.category_ids = settings.subCategories.join(',');
+            return payload;
+        };
         orsUtilsService.addShortAddresses = function(features) {
             angular.forEach(features, function(feature) {
                 const properties = feature.properties;

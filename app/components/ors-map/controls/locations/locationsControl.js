@@ -29,7 +29,7 @@ let locationsControl = L.control.angular({
                             <div class="sub-categories" ng-show="showSubcategories">
                                 <div class="sc-nav">
                                     <div ng-click="toggleSubcategories()">
-                                        <i class="fa fa-arrow-left"></i>
+                                        <i class="fa fa-lg fa-arrow-left"></i>
                                     </div>
                                     <div>
                                         <div class="ui compact menu">
@@ -47,7 +47,7 @@ let locationsControl = L.control.angular({
                                     <ul>
                                         <li ng-repeat="(scId, scObj) in categories[selectedCategoryId].subCategories">
                                             <div class="ui checkbox">
-                                                <input id="{{scId}}" name="subcategory" ng-change="verifySubcategory(selectedCategoryId)" ng-model="scObj.selected" type="checkbox">
+                                                <input id="{{scId}}" name="subcategory" ng-click="verifySubcategory(selectedCategoryId)" ng-model="scObj.selected" type="checkbox">
                                                     <label for="{{scId}}" ng-bind-html="(scObj.name | translate)">
                                                     </label>
                                                 </input>
@@ -58,22 +58,19 @@ let locationsControl = L.control.angular({
                             </div>
                         </div>
                         <div class="search-input">
-                           <div class="ui right labeled fluid input ors-input">
-                                <input ng-model="$ctrl.waypoint._address" placeholder="{{getPlaceholder()}}" select-on-click="" type="text">
-                                    <div class="ui basic label">
-                                        <button class="tiny ui basic button ors-control-button" ng-click="$ctrl.delete()">
-                                            <i class="fa fa-search">
-                                            </i>
-                                        </button>
-                                    </div>
+                           <div class="ui fluid action input">
+                                <input ng-model="namefilter" placeholder="{{getPlaceholder()}}" select-on-click="" type="text">
+                                    
                                 </input>
+                                <div ng-class="{'ui primary button': !loading, 'ui primary loading button': loading, 'ui primary disabled button': disabled}" ng-click="callLocations();">Search</div>
+                                
                             </div>
                         </div>
                         <div class="result-list">3</div>
                      </div>
                      `,
     controllerAs: 'leaflet',
-    controller: function($scope, $element, $map, lists) {
+    controller: function($scope, $element, $map, lists, orsUtilsService, orsLocationsService, $timeout) {
         const lControl = angular.element(document.querySelector('.angular-control-leaflet'))
             .addClass('leaflet-bar')[0];
         if (!L.Browser.touch) {
@@ -83,29 +80,47 @@ let locationsControl = L.control.angular({
             L.DomEvent.disableClickPropagation(lControl)
                 .disableScrollPropagation(lControl);
         }
-        $scope.categoryIcons = {
-            100: '<i class="fa fa-lg fa-hotel"></i>',
-            120: '<i class="fa fa-lg fa-paw"></i>',
-            130: '<i class="fa fa-lg fa-paint-brush"></i>',
-            150: '<i class="fa fa-lg fa-university"></i>',
-            160: '<i class="fa fa-lg fa-building"></i>',
-            190: '<i class="fa fa-lg fa-dollar"></i>',
-            200: '<i class="fa fa-lg fa-hospital-o"></i>',
-            220: '<i class="fa fa-lg fa-fort-awesome"></i>',
-            260: '<i class="fa fa-lg fa-film"></i>',
-            330: '<i class="fa fa-lg fa-tree"></i>',
-            360: '<i class="fa fa-lg fa-map-signs"></i>',
-            390: '<i class="fa fa-lg fa-camera"></i>',
-            420: '<i class="fa fa-lg fa-shopping-cart"></i>',
-            560: '<i class="fa fa-lg fa-cutlery"></i>',
-            580: '<i class="fa fa-lg fa-bus"></i>',
-            620: '<i class="fa fa-lg fa-suitcase"></i>',
+        $scope.callLocations = () => {
+            $scope.loading = true;
+            settings = {
+                categories: [],
+                subCategories: []
+            };
+            angular.forEach($scope.categories, function(cObj, index) {
+                if (cObj.selected === true) {
+                    settings.categories.push(index);
+                }
+                if (cObj.selected.length === 0) {
+                    angular.forEach(cObj.subCategories, function(scObj, index) {
+                        console.log(scObj)
+                        if (scObj.selected) {
+                            console.log(index)
+                            settings.subCategories.push(index);
+                        }
+                    });
+                }
+            });
+            if ($scope.namefilter && $scope.namefilter.length > 0) settings.nameFilter = $scope.namefilter;
+            settings.bbox = $map.getBounds()
+                .toBBoxString();
+            orsLocationsService.clear();
+            const payload = orsUtilsService.locationsPayload(settings);
+            const request = orsLocationsService.fetchLocations(payload);
+            orsLocationsService.requests.push(request);
+            request.promise.then(function(response) {
+                orsLocationsService.addLocationsToMap(response);
+                $scope.loading = false;
+            }, function(response) {
+                console.error(response);
+                $scope.loading = false;
+            });
         };
+        $scope.categoryIcons = lists.locations_icons;
         $scope.getPlaceholder = () => {
             // get set lang
-            return 'Optional poi filter, e.g. shell or she* ..';
-        };  
-        $scope.selectCategory  = (id) => {
+            return 'Optional filter, e.g. shell*';
+        };
+        $scope.selectCategory = (id) => {
             $scope.selectedCategoryId = id;
         };
         $scope.verifySubcategory = (selectedCategoryId) => {
@@ -118,17 +133,19 @@ let locationsControl = L.control.angular({
             if (cnt == scLength) {
                 $scope.categories[selectedCategoryId].selected = true;
                 $scope.isIntermediate = false;
-            } else if (cnt > 0 && cnt < scLength - 1) {
+            } else if (cnt > 0 && cnt < scLength) {
                 $scope.categories[selectedCategoryId].selected = '';
                 $scope.isIntermediate = true;
             } else {
                 $scope.categories[selectedCategoryId].selected = false;
                 $scope.isIntermediate = false;
             }
-            console.log($scope.categories[selectedCategoryId])
+            // wait for intermediate directive to execute, next cycle
+            $timeout(function() {
+                $scope.isAnySelected();
+            }, 0);
         };
         $scope.setSubcategories = function(categoryId) {
-            console.log($scope.categories[categoryId], $scope.categories[categoryId].subCategories, $scope.isIntermediate)
             angular.forEach($scope.categories[categoryId].subCategories, (subCategoryObj, subCategoryId) => {
                 if ($scope.isIntermediate) {
                     subCategoryObj.selected = false;
@@ -137,12 +154,28 @@ let locationsControl = L.control.angular({
                 }
             });
             $scope.isIntermediate = false;
+            // wait for intermediate directive to execute, next cycle
+            $timeout(function() {
+                $scope.isAnySelected();
+            }, 0);
+        };
+        //10 seconds delay
+        $scope.isAnySelected = () => {
+            let active = false;
+            angular.forEach($scope.categories, (categoryObj, categoryName) => {
+                if (categoryObj.selected || categoryObj.selected.length === 0) {
+                    active = true;
+                }
+            });
+            if (active) $scope.disabled = false;
+            else $scope.disabled = true;
         };
         $scope.toggleSubcategories = function(categoryId) {
             if (categoryId) $scope.selectedCategoryId = categoryId;
             $scope.showSubcategories = $scope.showSubcategories === true ? false : true;
         };
         // create categories object
+        $scope.onInit = () => {};
         $scope.categories = {};
         angular.forEach(lists.locations.categories, (categoryObj, categoryName) => {
             let subCategories = {};
@@ -159,11 +192,11 @@ let locationsControl = L.control.angular({
             };
         });
         var that = this;
-        // intermediate state is need as tri-state checkbox
+        // intermediate state is needed as we are using a tri-state checkbox
         $scope.isIntermediate = false;
         $scope.show = true;
         $scope.showSubcategories = false;
-        this.message = "dude";
+        $scope.disabled = true;
         this.latlng = null;
         this.zoom = function() {
             $map.zoomIn();

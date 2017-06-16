@@ -1,3 +1,29 @@
+.ors-icon-locations {
+    text-align: center;
+    line-height: 100%;
+}
+
+.ors-icon-locations {
+    margin-left: 13px !important;
+    margin-top: -35px !important;
+    height: 18px;
+    width: 18px;
+    background-color: #cf5f5f;
+    position: absolute;
+    padding-top: 5px;
+    text-align: center;
+    z-index: 1;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.ors-icon-locations i {
+    width: 100%;
+    height: 100%;
+    color: #FFF;
+    font-size: 14px;
+}
+
 a.leaflet-locations:before {
     content: "\f276";
     font-family: FontAwesome;
@@ -52,7 +78,7 @@ a.leaflet-locations {
 }
 
 .categories .category:hover {
-	background: #d9d9d9;
+	color: #cf5f5f;
 }
 
 
@@ -67,15 +93,31 @@ a.leaflet-locations {
 	font-size: 14px;
 }
 
+.sub-categories div.ui.compact.menu {
+
+    background: #9d0000;
+    padding: 4px;
+    border-radius: 5px;
+    font-weight: normal;
+
+}
+
 .sub-categories .sc-nav, .categories .c-nav {
 	display: flex;
 	flex-direction: row;
 	border-bottom: .1rem solid #d9d9d9;
 	justify-content: space-between;
-	padding: 8px;
 	background-color: #cf5f5f;
 	color: rgba(255, 255, 255, 0.75);
 	font-weight: bold;
+}
+.sub-categories .sc-nav {
+	padding: 8px;
+}
+
+.categories .c-nav {
+	padding: 12px;
+	letter-spacing: 1px;
 }
 
 .sub-categories .sc-nav .ui.dropdown .menu > .item {
