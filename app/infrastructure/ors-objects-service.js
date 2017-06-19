@@ -45,6 +45,7 @@ angular.module('orsApp.objects-service', []).factory('orsObjectsFactory', () => 
          * @return {Object} A map interaction object.
          */
         createMapAction: (actionCode, layerCode, geometry = undefined, featureId = undefined, style = undefined) => {
+            console.log(style)
             return new mapAction(actionCode, layerCode, geometry, featureId, style);
         }
     };

@@ -1,3 +1,39 @@
+.ors-icon-locations, .ors-icon-locations-highlight {
+    text-align: center;
+    line-height: 100%;
+}
+
+.ors-icon-locations {
+    height: 18px;
+    width: 18px;
+    background-color: #cf5f5f;
+    position: absolute;
+    padding-top: 5px;
+    text-align: center;
+    z-index: 1;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.ors-icon-locations-highlight {
+    height: 18px;
+    width: 18px;
+    background-color: #000;
+    position: absolute;
+    padding-top: 5px;
+    text-align: center;
+    z-index: 1;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.ors-icon-locations i, .ors-icon-locations-highlight i {
+    width: 100%;
+    height: 100%;
+    color: #FFF;
+    font-size: 14px;
+}
+
 a.leaflet-locations:before {
     content: "\f276";
     font-family: FontAwesome;
@@ -15,20 +51,81 @@ a.leaflet-locations {
     text-indent: inherit !important;
 }
 
-.search-input, .result-list {
-	padding: 8px;
+.location-popup .leaflet-popup-content {
+    padding: 5px 5px 5px 5px;
+
+}
+.search-input {
+    padding: 8px;
+}
+
+.result-list {
+    max-height: 200px;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+}
+
+.result-list .poi-items {
+    max-height: 200px;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.result-list .poi-item {
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 14px;
+    border-bottom: 1px solid #DDE0E5;
+}
+
+
+.result-list .poi-item:hover {
+    background-color: #FAFAFA;
+}
+
+.result-list .poi-item .poi-details {
+    padding-top: 10px;
+}
+
+.result-list .poi-item .poi-details .text {
+    -color: #7E7E7E;
+}
+
+.result-list .poi-item .poi-row {
+    display: flex;
+    flex-direction: row;
+    margin-top: 3px;
+}
+
+.result-list .poi-item .poi-row .icon {
+    flex: 0 0 15%;
+}
+
+.result-list .poi-item .poi-row .text {
+    flex: 1 1 auto;
+    text-overflow: ellipsis;
+}
+
+.result-list .poi-item .poi-row a {
+    width: 0px !important;
+     height: 0px !important;
+         line-height: inherit !important;
+
 }
 
 .locations {
-	position: absolute;
+    position: absolute;
     right: 50px;
     top: -2px;
-  	height: auto;
+    height: auto;
 }
 
-.locations > div {
-	border-radius: 0px;
-    background-color: #FAFAFA;
+.locations>div {
+    border-radius: 0px;
+    background-color: #FFF;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     -padding: 5px;
     margin-bottom: 5px;
@@ -37,49 +134,62 @@ a.leaflet-locations {
 }
 
 .categories .c-list .ui.grid {
-    margin-top: 0 ;
+    margin-top: 0;
     margin-bottom: 0;
     margin-left: 0;
     margin-right: 0;
 }
 
 .categories .category {
-	display: flex !important;
-	flex-direction: row;
-	justify-content: space-between;
-	-border-left: .1rem solid #d9d9d9;
-	-border-bottom: .1rem solid #d9d9d9;
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-between;
+    -border-left: .1rem solid #d9d9d9;
+    -border-bottom: .1rem solid #d9d9d9;
 }
 
 .categories .category:hover {
-	background: #d9d9d9;
+    color: #cf5f5f;
 }
-
 
 .categories .category .category-checkbox {
-	margin-top: -5px;
+    margin-top: -5px;
 }
 
-
 .categories, .sub-categories {
-	display: flex;
-	flex-direction: column;
-	font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+.sub-categories div.ui.compact.menu {
+    background: #9d0000;
+    padding: 4px;
+    border-radius: 5px;
+    font-weight: normal;
 }
 
 .sub-categories .sc-nav, .categories .c-nav {
-	display: flex;
-	flex-direction: row;
-	border-bottom: .1rem solid #d9d9d9;
-	justify-content: space-between;
-	padding: 8px;
-	background-color: #cf5f5f;
-	color: rgba(255, 255, 255, 0.75);
-	font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    -border-bottom: .1rem solid #d9d9d9;
+    justify-content: space-between;
+    background-color: #cf5f5f;
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: bold;
 }
 
-.sub-categories .sc-nav .ui.dropdown .menu > .item {
-	padding: 0.4rem 0.4rem !important;
+.sub-categories .sc-nav {
+    padding: 8px;
+}
+
+.categories .c-nav {
+    padding: 12px;
+    letter-spacing: 1px;
+}
+
+.sub-categories .sc-nav .ui.dropdown .menu>.item {
+    padding: 0.4rem 0.4rem !important;
 }
 
 .sub-categories .sc-list ul {
@@ -89,8 +199,6 @@ a.leaflet-locations {
     margin-top: 0;
 }
 
-.sub-categories .sc-list ul > li {
+.sub-categories .sc-list ul>li {
     padding-top: 5px;
 }
-
-

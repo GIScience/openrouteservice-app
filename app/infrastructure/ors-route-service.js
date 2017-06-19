@@ -62,7 +62,7 @@ angular.module('orsApp.route-service', [])
             orsMapFactory.mapServiceSubject.onNext(action);
         };
         orsRouteService.Color = (geom, color) => {
-            let style = lists.layerStyles.getStyle(color,6,1);
+            let style = lists.layerStyles.getStyle(color, 6, 1);
             let action = orsObjectsFactory.createMapAction(1, lists.layers[7], geom, undefined, style);
             orsMapFactory.mapServiceSubject.onNext(action);
         };

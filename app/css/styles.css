@@ -454,7 +454,6 @@ ors-instructions {
     justify-content: space-between;
 }
 
-
 .ors-extras {
     width: 300px;
     display: flex;
@@ -472,7 +471,6 @@ ors-instructions {
     cursor: default;
     flex: 1 1 auto;
 }
-
 
 .ors-extras-button {
     flex: 1 1 auto;
