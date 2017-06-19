@@ -309,8 +309,18 @@ angular.module('orsApp.utils-service', [])
         /** 
          * generates object for request and serializes it to http parameters   
          * @param {Object} settings: Settings object for payload
-         * @param {string} nameFilter: filter for name
-         
+         * @return {Object} payload: Paylod object used in xhr request
+         */
+        orsUtilsService.locationsCategoryPayload = () => {
+            let payload;
+            payload = {
+                request: 'category_list'
+            };
+            return payload;
+        };
+        /** 
+         * generates object for request and serializes it to http parameters   
+         * @param {Object} settings: Settings object for payload         
          * @return {Object} payload: Paylod object used in xhr request
          */
         orsUtilsService.locationsPayload = (settings) => {
@@ -318,7 +328,8 @@ angular.module('orsApp.utils-service', [])
             payload = {
                 request: 'pois',
                 bbox: settings.bbox,
-                limit: 200
+                limit: 200,
+                details: 'address|contact|attributes'
             };
             if (settings.nameFilter) payload.name = settings.nameFilter;
             if (settings.categories.length > 0) payload.category_group_ids = settings.categories.join(',');

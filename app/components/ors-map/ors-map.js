@@ -7,7 +7,7 @@ angular.module('orsApp')
                 orsMap: '='
             },
             link: (scope, element, attrs) => {},
-            controller: ['$scope', '$filter', '$compile', '$timeout', 'orsSettingsFactory', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', 'lists', 'mappings', 'orsNamespaces', ($scope, $filter, $compile, $timeout, orsSettingsFactory, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsCookiesFactory, lists, mappings, orsNamespaces) => {
+            controller: ['$scope', '$filter', '$compile', '$timeout', 'orsSettingsFactory', 'orsLocationsService', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', 'lists', 'mappings', 'orsNamespaces', ($scope, $filter, $compile, $timeout, orsSettingsFactory, orsLocationsService, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsCookiesFactory, lists, mappings, orsNamespaces) => {
                 $scope.translateFilter = $filter('translate');
                 const mapsurfer = L.tileLayer(orsNamespaces.layerMapSurfer.url, {
                     attribution: orsNamespaces.layerMapSurfer.attribution
@@ -368,8 +368,9 @@ angular.module('orsApp')
                         } else if (actionPackage.featureId === undefined) {
                             if (actionPackage.geometry !== undefined) {
                                 if (actionPackage.geometry.lat && actionPackage.geometry.lng) {
+                                    console.log('panning')
                                     $scope.mapModel.map.panTo(actionPackage.geometry);
-                                    $scope.mapModel.map.setZoom(13);
+                                    //$scope.mapModel.map.setZoom(13);
                                 } else {
                                     let bounds = new L.LatLngBounds(actionPackage.geometry);
                                     $scope.orsMap.fitBounds(bounds);
@@ -410,24 +411,61 @@ angular.module('orsApp')
                     });
                     wayPointMarker.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                 };
+                $scope.highlightPoi = (actionPackage) => {
+                    let locationsIcon = L.divIcon(lists.locationsIconHighlight);
+                    locationsIcon.options.html = lists.locations_icons[$scope.subcategoriesLookup[parseInt(actionPackage.style)]];
+
+                    let locationsMarker = L.marker(actionPackage.geometry, {
+                        icon: locationsIcon
+                    });
+                    locationsMarker.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
+                };
                 $scope.addLocations = (actionPackage) => {
+                    //$scope.layerControls.addOverlay($scope.geofeatures.layerLocations, 'Locations');
+                    $scope.subcategoriesLookup = orsLocationsService.getSubcategoriesLookup();
                     $scope.mapModel.geofeatures[actionPackage.layerCode].clearLayers();
-                    const zoomToFeature = (e) => {
-                        $scope.mapModel.map.panTo(e.latlng);
+                    const highlightFeature = (e) => {
+                        console.log(true)
+                        // const layer = e.target;
+                        // let locationsIconHighlight = L.divIcon(lists.locationsIconHighlight);
+                        // locationsIconHighlight.options.html = lists.locations_icons[$scope.subcategoriesLookup[parseInt(layer.feature.properties.category)]];
+                        // layer.setIcon(locationsIconHighlight);
+                    };
+                    const resetHighlight = (e) => {
+                        console.log(false)
+                        // const layer = e.target;
+                        // let locationsIconHighlightReset = L.divIcon(lists.locationsIcon);
+                        // locationsIconHighlightReset.options.html = lists.locations_icons[$scope.subcategoriesLookup[parseInt(layer.feature.properties.category)]];
+                        // layer.setIcon(locationsIconHighlightReset);
                     };
                     const onEachFeature = (feature, layer) => {
                         layer.on({
-                            click: zoomToFeature
+                            mouseover: highlightFeature,
+                            mouseout: resetHighlight
                         });
-                        const popupContent = feature.properties.name + ' ' + feature.properties.osm_id;
-                        layer.bindPopup(popupContent);
+                        let popupContent = '<strong>' + feature.properties.name + '</strong>';
+                        if (feature.properties.address) {
+                            console.log(feature.properties.address)
+                            popupContent += '<br>' + lists.locations_icons.address + ' ';
+                            angular.forEach(feature.properties.address, (addressObj, addressName) => {
+                                popupContent += addressObj + ', ';
+                            });
+                        }
+                        if (feature.properties.phone) popupContent += '<br>' + lists.locations_icons.phone + ' ' + feature.properties.phone;
+                        if (feature.properties.website) popupContent += '<br>' + lists.locations_icons.website + ' ' + '<a href="' + feature.properties.website + '" target=_blank>' + feature.properties.website + '</a>';
+                        if (feature.properties.wheelchair) popupContent += '<br>' + lists.locations_icons.wheelchair;
+                        popupContent += '<br><br><a href="http://www.openstreetmap.org/node/' + feature.properties.osm_id + '" target=_blank>Edit on OpenStreetMap</a>';
+                        popupContent += '<br>Source: © OpenStreetMap-Contributors';
+                        layer.bindPopup(popupContent, {
+                            className: 'location-popup'
+                        });
                     };
-                    const geojson = L.geoJson(actionPackage.geometry, {
+                    let geojson = L.geoJson(actionPackage.geometry, {
                             pointToLayer: function(feature, latlng) {
+                                let locationsIcon = L.divIcon(lists.locationsIcon);
+                                locationsIcon.options.html = lists.locations_icons[$scope.subcategoriesLookup[parseInt(feature.properties.category)]];
                                 return L.marker(latlng, {
-                                    icon: L.divIcon(lists.locationsIcon, {
-                                        html: feature.properties.group_id
-                                    })
+                                    icon: locationsIcon
                                 });
                             },
                             onEachFeature: onEachFeature
@@ -632,6 +670,9 @@ angular.module('orsApp')
                             break;
                         case 10:
                             $scope.addLocations(params._package);
+                            break;
+                        case 11:
+                            $scope.highlightPoi(params._package);
                             break;
                         default:
                             break;
