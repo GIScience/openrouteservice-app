@@ -479,7 +479,7 @@ angular.module('orsApp')
                     }
                 });
                 // add locations control
-                $scope.mapModel.map.addControl(locationsControl);
+                //$scope.mapModel.map.addControl(locationsControl);
                 /**
                  * Listens to left mouse click on map
                  * @param {Object} e: Click event

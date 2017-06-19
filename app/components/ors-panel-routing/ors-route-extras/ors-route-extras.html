@@ -1,6 +1,12 @@
-<div ng-repeat="obj in $ctrl.routeExtras">
-    <ors-route-extras-map checkboxes="$ctrl.checkboxes" extra="obj.type" route-index="obj.routeIndex" types="obj.data" i="$index">
-    </ors-route-extras-map>
-    <ors-bars-chart key="obj.type" obj="obj.data" route-index="obj.routeIndex" types-order="obj.typesOrder">
-    </ors-bars-chart>
+<div class="ui-divider">
+</div>
+<div class="ors-extras" ng-repeat="obj in $ctrl.routeExtras">
+	<div class="extras-item">
+	    <ors-bars-chart key="obj.type" obj="obj.data" route-index="obj.routeIndex" types-order="obj.typesOrder">
+	    </ors-bars-chart>
+	     <div class="ors-extras-button">
+	        <ors-route-extras-map checkboxes="$ctrl.checkboxes" extra="obj.type" i="$index" route-index="obj.routeIndex"  types="obj.data">
+	        </ors-route-extras-map>
+	    </div>
+	</div>
 </div>

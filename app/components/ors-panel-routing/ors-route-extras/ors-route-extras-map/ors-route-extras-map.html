@@ -1,6 +1,5 @@
-<div class="ui checkbox">
-    <input id="color-{{$ctrl.i}}" name="orsRouteColor"  ng-model="$ctrl.checkboxes[$ctrl.i]" ng-click="$ctrl.updateExtrasColor()" type="checkbox">
-        <label class="checkbox-label" for="color-{{$ctrl.i}}" ng-bind="('COLOR_ROUTE' | translate) + ' ' + ('{{$ctrl.extra}}' | translate)">
-        </label>
-    </input>
+<div ng-click="$ctrl.updateExtrasColor($ctrl.checkboxes[$ctrl.i])" tooltip-side="left" tooltip-template="{{('ADD_EXTRAS' | translate)}}"" tooltips="">
+    <i ng-class="{ 'fa fa-map-o': !$ctrl.checkboxes[$ctrl.i] , 'fa fa-map': $ctrl.checkboxes[$ctrl.i]  }">
+    </i>
 </div>
+

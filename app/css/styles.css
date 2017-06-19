@@ -454,21 +454,29 @@ ors-instructions {
     justify-content: space-between;
 }
 
-.ors-bars {
-    padding: 0px 15px 15px 15px;
+.ors-extras {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.ors-extras .extras-item {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.ors-bars, ors-route-extras-map {
+    padding: 0px 0px 15px 15px;
     cursor: default;
+    flex: 1 1 auto;
 }
 
-ors-route-extras-map {
-    padding-left: 10px;
-    cursor: default;
+.ors-extras-button {
+    flex: 1 1 auto;
+    margin-top: 4px;
+    cursor: ;
 }
-
-.checkbox-label {
-    margin-bottom: 5px;
-    margin-left: 5px;
-}
-
 
 /** Isochrone queries */
 

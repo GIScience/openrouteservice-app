@@ -16,7 +16,8 @@ angular.module('orsApp.ors-route-extras-map', [])
                 orsRouteService.DeColor();
             };
             ctrl.updateExtrasColor = () => {
-                orsRouteService.DeColor();
+                ctrl.checkboxes[ctrl.i] = !ctrl.checkboxes[ctrl.i];
+                // orsRouteService.DeColor();
                 angular.forEach(ctrl.checkboxes, function(checked, idx) {
                     if (ctrl.i == idx) {
                         if (ctrl.checkboxes[ctrl.i]) {
