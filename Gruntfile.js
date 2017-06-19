@@ -156,8 +156,10 @@ module.exports = function(grunt) {
                         return [
                             //modRewrite(['^[^\\.]*$ /index.html [L]']),
                             modRewrite(['!\\.html|\\.js|\\.txt|\\.ico|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]']),
-                            connect().use('/bower_components', connect.static('./bower_components')),
-                            connect().use('/node_modules', connect.static('./node_modules')),
+                            connect()
+                            .use('/bower_components', connect.static('./bower_components')),
+                            connect()
+                            .use('/node_modules', connect.static('./node_modules')),
                             connect.static('./app')
                         ];
                     }
@@ -232,6 +234,22 @@ module.exports = function(grunt) {
                         tmc: 'http://129.206.228.124/routing-test?tmc',
                         analyse: 'https://api.openrouteservice.org/pisochrones',
                         places: 'https://api.openrouteservice.org/pplaces',
+                        shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
+                    }
+                }
+            },
+            labs: {
+                options: {
+                    dest: 'app/js/config.js'
+                },
+                constants: {
+                    ENV: {
+                        name: 'labs',
+                        geocoding: 'https://labs-api.openrouteservice.org/geocode',
+                        routing: 'https://labs-api.openrouteservice.org/routes',
+                        tmc: 'http://labs-api.openrouteservice.org/routes?tmc',
+                        analyse: 'https://labs-api.openrouteservice.org/isochrones',
+                        places: 'https://labs-api.openrouteservice.org/locations',
                         shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
                     }
                 }
@@ -330,4 +348,6 @@ module.exports = function(grunt) {
     grunt.registerTask('test', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'clean:task_rm_build', 'copy:build', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug']);
     grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'clean:task_rm_build', 'copy:build', 'ngconstant:production', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'connect:build:keepalive']);
     grunt.registerTask('serve', 'Run local server', ['browserify:turf', 'ngconstant:development', 'connect:dev', 'watch']);
+    grunt.registerTask('buildlabs', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'clean:task_rm_build', 'copy:build', 'ngconstant:labs', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:labs', 'clean:task_rm_build_unused', 'stripDebug', 'connect:build:keepalive']);
+    grunt.registerTask('servelabs', 'Run local server', ['browserify:turf', 'ngconstant:labs', 'connect:dev', 'watch']);
 };
