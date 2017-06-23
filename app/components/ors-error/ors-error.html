@@ -1,4 +1,4 @@
-<div ng-attr-class="{{ 'ui message fade ' + $ctrl.message.color }}" ng-show="$ctrl.show">
+<div ng-attr-class="{{ 'ui message fade ' + $ctrl.message.color }}" ng-if="$ctrl.show" ng-show="$ctrl.show">
     <i class="fa fa-close flright" data-ng-click="$ctrl.show = !$ctrl.show">
     </i>
     <div class="header" ng-bind-html="('NOTICE' | translate)">

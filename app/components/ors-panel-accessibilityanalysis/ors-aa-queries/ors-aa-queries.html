@@ -2,6 +2,6 @@
     <ors-aa-query isochrone-idx="$index" attributes="isochroneResponse" on-delete="$ctrl.deleteQuery(isoidx)" on-emph="$ctrl.emph(isoidx,isonum)" on-de-emph="$ctrl.deEmph()" on-toggle="$ctrl.toggleQuery(obj)" on-download="$ctrl.downloadQuery(isoidx)" on-zoom="$ctrl.zoomTo(isoidx, isonum)">
     </ors-aa-query>
 </div>
-<ors-modal show="$ctrl.showExport">
+<ors-modal data-ng-if="$ctrl.showExport" show="$ctrl.showExport">
 	<ors-export-query isochrone-data="$ctrl.selectedIsochroneData"></ors-export-query>
 </ors-modal>

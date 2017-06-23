@@ -1,5 +1,11 @@
 /** isochrone query styles */
 
+.ors-aa-controls {
+    height: 39px;
+    width: 340px;
+    text-align: center;
+}
+
 .ors-aa-query, .ors-loading {
     margin: 10px;
     padding: 10px;

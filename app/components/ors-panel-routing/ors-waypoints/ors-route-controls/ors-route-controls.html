@@ -1,28 +1,38 @@
 <div class="ors-route-controls">
-    <button class="ors-controls-button" ng-click="$ctrl.add()" ng-show="$ctrl.showAdd" tooltip-side="right" tooltip-template="{{('ADD' | translate)}}" tooltips="">
-        <i class="fa fa-plus" s="">
-        </i>
-    </button>
-    <button class="ors-controls-button" ng-click="$ctrl.reset()" tooltip-side="top" tooltip-template="{{('RESET' | translate)}}" tooltips="">
-        <i class="fa fa-remove">
-        </i>
-    </button>
+    <div>
+        <button class="ors-controls-button" ng-click="$ctrl.add()" ng-show="$ctrl.showAdd" tooltip-side="right" tooltip-template="{{('ADD' | translate)}}" tooltips="">
+            <i class="fa fa-plus" s="">
+            </i>
+        </button>
+    </div>
+    <div>
+        <button class="ors-controls-button" ng-click="$ctrl.reset()" tooltip-side="top" tooltip-template="{{('RESET' | translate)}}" tooltips="">
+            <i class="fa fa-remove">
+            </i>
+        </button>
+    </div>
     <button class="ors-controls-button" ng-click="$ctrl.reversing()" tooltip-side="top" tooltip-template="{{('REVERSE' | translate)}}" tooltips="">
         <i class="fa fa-retweet">
         </i>
     </button>
-    <button class="ors-controls-button" ng-click="$ctrl.zoom()" tooltip-side="top" tooltip-template="{{('EXPAND' | translate)}}" tooltips="">
-        <i class="fa fa-expand">
-        </i>
-    </button>
-    <button class="ors-controls-button" data-ng-click="$ctrl.showImport = !$ctrl.showImport" tooltip-side="top" tooltip-template="{{('UPLOAD' | translate)}}" tooltips="">
-        <i class="fa fa-upload">
-        </i>
-    </button>
-    <button class="ors-controls-button" ng-click="$ctrl.callOptions()" tooltip-side="left" tooltip-template="{{('OPTIONS' | translate)}}" tooltips="">
-        <i class="fa fa-sliders">
-        </i>
-    </button>
+    <div>
+        <button class="ors-controls-button" ng-click="$ctrl.zoom()" tooltip-side="top" tooltip-template="{{('EXPAND' | translate)}}" tooltips="">
+            <i class="fa fa-expand">
+            </i>
+        </button>
+    </div>
+    <div>
+        <button class="ors-controls-button" data-ng-click="$ctrl.showImport = !$ctrl.showImport" tooltip-side="top" tooltip-template="{{('UPLOAD' | translate)}}" tooltips="">
+            <i class="fa fa-upload">
+            </i>
+        </button>
+    </div>
+    <div>
+        <button class="ors-controls-button" ng-click="$ctrl.callOptions()" tooltip-side="left" tooltip-template="{{('OPTIONS' | translate)}}" tooltips="">
+            <i class="fa fa-sliders">
+            </i>
+        </button>
+    </div>
 </div>
 <div class="ors-routing-options container" ng-show="$ctrl.showOptions">
     <ors-options active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup" show-options="$ctrl.showOptions">

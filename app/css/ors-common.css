@@ -185,6 +185,13 @@ label, .label {
     justify-content: space-between;
 }
 
+
+/** https://jsfiddle.net/vhem8scs/2/ */
+
+.ors-route-controls div:last-child {
+    margin-left: auto;
+}
+
 .ors-summary ul, .ors-navigation ul {
     padding: 0;
     margin: 0;
@@ -314,11 +321,13 @@ button.summary-select {
     -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }
 
+
 /* 
   Allow angular.js to be loaded in body, hiding cloaked elements until 
   templates compile.  The !important is important given that there may be 
   other selectors that are more specific or come later and might alter display.  
  */
+
 [ng\:cloak], [ng-cloak], .ng-cloak {
-  display: none !important;
+    display: none !important;
 }
