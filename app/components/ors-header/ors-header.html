@@ -44,11 +44,11 @@
         </div>
     </li>
 </ul>
-<ors-modal show="$ctrl.showSettings">
+<ors-modal data-ng-if="$ctrl.showSettings" show="$ctrl.showSettings">
     <div ng-include="'includes/settings.html'">
     </div>
 </ors-modal>
-<ors-modal show="$ctrl.showInfo">
+<ors-modal data-ng-if="$ctrl.showInfo" show="$ctrl.showInfo">
     <div ng-include="'includes/info.html'">
     </div>
 </ors-modal>
