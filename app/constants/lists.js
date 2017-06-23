@@ -300,25 +300,30 @@ angular.module('orsApp')
                 },
             },
             hgvParams: {
-                Length: {
+                length: {
                     min: 2,
-                    max: 15
+                    max: 15,
+                    value: 'length'
                 },
-                Height: {
+                height: {
                     min: 2,
-                    max: 5
+                    max: 5,
+                    value: 'height'
                 },
-                Width: {
+                width: {
                     min: 2,
-                    max: 5
+                    max: 5,
+                    value: 'width'
                 },
-                Weight: {
+                hgvWeight: {
                     min: 1,
-                    max: 100
+                    max: 100,
+                    value: 'weight'
                 },
-                AxleLoad: {
+                axleload: {
                     min: 1,
-                    max: 100
+                    max: 100,
+                    value: 'axleload'
                 }
             },
             maxspeeds: {

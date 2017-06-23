@@ -46,15 +46,6 @@ angular.module('orsApp.ors-options', [])
                     maxspeedVal = ctrl.maxspeedOptions.default;
                     ctrl.maxspeedCheckbox = false;
                 }
-                // // enable or disable hgv options checkboxes depending on whether they are set
-                // let maxspeedVal;
-                // if (ctrl.currentOptions.maxspeed >= 0) {
-                //     maxspeedVal = ctrl.currentOptions.maxspeed;
-                //     ctrl.maxspeedCheckbox = true;
-                // } else {
-                //     maxspeedVal = ctrl.maxspeedOptions.default;
-                //     ctrl.maxspeedCheckbox = false;
-                // }
                 ctrl.toggleMaxspeedSlider = (fireRequest = true) => {
                     console.log('TOGGLED')
                     if (ctrl.maxspeedCheckbox === true) {
@@ -76,7 +67,6 @@ angular.module('orsApp.ors-options', [])
                             return value + ' <b>km/h</b>';
                         },
                         onEnd: () => {
-                            console.log('ON END')
                             ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
                             ctrl.changeOptions();
                         }
@@ -124,10 +114,11 @@ angular.module('orsApp.ors-options', [])
                             }
                             break;
                         case 'axleload':
+                            console.log('****')
                             if (ctrl.hgvAxleloadCb === true) {
                                 ctrl.hgvSliders.AxleLoad.options.disabled = false;
                                 ctrl.currentOptions.axleload = ctrl.hgvSliders.AxleLoad.value;
-                            } else if (ctrl.hgvWeightCb === false) {
+                            } else if (ctrl.hgvAxleloadCb === false) {
                                 ctrl.hgvSliders.AxleLoad.options.disabled = true;
                                 delete ctrl.currentOptions.axleload;
                             }
@@ -136,15 +127,45 @@ angular.module('orsApp.ors-options', [])
                     }
                     if (fireRequest) ctrl.changeOptions();
                 };
-                ctrl.toggleHgvOptSlider('', false);
                 if (ctrl.currentOptions.hazmat !== undefined) ctrl.currentOptions.hazmat = true;
+                const hgvParamsInit = {
+                    height: {
+                        val: ctrl.optionList.hgvParams.height.min,
+                        checkbox: 'hgvHeightCb'
+                    },
+                    width: {
+                        val: ctrl.optionList.hgvParams.width.min,
+                        checkbox: 'hgvWidthCb'
+                    },
+                    hgvWeight: {
+                        val: ctrl.optionList.hgvParams.hgvWeight.min,
+                        checkbox: 'hgvWeightCb'
+                    },
+                    axleload: {
+                        val: ctrl.optionList.hgvParams.axleload.min,
+                        checkbox: 'hgvAxleloadCb'
+                    },
+                    length: {
+                        val: ctrl.optionList.hgvParams.length.min,
+                        checkbox: 'hgvLengthCb'
+                    }
+                };
+                // check if params contain hgv settings within range
+                angular.forEach(hgvParamsInit, (val, key) => {
+
+                    if (ctrl.currentOptions[key] >= ctrl.optionList.hgvParams[key].min && ctrl.currentOptions[key] <= ctrl.optionList.hgvParams[key].max) {
+                        console.log(ctrl.currentOptions[key])
+                        hgvParamsInit[key].val = ctrl.currentOptions[key];
+                        ctrl[hgvParamsInit[key].checkbox] = true;
+                    }
+                });
                 ctrl.hgvSliders = {
                     Height: {
-                        value: ctrl.optionList.hgvParams.Height.min,
+                        value: hgvParamsInit.height.val,
                         options: {
-                            disabled: true,
-                            floor: ctrl.optionList.hgvParams.Height.min,
-                            ceil: ctrl.optionList.hgvParams.Height.max,
+                            disabled: !ctrl.hgvHeightCb,
+                            floor: ctrl.optionList.hgvParams.height.min,
+                            ceil: ctrl.optionList.hgvParams.height.max,
                             translate: (value) => {
                                 return value + ' <b>m</b>';
                             },
@@ -155,11 +176,11 @@ angular.module('orsApp.ors-options', [])
                         }
                     },
                     Length: {
-                        value: ctrl.optionList.hgvParams.Length.min,
+                        value: hgvParamsInit.length.val,
                         options: {
-                            disabled: true,
-                            floor: ctrl.optionList.hgvParams.Length.min,
-                            ceil: ctrl.optionList.hgvParams.Length.max,
+                            disabled: !ctrl.hgvLengthCb,
+                            floor: ctrl.optionList.hgvParams.length.min,
+                            ceil: ctrl.optionList.hgvParams.length.max,
                             translate: (value) => {
                                 return value + ' <b>m</b>';
                             },
@@ -170,11 +191,11 @@ angular.module('orsApp.ors-options', [])
                         }
                     },
                     Width: {
-                        value: ctrl.optionList.hgvParams.Width.min,
+                        value: hgvParamsInit.width.val,
                         options: {
-                            disabled: true,
-                            floor: ctrl.optionList.hgvParams.Width.min,
-                            ceil: ctrl.optionList.hgvParams.Width.max,
+                            disabled: !ctrl.hgvWidthCb,
+                            floor: ctrl.optionList.hgvParams.width.min,
+                            ceil: ctrl.optionList.hgvParams.width.max,
                             translate: (value) => {
                                 return value + ' <b>m</b>';
                             },
@@ -185,11 +206,11 @@ angular.module('orsApp.ors-options', [])
                         }
                     },
                     AxleLoad: {
-                        value: ctrl.optionList.hgvParams.AxleLoad.min,
+                        value: hgvParamsInit.axleload.val,
                         options: {
-                            disabled: true,
-                            floor: ctrl.optionList.hgvParams.AxleLoad.min,
-                            ceil: ctrl.optionList.hgvParams.AxleLoad.max,
+                            disabled: !ctrl.hgvAxleloadCb,
+                            floor: ctrl.optionList.hgvParams.axleload.min,
+                            ceil: ctrl.optionList.hgvParams.axleload.max,
                             translate: (value) => {
                                 return value + ' <b>t</b>';
                             },
@@ -200,11 +221,11 @@ angular.module('orsApp.ors-options', [])
                         }
                     },
                     Weight: {
-                        value: ctrl.currentOptions.hgvWeight,
+                        value: hgvParamsInit.hgvWeight.val,
                         options: {
-                            disabled: true,
-                            floor: ctrl.optionList.hgvParams.Weight.min,
-                            ceil: ctrl.optionList.hgvParams.Weight.max,
+                            disabled: !ctrl.hgvWeightCb,
+                            floor: ctrl.optionList.hgvParams.hgvWeight.min,
+                            ceil: ctrl.optionList.hgvParams.hgvWeight.max,
                             translate: (value) => {
                                 return value + ' <b>t</b>';
                             },
@@ -215,6 +236,7 @@ angular.module('orsApp.ors-options', [])
                         }
                     }
                 };
+                ctrl.toggleHgvOptSlider('', false);
                 // Difficulty settings
                 ctrl.currentOptions.fitness = ctrl.currentOptions.fitness !== undefined ? ctrl.optionList.difficulty.fitness[ctrl.currentOptions.fitness].value : ctrl.optionList.difficulty.fitness['-1'].value;
                 ctrl.fitnessValue = ctrl.optionList.difficulty.fitness[ctrl.currentOptions.fitness].name;
