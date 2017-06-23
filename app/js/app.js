@@ -24,7 +24,8 @@
                 angular.module('orsApp')
                     .value("weathercheck", response.data);
             }, function(errorResponse) {
-                console.log(errorResponse);
+                angular.module('orsApp')
+                    .value("weathercheck", '');
             });
     }
 
