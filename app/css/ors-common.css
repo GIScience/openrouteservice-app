@@ -72,14 +72,14 @@ h3, h4, h5 {
 
 .ors-route-card .left {
     color: rgba(0, 0, 0, 0.7);
-    padding: 1rem;
+    padding: 1rem 1rem 0 1rem;
     flex: 0 0 15%;
 }
 
 .ors-route-card .right {
     color: rgba(0, 0, 0, 0.7);
     flex: 1 1 auto;
-    padding: 1rem;
+    padding: 1rem 1rem 0 1rem;
     -display: flex;
     flex-direction: column;
 }

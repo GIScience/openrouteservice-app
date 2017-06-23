@@ -3,8 +3,18 @@
         <li data-ng-repeat="route in $ctrl.data.routes">
             <div ng-include="'includes/route-summary.html'" ng-mouseout="$ctrl.DeEmphRoute()" ng-mouseover="$ctrl.EmphRoute($index)">
             </div>
-            <ors-route-extras ng-if="route.extras" current-route="route" route-index="$index">
-            </ors-route-extras>
+            <div class="options-box" ng-if="route.extras">
+                <div class="pointer margin-bottom-6" ng-init="showRouteExtras = true;" ng-click="showRouteExtras = !showRouteExtras">
+                    <i ng-class="$ctrl.getClass(showRouteExtras)">
+                    </i>
+                    <span ng-bind-html="('EXTRAS' | translate)">
+                    </span>
+                </div>
+                <div class="collapsable" ng-class="{ showMe: showRouteExtras }">
+                    <ors-route-extras current-route="route" route-index="$index">
+                    </ors-route-extras>
+                </div>
+            </div>
             <div class="bottom-border">
             </div>
         </li>

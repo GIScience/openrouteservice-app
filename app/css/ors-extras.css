@@ -12,7 +12,7 @@
 }
 
 .ors-bars, ors-route-extras-map {
-    padding: 0px 0px 15px 15px;
+    padding: 0px 0px 15px 5px;
     cursor: default;
     flex: 1 1 auto;
 }
