@@ -180,6 +180,9 @@ label, .label {
 .ors-route-controls, .ors-instruction-controls {
     height: 39px;
     width: 340px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .ors-summary ul, .ors-navigation ul {
