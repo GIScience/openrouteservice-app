@@ -53,7 +53,6 @@ angular.module('orsApp.utils-service', [])
          */
         orsUtilsService.roundCoordinate = (coord) => {
             coord = Math.round(coord * 1000000) / 1000000;
-            console.log(coord)
             return coord;
         };
         /**
@@ -462,10 +461,17 @@ angular.module('orsApp.utils-service', [])
          * @settings: route/analysis settings
          * @useroptions: useroptions
          */
-        orsUtilsService.parseSettingsToPermalink = function(settings, userOptions) {
-            console.info("parseSettingsToPermalink", settings);
+        orsUtilsService.parseSettingsToPermalink = (settings, userOptions) => {
+            console.info("parseSettingsToPermalink", settings, userOptions);
             if (settings.profile === undefined) return;
             let link = '';
+            if (userOptions.lat && userOptions.lng) {
+                link += lists.permalinkKeys.lat + '=' + orsUtilsService.roundCoordinate(userOptions.lat) + '&';
+                link += lists.permalinkKeys.lng + '=' + orsUtilsService.roundCoordinate(userOptions.lng) + '&';
+            }
+            if (userOptions.zoom) {
+                link += lists.permalinkKeys.zoom + '=' + userOptions.zoom + '&';
+            }
             // Hack to remove angular properties that do not have to be saved
             let profile = angular.fromJson(angular.toJson(settings.profile));
             let waypoints = angular.fromJson(angular.toJson(settings.waypoints));
@@ -479,42 +485,45 @@ angular.module('orsApp.utils-service', [])
                         if (typeof obj[o] != "function" && o.toString()
                             .charAt(0) != '_' && (lists.permalinkFilters[settings.profile.type].includes(o) || lists.permalinkFilters.analysis.includes(o))) {
                             if (obj[o] in lists.profiles) {
-                                link = link.concat('&' + lists.permalinkKeys[o] + '=' + lists.profiles[obj[o]].shortValue);
+                                link += '&' + lists.permalinkKeys[o] + '=' + lists.profiles[obj[o]].shortValue;
                             } else if (obj[o] in lists.optionList.weight) {
-                                link = link.concat('&' + lists.permalinkKeys[o] + '=' + lists.optionList.weight[obj[o]].shortValue);
+                                link += '&' + lists.permalinkKeys[o] + '=' + lists.optionList.weight[obj[o]].shortValue;
                             } else if (obj[o] === true) {
-                                link = link.concat('&' + lists.permalinkKeys[o] + '=1');
+                                link += '&' + lists.permalinkKeys[o] + '=1';
                             } else if (obj[o] === false) {} else {
-                                link = link.concat('&' + lists.permalinkKeys[o] + '=' + obj[o]);
+                                link += '&' + lists.permalinkKeys[o] + '=' + obj[o];
                             }
                         }
                         if (lists.optionList.avoidables[o]) {
                             if (lists.optionList.avoidables[o].subgroups.includes(settings.profile.type)) {
                                 if (obj[o] === true) {
-                                    link = link.concat('&' + lists.permalinkKeys[o] + '=1');
+                                    link += '&' + lists.permalinkKeys[o] + '=1';
                                 } else if (obj[o] === false) {} else {
-                                    link = link.concat('&' + lists.permalinkKeys[o] + '=' + obj[o]);
+                                    link += '&' + lists.permalinkKeys[o] + '=' + obj[o];
                                 }
                             }
                         }
                     }
                 }
             }
-            if (waypoints[0] !== undefined) {
-                link = link.concat(lists.permalinkKeys.wps + '=');
-                for (let waypoint of waypoints) {
-                    let lat = typeof(waypoint._latlng.lat) === 'number' ? (Math.round(waypoint._latlng.lat * 1000000) / 1000000) : 'null';
-                    let lng = typeof(waypoint._latlng.lng) === 'number' ? (Math.round(waypoint._latlng.lng * 1000000) / 1000000) : 'null';
-                    link = link.concat(lat);
-                    link = link.concat(',');
-                    link = link.concat(lng);
-                    link = link.concat(',');
+            let latLngs = [],
+                waypointsSet = false;
+            for (let waypoint of waypoints) {
+                let lat, lng;
+                if (typeof(waypoint._latlng.lat) === 'number' && typeof(waypoint._latlng.lng) === 'number') {
+                    lat = Math.round(waypoint._latlng.lat * 1000000) / 1000000;
+                    lng = Math.round(waypoint._latlng.lng * 1000000) / 1000000;
+                    waypointsSet = true;
+                } else {
+                    lat = lng = 'null';
                 }
-                link = link.slice(0, -1);
+                latLngs.push(lat);
+                latLngs.push(lng);
             }
+            if (waypointsSet) link += lists.permalinkKeys.wps + '=' + latLngs.join(',');
             getProp(profile);
-            if (userOptions.routinglang !== undefined) link = link.concat('&' + lists.permalinkKeys.routinglang + '=' + userOptions.routinglang);
-            if (userOptions.units !== undefined) link = link.concat('&' + lists.permalinkKeys.units + '=' + userOptions.units);
+            if (userOptions.routinglang !== undefined) link += '&' + lists.permalinkKeys.routinglang + '=' + userOptions.routinglang;
+            if (userOptions.units !== undefined) link += '&' + lists.permalinkKeys.units + '=' + userOptions.units;
             // This timeout is neccessariliy needed to update the permalink on router reuse !!!
             $timeout(function() {
                 $location.search(link);

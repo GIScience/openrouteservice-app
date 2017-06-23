@@ -175,7 +175,6 @@
                     ctrl.$parsers = [];
                     ctrl.$render = function() {
                         var d = ctrl.$viewValue;
-                        console.log(d)
                         el.data('checked', d);
                         switch (d) {
                             case truthy:

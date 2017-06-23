@@ -514,7 +514,10 @@ angular.module('orsApp')
             tollroads: 'l6',
             tunnels: 'l7',
             tracks: 'l8',
-            green: 'm1'
+            green: 'm1',
+            lat: 'n1',
+            lng: 'n2',
+            zoom: 'n3'
         },
         reversePermalinkKeys: function(obj) {
             var rev = {};

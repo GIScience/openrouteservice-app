@@ -27,14 +27,19 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
                 angular.forEach(importedParams.settings.waypoints, (wp, idx) => {
                     if (wp._latlng !== false) orsSettingsFactory.getAddress(wp._latlng, idx, true);
                 });
-                orsSettingsFactory.setUserOptions(orsCookiesFactory.getCookies());
-                orsSettingsFactory.setUserOptions(importedParams.user_options);
+                // merge cookies and permalink settings 
+                const userOptionsCookie = orsCookiesFactory.getCookies();
+                const mapOptionsCookie = orsCookiesFactory.getMapOptions();
+                console.log(userOptionsCookie, mapOptionsCookie, importedParams.user_options)
+                const userOptions = Object.assign({}, userOptionsCookie, mapOptionsCookie, importedParams.user_options);
+                orsSettingsFactory.setUserOptions(userOptions);
             }
             orsSettingsFactory.updateWaypoints();
             ctrl.activeProfile = orsSettingsFactory.getActiveProfile().type;
             ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
             console.info(ctrl.activeProfile, ctrl.activeSubgroup);
             ctrl.shouldDisplayRouteDetails = false;
+            console.log(orsSettingsFactory.getSettings(), JSON.stringify(orsSettingsFactory.getUserOptions()));
             orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
         };
         ctrl.$routerOnReuse = function(next, prev) {

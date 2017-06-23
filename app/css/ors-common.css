@@ -1,0 +1,312 @@
+/** common styles */
+
+a {
+    transition: color .4s;
+    color: #265C83;
+}
+
+a:link, a:visited {
+    color: #265C83;
+}
+
+a:hover {
+    color: #7FDBFF;
+}
+
+a:active {
+    transition: color .3s;
+    color: #007BE6;
+}
+
+h3, h4, h5 {
+    padding: 0;
+    margin: 0;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.ors-control-button {
+    padding: 0 !important;
+    border: none;
+    box-shadow: none !important;
+}
+
+.ors-button {
+    width: 40px;
+    height: 37px;
+    background-color: transparent;
+    border: none;
+    color: #444;
+    outline: none;
+}
+
+.ors-button:hover {
+    color: #cd6060;
+}
+
+.ors-controls-button {
+    width: 40px;
+    height: 37px;
+    border: none;
+    color: rgba(0, 0, 0, 0.7);
+    background-color: #FFF;
+    outline: none;
+}
+
+.ors-route-card {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+.ors-route-card .left {
+    color: rgba(0, 0, 0, 0.7);
+    padding: 1rem;
+    flex: 0 0 15%;
+}
+
+.ors-route-card .right {
+    color: rgba(0, 0, 0, 0.7);
+    flex: 1 1 auto;
+    padding: 1rem;
+    -display: flex;
+    flex-direction: column;
+}
+
+.ors-route-card .right-2 {
+    color: rgba(0, 0, 0, 0.7);
+    flex: 1 1 auto;
+    text-align: right;
+    padding-top: 0.2rem;
+    padding-right: 0rem;
+}
+
+
+/** this is needed for position of tooltip on body */
+
+.ors-controls-button tooltip, span tooltip {
+    box-sizing: initial !important;
+}
+
+.ors-controls-button i:hover, span i:hover {
+    color: #cd6060;
+}
+
+tooltip tip {
+    min-width: 70px !important;
+    padding: 5px 8px !important;
+    border-radius: 4px !important;
+}
+
+tooltip._multiline {
+    display: inline-block !important;
+}
+
+.flright {
+    float: right !important;
+}
+
+.flleft {
+    float: left;
+}
+
+.textright {
+    text-align: right;
+}
+
+.textleft {
+    text-align: left;
+}
+
+.textcenter {
+    text-align: center;
+}
+
+.textjustify {
+    text-align: justify !important;
+}
+
+#loading-bar .bar {
+    background: #b5152b;
+    height: 3px;
+}
+
+.block {
+    display: block !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.margin-bottom-3 {
+    margin-bottom: 3px !important;
+}
+
+.margin-bottom-6 {
+    margin-bottom: 6px !important;
+}
+
+.margin-bottom-10 {
+    margin-bottom: 10px !important;
+}
+
+
+/* Semantic ui overrides */
+
+.ui.checkbox, .item {
+    font-size: 100% !important;
+}
+
+label, .label {
+    cursor: pointer !important;
+}
+
+.ors-summary {
+    width: 340px;
+}
+
+.ors-route-controls, .ors-instruction-controls {
+    height: 39px;
+    width: 340px;
+}
+
+.ors-summary ul, .ors-navigation ul {
+    padding: 0;
+    margin: 0;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.summary-item span {
+    padding-right: 5px;
+}
+
+button.summary-select {
+    background: none !important;
+    border: none;
+    padding-bottom: 5px !important;
+    font-weight: bold;
+    color: #cd6060;
+    display: block;
+    outline: none !important;
+}
+
+.top-border {
+    border-top: 1px solid #edf3f5;
+}
+
+.bottom-border {
+    height: 1px;
+    border-bottom: .1rem solid #edf3f5;
+    margin: auto;
+}
+
+.short {
+    width: 85%;
+}
+
+.ors-routing-options .container, .ors-routing-inner .container, .ors-aa-query, .container {
+    background-color: rgb(250, 250, 250);
+    padding-top: 10px;
+}
+
+.ors-routing-inner {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+/* options menu */
+
+.ors-options-menu {
+    width: 300px;
+    padding-left: 10px;
+    padding-top: 10px;
+    display: block;
+}
+
+.ors-options-menu li {
+    padding-bottom: 5px;
+}
+
+.restrict-height-200 {
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
+.small {
+    width: 150px;
+    display: block;
+}
+
+.ors-options-input {
+    height: 35px;
+}
+
+.ors-options-input input {
+    width: 150px;
+}
+
+.options-box {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.7rem;
+    cursor: pointer;
+}
+
+.options-box span {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.options-box i {
+    color: #444;
+}
+
+.collapsable {
+    -display: inline-block;
+    overflow: hidden;
+    height: 0;
+}
+
+.collapsable.showMe {
+    height: auto;
+    overflow: visible;
+    width: 100%;
+}
+
+
+/* scrollbar */
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, .5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
