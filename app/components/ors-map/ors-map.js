@@ -534,6 +534,10 @@ angular.module('orsApp')
                         iconSize: L.point(17, 17)
                     });
                 };
+                $scope.getGradientColor = (rangePos) => {
+                    const hsl = Math.floor(120 - 120 * rangePos);
+                    return "hsl(" + hsl + ", 100%, 50%" + ")";
+                };
                 /** 
                  * adds polygon array to specific layer
                  * @param {Object} actionPackage - The action actionPackage
@@ -551,14 +555,10 @@ angular.module('orsApp')
                         });
                     });
                     if (add) {
-                        const getGradientColor = (rangePos) => {
-                            const hsl = Math.floor(120 - 120 * rangePos);
-                            return "hsl(" + hsl + ", 100%, 50%" + ")";
-                        };
                         let isochrones = new L.FeatureGroup();
                         for (let i = actionPackage.geometry.length - 1; i >= 0; i--) {
                             L.polygon(actionPackage.geometry[i].geometry.coordinates[0], {
-                                    fillColor: actionPackage.geometry.length == 1 ? getGradientColor(1) : getGradientColor(i / (actionPackage.geometry.length - 1)),
+                                    fillColor: actionPackage.geometry.length == 1 ? $scope.getGradientColor(1) : $scope.getGradientColor(i / (actionPackage.geometry.length - 1)),
                                     color: '#FFF',
                                     weight: 1,
                                     fillOpacity: 1,
@@ -568,12 +568,7 @@ angular.module('orsApp')
                                 .addTo(isochrones);
                         }
                         isochrones.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
-                        // hack to change opacity of entire overlaypane layer but prevent opacity of stroke
-                        let svg = d3.select($scope.mapModel.map.getPanes()
-                                .isochronesPane)
-                            .style("opacity", 0.5);
-                        svg.selectAll("path")
-                            .style("stroke-opacity", 1);
+                        $scope.opacityIsochrones();
                     }
                 };
                 /** 
@@ -588,16 +583,12 @@ angular.module('orsApp')
                             }
                         });
                     });
-                    const getGradientColor = (rangePos) => {
-                        const hsl = Math.floor(120 - 120 * rangePos);
-                        return "hsl(" + hsl + ", 100%, 50%" + ")";
-                    };
                     let isochrones = new L.FeatureGroup();
                     for (let i = actionPackage.geometry.length - 1; i >= 0; i--) {
                         // if i is in the list of indices of intervals to be hidden, skip
                         if (actionPackage.extraInformation.intervalIndices.indexOf(i) == -1) {
                             L.polygon(actionPackage.geometry[i].geometry.coordinates[0], {
-                                    fillColor: actionPackage.geometry.length == 1 ? getGradientColor(1) : getGradientColor(i / (actionPackage.geometry.length - 1)),
+                                    fillColor: actionPackage.geometry.length == 1 ? $scope.getGradientColor(1) : $scope.getGradientColor(i / (actionPackage.geometry.length - 1)),
                                     color: '#FFF',
                                     weight: 1,
                                     fillOpacity: 1,
@@ -607,7 +598,10 @@ angular.module('orsApp')
                                 .addTo(isochrones);
                         }
                     }
+                    $scope.opacityIsochrones();
                     isochrones.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
+                };
+                $scope.opacityIsochrones = () => {
                     // hack to change opacity of entire overlaypane layer but prevent opacity of stroke
                     let svg = d3.select($scope.mapModel.map.getPanes()
                             .isochronesPane)
