@@ -65,7 +65,7 @@ angular.module('orsApp.ors-aa-query', [])
                 ctrl.intervalsHidden = [];
                 if (ctrl.showOnMap === true) {
                     // hide all intervals
-                    for (i = 0; i < ctrl.intervalsLength; i++) {
+                    for (let i = 0; i < ctrl.intervalsLength; i++) {
                         ctrl.intervalsHidden.push(i);
                     }
                     ctrl.showIntervals = Array.apply(null, Array(ctrl.intervalsLength))

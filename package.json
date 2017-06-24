@@ -30,6 +30,7 @@
     "connect-modrewrite": "^0.9.0",
     "grunt": "^0.4.5",
     "grunt-browserify": "^5.0.0",
+    "grunt-cache-breaker": "^2.0.1",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-concat": "^0.5.1",

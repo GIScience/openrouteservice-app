@@ -3,8 +3,8 @@ angular.module('orsApp.ors-filters', [])
         return (input) => {
             const hours = Math.floor(input / 3600);
             input %= 3600;
-            minutes = Math.floor(input / 60);
-            seconds = input % 60;
+            const minutes = Math.floor(input / 60);
+            const seconds = input % 60;
             if (hours < 1 && minutes < 1) {
                 return '<b>' + '< 1' + '</b>' + ' min';
             } else {
