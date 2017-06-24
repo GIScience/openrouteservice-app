@@ -62,9 +62,10 @@ angular.module('orsApp.ors-aa-query', [])
                 }
             };
             ctrl.toggle = () => {
+                ctrl.intervalsHidden = [];
                 if (ctrl.showOnMap === true) {
                     // hide all intervals
-                    for (i = 0; i <= ctrl.intervalsLength; i++) {
+                    for (i = 0; i < ctrl.intervalsLength; i++) {
                         ctrl.intervalsHidden.push(i);
                     }
                     ctrl.showIntervals = Array.apply(null, Array(ctrl.intervalsLength))
@@ -73,7 +74,6 @@ angular.module('orsApp.ors-aa-query', [])
                         });
                     ctrl.showOnMap = false;
                 } else {
-                    ctrl.intervalsHidden = [];
                     ctrl.showIntervals = Array.apply(null, Array(ctrl.intervalsLength))
                         .map(function() {
                             return true;
@@ -97,6 +97,7 @@ angular.module('orsApp.ors-aa-query', [])
                     const index = ctrl.intervalsHidden.indexOf(intervalIdx);
                     ctrl.intervalsHidden.splice(index, 1);
                 }
+                console.log(ctrl.intervalsHidden.length ,ctrl.intervalsLength)
                 if (ctrl.intervalsHidden.length == ctrl.intervalsLength) {
                     ctrl.showOnMap = false;
                 } else  {
