@@ -11,13 +11,18 @@ angular.module('orsApp.ors-aa-query', [])
             onDownload: '&',
             onEmph: '&',
             onDeEmph: '&',
-            onZoom: '&'
+            onZoom: '&',
+            intervalsLength: '<'
         },
-        controller: ['orsMessagingService', 'orsAaService', function(orsMessagingService, orsAaService) {
+        controller: ['orsMessagingService', 'orsAaService', '$timeout', function(orsMessagingService, orsAaService, $timeout) {
             let ctrl = this;
             ctrl.intervalsHidden = [];
             ctrl.$onInit = () => {
                 ctrl.showOnMap = true;
+                ctrl.showIntervals = Array.apply(null, Array(ctrl.intervalsLength))
+                    .map(function() {
+                        return true;
+                    });
                 ctrl.onToggle({
                     obj: {
                         isoidx: ctrl.isochroneIdx,
@@ -48,10 +53,6 @@ angular.module('orsApp.ors-aa-query', [])
                 if (ctrl.showOnMap === true) return "fa fa-toggle-on";
                 else return "fa fa-toggle-off";
             };
-            ctrl.showInterval = (bool) => {
-                if (bool) return "fa fa-toggle-off";
-                else return "fa fa-toggle-on";
-            };
             ctrl.zoomTo = (isonum) => {
                 if (ctrl.showOnMap) {
                     ctrl.onZoom({
@@ -61,7 +62,24 @@ angular.module('orsApp.ors-aa-query', [])
                 }
             };
             ctrl.toggle = () => {
-                ctrl.showOnMap = ctrl.showOnMap === true ? false : true;
+                if (ctrl.showOnMap === true) {
+                    // hide all intervals
+                    for (i = 0; i <= ctrl.intervalsLength; i++) {
+                        ctrl.intervalsHidden.push(i);
+                    }
+                    ctrl.showIntervals = Array.apply(null, Array(ctrl.intervalsLength))
+                        .map(function() {
+                            return false;
+                        });
+                    ctrl.showOnMap = false;
+                } else {
+                    ctrl.intervalsHidden = [];
+                    ctrl.showIntervals = Array.apply(null, Array(ctrl.intervalsLength))
+                        .map(function() {
+                            return true;
+                        });
+                    ctrl.showOnMap = true;
+                }
                 ctrl.onToggle({
                     obj: {
                         isoidx: ctrl.isochroneIdx,
@@ -72,12 +90,19 @@ angular.module('orsApp.ors-aa-query', [])
             ctrl.toggleInterval = (intervalIdx, event) => {
                 event.preventDefault();
                 event.stopPropagation();
+                ctrl.showIntervals[intervalIdx] = ctrl.showIntervals[intervalIdx] === true ? false : true;
                 if (ctrl.intervalsHidden.indexOf(intervalIdx) == -1) {
                     ctrl.intervalsHidden.push(intervalIdx);
                 } else {
                     const index = ctrl.intervalsHidden.indexOf(intervalIdx);
                     ctrl.intervalsHidden.splice(index, 1);
                 }
+                if (ctrl.intervalsHidden.length == ctrl.intervalsLength) {
+                    ctrl.showOnMap = false;
+                } else  {
+                    ctrl.showOnMap = true;
+                }
+                ctrl.show();
                 ctrl.onToggleInterval({
                     obj: {
                         isoidx: ctrl.isochroneIdx,

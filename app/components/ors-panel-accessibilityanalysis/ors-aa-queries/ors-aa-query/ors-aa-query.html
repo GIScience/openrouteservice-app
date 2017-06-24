@@ -115,8 +115,8 @@
                         </span>
                     </td>
                     <td>
-                        <span ng-click="$ctrl.toggleInterval($index, $event, showinterval); showinterval=!showinterval">
-                            <i ng-class="$ctrl.showInterval(showinterval)"></i>
+                        <span ng-click="$ctrl.toggleInterval($index, $event, ctrl.showIntervals[$index]);">
+                        <i ng-class="$ctrl.showIntervals[$index] ? 'fa fa-toggle-on': 'fa fa-toggle-off'"></i>
                         </span>
                     </td>
                 </tr>
