@@ -1,18 +1,13 @@
 angular.module('orsApp.ors-filters', [])
     .filter('duration', () => {
         return (input) => {
-            const days = Math.floor(input / 86400);
             const hours = Math.floor(input / 3600);
             input %= 3600;
             minutes = Math.floor(input / 60);
             seconds = input % 60;
-            if (days < 1 && hours < 1 && minutes < 1) {
+            if (hours < 1 && minutes < 1) {
                 return '<b>' + '< 1' + '</b>' + ' min';
             } else {
-                let dayStr = '';
-                if (days > 0) {
-                    dayStr = days + 'd' + ' ';
-                }
                 let HHMM = [];
                 if (hours.toString()
                     .length == 1) HHMM.push('0' + hours);
@@ -20,7 +15,7 @@ angular.module('orsApp.ors-filters', [])
                 if (minutes.toString()
                     .length == 1) HHMM.push('0' + minutes);
                 else HHMM.push(minutes);
-                return '<b>' + dayStr + HHMM.join(':') + '</b>';
+                return '<b>' + HHMM.join(':') + '</b>';
             }
         };
     })

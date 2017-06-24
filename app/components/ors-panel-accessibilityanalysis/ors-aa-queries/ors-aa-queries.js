@@ -25,6 +25,10 @@ angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query', 'orsApp.ors-expo
         ctrl.toggleQuery = (obj) => {
             orsAaService.toggleQuery(obj.isoidx, ctrl.aaQueries[obj.isoidx], obj.zoom);
         };
+        ctrl.toggleInterval = (obj) => {
+            console.log(obj)
+            orsAaService.toggleInterval(obj.isoidx, ctrl.aaQueries[obj.isoidx], obj.isointervalindices);
+        };
         ctrl.removeQuery = (isoidx) => {
             orsAaService.removeQuery(isoidx);
         };

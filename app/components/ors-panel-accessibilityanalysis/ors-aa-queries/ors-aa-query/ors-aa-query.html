@@ -89,10 +89,15 @@
                         <span ng-bind-html="('REACHFACTOR' | translate)">
                         </span>
                     </th>
+                    <th>
+                        <span>
+                            <i class="fa fa-check"></i>
+                        </span>
+                    </th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="pointer" ng-class="{highlight: hover}" ng-click="$ctrl.zoomTo($index);" ng-mouseout="$ctrl.deEmph(); hover=false;" ng-mouseover="$ctrl.emph($index); hover=true;" ng-repeat="isochrone in $ctrl.attributes.info.query.ranges" ng-switch="$ctrl.attributes.info.query.range_type">
+                <tr class="pointer" ng-class="{highlight: hover}" ng-click="$ctrl.zoomTo($index); $event.stopPropagation();" ng-mouseout="$ctrl.deEmph(); hover=false;" ng-mouseover="$ctrl.emph($index); hover=true;" ng-repeat="isochrone in $ctrl.attributes.info.query.ranges" ng-switch="$ctrl.attributes.info.query.range_type">
                     <td>
                         <span ng-bind-html="(isochrone | distance:true)" ng-switch-when="distance">
                         </span>
@@ -107,6 +112,11 @@
                     </td>
                     <td ng-switch-when="time">
                         <span ng-bind-html="($ctrl.attributes.features[$index].properties.reachfactor | number: 2)">
+                        </span>
+                    </td>
+                    <td>
+                        <span ng-click="$ctrl.toggleInterval($index, $event, showinterval); showinterval=!showinterval">
+                            <i ng-class="$ctrl.showInterval(showinterval)"></i>
                         </span>
                     </td>
                 </tr>

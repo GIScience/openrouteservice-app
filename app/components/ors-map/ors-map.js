@@ -577,6 +577,45 @@ angular.module('orsApp')
                     }
                 };
                 /** 
+                 * adds polygon array to specific layer but skip intervals
+                 * @param {Object} actionPackage - The action actionPackage
+                 */
+                $scope.togglePolygonsIntervals = (actionPackage) => {
+                    $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
+                        layer.eachLayer((isochrone) => {
+                            if (isochrone.options.index == actionPackage.featureId) {
+                                $scope.mapModel.geofeatures[actionPackage.layerCode].removeLayer(layer);
+                            }
+                        });
+                    });
+                    const getGradientColor = (rangePos) => {
+                        const hsl = Math.floor(120 - 120 * rangePos);
+                        return "hsl(" + hsl + ", 100%, 50%" + ")";
+                    };
+                    let isochrones = new L.FeatureGroup();
+                    for (let i = actionPackage.geometry.length - 1; i >= 0; i--) {
+                        // if i is in the list of indices of intervals to be hidden, skip
+                        if (actionPackage.extraInformation.intervalIndices.indexOf(i) == -1) {
+                            L.polygon(actionPackage.geometry[i].geometry.coordinates[0], {
+                                    fillColor: actionPackage.geometry.length == 1 ? getGradientColor(1) : getGradientColor(i / (actionPackage.geometry.length - 1)),
+                                    color: '#FFF',
+                                    weight: 1,
+                                    fillOpacity: 1,
+                                    index: actionPackage.featureId,
+                                    pane: 'isochronesPane'
+                                })
+                                .addTo(isochrones);
+                        }
+                    }
+                    isochrones.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
+                    // hack to change opacity of entire overlaypane layer but prevent opacity of stroke
+                    let svg = d3.select($scope.mapModel.map.getPanes()
+                            .isochronesPane)
+                        .style("opacity", 0.5);
+                    svg.selectAll("path")
+                        .style("stroke-opacity", 1);
+                };
+                /** 
                  * clears layer entirely or specific layer in layer
                  */
                 $scope.clear = (actionPackage) => {
@@ -985,6 +1024,9 @@ angular.module('orsApp')
                             break;
                         case 11:
                             $scope.highlightPoi(params._package);
+                            break;
+                        case 12:
+                            $scope.togglePolygonsIntervals(params._package);
                             break;
                         default:
                             break;
