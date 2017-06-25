@@ -29,6 +29,7 @@
     "concurrently": "^2.0.0",
     "connect-modrewrite": "^0.9.0",
     "grunt": "^0.4.5",
+    "grunt-angular-templates": "^1.1.0",
     "grunt-browserify": "^5.0.0",
     "grunt-cache-breaker": "^2.0.1",
     "grunt-cli": "^0.1.13",

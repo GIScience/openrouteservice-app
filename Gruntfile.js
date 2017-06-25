@@ -13,7 +13,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: 'app',
                 dest: 'build',
-                src: ['img/**/*.png', 'includes/**/*.html', 'languages/**/*.json', 'components/**/*.html', 'css/*.css', '*.html', '*.js', 'favicon.ico']
+                src: ['img/**/*.png', 'languages/**/*.json', 'css/*.css', '*.html', '*.js', 'favicon.ico']
             },
             libs: {
                 expand: true,
@@ -42,7 +42,7 @@ module.exports = function(grunt) {
                 src: ['build/*']
             },
             task_rm_build_unused: {
-                src: ['build/components/**/*.js', 'build/infrastructure', 'build/js/', 'build/constants', 'build/css']
+                src: ['build/components', 'build/infrastructure', 'build/js/', 'build/constants', 'build/css']
             },
         },
         jshint: {
@@ -272,6 +272,33 @@ module.exports = function(grunt) {
                     src: ['build/index.html']
                 }
             }
+        },
+        // TODO
+        less: {
+            development: {
+                files: {
+                    "src/css/themes/lime.css": "src/css/themes/lime.less",
+                    "src/css/themes/purple.css": "src/css/themes/purple.less",
+                    "src/css/themes/steelblue.css": "src/css/themes/steelblue.less"
+                }
+            },
+            production: {
+                options: {
+                    yuicompress: true
+                },
+                files: {
+                    "tmp/css/themes/lime.min.css": "src/css/themes/lime.less",
+                    "tmp/css/themes/purple.min.css": "src/css/themes/purple.less",
+                    "tmp/css/themes/steelblue.min.css": "src/css/themes/steelblue.less"
+                }
+            }
+        },
+        ngtemplates: {
+            orsApp: {
+                cwd: 'app',
+                src: ['components/**/*.html', 'includes/**/*.html'],
+                dest: 'app/js/templates.js'
+            }
         }
         // connect: {
         //     options: {
@@ -339,6 +366,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-ng-constant');
     grunt.loadNpmTasks('grunt-strip-debug');
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-angular-templates');
     // Clean the .git/hooks/pre-commit file then copy in the latest version 
     //grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['clean:task_rm_build', 'copy:build', 'removelogging', 'preprocess', 'traceur', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'usemin', 'clean:task_rm_build_unused']);
     //   grunt.registerTask('build', [
@@ -358,8 +387,8 @@ module.exports = function(grunt) {
     //   'htmlmin'
     // ]);
     grunt.registerTask('test', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'clean:task_rm_build', 'copy:build', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cachebreaker']);
-    grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'clean:task_rm_build', 'copy:build', 'ngconstant:production', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cachebreaker', 'connect:build:keepalive']);
-    grunt.registerTask('serve', 'Run local server', ['browserify:turf', 'ngconstant:development', 'connect:dev', 'watch']);
+    grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:production', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cachebreaker', 'connect:build:keepalive']);
+    grunt.registerTask('serve', 'Run local server', ['browserify:turf', 'ngtemplates', 'ngconstant:development', 'connect:dev', 'watch']);
     grunt.registerTask('buildlabs', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'clean:task_rm_build', 'copy:build', 'ngconstant:labs', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:labs', 'clean:task_rm_build_unused', 'stripDebug', 'cachebreaker', 'connect:build:keepalive']);
     grunt.registerTask('servelabs', 'Run local server', ['browserify:turf', 'ngconstant:labs', 'connect:dev', 'watch']);
 };
