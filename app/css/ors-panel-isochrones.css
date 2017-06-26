@@ -1,61 +1,50 @@
-/** isochrone query styles */
-
 .ors-aa-controls {
-    height: 39px;
-    width: 340px;
-    text-align: center;
+  height: 39px;
+  width: 340px;
+  text-align: center;
 }
-
-.ors-aa-query, .ors-loading {
-    margin: 10px;
-    padding: 10px;
-    border-radius: 5px;
+.ors-aa-query,
+.ors-loading {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
 }
-
 .ors-aa-query .segment {
-    display: flex;
-    position: relative;
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    cursor: default;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    justify-content: space-between;
-    padding-bottom: 10px;
+  display: flex;
+  position: relative;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  justify-content: space-between;
+  padding-bottom: 10px;
 }
-
 .ors-aa-query .segment .summary {
-    flex: 0 1 auto;
+  flex: 0 1 auto;
 }
-
 .ors-aa-query .segment .controls {
-    flex: 0 1 auto;
+  flex: 0 1 auto;
 }
-
 .ors-aa-query .segment .controls span {
-    float: right;
-    width: 20px;
-    text-align: center;
+  float: right;
+  width: 20px;
+  text-align: center;
 }
-
 .ors-aa-query .segment .icon {
-    flex: 0 1 15%;
+  flex: 0 1 15%;
 }
-
 .ors-aa-query .segment .waypoint {
-    flex: 1 1 50%;
-    padding-left: 10px;
+  flex: 1 1 50%;
+  padding-left: 10px;
 }
-
-.ors-aa-query .segment.highlight {
-    color: rgb(0, 0, 0);
-    background-color: #FAFAFA;
+.ors-aa-query .segment .segment.highlight {
+  color: #000000;
+  background-color: #FAFAFA;
 }
-
-.ors-aa-query tr.highlight {
-    background-color: #E8E8E8;
+.ors-aa-query .segment tr.highlight {
+  background-color: #E8E8E8;
 }
-

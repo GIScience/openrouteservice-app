@@ -1,0 +1,116 @@
+ors-instructions {
+    display: flex;
+    min-height: 0;
+    /* needed for FF */
+    flex-direction: column;
+}
+
+.ors-instructions-summary, .ors-analysis-settings {
+    flex: 0 0 auto;
+}
+
+.ors-instructions-summary {
+    .header {
+        display: flex;
+        flex-direction: row;
+        flex: 0 0 auto;
+        flex-basis: 30px;
+        border-bottom: .1rem solid #edf3f5;
+        .left {
+            color: rgba(0, 0, 0, 0.7);
+            padding: 1rem;
+            flex: 0 0 10%;
+        }
+        .right {
+            color: rgba(0, 0, 0, 0.7);
+            flex: 1 1 auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    }
+}
+
+.ors-segment-card {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    .pipe {
+        color: #d4dce3;
+        display: inline-block;
+        padding: 0 .5rem;
+    }
+    .steps {
+        margin-right: 20px;
+    }
+    .info {
+        .heading {
+            .icon {
+                flex: 0 1 auto;
+                width: 1.5rem;
+            }
+            .waypoint {
+                flex: 0 1 80%;
+                padding-left: 1rem;
+            }
+        }
+    }
+    .info, .step {
+        border-left: 2px solid transparent;
+        border-right: 2px solid transparent;
+        width: 100%;
+        margin-right: 20px;
+    }
+    .step {
+        width: 100%;
+        padding-top: 1rem;
+        .header {
+            display: flex;
+            flex-direction: row;
+            padding-left: 3rem;
+            .icon {
+                flex: 0 0 auto;
+                width: 2rem;
+            }
+            .text {
+                flex: 1 1 100%;
+                word-break: break-word;
+                word-wrap: break-word;
+            }
+        }
+        .summary {
+            flex-direction: row;
+            padding-top: 1rem;
+        }
+    }
+    .info.highlight, .step.highlight {
+        border-left: 2px solid #cf5f5f;
+        border-right: 2px solid transparent;
+    }
+    .heading, .summary, .steps {
+        color: rgba(0, 0, 0, 0.7);
+        flex: 0 1 100%;
+        display: flex;
+    }
+    .heading {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        padding-left: 0.5rem;
+    }
+    .summary {
+        padding-bottom: 1rem;
+        border-bottom: .1rem solid #edf3f5;
+        padding-left: 4.5rem;
+        flex-wrap: wrap;
+    }
+}

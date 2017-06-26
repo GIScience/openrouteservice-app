@@ -1,0 +1,201 @@
+@import 'variables.less';
+.cm-popup-option {
+    cursor: pointer;
+    padding: 5px 5px 0 5px;
+    &:hover {
+        background: @leafletPopupHighlight;
+    }
+}
+
+.leaflet-bar, .leaflet-bar a:last-child, .leaflet-bar a:first-child, .leaflet-control-layers, .heightgraph-toggle-icon {
+    /* For general elements on map */
+    border-radius: 0px;
+    background-color: @leafletControlsBg;
+}
+
+div.leaflet-control-measure.leaflet-control {
+    border: 2px solid rgba(0, 0, 0, 0.2) !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+    background-color: @leafletControlsBg;
+}
+
+.leaflet-measure-resultpopup .leaflet-popup-content-wrapper {
+    padding: 7px;
+}
+
+.leaflet-control a, .leaflet-control-layers-toggle {
+    width: 30px !important;
+    height: 30px;
+    color: @leafletControlColor;
+}
+
+.leaflet-control {
+    a:link, a:visited, a:hover {
+        text-decoration: none;
+        color: @leafletControlColor;
+        height: 30px !important;
+    }
+}
+
+.leaflet-popup-content {
+    margin: 5px 0 5px 0 !important;
+    line-height: 2 !important;
+}
+
+.leaflet-popup-tip {
+    border-radius: 50px;
+    box-shadow: @leafletPopupShadow;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 0px;
+    box-shadow: @leafletPopupShadow;
+}
+
+a.leaflet-control-layers-toggle, a.leaflet-avoid-area, div.leaflet-control-measure>a {
+    position: relative;
+    text-align: center;
+    background-image: none !important;
+    height: 30px !important;
+    color: @leafletControlColor;
+    text-indent: inherit !important;
+}
+
+div.leaflet-control-measure.leaflet-control>a:before {
+    content: "\f040";
+    font-family: @fa;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    padding-top: 5px;
+}
+
+a.leaflet-control-layers-toggle:before {
+    content: "\f278";
+    font-family: @fa;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    padding-top: 5px;
+}
+
+a.leaflet-avoid-area:before {
+    content: "\f248";
+    font-family: @fa;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+}
+
+.angular-control-leaflet {
+    cursor: pointer;
+}
+
+.ors-marker-start, .ors-marker-via, .ors-marker-end, .ors-marker-location, .ors-marker-highlight {
+    text-align: center;
+    line-height: 100%;
+}
+
+.ors-marker-start i, .ors-marker-via i, .ors-marker-end i, .ors-marker-location i {
+    width: 100%;
+    height: 100%;
+    font-size: 40px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: @whiteColor;
+}
+
+.ors-marker-highlight i {
+    width: 100%;
+    height: 100%;
+    font-size: 40px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: @whiteColor;
+    color: @markerHighlightColor;
+}
+
+.ors-marker-start i {
+    -webkit-text-fill-color: @markerStartColor;
+}
+
+.ors-marker-via i {
+    -webkit-text-fill-color: @markerViaColor;
+}
+
+.ors-marker-end i {
+    -webkit-text-fill-color: @markerEndColor;
+}
+
+.ors-marker-location i {
+    -webkit-text-fill-color: @blueColor;
+}
+
+.number-style {
+    border-radius: 50%;
+    margin-left: 13px !important;
+    margin-top: -35px !important;
+    height: 18px;
+    width: 18px;
+    position: absolute;
+    padding-top: 5px;
+    text-align: center;
+    z-index: 1;
+}
+
+.location-number-circle {
+    .number-style;
+    background-color: @blueColor;
+}
+
+.via-number-circle {
+    .number-style;
+    background-color: @markerViaColor;
+}
+
+.start-number-circle {
+    .number-style;
+    background-color: @markerStartColor;
+}
+
+.end-number-circle {
+    .number-style;
+    background-color: @markerEndColor;
+}
+
+.highlight-number-circle {
+    .number-style;
+    background-color: @markerHighlightColor;
+}
+
+.via-number-text {
+    font-size: 10px;
+    font-family: @fontArial;
+}
+
+.textLabel-common {
+    white-space: nowrap;
+    font-weight: 400;
+    pointer-events: none !important;
+    color: @whiteColor;
+    font-size: 9px;
+    background-color: @textLabelIsochronesBg;
+    text-align: center;
+    border-radius: 50%;
+    padding-top: 2px;
+}
+
+.textLabelclass-isochrones {
+    .textLabel-common;
+}
+
+.textLabelclass {
+    .textLabel-common;
+    margin-left: 5px !important;
+    margin-top: -50px !important;
+}
+
+.textLabelclass-onedigit {
+    .textLabel-common;
+    margin-left: 5px !important;
+    margin-top: -50px !important;
+}

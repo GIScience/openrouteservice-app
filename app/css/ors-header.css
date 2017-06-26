@@ -1,47 +1,42 @@
 /** header styles */
-
 .ors-header {
-    display: flex;
-    flex: 0 0 40px;
-    z-index: 2;
+  display: flex;
+  flex: 0 0 40px;
+  z-index: 2;
 }
-
-.ors-header ul {
-    width: 100%;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    background-color: #cf5f5f;
-}
-
-.ors-header li {
-    float: right;
-}
-
-.ors-header li a {
-    display: block;
-    color: rgba(255, 255, 255, 0.75);
-    text-align: center;
-    padding: 12px 16px;
-    text-decoration: none;
-}
-
 .ors-header .brand {
-    letter-spacing: 1px;
+  letter-spacing: 1px;
 }
-
+.ors-header ul {
+  width: 100%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #cf5f5f;
+}
+.ors-header li {
+  float: right;
+}
+.ors-header li a {
+  display: block;
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+  padding: 12px 16px;
+  text-decoration: none;
+}
+.ors-header li a:hover {
+  color: #FFF;
+}
 .ors-header li div {
-    color: rgba(255, 255, 255, 0.75);
-    text-align: left;
-    padding: 13px 16px;
+  color: rgba(255, 255, 255, 0.75);
+  text-align: left;
+  padding: 13px 16px;
 }
-
-.ors-header li div:hover, .ors-header li a:hover {
-    color: #FFF;
+.ors-header li div:hover {
+  color: #FFF;
 }
-
 .ui.dropdown .menu {
-    left: auto;
-    right: 10px;
-    margin-top: -7px;
+  left: auto;
+  right: 10px;
+  margin-top: -7px;
 }

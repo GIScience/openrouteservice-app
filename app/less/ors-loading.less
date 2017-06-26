@@ -1,0 +1,40 @@
+div.ors-app-loading {
+    position: fixed;
+    z-index: 999;
+}
+
+div.ors-app-loading div.animated-container {
+    background-color: #FFF;
+    bottom: 0px;
+    left: 0px;
+    opacity: 1.0;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+}
+
+
+/* Used to initialize the ng-leave animation state. */
+
+div.ors-app-loading div.animated-container.ng-leave {
+    opacity: 1.0;
+    transition: all linear 100ms;
+    -webkit-transition: all linear 100ms;
+}
+
+
+/* Used to set the end properties of the ng-leave animation state. */
+
+div.ors-app-loading div.animated-container.ng-leave-active {
+    opacity: 0;
+}
+
+div.ors-app-loading div.messaging {
+    color: #444;
+    left: 0px;
+    margin-top: -37px;
+    position: absolute;
+    right: 0px;
+    text-align: center;
+    top: 50%;
+}

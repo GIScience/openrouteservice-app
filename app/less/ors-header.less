@@ -1,0 +1,46 @@
+/** header styles */
+
+.ors-header {
+    display: flex;
+    flex: 0 0 40px;
+    z-index: 2;
+    .brand {
+        letter-spacing: 1px;
+    }
+    ul {
+        width: 100%;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        background-color: #cf5f5f;
+    }
+    li {
+        float: right;
+        a {
+            display: block;
+            color: rgba(255, 255, 255, 0.75);
+            text-align: center;
+            padding: 12px 16px;
+            text-decoration: none;
+            &:hover {
+                color: #FFF;
+            }
+        }
+        div {
+            color: rgba(255, 255, 255, 0.75);
+            text-align: left;
+            padding: 13px 16px;
+            &:hover {
+                color: #FFF;
+            }
+        }
+    }
+}
+
+.ui.dropdown {
+    .menu {
+        left: auto;
+        right: 10px;
+        margin-top: -7px;
+    }
+}

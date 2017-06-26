@@ -26,8 +26,9 @@ module.exports = function(grunt) {
             options: {
                 livereload: true,
             },
-            css: {
-                files: ['app/css/**/*.css'],
+            less: {
+                files: ['app/less/**/*.less'],
+                tasks: ['less:development']
             },
             js: {
                 files: ['app/**/*.js']
@@ -277,19 +278,22 @@ module.exports = function(grunt) {
         less: {
             development: {
                 files: {
-                    "src/css/themes/lime.css": "src/css/themes/lime.less",
-                    "src/css/themes/purple.css": "src/css/themes/purple.less",
-                    "src/css/themes/steelblue.css": "src/css/themes/steelblue.less"
-                }
-            },
-            production: {
-                options: {
-                    yuicompress: true
-                },
-                files: {
-                    "tmp/css/themes/lime.min.css": "src/css/themes/lime.less",
-                    "tmp/css/themes/purple.min.css": "src/css/themes/purple.less",
-                    "tmp/css/themes/steelblue.min.css": "src/css/themes/steelblue.less"
+                    "app/css/ors-layout.css": "app/less/ors-layout.less",
+                    "app/css/ors-leaflet.css": "app/less/ors-leaflet.less",
+                    "app/css/ors-common.css": "app/less/ors-common.less",
+                    "app/css/ors-header.css": "app/less/ors-header.less",
+                    "app/css/ors-error.css": "app/less/ors-error.less",
+                    "app/css/ors-icons.css": "app/less/ors-icons.less",
+                    "app/css/ors-instructions.css": "app/less/ors-instructions.less",
+                    "app/css/ors-loading.css": "app/less/ors-loading.less",
+                    "app/css/ors-modal.css": "app/less/ors-modal.less",
+                    "app/css/ors-locations.css": "app/less/ors-locations.less",
+                    "app/css/ors-extras.css": "app/less/ors-extras.less",
+                    "app/css/ors-nav-profiles.css": "app/less/ors-nav-profiles.less",
+                    "app/css/ors-panel-isochrones.css": "app/less/ors-panel-isochrones.less",
+                    "app/css/ors-panel-routing.css": "app/less/ors-panel-routing.less",
+                    "app/css/ors-sidebar-outlet.css": "app/less/ors-sidebar-outlet.less",
+                    "app/css/ors-tooltips.css": "app/less/ors-tooltips.less"
                 }
             }
         },
@@ -388,7 +392,7 @@ module.exports = function(grunt) {
     // ]);
     grunt.registerTask('test', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'clean:task_rm_build', 'copy:build', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cachebreaker']);
     grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:production', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cachebreaker', 'connect:build:keepalive']);
-    grunt.registerTask('serve', 'Run local server', ['browserify:turf', 'ngtemplates', 'ngconstant:development', 'connect:dev', 'watch']);
+    grunt.registerTask('serve', 'Run local server', ['less:development', 'browserify:turf', 'ngtemplates', 'ngconstant:development', 'connect:dev', 'watch']);
     grunt.registerTask('buildlabs', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'clean:task_rm_build', 'copy:build', 'ngconstant:labs', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:labs', 'clean:task_rm_build_unused', 'stripDebug', 'cachebreaker', 'connect:build:keepalive']);
     grunt.registerTask('servelabs', 'Run local server', ['browserify:turf', 'ngconstant:labs', 'connect:dev', 'watch']);
 };

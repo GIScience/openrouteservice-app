@@ -1,60 +1,51 @@
 /** sidebar which contains navigation and routing */
-
 .ors-sidebar {
-    flex: 1 1 388px;
-    min-height: 0;
-    /* needed for FF */
-    -webkit-box-flex: 1 1 388px;
-    -webkit-flex: 1 1 388px;
-    -ms-flex: 1 1 388px;
-    box-sizing: border-box;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
+  flex: 1 1 388px;
+  min-height: 0;
+  /* needed for FF */
+  -webkit-box-flex: 1 1 388px;
+  -webkit-flex: 1 1 388px;
+  -ms-flex: 1 1 388px;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
 }
-
-
 /** navigation for isochrones or routing */
-
 .ors-navigation {
-    border-right: 1px solid #CCC;
-    background-color: #F0F0F0;
-    flex: 0 0 44px;
-    -overflow-y: auto;
+  border-right: 1px solid #CCC;
+  background-color: #F0F0F0;
+  flex: 0 0 44px;
+  -overflow-y: auto;
 }
-
-
 /** outlet which is either analysis or routing */
-
 .ors-outlet {
-    display: flex;
+  display: flex;
 }
-
-
 /** inside outlet */
-
-ors-route, ors-analysis {
-    /* -webkit-box-flex: 1;
+ors-route,
+ors-analysis {
+  /* -webkit-box-flex: 1;
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1;*/
-    box-sizing: border-box;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    width: 344px;
-    -overflow-x: hidden;
-    /* otherwise y-scrollbar will cause x-scrollbar */
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 344px;
+  -overflow-x: hidden;
+  /* otherwise y-scrollbar will cause x-scrollbar */
 }
