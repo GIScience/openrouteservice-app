@@ -4,7 +4,8 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         orsMap: '<',
         orsParams: '<',
         activeProfile: '<',
-        activeSubgroup: '<'
+        activeSubgroup: '<',
+        currentOptions: '<'
     },
     controller: ['$scope', 'orsSettingsFactory', 'orsAaService', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', function($scope, orsSettingsFactory, orsAaService, orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService) {
         let ctrl = this;
@@ -14,6 +15,7 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
                 ctrl.waypoints = orsSettingsFactory.initWaypoints(1);
             }
             ctrl.showAdd = true;
+            console.log(ctrl.currentOptions);
         };
         // subscribes to changes in waypoints, this doesnt have to be added though, why?
         // orsSettingsFactory.subscribeToAaWaypoints(function onNext(d) {
@@ -66,6 +68,7 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         };
         ctrl.calculate = function() {
             console.log(ctrl.currentOptions);
+
             orsSettingsFactory.setActiveOptions(ctrl.currentOptions, true);
         };
     }]

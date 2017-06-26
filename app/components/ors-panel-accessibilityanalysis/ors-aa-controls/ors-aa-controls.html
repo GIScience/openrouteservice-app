@@ -1,7 +1,26 @@
-<div class="ors-aa-controls textcenter">
-	<button tooltips tooltip-template="{{('CALCULATE' | translate)}}" tooltip-side="top" class="ors-controls-button" ng-click="$ctrl.calculate()">
-        <i class="fa fa-lg fa-bullseye">
-        </i>
-    </button>
-    <ors-loading style="position: absolute; margin-top: -9px"></ors-loading>
+<div class="ors-aa-controls">
+    <div>
+        <button class="ors-controls-button" ng-click="$ctrl.callOptions()" tooltip-side="top" tooltip-template="{{('OPTIONS' | translate)}}" tooltips="">
+            <i class="fa fa-sliders">
+            </i>
+        </button>
+    </div>
+    <div>
+        <button class="ors-controls-button" tooltip-side="top" tooltip-template="{{('CALCULATE' | translate)}}" tooltips="">
+        </button>
+    </div>
+    <div>
+        <button ng-class="{'tiny teal ui button': !$ctrl.disabled, 'tiny teal ui button loading': $ctrl.requesting, 'tiny teal ui button disabled': $ctrl.disabled}" ng-click="$ctrl.calculate()">
+            <i class="fa fa-bullseye">
+            </i>
+            <span ng-bind-html="('GENERATE_ISOCHRONES' | translate)">
+            </span>
+        </button>
+    </div>
+</div>
+<div class="container ors-aa-options" ng-show="$ctrl.showOptions">
+    <ors-aa-sliders active-subgroup="$ctrl.activeSubgroup" current-options="$ctrl.currentOptions">
+    </ors-aa-sliders>
+    <ors-options active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup">
+    </ors-options>
 </div>
