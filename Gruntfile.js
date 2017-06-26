@@ -34,7 +34,8 @@ module.exports = function(grunt) {
                 files: ['app/**/*.js']
             },
             html: {
-                files: ['app/**/*.html']
+                files: ['app/**/*.html'],
+                tasks: ['ngtemplates']
             }
         },
         // Clean stuff up
