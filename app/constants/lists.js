@@ -652,5 +652,16 @@ angular.module('orsApp')
             address: '<i class="fa fa-address-card"></i>',
             website: '<i class="fa fa-globe"></i>',
             wheelchair: '<i class="fa fa-wheelchair-alt"></i>'
+        },
+        measure_locale: {
+        	'de-DE': 'de',
+        	'en-US': 'en',
+        	'en-GB': 'en_UK',
+        	'zh-CN': 'cn',
+        	'pt-PT': 'pt_PT',
+        	'es-ES': 'es',
+        	'ru-RU': 'ru',
+        	'fr-FR': 'fr',
+        	'pl-PL': 'pl'
         }
     });

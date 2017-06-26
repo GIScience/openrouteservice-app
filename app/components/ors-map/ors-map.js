@@ -108,8 +108,7 @@ angular.module('orsApp')
                 orsSettingsFactory.userOptionsSubject.subscribe(settings => {
                     if (settings.language) {
                         $scope.mapModel.map.removeControl($scope.measureControl);
-                        // TODO Amandus
-                        measureControlOptions.localization = settings.language.substr(0, 2);
+                        measureControlOptions.localization = lists.measure_locale[settings.language];
                         $scope.measureControl = L.control.measure(measureControlOptions)
                             .addTo($scope.mapModel.map);
                         const el = angular.element(document.querySelector('.js-toggle'))
