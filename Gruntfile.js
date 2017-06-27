@@ -264,15 +264,14 @@ module.exports = function(grunt) {
                 }
             }
         },
-        // Append a timestamp to 'all.min.js' & 'core.min.js' which are both located in 'index.html'
-        cachebreaker: {
-            dev: {
+        cacheBust: {
+            taskName: {
                 options: {
-                    match: ['scripts.js', 'main.css', 'vendor.js', 'vendor.css'],
+                    assets: ['scripts.js', 'vendor.js', 'main.css', 'vendor.css'],
+                    baseDir: './build',
+                    deleteOriginals: true
                 },
-                files: {
-                    src: ['build/index.html']
-                }
+                src: ['./build/index.html']
             }
         },
         // TODO
@@ -352,7 +351,7 @@ module.exports = function(grunt) {
         //     }
         // }
     });
-    grunt.loadNpmTasks('grunt-cache-breaker');
+    grunt.loadNpmTasks('grunt-cache-bust');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-htmlhint');
     grunt.loadNpmTasks("grunt-contrib-copy");
@@ -391,9 +390,9 @@ module.exports = function(grunt) {
     //   'usemin',
     //   'htmlmin'
     // ]);
-    grunt.registerTask('test', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'clean:task_rm_build', 'copy:build', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cachebreaker']);
-    grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:production', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cachebreaker', 'connect:build:keepalive']);
+    grunt.registerTask('test', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'clean:task_rm_build', 'copy:build', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust']);
+    grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:production', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
     grunt.registerTask('serve', 'Run local server', ['less:development', 'browserify:turf', 'ngtemplates', 'ngconstant:development', 'connect:dev', 'watch']);
-    grunt.registerTask('buildlabs', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'clean:task_rm_build', 'copy:build', 'ngconstant:labs', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:labs', 'clean:task_rm_build_unused', 'stripDebug', 'cachebreaker', 'connect:build:keepalive']);
+    grunt.registerTask('buildlabs', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'clean:task_rm_build', 'copy:build', 'ngconstant:labs', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:labs', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
     grunt.registerTask('servelabs', 'Run local server', ['browserify:turf', 'ngconstant:labs', 'connect:dev', 'watch']);
 };
