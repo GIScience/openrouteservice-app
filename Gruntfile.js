@@ -372,25 +372,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-strip-debug');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-angular-templates');
-    // Clean the .git/hooks/pre-commit file then copy in the latest version 
-    //grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['clean:task_rm_build', 'copy:build', 'removelogging', 'preprocess', 'traceur', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'usemin', 'clean:task_rm_build_unused']);
-    //   grunt.registerTask('build', [
-    //   'clean:dist',
-    //   'traceur',
-    //   'useminPrepare',
-    //   'concurrent:dist',
-    //   'autoprefixer',
-    //   'concat',
-    //   'ngAnnotate',
-    //   'copy:dist',
-    //   'cdnify',
-    //   'cssmin',
-    //   'uglify',
-    //   'filerev',
-    //   'usemin',
-    //   'htmlmin'
-    // ]);
-    grunt.registerTask('test', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'clean:task_rm_build', 'copy:build', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust']);
+    grunt.registerTask('staging', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:development', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
     grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:production', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
     grunt.registerTask('serve', 'Run local server', ['less:development', 'browserify:turf', 'ngtemplates', 'ngconstant:development', 'connect:dev', 'watch']);
     grunt.registerTask('buildlabs', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'clean:task_rm_build', 'copy:build', 'ngconstant:labs', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:labs', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
