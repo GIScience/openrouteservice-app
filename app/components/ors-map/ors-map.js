@@ -45,6 +45,7 @@ angular.module('orsApp')
                     layerRouteNumberedMarkers: L.featureGroup(),
                     layerRouteExtras: L.featureGroup(),
                     layerLocations: L.featureGroup(),
+                    layerTmcMarker: L.featureGroup()
                 };
                 $scope.mapModel = {
                     map: $scope.orsMap,
@@ -275,6 +276,7 @@ angular.module('orsApp')
                     orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), userOptions);
                 };
                 $scope.processMapWaypoint = (idx, pos, updateWp = false, fireRequest = true) => {
+                    console.error(pos)
                     // add waypoint to map
                     // get the address from the response
                     if (updateWp) {
@@ -665,6 +667,7 @@ angular.module('orsApp')
                 $scope.showHereMessage = (pos) => {
                     $scope.mapModel.map.closePopup();
                     const lngLatString = orsUtilsService.parseLngLatString(pos);
+                    const latLngString = orsUtilsService.parseLatLngString(pos);
                     // get the information of the rightclick location 
                     const payload = orsUtilsService.geocodingPayload(lngLatString, true);
                     const request = orsRequestService.geocode(payload);
@@ -676,7 +679,7 @@ angular.module('orsApp')
                         } else {
                             $scope.address.info = $scope.translateFilter('NO_ADDRESS');
                         }
-                        $scope.address.position = lngLatString;
+                        $scope.address.position = latLngString;
                         $scope.mapModel.map.addControl($scope.hereControl);
                     }, (response) => {
                         orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);

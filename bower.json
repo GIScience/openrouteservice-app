@@ -1,7 +1,7 @@
 {
   "name": "openrouteservice.org",
   "description": "angular version of openrouteservice.org",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "homepage": "http://www.uni-heidelberg.de",
   "license": "MIT",
   "private": true,
