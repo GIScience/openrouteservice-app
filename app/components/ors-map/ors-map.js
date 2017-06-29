@@ -52,6 +52,12 @@ angular.module('orsApp')
                     geofeatures: $scope.geofeatures
                 };
                 $scope.mapModel.map.createPane('isochronesPane');
+                $scope.locateControl = L.control.locate({
+                        locateOptions: {
+                            enableHighAccuracy: true
+                        }
+                    })
+                    .addTo($scope.mapModel.map);
                 /* HEIGHTGRAPH CONTROLLER */
                 $scope.hg = L.control.heightgraph({
                     width: 800,
@@ -668,7 +674,7 @@ angular.module('orsApp')
                     $scope.mapModel.map.closePopup();
                     const lngLatString = orsUtilsService.parseLngLatString(pos);
                     const latLngString = orsUtilsService.parseLatLngString(pos);
-                    // get the information of the rightclick location 
+                    // get the information of the rightclick    location 
                     const payload = orsUtilsService.geocodingPayload(lngLatString, true);
                     const request = orsRequestService.geocode(payload);
                     request.promise.then((data) => {

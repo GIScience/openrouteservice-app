@@ -27,7 +27,8 @@
     "leaflet.editable": "^1.0.0",
     "leaflet.markercluster": "^1.0.3",
     "leaflet.heightgraph": "*",
-    "leaflet-measure": "^2.1.7"
+    "leaflet-measure": "^2.1.7",
+    "leaflet.locatecontrol": "^0.62.0"
   },
   "resolutions": {
     "angular": "~1.5.10"
