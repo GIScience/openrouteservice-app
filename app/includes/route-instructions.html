@@ -58,7 +58,7 @@
                             <i class="fa fa-lastfm">
                             </i>
                         </span>
-                        <span ng-bind-html="segment.detour_factor">
+                        <span ng-bind-html="(route.summary.distance  / (segment.detour_factor * route.summary.distance) | number: 1 )">
                         </span>
                     </div>
                     <div class="summary-item" ng-if="segment.percentage" tooltip-side="top" tooltip-template="{{('PERCENTAGE_OF_ROUTE' | translate)}}" tooltips="">
