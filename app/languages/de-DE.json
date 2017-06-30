@@ -160,5 +160,7 @@
     "INFO_III": "Falls Sie weitere Fragen, Anliegen oder Feedback für uns haben, kontaktieren Sie uns bitte per E-Mail:", 
     "INFO_IV": "OpenRouteService nimmt sich Zeit für Ihre Anfragen, Probleme, Fragen etc. Wir legen großen Wert darauf Ihnen so schnell wie möglich zu antworten. Nachdem Sie unsere automatische E-Mail erhalten die Ihnen bestätigt, dass wir Ihre Anfrage erhalten haben, werden wir uns bald mit Ihnen in Verbindung setzen. Bitte geben Sie uns etwas Zeit ihre Anfrage zu bearbeiten, da wir sehr viele Anfragen erhalten.", 
     "ADD_EXTRAS": "Add to map",
-    "GENERATE_ISOCHRONES": "Isochronen generieren"
+    "GENERATE_ISOCHRONES": "Isochronen generieren",
+    "DETOUR_FACTOR" : "Umwegfaktor",
+    "PERCENTAGE_OF_ROUTE": "Anteil der Gesamtstrecke"
 }

@@ -159,6 +159,7 @@ angular.module('orsApp.utils-service', [])
                 instructions: true,
                 geometry: true,
                 units: 'm',
+                attributes: 'detourfactor|percentage',
                 instructions_format: 'html',
                 elevation: lists.profiles[settings.profile.type].elevation,
                 options: JSON.stringify(orsUtilsService.generateOptions(settings))

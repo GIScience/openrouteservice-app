@@ -11,7 +11,10 @@ ors-instructions {
     overflow-x: hidden;
 }
 
-.ors-instructions-summary, .ors-analysis-settings {
+
+
+
+.ors-instructions-summary {
     flex: 0 0 auto;
 }
 
@@ -114,9 +117,16 @@ ors-instructions {
         padding-left: 0.5rem;
     }
     .summary {
+        display: flex;
+        flex-direction: column;
         padding-bottom: 1rem;
         border-bottom: .1rem solid #edf3f5;
         padding-left: 4.5rem;
-        flex-wrap: wrap;
+        .group {
+            display: flex;
+            flex-direction: row;
+                    flex-wrap: wrap;
+            
+        }
     }
 }
