@@ -54,7 +54,11 @@ angular.module('orsApp')
                 $scope.mapModel.map.createPane('isochronesPane');
                 $scope.locateControl = L.control.locate({
                         locateOptions: {
-                            enableHighAccuracy: true
+                            enableHighAccuracy: true,
+                            showPopup: false,
+                            strings: {
+                                title: ""
+                            }
                         }
                     })
                     .addTo($scope.mapModel.map);

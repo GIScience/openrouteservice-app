@@ -1,22 +1,20 @@
-<div class="ors-wp-table">
-    <div class="ors-wp-tr">
-        <div class="ors-wp-td left" ng-mouseout="$ctrl.deEmph()" ng-mouseover="$ctrl.emph()" style="width: 30px;">
-            <i aria-hidden="true" class="fa fa-ellipsis-v">
-            </i>
-            <span ng-bind-html="$ctrl.getIdx()">
-            </span>
-        </div>
-        <div class="ors-wp-td right">
-            <div class="ui right labeled fluid input ors-input" ng-mouseout="hoverInput=false;" ng-mouseover="hoverInput=true;">
-                <input ng-change="$ctrl.addressChanged()" ng-click="$ctrl.checkForAddresses()" ng-model="$ctrl.waypoint._address" ng-model-options="{debounce: 1000}" placeholder="{{$ctrl.getPlaceholder()}}" select-on-click="" type="text">
-                    <div class="ui basic label ors-input-label">
-                        <button class="tiny ui basic button ors-control-button" ng-class="{show: hoverInput}" ng-click="$ctrl.delete()">
-                            <i class="fa fa-remove">
-                            </i>
-                        </button>
-                    </div>
-                </input>
-            </div>
+<div class="ors-wp-item">
+    <div class="wp-idx" ng-mouseout="$ctrl.deEmph()" ng-mouseover="$ctrl.emph()">
+        <i aria-hidden="true" class="fa fa-ellipsis-v">
+        </i>
+        <span ng-bind-html="$ctrl.getIdx()">
+        </span>
+    </div>
+    <div class="wp-input">
+        <div class="ui right labeled fluid input" ng-mouseout="hoverInput=false;" ng-mouseover="hoverInput=true;">
+            <input ng-change="$ctrl.addressChanged()" ng-click="$ctrl.checkForAddresses()" ng-model="$ctrl.waypoint._address" ng-model-options="{debounce: 1000}" placeholder="{{$ctrl.getPlaceholder()}}" select-on-click="" type="text">
+                <div class="ui basic label wp-input-label">
+                    <button class="tiny ui basic button ors-control-button" ng-class="{show: hoverInput}" ng-click="$ctrl.delete()">
+                        <i class="fa fa-remove">
+                        </i>
+                    </button>
+                </div>
+            </input>
         </div>
     </div>
 </div>
