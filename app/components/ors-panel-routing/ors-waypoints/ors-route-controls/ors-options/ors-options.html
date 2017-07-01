@@ -213,7 +213,7 @@
         </span>
     </div>
     <div class="collapsable" ng-class="{ showMe: additionalOptions }">
-        <div class="ors-options-menu" ng-show="$ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Pedestrian'">
+        <div class="ors-options-menu" ng-show="$ctrl.activeSubgroup == 'Pedestrian'">
             <div class="ui checkbox">
                 <input id="greenrouting" name="orsRouteGreenRoutingInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.green" type="checkbox">
                     <label for="greenrouting" ng-bind-html="('GREEN_ROUTING' | translate)">

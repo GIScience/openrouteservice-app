@@ -23,7 +23,7 @@
     </div>
     <ors-loading>
     </ors-loading>
-    <div ng-include="'includes/route-summary.html'">
+    <div ng-if="!$ctrl.isLoading" ng-include="'includes/route-summary.html'">
     </div>
     <div class="options-box" ng-if="$ctrl.route.extras">
         <div class="pointer margin-bottom-6" ng-click="showRouteExtras = !showRouteExtras">
@@ -40,7 +40,7 @@
     <div class="bottom-border" ng-if="$ctrl.route.extras">
     </div>
 </div>
-<div class="ors-instructions-inner" >
+<div class="ors-instructions-inner" ng-if="!$ctrl.isLoading">
     <div ng-include="'includes/route-instructions.html'">
     </div>
 </div>

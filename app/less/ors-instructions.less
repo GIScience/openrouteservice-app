@@ -11,9 +11,6 @@ ors-instructions {
     overflow-x: hidden;
 }
 
-
-
-
 .ors-instructions-summary {
     flex: 0 0 auto;
 }
@@ -60,7 +57,7 @@ ors-instructions {
         padding: 0 .5rem;
     }
     .steps {
-        margin-right: 20px;
+        -margin-right: 20px;
     }
     .info {
         .heading {
@@ -78,7 +75,7 @@ ors-instructions {
         border-left: 2px solid transparent;
         border-right: 2px solid transparent;
         width: 100%;
-        margin-right: 20px;
+        -margin-right: 20px;
     }
     .step {
         width: 100%;
@@ -125,8 +122,10 @@ ors-instructions {
         .group {
             display: flex;
             flex-direction: row;
-                    flex-wrap: wrap;
-            
+            flex-wrap: wrap;
+            i {
+                color: #767676;
+            }
         }
     }
 }

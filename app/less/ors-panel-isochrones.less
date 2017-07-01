@@ -1,14 +1,18 @@
 .ors-analysis-settings {
-    flex: 0 0 auto;
+    flex: 0 1 auto;
 }
 
 .ors-aa-controls {
-    height: 39px;
-    width: 340px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding-right: 10px;
+    div {
+        &:last-child {
+            margin-left: auto;
+        }
+    }
 }
 
 .ors-aa-options {
@@ -20,6 +24,10 @@
     margin: 10px;
     padding: 10px;
     border-radius: 5px;
+}
+
+.aa-input {
+    width: 340px;
 }
 
 .ors-aa-query {
