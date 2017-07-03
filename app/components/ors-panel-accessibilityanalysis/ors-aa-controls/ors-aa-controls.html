@@ -6,10 +6,6 @@
         </button>
     </div>
     <div>
-        <button class="ors-controls-button" tooltip-side="top" tooltip-template="{{('CALCULATE' | translate)}}" tooltips="">
-        </button>
-    </div>
-    <div>
         <button ng-class="{'tiny teal ui button': !$ctrl.disabled, 'tiny teal ui button loading': $ctrl.requesting, 'tiny teal ui button disabled': $ctrl.disabled}" ng-click="$ctrl.calculate()">
             <i class="fa fa-bullseye">
             </i>

@@ -45,6 +45,7 @@ angular.module('orsApp')
                     layerRouteNumberedMarkers: L.featureGroup(),
                     layerRouteExtras: L.featureGroup(),
                     layerLocations: L.featureGroup(),
+                    layerRouteDrag: L.featureGroup(),
                 };
                 $scope.mapModel = {
                     map: $scope.orsMap,
@@ -200,6 +201,7 @@ angular.module('orsApp')
                     $scope.mapModel.geofeatures.layerTracks.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerRouteExtras.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerLocations.addTo($scope.mapModel.map);
+                    $scope.mapModel.geofeatures.layerRouteDrag.addTo($scope.mapModel.map);
                     // add layer control
                     $scope.layerControls = L.control.layers($scope.baseLayers, $scope.overlays)
                         .addTo($scope.mapModel.map);
@@ -504,10 +506,14 @@ angular.module('orsApp')
                  */
                 $scope.addFeatures = (actionPackage) => {
                     let polyLine = L.polyline(actionPackage.geometry, {
-                            index: !(actionPackage.featureId === undefined) ? actionPackage.featureId : null
+                            index: !(actionPackage.featureId === undefined) ? actionPackage.featureId : null ,
+                            interactive: true
                         })
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     polyLine.setStyle(actionPackage.style);
+                    polyLine.on("mouseover", (event) => {
+                            console.log("hover")
+                        });
                 };
                 /**
                  * adds numbered marker if not yet added 
