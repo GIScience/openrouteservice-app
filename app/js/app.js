@@ -119,8 +119,8 @@
                 'tooltipTemplateUrlCache': true
             });
         }])
-        .config(['$translateProvider', '$windowProvider', /* 'storageFactory',*/
-            function($translateProvider, $windowProvider /*, storageFactory*/ ) {
+        .config(['$translateProvider', '$windowProvider', 'lists', /* 'storageFactory',*/
+            function($translateProvider, $windowProvider, lists /*, storageFactory*/ ) {
                 var $window = $windowProvider.$get();
                 $translateProvider.useSanitizeValueStrategy('sanitizeParameters');
                 //get the translations local folder
@@ -130,6 +130,9 @@
                 });
                 // set the preferred language (default language)
                 $translateProvider.preferredLanguage('en-US');
+                $translateProvider.registerAvailableLanguageKeys(lists.userOptions.languages.all);
+
+              
             }
         ])
         .controller('RootController', function(orsSettingsFactory, orsObjectsFactory, orsMapFactory, $route, $interval, $http) {
