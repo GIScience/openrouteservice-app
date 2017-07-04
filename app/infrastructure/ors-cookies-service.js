@@ -3,7 +3,7 @@ angular.module('orsApp.cookies-service', ['ngCookies'])
         let orsCookiesFactory = {};
         orsCookiesFactory.getCookies = () => {
             let routinglang, language, units;
-            const cookieUserOptions = $cookies.getObject('userOptions');
+            let cookieUserOptions = $cookies.getObject('userOptions') ? $cookies.getObject('userOptions') : {};
             console.warn(cookieUserOptions)
             if ('language' in cookieUserOptions) {
                 language = cookieUserOptions.language;
@@ -20,12 +20,12 @@ angular.module('orsApp.cookies-service', ['ngCookies'])
             if ('routinglang' in cookieUserOptions) {
                 routinglang = cookieUserOptions.routinglang;
             } else {
-                routinglang = lists.optionList.routinglanguages.default;
+                routinglang = lists.userOptions.routinglanguages.default;
             }
             if ('units' in cookieUserOptions) {
                 units = cookieUserOptions.units;
             } else {
-                units = lists.optionList.units.default;
+                units = lists.userOptions.units.default;
             }
             let currentUserOptions = {
                 language: language,
