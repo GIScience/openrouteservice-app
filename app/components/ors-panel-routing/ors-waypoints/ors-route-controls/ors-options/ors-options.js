@@ -12,7 +12,6 @@ angular.module('orsApp.ors-options', [])
             ctrl.$onInit = () => {
                 /** This is a reference of the settings object, if we change here, it is updated in settings */
                 ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
-                console.log(ctrl.currentOptions)
                 // preference/weight is only considered for routing panel
                 if (ctrl.routing) ctrl.currentOptions.weight = ctrl.currentOptions.weight !== undefined ? ctrl.currentOptions.weight : ctrl.optionList.weight.Fastest.value;
                 ctrl.weightSlider = {
@@ -73,6 +72,64 @@ angular.module('orsApp.ors-options', [])
                     }
                 };
                 ctrl.toggleMaxspeedSlider(false);
+                ctrl.greenActive = false;
+                ctrl.toggleGreenSlider = (fireRequest = true) => {
+                    if (ctrl.greenActive === true) {
+                        ctrl.greenSlider.options.disabled = false;
+                        ctrl.currentOptions.green = ctrl.greenSlider.value;
+                    } else if (ctrl.greenActive === false) {
+                        ctrl.greenSlider.options.disabled = true;
+                        delete ctrl.currentOptions.green;
+                    }
+                    ctrl.refreshSlider();
+                    if (fireRequest) ctrl.changeOptions();
+                };
+                ctrl.greenSlider = {
+                    value: ctrl.optionList.green.min,
+                    options: {
+                        floor: ctrl.optionList.green.min,
+                        ceil: ctrl.optionList.green.max,
+                        step: 0.2,
+                        precision: 1,
+                        translate: (value) => {
+                            return value * 10 + '/10 <b>score</b>';
+                        },
+                        onEnd: () => {
+                            ctrl.currentOptions.green = ctrl.greenSlider.value;
+                            ctrl.changeOptions();
+                        }
+                    }
+                };
+                ctrl.toggleGreenSlider(false);
+                ctrl.quietActive = false;
+                ctrl.toggleQuietSlider = (fireRequest = true) => {
+                    if (ctrl.quietActive === true) {
+                        ctrl.quietSlider.options.disabled = false;
+                        ctrl.currentOptions.quiet = ctrl.quietSlider.value;
+                    } else if (ctrl.quietActive === false) {
+                        ctrl.quietSlider.options.disabled = true;
+                        delete ctrl.currentOptions.quiet;
+                    }
+                    ctrl.refreshSlider();
+                    if (fireRequest) ctrl.changeOptions();
+                };
+                ctrl.quietSlider = {
+                    value: ctrl.optionList.quiet.min,
+                    options: {
+                        floor: ctrl.optionList.quiet.min,
+                        ceil: ctrl.optionList.quiet.max,
+                        step: 0.2,
+                        precision: 1,
+                        translate: (value) => {
+                            return value * 10 + '/10 <b>score</b>';
+                        },
+                        onEnd: () => {
+                            ctrl.currentOptions.quiet = ctrl.quietSlider.value;
+                            ctrl.changeOptions();
+                        }
+                    }
+                };
+                ctrl.toggleQuietSlider(false);
                 // set hgv options from params
                 ctrl.toggleHgvOptSlider = (name, fireRequest = true) => {
                     console.log(name)
@@ -152,7 +209,6 @@ angular.module('orsApp.ors-options', [])
                 };
                 // check if params contain hgv settings within range
                 angular.forEach(hgvParamsInit, (val, key) => {
-
                     if (ctrl.currentOptions[key] >= ctrl.optionList.hgvParams[key].min && ctrl.currentOptions[key] <= ctrl.optionList.hgvParams[key].max) {
                         console.log(ctrl.currentOptions[key])
                         hgvParamsInit[key].val = ctrl.currentOptions[key];

@@ -179,13 +179,11 @@ angular.module('orsApp.utils-service', [])
             }
             payload.coordinates = payload.coordinates.slice(0, -1);
             // extras
-            if (lists.profiles[settings.profile.type].green === true) {
-                payload.extra_info = 'surface|waytype|suitability|steepness|green';
-            } else if (lists.profiles[settings.profile.type].elevation === true) {
-                payload.extra_info = 'surface|waytype|suitability|steepness';
-            } else {
-                payload.extra_info = 'surface|waytype|suitability';
+            payload.extra_info = [];
+            for (let extra in lists.profiles[settings.profile.type].extras) {
+                payload.extra_info.push(extra);
             }
+            payload.extra_info = payload.extra_info.join("|");
             return payload;
         };
         /** 
@@ -258,9 +256,13 @@ angular.module('orsApp.utils-service', [])
                 }
             }
             if (subgroup == 'Pedestrian') {
-                console.log(settings.profile.options)
                 if (settings.profile.options.green) {
-                    options.profile_params.green_routing = settings.profile.options.green;
+                    options.profile_params.green_routing = true;
+                    options.profile_params.green_factor = settings.profile.options.green;
+                }
+                if (settings.profile.options.quiet) {
+                    options.profile_params.quiet_routing = true;
+                    options.profile_params.quiet_factor = settings.profile.options.quiet;
                 }
             }
             // if avoid area polygon

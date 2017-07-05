@@ -153,6 +153,7 @@
     "SHORTEN": "Kurz-URL", 
     "SHORTEN_HINT": "Du kannst den Link auch aus der Adressleiste deines Browsers kopieren.", 
     "GREEN_ROUTING": "Grünfächen bevorzugen", 
+    "QUIET_ROUTING": "Ruhige Wege bevorzugen", 
     "DONATE": "Spenden Sie Daten!", 
     "DONATE_TEXT": "Helfen Sie mit und fügen Sie Ihre geographischen Daten hinzu auf", 
     "INFO_I": "OpenRouteService.org bietet Routing Services auf Basis nutzergenerierter, gemeinschaftlich erhobener, freier geographischer Daten von OpenStreetMap an. Bitte fügen Sie Ihre geographischen Daten auf openstreetmap.org hinzu!", 
