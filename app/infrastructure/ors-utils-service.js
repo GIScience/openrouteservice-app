@@ -258,11 +258,11 @@ angular.module('orsApp.utils-service', [])
             if (subgroup == 'Pedestrian') {
                 if (settings.profile.options.green) {
                     options.profile_params.green_routing = true;
-                    options.profile_params.green_factor = settings.profile.options.green;
+                    options.profile_params.green_weighting_factor = settings.profile.options.green;
                 }
                 if (settings.profile.options.quiet) {
                     options.profile_params.quiet_routing = true;
-                    options.profile_params.quiet_factor = settings.profile.options.quiet;
+                    options.profile_params.quiet_weighting_factor = settings.profile.options.quiet;
                 }
             }
             // if avoid area polygon
