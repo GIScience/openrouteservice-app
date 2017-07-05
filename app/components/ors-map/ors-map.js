@@ -506,14 +506,35 @@ angular.module('orsApp')
                  */
                 $scope.addFeatures = (actionPackage) => {
                     let polyLine = L.polyline(actionPackage.geometry, {
-                            index: !(actionPackage.featureId === undefined) ? actionPackage.featureId : null ,
+                            index: !(actionPackage.featureId === undefined) ? actionPackage.featureId : null,
                             interactive: true
                         })
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     polyLine.setStyle(actionPackage.style);
-                    polyLine.on("mouseover", (event) => {
+                    polyLine.on("mouseover", (e) => {
+                        $scope.mapModel.map.closePopup();
+                        $scope.displayPos = e.latlng;
+
+                        function addHoverPoint() {
                             console.log("hover")
+                        };
+                        $scope.dragText = $scope.translateFilter('DRAGTOADD');
+                        const popupDirective = '<div ng-bind-html="(\'DRAGTOADD\' | translate)"></div>';
+                        const popupContent = $compile(popupDirective)($scope);
+                        $scope.popup.setContent(popupContent[0])
+                            .setLatLng($scope.displayPos)
+                            .openOn($scope.mapModel.map);
+                        $timeout(function() {
+                            $scope.popup.update();
+                        }, 100);
+                        polyLine.on("mouseout", (e) => {
+                            $scope.mapModel.map.closePopup();
                         });
+                    });
+                    // add popup
+                    // add point on route
+                    // on click creat viapoint
+                    // on dragend set viapoint -> at right position in route
                 };
                 /**
                  * adds numbered marker if not yet added 
