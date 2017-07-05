@@ -206,36 +206,36 @@ angular.module('orsApp')
         },
         green: {
             '3': {
-                text: '10/10',
-                color: '#9acd32'
+                text: '3/10',
+                color: '#dcdc51'
             },
             '4': {
-                text: '9/10',
-                color: '#97c12c'
+                text: '4/10',
+                color: '#d1d84e'
             },
             '5': {
-                text: '8/10',
-                color: '#93b725'
+                text: '5/10',
+                color: '#c6d54a'
             },
             '6': {
-                text: '7/10',
-                color: '#90ac1f'
+                text: '6/10',
+                color: '#bbd246'
             },
             '7': {
-                text: '6/10',
-                color: '#8ca018'
+                text: '7/10',
+                color: '#afcf43'
             },
             '8': {
-                text: '5/10',
-                color: '#889511'
+                text: '8/10',
+                color: '#a4cc40'
             },
             '9': {
-                text: '4/10',
-                color: '#848b08'
+                text: '9/10',
+                color: '#99c93c'
             },
             '10': {
-                text: '3/10',
-                color: '#808000'
+                text: '10/10',
+                color: '#8ec639'
             }
         },
         quiet: {
