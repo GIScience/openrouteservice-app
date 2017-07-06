@@ -141,7 +141,7 @@ angular.module('orsApp')
                     suitability: true,
                     steepness: true,
                     green: true,
-                    quiet: true
+                    noise: true
                 }
             },
             PedestrianHiking: {
@@ -156,7 +156,7 @@ angular.module('orsApp')
                     suitability: true,
                     steepness: true,
                     green: true,
-                    quiet: true
+                    noise: true
                 }
             },
             Wheelchair: {
@@ -510,11 +510,11 @@ angular.module('orsApp')
                 },
             },
             green: {
-                min: 0.2,
+                min: 0.1,
                 max: 1
             },
             quiet: {
-                min: 0.2,
+                min: 0.1,
                 max: 1
             }
         },

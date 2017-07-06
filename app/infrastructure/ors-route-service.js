@@ -94,6 +94,7 @@ angular.module('orsApp.route-service', [])
             orsRouteService.data = data;
             let cnt = 0;
             angular.forEach(orsRouteService.data.routes, function(route) {
+                console.error(route)
                 //const geometry = orsUtilsService.decodePolyline(route.geometry, route.elevation);
                 route.geometryRaw = angular.copy(route.geometry.coordinates);
                 let geometry = route.geometry.coordinates;

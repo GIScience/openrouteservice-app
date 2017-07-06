@@ -238,7 +238,7 @@ angular.module('orsApp')
                 color: '#dcdc51'
             }
         },
-        quiet: {
+        noise: {
             '7': {
                 text: '7/10',
                 color: '#F8A056'
@@ -253,7 +253,7 @@ angular.module('orsApp')
             },
             '10': {
                 text: '10/10',
-                color: '#77360'
+                color: '#773600'
             }
         }
     });

@@ -89,7 +89,7 @@ angular.module('orsApp.ors-options', [])
                     options: {
                         floor: ctrl.optionList.green.min,
                         ceil: ctrl.optionList.green.max,
-                        step: 0.2,
+                        step: 0.1,
                         precision: 1,
                         translate: (value) => {
                             return value * 10 + '/10 <b>score</b>';
@@ -118,7 +118,7 @@ angular.module('orsApp.ors-options', [])
                     options: {
                         floor: ctrl.optionList.quiet.min,
                         ceil: ctrl.optionList.quiet.max,
-                        step: 0.2,
+                        step: 0.1,
                         precision: 1,
                         translate: (value) => {
                             return value * 10 + '/10 <b>score</b>';
