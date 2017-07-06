@@ -152,6 +152,20 @@ angular.module('orsApp')
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
                 shortValue: '4f'
+            },
+            EmergencyVehicle: {
+                name: 'EmergencyVehicle',
+                elevation: false,
+                subgroup: 'Car',
+                request: 'driving-emergency',   
+                shortValue: '5a'
+            },
+            FireEngine: {
+                name: 'FireEngine',
+                elevation: false,
+                subgroup: 'Emergency',
+                request: 'driving-emergency',
+                shortValue: '5b'
             }
         },
         optionList: {
@@ -200,19 +214,19 @@ angular.module('orsApp')
             avoidables: {
                 ferry: {
                     name: 'ferries',
-                    subgroups: ['Car', 'Bicycle', 'HeavyVehicle', 'Wheelchair', 'Pedestrian']
+                    subgroups: ['Car', 'Bicycle', 'HeavyVehicle', 'Wheelchair', 'Pedestrian','Emergency']
                 },
                 unpaved: {
                     name: 'unpavedroads',
-                    subgroups: ['Car', 'Bicycle', 'HeavyVehicle']
+                    subgroups: ['Car', 'Bicycle', 'HeavyVehicle','Emergency']
                 },
                 paved: {
                     name: 'pavedroads',
-                    subgroups: ['Car', 'Bicycle', 'HeavyVehicle']
+                    subgroups: ['Car', 'Bicycle', 'HeavyVehicle','Emergency']
                 },
                 fords: {
                     name: 'fords',
-                    subgroups: ['Car', 'Bicycle', 'HeavyVehicle', 'Wheelchair', 'Pedestrian']
+                    subgroups: ['Car', 'Bicycle', 'HeavyVehicle', 'Wheelchair', 'Pedestrian','Emergency']
                 },
                 steps: {
                     name: 'steps',
@@ -220,19 +234,19 @@ angular.module('orsApp')
                 },
                 highways: {
                     name: 'highways',
-                    subgroups: ['Car', 'HeavyVehicle']
+                    subgroups: ['Car', 'HeavyVehicle','Emergency']
                 },
                 tollroads: {
                     name: 'tollways',
-                    subgroups: ['Car', 'HeavyVehicle']
+                    subgroups: ['Car', 'HeavyVehicle','Emergency']
                 },
                 tunnels: {
                     name: 'tunnels',
-                    subgroups: ['Car', 'HeavyVehicle']
+                    subgroups: ['Car', 'HeavyVehicle','Emergency']
                 },
                 tracks: {
                     name: 'tracks',
-                    subgroups: ['Car', 'HeavyVehicle']
+                    subgroups: ['Car', 'HeavyVehicle','Emergency']
                 }
             },
             wheelchair: {
@@ -417,6 +431,22 @@ angular.module('orsApp')
                     default: 100,
                     step: 5
                 },
+                EmergencyVehicle: {
+                    min: 30,
+                    max: 220,
+                    default: 130,
+                    step: 5
+                },
+                FireEngine: {
+                    min: 30,
+                    max: 200,
+                    default: 80,
+                    step: 5 
+                    // defaultweight: 7.5,
+                    // defaultheight: 3,
+                    // defaultwidth: 2.5,
+                    // defaultlenght: 7
+                },
             },
         },
         isochroneOptionList: {
@@ -486,7 +516,9 @@ angular.module('orsApp')
             BicycleTour: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
             Pedestrian: ['type', 'weight', 'maxspeed', 'fitness', 'steepness', 'green'],
             PedestrianHiking: ['type', 'weight', 'maxspeed', 'fitness', 'steepness', 'green'],
-            Wheelchair: ['type', 'weight', 'maxspeed', 'incline', 'curb', 'surface']
+            Wheelchair: ['type', 'weight', 'maxspeed', 'incline', 'curb', 'surface'],
+            EmergencyVehicle: ['type', 'weight', 'maxspeed'],
+            FireEngine: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload']
         },
         //Whitelist for settings to be stored in permalink
         permalinkKeys: {
