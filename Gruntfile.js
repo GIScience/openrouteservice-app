@@ -44,7 +44,7 @@ module.exports = function(grunt) {
                 src: ['build/*']
             },
             task_rm_build_unused: {
-                src: ['build/components', 'build/infrastructure', 'build/js/', 'build/constants', 'build/css']
+                src: ['build/components', 'build/infrastructure', 'build/languages', 'build/js/', 'build/constants', 'build/css']
             },
         },
         jshint: {
@@ -300,7 +300,7 @@ module.exports = function(grunt) {
         ngtemplates: {
             orsApp: {
                 cwd: 'app',
-                src: ['components/**/*.html', 'includes/**/*.html'],
+                src: ['components/**/*.html', 'includes/**/*.html', 'languages/**/*.json'],
                 dest: 'app/js/templates.js'
             }
         }

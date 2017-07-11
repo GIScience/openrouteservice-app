@@ -22,15 +22,18 @@ angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query', 'orsApp.ors-expo
             // re-add all indices as custom indices won't correspond anymore
             orsAaService.reshuffle();
         };
-        ctrl.toggleQuery = (obj) => {
-            orsAaService.toggleQuery(obj.isoidx, ctrl.aaQueries[obj.isoidx], obj.zoom);
+        ctrl.add = (obj) => {
+            orsAaService.add(obj.isoidx, ctrl.aaQueries[obj.isoidx], obj.zoom);
+        };
+        ctrl.toggle = (obj) => {
+            orsAaService.toggle(obj.isoidx, obj.toggle, obj.zoom);
         };
         ctrl.toggleInterval = (obj) => {
             console.log(obj)
-            orsAaService.toggleInterval(obj.isoidx, ctrl.aaQueries[obj.isoidx], obj.isointervalindices);
+            orsAaService.toggleInterval(obj.isoidx, obj.isoIidx, obj.toggle);
         };
         ctrl.removeQuery = (isoidx) => {
-            orsAaService.removeQuery(isoidx);
+            orsAaService.remove(isoidx);
         };
         ctrl.downloadQuery = (isoidx) => {
             ctrl.selectedIsochroneData = ctrl.aaQueries[isoidx];

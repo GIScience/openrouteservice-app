@@ -12,6 +12,7 @@ angular.module('orsApp.ors-aa-query', [])
             onEmph: '&',
             onDeEmph: '&',
             onZoom: '&',
+            onAdd: '&',
             intervalsLength: '<'
         },
         controller: ['orsMessagingService', 'orsAaService', '$timeout', function(orsMessagingService, orsAaService, $timeout) {
@@ -23,7 +24,7 @@ angular.module('orsApp.ors-aa-query', [])
                     .map(function() {
                         return true;
                     });
-                ctrl.onToggle({
+                ctrl.onAdd({
                     obj: {
                         isoidx: ctrl.isochroneIdx,
                         zoom: true
@@ -62,6 +63,13 @@ angular.module('orsApp.ors-aa-query', [])
                 }
             };
             ctrl.toggle = () => {
+                ctrl.onToggle({
+                    obj: {
+                        isoidx: ctrl.isochroneIdx,
+                        toggle: ctrl.showOnMap,
+                        zoom: false
+                    }
+                });
                 ctrl.intervalsHidden = [];
                 if (ctrl.showOnMap === true) {
                     // hide all intervals
@@ -80,16 +88,17 @@ angular.module('orsApp.ors-aa-query', [])
                         });
                     ctrl.showOnMap = true;
                 }
-                ctrl.onToggle({
-                    obj: {
-                        isoidx: ctrl.isochroneIdx,
-                        zoom: false
-                    }
-                });
             };
             ctrl.toggleInterval = (intervalIdx, event) => {
                 event.preventDefault();
                 event.stopPropagation();
+                ctrl.onToggleInterval({
+                    obj: {
+                        isoidx: ctrl.isochroneIdx,
+                        isoIidx: intervalIdx,
+                        toggle: ctrl.showIntervals[intervalIdx]
+                    }
+                });
                 ctrl.showIntervals[intervalIdx] = ctrl.showIntervals[intervalIdx] === true ? false : true;
                 if (ctrl.intervalsHidden.indexOf(intervalIdx) == -1) {
                     ctrl.intervalsHidden.push(intervalIdx);
@@ -97,19 +106,13 @@ angular.module('orsApp.ors-aa-query', [])
                     const index = ctrl.intervalsHidden.indexOf(intervalIdx);
                     ctrl.intervalsHidden.splice(index, 1);
                 }
-                console.log(ctrl.intervalsHidden.length ,ctrl.intervalsLength)
+                console.log(ctrl.intervalsHidden.length, ctrl.intervalsLength)
                 if (ctrl.intervalsHidden.length == ctrl.intervalsLength) {
                     ctrl.showOnMap = false;
-                } else  {
+                } else {
                     ctrl.showOnMap = true;
                 }
                 ctrl.show();
-                ctrl.onToggleInterval({
-                    obj: {
-                        isoidx: ctrl.isochroneIdx,
-                        isointervalindices: ctrl.intervalsHidden
-                    }
-                });
             };
             ctrl.download = () => {
                 ctrl.onDownload({

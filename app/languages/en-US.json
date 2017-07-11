@@ -163,5 +163,7 @@
     "ADD_EXTRAS": "Add to map",
     "GENERATE_ISOCHRONES": "Generate isochrones",
     "DETOUR_FACTOR" : "Detour factor",
-    "PERCENTAGE_OF_ROUTE": "Percentage of route"
+    "PERCENTAGE_OF_ROUTE": "Percentage of route",
+    "LOCALE_MAP_SETTINGS": "Map Settings",
+    "LOCALE_ISOCHRONE_RANDOMIZE_COLORS": "Randomized isochrone colors"
 }

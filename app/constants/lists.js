@@ -701,6 +701,9 @@ angular.module('orsApp')
                 };
             }
         },
+        isochronesColorsRanges: [
+            360, 300, 240, 180, 120, 60
+        ],
         errors: {
             CONNECTION: {
                 translate: 'CONNECTION',

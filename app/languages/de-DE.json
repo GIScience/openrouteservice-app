@@ -163,5 +163,7 @@
     "ADD_EXTRAS": "Add to map",
     "GENERATE_ISOCHRONES": "Isochronen generieren",
     "DETOUR_FACTOR" : "Umwegfaktor",
-    "PERCENTAGE_OF_ROUTE": "Anteil der Gesamtstrecke"
+    "PERCENTAGE_OF_ROUTE": "Anteil der Gesamtstrecke",
+    "LOCALE_MAP_SETTINGS": "Karteneinstellungen",
+    "LOCALE_ISOCHRONE_RANDOMIZE_COLORS": "Randomisierte Farben für Isochronen"
 }
