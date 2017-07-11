@@ -5,7 +5,7 @@ angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query', 'orsApp.ors-expo
         let ctrl = this;
         ctrl.aaQueries = orsAaService.aaQueries;
         ctrl.showExport = false;
-        
+        ctrl.showShare = false;
         try {
             $rootScope.isochronesSubscription.dispose();
         } catch (error) {
@@ -38,6 +38,10 @@ angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query', 'orsApp.ors-expo
         ctrl.downloadQuery = (isoidx) => {
             ctrl.selectedIsochroneData = ctrl.aaQueries[isoidx];
             ctrl.showExport = !ctrl.showExport;
+        };
+        ctrl.shareQuery = (shareUrl) => {
+            ctrl.shareUrl = shareUrl;
+            ctrl.showShare = !ctrl.showShare;
         };
         ctrl.zoomTo = (isoidx, isonum = -1) => {
             let geometry;

@@ -37,6 +37,10 @@
                 <i class="fa fa-download" tooltip-append-to-body="true" tooltip-side="top" tooltip-template="{{('DOWNLOAD' | translate)}}" tooltips="">
                 </i>
             </span>
+            <span ng-click="$ctrl.share();">
+                <i class="fa fa-share-alt" tooltip-append-to-body="true" tooltip-side="top" tooltip-template="{{('SHARE_LINK' | translate)}}" tooltips="">
+                </i>
+            </span>
         </div>
     </div>
     <div class="segment" ng-mouseout="$ctrl.deEmph();" ng-mouseover="$ctrl.emph();">

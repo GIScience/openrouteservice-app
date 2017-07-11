@@ -9,13 +9,14 @@ angular.module('orsApp.ors-aa-query', [])
             onToggle: '&',
             onToggleInterval: '&',
             onDownload: '&',
+            onShare: '&',
             onEmph: '&',
             onDeEmph: '&',
             onZoom: '&',
             onAdd: '&',
             intervalsLength: '<'
         },
-        controller: ['orsMessagingService', 'orsAaService', '$timeout', function(orsMessagingService, orsAaService, $timeout) {
+        controller: ['orsMessagingService', 'orsAaService', '$timeout', '$location', function(orsMessagingService, orsAaService, $timeout, $location) {
             let ctrl = this;
             ctrl.intervalsHidden = [];
             ctrl.$onInit = () => {
@@ -30,6 +31,7 @@ angular.module('orsApp.ors-aa-query', [])
                         zoom: true
                     }
                 });
+                ctrl.shareUrl = $location.absUrl();
             };
             // ctrl.$onChanges = (changesObj) => {
             //     console.log(changesObj)
@@ -106,7 +108,6 @@ angular.module('orsApp.ors-aa-query', [])
                     const index = ctrl.intervalsHidden.indexOf(intervalIdx);
                     ctrl.intervalsHidden.splice(index, 1);
                 }
-                console.log(ctrl.intervalsHidden.length, ctrl.intervalsLength)
                 if (ctrl.intervalsHidden.length == ctrl.intervalsLength) {
                     ctrl.showOnMap = false;
                 } else {
@@ -117,6 +118,11 @@ angular.module('orsApp.ors-aa-query', [])
             ctrl.download = () => {
                 ctrl.onDownload({
                     isoidx: ctrl.isochroneIdx
+                });
+            };
+            ctrl.share = () => {
+                ctrl.onShare({
+                    shareUrl : ctrl.shareUrl
                 });
             };
             ctrl.remove = () => {
