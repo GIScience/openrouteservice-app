@@ -181,6 +181,10 @@ angular.module('orsApp.utils-service', [])
             // if (lists.profiles[settings.profile.type].green === true) {
             //     payload.extra_info = 'surface|waytype|suitability|steepness|green';
             //} else
+            console.error(settings.profile.type)
+            if (settings.profile.type == 'FireEngine' || 'EmergencyVehicle'){
+                payload.extra_info = '';
+            } else
             if (lists.profiles[settings.profile.type].elevation === true) {
                 payload.extra_info = 'surface|waytype|suitability|steepness';
             } else {

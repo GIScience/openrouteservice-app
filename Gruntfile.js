@@ -216,9 +216,9 @@ module.exports = function(grunt) {
                     ENV: {
                         name: 'development',
                         geocoding: 'http://129.206.7.188:8080/ors/geocode',
-                        routing: 'http://129.206.7.188:8080/ors/routes',
+                        routing: 'http://localhost:8082/openrouteservice-4.2.0/routes',
                         tmc: 'http://129.206.228.188:8080/ors/routes?tmc',
-                        analyse: 'http://129.206.7.188:8080/ors/isochrones',
+                        analyse: 'http://localhost:8082/openrouteservice-4.2.0/isochrones',
                         places: 'http://129.206.7.188:8080/ors/locations',
                         shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
                     }
