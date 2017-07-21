@@ -62,6 +62,7 @@ angular.module('orsApp.objects-service', [])
              * @return {Object} A new waypoint object.
              */
             createWaypoint: (address, latlng, set = 0) => {
+                console.log(address, latlng)
                 return new waypoint(address, latlng, set);
             },
             /** 

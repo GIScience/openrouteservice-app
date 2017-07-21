@@ -1,12 +1,7 @@
 <div ng-model="$ctrl.waypoints" class="ors-wp-list">
-     <div ng-repeat="waypoint in $ctrl.waypoints" ng-show="$ctrl.collapseWp($index)" class="ors-wp-item">
+     <div ng-repeat="waypoint in $ctrl.waypoints" ng-show="$ctrl.collapseWp($index)" class="ors-wp-container">
      	<ors-aa-waypoint idx="$index" on-delete="$ctrl.deleteWaypoint(idx)" on-waypoints-changed="$ctrl.waypointsChanged()" on-address-changed="$ctrl.addressChanged(waypoint)" waypoint="waypoint" waypoints="$ctrl.waypoints" show-add="$ctrl.showAdd">
 		</ors-aa-waypoint>
-		<div class="ui horizontal divider ors-wp-divider" ng-show="$ctrl.showViapoints($index)">
-		    <a class="ui circular label ors-label">
-		    	{{$ctrl.waypoints.length - 2}}
-		  	</a>
-		 </div>
 	</div>
 </div>
 <div class="bottom-border"></div>

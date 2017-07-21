@@ -64,7 +64,7 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
             orsSettingsFactory.updateWaypoints();
         };
         ctrl.addressChanged = () => {
-            orsSettingsFactory.setWaypoints(ctrl.waypoints);
+            orsSettingsFactory.setWaypoints(ctrl.waypoints, false);
         };
         ctrl.calculate = function() {
             console.log(ctrl.currentOptions);

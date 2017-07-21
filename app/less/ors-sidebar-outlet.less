@@ -1,21 +1,22 @@
 /** sidebar which contains navigation and routing */
 
 .ors-sidebar {
-    flex: 1 1 388px;
+    
     min-height: 0;
     /* needed for FF */
-    -webkit-box-flex: 1 1 388px;
-    -webkit-flex: 1 1 388px;
-    -ms-flex: 1 1 388px;
-    box-sizing: border-box;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
+    flex: 1 1 auto;
+    // -webkit-box-flex: 1 1 388px;
+    // -webkit-flex: 1 1 388px;
+    // -ms-flex: 1 1 388px;
+    // box-sizing: border-box;
+    // display: -webkit-box;
+    // display: -webkit-flex;
+    // display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
+    // -webkit-box-orient: horizontal;
+    // -webkit-box-direction: normal;
+    // -webkit-flex-direction: row;
+    // -ms-flex-direction: row;
     flex-direction: row;
 }
 
@@ -34,6 +35,7 @@
 
 .ors-outlet {
     display: flex;
+    width: 380px;
 }
 
 
@@ -54,7 +56,7 @@ ors-route, ors-analysis {
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
-    width: 344px;
+    flex: 1 1 auto;
     -overflow-x: hidden;
     /* otherwise y-scrollbar will cause x-scrollbar */
 }

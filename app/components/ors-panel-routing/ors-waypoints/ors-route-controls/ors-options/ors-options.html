@@ -207,20 +207,12 @@
 </div>
 <div class="options-box" ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Wheelchair' || $ctrl.activeSubgroup == 'HeavyVehicle' || $ctrl.activeSubgroup == 'Pedestrian'">
     <div class="pointer" ng-click="additionalOptions = !additionalOptions">
-        <i ng-class="$ctrl.getClass(maxspeedOptions)">
+        <i ng-class="$ctrl.getClass(additionalOptions)">
         </i>
         <span ng-bind-html="('ADDITIONALSETTINGS' | translate)">
         </span>
     </div>
     <div class="collapsable" ng-class="{ showMe: additionalOptions }">
-        <!-- <div class="ors-options-menu" ng-show="$ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Pedestrian'">
-            <div class="ui checkbox">
-                <input id="greenrouting" name="orsRouteGreenRoutingInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.green" type="checkbox">
-                    <label for="greenrouting" ng-bind-html="('GREEN_ROUTING' | translate)">
-                    </label>
-                </input>
-            </div>
-        </div> -->
         <div class="ors-options-menu">
             <div class="ui checkbox">
                 <input id="maximumspeed" name="orsRouteMaximumspeedInput" ng-change="$ctrl.toggleMaxspeedSlider()" ng-model="$ctrl.maxspeedCheckbox" type="checkbox">
@@ -231,6 +223,26 @@
             <rzslider rz-slider-model="$ctrl.maxspeedSlider.value" rz-slider-options="$ctrl.maxspeedSlider.options">
             </rzslider>
         </div>
+        <div class="ors-options-menu" ng-show="$ctrl.activeSubgroup == 'Pedestrian'">
+            <div class="ui checkbox">
+                <input id="greenrouting" name="orsRouteGreenRoutingInput" ng-change="$ctrl.toggleGreenSlider()" ng-model="$ctrl.greenActive" type="checkbox">
+                    <label for="greenrouting" ng-bind-html="('GREEN_ROUTING' | translate)">
+                    </label>
+                </input>
+            </div>
+            <rzslider rz-slider-model="$ctrl.greenSlider.value" rz-slider-options="$ctrl.greenSlider.options">
+            </rzslider>
+        </div>
+        <!-- <div class="ors-options-menu" ng-show="$ctrl.activeSubgroup == 'Pedestrian'">
+            <div class="ui checkbox">
+                <input id="greenrouting" name="orsRouteQuietRoutingInput" ng-change="$ctrl.toggleQuietSlider()" ng-model="$ctrl.quietActive" type="checkbox">
+                    <label for="quietrouting" ng-bind-html="('QUIET_ROUTING' | translate)">
+                    </label>
+                </input>
+            </div>
+            <rzslider rz-slider-model="$ctrl.quietSlider.value" rz-slider-options="$ctrl.quietSlider.options">
+            </rzslider>
+        </div> -->
     </div>
 </div>
 <div class="options-box" ng-show="$ctrl.activeSubgroup == 'Wheelchair'">

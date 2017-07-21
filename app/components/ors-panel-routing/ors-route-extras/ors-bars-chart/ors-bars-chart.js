@@ -23,7 +23,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
                     bottom: 0,
                     left: 10
                 },
-                width = 300 - margin.left - margin.right,
+                width = 320 - margin.left - margin.right,
                 height = 50 - margin.top - margin.bottom;
             let y = d3.scaleLinear().rangeRound([height, 0]);
             let x = d3.scaleLinear().rangeRound([0, width]);
@@ -80,15 +80,15 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
             svg.attr("height", 45);
             if (scope.typesOrder.length >= 1) {
                 let show = false;
-                let expand = svg.append('path').attr("transform", "translate(270,35) rotate(90)").attr("class", "pointer").style("fill", "#444").attr("d", d3.symbol().type(d3.symbolTriangle).size(35)).style("font-size", "11px").on("click", () => {
+                let expand = svg.append('path').attr("transform", "translate(290,35) rotate(90)").attr("class", "pointer").style("fill", "#444").attr("d", d3.symbol().type(d3.symbolTriangle).size(35)).style("font-size", "11px").on("click", () => {
                     // Determine if current line is visible
                     show = show === false ? true : false;
                     if (show === true) {
                         svg.attr("height", legendTotalHeight + height);
-                        expand.attr("transform", "translate(270,35) rotate(180)");
+                        expand.attr("transform", "translate(290,35) rotate(180)");
                     } else {
                         svg.attr("height", 45);
-                        expand.attr("transform", "translate(270,35) rotate(90)");
+                        expand.attr("transform", "translate(290,35) rotate(90)");
                     }
                 });
             }

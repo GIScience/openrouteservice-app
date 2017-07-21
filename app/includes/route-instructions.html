@@ -18,37 +18,57 @@
                 </div>
             </div>
             <div class="summary">
-                <div class="summary-item">
-                    <span>
-                        <i class="fa fa-clock-o">
-                        </i>
-                    </span>
-                    <span ng-bind-html="(segment.duration | duration)">
-                    </span>
+                <div class="group">
+                    <div class="summary-item">
+                        <span>
+                            <i class="fa fa-clock-o">
+                            </i>
+                        </span>
+                        <span ng-bind-html="(segment.duration | duration)">
+                        </span>
+                    </div>
+                    <div class="summary-item">
+                        <span>
+                            <i class="fa fa-arrows-h">
+                            </i>
+                        </span>
+                        <span ng-bind-html="(segment.distance | distance)">
+                        </span>
+                    </div>
+                    <div class="summary-item" ng-if="segment.ascent">
+                        <span>
+                            <i class="fa fa-long-arrow-up">
+                            </i>
+                        </span>
+                        <span ng-bind-html="(segment.ascent | distance)">
+                        </span>
+                    </div>
+                    <div class="summary-item" ng-if="segment.descent">
+                        <span>
+                            <i class="fa fa-long-arrow-down">
+                            </i>
+                        </span>
+                        <span ng-bind-html="(segment.descent | distance)">
+                        </span>
+                    </div>
                 </div>
-                <div class="summary-item">
-                    <span>
-                        <i class="fa fa-arrows-h">
-                        </i>
-                    </span>
-                    <span ng-bind-html="(segment.distance | distance)">
-                    </span>
-                </div>
-                <div class="summary-item" ng-if="segment.ascent">
-                    <span>
-                        <i class="fa fa-long-arrow-up">
-                        </i>
-                    </span>
-                    <span ng-bind-html="(segment.ascent | distance)">
-                    </span>
-                </div>
-                <div class="summary-item" ng-if="segment.descent">
-                    <span>
-                        <i class="fa fa-long-arrow-down">
-                        </i>
-                    </span>
-                    <span ng-bind-html="(segment.descent | distance)">
-                    </span>
+                <div class="group">
+                    <div class="summary-item" ng-if="segment.detour_factor" tooltip-side="top" tooltip-template="{{('DETOUR_FACTOR' | translate)}}" tooltips="">
+                        <span>
+                            <i class="fa fa-lastfm">
+                            </i>
+                        </span>
+                        <span ng-bind-html="'<b>' + (route.summary.distance  / (segment.detour_factor * route.summary.distance) | number: 1 ) + '</b>'">
+                        </span>
+                    </div>
+                    <div class="summary-item" ng-if="segment.percentage" tooltip-side="top" tooltip-template="{{('PERCENTAGE_OF_ROUTE' | translate)}}" tooltips="">
+                        <span>
+                            <i class="fa fa-percent">
+                            </i>
+                        </span>
+                        <span ng-bind-html="'<b>' + segment.percentage + '</b>'">
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>

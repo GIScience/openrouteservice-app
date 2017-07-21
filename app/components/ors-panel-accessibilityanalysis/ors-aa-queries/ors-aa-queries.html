@@ -1,7 +1,12 @@
 <div ng-repeat="isochroneResponse in $ctrl.aaQueries track by isochroneResponse.info.timestamp;">
-    <ors-aa-query isochrone-idx="$index" attributes="isochroneResponse" on-delete="$ctrl.deleteQuery(isoidx)" on-emph="$ctrl.emph(isoidx,isonum)" on-de-emph="$ctrl.deEmph()" on-toggle="$ctrl.toggleQuery(obj)" on-toggle-interval="$ctrl.toggleInterval(obj)" intervals-length= "$ctrl.aaQueries[$index].features.length" on-download="$ctrl.downloadQuery(isoidx)" on-zoom="$ctrl.zoomTo(isoidx, isonum)">
+    <ors-aa-query attributes="isochroneResponse" intervals-length="$ctrl.aaQueries[$index].features.length" isochrone-idx="$index" on-add="$ctrl.add(obj)" on-de-emph="$ctrl.deEmph()" on-delete="$ctrl.deleteQuery(isoidx)" on-download="$ctrl.downloadQuery(isoidx)" on-emph="$ctrl.emph(isoidx,isonum)" on-share="$ctrl.shareQuery(shareUrl)" on-toggle="$ctrl.toggle(obj)" on-toggle-interval="$ctrl.toggleInterval(obj)" on-zoom="$ctrl.zoomTo(isoidx, isonum)">
     </ors-aa-query>
 </div>
 <ors-modal data-ng-if="$ctrl.showExport" show="$ctrl.showExport">
-	<ors-export-query isochrone-data="$ctrl.selectedIsochroneData"></ors-export-query>
+    <ors-export-query isochrone-data="$ctrl.selectedIsochroneData">
+    </ors-export-query>
+</ors-modal>
+<ors-modal data-ng-if="$ctrl.showShare" show="$ctrl.showShare">
+    <ors-share share-url="$ctrl.shareUrl">
+    </ors-share>
 </ors-modal>

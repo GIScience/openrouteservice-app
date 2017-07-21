@@ -83,6 +83,7 @@ angular.module('orsApp.route-service', [])
             }
         };
         orsRouteService.addHeightgraph = (geometry) => {
+            console.log(geometry)
             const heightgraph = orsObjectsFactory.createMapAction(-1, undefined, geometry, undefined, undefined);
             orsMapFactory.mapServiceSubject.onNext(heightgraph);
         };
@@ -104,6 +105,7 @@ angular.module('orsApp.route-service', [])
             orsRouteService.data = data;
             let cnt = 0;
             angular.forEach(orsRouteService.data.routes, function(route) {
+                console.error(route)
                 //const geometry = orsUtilsService.decodePolyline(route.geometry, route.elevation);
                 route.geometryRaw = angular.copy(route.geometry.coordinates);
                 let geometry = route.geometry.coordinates;
@@ -240,26 +242,27 @@ angular.module('orsApp.route-service', [])
             let hgData = [];
             for (let key in route.extras) {
                 let extra = [];
-                for (let item of route.extras[key].values) {
-                    let chunk = {};
-                    const from = item[0];
-                    const to = item[1];
-                    const geometry = routeString.slice(from, to + 1);
-                    chunk.line = geometry;
-                    const typenumber = item[2];
-                    chunk.attributeType = typenumber;
-                    extra.push(chunk);
-                }
-                extra = GeoJSON.parse(extra, {
-                    LineString: 'line',
-                    extraGlobal: {
-                        'Creator': 'OpenRouteService.org',
-                        'records': extra.length,
-                        'summary': key
+                if (key !== 'waycategory') {
+                    for (let item of route.extras[key].values) {
+                        let chunk = {};
+                        const from = item[0];
+                        const to = item[1];
+                        const geometry = routeString.slice(from, to + 1);
+                        chunk.line = geometry;
+                        const typenumber = item[2];
+                        chunk.attributeType = typenumber;
+                        extra.push(chunk);
                     }
-                });
-                // console.log(JSON.stringify(extra))
-                hgData.push(extra);
+                    extra = GeoJSON.parse(extra, {
+                        LineString: 'line',
+                        extraGlobal: {
+                            'Creator': 'OpenRouteService.org',
+                            'records': extra.length,
+                            'summary': key
+                        }
+                    });
+                    hgData.push(extra);
+                }
             }
             return hgData;
         };

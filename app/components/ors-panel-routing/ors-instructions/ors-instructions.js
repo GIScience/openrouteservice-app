@@ -11,6 +11,7 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
         ctrl.routeIndex = orsRouteService.getCurrentRouteIdx();
         ctrl.data = orsRouteService.data;
         $scope.route = ctrl.route = ctrl.data.routes[ctrl.routeIndex];
+        console.error($scope.route)
         /** subscribe to route object if instructions are already open */
         /** if we are returning to this panel, dispose all old subscriptions */
         try {
