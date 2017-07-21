@@ -115,7 +115,7 @@ angular.module('orsApp.route-service', [])
                     geometry[i][1] = lng;
                 }
                 route.geometry = geometry;
-                route.point_information = orsRouteService.processRichData(route);
+                route.point_information = orsRouteService.processPointExtras(route);
                 if (cnt == 0) {
                     if (route.elevation) {
                         // get max and min elevation from nested array
@@ -137,107 +137,98 @@ angular.module('orsApp.route-service', [])
             orsRouteService.routesSubject.onNext(orsRouteService.data);
         };
         /** process point information */
-        orsRouteService.processRichData = (route) => {
-            let info_array = [];
-            let geometry = route.geometry;
-            // create point geometry for turf function
-            point = (lat, lng) => {
-                let jsonpoint = {
-                    "type": "Feature",
-                    "properties": {},
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": [lng, lat]
+        orsRouteService.processPointExtras = (route) => {
+            const generateHeightInfo = (geometry, idx) => {
+                const obj = {};
+                obj.height = parseFloat(geometry[idx][2].toFixed(1));
+                if (idx > 0) {
+                    let last_z = geometry[(idx - 1)][2];
+                    if (obj.height < last_z) {
+                        let minus = last_z - obj.height;
+                        descent += minus;
+                    } else if (obj.height > last_z) {
+                        let plus = obj.height - last_z;
+                        ascent += plus;
                     }
-                };
-                return jsonpoint;
+                    if (ascent > 0) {
+                        obj.ascent = parseFloat(ascent.toFixed(1));
+                    }
+                    if (descent > 0) {
+                        obj.descent = parseFloat(descent.toFixed(1));
+                    }
+                }
+                return obj;
             };
-            // initiate addup variables
-            let descent = ascent = distance = segment_distance = step_distance = point_distance = segment_id = step_id = point_id = 0;
-            let segments = route.segments;
-            // because of graphhopper approximation extend the distance value with factor (graphhopper dist/ dist calculated)
-            for (let i = 0; i < geometry.length; i++) {
-                let indices = {};
-                // creates counting index for each extra
-                angular.forEach(route.extras, function(val, key) {
-                    indices[key] = 0;
-                    if (i > val.values[indices[key]][1]) {
-                        indices[key] += 1;
-                    }
+            const fetchExtrasAtPoint = (extrasObj, idx) => {
+                const extrasAtPoint = {};
+                angular.forEach(extrasObj, function(values, key) {
+                    extrasAtPoint[key] = values[idx];
                 });
-                let lat = geometry[i][0];
-                let lng = geometry[i][1];
+                return extrasAtPoint;
+            };
+            // prepare extras object
+            let extrasObj = {};
+            (extrasObj = () => {
+                angular.forEach(route.extras, function(val, key) {
+                    const list = [];
+                    angular.forEach(val.values, function(extraList, keyIdx) {
+                        for (let start = extraList[0]; start < extraList[1]; start++) {
+                            list.push(extraList[2]);
+                        }
+                    });
+                    // push last extra, not considered in above loop
+                    list.push(val.values[val.values.length - 1][2]);
+                    extrasObj[key] = list;
+                });
+            })();
+            const info_array = [];
+            const geometry = route.geometry;
+            const segments = route.segments;
+            // declare cumulative statistic variables
+            let descent = ascent = distance = segment_distance = step_distance = point_distance = 0;
+            // declare incrementing ids
+            let segment_id = step_id = point_id = 0;
+            // loop the geometry and calculate distances
+            for (let i = 0; i < geometry.length; i++) {
+                const lat = geometry[i][0];
+                const lng = geometry[i][1];
+                // store the segment_id of the point and reset the step_id
                 if (i > route.way_points[segment_id + 1]) {
                     segment_id += 1;
                     step_id = 0;
-                }1
+                }
                 if (i > 0) {
                     let last_lat = geometry[i - 1][0];
                     let last_lng = geometry[i - 1][1];
-                    // calcualte point distance to last point in meter
-                    point_distance = turf.distance(point(last_lat, last_lng), point(lat, lng)) * 1000;
+                    // calculate point distance to last point in meters
+                    point_distance = turf.distance(orsObjectsFactory.createPoint(last_lat, last_lng), orsObjectsFactory.createPoint(lat, lng)) * 1000;
                     // add to to the step distance
                     step_distance += point_distance;
                     segment_distance += point_distance;
                     distance += point_distance;
                 }
-                // console.log(distance, segment_id, segment_distance, step_id, step_distance, point_id, point_distance)
-                // if at last point of a step
+                // if last point of a step is reached
                 if (i == segments[segment_id].steps[step_id].way_points[1]) {
-                    // divide backend step distance with calculated step distance
-                    segments[segment_id].steps[step_id].distance_new = parseFloat(step_distance.toFixed(1)); // this would override steps distance with turf value
-                    // factors[segment_id].push([i, g_factor]);
+                    segments[segment_id].steps[step_id].distanceTurf = parseFloat(step_distance.toFixed(1)); // this would override steps distance with turf value
                     step_id += 1;
                     step_distance = 0;
                 }
                 // advances to next route segment
                 if (i == route.way_points[segment_id + 1]) {
-                    // segments[segment_id].distance_new = parseFloat(segment_distance.toFixed(1)); // this would override segment distance with turf value
                     segment_id += 1;
                     segment_distance = 0;
                     step_id = 0;
                     point_id = 0;
                 }
-                // creating object
-                let pointobject = {
+                const pointobject = {
                     coords: [lat, lng],
-                    extras: {
-                        suitability: route.extras.suitability.values[indices.suitability][2],
-                        waytype: route.extras.waytypes.values[indices.waytypes][2],
-                        surface: route.extras.surface.values[indices.surface][2]
-                    },
+                    extras: fetchExtrasAtPoint(extrasObj, i),
                     distance: parseFloat(distance.toFixed(1)),
                     // duration: null, // todo
                     segment_index: segment_id,
-                    point_id: i
+                    point_id: i,
+                    heights: route.elevation && generateHeightInfo(geometry, i)
                 };
-                // if elevation = true calculate heights and add z value
-                if (route.elevation) {
-                    let z = geometry[i][2];
-                    pointobject.coords[2] = z;
-                    pointobject.extras.steepness = route.extras.steepness.values[indices.steepness][2];
-                    let relative = z - geometry[0][2];
-                    relative = parseFloat(relative.toFixed(1));
-                    pointobject['heights'] = {
-                        relative_elevation: relative,
-                    };
-                    if (i > 0) {
-                        let last_z = geometry[(i - 1)][2];
-                        if (z < last_z) {
-                            let minus = last_z - z;
-                            descent += minus;
-                        } else if (z > last_z) {
-                            let plus = z - last_z;
-                            ascent += plus;
-                        }
-                        if (ascent > 0) {
-                            pointobject.heights.ascent = parseFloat(ascent.toFixed(1));
-                        }
-                        if (descent > 0) {
-                            pointobject.heights.descent = parseFloat(descent.toFixed(1));
-                        }
-                    }
-                }
                 point_id += 1;
                 info_array.push(pointobject);
             }
