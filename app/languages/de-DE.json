@@ -165,5 +165,6 @@
     "DETOUR_FACTOR" : "Umwegfaktor",
     "PERCENTAGE_OF_ROUTE": "Anteil der Gesamtstrecke",
     "LOCALE_MAP_SETTINGS": "Karteneinstellungen",
-    "LOCALE_ISOCHRONE_RANDOMIZE_COLORS": "Randomisierte Farben für Isochronen"
+    "LOCALE_ISOCHRONE_RANDOMIZE_COLORS": "Randomisierte Farben für Isochronen", 
+    "DRAGTOADD": "Ziehen für Wegpunkt, klicken für Infos"
 }

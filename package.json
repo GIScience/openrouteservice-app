@@ -19,6 +19,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-remove-logging": "^0.2.0",
     "leaflet-control-angular": "^0.1.4",
+    "leaflet-geometryutil": "^0.8.0",
     "leaflet-omnivore": "^0.3.4",
     "togpx": "^0.5.3",
     "tokml": "^0.4.0",

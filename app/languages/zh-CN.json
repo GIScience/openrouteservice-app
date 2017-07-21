@@ -165,5 +165,6 @@
     "DETOUR_FACTOR" : "绕道指数",
     "PERCENTAGE_OF_ROUTE": "路段占比",
     "LOCALE_MAP_SETTINGS": "Map Settings",
-    "LOCALE_ISOCHRONE_RANDOMIZE_COLORS": "Randomized isochrone colors"
+    "LOCALE_ISOCHRONE_RANDOMIZE_COLORS": "Randomized isochrone colors", 
+    "DRAGTOADD": "Drag to add a via point. Click for point info"
 }

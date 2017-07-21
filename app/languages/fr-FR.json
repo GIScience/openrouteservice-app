@@ -164,5 +164,6 @@
     "DETOUR_FACTOR" : "Facteur de détour",
     "PERCENTAGE_OF_ROUTE": "Pourcentage d'itinéraire",
     "LOCALE_MAP_SETTINGS": "Map Settings",
-    "LOCALE_ISOCHRONE_RANDOMIZE_COLORS": "Randomized isochrone colors"
+    "LOCALE_ISOCHRONE_RANDOMIZE_COLORS": "Randomized isochrone colors", 
+    "DRAGTOADD": "Drag to add a via point. Click for point info"
 }
