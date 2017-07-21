@@ -568,7 +568,7 @@ angular.module('orsApp')
                                 [nextPointInfo.coords][0]
                             ]);
                             let factor = L.GeometryUtil.locateOnLine($scope.mapModel.map, lineSegment, L.latLng(pos));
-                            let thisPointInfo = angular.copy(nextPointInfo);
+                            let thisPointInfo = angular.copy(lastPointInfo);
 
                             function calcCurrent(last, next) {
                                 let current = last + (next - last) * factor;
@@ -582,9 +582,8 @@ angular.module('orsApp')
                             thisPointInfo.point_id = calcCurrent(lastPointInfo.point_id, nextPointInfo.point_id);
                             // create only for elevation data
                             if (elevation) {
-                                let thisElevation = calcCurrent(lastPointInfo.coords[2], nextPointInfo.coords[2]);
-                                thisPointInfo.coords.push(thisElevation);
-                                thisPointInfo.heights.relative_elevation = calcCurrent(lastPointInfo.heights.relative_elevation, nextPointInfo.heights.relative_elevation);
+                                let thisElevation = calcCurrent(lastPointInfo.heights.height, nextPointInfo.heights.height);
+                                thisPointInfo.heights.height = thisElevation;
                                 // calculate only if ascen/descent is present 
                                 // TODO if value too small rounds to and shows Zero
                                 if ('ascent' in nextPointInfo.heights) {
