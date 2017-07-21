@@ -42,3 +42,13 @@
     <select data-ng-model="$ctrl.currentOptions.routinglang" data-ng-options="(language) for language in $ctrl.optionList.routinglanguages.all" name="routinglanguage" ng-change="$ctrl.changeOptions()">
     </select>
 </section>
+<section>
+    <h2 ng-bind-html="('LOCALE_MAP_SETTINGS' | translate)">
+    </h2>
+    <div class="ui checkbox">
+        <input data-ng-model="$ctrl.currentOptions.randomIsochronesColors" id="isochronescolors" name="orsRouteQuietRoutingInput" ng-change="$ctrl.changeOptions()" type="checkbox">
+            <label for="isochronescolors" ng-bind-html="('LOCALE_ISOCHRONE_RANDOMIZE_COLORS' | translate)">
+            </label>
+        </input>
+    </div>
+</section>

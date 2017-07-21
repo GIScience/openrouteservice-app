@@ -7,6 +7,9 @@ angular.module('orsApp.ors-summary', ['orsApp.ors-exportRoute-controls', 'orsApp
         },
         controller: ['$rootScope', 'orsSettingsFactory', 'orsMapFactory', 'orsObjectsFactory', 'orsRouteService', 'lists', function($rootScope, orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsRouteService, lists) {
             let ctrl = this;
+            
+            ctrl.showShare = false;
+            ctrl.showExport = false;
             ctrl.profiles = lists.profiles;
             ctrl.setIdx = (idx) => {
                 orsRouteService.setCurrentRouteIdx(idx);

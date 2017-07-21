@@ -5,8 +5,17 @@ ors-instructions {
     flex-direction: column;
 }
 
-.ors-instructions-summary, .ors-analysis-settings {
-    flex: 0 0 auto;
+.ors-instructions-inner {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.ors-instructions-summary {
+    flex: 1 0 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 400px;
 }
 
 .ors-instructions-summary {
@@ -51,7 +60,7 @@ ors-instructions {
         padding: 0 .5rem;
     }
     .steps {
-        margin-right: 20px;
+        -margin-right: 20px;
     }
     .info {
         .heading {
@@ -69,7 +78,7 @@ ors-instructions {
         border-left: 2px solid transparent;
         border-right: 2px solid transparent;
         width: 100%;
-        margin-right: 20px;
+        -margin-right: 20px;
     }
     .step {
         width: 100%;
@@ -108,9 +117,18 @@ ors-instructions {
         padding-left: 0.5rem;
     }
     .summary {
+        display: flex;
+        flex-direction: column;
         padding-bottom: 1rem;
         border-bottom: .1rem solid #edf3f5;
         padding-left: 4.5rem;
-        flex-wrap: wrap;
+        .group {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            i {
+                color: #767676;
+            }
+        }
     }
 }

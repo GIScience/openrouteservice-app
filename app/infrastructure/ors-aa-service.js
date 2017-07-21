@@ -30,39 +30,58 @@
             };
             orsAaService.reshuffle = () => {
                 let action;
-                action = orsObjectsFactory.createMapAction(6, lists.layers[3], undefined, undefined);
-                orsMapFactory.mapServiceSubject.onNext(action);
-                action = orsObjectsFactory.createMapAction(9, lists.layers[5], undefined, undefined);
+                action = orsObjectsFactory.createMapAction(33, lists.layers[5], undefined, undefined);
                 orsMapFactory.mapServiceSubject.onNext(action);
             };
             /**
              * Clears the map and forwards the polygons to it
              */
-            orsAaService.toggleQuery = (idx, isochronesObj, zoomTo = false) => {
+            orsAaService.toggle = (idx, toggle, zoomTo = false) => {
+                // toggle isochrones
                 let action;
-                action = orsObjectsFactory.createMapAction(4, lists.layers[3], isochronesObj.features, idx);
+                action = orsObjectsFactory.createMapAction(31, lists.layers[3], undefined, idx, undefined, {
+                    idx: idx,
+                    toggle: toggle
+                });
                 orsMapFactory.mapServiceSubject.onNext(action);
-                action = orsObjectsFactory.createMapAction(8, lists.layers[5], isochronesObj.info.query.locations[0], idx);
+                // toggle numbered marker
+                action = orsObjectsFactory.createMapAction(36, lists.layers[5], undefined, idx, undefined, {
+                    idx: idx,
+                    toggle: toggle
+                });
                 orsMapFactory.mapServiceSubject.onNext(action);
                 if (zoomTo) {
                     action = orsObjectsFactory.createMapAction(0, lists.layers[5], isochronesObj.features[isochronesObj.features.length - 1].geometry.coordinates, undefined, undefined);
                     orsMapFactory.mapServiceSubject.onNext(action);
                 }
             };
-            /**
-             * Clears the map and forwards the polygons with intervals to be hidden
-             */
-            orsAaService.toggleInterval = (idx, isochronesObj, intervalIndices) => {
+            orsAaService.toggleInterval = (idx, iIdx, toggle) => {
                 let action;
-                action = orsObjectsFactory.createMapAction(12, lists.layers[3], isochronesObj.features, idx, undefined, {
-                    intervalIndices: intervalIndices
+                action = orsObjectsFactory.createMapAction(32, lists.layers[3], undefined, idx, undefined, {
+                    toggle: toggle,
+                    idx: idx,
+                    iIdx: iIdx
                 });
                 orsMapFactory.mapServiceSubject.onNext(action);
             };
-            orsAaService.removeQuery = (idx) => {
+            /**
+             * Triggers isochrones creation on map
+             */
+            orsAaService.add = (idx, isochronesObj, zoomTo = false) => {
+                let action;
+                action = orsObjectsFactory.createMapAction(30, lists.layers[3], isochronesObj.features, idx);
+                orsMapFactory.mapServiceSubject.onNext(action);
+                action = orsObjectsFactory.createMapAction(34, lists.layers[5], isochronesObj.info.query.locations[0], idx);
+                orsMapFactory.mapServiceSubject.onNext(action);
+                if (zoomTo) {
+                    action = orsObjectsFactory.createMapAction(0, lists.layers[5], isochronesObj.features[isochronesObj.features.length - 1].geometry.coordinates, undefined, undefined);
+                    orsMapFactory.mapServiceSubject.onNext(action);
+                }
+            };
+            orsAaService.remove = (idx) => {
                 let action;
                 // remove isochrones
-                action = orsObjectsFactory.createMapAction(7, lists.layers[3], undefined, idx);
+                action = orsObjectsFactory.createMapAction(35, lists.layers[3], undefined, idx);
                 orsMapFactory.mapServiceSubject.onNext(action);
                 // remove centermarker
                 action = orsObjectsFactory.createMapAction(2, lists.layers[5], undefined, idx);

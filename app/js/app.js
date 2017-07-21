@@ -116,20 +116,20 @@
                 'smart': true,
                 'size': 'small',
                 'speed': 'fast',
-                'tooltipTemplateUrlCache': true
+                'tooltipTemplateUrlCache': false
             });
         }])
-        .config(['$translateProvider', '$windowProvider', /* 'storageFactory',*/
-            function($translateProvider, $windowProvider /*, storageFactory*/ ) {
-                var $window = $windowProvider.$get();
+        .config(['$translateProvider', 'lists',
+            function($translateProvider, lists) {
                 $translateProvider.useSanitizeValueStrategy('sanitizeParameters');
-                //get the translations local folder
                 $translateProvider.useStaticFilesLoader({
                     prefix: 'languages/',
                     suffix: '.json'
                 });
-                // set the preferred language (default language)
                 $translateProvider.preferredLanguage('en-US');
+                $translateProvider.registerAvailableLanguageKeys(lists.userOptions.languages.all);
+                $translateProvider.useLoaderCache('$templateCache');
+              
             }
         ])
         .controller('RootController', function(orsSettingsFactory, orsObjectsFactory, orsMapFactory, $route, $interval, $http) {
@@ -141,7 +141,8 @@
             $animate.enabled(true);
             $injector.get('orsApikeyFactory')
                 .setApiKeyInterval();
-        });
+        })
+        ;
     /**
      * Directive to one-click-select all text in input fields
      * apply to <input> as attribute "select-on-click"

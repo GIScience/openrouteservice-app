@@ -159,6 +159,7 @@ angular.module('orsApp.utils-service', [])
                 instructions: true,
                 geometry: true,
                 units: 'm',
+                attributes: 'detourfactor|percentage',
                 instructions_format: 'html',
                 elevation: lists.profiles[settings.profile.type].elevation,
                 options: JSON.stringify(orsUtilsService.generateOptions(settings))
@@ -178,15 +179,11 @@ angular.module('orsApp.utils-service', [])
             }
             payload.coordinates = payload.coordinates.slice(0, -1);
             // extras
-            // if (lists.profiles[settings.profile.type].green === true) {
-            //     payload.extra_info = 'surface|waytype|suitability|steepness|green';
-            //} else
-            if (lists.profiles[settings.profile.type].elevation === true) {
-                payload.extra_info = 'surface|waytype|suitability|steepness';
-            } else {
-                payload.extra_info = 'surface|waytype|suitability';
+            payload.extra_info = [];
+            for (let extra in lists.profiles[settings.profile.type].extras) {
+                payload.extra_info.push(extra);
             }
-            console.log(payload)
+            payload.extra_info = payload.extra_info.join("|");
             return payload;
         };
         /** 
@@ -218,7 +215,10 @@ angular.module('orsApp.utils-service', [])
             const subgroup = lists.profiles[settings.profile.type].subgroup;
             let options = {
                 avoid_features: '',
-                profile_params: {}
+                profile_params: {
+                    weightings: {},
+                    restrictions: {}
+                }
             };
             angular.forEach(settings.profile.options.avoidables, function(value, key) {
                 if (value === true) {
@@ -239,29 +239,35 @@ angular.module('orsApp.utils-service', [])
                 options.avoid_features = options.avoid_features.slice(0, -1);
             }
             if (subgroup == 'HeavyVehicle') {
-                console.log(settings.profile.options)
                 options.vehicle_type = settings.profile.type;
-                if (!angular.isUndefined(settings.profile.options.width)) options.profile_params.width = settings.profile.options.width.toString();
-                if (!angular.isUndefined(settings.profile.options.height)) options.profile_params.height = settings.profile.options.height.toString();
-                if (!angular.isUndefined(settings.profile.options.hgvWeight)) options.profile_params.weight = settings.profile.options.hgvWeight.toString();
-                if (!angular.isUndefined(settings.profile.options.length)) options.profile_params.length = settings.profile.options.length.toString();
-                if (!angular.isUndefined(settings.profile.options.axleload)) options.profile_params.axleload = settings.profile.options.axleload.toString();
-                if (!angular.isUndefined(settings.profile.options.hazmat)) options.profile_params.hazmat = settings.profile.options.hazmat;
+                if (!angular.isUndefined(settings.profile.options.width)) options.profile_params.restrictions.width = settings.profile.options.width.toString();
+                if (!angular.isUndefined(settings.profile.options.height)) options.profile_params.restrictions.height = settings.profile.options.height.toString();
+                if (!angular.isUndefined(settings.profile.options.hgvWeight)) options.profile_params.restrictions.weight = settings.profile.options.hgvWeight.toString();
+                if (!angular.isUndefined(settings.profile.options.length)) options.profile_params.restrictions.length = settings.profile.options.length.toString();
+                if (!angular.isUndefined(settings.profile.options.axleload)) options.profile_params.restrictions.axleload = settings.profile.options.axleload.toString();
+                if (!angular.isUndefined(settings.profile.options.hazmat)) options.profile_params.restrictions.hazmat = settings.profile.options.hazmat;
             }
             if (settings.profile.options.maxspeed) options.maximum_speed = settings.profile.options.maxspeed.toString();
-            // fitness
             if (subgroup == 'Bicycle') {
+                options.profile_params.weightings.fitness = {};
                 if (settings.profile.options.steepness > 0 & settings.profile.options.steepness <= 15) {
-                    options.profile_params.maximum_gradient = settings.profile.options.steepness.toString();
+                    options.profile_params.weightings.fitness.maximum_gradient = settings.profile.options.steepness.toString();
                 }
                 if (settings.profile.options.fitness >= 0 & settings.profile.options.fitness <= 3) {
-                    options.profile_params.difficulty_level = settings.profile.options.fitness.toString();
+                    options.profile_params.weightings.fitness.difficulty_level = settings.profile.options.fitness.toString();
                 }
+                if (angular.equals(options.profile_params.weightings.fitness, {})) delete options.profile_params.weightings.fitness;
             }
             if (subgroup == 'Pedestrian') {
-                console.log(settings.profile.options)
                 if (settings.profile.options.green) {
-                    options.profile_params.green_routing = settings.profile.options.green;
+                    options.profile_params.weightings.green = {
+                        factor: settings.profile.options.green
+                    };
+                }
+                if (settings.profile.options.quiet) {
+                    options.profile_params.weightings.quiet = {
+                        factor: settings.profile.options.quiet
+                    };
                 }
             }
             // if avoid area polygon
@@ -275,8 +281,7 @@ angular.module('orsApp.utils-service', [])
                 if (settings.profile.options.curb) options.profile_params.maximum_sloped_curb = settings.profile.options.curb.toString();
                 if (settings.profile.options.incline) options.profile_params.maximum_incline = settings.profile.options.incline.toString();
             }
-            console.log(settings.profile.options)
-            if (angular.equals(options.profile_params, {})) delete options.profile_params;
+            if (angular.equals(options.profile_params.weightings, {}) && angular.equals(options.profile_params.restrictions, {})) delete options.profile_params;
             return options;
         };
         /** 

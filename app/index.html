@@ -27,11 +27,11 @@
     <link href="bower_components/angular-tooltips/dist/angular-tooltips.css" rel="stylesheet" type="text/css" />
     <link href="bower_components/leaflet/dist/leaflet.css" rel="stylesheet"></link>
     <link href="bower_components/leaflet-measure/dist/leaflet-measure.css" rel="stylesheet"></link>
+    <link href="bower_components/leaflet.markercluster/dist/MarkerCluster.css" rel="stylesheet"></link>
     <!-- endbuild -->
     <!-- these scripts remain unbuilt as they contain relative paths -->
-    <!--<link href="bower_components/leaflet.markercluster/dist/MarkerCluster.css" rel="stylesheet" type="text/css" />-->
     <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet"></link>
-    <link href="bower_components/leaflet.heightgraph/L.Control.Heightgraph.css" rel="stylesheet"></link>
+    <link href="bower_components/leaflet.heightgraph/src/L.Control.Heightgraph.css" rel="stylesheet"></link>
     <!-- build:css main.css -->
     <link href="css/ors-layout.css" rel="stylesheet"></link>
     <link href="css/ors-sidebar-outlet.css" rel="stylesheet"></link>
@@ -58,13 +58,12 @@
         <!-- BEGIN: Actual animated container. -->
         <div class="animated-container">
             <div class="messaging">
-                <h1>
-                    OpenRouteService
-                </h1>
+                <p>
+                    <img height="auto" src="img/logo@2x.png" width="200px"/>
+                </p>
                 <p>
                     <div class="ui active centered inline loader"></div>
                 </p>
-
             </div>
         </div>
         <!-- END: Actual animated container. -->
@@ -94,28 +93,29 @@
 <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
 <script src="node_modules/@angular/router/angular1/angular_1_router.js"></script>
 <script src="node_modules/geojson/geojson.min.js"></script>
-
 <script src="node_modules/togpx/togpx.js"></script>
 <script src="node_modules/tokml/tokml.js"></script>
 <script src="node_modules/leaflet-omnivore/leaflet-omnivore.min.js"></script>
 <script src="node_modules/turf.js" type="text/javascript"></script>
-
 <script src="bower_components/leaflet/dist/leaflet.js"></script>
 <script src="bower_components/leaflet-measure/dist/leaflet-measure.js"></script>
 <script src="node_modules/leaflet-control-angular/src/L.Control.Angular.js"></script>
-<!--<script src="bower_components/leaflet.markercluster/dist/leaflet.markercluster.js"></script>-->
+<script src="bower_components/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
 <script src="bower_components/leaflet.editable/src/Leaflet.Editable.js"></script>
-<script src="bower_components/leaflet.heightgraph/L.Control.Heightgraph.js"></script>
+<script src="bower_components/leaflet.heightgraph/src/L.Control.Heightgraph.js"></script>
+<script src="bower_components/leaflet.locatecontrol/src/L.Control.Locate.js" charset="utf-8"></script>
 <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
 <script src="bower_components/angular-ui-sortable/sortable.js"></script>
 <script src="bower_components/angularjs-slider/dist/rzslider.js"></script>
 <script src="bower_components/d3/d3.js"></script>
 <script src="bower_components/d3-tip/index.js"></script>
+<script src="node_modules/d3-interpolate/build/d3-interpolate.js"></script>
+<script src="node_modules/d3-color/build/d3-color.js"></script>
+<script src="node_modules/d3-scale-chromatic/build/d3-scale-chromatic.js"></script>
 <script src="bower_components/vkBeautify/vkbeautify.js" type="text/javascript"></script>
 <script src="bower_components/angular-file-saver/dist/angular-file-saver.bundle.js" type="text/javascript"></script>
 <script src="bower_components/angular-tooltips/dist/angular-tooltips.js"></script>
 <!-- endbuild -->
-
 <!-- build:js scripts.js -->
 <script src="js/app.js"></script>
 <script src="js/filters.js"></script>

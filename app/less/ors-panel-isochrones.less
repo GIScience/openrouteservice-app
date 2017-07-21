@@ -1,10 +1,18 @@
+.ors-analysis-settings {
+    flex: 0 1 auto;
+}
+
 .ors-aa-controls {
-    height: 39px;
-    width: 340px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding-right: 10px;
+    div {
+        &:last-child {
+            margin-left: auto;
+        }
+    }
 }
 
 .ors-aa-options {
@@ -12,17 +20,21 @@
     overflow: auto;
 }
 
-.ors-aa-query, .ors-loading {
-    margin: 10px;
-    padding: 10px;
-    border-radius: 5px;
+.aa-input {
+    width: 340px;
 }
 
 .ors-aa-query {
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    user-select: none;
+    table {
+        cursor: pointer;
+    }
     .segment {
         display: flex;
         position: relative;
-        width: 100%;
         flex-direction: row;
         flex-wrap: wrap;
         cursor: default;

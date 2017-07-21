@@ -247,8 +247,9 @@ angular.module('orsApp.settings-service', [])
                     idx = set.waypoints.length - 2;
                 }
             }
+            const latLngString = orsUtilsService.parseLatLngString(pos);
             const lngLatString = orsUtilsService.parseLngLatString(pos);
-            orsSettingsFactory.updateWaypointAddress(idx, lngLatString, init);
+            orsSettingsFactory.updateWaypointAddress(idx, latLngString, init);
             const payload = orsUtilsService.geocodingPayload(lngLatString, true);
             const request = orsRequestService.geocode(payload);
             const requestsQue = orsSettingsFactory.ngRouteSubject.getValue() == 'directions' ? 'routeRequests' : 'aaRequests';
@@ -296,6 +297,7 @@ angular.module('orsApp.settings-service', [])
          * @param {Object} wp - The waypoint object to be inserted to wp list.
          */
         orsSettingsFactory.insertWaypointFromMap = (idx, wp, fireRequest = true) => {
+            console.log(wp)
             if (idx == 0) {
                 orsSettingsFactory[currentSettingsObj].value.waypoints[idx] = wp;
             } else if (idx == 2) {

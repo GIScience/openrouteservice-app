@@ -5,6 +5,8 @@
             </div> -->
             <div ng-include="'includes/route-summary.html'">
             </div>
+            <div class="bottom-border">
+            </div>
             <div class="options-box" ng-if="route.extras">
                 <div class="pointer margin-bottom-6" ng-init="showRouteExtras = true;" ng-click="showRouteExtras = !showRouteExtras">
                     <i ng-class="$ctrl.getClass(showRouteExtras)">

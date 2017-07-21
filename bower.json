@@ -1,7 +1,7 @@
 {
   "name": "openrouteservice.org",
   "description": "angular version of openrouteservice.org",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "homepage": "http://www.uni-heidelberg.de",
   "license": "MIT",
   "private": true,
@@ -26,8 +26,9 @@
     "angular-translate-loader-static-files": "2.13.0",
     "leaflet.editable": "^1.0.0",
     "leaflet.markercluster": "^1.0.3",
-    "leaflet.heightgraph": "*",
-    "leaflet-measure": "^2.1.7"
+    "leaflet.heightgraph": "^0.1.3",
+    "leaflet-measure": "^2.1.7",
+    "leaflet.locatecontrol": "^0.62.0"
   },
   "resolutions": {
     "angular": "~1.5.10"

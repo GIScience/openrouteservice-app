@@ -5,7 +5,7 @@ angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query', 'orsApp.ors-expo
         let ctrl = this;
         ctrl.aaQueries = orsAaService.aaQueries;
         ctrl.showExport = false;
-        
+        ctrl.showShare = false;
         try {
             $rootScope.isochronesSubscription.dispose();
         } catch (error) {
@@ -22,19 +22,26 @@ angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query', 'orsApp.ors-expo
             // re-add all indices as custom indices won't correspond anymore
             orsAaService.reshuffle();
         };
-        ctrl.toggleQuery = (obj) => {
-            orsAaService.toggleQuery(obj.isoidx, ctrl.aaQueries[obj.isoidx], obj.zoom);
+        ctrl.add = (obj) => {
+            orsAaService.add(obj.isoidx, ctrl.aaQueries[obj.isoidx], obj.zoom);
+        };
+        ctrl.toggle = (obj) => {
+            orsAaService.toggle(obj.isoidx, obj.toggle, obj.zoom);
         };
         ctrl.toggleInterval = (obj) => {
             console.log(obj)
-            orsAaService.toggleInterval(obj.isoidx, ctrl.aaQueries[obj.isoidx], obj.isointervalindices);
+            orsAaService.toggleInterval(obj.isoidx, obj.isoIidx, obj.toggle);
         };
         ctrl.removeQuery = (isoidx) => {
-            orsAaService.removeQuery(isoidx);
+            orsAaService.remove(isoidx);
         };
         ctrl.downloadQuery = (isoidx) => {
             ctrl.selectedIsochroneData = ctrl.aaQueries[isoidx];
             ctrl.showExport = !ctrl.showExport;
+        };
+        ctrl.shareQuery = (shareUrl) => {
+            ctrl.shareUrl = shareUrl;
+            ctrl.showShare = !ctrl.showShare;
         };
         ctrl.zoomTo = (isoidx, isonum = -1) => {
             let geometry;

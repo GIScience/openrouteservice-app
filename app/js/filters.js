@@ -31,8 +31,10 @@ angular.module('orsApp.ors-filters', [])
                         input = (input / 1000)
                             .toFixed();
                     } else {
-                        input = (input / 1000)
-                            .toFixed(2);
+                        if (input >= 1000000) input = (input / 1000)
+                            .toFixed();
+                        else input = (input / 1000)
+                            .toFixed(1);
                     }
                     units = ' km';
                 } else {
@@ -45,7 +47,7 @@ angular.module('orsApp.ors-filters', [])
                         .toFixed();
                 } else {
                     input = (input * 0.000621371192)
-                        .toFixed(2);
+                        .toFixed(1);
                 }
                 if (input < 0.5 && input > 0.2) {
                     /** yards */

@@ -70,17 +70,6 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
         };
         ctrl.exportRoute = () => {
             let options = {};
-            switch (ctrl.currentFileFormat) {
-                case 'tcx':
-                    break;
-                case 'kml':
-                    break;
-                case 'gml':
-                    break;
-                case 'geojson':
-                    break;
-                default:
-            }
             let currentRoute = orsRouteService.data.routes[orsRouteService.getCurrentRouteIdx()].geometry;
             orsExportFactory.exportFile(currentRoute, 'linestring', options, ctrl.currentFileFormat, ctrl.filename);
         };

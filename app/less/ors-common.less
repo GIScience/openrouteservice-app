@@ -19,6 +19,10 @@ h3, h4, h5 {
     margin: 0;
 }
 
+.ors-loading {
+    margin: 10px;
+}
+
 .link {
     text-decoration: none;
 }
@@ -93,6 +97,9 @@ span tooltip {
         padding: 1rem 1rem 0 1rem;
         -display: flex;
         flex-direction: column;
+        i {
+            color: #767676;
+        }
     }
     .right-2 {
         color: rgba(0, 0, 0, 0.7);
@@ -175,22 +182,17 @@ label, .label {
     cursor: pointer !important;
 }
 
-.ors-summary {
-    width: 340px;
-}
-
 .ors-route-controls, .ors-instruction-controls {
-    height: 39px;
-    width: 340px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
 .ors-route-controls {
-    /** https://jsfiddle.net/vhem8scs/2/ */
-    div:last-child {
-        margin-left: auto;
+    div {
+        &:last-child {
+            margin-left: auto;
+        }
     }
 }
 
@@ -226,25 +228,18 @@ button.summary-select {
 }
 
 .bottom-border {
-    height: 1px;
+    display: flex;
+    flex: 1 1 auto;
     border-bottom: .1rem solid @borderColor;
-    margin: auto;
 }
 
 .short {
     width: 85%;
 }
 
-.ors-routing-options .container, .ors-routing-inner .container, .ors-aa-query, .container {
-    background-color: rgb(250, 250, 250);
-    padding-top: 10px;
-}
-
-.ors-routing-inner {
-    flex: 1 1 auto;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
+// .ors-routing-options .container, .ors-routing-inner .container, .ors-aa-query, .container {
+//     background-color: rgb(250, 250, 250);
+// }
 
 
 /* options menu */
@@ -264,10 +259,10 @@ button.summary-select {
     overflow-y: scroll;
 }
 
-.small {
-    width: 150px;
-    display: block;
-}
+// .small {
+//     width: 150px;
+//     display: block;
+// }
 
 .ors-options-input {
     height: 35px;
@@ -298,31 +293,97 @@ button.summary-select {
 }
 
 .collapsable {
-    -display: inline-block;
+    
     overflow: hidden;
     height: 0;
 }
 
 .collapsable.showMe {
     height: auto;
-    overflow: visible;
-    width: 100%;
+}
+
+.ors-wp-list {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0px 10px 0px;
+}
+
+.ors-wp-container {
+    padding: 2px 10px 0px 10px;
+}
+
+.ors-wp-item {
+    padding: 2px;
+    display: flex;
+    cursor: move;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    .wp-idx {
+        flex: 0 0 auto;
+    }
+    .wp-input {
+        flex: 1 1 auto;
+        margin-left: 10px;
+        input {
+            border-right: transparent !important;
+            &:focus, &:active {
+                border: 1px solid rgba(34, 36, 38, 0.15) !important;
+                border-right: transparent !important;
+            }
+        }
+        .wp-input-label {
+            border-left: none !important;
+            padding: 10px 8px 0 0 !important;
+            button {
+                visibility: hidden !important;
+            }
+            button.show {
+                visibility: visible !important;
+            }
+        }
+    }
+    .wp-aa-input {
+        flex: 1 1 auto;
+        input {
+            &:focus, &:active {
+                border: 1px solid rgba(34, 36, 38, 0.15) !important;
+            }
+        }
+    }
+}
+
+.ui-sortable-disabled {
+    .ors-wp-item {
+        cursor: default;
+    }
+}
+
+.ors-addresses {
+    padding: 15px 0 15px 0;
+    font-weight: normal;
+    .item {
+        .ng-binding {
+            &:hover {
+                color: black;
+                cursor: pointer;
+            }
+        }
+    }
 }
 
 
 /* scrollbar */
 
-::-webkit-scrollbar {
-    -webkit-appearance: none;
-    width: 5px;
-}
-
-::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: rgba(0, 0, 0, .5);
-    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
-}
-
+// ::-webkit-scrollbar {
+//     -webkit-appearance: none;
+//     width: 5px;
+// }
+// ::-webkit-scrollbar-thumb {
+//     border-radius: 5px;
+//     background-color: rgba(0, 0, 0, .5);
+//     -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+// }
 
 /* 
   Allow angular.js to be loaded in body, hiding cloaked elements until 

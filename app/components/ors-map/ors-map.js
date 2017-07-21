@@ -46,12 +46,22 @@ angular.module('orsApp')
                     layerRouteExtras: L.featureGroup(),
                     layerLocations: L.featureGroup(),
                     layerRouteDrag: L.featureGroup(),
+                    layerTmcMarker: L.featureGroup()
                 };
                 $scope.mapModel = {
                     map: $scope.orsMap,
                     geofeatures: $scope.geofeatures
                 };
-                $scope.mapModel.map.createPane('isochronesPane');
+                $scope.locateControl = L.control.locate({
+                        locateOptions: {
+                            enableHighAccuracy: true,
+                            showPopup: false,
+                            strings: {
+                                title: ""
+                            }
+                        }
+                    })
+                    .addTo($scope.mapModel.map);
                 /* HEIGHTGRAPH CONTROLLER */
                 $scope.hg = L.control.heightgraph({
                     width: 800,
@@ -277,6 +287,7 @@ angular.module('orsApp')
                     orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), userOptions);
                 };
                 $scope.processMapWaypoint = (idx, pos, updateWp = false, fireRequest = true) => {
+                    console.error(pos)
                     // add waypoint to map
                     // get the address from the response
                     if (updateWp) {
@@ -364,16 +375,8 @@ angular.module('orsApp')
                     // if only one waypoint is set, clear the route line layer
                     if (setCnt == 1) $scope.clearLayer('layerRouteLines');
                 };
-                $scope.reshuffleIndices = (actionPackage) => {
-                    let i = 0;
-                    $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
-                        layer.eachLayer((sublayer) => {
-                            sublayer.options.index = i;
-                        });
-                        i++;
-                    });
-                };
                 $scope.reshuffleIndicesText = (actionPackage) => {
+                    console.log(actionPackage)
                     let i = 0;
                     $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
                         let markerIcon;
@@ -453,14 +456,12 @@ angular.module('orsApp')
                     $scope.subcategoriesLookup = orsLocationsService.getSubcategoriesLookup();
                     $scope.mapModel.geofeatures[actionPackage.layerCode].clearLayers();
                     const highlightFeature = (e) => {
-                        console.log(true)
                         // const layer = e.target;
                         // let locationsIconHighlight = L.divIcon(lists.locationsIconHighlight);
                         // locationsIconHighlight.options.html = lists.locations_icons[$scope.subcategoriesLookup[parseInt(layer.feature.properties.category)]];
                         // layer.setIcon(locationsIconHighlight);
                     };
                     const resetHighlight = (e) => {
-                        console.log(false)
                         // const layer = e.target;
                         // let locationsIconHighlightReset = L.divIcon(lists.locationsIcon);
                         // locationsIconHighlightReset.options.html = lists.locations_icons[$scope.subcategoriesLookup[parseInt(layer.feature.properties.category)]];
@@ -540,18 +541,21 @@ angular.module('orsApp')
                  * adds numbered marker if not yet added 
                  * @param {Object} actionPackage - The action actionPackage
                  */
-                $scope.toggleNumberedMarker = (actionPackage) => {
-                    let add = true;
-                    $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
-                        if (layer.options.index == actionPackage.featureId) {
-                            $scope.mapModel.geofeatures[actionPackage.layerCode].removeLayer(layer);
-                            add = false;
-                            return;
-                        }
-                    });
-                    if (add) {
-                        $scope.addNumberedMarker(actionPackage.geometry, actionPackage.featureId, actionPackage.layerCode, true);
-                    }
+                $scope.addIsochronesMarker = (actionPackage) => {
+                    $scope.addNumberedMarker(actionPackage.geometry, actionPackage.featureId, actionPackage.layerCode, true);
+                };
+                /**
+                 * adds numbered marker if not yet added 
+                 * @param {Object} actionPackage - The action actionPackage
+                 */
+                $scope.toggleIsochronesMarker = (actionPackage) => {
+                    const idx = actionPackage.extraInformation.idx;
+                    const toggle = actionPackage.extraInformation.toggle;
+                    const marker = $scope.mapModel.geofeatures[actionPackage.layerCode].getLayers()[idx];
+                    if (toggle) angular.element(marker._icon)
+                        .addClass('hideMarker');
+                    else angular.element(marker._icon)
+                        .removeClass('hideMarker');
                 };
                 let createLabelIcon = function(labelClass, labelText) {
                     return L.divIcon({
@@ -560,80 +564,73 @@ angular.module('orsApp')
                         iconSize: L.point(17, 17)
                     });
                 };
-                $scope.getGradientColor = (rangePos) => {
-                    const hsl = Math.floor(120 - 120 * rangePos);
+                $scope.removeIsochrones = (actionPackage) => {
+                    const idx = actionPackage.featureId;
+                    const layerToRemove = $scope.mapModel.geofeatures[actionPackage.layerCode].getLayers()[idx];
+                    layerToRemove.removeFrom($scope.mapModel.geofeatures[actionPackage.layerCode]);
+                };
+                $scope.toggleIsochrones = (actionPackage) => {
+                    const toggle = actionPackage.extraInformation.toggle;
+                    const idx = actionPackage.extraInformation.idx;
+                    $scope.mapModel.geofeatures[actionPackage.layerCode].getLayers()[idx].setStyle({
+                        opacity: toggle === true ? 0 : 1,
+                        weight: toggle === true ? 0 : 1,
+                        fillOpacity: toggle === true ? 0 : 1
+                    });
+                };
+                $scope.toggleIsochroneIntervals = (actionPackage) => {
+                    const toggle = actionPackage.extraInformation.toggle;
+                    const idx = actionPackage.extraInformation.idx;
+                    const iIdx = actionPackage.extraInformation.iIdx;
+                    $scope.mapModel.geofeatures[actionPackage.layerCode].getLayers()[idx].getLayers()[iIdx].setStyle({
+                        opacity: toggle === true ? 0 : 1,
+                        weight: toggle === true ? 0 : 1,
+                        fillOpacity: toggle === true ? 0 : 1
+                    });
+                };
+                $scope.getGradientColor = (rangePos, colorRangeStart) => {
+                    const hsl = Math.floor(colorRangeStart - 120 * rangePos);
                     return "hsl(" + hsl + ", 100%, 50%" + ")";
                 };
-                /** 
-                 * adds polygon array to specific layer
-                 * @param {Object} actionPackage - The action actionPackage
-                 */
-                $scope.togglePolygons = (actionPackage) => {
-                    // check if isochrones with this index are already on the map, if they are remove them
-                    let add = true;
-                    $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
-                        layer.eachLayer((isochrone) => {
-                            if (isochrone.options.index == actionPackage.featureId) {
-                                add = false;
-                                $scope.mapModel.geofeatures[actionPackage.layerCode].removeLayer(layer);
-                                return;
-                            }
-                        });
-                    });
-                    if (add) {
-                        let isochrones = new L.FeatureGroup();
-                        for (let i = actionPackage.geometry.length - 1; i >= 0; i--) {
-                            L.polygon(actionPackage.geometry[i].geometry.coordinates[0], {
-                                    fillColor: actionPackage.geometry.length == 1 ? $scope.getGradientColor(1) : $scope.getGradientColor(i / (actionPackage.geometry.length - 1)),
-                                    color: '#FFF',
-                                    weight: 1,
-                                    fillOpacity: 1,
-                                    index: actionPackage.featureId,
-                                    pane: 'isochronesPane'
-                                })
-                                .addTo(isochrones);
-                        }
-                        isochrones.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
-                        $scope.opacityIsochrones();
+                $scope.colorRangeIsochronesRotator = lists.isochronesColorsRanges;
+                $scope.addIsochrones = (actionPackage) => {
+                    const randomColorsSelected = orsSettingsFactory.getUserOptions()
+                        .randomIsochronesColors === true ? true : false;
+                    let colorRangeStart = 120;
+                    if (randomColorsSelected) {
+                        colorRangeStart = $scope.colorRangeIsochronesRotator[0];
+                        $scope.colorRangeIsochronesRotator.push(colorRangeStart);
+                        $scope.colorRangeIsochronesRotator.splice(0, 1);
                     }
-                };
-                /** 
-                 * adds polygon array to specific layer but skip intervals
-                 * @param {Object} actionPackage - The action actionPackage
-                 */
-                $scope.togglePolygonsIntervals = (actionPackage) => {
-                    $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
-                        layer.eachLayer((isochrone) => {
-                            if (isochrone.options.index == actionPackage.featureId) {
-                                $scope.mapModel.geofeatures[actionPackage.layerCode].removeLayer(layer);
-                            }
-                        });
-                    });
-                    let isochrones = new L.FeatureGroup();
+                    const isochrones = [];
+                    const isochronesPane = 'isochronesPane' + actionPackage.featureId;
+                    $scope.mapModel.map.createPane(isochronesPane);
                     for (let i = actionPackage.geometry.length - 1; i >= 0; i--) {
-                        // if i is in the list of indices of intervals to be hidden, skip
-                        if (actionPackage.extraInformation.intervalIndices.indexOf(i) == -1) {
-                            L.polygon(actionPackage.geometry[i].geometry.coordinates[0], {
-                                    fillColor: actionPackage.geometry.length == 1 ? $scope.getGradientColor(1) : $scope.getGradientColor(i / (actionPackage.geometry.length - 1)),
-                                    color: '#FFF',
-                                    weight: 1,
-                                    fillOpacity: 1,
-                                    index: actionPackage.featureId,
-                                    pane: 'isochronesPane'
-                                })
-                                .addTo(isochrones);
-                        }
+                        let isochrone = L.polygon(actionPackage.geometry[i].geometry.coordinates[0], {
+                            fillColor: actionPackage.geometry.length == 1 ? $scope.getGradientColor(1, colorRangeStart) : $scope.getGradientColor(i / (actionPackage.geometry.length - 1), colorRangeStart),
+                            color: '#FFF',
+                            weight: 1,
+                            fillOpacity: 1,
+                            index: actionPackage.featureId,
+                            pane: isochronesPane
+                        });
+                        isochrones.push(isochrone);
                     }
+                    new L.FeatureGroup(isochrones)
+                        .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     $scope.opacityIsochrones();
-                    isochrones.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                 };
                 $scope.opacityIsochrones = () => {
-                    // hack to change opacity of entire overlaypane layer but prevent opacity of stroke
-                    let svg = d3.select($scope.mapModel.map.getPanes()
-                            .isochronesPane)
-                        .style("opacity", 0.5);
-                    svg.selectAll("path")
-                        .style("stroke-opacity", 1);
+                    const mapPanes = $scope.mapModel.map.getPanes();
+                    console.log(mapPanes)
+                    for (let pane in mapPanes) {
+                        if (pane.startsWith("isochronesPane")) {
+                            let svg = d3.select(mapPanes[pane]);
+                            svg.style("opacity", 0.5);
+                            svg.selectAll("path")
+                                .style("stroke-opacity", 1);
+                        }
+                    }
                 };
                 /** 
                  * clears layer entirely or specific layer in layer
@@ -692,7 +689,8 @@ angular.module('orsApp')
                 $scope.showHereMessage = (pos) => {
                     $scope.mapModel.map.closePopup();
                     const lngLatString = orsUtilsService.parseLngLatString(pos);
-                    // get the information of the rightclick location 
+                    const latLngString = orsUtilsService.parseLatLngString(pos);
+                    // get the information of the rightclick    location 
                     const payload = orsUtilsService.geocodingPayload(lngLatString, true);
                     const request = orsRequestService.geocode(payload);
                     request.promise.then((data) => {
@@ -703,7 +701,7 @@ angular.module('orsApp')
                         } else {
                             $scope.address.info = $scope.translateFilter('NO_ADDRESS');
                         }
-                        $scope.address.position = lngLatString;
+                        $scope.address.position = latLngString;
                         $scope.mapModel.map.addControl($scope.hereControl);
                     }, (response) => {
                         orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
@@ -1021,23 +1019,11 @@ angular.module('orsApp')
                         case 3:
                             $scope.highlightWaypoint(params._package);
                             break;
-                        case 4:
-                            $scope.togglePolygons(params._package);
-                            break;
                         case 5:
                             $scope.clearMap();
                             break;
-                        case 6:
-                            $scope.reshuffleIndices(params._package);
-                            break;
                         case 7:
                             $scope.clearFeaturegroup(params._package);
-                            break;
-                        case 8:
-                            $scope.toggleNumberedMarker(params._package);
-                            break;
-                        case 9:
-                            $scope.reshuffleIndicesText(params._package);
                             break;
                         case 10:
                             $scope.addLocations(params._package);
@@ -1045,8 +1031,26 @@ angular.module('orsApp')
                         case 11:
                             $scope.highlightPoi(params._package);
                             break;
-                        case 12:
-                            $scope.togglePolygonsIntervals(params._package);
+                        case 30:
+                            $scope.addIsochrones(params._package);
+                            break;
+                        case 31:
+                            $scope.toggleIsochrones(params._package);
+                            break;
+                        case 32:
+                            $scope.toggleIsochroneIntervals(params._package);
+                            break;
+                        case 33:
+                            $scope.reshuffleIndicesText(params._package);
+                            break;
+                        case 34:
+                            $scope.addIsochronesMarker(params._package);
+                            break;
+                        case 35:
+                            $scope.removeIsochrones(params._package);
+                            break;
+                        case 36:
+                            $scope.toggleIsochronesMarker(params._package);
                             break;
                         default:
                             break;
