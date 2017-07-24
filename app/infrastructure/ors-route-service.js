@@ -1,5 +1,5 @@
 angular.module('orsApp.route-service', [])
-    .factory('orsRouteService', ['$q', '$http', 'orsUtilsService', 'orsMapFactory', 'orsObjectsFactory', 'lists', 'ENV', ($q, $http, orsUtilsService, orsMapFactory, orsObjectsFactory, lists, ENV) => {
+    .factory('orsRouteService', ['$q', '$http', 'orsUtilsService', 'orsMapFactory', 'orsObjectsFactory', 'lists', 'mappings', 'ENV', ($q, $http, orsUtilsService, orsMapFactory, orsObjectsFactory, lists, mappings, ENV) => {
         /**
          * Requests geocoding from ORS backend
          * @param {String} requestData: XML for request payload
@@ -164,7 +164,7 @@ angular.module('orsApp.route-service', [])
             const fetchExtrasAtPoint = (extrasObj, idx) => {
                 const extrasAtPoint = {};
                 angular.forEach(extrasObj, function(values, key) {
-                    extrasAtPoint[key] = values[idx];
+                    extrasAtPoint[key] = mappings[key][values[idx]].text;
                 });
                 return extrasAtPoint;
             };

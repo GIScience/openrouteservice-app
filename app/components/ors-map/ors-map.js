@@ -524,7 +524,6 @@ angular.module('orsApp')
                         })
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     polyLine.setStyle(actionPackage.style);
-                    const elevation = (actionPackage.geometry[0].length === 3) ? true : false;
                     const pointList = actionPackage.extraInformation.pointInformation;
                     // polyLine.on("mouseover", (e) => {
                     //     $scope.mapModel.map.closePopup();
@@ -568,7 +567,7 @@ angular.module('orsApp')
                             .openOn($scope.mapModel.map);
                         $timeout(function() {
                             $scope.popup.update();
-                        });
+                        }, 300);
                         // returns id of previous route point
                         function getPositionOnRoute(map, polyLine, pos) {
                             const factor = L.GeometryUtil.locateOnLine(map, polyLine, pos);
@@ -1155,11 +1154,7 @@ angular.module('orsApp')
     .directive('orsInterpolatedpointPopup', ['$translate', ($translate) => {
         return {
             restrict: 'E',
-            template: ` <div ng-bind-html="('DISTANCE' | translate)"></div>
-                        <div ng-bind-html="distanceAtInterpolatedPoint">
-                            distanceAtInterpolatedPoint
-                        </div>
-            `,
+            templateUrl: 'components/ors-map/directive-templates/ors-route-point-popup.html',
             link: (scope, elem, attr) => {}
         };
     }]);
