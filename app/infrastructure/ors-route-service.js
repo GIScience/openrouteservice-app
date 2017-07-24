@@ -73,7 +73,7 @@ angular.module('orsApp.route-service', [])
         orsRouteService.addRoute = (route, focusIdx) => {
             const routePadding = orsObjectsFactory.createMapAction(1, lists.layers[1], route.geometry, undefined, lists.layerStyles.routePadding());
             orsMapFactory.mapServiceSubject.onNext(routePadding);
-            const routeLine = orsObjectsFactory.createMapAction(1, lists.layers[1], route.geometry, undefined, lists.layerStyles.route(), {
+            const routeLine = orsObjectsFactory.createMapAction(40, lists.layers[1], route.geometry, undefined, lists.layerStyles.route(), {
                 pointInformation: route.point_information
             });
             orsMapFactory.mapServiceSubject.onNext(routeLine);
