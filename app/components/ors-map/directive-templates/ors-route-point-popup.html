@@ -1,0 +1,83 @@
+<table style="width:100%">
+    <tr>
+        <th>
+            <div ng-bind-html="('DISTANCE' | translate)">
+            </div>
+        </th>
+        <td>
+            <div ng-bind-html="distanceAtInterpolatedPoint">
+                {{distanceAtInterpolatedPoint | number : 1 }}
+            </div>
+        </td>
+    </tr>
+    <tr ng-if="">
+        <th>
+            <div ng-bind-html="('HEIGHT' | translate)">
+            </div>
+        </th>
+        <td>
+            <div ng-bind="interpolatedRoutePoint.heights.height">
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <div ng-bind-html="('SURFACE' | translate)">
+            </div>
+        </th>
+        <td>
+            <div ng-bind-html="interpolatedRoutePoint.extras.surface">
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <div ng-bind-html="('waytypes' | translate)">
+            </div>
+        </th>
+        <td>
+            <div ng-bind-html="interpolatedRoutePoint.extras.waytypes">
+            </div>
+        </td>
+    </tr>
+    <tr ng-if="">
+        <th>
+            <div ng-bind-html="('steepness' | translate)">
+            </div>
+        </th>
+        <td>
+            <div ng-bind-html="interpolatedRoutePoint.extras.steepness">
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <div ng-bind-html="('suitability' | translate)">
+            </div>
+        </th>
+        <td>
+            <div ng-bind-html="interpolatedRoutePoint.extras.suitability">
+            </div>
+        </td>
+    </tr>
+        <tr>
+        <th>
+            <div ng-bind-html="('GREEN' | translate)">
+            </div>
+        </th>
+        <td>
+            <div ng-bind-html="interpolatedRoutePoint.extras.green">
+            </div>
+        </td>
+    </tr>
+        <tr>
+        <th>
+            <div ng-bind-html="('noise' | translate)">
+            </div>
+        </th>
+        <td>
+            <div ng-bind-html="interpolatedRoutePoint.extras.noise">
+            </div>
+        </td>
+    </tr>
+</table>
