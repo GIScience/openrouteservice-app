@@ -525,25 +525,47 @@ angular.module('orsApp')
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     polyLine.setStyle(actionPackage.style);
                     const pointList = actionPackage.extraInformation.pointInformation;
-                    // polyLine.on("mouseover", (e) => {
-                    //     $scope.mapModel.map.closePopup();
-                    //     $scope.displayPos = e.latlng;
-                    //     addHoverPoint();
-                    //     function addHoverPoint() {
-                    //         // TODO
-                    //     };
-                    //     const popupDirective = '<div ng-bind-html="(\'DRAGTOADD\' | translate)"></div>';
-                    //     const popupContent = $compile(popupDirective)($scope);
-                    //     $scope.popup.setContent(popupContent[0])
-                    //         .setLatLng($scope.displayPos)
-                    //         .openOn($scope.mapModel.map);
-                    //     $timeout(function() {
-                    //         $scope.popup.update();
-                    //     }, 100);
-                    //     polyLine.on("mouseout", (e) => {
-                    //         $scope.mapModel.map.closePopup();
-                    //     });
-                    // });
+                    polyLine.on("mouseover", (e) => {
+                        console.log($scope.mapModel.geofeatures)
+                        $scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
+                        $scope.mapModel.map.closePopup();
+                        $scope.displayPos = e.latlng;
+                        addHoverPoint();
+
+                        function getPositionOnRoute(map, polyLine, pos) {
+                            const factor = L.GeometryUtil.locateOnLine(map, polyLine, pos);
+                            const predecessorPoint = L.GeometryUtil.interpolateOnLine(map, polyLine, factor);
+                            return {
+                                latlng: predecessorPoint.latLng
+                            };
+                        }
+                        function addHoverPoint() {
+                            let snapPosition = getPositionOnRoute($scope.mapModel.map, polyLine, e.latlng);
+                            console.log(snapPosition, $scope.mapModel.geofeatures.layerRouteLines)
+                            let hoverPoint = L.circle(snapPosition.latlng, {
+                                    radius: 2.5,
+                                    weight: 1,
+                                    color: 'white',
+                                    fillColor: 'orange',
+                                    fillOpacity: 1,
+                                    bubblingMouseEvents: true,
+                                    interactive: true,
+                                    draggable: true
+                                })
+                                .addTo($scope.mapModel.geofeatures.layerRouteDrag);
+                        }
+                        // const popupDirective = '<div ng-bind-html="(\'DRAGTOADD\' | translate)"></div>';
+                        // const popupContent = $compile(popupDirective)($scope);
+                        // $scope.popup.setContent(popupContent[0])
+                        //     .setLatLng($scope.displayPos)
+                        //     .openOn($scope.mapModel.map);
+                        // $timeout(function() {
+                        //     $scope.popup.update();
+                        // }, 100);
+                        // polyLine.on("mouseout", (e) => {
+                        //     $scope.mapModel.map.closePopup();
+                        // });
+                    });
                     // polyLine.on("mousedown", (e) => {
                     //     $scope.mapModel.map.closePopup();
                     //     $scope.displayPos = e.latlng;
