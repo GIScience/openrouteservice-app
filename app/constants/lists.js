@@ -44,49 +44,90 @@ angular.module('orsApp')
                 elevation: false,
                 subgroup: 'Car',
                 request: 'driving-car',
-                shortValue: '0'
+                shortValue: '0',
+                extras: {
+                    surface: true,
+                    waytype: true,
+                    suitability: true
+                }
             },
             Bicycle: {
                 name: 'Bicycle',
                 elevation: true,
                 subgroup: 'Bicycle',
                 request: 'cycling-regular',
-                shortValue: '1a'
+                shortValue: '1a',
+                extras: {
+                    surface: true,
+                    waytype: true,
+                    suitability: true,
+                    steepness: true
+                }
             },
             BicycleMTB: {
                 name: 'BicycleMTB',
                 elevation: true,
                 subgroup: 'Bicycle',
                 request: 'cycling-mountain',
-                shortValue: '1b'
+                shortValue: '1b',
+                extras: {
+                    surface: true,
+                    waytype: true,
+                    suitability: true,
+                    steepness: true
+                }
             },
             BicycleRacer: {
                 name: 'BicycleRacer',
                 elevation: true,
                 subgroup: 'Bicycle',
                 request: 'cycling-road',
-                shortValue: '1c'
+                shortValue: '1c',
+                extras: {
+                    surface: true,
+                    waytype: true,
+                    suitability: true,
+                    steepness: true
+                }
             },
             BicycleTour: {
                 name: 'BicycleTour',
                 elevation: true,
                 subgroup: 'Bicycle',
                 request: 'cycling-tour',
-                shortValue: '1d'
+                shortValue: '1d',
+                extras: {
+                    surface: true,
+                    waytype: true,
+                    suitability: true,
+                    steepness: true
+                }
             },
             BicycleSafety: {
                 name: 'BicycleSafety',
                 elevation: true,
                 subgroup: 'Bicycle',
                 request: 'cycling-safe',
-                shortValue: '1e'
+                shortValue: '1e',
+                extras: {
+                    surface: true,
+                    waytype: true,
+                    suitability: true,
+                    steepness: true
+                }
             },
             BicycleElectro: {
                 name: 'BicycleElectro',
                 elevation: true,
                 subgroup: 'Bicycle',
                 request: 'cycling-electric',
-                shortValue: '1f'
+                shortValue: '1f',
+                extras: {
+                    surface: true,
+                    waytype: true,
+                    suitability: true,
+                    steepness: true
+                }
             },
             Pedestrian: {
                 name: 'Pedestrian',
@@ -94,7 +135,14 @@ angular.module('orsApp')
                 subgroup: 'Pedestrian',
                 request: 'foot-walking',
                 shortValue: '2',
-                green: true
+                extras: {
+                    surface: true,
+                    waytype: true,
+                    suitability: true,
+                    steepness: true,
+                    green: true,
+                    noise: true
+                }
             },
             PedestrianHiking: {
                 name: 'PedestrianHiking',
@@ -102,70 +150,117 @@ angular.module('orsApp')
                 subgroup: 'Pedestrian',
                 request: 'foot-hiking',
                 shortValue: '2b',
-                green: true
+                extras: {
+                    surface: true,
+                    waytype: true,
+                    suitability: true,
+                    steepness: true,
+                    green: true,
+                    noise: true
+                }
             },
             Wheelchair: {
                 name: 'Wheelchair',
                 elevation: true,
                 subgroup: 'Wheelchair',
                 request: 'wheelchair',
-                shortValue: '3'
+                shortValue: '3',
+                extras: {
+                    surface: true,
+                    waytype: true,
+                    suitability: true,
+                    steepness: true
+                }
             },
             hgv: {
                 name: 'hgv',
                 elevation: false,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
-                shortValue: '4a'
+                shortValue: '4a',
+                extras: {
+                    surface: true,
+                    waytype: true,
+                    suitability: true
+                }
             },
             goods: {
                 name: 'goods',
                 elevation: false,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
-                shortValue: '4b'
+                shortValue: '4b',
+                extras: {
+                    surface: true,
+                    waytype: true,
+                    suitability: true
+                }
             },
             bus: {
                 name: 'bus',
                 elevation: false,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
-                shortValue: '4c'
+                shortValue: '4c',
+                extras: {
+                    surface: true,
+                    waytype: true,
+                    suitability: true
+                }
             },
             agricultural: {
                 name: 'agricultural',
                 elevation: false,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
-                shortValue: '4d'
+                shortValue: '4d',
+                extras: {
+                    surface: true,
+                    waytype: true,
+                    suitability: true
+                }
             },
             forestry: {
                 name: 'forestry',
                 elevation: false,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
-                shortValue: '4e'
+                shortValue: '4e',
+                extras: {
+                    surface: true,
+                    waytype: true,
+                    suitability: true
+                }
             },
             delivery: {
                 name: 'delivery',
                 elevation: false,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
-                shortValue: '4f'
+                shortValue: '4f',
+                extras: {
+                    surface: true,
+                    waytype: true,
+                    suitability: true
+                }
             },
             EmergencyVehicle: {
                 name: 'EmergencyVehicle',
                 elevation: false,
                 subgroup: 'Car',
                 request: 'driving-emergency',   
-                shortValue: '5a'
+                shortValue: '5a',
+                extras: {
+                }
             },
             FireEngine: {
                 name: 'FireEngine',
                 elevation: false,
                 subgroup: 'Emergency',
                 request: 'driving-emergency',
-                shortValue: '5b'
+                shortValue: '5b',
+                extras: {
+                }
             }
         },
         optionList: {
@@ -448,6 +543,14 @@ angular.module('orsApp')
                     // defaultlenght: 7
                 },
             },
+            green: {
+                min: 0.1,
+                max: 1
+            },
+            quiet: {
+                min: 0.1,
+                max: 1
+            }
         },
         isochroneOptionList: {
             methodOptions: {
@@ -634,6 +737,9 @@ angular.module('orsApp')
                 };
             }
         },
+        isochronesColorsRanges: [
+            360, 300, 240, 180, 120, 60
+        ],
         errors: {
             CONNECTION: {
                 translate: 'CONNECTION',
@@ -686,14 +792,14 @@ angular.module('orsApp')
             wheelchair: '<i class="fa fa-wheelchair-alt"></i>'
         },
         measure_locale: {
-        	'de-DE': 'de',
-        	'en-US': 'en',
-        	'en-GB': 'en_UK',
-        	'zh-CN': 'cn',
-        	'pt-PT': 'pt_PT',
-        	'es-ES': 'es',
-        	'ru-RU': 'ru',
-        	'fr-FR': 'fr',
-        	'pl-PL': 'pl'
+            'de-DE': 'de',
+            'en-US': 'en',
+            'en-GB': 'en_UK',
+            'zh-CN': 'cn',
+            'pt-PT': 'pt_PT',
+            'es-ES': 'es',
+            'ru-RU': 'ru',
+            'fr-FR': 'fr',
+            'pl-PL': 'pl'
         }
     });

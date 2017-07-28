@@ -2,7 +2,7 @@
 	<i ng-class="$ctrl.collapseIcon"></i>
 </div>
 <div ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.waypoints" class="ors-wp-list">
-     <div ng-repeat="waypoint in $ctrl.waypoints" ng-show="$ctrl.collapseWp($index)" class="ors-wp-item">
+     <div ng-repeat="waypoint in $ctrl.waypoints" ng-show="$ctrl.collapseWp($index)" class="ors-wp-container">
      	<ors-waypoint idx="$index" on-delete="$ctrl.deleteWaypoint(idx)" on-address-changed="$ctrl.addressChanged(waypoint)" waypoint="waypoint" waypoints="$ctrl.waypoints" show-add="$ctrl.showAdd">
 		</ors-waypoint>
 		<div class="ui horizontal divider ors-wp-divider" ng-show="$ctrl.showViapoints($index)">
