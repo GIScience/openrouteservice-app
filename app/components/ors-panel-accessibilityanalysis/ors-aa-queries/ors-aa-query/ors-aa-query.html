@@ -65,6 +65,10 @@
                 <i class="fa fa-lg fa-male">
                 </i>
             </div>
+            <div ng-switch-when="driving-emergency">
+                <i class="fa fa-lg fa-ambulance">
+                </i>
+            </div>
         </div>
         <div class="waypoint">
             <h4 ng-bind-html="$ctrl.attributes.info.address">
@@ -95,7 +99,8 @@
                     </th>
                     <th>
                         <span>
-                            <i class="fa fa-check"></i>
+                            <i class="fa fa-check">
+                            </i>
                         </span>
                     </th>
                 </tr>
@@ -120,7 +125,8 @@
                     </td>
                     <td>
                         <span ng-click="$ctrl.deEmph(); $ctrl.toggleInterval($index, $event, ctrl.showIntervals[$index]);">
-                        <i ng-class="$ctrl.showIntervals[$index] ? 'fa fa-toggle-on': 'fa fa-toggle-off'"></i>
+                            <i ng-class="$ctrl.showIntervals[$index] ? 'fa fa-toggle-on': 'fa fa-toggle-off'">
+                            </i>
                         </span>
                     </td>
                 </tr>

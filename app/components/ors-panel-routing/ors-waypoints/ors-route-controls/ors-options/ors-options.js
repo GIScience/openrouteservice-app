@@ -432,7 +432,7 @@ angular.module('orsApp.ors-options', [])
                 if (changesObj.showOptions) ctrl.refreshSlider();
                 if (changesObj.activeSubgroup || changesObj.activeProfile) {
                     console.log('hallo', changesObj.activeProfile)
-                    ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeSubgroup];
+                    ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeProfile];
                     // check if already initiated
                     /** update slider settings */
                     if (ctrl.maxspeedSlider) {

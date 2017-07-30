@@ -247,7 +247,7 @@ angular.module('orsApp')
             EmergencyVehicle: {
                 name: 'EmergencyVehicle',
                 elevation: false,
-                subgroup: 'Car',
+                subgroup: 'Emergency',
                 request: 'driving-emergency',   
                 shortValue: '5a',
                 extras: {
@@ -526,6 +526,12 @@ angular.module('orsApp')
                     default: 100,
                     step: 5
                 },
+                Emergency: {
+                    min: 30,
+                    max: 200,
+                    default: 130,
+                    step: 5
+                },
                 EmergencyVehicle: {
                     min: 30,
                     max: 220,
@@ -584,6 +590,7 @@ angular.module('orsApp')
                 Bicycle: 20,
                 Wheelchair: 5,
                 HeavyVehicle: 80,
+                Emergency: 80,
             }
         },
         userOptions: {
