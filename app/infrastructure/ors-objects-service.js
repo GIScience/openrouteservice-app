@@ -1,5 +1,20 @@
 angular.module('orsApp.objects-service', [])
     .factory('orsObjectsFactory', () => {
+        class point {
+            /**
+             * Create a waypoint.
+             * @param {string} address - The address string.
+             * @param {Object} latlng - The leaflet latlng object.
+             */
+            constructor(lat, lng) {
+                this.type = "Feature";
+                this.properties = {};
+                this.geometry = {
+                    "type": "Point",
+                    "coordinates": [lng, lat]
+                };
+            }
+        }
         /** Class representing a waypoint. */
         class waypoint {
             /**
@@ -35,6 +50,13 @@ angular.module('orsApp.objects-service', [])
             }
         }
         return {
+            /**
+             * Get new waypoint.
+             * @return {Object} A new waypoint object.
+             */
+            createPoint: (lat, lng) => {
+                return new point(lat, lng);
+            },
             /**
              * Get new waypoint.
              * @return {Object} A new waypoint object.

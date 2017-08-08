@@ -45,8 +45,9 @@ angular.module('orsApp')
                     layerRouteNumberedMarkers: L.featureGroup(),
                     layerRouteExtras: L.featureGroup(),
                     layerLocations: L.featureGroup(),
-                    layerTmcMarker: L.featureGroup(),
-                    layerRouteDrag: L.featureGroup()
+                    layerRouteDrag: L.featureGroup(),
+                    layerTmcMarker: L.featureGroup()
+
                 };
                 $scope.mapModel = {
                     map: $scope.orsMap,
@@ -512,14 +513,15 @@ angular.module('orsApp')
                         })
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     polyLine.setStyle(actionPackage.style);
+                    let elevation = (actionPackage.geometry[0].length === 3) ? true : false;
                     polyLine.on("mouseover", (e) => {
                         $scope.mapModel.map.closePopup();
                         $scope.displayPos = e.latlng;
+                        addHoverPoint();
 
                         function addHoverPoint() {
-                            console.log("hover")
+                            // TODO
                         };
-                        $scope.dragText = $scope.translateFilter('DRAGTOADD');
                         const popupDirective = '<div ng-bind-html="(\'DRAGTOADD\' | translate)"></div>';
                         const popupContent = $compile(popupDirective)($scope);
                         $scope.popup.setContent(popupContent[0])
@@ -532,9 +534,104 @@ angular.module('orsApp')
                             $scope.mapModel.map.closePopup();
                         });
                     });
+                    polyLine.on("mousedown", (e) => {
+                        $scope.mapModel.map.closePopup();
+                        $scope.displayPos = e.latlng;
+                        // TODO: create waypoint and drag immediately
+                        const popupDirective = '<div ng-bind-html="(\'DRAGTOADD\' | translate)"></div>';
+                        console.log("down")
+                        polyLine.on("mouseout", (e) => {
+                            console.log("out")
+                        });
+                    });
+                    polyLine.on("click", (e) => {
+                        $scope.mapModel.map.closePopup();
+                        $scope.displayPos = e.latlng;
+
+                        // returns id of previous route point
+                        function getPositionOnRoute(map, linegeom, pos) {
+                            let factor = L.GeometryUtil.locateOnLine(map, linegeom, pos);
+                            let lastPos = L.GeometryUtil.interpolateOnLine(map, linegeom, factor);
+                            // ^ returns -1 for click between 0th and 1st point
+                            if (lastPos.predecessor == -1) {
+                                lastPos.predecessor = 0;
+                            }
+                            return lastPos;
+                        }
+
+                        // fetches point info of surrounding points and calculates exact values
+                        function getCurrentPointInfo(last, pos) {
+                            let lastPointInfo = actionPackage.extraInformation.pointInformation[last];
+                            let nextPointInfo = actionPackage.extraInformation.pointInformation[last + 1];
+                            // factor for line position between the 2 points
+                            let lineSegment = L.polyline([
+                                [lastPointInfo.coords][0],
+                                [nextPointInfo.coords][0]
+                            ]);
+                            let factor = L.GeometryUtil.locateOnLine($scope.mapModel.map, lineSegment, L.latLng(pos));
+                            let thisPointInfo = angular.copy(lastPointInfo);
+
+                            function calcCurrent(last, next) {
+                                let current = last + (next - last) * factor;
+                                return parseFloat(current.toFixed(1));
+                            }
+                            thisPointInfo.coords = [
+                                pos.lat,
+                                pos.lng
+                            ];
+                            thisPointInfo.distance = calcCurrent(lastPointInfo.distance, nextPointInfo.distance);
+                            thisPointInfo.point_id = calcCurrent(lastPointInfo.point_id, nextPointInfo.point_id);
+                            // create only for elevation data
+                            if (elevation) {
+                                let thisElevation = calcCurrent(lastPointInfo.heights.height, nextPointInfo.heights.height);
+                                thisPointInfo.heights.height = thisElevation;
+                                // calculate only if ascen/descent is present 
+                                // TODO if value too small rounds to and shows Zero
+                                if ('ascent' in nextPointInfo.heights) {
+                                    if (!('ascent' in lastPointInfo.heights)) {
+                                        thisPointInfo.heights.ascent = calcCurrent(0, nextPointInfo.heights.ascent);
+                                    } else {
+                                        thisPointInfo.heights.ascent = calcCurrent(lastPointInfo.heights.ascent, nextPointInfo.heights.ascent);
+                                    }
+                                }
+                                if ('descent' in nextPointInfo.heights) {
+                                    if (!('descent' in lastPointInfo.heights)) {
+                                        thisPointInfo.heights.descent = calcCurrent(0, nextPointInfo.heights.descent);
+                                    } else {
+                                        thisPointInfo.heights.descent = calcCurrent(lastPointInfo.heights.descent, nextPointInfo.heights.descent);
+                                    }
+                                }
+                            }
+                            return thisPointInfo;
+                        }
+                        let previous = getPositionOnRoute($scope.mapModel.map, polyLine, e.latlng);
+                        let pointInf = getCurrentPointInfo(previous.predecessor, e.latlng);
+
+                        console.log(pointInf)
+
+                        // TODO popup shows 
+                        $scope.pointInfo = pointInf;
+                        $scope.pointPopup = L.popup({
+                            minWidth: 150,
+                            closeButton: true,
+                            className: 'cm-popup'
+                        });
+                        let popupDirective = `
+                            <div ng-bind-html="(\'DISTANCE\' | translate)"></div><div>: $scope.pointInfo.distance</div>`;
+                        let popupContent = $compile(popupDirective)($scope);
+                        $scope.pointPopup.setContent(popupContent[0])
+                            .setLatLng($scope.displayPos)
+                            .openOn($scope.mapModel.map);
+                        $timeout(function() {
+                            $scope.pointPopup.update();
+                        }, 100);
+                        polyLine.on("mouseout", (e) => {
+                            $scope.mapModel.map.closePopup();
+                        });
+                    });
                     // add popup
                     // add point on route
-                    // on click creat viapoint
+                    // on mousedown creat viapoint
                     // on dragend set viapoint -> at right position in route
                 };
                 /**
