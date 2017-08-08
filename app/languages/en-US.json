@@ -152,7 +152,7 @@
     "SHARE_LINK": "Share link", 
     "SHORTEN": "Short URL", 
     "SHORTEN_HINT": "You can also copy the link from your browser's address bar.", 
-    "GREEN_ROUTING": "Prefer green areas",
+    "GREEN_ROUTING": "Prefer green areas", 
     "QUIET_ROUTING": "Prefer quiet areas", 
     "DONATE": "Donate!", 
     "DONATE_TEXT": "Please donate your geographic data to", 
@@ -169,5 +169,7 @@
     "DRAGTOADD": "Drag to add a via point. Click for point info",
     "EMERGENCY": "Emergency Vehicle (Bavaria)", 
     "EMERGENCYVEHICLE": "Basic Emergency Vehicle", 
-    "FIREENGINE": "Fire Engine"
+    "FIREENGINE": "Fire Engine",
+    "noise": "Noise index", 
+    "height": "Height"
 }

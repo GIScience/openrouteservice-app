@@ -169,5 +169,7 @@
     "DRAGTOADD": "Drag to add a via point. Click for point info",
     "EMERGENCY": "Emergency Vehicle (Bavaria)", 
     "EMERGENCYVEHICLE": "Basic Emergency Vehicle", 
-    "FIREENGINE": "Fire Engine"
+    "FIREENGINE": "Fire Engine",
+    "noise": "Noise index", 
+    "height": "Height"
 }

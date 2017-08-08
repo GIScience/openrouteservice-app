@@ -1,0 +1,143 @@
+<table style="width:100%">
+    <tr>
+    	<td align='center'>
+    		<i class="fa fa-lg fa-arrows-h"></i>
+    	</td>
+        <th>
+            <div ng-bind-html="('DISTANCE' | translate)">
+            </div>
+        </th>
+        <td>
+            <div ng-show="{{distanceAtInterpolatedPoint >= 1000}}">
+                {{distanceAtInterpolatedPoint / 1000 | number : 1 }} km
+            </div>
+            <div ng-show="{{distanceAtInterpolatedPoint < 1000}}">
+                {{distanceAtInterpolatedPoint | number : 1 }} m
+            </div>
+        </td>
+    </tr>
+    <tr ng-if="interpolatedRoutePoint.heights">
+    	<td align='center'>
+    		<i class="fa fa-lg fa-arrows-v"></i>
+    	</td>
+        <th>
+            <div ng-bind-html="('height' | translate)">
+            </div>
+        </th>
+        <td>
+            <div>
+                {{interpolatedRoutePoint.heights.height}} m a.s.l
+            </div>
+        </td>
+    </tr>
+    <tr ng-if="interpolatedRoutePoint.heights.ascent">
+    	<td align='center'>
+    		<i class="fa fa-lg fa-long-arrow-down fa-rotate-225"></i>
+    	</td>
+        <th>
+            <div ng-bind-html="('ASCENT' | translate)">
+            </div>
+        </th>
+        <td>
+            <div>
+                {{interpolatedRoutePoint.heights.ascent}} m
+            </div>
+        </td>
+    </tr>
+    <tr ng-if="interpolatedRoutePoint.heights.descent">
+    	<td align='center'>
+    		<i class="fa fa-lg fa-long-arrow-up fa-rotate-135"></i>
+    	</td>
+        <th>
+            <div ng-bind-html="('DESCENT' | translate)">
+            </div>
+        </th>
+        <td>
+            <div>
+                {{interpolatedRoutePoint.heights.descent}} m
+            </div>
+        </td>
+    </tr>
+    <tr>
+    	<td align='center'>
+    		<i class="fa fa-lg fa-road"></i>
+    	</td>
+        <th>
+            <div ng-bind-html="('SURFACE' | translate)">
+            </div>
+        </th>
+        <td>
+            <div ng-bind-html="(interpolatedRoutePoint.extras.surface | translate)">
+            </div>
+        </td>
+    </tr>
+    <tr>
+    	<td align='center'>
+    		<i class="fa fa-lg fa-question"></i>
+    	</td>
+        <th>
+            <div ng-bind-html="('waytypes' | translate)">
+            </div>
+        </th>
+        <td>
+            <div ng-bind-html="(interpolatedRoutePoint.extras.waytypes | translate)">
+            </div>
+        </td>
+    </tr>
+    <tr ng-if="interpolatedRoutePoint.heights">
+    	<td align='center'>
+    		<i class="fa fa-lg fa-area-chart"></i>
+    	</td>
+        <th>
+            <div ng-bind-html="('steepness' | translate)">
+            </div>
+        </th>
+        <td>
+            <div>
+                {{interpolatedRoutePoint.extras.steepness}}
+            </div>
+        </td>
+    </tr>
+    <tr>
+    	<td align='center'>
+    		<i class="fa fa-lg fa-thumbs-o-up"></i>
+    	</td>
+        <th>
+            <div ng-bind-html="('suitability' | translate)">
+            </div>
+        </th>
+        <td>
+            <div>
+                {{interpolatedRoutePoint.extras.suitability}}
+            </div>
+        </td>
+    </tr>
+    <tr ng-if="interpolatedRoutePoint.extras.green">
+    	<td align='center'>
+    		<i class="fa fa-lg fa-leaf"></i>
+    	</td>
+        <th>
+            <div ng-bind-html="('green' | translate)">
+            </div>
+        </th>
+        <td>
+            <div>
+                {{interpolatedRoutePoint.extras.green}}
+            </div>
+        </td>
+    </tr>
+    <tr ng-if="interpolatedRoutePoint.extras.noise">
+    	<td align='center'>
+    		<i class="fa fa-lg fa-volume-down"></i>
+    	</td>
+        <th>
+            <div ng-bind-html="('noise' | translate)">
+            </div>
+        </th>
+        <td>
+            <div>
+                {{interpolatedRoutePoint.extras.noise}}
+            </div>
+        </td>
+    </tr>
+</table>

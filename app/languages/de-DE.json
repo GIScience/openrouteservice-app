@@ -169,5 +169,7 @@
     "DRAGTOADD": "Ziehen für Wegpunkt, klicken für Infos",
     "EMERGENCY": "Notfall Fahrzeuge (Bayern)", 
     "EMERGENCYVEHICLE": "Einsatzfahrzeug", 
-    "FIREENGINE": "Feuerwehrfahrzeug"
+    "FIREENGINE": "Feuerwehrfahrzeug",
+    "noise": "Lautstärkeindex", 
+    "height": "Höhe"
 }
