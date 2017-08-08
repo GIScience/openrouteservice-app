@@ -639,7 +639,8 @@ angular.module('orsApp')
             5: 'layerAccessibilityAnalysisNumberedMarkers',
             6: 'layerRouteNumberedMarkers',
             7: 'layerRouteExtras',
-            8: 'layerLocations'
+            8: 'layerLocations',
+            9: 'layerRouteDrag'
         },
         layerStyles: {
             route: function() {
@@ -684,6 +685,11 @@ angular.module('orsApp')
                     opacity: 1
                 };
             },
+            hoverPoint: function() {
+                return {
+                    
+                }
+            }
             rand: function(min, max) {
                 return parseInt(Math.random() * (max - min + 1), 10) + min;
             },
