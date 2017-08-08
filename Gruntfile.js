@@ -215,7 +215,7 @@ module.exports = function(grunt) {
                 constants: {
                     ENV: {
                         name: 'development',
-                        geocoding: 'http://129.206.7.188:8080/ors/geocode',
+                        geocoding: 'http://localhost:8082/openrouteservice-4.2.0/geocode',
                         routing: 'http://localhost:8082/openrouteservice-4.2.0/routes',
                         tmc: 'http://129.206.228.188:8080/ors/routes?tmc',
                         analyse: 'http://localhost:8082/openrouteservice-4.2.0/isochrones',
@@ -236,6 +236,22 @@ module.exports = function(grunt) {
                         tmc: 'http://129.206.228.124:8080/ors/routes?tmc',
                         analyse: 'http://129.206.228.124:8080/ors/isochrones',
                         places: 'http://129.206.228.124:8080/ors/locations',
+                        shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
+                    }
+                },
+            },
+            emergency: {
+                options: {
+                    dest: 'app/js/config.js'
+                },
+                constants: {
+                    ENV: {
+                        name: 'development',
+                        geocoding: 'http://129.206.7.95:8080/ors/geocode',
+                        routing: 'http://129.206.7.95:8080/ors/routes',
+                        tmc: 'http://129.206.7.95:8080/ors/routes?tmc',
+                        analyse: '129.206.7.95:8080/ors/isochrones',
+                        places: 'http://129.206.7.95:8080/ors/locations',
                         shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
                     }
                 },
@@ -391,6 +407,7 @@ module.exports = function(grunt) {
     grunt.registerTask('staging', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:development', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
     grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:production', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
     grunt.registerTask('zugspitze', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:zugspitze', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
+    grunt.registerTask('emergency','Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:zugspitze', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
     grunt.registerTask('serve', 'Run local server', ['less:development', 'browserify:turf', 'ngtemplates', 'ngconstant:development', 'connect:dev', 'watch']);
     grunt.registerTask('labs', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'clean:task_rm_build', 'copy:build', 'ngconstant:labs', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:labs', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
     grunt.registerTask('servelabs', 'Run local server', ['browserify:turf', 'less:development', 'ngconstant:labs', 'connect:dev', 'watch']);
