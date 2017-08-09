@@ -435,6 +435,15 @@ angular.module('orsApp')
                     value: 'axleload'
                 }
             },
+            hgvDefaults:{
+                FireEngine: {
+                    height: 3,
+                    width: 2.5,
+                    hgvWeight: 7.5,
+                    axleload: 1,
+                    length: 7
+                },
+            },
             maxspeeds: {
                 Car: {
                     min: 30,
@@ -490,6 +499,12 @@ angular.module('orsApp')
                     default: 8,
                     step: 1
                 },
+                hgv: {
+                    min: 30,
+                    max: 200,
+                    default: 100,
+                    step: 5
+                },
                 HeavyVehicle: {
                     min: 30,
                     max: 200,
@@ -542,11 +557,7 @@ angular.module('orsApp')
                     min: 30,
                     max: 200,
                     default: 80,
-                    step: 5 
-                    // defaultweight: 7.5,
-                    // defaultheight: 3,
-                    // defaultwidth: 2.5,
-                    // defaultlenght: 7
+                    step: 5,
                 },
             },
             green: {

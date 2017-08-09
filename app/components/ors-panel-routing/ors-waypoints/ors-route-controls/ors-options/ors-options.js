@@ -35,7 +35,7 @@ angular.module('orsApp.ors-options', [])
                     }
                 };
                 // set maxspeed slider from params
-                ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeSubgroup];
+                ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeProfile];
                 // enable or disable checkbox depending on whether maxspeed is set
                 let maxspeedVal;
                 if (ctrl.currentOptions.maxspeed >= 0) {
@@ -185,34 +185,64 @@ angular.module('orsApp.ors-options', [])
                     if (fireRequest) ctrl.changeOptions();
                 };
                 if (ctrl.currentOptions.hazmat !== undefined) ctrl.currentOptions.hazmat = true;
-                const hgvParamsInit = {
-                    height: {
-                        val: ctrl.optionList.hgvParams.height.min,
-                        checkbox: 'hgvHeightCb'
-                    },
-                    width: {
-                        val: ctrl.optionList.hgvParams.width.min,
-                        checkbox: 'hgvWidthCb'
-                    },
-                    hgvWeight: {
-                        val: ctrl.optionList.hgvParams.hgvWeight.min,
-                        checkbox: 'hgvWeightCb'
-                    },
-                    axleload: {
-                        val: ctrl.optionList.hgvParams.axleload.min,
-                        checkbox: 'hgvAxleloadCb'
-                    },
-                    length: {
-                        val: ctrl.optionList.hgvParams.length.min,
-                        checkbox: 'hgvLengthCb'
-                    }
-                };
+                let hgvParamsInit = {};
+                if (ctrl.optionList.hgvDefaults[ctrl.activeProfile] !== undefined) {
+                    hgvParamsInit = {
+                        height: {
+                            val: ctrl.optionList.hgvDefaults[ctrl.activeProfile].height,
+                            checkbox: 'hgvHeightCb'
+                        },
+                        width: {
+                            val: ctrl.optionList.hgvDefaults[ctrl.activeProfile].width,
+                            checkbox: 'hgvWidthCb'
+                        },
+                        hgvWeight: {
+                            val: ctrl.optionList.hgvDefaults[ctrl.activeProfile].hgvWeight,
+                            checkbox: 'hgvWeightCb'
+                        },
+                        axleload: {
+                            val: ctrl.optionList.hgvDefaults[ctrl.activeProfile].axleload,
+                            checkbox: 'hgvAxleloadCb'
+                        },
+                        length: {
+                            val: ctrl.optionList.hgvDefaults[ctrl.activeProfile].length,
+                            checkbox: 'hgvLengthCb'
+                        }
+                    };
+                } else {
+                    hgvParamsInit = {
+                        height: {
+                            val: ctrl.optionList.hgvParams.height.min,
+                            checkbox: 'hgvHeightCb'
+                        },
+                        width: {
+                            val: ctrl.optionList.hgvParams.width.min,
+                            checkbox: 'hgvWidthCb'
+                        },
+                        hgvWeight: {
+                            val: ctrl.optionList.hgvParams.hgvWeight.min,
+                            checkbox: 'hgvWeightCb'
+                        },
+                        axleload: {
+                            val: ctrl.optionList.hgvParams.axleload.min,
+                            checkbox: 'hgvAxleloadCb'
+                        },
+                        length: {
+                            val: ctrl.optionList.hgvParams.length.min,
+                            checkbox: 'hgvLengthCb'
+                        }
+                    };
+                }
                 // check if params contain hgv settings within range
                 angular.forEach(hgvParamsInit, (val, key) => {
+                    console.log(ctrl.optionList.hgvDefaults[ctrl.activeProfile][key])
                     if (ctrl.currentOptions[key] >= ctrl.optionList.hgvParams[key].min && ctrl.currentOptions[key] <= ctrl.optionList.hgvParams[key].max) {
-                        console.log(ctrl.currentOptions[key])
-                        hgvParamsInit[key].val = ctrl.currentOptions[key];
-                        ctrl[hgvParamsInit[key].checkbox] = true;
+                        hgvParamsInit[key].val = ctrl.currentOptions[key].val;
+                        ctrl[val.checkbox] = true;
+                    } else if (ctrl.optionList.hgvDefaults[ctrl.activeProfile][key] >= ctrl.optionList.hgvParams[key].min && ctrl.optionList.hgvDefaults[ctrl.activeProfile][key] <= ctrl.optionList.hgvParams[key].max) {
+                        ctrl[val.checkbox] = true;
+                    } else {
+                        ctrl[val.checkbox] = false;
                     }
                 });
                 ctrl.hgvSliders = {

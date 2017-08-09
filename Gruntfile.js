@@ -215,11 +215,11 @@ module.exports = function(grunt) {
                 constants: {
                     ENV: {
                         name: 'development',
-                        geocoding: 'http://localhost:8082/openrouteservice-4.2.0/geocode',
-                        routing: 'http://localhost:8082/openrouteservice-4.2.0/routes',
-                        tmc: 'http://129.206.228.188:8080/ors/routes?tmc',
-                        analyse: 'http://localhost:8082/openrouteservice-4.2.0/isochrones',
-                        places: 'http://129.206.7.188:8080/ors/locations',
+                        geocoding: 'https://disaster-api.openrouteservice.org/emergency/geocode',
+                        routing: 'https://disaster-api.openrouteservice.org/emergency/routes',
+                        tmc: 'https://disaster-api.openrouteservice.org/emergency/routes?tmc',
+                        analyse: 'https://disaster-api.openrouteservice.org/emergency/isochrones',
+                        places: 'https://disaster-api.openrouteservice.org/emergency/locations',
                         shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
                     }
                 },
@@ -247,11 +247,11 @@ module.exports = function(grunt) {
                 constants: {
                     ENV: {
                         name: 'development',
-                        geocoding: 'http://129.206.7.95:8080/ors/geocode',
-                        routing: 'http://129.206.7.95:8080/ors/routes',
-                        tmc: 'http://129.206.7.95:8080/ors/routes?tmc',
-                        analyse: '129.206.7.95:8080/ors/isochrones',
-                        places: 'http://129.206.7.95:8080/ors/locations',
+                        geocoding: 'https://disaster-api.openrouteservice.org/emergency/geocode',
+                        routing: 'https://disaster-api.openrouteservice.org/emergency/routes',
+                        tmc: 'https://disaster-api.openrouteservice.org/emergency/routes?tmc',
+                        analyse: 'https://disaster-api.openrouteservice.org/emergency/isochrones',
+                        places: 'https://disaster-api.openrouteservice.org/emergency/locations',
                         shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
                     }
                 },
