@@ -32,7 +32,7 @@ angular.module('orsApp.ors-summary', ['orsApp.ors-exportRoute-controls', 'orsApp
                         const hgGeojson = orsRouteService.processHeightgraphData(ctrl.route);
                         orsRouteService.addHeightgraph(hgGeojson);
                     }
-                    orsRouteService.addRoute(ctrl.route.geometry);
+                    orsRouteService.addRoute(ctrl.route);
                 }
             }
             /** if we are returning to this panel, dispose all old subscriptions */
