@@ -182,14 +182,22 @@ angular.module('orsApp.route-service', [])
                     list.push(val.values[val.values.length - 1][2]);
                     extrasObj[key] = list;
                 });
-            })();
+            });
             const info_array = [];
             const geometry = route.geometry;
             const segments = route.segments;
             // declare cumulative statistic variables
-            let descent = ascent = distance = segment_distance = step_distance = point_distance = 0;
+            // a=b=c=d= 0 not working in strict mode
+            let descent = 0;
+            let ascent = 0;
+            let distance = 0;
+            let segment_distance = 0;
+            let step_distance = 0;
+            let point_distance = 0;
             // declare incrementing ids
-            let segment_id = step_id = point_id = 0;
+            let segment_id = 0;
+            let step_id = 0;
+            let point_id = 0;
             // loop the geometry and calculate distances
             for (let i = 0; i < geometry.length; i++) {
                 const lat = geometry[i][0];

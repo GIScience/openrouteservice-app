@@ -246,7 +246,7 @@ module.exports = function(grunt) {
                 },
                 constants: {
                     ENV: {
-                        name: 'development',
+                        name: 'emergency',
                         geocoding: 'https://disaster-api.openrouteservice.org/emergency/geocode',
                         routing: 'https://disaster-api.openrouteservice.org/emergency/routes',
                         tmc: 'https://disaster-api.openrouteservice.org/emergency/routes?tmc',
@@ -407,7 +407,7 @@ module.exports = function(grunt) {
     grunt.registerTask('staging', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:development', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
     grunt.registerTask('build', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:production', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
     grunt.registerTask('zugspitze', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:zugspitze', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
-    grunt.registerTask('emergency','Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:zugspitze', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
+    grunt.registerTask('emergency','Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:emergency', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
     grunt.registerTask('serve', 'Run local server', ['less:development', 'browserify:turf', 'ngtemplates', 'ngconstant:development', 'connect:dev', 'watch']);
     grunt.registerTask('labs', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'clean:task_rm_build', 'copy:build', 'ngconstant:labs', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:labs', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
     grunt.registerTask('servelabs', 'Run local server', ['browserify:turf', 'less:development', 'ngconstant:labs', 'connect:dev', 'watch']);
