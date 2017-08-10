@@ -8,9 +8,15 @@ angular.module('orsApp.ors-addresses', ['orsApp.ors-exportRoute-controls'])
         controller: ['orsSettingsFactory', 'orsMapFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsMessagingService', 'lists', function(orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsMessagingService, lists) {
             let ctrl = this;
             console.log(ctrl.showGeocodingPanelIdx);
-            ctrl.waypoint = orsSettingsFactory.getWaypoints()[ctrl.showGeocodingPanelIdx];
-            ctrl.checkForAddresses = () => {
-                if (ctrl.addresses) ctrl.showAddresses = true;
+            ctrl.$onInit = () => {
+                ctrl.isDirections = ctrl.showGeocodingPanelIdx === undefined ? false : true;
+                if (ctrl.isDirections) {
+                    ctrl.waypoint = orsSettingsFactory.getWaypoints()[ctrl.showGeocodingPanelIdx];
+                    ctrl.addresses = orsRequestService.savedRequests.directions[ctrl.showGeocodingPanelIdx];
+                } else {
+                    ctrl.waypoint = orsSettingsFactory.getWaypoints()[0];
+                    ctrl.addresses = orsRequestService.savedRequests.geocoding[0];
+                }
             };
             ctrl.addressChanged = () => {
                 let addressString = ctrl.waypoint._address;
@@ -29,7 +35,6 @@ angular.module('orsApp.ors-addresses', ['orsApp.ors-exportRoute-controls'])
                             },
                             shortaddress: positionString
                         }];
-                        ctrl.showAddresses = true;
                     } else {
                         ctrl.contructPayLoad();
                     }
@@ -38,6 +43,7 @@ angular.module('orsApp.ors-addresses', ['orsApp.ors-exportRoute-controls'])
                 }
             };
             ctrl.contructPayLoad = () => {
+                ctrl.addresses = [];
                 const payload = orsUtilsService.geocodingPayload(ctrl.waypoint._address);
                 const request = orsRequestService.geocode(payload);
                 orsRequestService.geocodeRequests.updateRequest(request, ctrl.idx, 'routeRequests');
@@ -46,7 +52,11 @@ angular.module('orsApp.ors-addresses', ['orsApp.ors-exportRoute-controls'])
                     if (data.features.length > 0) {
                         ctrl.addresses = orsUtilsService.addShortAddresses(data.features);
                         console.log(ctrl.addresses)
-                        ctrl.showAddresses = true;
+                        if (ctrl.isDirections) {
+                            orsRequestService.savedRequests.directions[ctrl.showGeocodingPanelIdx] = ctrl.addresses;
+                        } else {
+                            orsRequestService.savedRequests.geocoding[0] = ctrl.addresses;
+                        }
                     } else {
                         orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
                     }
@@ -58,13 +68,13 @@ angular.module('orsApp.ors-addresses', ['orsApp.ors-exportRoute-controls'])
                 });
             };
             ctrl.select = (address) => {
-                ctrl.showAddresses = false;
                 ctrl.showGeocodingPanel = !ctrl.showGeocodingPanel;
                 const addressStrings = [address.processed.primary, address.processed.secondary];
                 ctrl.waypoint._address = addressStrings.join(", ");
                 ctrl.waypoint._latlng = L.latLng(address.geometry.coordinates[1], address.geometry.coordinates[0]);
                 ctrl.waypoint._set = 1;
-                orsSettingsFactory.setWaypoint(ctrl.waypoint, ctrl.showGeocodingPanelIdx, true);
+                const idx = ctrl.showGeocodingPanelIdx === undefined ? 0 : ctrl.showGeocodingPanelIdx;
+                orsSettingsFactory.setWaypoint(ctrl.waypoint, idx, true);
                 orsRequestService.zoomTo([
                     [address.geometry.coordinates[1], address.geometry.coordinates[0]]
                 ]);

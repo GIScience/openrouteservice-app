@@ -1,8 +1,8 @@
 <div class="ors-addresses-input">
     <div class="ui left icon input">
-        <input ng-change="$ctrl.addressChanged()" ng-click="$ctrl.checkForAddresses()" ng-model="$ctrl.waypoint._address" ng-model-options="{debounce: 1000}" placeholder="{{$ctrl.getPlaceholder()}}" select-on-click="" type="text">
+        <input ng-change="$ctrl.addressChanged()" ng-model="$ctrl.waypoint._address" ng-model-options="{debounce: 1000}" placeholder="{{$ctrl.getPlaceholder()}}" select-on-click="" type="text">
         </input>
-        <i class="circular search link icon">
+        <i class="fa fa-search icon">
         </i>
     </div>
     <div>
@@ -19,7 +19,7 @@
     </ors-loading>
 </div>
 <div class="ors-addresses-container">
-    <div ng-if="!$ctrl.isLoading && $ctrl.showAddresses" class="addresses-list">
+    <div ng-if="!$ctrl.isLoading" class="addresses-list">
         <div ng-repeat="feature in $ctrl.addresses" ng-click="$ctrl.select(feature)">
             <div class="content">
                 <div class="left">

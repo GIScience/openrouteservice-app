@@ -9,6 +9,10 @@ angular.module('orsApp.request-service', [])
         orsRequestService.geocodeRequests.aaRequests = [];
         orsRequestService.geocodeRequests.routeRequests = [];
         orsRequestService.requestSubject = new Rx.Subject();
+        orsRequestService.savedRequests = {
+            directions: [],
+            geocoding: []
+        };
         /** Subscription function to geocoding request. */
         orsRequestService.subscribeToGeocodingRequest = (o) => {
             return orsRequestService.requestSubject.subscribe(o);
