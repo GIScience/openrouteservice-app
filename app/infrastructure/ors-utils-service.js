@@ -238,8 +238,10 @@ angular.module('orsApp.utils-service', [])
             } else {
                 options.avoid_features = options.avoid_features.slice(0, -1);
             }
-            if (subgroup == 'HeavyVehicle') {
-                options.vehicle_type = settings.profile.type;
+            if (subgroup == 'HeavyVehicle' || subgroup == 'Emergency') {
+                if (subgroup == 'HeavyVehicle') {
+                    options.vehicle_type = settings.profile.type; 
+                }
                 if (!angular.isUndefined(settings.profile.options.width)) options.profile_params.restrictions.width = settings.profile.options.width.toString();
                 if (!angular.isUndefined(settings.profile.options.height)) options.profile_params.restrictions.height = settings.profile.options.height.toString();
                 if (!angular.isUndefined(settings.profile.options.hgvWeight)) options.profile_params.restrictions.weight = settings.profile.options.hgvWeight.toString();

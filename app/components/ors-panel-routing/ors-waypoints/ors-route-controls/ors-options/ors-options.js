@@ -136,37 +136,37 @@ angular.module('orsApp.ors-options', [])
                     switch (name) {
                         case 'height':
                             if (ctrl.hgvHeightCb === true) {
-                                ctrl.hgvSliders.Height.options.disabled = false;
+                                ctrl.hgvSliders.Height.options.enabled = true;
                                 ctrl.currentOptions.height = ctrl.hgvSliders.Height.value;
                             } else if (ctrl.hgvHeightCb === false) {
-                                ctrl.hgvSliders.Height.options.disabled = true;
+                                ctrl.hgvSliders.Height.options.enabled = false;
                                 delete ctrl.currentOptions.height;
                             }
                             break;
                         case 'width':
                             if (ctrl.hgvWidthCb === true) {
-                                ctrl.hgvSliders.Width.options.disabled = false;
+                                ctrl.hgvSliders.Width.options.enabled = true;
                                 ctrl.currentOptions.width = ctrl.hgvSliders.Width.value;
                             } else if (ctrl.hgvWidthCb === false) {
-                                ctrl.hgvSliders.Width.options.disabled = true;
+                                ctrl.hgvSliders.Width.options.enabled = false;
                                 delete ctrl.currentOptions.width;
                             }
                             break;
                         case 'length':
                             if (ctrl.hgvLengthCb === true) {
-                                ctrl.hgvSliders.Length.options.disabled = false;
+                                ctrl.hgvSliders.Length.options.enabled = true;
                                 ctrl.currentOptions.length = ctrl.hgvSliders.Length.value;
                             } else if (ctrl.hgvLengthCb === false) {
-                                ctrl.hgvSliders.Length.options.disabled = true;
+                                ctrl.hgvSliders.Length.options.enabled = false;
                                 delete ctrl.currentOptions.length;
                             }
                             break;
                         case 'hgvWeight':
                             if (ctrl.hgvWeightCb === true) {
-                                ctrl.hgvSliders.Weight.options.disabled = false;
+                                ctrl.hgvSliders.Weight.options.enabled = true;
                                 ctrl.currentOptions.hgvWeight = ctrl.hgvSliders.Weight.value;
                             } else if (ctrl.hgvWeightCb === false) {
-                                ctrl.hgvSliders.Weight.options.disabled = true;
+                                ctrl.hgvSliders.Weight.options.enabled = false;
                                 delete ctrl.currentOptions.hgvWeight;
                             }
                             break;
@@ -197,7 +197,7 @@ angular.module('orsApp.ors-options', [])
                             checkbox: 'hgvWidthCb'
                         },
                         hgvWeight: {
-                            val: ctrl.optionList.hgvDefaults[ctrl.activeProfile].hgvWeight,
+                            val: ctrl.optionList.hgvDefaults[ctrl.activeProfile].weight,
                             checkbox: 'hgvWeightCb'
                         },
                         axleload: {
@@ -235,23 +235,25 @@ angular.module('orsApp.ors-options', [])
                 }
                 // check if params contain hgv settings within range
                 angular.forEach(hgvParamsInit, (val, key) => {
-                    console.log(ctrl.optionList.hgvDefaults[ctrl.activeProfile][key])
-                    if (ctrl.currentOptions[key] >= ctrl.optionList.hgvParams[key].min && ctrl.currentOptions[key] <= ctrl.optionList.hgvParams[key].max) {
+                    if (ctrl.optionList.hgvDefaults[ctrl.activeProfile] !== undefined) {
+                        hgvParamsInit[key].val = ctrl.optionList.hgvDefaults[ctrl.activeProfile][key]
+                        ctrl[val.checkbox] = true;
+                    } else if (ctrl.currentOptions[key] >= ctrl.optionList.hgvParams[key].min && ctrl.currentOptions[key] <= ctrl.optionList.hgvParams[key].max) {
                         hgvParamsInit[key].val = ctrl.currentOptions[key].val;
                         ctrl[val.checkbox] = true;
-                    } else if (ctrl.optionList.hgvDefaults[ctrl.activeProfile][key] >= ctrl.optionList.hgvParams[key].min && ctrl.optionList.hgvDefaults[ctrl.activeProfile][key] <= ctrl.optionList.hgvParams[key].max) {
-                        ctrl[val.checkbox] = true;
-                    } else {
-                        ctrl[val.checkbox] = false;
+                    // } else if (ctrl.optionList.hgvDefaults[ctrl.activeProfile] !== undefined && (ctrl.optionList.hgvDefaults[ctrl.activeProfile][key] >= ctrl.optionList.hgvParams[key].min && ctrl.optionList.hgvDefaults[ctrl.activeProfile][key] <= ctrl.optionList.hgvParams[key].max)) {
+                    //     ctrl[val.checkbox] = true;
                     }
                 });
                 ctrl.hgvSliders = {
                     Height: {
                         value: hgvParamsInit.height.val,
                         options: {
-                            disabled: !ctrl.hgvHeightCb,
+                            enabled: ctrl.hgvHeightCb,
                             floor: ctrl.optionList.hgvParams.height.min,
                             ceil: ctrl.optionList.hgvParams.height.max,
+                            step: 0.5,
+                            precision: 1,
                             translate: (value) => {
                                 return value + ' <b>m</b>';
                             },
@@ -264,9 +266,11 @@ angular.module('orsApp.ors-options', [])
                     Length: {
                         value: hgvParamsInit.length.val,
                         options: {
-                            disabled: !ctrl.hgvLengthCb,
+                            enabled: ctrl.hgvLengthCb,
                             floor: ctrl.optionList.hgvParams.length.min,
                             ceil: ctrl.optionList.hgvParams.length.max,
+                            step: 0.5,
+                            precision: 1,
                             translate: (value) => {
                                 return value + ' <b>m</b>';
                             },
@@ -279,9 +283,11 @@ angular.module('orsApp.ors-options', [])
                     Width: {
                         value: hgvParamsInit.width.val,
                         options: {
-                            disabled: !ctrl.hgvWidthCb,
+                            enabled: ctrl.hgvWidthCb,
                             floor: ctrl.optionList.hgvParams.width.min,
                             ceil: ctrl.optionList.hgvParams.width.max,
+                            step: 0.5,
+                            precision: 1,
                             translate: (value) => {
                                 return value + ' <b>m</b>';
                             },
@@ -309,9 +315,11 @@ angular.module('orsApp.ors-options', [])
                     Weight: {
                         value: hgvParamsInit.hgvWeight.val,
                         options: {
-                            disabled: !ctrl.hgvWeightCb,
+                            enabled: ctrl.hgvWeightCb,
                             floor: ctrl.optionList.hgvParams.hgvWeight.min,
                             ceil: ctrl.optionList.hgvParams.hgvWeight.max,
+                            step: 0.5,
+                            precision: 1,
                             translate: (value) => {
                                 return value + ' <b>t</b>';
                             },
@@ -474,6 +482,21 @@ angular.module('orsApp.ors-options', [])
                         if (ctrl.currentOptions.maxspeed) {
                             ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
                         }
+                    }
+                    if (ctrl.activeSubgroup == 'Emergency') {
+                        ctrl.hgvLengthCb = true;
+                        ctrl.hgvWidthCb = true;
+                        ctrl.hgvWeight = true;
+                        ctrl.hgvHeightCb = true;
+                        if (ctrl.activeProfile == 'FireEngine') {
+                            ctrl.currentOptions.height = ctrl.optionList.hgvDefaults.FireEngine.height;
+                            ctrl.currentOptions.hgvWeight = ctrl.optionList.hgvDefaults.FireEngine.hgvWeight;
+                            ctrl.currentOptions.width = ctrl.optionList.hgvDefaults.FireEngine.width;
+                            ctrl.currentOptions.length = ctrl.optionList.hgvDefaults.FireEngine.length;
+                            ctrl.maxspeedCheckbox = true;
+                            ctrl.currentOptions.maxspeed = ctrl.optionList.maxspeeds.FireEngine.default;
+                        }
+                        ctrl.changeOptions();
                     }
                 }
             };
