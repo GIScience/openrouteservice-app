@@ -7,7 +7,7 @@ angular.module('orsApp.ors-summary', ['orsApp.ors-exportRoute-controls', 'orsApp
         },
         controller: ['$rootScope', 'orsSettingsFactory', 'orsMapFactory', 'orsObjectsFactory', 'orsRouteService', 'lists', function($rootScope, orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsRouteService, lists) {
             let ctrl = this;
-            
+            ctrl.checkboxes = [false, false, false, false];
             ctrl.showShare = false;
             ctrl.showExport = false;
             ctrl.profiles = lists.profiles;

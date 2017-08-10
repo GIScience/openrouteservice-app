@@ -3,7 +3,8 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart','orsApp.ors-r
         templateUrl: 'components/ors-panel-routing/ors-route-extras/ors-route-extras.html',
         bindings: {
             currentRoute: '<',
-            routeIndex: '<'
+            routeIndex: '<',
+            checkboxes: '<'
         },
         controller: ['$scope', 'mappings', 'orsRouteService', function($scope, mappings, orsRouteService) {
             let ctrl = this;
@@ -52,7 +53,6 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart','orsApp.ors-r
                 };
             };
             ctrl.routeExtras = [];
-            ctrl.checkboxes = [false, false, false, false];
             $scope.$watch('$ctrl.currentRoute', (route) => {
                 ctrl.routeExtras = [];
                 for (let key in route.extras) {
