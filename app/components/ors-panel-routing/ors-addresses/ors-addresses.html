@@ -1,0 +1,42 @@
+<div class="ors-addresses-input">
+    <div class="ui left icon input">
+        <input ng-change="$ctrl.addressChanged()" ng-click="$ctrl.checkForAddresses()" ng-model="$ctrl.waypoint._address" ng-model-options="{debounce: 1000}" placeholder="{{$ctrl.getPlaceholder()}}" select-on-click="" type="text">
+        </input>
+        <i class="circular search link icon">
+        </i>
+    </div>
+    <div>
+        <button class="tiny ui basic button ors-control-button" ng-class="{show: hoverInput}" ng-click="$ctrl.showGeocodingPanel = !$ctrl.showGeocodingPanel">
+            <i class="fa fa-lg fa-remove">
+            </i>
+        </button>
+    </div>
+</div>
+<div class="bottom-border">
+</div>
+<div>
+    <ors-loading>
+    </ors-loading>
+</div>
+<div class="ors-addresses-container">
+    <div ng-if="!$ctrl.isLoading && $ctrl.showAddresses" class="addresses-list">
+        <div ng-repeat="feature in $ctrl.addresses" ng-click="$ctrl.select(feature)">
+            <div class="content">
+                <div class="left">
+                    <i class="fa fa-lg fa-circle">
+                    </i>
+                </div>
+                <div class="right">
+                    <div>
+                        <h3 ng-bind-html="feature.processed.primary"></h3>
+                    </div>
+                    <div>
+                        <span ng-bind-html="feature.processed.secondary"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-border">
+            </div>
+        </div>
+    </div>
+</div>

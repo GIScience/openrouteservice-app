@@ -73,7 +73,6 @@ angular.module('orsApp.settings-service', [])
         orsSettingsFactory.setActiveOptions = (options, fireRequest) => {
             orsSettingsFactory[currentSettingsObj].getValue()
                 .profile.options = options;
-            console.log(orsSettingsFactory[currentSettingsObj].getValue())
             if (fireRequest) orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
             if (orsSettingsFactory.isInitialized) {
                 orsUtilsService.parseSettingsToPermalink(orsSettingsFactory[currentSettingsObj].getValue(), orsSettingsFactory.getUserOptions());
@@ -287,6 +286,20 @@ angular.module('orsApp.settings-service', [])
             /** fire a new request */
             if (fireRequest) orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
             orsSettingsFactory[currentWaypointsObj].onNext(waypoints);
+            orsUtilsService.parseSettingsToPermalink(orsSettingsFactory[currentSettingsObj].getValue(), orsSettingsFactory.getUserOptions());
+        };
+        /**
+         * Sets waypoint into settings.
+         * @param {waypoints.<Object>} List of waypoint objects.
+         */
+        orsSettingsFactory.setWaypoint = (waypoint, idx, fireRequest = true) => {
+            console.log('setting..', waypoint);
+            orsSettingsFactory[currentSettingsObj].getValue()
+                .waypoints[idx] = waypoint;
+            /** fire a new request */
+            if (fireRequest) orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
+            orsSettingsFactory[currentWaypointsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue()
+                .waypoints);
             orsUtilsService.parseSettingsToPermalink(orsSettingsFactory[currentSettingsObj].getValue(), orsSettingsFactory.getUserOptions());
         };
         /**
