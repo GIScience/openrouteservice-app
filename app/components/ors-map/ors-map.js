@@ -560,7 +560,7 @@ angular.module('orsApp')
                         $scope.interpolatedInformation = getPositionOnRoute($scope.mapModel.map, polyLine, e.latlng);
                         $scope.distanceAtInterpolatedPoint = $scope.interpolatedInformation.factorAlongRoute * pointList[pointList.length - 1].distance;
                         $scope.interpolatedRoutePoint = pointList[$scope.interpolatedInformation.predecessorIdx];
-                        const popupDirective = '<ors-interpolatedpoint-popup></ors-interpolatedpoint-popup>';
+                        const popupDirective = '<ors-route-point-popup></ors-route-point-popup>';
                         const popupContent = $compile(popupDirective)($scope);
                         $scope.popup.setContent(popupContent[0])
                             .setLatLng($scope.displayPos)
@@ -1151,7 +1151,7 @@ angular.module('orsApp')
         };
     }]);
 angular.module('orsApp')
-    .directive('orsInterpolatedpointPopup', ['$translate', ($translate) => {
+    .directive('orsRoutePointPopup', ['$translate', ($translate) => {
         return {
             restrict: 'E',
             templateUrl: 'components/ors-map/directive-templates/ors-route-point-popup.html',
