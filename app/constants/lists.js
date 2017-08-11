@@ -687,9 +687,16 @@ angular.module('orsApp')
             },
             hoverPoint: function() {
                 return {
-                    
-                }
-            }
+                    radius: 2.5,
+                    weight: 1,
+                    color: 'white',
+                    fillColor: 'orange',
+                    fillOpacity: 1,
+                    bubblingMouseEvents: 'true',
+                    interactive: 'true',
+                    draggable: 'true'
+                };
+            },
             rand: function(min, max) {
                 return parseInt(Math.random() * (max - min + 1), 10) + min;
             },

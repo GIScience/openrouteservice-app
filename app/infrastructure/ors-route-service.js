@@ -71,8 +71,8 @@ angular.module('orsApp.route-service', [])
             orsMapFactory.mapServiceSubject.onNext(action);
         };
         orsRouteService.addHoverpoint = () => {
-            const hoverPoint = orsObjectsFactory.createMapAction(1, lists.layers[9],)
-        }
+            const hoverPoint = orsObjectsFactory.createMapAction(1, lists.layers[9],geom, undefined);
+        };
         orsRouteService.addRoute = (route, focusIdx) => {
             const routePadding = orsObjectsFactory.createMapAction(1, lists.layers[1], route.geometry, undefined, lists.layerStyles.routePadding());
             orsMapFactory.mapServiceSubject.onNext(routePadding);
