@@ -315,6 +315,7 @@ angular.module('orsApp')
                     marker.addTo($scope.mapModel.geofeatures[layerCode]);
                 };
                 $scope.addWaypoint = (idx, iconIdx, pos, fireRequest = true, aaIcon = false) => {
+                    console.log(idx, iconIdx, pos)
                     let waypointIcon = aaIcon === true ? L.divIcon(lists.waypointIcons[3]) : L.divIcon(lists.waypointIcons[iconIdx]);
                     const waypointsLength = orsSettingsFactory.getWaypoints()
                         .length;
@@ -331,7 +332,10 @@ angular.module('orsApp')
                     let wayPointMarker = new L.marker(pos, {
                         icon: waypointIcon,
                         draggable: 'true',
-                        idx: idx
+                        idx: idx,
+                        autoPan: true,
+                        autoPanPadding: [50, 50],
+                        autoPanSpeed: 10
                     });
                     wayPointMarker.addTo($scope.mapModel.geofeatures.layerRoutePoints);
                     wayPointMarker.on('dragend', (event) => {
@@ -398,8 +402,9 @@ angular.module('orsApp')
                         } else if (actionPackage.featureId === undefined) {
                             if (actionPackage.geometry !== undefined) {
                                 if (actionPackage.geometry.lat && actionPackage.geometry.lng) {
-                                    console.log('panning')
-                                    $scope.mapModel.map.panTo(actionPackage.geometry);
+                                    $timeout(function() {
+                                        $scope.mapModel.map.panTo(actionPackage.geometry);
+                                    }, 100);
                                     //$scope.mapModel.map.setZoom(13);
                                 } else {
                                     let bounds = new L.LatLngBounds(actionPackage.geometry);
