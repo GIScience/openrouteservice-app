@@ -5,7 +5,8 @@ angular.module('orsApp.ors-aa-waypoints', ['orsApp.ors-aa-waypoint']).component(
         orsParams: '<',
         activeProfile: '<',
         activeSubgroup: '<',
-        currentOptions: '<'
+        currentOptions: '<',
+        showGeocodingPanel: '=',
     },
     controller: ['$scope', 'orsSettingsFactory', 'orsAaService', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', function($scope, orsSettingsFactory, orsAaService, orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService) {
         let ctrl = this;

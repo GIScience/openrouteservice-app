@@ -7,22 +7,14 @@
     </div>
     <div class="wp-input">
         <div class="ui right labeled fluid input" ng-mouseout="hoverInput=false;" ng-mouseover="hoverInput=true;">
-            <input ng-change="$ctrl.addressChanged()" ng-click="$ctrl.checkForAddresses()" ng-model="$ctrl.waypoint._address" ng-model-options="{debounce: 1000}" placeholder="{{$ctrl.getPlaceholder()}}" select-on-click="" type="text">
+            <input ng-click="$ctrl.callGeocodingPanel()" ng-model="$ctrl.waypoint._address" placeholder="{{$ctrl.getPlaceholder()}}" type="text" ng-readonly="true">
                 <div class="ui basic label wp-input-label">
                     <button class="tiny ui basic button ors-control-button" ng-class="{show: hoverInput}" ng-click="$ctrl.delete()">
-                        <i class="fa fa-remove">
+                        <i class="fa fa-trash">
                         </i>
                     </button>
                 </div>
             </input>
-        </div>
-    </div>
-</div>
-<div class="ors-addresses" ng-show="$ctrl.showAddresses">
-    <div class="ui divided list">
-        <div class="item" ng-repeat="feature in $ctrl.addresses">
-            <div ng-bind-html="feature.shortaddress" ng-click="$ctrl.select(feature)">
-            </div>
         </div>
     </div>
 </div>

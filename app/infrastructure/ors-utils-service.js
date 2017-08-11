@@ -343,46 +343,45 @@ angular.module('orsApp.utils-service', [])
         orsUtilsService.addShortAddresses = function(features) {
             angular.forEach(features, function(feature) {
                 const properties = feature.properties;
-                let shortAddress = '',
-                    streetAddress = '';
-                if ('name' in properties) {
-                    shortAddress += properties.name;
-                    shortAddress += ', ';
-                }
+                feature.processed = {};
+                // primary information
                 if ('street' in properties) {
+                    const streetAddress = [];
                     // street and name can be the same, just needed once
-                    if (properties.street && properties.street !== properties.name) {
-                        streetAddress += properties.street;
-                    }
+                    streetAddress.push(properties.street);
                     if ('house_number' in properties) {
-                        streetAddress += ' ' + properties.house_number;
+                        streetAddress.push(properties.house_number);
                     }
                     // street address with house number can also be the same as name
-                    if (streetAddress.length > 0 && streetAddress !== properties.name) {
-                        shortAddress += streetAddress + ', ';
+                    if (streetAddress.length > 0) {
+                        feature.processed.primary = streetAddress.join(", ");
                     }
+                } else if ('name' in properties) {
+                    feature.processed.primary = properties.name;
+                } else if ('city' in properties) {
+                    feature.processed.primary = properties.city;
                 }
-                //if ('postal_code' in properties) shortAddress += properties.postal_code;
-                if ('city' in properties) {
-                    shortAddress += properties.city;
-                    shortAddress += ', ';
+                // secondary information
+                const secondary = [];
+                if ('postal_code' in properties) {
+                    secondary.push(properties.postal_code);
+                }
+                if ('city' in properties && properties.city !== properties.name) {
+                    secondary.push(properties.city);
                 }
                 if ('state' in properties) {
-                    shortAddress += properties.state;
-                    shortAddress += ', ';
+                    secondary.push(properties.state);
                 } else if ('county' in properties) {
-                    shortAddress += properties.county;
-                    shortAddress += ', ';
+                    secondary.push(properties.county);
                 } else if ('district' in properties) {
-                    shortAddress += properties.district;
-                    shortAddress += ', ';
+                    secondary.push(properties.district);
                 }
+                feature.processed.secondary = secondary.join(", ");
+                console.log(feature.processed)
                 // if ('country' in properties) {
                 //     shortAddress += properties.country;
                 //     shortAddress += ', ';
                 // }
-                shortAddress = shortAddress.slice(0, -2);
-                feature.shortaddress = shortAddress;
             });
             return features;
         };

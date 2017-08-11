@@ -41,3 +41,30 @@
         }
     }
 }
+
+.ors-route-point-popup {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0px 5px 0px 5px;
+    .item {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        user-select: none;
+        .left {
+            flex-direction: column;
+            flex: 1 0 25px;
+            text-align: center;
+            cursor: pointer;
+            i {
+                color: rgba(0, 0, 0, 0.7);
+            }
+        }
+        .right {
+            cursor: default;
+            text-align: -moz-left;
+            flex: 1 0 70%;
+            padding-left: 10px;
+        }
+    }
+}

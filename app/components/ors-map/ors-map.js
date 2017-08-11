@@ -44,8 +44,11 @@ angular.module('orsApp')
                     layerTracks: L.featureGroup(),
                     layerRouteNumberedMarkers: L.featureGroup(),
                     layerRouteExtras: L.featureGroup(),
-                    layerLocations: L.featureGroup(),
                     layerRouteDrag: L.featureGroup(),
+                    layerLocations: new L.MarkerClusterGroup({
+                        showCoverageOnHover: false,
+                        disableClusteringAtZoom: 14
+                    }),
                     layerTmcMarker: L.featureGroup()
                 };
                 $scope.mapModel = {
@@ -317,6 +320,7 @@ angular.module('orsApp')
                     marker.addTo($scope.mapModel.geofeatures[layerCode]);
                 };
                 $scope.addWaypoint = (idx, iconIdx, pos, fireRequest = true, aaIcon = false) => {
+                    console.log(idx, iconIdx, pos)
                     let waypointIcon = aaIcon === true ? L.divIcon(lists.waypointIcons[3]) : L.divIcon(lists.waypointIcons[iconIdx]);
                     const waypointsLength = orsSettingsFactory.getWaypoints()
                         .length;
@@ -333,7 +337,10 @@ angular.module('orsApp')
                     let wayPointMarker = new L.marker(pos, {
                         icon: waypointIcon,
                         draggable: 'true',
-                        idx: idx
+                        idx: idx,
+                        autoPan: true,
+                        autoPanPadding: [50, 50],
+                        autoPanSpeed: 10
                     });
                     wayPointMarker.addTo($scope.mapModel.geofeatures.layerRoutePoints);
                     wayPointMarker.on('dragend', (event) => {
@@ -400,8 +407,9 @@ angular.module('orsApp')
                         } else if (actionPackage.featureId === undefined) {
                             if (actionPackage.geometry !== undefined) {
                                 if (actionPackage.geometry.lat && actionPackage.geometry.lng) {
-                                    console.log('panning')
-                                    $scope.mapModel.map.panTo(actionPackage.geometry);
+                                    $timeout(function() {
+                                        $scope.mapModel.map.panTo(actionPackage.geometry);
+                                    }, 100);
                                     //$scope.mapModel.map.setZoom(13);
                                 } else {
                                     let bounds = new L.LatLngBounds(actionPackage.geometry);
@@ -491,6 +499,10 @@ angular.module('orsApp')
                     };
                     let geojson = L.geoJson(actionPackage.geometry, {
                             pointToLayer: function(feature, latlng) {
+                                // let locationsIcon = L.icon({
+                                //     iconUrl: '/bower_components/Font-Awesome-SVG-PNG/black/png/22/btc.png',
+                                //     iconSize: [22, 22], // size of the icon
+                                // });
                                 let locationsIcon = L.divIcon(lists.locationsIcon);
                                 locationsIcon.options.html = lists.locations_icons[$scope.subcategoriesLookup[parseInt(feature.properties.category)]];
                                 return L.marker(latlng, {
@@ -537,7 +549,7 @@ angular.module('orsApp')
                         $scope.interpolatedInformation = getPositionOnRoute($scope.mapModel.map, polyLine, e.latlng);
                         $scope.distanceAtInterpolatedPoint = $scope.interpolatedInformation.factorAlongRoute * pointList[pointList.length - 1].distance;
                         $scope.interpolatedRoutePoint = pointList[$scope.interpolatedInformation.predecessorIdx];
-                        const popupDirective = '<ors-interpolatedpoint-popup></ors-interpolatedpoint-popup>';
+                        const popupDirective = '<ors-route-point-popup></ors-route-point-popup>';
                         const popupContent = $compile(popupDirective)($scope);
                         $scope.popup.setContent(popupContent[0])
                             .setLatLng($scope.displayPos)
@@ -1034,7 +1046,7 @@ angular.module('orsApp')
                     });
                 };
                 // add locations control
-                //$scope.mapModel.map.addControl($scope.locationsControl());
+                $scope.mapModel.map.addControl($scope.locationsControl());
                 /**
                  * Dispatches all commands sent by Mapservice by using id and then performing the corresponding function
                  */
@@ -1146,7 +1158,7 @@ angular.module('orsApp')
         };
     }]);
 angular.module('orsApp')
-    .directive('orsInterpolatedpointPopup', ['$translate', ($translate) => {
+    .directive('orsRoutePointPopup', ['$translate', ($translate) => {
         return {
             restrict: 'E',
             templateUrl: 'components/ors-map/directive-templates/ors-route-point-popup.html',
