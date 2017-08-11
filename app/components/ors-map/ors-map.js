@@ -44,7 +44,11 @@ angular.module('orsApp')
                     layerTracks: L.featureGroup(),
                     layerRouteNumberedMarkers: L.featureGroup(),
                     layerRouteExtras: L.featureGroup(),
-                    layerLocations: L.featureGroup(),
+                    //layerLocations: L.featureGroup(),
+                    layerLocations: new L.MarkerClusterGroup({
+                        showCoverageOnHover: false,
+                        disableClusteringAtZoom: 14
+                    }),
                     layerTmcMarker: L.featureGroup()
                 };
                 $scope.mapModel = {
@@ -494,6 +498,10 @@ angular.module('orsApp')
                     };
                     let geojson = L.geoJson(actionPackage.geometry, {
                             pointToLayer: function(feature, latlng) {
+                                // let locationsIcon = L.icon({
+                                //     iconUrl: '/bower_components/Font-Awesome-SVG-PNG/black/png/22/btc.png',
+                                //     iconSize: [22, 22], // size of the icon
+                                // });
                                 let locationsIcon = L.divIcon(lists.locationsIcon);
                                 locationsIcon.options.html = lists.locations_icons[$scope.subcategoriesLookup[parseInt(feature.properties.category)]];
                                 return L.marker(latlng, {
@@ -969,7 +977,7 @@ angular.module('orsApp')
                     });
                 };
                 // add locations control
-                //$scope.mapModel.map.addControl($scope.locationsControl());
+                $scope.mapModel.map.addControl($scope.locationsControl());
                 /**
                  * Dispatches all commands sent by Mapservice by using id and then performing the corresponding function
                  */
