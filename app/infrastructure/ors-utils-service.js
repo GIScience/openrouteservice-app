@@ -466,7 +466,7 @@ angular.module('orsApp.utils-service', [])
          * @useroptions: useroptions
          */
         orsUtilsService.parseSettingsToPermalink = (settings, userOptions) => {
-            console.info("parseSettingsToPermalink", settings, userOptions);
+            //console.info("parseSettingsToPermalink", settings, userOptions);
             if (settings.profile === undefined) return;
             let link = '';
             if (userOptions.lat && userOptions.lng) {

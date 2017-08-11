@@ -279,7 +279,6 @@ angular.module('orsApp')
                         lng: mapCenter.lng,
                         zoom: mapZoom
                     };
-                    console.log(mapOptions)
                     orsCookiesFactory.setMapOptions(mapOptions);
                     // update permalink 
                     let userOptions = orsSettingsFactory.getUserOptions();
@@ -290,7 +289,6 @@ angular.module('orsApp')
                     orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), userOptions);
                 };
                 $scope.processMapWaypoint = (idx, pos, updateWp = false, fireRequest = true) => {
-                    console.error(pos)
                     // add waypoint to map
                     // get the address from the response
                     if (updateWp) {
@@ -482,7 +480,6 @@ angular.module('orsApp')
                         });
                         let popupContent = '<strong>' + feature.properties.name + '</strong>';
                         if (feature.properties.address) {
-                            console.log(feature.properties.address)
                             popupContent += '<br>' + lists.locations_icons.address + ' ';
                             angular.forEach(feature.properties.address, (addressObj, addressName) => {
                                 popupContent += addressObj + ', ';
@@ -834,26 +831,28 @@ angular.module('orsApp')
                             </div>
                         </div>
                         <div class="result-list" ng-show="results.length > 0">
+                             <div class="poi-header">
+                                    <div ng-bind-html="('DETAILS' | translate)"></div>
+                                    <div ng-bind-html="'OSM'"></div>
+                                </div>
                             <div class="poi-items">
+                               
                                 <div class="poi-item" ng-repeat="feature in results" ng-click="panTo(feature.geometry.coordinates);" ng-mouseout="DeEmphPoi();" ng-mouseover="EmphPoi(feature.geometry.coordinates, feature.properties.category);">
+                                    
                                     <div class="poi-row">
                                         <div class="icon" ng-bind-html='categoryIcons[subcategoriesLookup[feature.properties.category]]'></div>
                                         <div class="text" ng-bind-html='feature.properties.name'></div>   
                                         <div class="icon pointer" ng-click="poiDetails = !poiDetails; $event.stopPropagation();" ng-show='feature.properties.address || feature.properties.phone || feature.properties.wheelchair || feature.properties.website'>
-                                            <div tooltip-side="left" tooltip-template="{{('DETAILS' | translate)}}" tooltips="">
-                                                <i ng-class="getClass(poiDetails)" >
-                                                </i>
-                                            </div>  
+                                            <i ng-class="getClass(poiDetails)" >
+                                            </i>
                                         </div>
                                         <div class="icon pointer">
-                                             <div tooltip-side="left" tooltip-template="OSM" tooltips="">
-                                                <a target="_blank" ng-href="{{makeUrl(feature.properties.osm_id)}}">
-                                                    <i class="fa fa-map">
-                                                    </i>
-                                                </a> 
-                                            </div>  
+                                            <a target="_blank" ng-href="{{makeUrl(feature.properties.osm_id)}}">
+                                                <i class="fa fa-map">
+                                                </i>
+                                            </a> 
                                         </div>
-                                    </div>
+                                    </div>                                  
                                     <div class="collapsable poi-details" ng-class="{ showMe: poiDetails }">    
                                         <div class="poi-row" ng-if="feature.properties.address">
                                             <div class="icon">
@@ -883,6 +882,7 @@ angular.module('orsApp')
                                             </div>                                       
                                         </div> 
                                     </div> 
+                                    
                                 </div>
                             </div>     
                         </div>
@@ -940,6 +940,7 @@ angular.module('orsApp')
                                     });
                                     orsLocationsService.addLocationsToMap(response);
                                     $scope.results = response.features;
+                                    console.log($scope.results)
                                     $scope.loading = false;
                                 }, function(response) {
                                     console.error(response);
@@ -1007,7 +1008,7 @@ angular.module('orsApp')
                             };
                             $scope.EmphPoi = (geometry, category) => {
                                 console.log('emph')
-                                orsLocationsService.emphPoi(geometry, category);
+                                if ($map.getZoom() >= 14) orsLocationsService.emphPoi(geometry, category);
                             };
                             $scope.DeEmphPoi = () => {
                                 orsLocationsService.DeEmphPoi();

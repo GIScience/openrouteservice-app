@@ -158,6 +158,18 @@ a.leaflet-locations {
     overflow: visible;
     display: flex;
     flex-direction: column;
+    .poi-header {
+        display: flex;
+        flex-direction: row;
+        background-color: #cf5f5f;
+        color: rgba(255, 255, 255, 0.75);
+        font-weight: bold;
+        justify-content: flex-end;
+        padding: 5px;
+        div {
+            padding-right: 10px;
+        }
+    }
     .poi-items {
         max-height: 200px;
         overflow-x: auto;
