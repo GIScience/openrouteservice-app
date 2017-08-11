@@ -4,11 +4,7 @@
             <i class="fa fa-lg fa-arrows-h" tooltip-side="top" tooltip-template="{{('DISTANCE' | translate)}}" tooltips="">
             </i>
         </span>
-        <span class="right" ng-show="{{distanceAtInterpolatedPoint >= 1000}}">
-            {{distanceAtInterpolatedPoint / 1000 | number : 1 }} km
-        </span>
-        <span class="right" ng-show="{{distanceAtInterpolatedPoint < 1000}}">
-            {{distanceAtInterpolatedPoint | number : 1 }} m
+        <span class="right" ng-bind-html="(distanceAtInterpolatedPoint | distance)">
         </span>
     </div>
     <div class="item" ng-if="interpolatedRoutePoint.heights">
@@ -16,8 +12,7 @@
             <i class="fa fa-lg fa-arrows-v" tooltip-side="top" tooltip-template="{{('height' | translate)}}" tooltips="">
             </i>
         </span>
-        <span class="right">
-            {{interpolatedRoutePoint.heights.height}} m
+        <span class="right" ng-bind-html="(interpolatedRoutePoint.heights.height | distance)">
         </span>
     </div>
     <div class="item" ng-if="interpolatedRoutePoint.heights.ascent">
@@ -25,8 +20,7 @@
             <i class="fa fa-lg fa-long-arrow-down fa-rotate-225" tooltip-side="top" tooltip-template="{{('ASCENT' | translate)}}" tooltips="">
             </i>
         </span>
-        <span class="right">
-            {{interpolatedRoutePoint.heights.ascent}} m
+        <span class="right" ng-bind-html="(interpolatedRoutePoint.heights.ascent | distance)">
         </span>
     </div>
     <div class="item" ng-if="interpolatedRoutePoint.heights.descent">
@@ -34,8 +28,7 @@
             <i class="fa fa-lg fa-long-arrow-up fa-rotate-135" tooltip-side="top" tooltip-template="{{('DESCENT' | translate)}}" tooltips="">
             </i>
         </span>
-        <span class="right">
-            {{interpolatedRoutePoint.heights.descent}} m
+        <span class="right" ng-bind-html="(interpolatedRoutePoint.heights.descent | distance)">
         </span>
     </div>
     <div class="item">
@@ -59,8 +52,7 @@
             <i class="fa fa-lg fa-area-chart" tooltip-side="top" tooltip-template="{{('steepness' | translate)}}" tooltips="">
             </i>
         </span>
-        <span class="right">
-            {{interpolatedRoutePoint.extras.steepness}}
+        <span class="right" ng-bind-html="interpolatedRoutePoint.extras.steepness">
         </span>
     </div>
     <div class="item">
@@ -68,8 +60,7 @@
             <i class="fa fa-lg fa-thumbs-o-up" tooltip-side="top" tooltip-template="{{('suitability' | translate)}}" tooltips="">
             </i>
         </span>
-        <span class="right">
-            {{interpolatedRoutePoint.extras.suitability}}
+        <span class="right" ng-bind-html="interpolatedRoutePoint.extras.suitability">
         </span>
     </div>
     <div class="item" ng-if="interpolatedRoutePoint.extras.green">
@@ -77,8 +68,7 @@
             <i class="fa fa-lg fa-leaf" tooltip-side="top" tooltip-template="{{('green' | translate)}}" tooltips="">
             </i>
         </span>
-        <span class="right">
-            {{interpolatedRoutePoint.extras.green}}
+        <span class="right" ng-bind-html="interpolatedRoutePoint.extras.green">
         </span>
     </div>
     <div class="item" ng-if="interpolatedRoutePoint.extras.noise">
@@ -86,8 +76,7 @@
             <i class="fa fa-lg fa-volume-down" tooltip-side="top" tooltip-template="{{('noise' | translate)}}" tooltips="">
             </i>
         </span>
-        <span class="right">
-            {{interpolatedRoutePoint.extras.noise}}
+        <span class="right" ng-bind-html="interpolatedRoutePoint.extras.noise">
         </span>
     </div>
 </div>

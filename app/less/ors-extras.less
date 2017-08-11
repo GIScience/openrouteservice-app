@@ -50,17 +50,21 @@
         display: flex;
         flex-direction: row;
         width: 100%;
+        user-select: none;
         .left {
             flex-direction: column;
-            flex: 1 0 20px;
+            flex: 1 0 25px;
             text-align: center;
+            cursor: pointer;
             i {
-                color: #767676;
+                color: rgba(0, 0, 0, 0.7);
             }
         }
         .right {
+            cursor: default;
             text-align: -moz-left;
             flex: 1 0 70%;
+            padding-left: 10px;
         }
     }
 }
