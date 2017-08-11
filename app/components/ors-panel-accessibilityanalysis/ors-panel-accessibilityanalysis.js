@@ -38,6 +38,7 @@ angular.module('orsApp.ors-panel-accessibilityanalysis', ['orsApp.ors-aa-control
                 ctrl.activeProfile = orsSettingsFactory.getActiveProfile()
                     .type;
                 ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
+                ctrl.showGeocodingPanel = false;
                 orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
             };
             ctrl.$routerOnReuse = function(next, prev) {

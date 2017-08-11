@@ -1,4 +1,4 @@
-angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-profiles-options', 'orsApp.ors-options', 'orsApp.ors-summary', 'orsApp.ors-instructions'])
+angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-profiles-options', 'orsApp.ors-options', 'orsApp.ors-summary', 'orsApp.ors-instructions', 'orsApp.ors-addresses'])
     .component('orsRoute', {
         templateUrl: 'components/ors-panel-routing/ors-panel-routing.html',
         controller: ['orsSettingsFactory', 'orsParamsService', 'orsUtilsService', 'orsCookiesFactory', 'lists', function(orsSettingsFactory, orsParamsService, orsUtilsService, orsCookiesFactory, lists) {
@@ -41,7 +41,8 @@ angular.module('orsApp.ors-panel-routing', ['orsApp.ors-waypoints', 'orsApp.ors-
                     .type;
                 ctrl.activeSubgroup = ctrl.profiles[ctrl.activeProfile].subgroup;
                 console.info(ctrl.activeProfile, ctrl.activeSubgroup);
-                ctrl.shouldDisplayRouteDetails = false;
+                ctrl.shouldDisplayRouteDetails = ctrl.showGeocodingPanel = false;
+                ctrl.showGeocodingPanelIdx = null;
                 console.log(orsSettingsFactory.getSettings(), JSON.stringify(orsSettingsFactory.getUserOptions()));
                 orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
             };

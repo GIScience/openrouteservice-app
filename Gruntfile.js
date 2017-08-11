@@ -309,7 +309,8 @@ module.exports = function(grunt) {
                     "app/css/ors-panel-isochrones.css": "app/less/ors-panel-isochrones.less",
                     "app/css/ors-panel-routing.css": "app/less/ors-panel-routing.less",
                     "app/css/ors-sidebar-outlet.css": "app/less/ors-sidebar-outlet.less",
-                    "app/css/ors-tooltips.css": "app/less/ors-tooltips.less"
+                    "app/css/ors-tooltips.css": "app/less/ors-tooltips.less",
+                    "app/css/ors-addresses.css": "app/less/ors-addresses.less"
                 }
             }
         },

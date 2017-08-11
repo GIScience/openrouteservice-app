@@ -3,16 +3,8 @@
         <div class="ui left icon fluid input">
             <i class="fa fa-search icon">
             </i>
-            <input ng-change="$ctrl.addressChanged()" ng-click="$ctrl.checkForAddresses()" ng-model="$ctrl.waypoint._address" ng-model-options="{debounce: 1000}" placeholder="{{$ctrl.getPlaceholder()}}" select-on-click="" type="text">
+            <input ng-click="$ctrl.callGeocodingPanel()" ng-model="$ctrl.waypoint._address" placeholder="{{$ctrl.getPlaceholder()}}" type="text" ng-readonly="true">
             </input>
-        </div>
-    </div>
-</div>
-<div class="ors-addresses" ng-show="$ctrl.showAddresses">
-    <div class="ui divided list">
-        <div class="item" ng-repeat="feature in $ctrl.addresses">
-            <div ng-bind-html="feature.shortaddress" ng-click="$ctrl.select(feature)">
-            </div>
         </div>
     </div>
 </div>
