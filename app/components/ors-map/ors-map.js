@@ -248,6 +248,13 @@ angular.module('orsApp')
                     closeButton: false,
                     className: 'cm-popup'
                 });
+                $scope.pointPopup = L.popup({
+                    minWidth: 240,
+                    maxWidth: 240,
+                    maxHeight: 300,
+                    closeButton: true,
+                    className: 'cm-popup'
+                });
                 $scope.mapModel.map.on('contextmenu', (e) => {
                     $scope.displayPos = e.latlng;
                     const popupDirective = $scope.routing === true ? '<ors-popup></ors-popup>' : '<ors-aa-popup></ors-aa-popup>';
@@ -546,6 +553,7 @@ angular.module('orsApp')
                  * @param {Object} actionPackage - The action actionPackage
                  */
                 $scope.addPolyline = (actionPackage) => {
+                    $scope.mapModel.map.closePopup();
                     console.log('calling')
                     const polyLine = L.polyline(actionPackage.geometry, {
                             index: !(actionPackage.featureId === undefined) ? actionPackage.featureId : null,
@@ -594,11 +602,11 @@ angular.module('orsApp')
                         $scope.interpolatedRoutePoint = pointList[$scope.interpolatedInformation.predecessorIdx];
                         const popupDirective = '<ors-route-point-popup></ors-route-point-popup>';
                         const popupContent = $compile(popupDirective)($scope);
-                        $scope.popup.setContent(popupContent[0])
+                        $scope.pointPopup.setContent(popupContent[0])
                             .setLatLng($scope.displayPos)
                             .openOn($scope.mapModel.map);
                         $timeout(function() {
-                            $scope.popup.update();
+                            $scope.pointPopup.update();
                         }, 300);
                         // returns id of previous route point
                         function getPositionOnRoute(map, polyLine, pos) {

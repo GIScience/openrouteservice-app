@@ -45,15 +45,16 @@
 .ors-route-point-popup {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: row;
     padding: 0px 5px 0px 5px;
+    justify-content: space-around;
     .item {
         display: flex;
         flex-direction: row;
-        width: 100%;
         user-select: none;
+        
         .left {
-            flex-direction: column;
-            flex: 1 0 25px;
+            width: 25px;
             text-align: center;
             cursor: pointer;
             i {
@@ -62,8 +63,8 @@
         }
         .right {
             cursor: default;
-            text-align: -moz-left;
-            flex: 1 0 70%;
+            text-align: left;
+            width: 75px;
             padding-left: 10px;
         }
     }
