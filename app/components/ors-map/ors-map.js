@@ -565,35 +565,17 @@ angular.module('orsApp')
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     polyLine.setStyle(actionPackage.style);
                     const pointList = actionPackage.extraInformation.pointInformation;
-                    // polyLine.on("mouseover", (e) => {
-                    //     $scope.mapModel.map.closePopup();
-                    //     $scope.displayPos = e.latlng;
-                    //     addHoverPoint();
-                    //     function addHoverPoint() {
-                    //         // TODO
-                    //     };
-                    //     const popupDirective = '<div ng-bind-html="(\'DRAGTOADD\' | translate)"></div>';
-                    //     const popupContent = $compile(popupDirective)($scope);
-                    //     $scope.popup.setContent(popupContent[0])
-                    //         .setLatLng($scope.displayPos)
-                    //         .openOn($scope.mapModel.map);
+                    polyLine.on("mouseover", (e) => {
+                        $scope.addHoverPoint(e, polyLine, pointList);
+                    });
+                    // TODO
+                    // remove hoverpoint on mouseout : the following does not work..
+                    // polyLine.on("mouseout", () => {
                     //     $timeout(function() {
-                    //         $scope.popup.update();
-                    //     }, 100);
-                    //     polyLine.on("mouseout", (e) => {
-                    //         $scope.mapModel.map.closePopup();
-                    //     });
+                    //         $scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
+                    //     }, 300);
                     // });
-                    // polyLine.on("mousedown", (e) => {
-                    //     $scope.mapModel.map.closePopup();
-                    //     $scope.displayPos = e.latlng;
-                    //     // TODO: create waypoint and drag immediately
-                    //     const popupDirective = '<div ng-bind-html="(\'DRAGTOADD\' | translate)"></div>';
-                    //     console.log("down")
-                    //     polyLine.on("mouseout", (e) => {
-                    //         console.log("out")
-                    //     });
-                    // });
+                    // on dragend set viapoint -> at right position in route
                     polyLine.on("click", (e) => {
                         // $scope.mapModel.map.closePopup();
                         $scope.displayPos = e.latlng;
@@ -622,8 +604,42 @@ angular.module('orsApp')
                             };
                         }
                     });
-                    // on mousedown creat viapoint
-                    // on dragend set viapoint -> at right position in route
+                };
+                /** 
+                 * adds interactive point over a polyLine 
+                 * @param {Object} actionPackage - The action actionPackage
+                 * @param {Object} polyLine - the polyline
+                 */
+                $scope.addHoverPoint = (actionPackage, polyLine, pointList) => {
+                    $scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
+                    $scope.displayPos = actionPackage.latlng;
+
+                    function getPositionOnRoute(map, polyLine, pos) {
+                        const factor = L.GeometryUtil.locateOnLine(map, polyLine, pos);
+                        const predecessorPoint = L.GeometryUtil.interpolateOnLine(map, polyLine, factor);
+                        return {
+                            latlng: predecessorPoint.latLng,
+                            index: pointList[predecessorPoint.predecessor].segment_index
+                        };
+                    }
+                    // center the point on the polyline
+                    let snapPosition = getPositionOnRoute($scope.mapModel.map, polyLine, actionPackage.latlng);
+                    //console.log(snapPosition, $scope.mapModel.geofeatures.layerRouteLines)
+                    let hoverPoint = L.circleMarker(snapPosition.latlng, lists.layerStyles.hoverPoint())
+                        .addTo($scope.mapModel.geofeatures.layerRouteDrag);
+                    hoverPoint.on("mousedown", (e) => {
+                        $scope.mapModel.map.dragging.disable();
+                        $scope.mapModel.map.on("mousemove", (e) => {
+                            hoverPoint.setLatLng(e.latlng);
+                        });
+                        $scope.mapModel.map.on("mouseup", (e) => {
+                            $scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
+                            $scope.addWaypoint(snapPosition.index + 1, 1, e.latlng, true, false);
+                            $scope.mapModel.map.removeEventListener("mousemove");
+                            $scope.mapModel.map.removeEventListener("mouseup");
+                            $scope.mapModel.map.dragging.enable();
+                        });
+                    });
                 };
                 /**
                  * adds numbered marker if not yet added 

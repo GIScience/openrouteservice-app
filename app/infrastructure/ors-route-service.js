@@ -70,6 +70,9 @@ angular.module('orsApp.route-service', [])
             let action = orsObjectsFactory.createMapAction(0, lists.layers[2], geom, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
         };
+        orsRouteService.addHoverpoint = () => {
+            const hoverPoint = orsObjectsFactory.createMapAction(1, lists.layers[9],geom, undefined);
+        };
         orsRouteService.addRoute = (route, focusIdx) => {
             const routePadding = orsObjectsFactory.createMapAction(1, lists.layers[1], route.geometry, undefined, lists.layerStyles.routePadding());
             orsMapFactory.mapServiceSubject.onNext(routePadding);
@@ -90,15 +93,6 @@ angular.module('orsApp.route-service', [])
         orsRouteService.removeHeightgraph = () => {
             const heightgraph = orsObjectsFactory.createMapAction(-1, undefined, undefined, undefined, undefined);
             orsMapFactory.mapServiceSubject.onNext(heightgraph);
-        };
-        orsRouteService.calculateDistance = (lat1, lon1, lat2, lon2) => { // generally used geo measurement function
-            var R = 6371; // 8.137; // Radius of earth in KM // Turf uses 6373.0
-            var dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
-            var dLon = lon2 * Math.PI / 180 - lon1 * Math.PI / 180;
-            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            var d = R * c;
-            return d * 1000; // meters
         };
         /** prepare route to json */
         orsRouteService.processResponse = (data, profile, focusIdx) => {

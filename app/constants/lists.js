@@ -639,7 +639,8 @@ angular.module('orsApp')
             5: 'layerAccessibilityAnalysisNumberedMarkers',
             6: 'layerRouteNumberedMarkers',
             7: 'layerRouteExtras',
-            8: 'layerLocations'
+            8: 'layerLocations',
+            9: 'layerRouteDrag'
         },
         layerStyles: {
             route: function() {
@@ -682,6 +683,20 @@ angular.module('orsApp')
                     color: '#FFF',
                     weight: 6,
                     opacity: 1
+                };
+            },
+            hoverPoint: function() {
+                return {
+                    radius: 4,
+                    weight: 1,
+                    color: 'white',
+                    fillColor: 'orange',
+                    fillOpacity: 1,
+                    // interactive: true,
+                    draggable: 'true',
+                    autoPan: true,
+                    autoPanPadding: [50, 50],
+                    autoPanSpeed: 10
                 };
             },
             rand: function(min, max) {
