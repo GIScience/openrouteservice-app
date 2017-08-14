@@ -303,16 +303,17 @@ angular.module('orsApp')
                     // dont set user options here, will otherwise end in a loop
                     orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), userOptions);
                 };
-                $scope.processMapWaypoint = (idx, pos, updateWp = false, fireRequest = true) => {
+                $scope.processMapWaypoint = (idx, pos, updateWp = false, fireRequest = true, fromHover = false) => {
                     // add waypoint to map
                     // get the address from the response
                     if (updateWp) {
                         orsSettingsFactory.updateWaypoint(idx, '', pos, fireRequest);
                     } else {
                         const waypoint = orsObjectsFactory.createWaypoint('', pos, 1);
-                        orsSettingsFactory.insertWaypointFromMap(idx, waypoint, fireRequest);
+                        if (!fromHover) orsSettingsFactory.insertWaypointFromMap(idx, waypoint, fireRequest);
+                        else orsSettingsFactory.insertWaypointFromHovering(idx, waypoint, fireRequest);
                     }
-                    orsSettingsFactory.getAddress(pos, idx, updateWp);
+                    orsSettingsFactory.getAddress(pos, idx, updateWp, fromHover);
                     orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
                     // close the popup
                     $scope.mapModel.map.closePopup();
@@ -333,7 +334,6 @@ angular.module('orsApp')
                     marker.addTo($scope.mapModel.geofeatures[layerCode]);
                 };
                 $scope.addWaypoint = (idx, iconIdx, pos, fireRequest = true, aaIcon = false) => {
-                    console.log(idx, iconIdx, pos)
                     let waypointIcon = aaIcon === true ? L.divIcon(lists.waypointIcons[3]) : L.divIcon(lists.waypointIcons[iconIdx]);
                     const waypointsLength = orsSettingsFactory.getWaypoints()
                         .length;
@@ -532,8 +532,6 @@ angular.module('orsApp')
                 $scope.addFeatures = (actionPackage) => {
                     const isDistanceMarkers = orsSettingsFactory.getUserOptions()
                         .showDistanceMarkers === true ? true : false;
-
-
                     const polyLine = L.polyline(actionPackage.geometry, {
                             index: !(actionPackage.featureId === undefined) ? actionPackage.featureId : null,
                             interactive: false,
@@ -548,13 +546,27 @@ angular.module('orsApp')
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     polyLine.setStyle(actionPackage.style);
                 };
+                $scope.addPolylineHover = (actionPackage) => {
+                    $scope.mapModel.map.closePopup();
+                    $scope.hoverPolyLine = L.polyline(actionPackage.geometry, {
+                            interactive: true
+                        })
+                        .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
+                    $scope.hoverPolyLine.setStyle(actionPackage.style);
+                    const pointList = actionPackage.extraInformation.pointInformation;
+                    $scope.hoverPolyLine.on("mousemove", (e) => {
+                        $scope.addHoverPoint(e, $scope.hoverPolyLine, pointList);
+                    });
+                    // .on("mouseout", () => {
+                    //     $scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
+                    // });
+                };
                 /** 
                  * adds interactive route 
                  * @param {Object} actionPackage - The action actionPackage
                  */
                 $scope.addPolyline = (actionPackage) => {
                     $scope.mapModel.map.closePopup();
-                    console.log('calling')
                     const polyLine = L.polyline(actionPackage.geometry, {
                             index: !(actionPackage.featureId === undefined) ? actionPackage.featureId : null,
                             interactive: true,
@@ -564,82 +576,66 @@ angular.module('orsApp')
                         })
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     polyLine.setStyle(actionPackage.style);
-                    const pointList = actionPackage.extraInformation.pointInformation;
-                    polyLine.on("mouseover", (e) => {
-                        $scope.addHoverPoint(e, polyLine, pointList);
-                    });
-                    // TODO
-                    // remove hoverpoint on mouseout : the following does not work..
-                    // polyLine.on("mouseout", () => {
-                    //     $timeout(function() {
-                    //         $scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
-                    //     }, 300);
-                    // });
-                    // on dragend set viapoint -> at right position in route
-                    polyLine.on("click", (e) => {
-                        // $scope.mapModel.map.closePopup();
-                        $scope.displayPos = e.latlng;
-                        $scope.interpolatedInformation = getPositionOnRoute($scope.mapModel.map, polyLine, e.latlng);
-                        $scope.distanceAtInterpolatedPoint = $scope.interpolatedInformation.factorAlongRoute * pointList[pointList.length - 1].distance;
-                        $scope.interpolatedRoutePoint = pointList[$scope.interpolatedInformation.predecessorIdx];
-                        const popupDirective = '<ors-route-point-popup></ors-route-point-popup>';
-                        const popupContent = $compile(popupDirective)($scope);
-                        $scope.pointPopup.setContent(popupContent[0])
-                            .setLatLng($scope.displayPos)
-                            .openOn($scope.mapModel.map);
-                        $timeout(function() {
-                            $scope.pointPopup.update();
-                        }, 300);
-                        // returns id of previous route point
-                        function getPositionOnRoute(map, polyLine, pos) {
-                            const factor = L.GeometryUtil.locateOnLine(map, polyLine, pos);
-                            const predecessorPoint = L.GeometryUtil.interpolateOnLine(map, polyLine, factor);
-                            // returns -1 for click between 0th and 1st point
-                            if (predecessorPoint.predecessor == -1) {
-                                predecessorPoint.predecessor = 0;
-                            }
-                            return {
-                                predecessorIdx: predecessorPoint.predecessor,
-                                factorAlongRoute: factor
-                            };
-                        }
-                    });
                 };
                 /** 
                  * adds interactive point over a polyLine 
                  * @param {Object} actionPackage - The action actionPackage
                  * @param {Object} polyLine - the polyline
                  */
-                $scope.addHoverPoint = (actionPackage, polyLine, pointList) => {
+                $scope.addHoverPoint = (e, polyLine, pointList) => {
                     $scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
-                    $scope.displayPos = actionPackage.latlng;
-
+                    $scope.displayPos = e.latlng;
+                    /**
+                     * returns the closest point on a polyline relative to another point
+                     * additionally returns 
+                     * @param {Object} map - the leaflet map object
+                     * @param {}
+                     */
                     function getPositionOnRoute(map, polyLine, pos) {
                         const factor = L.GeometryUtil.locateOnLine(map, polyLine, pos);
-                        const predecessorPoint = L.GeometryUtil.interpolateOnLine(map, polyLine, factor);
+                        const pointOnRoute = L.GeometryUtil.interpolateOnLine(map, polyLine, factor);
+                        if (pointOnRoute.predecessor == -1) {
+                            pointOnRoute.predecessor = 0;
+                        }
                         return {
-                            latlng: predecessorPoint.latLng,
-                            index: pointList[predecessorPoint.predecessor].segment_index
+                            factor,
+                            latlng: pointOnRoute.latLng,
+                            index: pointList[pointOnRoute.predecessor].segment_index
                         };
                     }
                     // center the point on the polyline
-                    let snapPosition = getPositionOnRoute($scope.mapModel.map, polyLine, actionPackage.latlng);
-                    //console.log(snapPosition, $scope.mapModel.geofeatures.layerRouteLines)
-                    let hoverPoint = L.circleMarker(snapPosition.latlng, lists.layerStyles.hoverPoint())
-                        .addTo($scope.mapModel.geofeatures.layerRouteDrag);
-                    hoverPoint.on("mousedown", (e) => {
-                        $scope.mapModel.map.dragging.disable();
-                        $scope.mapModel.map.on("mousemove", (e) => {
-                            hoverPoint.setLatLng(e.latlng);
-                        });
-                        $scope.mapModel.map.on("mouseup", (e) => {
+                    const snapPosition = getPositionOnRoute($scope.mapModel.map, polyLine, e.latlng);
+                    const hoverIcon = L.divIcon(lists.waypointIcons[5]);
+                    hoverIcon.options.html = '<i class="fa fa-circle"></i>';
+                    // create the waypoint marker
+                    const hoverPoint = new L.marker(snapPosition.latlng, {
+                            icon: hoverIcon,
+                            draggable: 'true'
+                        })
+                        .addTo($scope.mapModel.geofeatures.layerRouteDrag)
+                        .on('dragend', (event) => {
+                            console.warn(snapPosition.index)
+                            $scope.processMapWaypoint(snapPosition.index + 1, event.target._latlng, false, true, true);
                             $scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
-                            $scope.addWaypoint(snapPosition.index + 1, 1, e.latlng, true, false);
-                            $scope.mapModel.map.removeEventListener("mousemove");
-                            $scope.mapModel.map.removeEventListener("mouseup");
-                            $scope.mapModel.map.dragging.enable();
+                        })
+                        .on('mousedown', (event) => {
+                            $scope.hoverPolyLine.off('mousemove', console.log('off'));
+                        })
+                        .on("click", (e) => {
+                            // $scope.mapModel.map.closePopup();
+                            $scope.displayPos = e.latlng;
+                            $scope.distanceAtInterpolatedPoint = snapPosition.factor * pointList[pointList.length - 1].distance;
+                            $scope.interpolatedRoutePoint = pointList[snapPosition.index];
+                            const popupDirective = '<ors-route-point-popup></ors-route-point-popup>';
+                            const popupContent = $compile(popupDirective)($scope);
+                            $scope.pointPopup.setContent(popupContent[0])
+                                .setLatLng($scope.displayPos)
+                                .openOn($scope.mapModel.map);
+                            $timeout(function() {
+                                $scope.pointPopup.update();
+                            }, 300);
+                            $scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
                         });
-                    });
                 };
                 /**
                  * adds numbered marker if not yet added 
@@ -1190,6 +1186,8 @@ angular.module('orsApp')
                         case 40:
                             $scope.addPolyline(params._package);
                             break;
+                        case 41:
+                            $scope.addPolylineHover(params._package);
                         default:
                             break;
                     }

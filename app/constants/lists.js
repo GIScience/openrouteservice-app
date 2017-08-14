@@ -36,6 +36,9 @@ angular.module('orsApp')
                 className: "ors-marker-highlight",
                 iconSize: [45, 45],
                 iconAnchor: [22, 45]
+            },
+            5: {
+                className: "ors-marker-hover",
             }
         },
         profiles: {
@@ -657,6 +660,13 @@ angular.module('orsApp')
                     opacity: 1
                 };
             },
+            routeHovering: function() {
+                return {
+                    color: '#FFF',
+                    weight: 30,
+                    opacity: 0
+                };
+            },
             routeEmph: function() {
                 return {
                     color: '#FFF',
@@ -687,16 +697,16 @@ angular.module('orsApp')
             },
             hoverPoint: function() {
                 return {
-                    radius: 4,
-                    weight: 1,
-                    color: 'white',
-                    fillColor: 'orange',
+                    radius: 5,
+                    weight: 2,
+                    color: '#000',
+                    fillColor: '#FFF',
                     fillOpacity: 1,
                     // interactive: true,
-                    draggable: 'true',
-                    autoPan: true,
-                    autoPanPadding: [50, 50],
-                    autoPanSpeed: 10
+                    draggable: 'true'
+                    // autoPan: true,
+                    // autoPanPadding: [50, 50],
+                    // autoPanSpeed: 10
                 };
             },
             rand: function(min, max) {
