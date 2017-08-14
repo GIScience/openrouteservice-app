@@ -44,7 +44,7 @@ module.exports = function(grunt) {
                 src: ['build/*']
             },
             task_rm_build_unused: {
-                src: ['build/components', 'build/infrastructure', 'build/languages', 'build/js/', 'build/constants', 'build/css']
+                src: ['build/components', 'build/infrastructure', 'build/languages', 'build/js/', 'build/constants', 'build/values', 'build/css']
             },
         },
         jshint: {
@@ -141,7 +141,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: 'app/',
                     //src: ['js/**/*.js'],
-                    src: ['components/**/*.js', 'constants/**/*.js', 'infrastructure/**/*.js', 'js/**/*.js'],
+                    src: ['components/**/*.js', 'constants/**/*.js', 'values/**/*.js', 'infrastructure/**/*.js', 'js/**/*.js'],
                     dest: 'build/'
                 }]
             },

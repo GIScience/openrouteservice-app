@@ -187,9 +187,16 @@ angular.module('orsApp.route-service', [])
             const geometry = route.geometry;
             const segments = route.segments;
             // declare cumulative statistic variables
-            let descent = ascent = distance = segment_distance = step_distance = point_distance = 0;
+            var descent = 0,
+                ascent = 0,
+                distance = 0,
+                segment_distance = 0,
+                step_distance = 0,
+                point_distance = 0;
             // declare incrementing ids
-            let segment_id = step_id = point_id = 0;
+            var segment_id = 0,
+                step_id = 0,
+                point_id = 0;
             // loop the geometry and calculate distances
             for (let i = 0; i < geometry.length; i++) {
                 const lat = geometry[i][0];

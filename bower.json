@@ -27,7 +27,8 @@
     "leaflet.markercluster": "^1.0.3",
     "leaflet.heightgraph": "^0.1.3",
     "leaflet-measure": "^2.1.7",
-    "leaflet.locatecontrol": "^0.62.0"
+    "leaflet.locatecontrol": "^0.62.0",
+    "leaflet-distance-markers": "https://github.com/adoroszlai/leaflet-distance-markers.git"
   },
   "resolutions": {
     "angular": "~1.5.10"

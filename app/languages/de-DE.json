@@ -168,5 +168,6 @@
     "LOCALE_ISOCHRONE_RANDOMIZE_COLORS": "Randomisierte Farben für Isochronen", 
     "DRAGTOADD": "Ziehen für Wegpunkt, klicken für Infos", 
     "noise": "Lautstärkeindex", 
-    "height": "Höhe"
+    "height": "Höhe",
+    "LOCALE_DISTANCE_MARKERS": "Distanz-Marker (km)"
 }

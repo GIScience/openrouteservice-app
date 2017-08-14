@@ -47,7 +47,15 @@ angular.module('orsApp')
                     layerRouteDrag: L.featureGroup(),
                     layerLocations: new L.MarkerClusterGroup({
                         showCoverageOnHover: false,
-                        disableClusteringAtZoom: 14
+                        disableClusteringAtZoom: 14,
+                        spiderLegPolylineOptions: {
+                            weight: 1.5,
+                            color: '#222',
+                            opacity: 0.5, // for defaults
+                            distanceMarkers: {
+                                lazy: true
+                            }, // for hiding the markers
+                        }
                     }),
                     layerTmcMarker: L.featureGroup()
                 };
@@ -515,9 +523,20 @@ angular.module('orsApp')
                  * @param {Object} actionPackage - The action actionPackage
                  */
                 $scope.addFeatures = (actionPackage) => {
-                    let polyLine = L.polyline(actionPackage.geometry, {
+                    const isDistanceMarkers = orsSettingsFactory.getUserOptions()
+                        .showDistanceMarkers === true ? true : false;
+
+
+                    const polyLine = L.polyline(actionPackage.geometry, {
                             index: !(actionPackage.featureId === undefined) ? actionPackage.featureId : null,
-                            interactive: true
+                            interactive: false,
+                            distanceMarkers: {
+                                lazy: !isDistanceMarkers,
+                                showAll: 13,
+                                offset: 500,
+                                cssClass: 'ors-marker-dist',
+                                iconSize: [18, 18]
+                            }
                         })
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     polyLine.setStyle(actionPackage.style);
@@ -527,9 +546,13 @@ angular.module('orsApp')
                  * @param {Object} actionPackage - The action actionPackage
                  */
                 $scope.addPolyline = (actionPackage) => {
-                    let polyLine = L.polyline(actionPackage.geometry, {
+                    console.log('calling')
+                    const polyLine = L.polyline(actionPackage.geometry, {
                             index: !(actionPackage.featureId === undefined) ? actionPackage.featureId : null,
-                            interactive: true
+                            interactive: true,
+                            distanceMarkers: {
+                                lazy: true
+                            }
                         })
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     polyLine.setStyle(actionPackage.style);

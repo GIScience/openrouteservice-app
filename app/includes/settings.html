@@ -45,10 +45,24 @@
 <section>
     <h2 ng-bind-html="('LOCALE_MAP_SETTINGS' | translate)">
     </h2>
-    <div class="ui checkbox">
-        <input data-ng-model="$ctrl.currentOptions.randomIsochronesColors" id="isochronescolors" name="orsRouteQuietRoutingInput" ng-change="$ctrl.changeOptions()" type="checkbox">
-            <label for="isochronescolors" ng-bind-html="('LOCALE_ISOCHRONE_RANDOMIZE_COLORS' | translate)">
-            </label>
-        </input>
+    <div class="ui form">
+        <div class="grouped fields">
+            <div class="field">
+                <div class="ui checkbox">
+                    <input data-ng-model="$ctrl.currentOptions.randomIsochronesColors" id="isochronescolors" ng-change="$ctrl.changeOptions()" type="checkbox">
+                        <label for="isochronescolors" ng-bind-html="('LOCALE_ISOCHRONE_RANDOMIZE_COLORS' | translate)">
+                        </label>
+                    </input>
+                </div>
+            </div>     
+            <div class="field">
+                <div class="ui checkbox">
+                    <input data-ng-model="$ctrl.currentOptions.showDistanceMarkers" id="distancemarkers" ng-change="$ctrl.changeOptions()" type="checkbox">
+                        <label for="distancemarkers" ng-bind-html="('LOCALE_DISTANCE_MARKERS' | translate)">
+                        </label>
+                    </input>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
