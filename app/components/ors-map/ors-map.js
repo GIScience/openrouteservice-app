@@ -7,7 +7,7 @@ angular.module('orsApp')
                 orsMap: '='
             },
             link: (scope, element, attrs) => {},
-            controller: ['$scope', '$filter', '$compile', '$timeout', 'orsSettingsFactory', 'orsLocationsService', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', 'lists', 'mappings', 'orsNamespaces', ($scope, $filter, $compile, $timeout, orsSettingsFactory, orsLocationsService, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsCookiesFactory, lists, mappings, orsNamespaces) => {
+            controller: ['$scope', '$filter', '$compile', '$timeout', 'orsSettingsFactory', 'orsLocationsService', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', 'lists', 'globals', 'mappings', 'orsNamespaces', ($scope, $filter, $compile, $timeout, orsSettingsFactory, orsLocationsService, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsCookiesFactory, lists, globals, mappings, orsNamespaces) => {
                 $scope.translateFilter = $filter('translate');
                 const mapsurfer = L.tileLayer(orsNamespaces.layerMapSurfer.url, {
                     attribution: orsNamespaces.layerMapSurfer.attribution
@@ -1076,9 +1076,19 @@ angular.module('orsApp')
                 orsMapFactory.subscribeToMapFunctions(function onNext(params) {
                     switch (params._actionCode) {
                         case -1:
+                            $scope.hg.options.expand = globals.showHeightgraph;
                             $scope.mapModel.map.addControl($scope.hg);
+                            const toggle = angular.element(document.querySelector('.heightgraph-toggle-icon'));
+                            const close = angular.element(document.querySelector('.heightgraph-close-icon'));
+                            toggle.bind('click', function(e) {
+                                globals.showHeightgraph = true;
+                            });
+                            close.bind('click', function(e) {
+                                globals.showHeightgraph = false;
+                            });
                             if (params._package.geometry) {
                                 $scope.hg.addData(params._package.geometry);
+                                if (globals.showHeightgraph) globals.showHeightgraph = true;
                             } else {
                                 $scope.hg.remove();
                             }
