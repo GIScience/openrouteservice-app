@@ -774,10 +774,18 @@ angular.module('orsApp')
                         <div>
                             <div class="categories" ng-show="!showSubcategories">
                                 <div class="c-nav">
-                                    <div>Locations</div>
-                                    <div ng-click="show = !show">
-                                        <i class="fa fa-remove"></i>
+                                    <div>
+                                        <div>Locations</div>
                                     </div>
+                                    <div>
+                                        <div ng-click="clearLocations()">
+                                                <i class="fa fa-trash"></i>
+                                        </div>
+                                        <div ng-click="show = !show">
+                                            <i class="fa fa-remove"></i>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                                 <div class="c-list">
                                     <div class="ui grid">
@@ -832,13 +840,18 @@ angular.module('orsApp')
                         </div>
                         <div class="result-list" ng-show="results.length > 0">
                              <div class="poi-header">
+                                <div>
+                                     <div ng-click="showResults = !showResults">
+                                        <i ng-class="showResults ? 'fa fa-window-minimize' : 'fa fa-expand'"></i>
+                                    </div>
+                                </div>
+                                <div>
                                     <div ng-bind-html="('DETAILS' | translate)"></div>
                                     <div ng-bind-html="'OSM'"></div>
                                 </div>
-                            <div class="poi-items">
-                               
+                            </div>
+                            <div class="poi-items" ng-show="showResults">
                                 <div class="poi-item" ng-repeat="feature in results" ng-click="panTo(feature.geometry.coordinates);" ng-mouseout="DeEmphPoi();" ng-mouseover="EmphPoi(feature.geometry.coordinates, feature.properties.category);">
-                                    
                                     <div class="poi-row">
                                         <div class="icon" ng-bind-html='categoryIcons[subcategoriesLookup[feature.properties.category]]'></div>
                                         <div class="text" ng-bind-html='feature.properties.name'></div>   
@@ -906,6 +919,10 @@ angular.module('orsApp')
                             $scope.makeUrl = (osmId) => {
                                 return "http://www.openstreetmap.org/node/" + osmId;
                             };
+                            $scope.clearLocations = () => {
+                                $scope.results = [];
+                                orsLocationsService.clearLocationsToMap();
+                            };
                             $scope.callLocations = () => {
                                 $scope.loading = true;
                                 let settings = {
@@ -940,7 +957,7 @@ angular.module('orsApp')
                                     });
                                     orsLocationsService.addLocationsToMap(response);
                                     $scope.results = response.features;
-                                    console.log($scope.results)
+                                    $scope.showResults = true;
                                     $scope.loading = false;
                                 }, function(response) {
                                     console.error(response);

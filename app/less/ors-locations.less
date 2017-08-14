@@ -26,6 +26,17 @@
         .c-nav {
             padding: 12px;
             letter-spacing: 1px;
+            align-items: center;
+            justify-content: space-between;
+            display: flex;
+            flex-direction: row;
+            div {
+                display: flex;
+
+            }
+            i {
+                padding-left: 10px;
+            }
         }
         .category {
             display: flex !important;
@@ -154,7 +165,7 @@ a.leaflet-locations {
 }
 
 .result-list {
-    max-height: 200px;
+    -max-height: 200px;
     overflow: visible;
     display: flex;
     flex-direction: column;
@@ -164,10 +175,16 @@ a.leaflet-locations {
         background-color: #cf5f5f;
         color: rgba(255, 255, 255, 0.75);
         font-weight: bold;
-        justify-content: flex-end;
+        justify-content: space-between;
         padding: 5px;
+        align-items: center;
         div {
-            padding-right: 10px;
+            padding-right: 5px;
+            display: flex;
+            flex-direction: row;
+        }
+        i {
+            padding-left: 5px;
         }
     }
     .poi-items {
