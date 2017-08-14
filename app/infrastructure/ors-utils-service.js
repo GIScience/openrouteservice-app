@@ -358,16 +358,16 @@ angular.module('orsApp.utils-service', [])
                     }
                 } else if ('name' in properties) {
                     feature.processed.primary = properties.name;
-                } else if ('city' in properties) {
-                    feature.processed.primary = properties.city;
+                } else if ('locality' in properties) {
+                    feature.processed.primary = properties.locality;
                 }
                 // secondary information
                 const secondary = [];
                 if ('postal_code' in properties) {
                     secondary.push(properties.postal_code);
                 }
-                if ('city' in properties && properties.city !== properties.name) {
-                    secondary.push(properties.city);
+                if ('locality' in properties && properties.locality !== properties.name) {
+                    secondary.push(properties.locality);
                 }
                 if ('state' in properties) {
                     secondary.push(properties.state);
