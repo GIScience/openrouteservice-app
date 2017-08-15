@@ -263,11 +263,11 @@ module.exports = function(grunt) {
                 constants: {
                     ENV: {
                         name: 'labs',
-                        geocoding: 'https://labs-api.openrouteservice.org/geocode',
-                        routing: 'https://labs-api.openrouteservice.org/routes',
-                        tmc: 'http://labs-api.openrouteservice.org/routes?tmc',
-                        analyse: 'https://labs-api.openrouteservice.org/isochrones',
-                        places: 'https://labs-api.openrouteservice.org/locations',
+                        geocoding: 'https://labs-api.openrouteservice.org/ors/geocode',
+                        routing: 'https://labs-api.openrouteservice.org/ors/routes',
+                        tmc: 'http://labs-api.openrouteservice.org/ors/routes?tmc',
+                        analyse: 'https://labs-api.openrouteservice.org/ors/isochrones',
+                        places: 'https://labs-api.openrouteservice.org/ors/locations',
                         shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
                     }
                 }
@@ -323,7 +323,7 @@ module.exports = function(grunt) {
         }
         // connect: {
         //     options: {
-        //         port: 3000,
+        //         port: 3000,öä
         //         // Change this to '0.0.0.0' to access the server from outside.
         //         hostname: 'localhost',
         //         //livereload: 35729

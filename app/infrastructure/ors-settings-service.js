@@ -311,24 +311,20 @@ angular.module('orsApp.settings-service', [])
          * @param {number} idx - Type of wp which should be added: start, via or end.
          * @param {Object} wp - The waypoint object to be inserted to wp list.
          */
-        orsSettingsFactory.insertWaypointFromMap = (idx, wp, fireRequest = true) => {
-            if (idx == 0) {
-                orsSettingsFactory[currentSettingsObj].value.waypoints[idx] = wp;
-            } else if (idx == 2) {
-                orsSettingsFactory[currentSettingsObj].value.waypoints[orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1] = wp;
-            } else if (idx == 1) {
-                orsSettingsFactory[currentSettingsObj].value.waypoints.splice(orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1, 0, wp);
+        orsSettingsFactory.insertWaypointFromMap = (idx, wp, fireRequest = true, fromHover = false) => {
+            if (fromHover) {
+                orsSettingsFactory[currentSettingsObj].value.waypoints.splice(idx, 0, wp);
                 orsSettingsFactory.focusIdx = false;
+            } else {
+                if (idx == 0) {
+                    orsSettingsFactory[currentSettingsObj].value.waypoints[idx] = wp;
+                } else if (idx == 2) {
+                    orsSettingsFactory[currentSettingsObj].value.waypoints[orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1] = wp;
+                } else if (idx == 1) {
+                    orsSettingsFactory[currentSettingsObj].value.waypoints.splice(orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1, 0, wp);
+                    orsSettingsFactory.focusIdx = false;
+                }
             }
-            /** Update Map. */
-            orsSettingsFactory[currentWaypointsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue()
-                .waypoints);
-            /** Fire a new request. */
-            if (fireRequest) orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
-        };
-        orsSettingsFactory.insertWaypointFromHovering = (idx, wp, fireRequest = true) => {
-            orsSettingsFactory[currentSettingsObj].value.waypoints.splice(idx, 0, wp);
-            orsSettingsFactory.focusIdx = false;
             /** Update Map. */
             orsSettingsFactory[currentWaypointsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue()
                 .waypoints);

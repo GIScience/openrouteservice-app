@@ -663,7 +663,7 @@ angular.module('orsApp')
             routeHovering: function() {
                 return {
                     color: '#FFF',
-                    weight: 30,
+                    weight: 50,
                     opacity: 0
                 };
             },
