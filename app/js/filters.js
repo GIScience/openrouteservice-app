@@ -1,4 +1,9 @@
 angular.module('orsApp.ors-filters', [])
+    .filter('trusted', function($sce) {
+        return function(html) {
+            return $sce.trustAsHtml(html);
+        };
+    })
     .filter('duration', () => {
         return (input) => {
             const hours = Math.floor(input / 3600);

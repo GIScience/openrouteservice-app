@@ -345,7 +345,9 @@ angular.module('orsApp.utils-service', [])
                 const properties = feature.properties;
                 feature.processed = {};
                 // primary information
-                if ('street' in properties) {
+                if ('name' in properties && properties.name !== properties.street + ' ' + properties.house_number) {
+                    feature.processed.primary = properties.name;
+                } else if ('street' in properties) {
                     const streetAddress = [];
                     // street and name can be the same, just needed once
                     streetAddress.push(properties.street);
@@ -354,10 +356,8 @@ angular.module('orsApp.utils-service', [])
                     }
                     // street address with house number can also be the same as name
                     if (streetAddress.length > 0) {
-                        feature.processed.primary = streetAddress.join(", ");
+                        feature.processed.primary = streetAddress.join(' ');
                     }
-                } else if ('name' in properties) {
-                    feature.processed.primary = properties.name;
                 } else if ('locality' in properties) {
                     feature.processed.primary = properties.locality;
                 }

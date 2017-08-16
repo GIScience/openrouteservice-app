@@ -7,76 +7,23 @@
         <span class="right" ng-bind-html="(distanceAtInterpolatedPoint | distance)">
         </span>
     </div>
+    <div class="item">
+        <span class="left">
+            <i class="fa fa-lg fa-road" tooltip-side="top" tooltip-template="{{ ('waytypes' | translate)}}{{' ('}}{{('SURFACE' | translate)}}{{' | '}}{{('suitability' | translate)}}{{')'}}" tooltips="">
+            </i>
+        </span>
+        <span class="right" ng-bind-html="'<strong>' + (interpolatedRoutePoint.extras.surface | translate) + '</strong> (' + (interpolatedRoutePoint.extras.waytypes | translate) +  ' | ' + interpolatedRoutePoint.extras.suitability + ') ' ">
+        </span>
+        
+    </div>
     <div class="item" ng-if="interpolatedRoutePoint.heights">
         <span class="left">
-            <i class="fa fa-lg fa-arrows-v" tooltip-side="top" tooltip-template="{{('height' | translate)}}" tooltips="">
+            <i class="fa fa-lg fa-area-chart" tooltip-side="top" tooltip-template="{{('height' | translate)}}{{' & '}}{{('steepness' | translate)}}" tooltips="">
             </i>
         </span>
         <span class="right" ng-bind-html="(interpolatedRoutePoint.heights.height | distance)">
         </span>
-    </div>
-    <div class="item" ng-if="interpolatedRoutePoint.heights.ascent">
-        <span class="left">
-            <i class="fa fa-lg fa-long-arrow-down fa-rotate-225" tooltip-side="top" tooltip-template="{{('ASCENT' | translate)}}" tooltips="">
-            </i>
-        </span>
-        <span class="right" ng-bind-html="(interpolatedRoutePoint.heights.ascent | distance)">
-        </span>
-    </div>
-    <div class="item" ng-if="interpolatedRoutePoint.heights.descent">
-        <span class="left">
-            <i class="fa fa-lg fa-long-arrow-up fa-rotate-135" tooltip-side="top" tooltip-template="{{('DESCENT' | translate)}}" tooltips="">
-            </i>
-        </span>
-        <span class="right" ng-bind-html="(interpolatedRoutePoint.heights.descent | distance)">
-        </span>
-    </div>
-    <div class="item">
-        <span class="left">
-            <i class="fa fa-lg fa-road" tooltip-side="top" tooltip-template="{{('SURFACE' | translate)}}" tooltips="">
-            </i>
-        </span>
-        <span class="right" ng-bind-html="(interpolatedRoutePoint.extras.surface | translate)">
-        </span>
-    </div>
-    <div class="item">
-        <span class="left">
-            <i class="fa fa-lg fa-question" tooltip-side="top" tooltip-template="{{('waytypes' | translate)}}" tooltips="">
-            </i>
-        </span>
-        <span class="right" ng-bind-html="(interpolatedRoutePoint.extras.waytypes | translate)">
-        </span>
-    </div>
-    <div class="item" ng-if="interpolatedRoutePoint.heights">
-        <span class="left">
-            <i class="fa fa-lg fa-area-chart" tooltip-side="top" tooltip-template="{{('steepness' | translate)}}" tooltips="">
-            </i>
-        </span>
-        <span class="right" ng-bind-html="interpolatedRoutePoint.extras.steepness">
-        </span>
-    </div>
-    <div class="item">
-        <span class="left">
-            <i class="fa fa-lg fa-thumbs-o-up" tooltip-side="top" tooltip-template="{{('suitability' | translate)}}" tooltips="">
-            </i>
-        </span>
-        <span class="right" ng-bind-html="interpolatedRoutePoint.extras.suitability">
-        </span>
-    </div>
-    <div class="item" ng-if="interpolatedRoutePoint.extras.green">
-        <span class="left">
-            <i class="fa fa-lg fa-leaf" tooltip-side="top" tooltip-template="{{('green' | translate)}}" tooltips="">
-            </i>
-        </span>
-        <span class="right" ng-bind-html="interpolatedRoutePoint.extras.green">
-        </span>
-    </div>
-    <div class="item" ng-if="interpolatedRoutePoint.extras.noise">
-        <span class="left">
-            <i class="fa fa-lg fa-volume-down" tooltip-side="top" tooltip-template="{{('noise' | translate)}}" tooltips="">
-            </i>
-        </span>
-        <span class="right" ng-bind-html="interpolatedRoutePoint.extras.noise">
+        <span class="right" ng-bind-html="(interpolatedRoutePoint.extras.steepness | trusted)">
         </span>
     </div>
 </div>

@@ -101,7 +101,6 @@ angular.module('orsApp.route-service', [])
             orsRouteService.data = data;
             let cnt = 0;
             angular.forEach(orsRouteService.data.routes, function(route) {
-                console.error(route)
                 //const geometry = orsUtilsService.decodePolyline(route.geometry, route.elevation);
                 route.geometryRaw = angular.copy(route.geometry.coordinates);
                 let geometry = route.geometry.coordinates;
@@ -136,31 +135,21 @@ angular.module('orsApp.route-service', [])
         };
         /** process point information */
         orsRouteService.processPointExtras = (route) => {
-            const generateHeightInfo = (geometry, idx) => {
-                const obj = {};
-                obj.height = parseFloat(geometry[idx][2].toFixed(1));
-                if (idx > 0) {
-                    let last_z = geometry[(idx - 1)][2];
-                    if (obj.height < last_z) {
-                        let minus = last_z - obj.height;
-                        descent += minus;
-                    } else if (obj.height > last_z) {
-                        let plus = obj.height - last_z;
-                        ascent += plus;
-                    }
-                    if (ascent > 0) {
-                        obj.ascent = parseFloat(ascent.toFixed(1));
-                    }
-                    if (descent > 0) {
-                        obj.descent = parseFloat(descent.toFixed(1));
-                    }
-                }
-                return obj;
-            };
             const fetchExtrasAtPoint = (extrasObj, idx) => {
                 const extrasAtPoint = {};
                 angular.forEach(extrasObj, function(values, key) {
-                    extrasAtPoint[key] = mappings[key][values[idx]].text;
+                    if (mappings[key][values[idx]].type == -1) {
+                        // green
+                        extrasAtPoint[key] = '<strong><span style="color: green;">' + '~ ' + mappings[key][values[idx]].text + '</span></strong>';
+                    } else if (mappings[key][values[idx]].type == 1) {
+                        // red
+                        extrasAtPoint[key] = '<strong><span style="color: red;>' + '~ ' + mappings[key][values[idx]].text + '</span></strong>';
+                    } else if (mappings[key][values[idx]].type == 0) {
+                        extrasAtPoint[key] = '<strong><span>' + '~ ' + mappings[key][values[idx]].text + '</span></strong>';
+                    }
+                    else  {
+                        extrasAtPoint[key] = mappings[key][values[idx]].text;
+                    }
                 });
                 return extrasAtPoint;
             };
@@ -183,14 +172,14 @@ angular.module('orsApp.route-service', [])
             const geometry = route.geometry;
             const segments = route.segments;
             // declare cumulative statistic variables
-            var descent = 0,
+            let descent = 0,
                 ascent = 0,
                 distance = 0,
                 segment_distance = 0,
                 step_distance = 0,
                 point_distance = 0;
             // declare incrementing ids
-            var segment_id = 0,
+            let segment_id = 0,
                 step_id = 0,
                 point_id = 0;
             // loop the geometry and calculate distances
@@ -232,11 +221,14 @@ angular.module('orsApp.route-service', [])
                     // duration: null, // todo
                     segment_index: segment_id,
                     point_id: i,
-                    heights: route.elevation && generateHeightInfo(geometry, i)
+                    heights: route.elevation && {
+                        height: parseFloat(geometry[i][2].toFixed(1))
+                    }
                 };
                 point_id += 1;
                 info_array.push(pointobject);
             }
+            console.log(info_array)
             return info_array;
         };
         /* process heightgraph geojson object */

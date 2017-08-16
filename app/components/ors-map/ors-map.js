@@ -249,8 +249,7 @@ angular.module('orsApp')
                     className: 'cm-popup'
                 });
                 $scope.pointPopup = L.popup({
-                    minWidth: 240,
-                    maxWidth: 240,
+                    minWidth: 175,
                     maxHeight: 300,
                     closeButton: true,
                     className: 'cm-popup'
@@ -286,6 +285,12 @@ angular.module('orsApp')
                 $scope.mapModel.map.on('moveend', (e) => {
                     $scope.setMapOptions();
                 });
+                $scope.mapModel.map.on('mouseover', (e) => {
+                    console.log(true)
+                });
+                $scope.mapModel.map.on('mouseout', (e) => {
+                    console.log(true)
+                })
                 $scope.setMapOptions = () => {
                     const mapCenter = $scope.mapModel.map.getCenter();
                     const mapZoom = $scope.mapModel.map.getZoom();
@@ -545,22 +550,6 @@ angular.module('orsApp')
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     polyLine.setStyle(actionPackage.style);
                 };
-                $scope.addPolylineHover = (actionPackage) => {
-                    $scope.mapModel.map.closePopup();
-                    $scope.hoverPolyLine = L.polyline(actionPackage.geometry, {
-                            interactive: true,
-                            distanceMarkers: {
-                                lazy: true
-                            },
-                            bubblingMouseEvents: true
-                        })
-                        .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
-                    $scope.hoverPolyLine.setStyle(actionPackage.style);
-                    $scope.pointList = actionPackage.extraInformation.pointInformation;
-                    $scope.hoverPolyLine.on("mousemove", (e) => {
-                        $scope.addHoverPoint($scope.mapModel, $scope.hoverPolyLine, $scope.pointList, e.latlng);
-                    });
-                };
                 /** 
                  * adds interactive route 
                  * @param {Object} actionPackage - The action actionPackage
@@ -590,10 +579,35 @@ angular.module('orsApp')
                         pointOnRoute.predecessor = 0;
                     }
                     return {
-                        factor,
+                        factor: factor,
                         latlng: pointOnRoute.latLng,
-                        index: pointList[pointOnRoute.predecessor].segment_index
+                        index: pointOnRoute.predecessor
                     };
+                };
+                $scope.addPolylineHover = (actionPackage) => {
+                    $scope.mapModel.map.closePopup();
+                    $scope.hoverPolyLine = L.polyline(actionPackage.geometry, {
+                            interactive: true,
+                            distanceMarkers: {
+                                lazy: true
+                            },
+                            //bubblingMouseEvents: true
+                        })
+                        .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
+                    $scope.hoverPolyLine.setStyle(actionPackage.style);
+                    $scope.pointList = actionPackage.extraInformation.pointInformation;
+                    $scope.hoverPolyLine.on("mousemove", (e) => {
+                        $scope.addHoverPoint($scope.mapModel, $scope.hoverPolyLine, $scope.pointList, e.latlng);
+                    });
+                    // careful using turf as a hack until we find a neater solution. Mouseout is called when the mouse is on the hoverpoint which is the problem
+                    $scope.hoverPolyLine.on("mouseout", (e) => {
+                        const poly = turf.buffer(turf.helpers.point([$scope.hoverPoint.getLatLng()
+                            .lng, $scope.hoverPoint.getLatLng()
+                            .lat
+                        ]), 0.05);
+                        const pt = turf.helpers.point([e.latlng.lng, e.latlng.lat]);
+                        if (!turf.inside(pt, poly)) $scope.hoverPoint.removeFrom($scope.mapModel.geofeatures.layerRouteDrag);
+                    });
                 };
                 /** 
                  * adds interactive point over a polyLine 
@@ -601,8 +615,7 @@ angular.module('orsApp')
                  */
                 $scope.addHoverPoint = (mapModel, hoverPolyLine, pointList, latlng) => {
                     if ($scope.hoverPoint) $scope.hoverPoint.removeFrom($scope.mapModel.geofeatures.layerRouteDrag);
-                    const snappedPosition = $scope.getPositionOnRoute(mapModel.map, hoverPolyLine, pointList, latlng);
-                    $scope.displayPos = latlng;
+                    let snappedPosition = $scope.getPositionOnRoute(mapModel.map, hoverPolyLine, pointList, latlng);
                     // center the point on the polyline
                     const hoverIcon = L.divIcon(lists.waypointIcons[5]);
                     hoverIcon.options.html = '<i class="fa fa-circle"></i>';
@@ -610,12 +623,15 @@ angular.module('orsApp')
                     $scope.hoverPoint = new L.marker(snappedPosition.latlng, {
                             icon: hoverIcon,
                             draggable: 'true',
-                            bubblingMouseEvents: true
+                            //bubblingMouseEvents: true
                         })
                         .addTo(mapModel.geofeatures.layerRouteDrag)
                         .on('dragend', (event) => {
-                            $scope.processMapWaypoint(snappedPosition.index + 1, event.target._latlng, false, true, true);
+                            $scope.processMapWaypoint(pointList[snappedPosition.index].segment_index + 1, event.target._latlng, false, true, true);
                             mapModel.geofeatures.layerRouteDrag.clearLayers();
+                        })
+                        .on('mouseover', (event) => {
+                            console.log('over')
                         })
                         .on('mousedown', (event) => {
                             hoverPolyLine.off('mousemove');
@@ -627,18 +643,19 @@ angular.module('orsApp')
                         })
                         .on("click", (e) => {
                             $scope.mapModel.map.closePopup();
+                            const snappedPosition = $scope.getPositionOnRoute(mapModel.map, hoverPolyLine, pointList, e.latlng);
                             //$scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
-                            const displayPos = e.latlng;
                             $scope.distanceAtInterpolatedPoint = snappedPosition.factor * pointList[pointList.length - 1].distance;
                             $scope.interpolatedRoutePoint = pointList[snappedPosition.index];
+                            console.log($scope.interpolatedRoutePoint)
                             const popupDirective = '<ors-route-point-popup></ors-route-point-popup>';
                             const popupContent = $compile(popupDirective)($scope);
                             $scope.pointPopup.setContent(popupContent[0])
-                                .setLatLng(displayPos)
+                                .setLatLng(e.latlng)
                                 .openOn($scope.mapModel.map);
                             $timeout(function() {
                                 $scope.pointPopup.update();
-                            }, 300);
+                            });
                         });
                 };
                 /**

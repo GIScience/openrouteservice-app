@@ -3,46 +3,57 @@ angular.module('orsApp')
         steepness: {
             '-5': {
                 text: '16%+',
+                type: '-1',
                 color: '#028306'
             },
             '-4': {
                 text: '10-15%',
+                type: '-1',
                 color: '#2AA12E'
             },
             '-3': {
                 text: '7-9%',
+                type: '-1',
                 color: '#53BF56'
             },
             '-2': {
                 text: '4-6%',
+                type: '-1',
                 color: '#7BDD7E'
             },
             '-1': {
                 text: '1-3%',
+                type: '-1',
                 color: '#A4FBA6'
             },
             '0': {
                 text: '0%',
+                type: '0',
                 color: '#ffcc99'
             },
             '1': {
                 text: '1-3%',
+                type: '1',
                 color: '#F29898'
             },
             '2': {
                 text: '4-6%',
+                type: '1',
                 color: '#E07575'
             },
             '3': {
                 text: '7-9%',
+                type: '1',
                 color: '#CF5352'
             },
             '4': {
                 text: '10-15%',
+                type: '1',
                 color: '#BE312F'
             },
             '5': {
                 text: '16%+',
+                type: '1',
                 color: '#AD0F0C'
             }
         },

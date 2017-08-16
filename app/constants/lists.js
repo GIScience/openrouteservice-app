@@ -39,6 +39,9 @@ angular.module('orsApp')
             },
             5: {
                 className: "ors-marker-hover",
+            },
+            6: {
+                className: "ors-marker-hover-drag",
             }
         },
         profiles: {
