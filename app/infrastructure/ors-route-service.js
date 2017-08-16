@@ -11,6 +11,8 @@ angular.module('orsApp.route-service', [])
             orsRouteService.routesSubject.onNext([]);
             let action = orsObjectsFactory.createMapAction(2, lists.layers[1], undefined, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
+            action = orsObjectsFactory.createMapAction(2, lists.layers[9], undefined, undefined);
+            orsMapFactory.mapServiceSubject.onNext(action);
             orsRouteService.DeColor();
         };
         orsRouteService.routingRequests = {};
@@ -69,9 +71,6 @@ angular.module('orsApp.route-service', [])
         orsRouteService.zoomTo = (geom) => {
             let action = orsObjectsFactory.createMapAction(0, lists.layers[2], geom, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
-        };
-        orsRouteService.addHoverpoint = () => {
-            const hoverPoint = orsObjectsFactory.createMapAction(1, lists.layers[9], geom, undefined);
         };
         orsRouteService.addRoute = (route, focusIdx) => {
             const routePadding = orsObjectsFactory.createMapAction(1, lists.layers[1], route.geometry, undefined, lists.layerStyles.routePadding());
