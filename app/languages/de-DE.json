@@ -147,6 +147,7 @@
     "waytypes": "Wegtypen", 
     "surface": "Oberflächenbeschaffenheit", 
     "green": "Grünflächen index", 
+    "tollways": "Mautstraßen", 
     "FROM": "from", 
     "TO": "to", 
     "SHARE_LINK": "Link teilen", 
@@ -169,5 +170,7 @@
     "DRAGTOADD": "Ziehen für Wegpunkt, klicken für Infos", 
     "noise": "Lautstärkeindex", 
     "height": "Höhe",
-    "LOCALE_DISTANCE_MARKERS": "Distanz-Marker (km)"
+    "LOCALE_DISTANCE_MARKERS": "Distanz-Marker (km)",
+    "LOCALE_NO_TOLLWAY": "Mautfreie Straßen",
+    "LOCALE_TOLLWAY": "Mautstraßen"
 }

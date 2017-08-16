@@ -285,6 +285,9 @@ angular.module('orsApp')
                 $scope.mapModel.map.on('moveend', (e) => {
                     $scope.setMapOptions();
                 });
+                $scope.mapModel.map.on('mouseover', (e) => {
+                    console.log(true)
+                });
                 $scope.setMapOptions = () => {
                     const mapCenter = $scope.mapModel.map.getCenter();
                     const mapZoom = $scope.mapModel.map.getZoom();
@@ -555,7 +558,8 @@ angular.module('orsApp')
                             interactive: true,
                             distanceMarkers: {
                                 lazy: true
-                            }
+                            },
+                            //bubblingMouseEvents: true
                         })
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     polyLine.setStyle(actionPackage.style);
@@ -580,12 +584,25 @@ angular.module('orsApp')
                 };
                 $scope.addPolylineHover = (actionPackage) => {
                     $scope.mapModel.map.closePopup();
+                    $scope.polylineZone = L.polyline(actionPackage.geometry, {
+                            distanceMarkers: {
+                                lazy: true
+                            }
+                        })
+                        .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
+                    $scope.polylineZone.setStyle({
+                        color: '#FFF',
+                        weight: 100,
+                        opacity: 0
+                    });
+                    $scope.polylineZone.on("mouseover", (e) => {
+                        if ($scope.hoverPoint) $scope.hoverPoint.removeFrom($scope.mapModel.geofeatures.layerRouteDrag);
+                    });
                     $scope.hoverPolyLine = L.polyline(actionPackage.geometry, {
                             interactive: true,
                             distanceMarkers: {
                                 lazy: true
-                            },
-                            //bubblingMouseEvents: true
+                            }
                         })
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     $scope.hoverPolyLine.setStyle(actionPackage.style);
@@ -626,15 +643,16 @@ angular.module('orsApp')
                             $scope.processMapWaypoint(pointList[snappedPosition.index].segment_index + 1, event.target._latlng, false, true, true);
                             mapModel.geofeatures.layerRouteDrag.clearLayers();
                         })
-                        .on('mouseover', (event) => {
-                            console.log('over')
-                        })
                         .on('mousedown', (event) => {
                             hoverPolyLine.off('mousemove');
+                            $scope.polylineZone.off('mouseover');
                         })
                         .on('mouseup', (event) => {
                             hoverPolyLine.on("mousemove", (e) => {
                                 $scope.addHoverPoint(mapModel, hoverPolyLine, pointList, e.latlng);
+                            });
+                            $scope.polylineZone.on("mouseover", (e) => {
+                                if ($scope.hoverPoint) $scope.hoverPoint.removeFrom($scope.mapModel.geofeatures.layerRouteDrag);
                             });
                         })
                         .on("click", (e) => {
