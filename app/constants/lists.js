@@ -54,7 +54,8 @@ angular.module('orsApp')
                 extras: {
                     surface: true,
                     waytype: true,
-                    suitability: true
+                    suitability: true,
+                    tollways: true
                 }
             },
             Bicycle: {
@@ -187,7 +188,8 @@ angular.module('orsApp')
                 extras: {
                     surface: true,
                     waytype: true,
-                    suitability: true
+                    suitability: true,
+                    tollways: true
                 }
             },
             goods: {
@@ -199,7 +201,8 @@ angular.module('orsApp')
                 extras: {
                     surface: true,
                     waytype: true,
-                    suitability: true
+                    suitability: true,
+                    tollways: true
                 }
             },
             bus: {
@@ -211,7 +214,8 @@ angular.module('orsApp')
                 extras: {
                     surface: true,
                     waytype: true,
-                    suitability: true
+                    suitability: true,
+                    tollways: true
                 }
             },
             agricultural: {
@@ -223,7 +227,8 @@ angular.module('orsApp')
                 extras: {
                     surface: true,
                     waytype: true,
-                    suitability: true
+                    suitability: true,
+                    tollways: true
                 }
             },
             forestry: {
@@ -235,7 +240,8 @@ angular.module('orsApp')
                 extras: {
                     surface: true,
                     waytype: true,
-                    suitability: true
+                    suitability: true,
+                    tollways: true
                 }
             },
             delivery: {
@@ -247,7 +253,8 @@ angular.module('orsApp')
                 extras: {
                     surface: true,
                     waytype: true,
-                    suitability: true
+                    suitability: true,
+                    tollways: true
                 }
             }
         },

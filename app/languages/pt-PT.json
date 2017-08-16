@@ -147,6 +147,7 @@
     "waytypes": "Tipos de caminho", 
     "surface": "Superfícies", 
     "green": "Green index", 
+    "tollways": "Tollways", 
     "FROM": "de", 
     "TO": "para", 
     "SHARE_LINK": "Partilhar link", 
@@ -168,5 +169,7 @@
     "DRAGTOADD": "Drag to add a via point. Click for point info", 
     "noise": "Noise index", 
     "height": "Height",
-    "LOCALE_DISTANCE_MARKERS": "Distance markers (km)"
+    "LOCALE_DISTANCE_MARKERS": "Distance markers (km)",
+    "LOCALE_NO_TOLLWAY": "Tollfree roads",
+    "LOCALE_TOLLWAY": "Tollroads "
 }

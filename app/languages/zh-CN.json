@@ -147,6 +147,7 @@
     "waytypes": "道路类型", 
     "surface": "路面类型", 
     "green": "绿化程度", 
+    "tollways": "Tollways", 
     "noise": "噪声强度", 
     "FROM": "从", 
     "TO": "至", 
@@ -168,5 +169,7 @@
     "LOCALE_ISOCHRONE_RANDOMIZE_COLORS": "Randomized isochrone colors", 
     "DRAGTOADD": "Drag to add a via point. Click for point info", 
     "height": "Height",
-    "LOCALE_DISTANCE_MARKERS": "Distance markers (km)"
+    "LOCALE_DISTANCE_MARKERS": "Distance markers (km)",
+    "LOCALE_NO_TOLLWAY": "Tollfree roads",
+    "LOCALE_TOLLWAY": "Tollroads "
 }

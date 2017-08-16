@@ -266,5 +266,15 @@ angular.module('orsApp')
                 text: '10/10',
                 color: '#773600'
             }
+        },
+        tollways: {
+            '0': {
+                text: 'LOCALE_NO_TOLLWAY',
+                color: '#6ca97b'
+            },
+            '1': {
+                text: 'LOCALE_TOLLWAY',
+                color: '#ffb347'
+            }
         }
     });

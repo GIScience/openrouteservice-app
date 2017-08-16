@@ -285,12 +285,6 @@ angular.module('orsApp')
                 $scope.mapModel.map.on('moveend', (e) => {
                     $scope.setMapOptions();
                 });
-                $scope.mapModel.map.on('mouseover', (e) => {
-                    console.log(true)
-                });
-                $scope.mapModel.map.on('mouseout', (e) => {
-                    console.log(true)
-                })
                 $scope.setMapOptions = () => {
                     const mapCenter = $scope.mapModel.map.getCenter();
                     const mapZoom = $scope.mapModel.map.getZoom();
@@ -600,14 +594,16 @@ angular.module('orsApp')
                         $scope.addHoverPoint($scope.mapModel, $scope.hoverPolyLine, $scope.pointList, e.latlng);
                     });
                     // careful using turf as a hack until we find a neater solution. Mouseout is called when the mouse is on the hoverpoint which is the problem
-                    $scope.hoverPolyLine.on("mouseout", (e) => {
-                        const poly = turf.buffer(turf.helpers.point([$scope.hoverPoint.getLatLng()
-                            .lng, $scope.hoverPoint.getLatLng()
-                            .lat
-                        ]), 0.05);
-                        const pt = turf.helpers.point([e.latlng.lng, e.latlng.lat]);
-                        if (!turf.inside(pt, poly)) $scope.hoverPoint.removeFrom($scope.mapModel.geofeatures.layerRouteDrag);
-                    });
+                    // $scope.hoverPolyLine.on("mouseout", (e) => {
+                    //     const poly = turf.buffer(turf.helpers.point([$scope.hoverPoint.getLatLng()
+                    //         .lng, $scope.hoverPoint.getLatLng()
+                    //         .lat
+                    //     ]), 0.05);
+                    //     const pt = turf.helpers.point([e.latlng.lng, e.latlng.lat]);
+                    //     if (!turf.inside(pt, poly)) {
+                    //         if ($scope.hoverPoint) $scope.hoverPoint.removeFrom($scope.mapModel.geofeatures.layerRouteDrag);
+                    //     }
+                    // });
                 };
                 /** 
                  * adds interactive point over a polyLine 
