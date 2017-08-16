@@ -32,7 +32,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
             var svg = d3.select(element[0]).append("svg").attr("width", width).attr("height", height);
             y.domain([0]);
             x.domain([0, data[data.length - 1].y1]);
-            svg.append("g").selectAll("rect").data(data).enter().append("rect").attr("height", 26).attr("x", (d) => {
+            svg.append("g").selectAll("rect").data(data).enter().append("rect").attr("height", 22).attr("x", (d) => {
                 return x(d.y0) / 1;
             }).attr("width", (d) => {
                 return x(d.y1) / 1 - x(d.y0) / 1;
@@ -50,7 +50,7 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
                 // not implemented yet
                 scope.ZoomToSegment(d.intervals);
             });
-            let legendRectSize = 7;
+            let legendRectSize = 5;
             let legendSpacing = 7;
             let legendTotalHeight = 0;
             let legendContainer = svg.append("g");
@@ -60,14 +60,14 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
             });
             let legend = legendContainer.selectAll('.chart-legend').data(legendData).enter().append('g').attr('class', '.chart-legend').attr('transform', (d, i) => {
                 let legendHeight = legendRectSize + legendSpacing;
-                let vert = height * 1.1 + i * legendHeight;
+                let vert = height + i * legendHeight;
                 legendTotalHeight += legendHeight;
                 return 'translate(' + 0 + ',' + vert + ')';
             });
             legend.append('rect').attr('width', legendRectSize).attr('height', legendRectSize).style('fill', (d, i) => {
                 return d.color;
             });
-            legendContainer.append('text').style("font-size", "12px").attr('x', 0).attr('y', 40).text(scope.translateFilter(scope.key));
+            legendContainer.append('text').style("font-size", "12px").attr('x', 0).attr('y',35).text(scope.translateFilter(scope.key));
             legend.append('text').style("font-size", "11px").attr('x', legendRectSize + legendSpacing).attr('y', legendRectSize).text((d) => {
                 return scope.translateFilter(d.type) + ' (' + d.percentage + '%)';
             });
@@ -77,18 +77,18 @@ angular.module('orsApp.ors-bars-chart', []).directive('orsBarsChart', () => {
             legend.on('mouseout', (d) => {
                 scope.DeEmphSegment();
             });
-            svg.attr("height", 45);
+            svg.attr("height", 40);
             if (scope.typesOrder.length >= 1) {
                 let show = false;
-                let expand = svg.append('path').attr("transform", "translate(290,35) rotate(90)").attr("class", "pointer").style("fill", "#444").attr("d", d3.symbol().type(d3.symbolTriangle).size(35)).style("font-size", "11px").on("click", () => {
+                let expand = svg.append('path').attr("transform", "translate(290,32) rotate(90)").attr("class", "pointer").style("fill", "#444").attr("d", d3.symbol().type(d3.symbolTriangle).size(35)).style("font-size", "11px").on("click", () => {
                     // Determine if current line is visible
                     show = show === false ? true : false;
                     if (show === true) {
                         svg.attr("height", legendTotalHeight + height);
-                        expand.attr("transform", "translate(290,35) rotate(180)");
+                        expand.attr("transform", "translate(290,32) rotate(180)");
                     } else {
-                        svg.attr("height", 45);
-                        expand.attr("transform", "translate(290,35) rotate(90)");
+                        svg.attr("height", 40);
+                        expand.attr("transform", "translate(290,32) rotate(90)");
                     }
                 });
             }
