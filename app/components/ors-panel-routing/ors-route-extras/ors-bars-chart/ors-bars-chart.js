@@ -48,7 +48,7 @@ angular.module('orsApp.ors-bars-chart', [])
                     .data(data)
                     .enter()
                     .append("rect")
-                    .attr("height", 26)
+                    .attr("height", 22)
                     .attr("x", (d) => {
                         return x(d.y0) / 1;
                     })
@@ -73,7 +73,7 @@ angular.module('orsApp.ors-bars-chart', [])
                         // not implemented yet
                         scope.ZoomToSegment(d.intervals);
                     });
-                let legendRectSize = 7;
+                let legendRectSize = 5;
                 let legendSpacing = 7;
                 let legendTotalHeight = 0;
                 let legendContainer = svg.append("g");
@@ -88,7 +88,7 @@ angular.module('orsApp.ors-bars-chart', [])
                     .attr('class', '.chart-legend')
                     .attr('transform', (d, i) => {
                         let legendHeight = legendRectSize + legendSpacing;
-                        let vert = height * 1.1 + i * legendHeight;
+                        let vert = height + i * legendHeight;
                         legendTotalHeight += legendHeight;
                         return 'translate(' + 0 + ',' + vert + ')';
                     });
@@ -101,7 +101,7 @@ angular.module('orsApp.ors-bars-chart', [])
                 legendContainer.append('text')
                     .style("font-size", "12px")
                     .attr('x', 0)
-                    .attr('y', 40)
+                    .attr('y', 35)
                     .text(scope.translateFilter(scope.key));
                 legend.append('text')
                     .style("font-size", "11px")
@@ -116,11 +116,11 @@ angular.module('orsApp.ors-bars-chart', [])
                 legend.on('mouseout', (d) => {
                     scope.DeEmphSegment();
                 });
-                svg.attr("height", 45);
+                svg.attr("height", 40);
                 if (scope.typesOrder.length >= 1) {
                     let show = false;
                     let expand = svg.append('path')
-                        .attr("transform", "translate(290,35) rotate(90)")
+                        .attr("transform", "translate(290,32) rotate(90)")
                         .attr("class", "pointer")
                         .style("fill", "#444")
                         .attr("d", d3.symbol()
@@ -132,10 +132,10 @@ angular.module('orsApp.ors-bars-chart', [])
                             show = show === false ? true : false;
                             if (show === true) {
                                 svg.attr("height", legendTotalHeight + height);
-                                expand.attr("transform", "translate(290,35) rotate(180)");
+                                expand.attr("transform", "translate(290,32) rotate(180)");
                             } else {
-                                svg.attr("height", 45);
-                                expand.attr("transform", "translate(290,35) rotate(90)");
+                                svg.attr("height", 40);
+                                expand.attr("transform", "translate(290,32) rotate(90)");
                             }
                         });
                 }

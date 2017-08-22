@@ -531,6 +531,7 @@ angular.module('orsApp')
                  * @param {Object} actionPackage - The action actionPackage
                  */
                 $scope.addFeatures = (actionPackage) => {
+                    console.log(actionPackage)
                     const isDistanceMarkers = orsSettingsFactory.getUserOptions()
                         .showDistanceMarkers === true ? true : false;
                     const polyLine = L.polyline(actionPackage.geometry, {

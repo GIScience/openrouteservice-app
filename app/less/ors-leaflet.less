@@ -1,4 +1,32 @@
 @import 'variables.less';
+
+// extras popup
+.ors-route-point-popup {
+    display: flex;
+    -flex-wrap: wrap;
+    flex-direction: column;
+    padding: 0px 5px 0px 5px;
+    justify-content: space-between;
+    .item {
+        display: flex;
+        flex-direction: row;
+        user-select: none;
+        .left {
+            flex: 0 0 25px;
+            text-align: center;
+            cursor: pointer;
+            i {
+                color: rgba(0, 0, 0, 0.7);
+            }
+        }
+        .right {
+            cursor: default;
+            flex: 1 0 auto;
+            padding: 0 10px 0 10px;
+        }
+    }
+}
+
 .cm-popup-option {
     cursor: pointer;
     padding: 5px 5px 0 5px;

@@ -429,6 +429,7 @@ angular.module('orsApp.ors-options', [])
                 }
             };
             ctrl.$onChanges = (changesObj) => {
+                console.log(changesObj)
                 if (changesObj.showOptions) ctrl.refreshSlider();
                 if (changesObj.activeSubgroup || changesObj.activeProfile) {
                     console.log('hallo', changesObj.activeProfile)

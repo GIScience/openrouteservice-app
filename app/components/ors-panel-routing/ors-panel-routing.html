@@ -1,6 +1,6 @@
 <ors-profiles-options active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup" class="ors-profiles-options" ng-show="$ctrl.shouldDisplayRouteDetails == false && $ctrl.showGeocodingPanel == false" ors-params="$ctrl.routeParams" profiles="$ctrl.profiles">
 </ors-profiles-options>
-<div class="ors-routing-inner" ng-if="$ctrl.shouldDisplayRouteDetails == false && $ctrl.showGeocodingPanel == false">
+<div class="ors-routing-inner" ng-show="$ctrl.shouldDisplayRouteDetails == false && $ctrl.showGeocodingPanel == false">
     <div>
         <ors-waypoints active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup" ors-map="$ctrl.parent.orsMap" ors-params="$ctrl.routeParams" show-options="$ctrl.showOptions" show-geocoding-panel="$ctrl.showGeocodingPanel" show-geocoding-panel-idx="$ctrl.showGeocodingPanelIdx">
         </ors-waypoints>
