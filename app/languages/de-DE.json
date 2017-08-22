@@ -169,8 +169,9 @@
     "LOCALE_ISOCHRONE_RANDOMIZE_COLORS": "Randomisierte Farben für Isochronen", 
     "DRAGTOADD": "Ziehen für Wegpunkt, klicken für Infos", 
     "noise": "Lautstärkeindex", 
-    "height": "Höhe",
-    "LOCALE_DISTANCE_MARKERS": "Distanz-Marker (km)",
-    "LOCALE_NO_TOLLWAY": "Mautfreie Straßen",
-    "LOCALE_TOLLWAY": "Mautstraßen"
+    "height": "Höhe", 
+    "LOCALE_DISTANCE_MARKERS": "Distanz-Marker (km)", 
+    "LOCALE_NO_TOLLWAY": "Mautfreie Straßen", 
+    "LOCALE_TOLLWAY": "Mautstraßen", 
+    "avgspeed": "Durchschnittsgeschwindigkeit"
 }

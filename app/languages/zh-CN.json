@@ -168,8 +168,9 @@
     "LOCALE_MAP_SETTINGS": "Map Settings", 
     "LOCALE_ISOCHRONE_RANDOMIZE_COLORS": "Randomized isochrone colors", 
     "DRAGTOADD": "Drag to add a via point. Click for point info", 
-    "height": "Height",
-    "LOCALE_DISTANCE_MARKERS": "Distance markers (km)",
-    "LOCALE_NO_TOLLWAY": "Tollfree roads",
-    "LOCALE_TOLLWAY": "Tollroads "
+    "height": "Height", 
+    "LOCALE_DISTANCE_MARKERS": "Distance markers (km)", 
+    "LOCALE_NO_TOLLWAY": "Tollfree roads", 
+    "LOCALE_TOLLWAY": "Tollroads ", 
+    "avgspeed": "Average speed"
 }

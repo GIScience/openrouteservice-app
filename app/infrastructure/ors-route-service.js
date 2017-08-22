@@ -137,16 +137,18 @@ angular.module('orsApp.route-service', [])
             const fetchExtrasAtPoint = (extrasObj, idx) => {
                 const extrasAtPoint = {};
                 angular.forEach(extrasObj, function(values, key) {
-                    if (mappings[key][values[idx]].type == -1) {
+                    if (key == 'avgspeed') {
+                        let value = orsUtilsService.getSpeedRange(values[idx]);
+                        extrasAtPoint[key] = mappings[key][value].text;
+                    } else if (mappings[key][values[idx]].type == -1) {
                         // green
                         extrasAtPoint[key] = '<strong><span style="color: green;">' + '~ ' + mappings[key][values[idx]].text + '</span></strong>';
                     } else if (mappings[key][values[idx]].type == 1) {
                         // red
-                        extrasAtPoint[key] = '<strong><span style="color: red;>' + '~ ' + mappings[key][values[idx]].text + '</span></strong>';
+                        extrasAtPoint[key] = '<strong><span style="color: red;">' + '~ ' + mappings[key][values[idx]].text + '</span></strong>';
                     } else if (mappings[key][values[idx]].type == 0) {
                         extrasAtPoint[key] = '<strong><span>' + '~ ' + mappings[key][values[idx]].text + '</span></strong>';
-                    }
-                    else  {
+                    } else {
                         extrasAtPoint[key] = mappings[key][values[idx]].text;
                     }
                 });
@@ -243,7 +245,13 @@ angular.module('orsApp.route-service', [])
                         const to = item[1];
                         const geometry = routeString.slice(from, to + 1);
                         chunk.line = geometry;
-                        const typenumber = item[2];
+                        let typenumber = 0;
+                        // get the right key for mappings
+                        if (key == 'avgspeed') {
+                            typenumber = parseInt(orsUtilsService.getSpeedRange(item[2]));
+                        } else {
+                            typenumber = item[2];
+                        }
                         chunk.attributeType = typenumber;
                         extra.push(chunk);
                     }

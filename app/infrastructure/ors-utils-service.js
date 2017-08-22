@@ -1,5 +1,5 @@
 angular.module('orsApp.utils-service', [])
-    .factory('orsUtilsService', ['$q', '$http', '$timeout', '$location', 'lists', 'ENV', ($q, $http, $timeout, $location, lists, ENV) => {
+    .factory('orsUtilsService', ['$q', '$http', '$timeout', '$location', 'lists', 'mappings', 'ENV', ($q, $http, $timeout, $location, lists, mappings, ENV) => {
         let orsUtilsService = {};
         /**
          * trims coordinates
@@ -532,6 +532,20 @@ angular.module('orsApp.utils-service', [])
             $timeout(function() {
                 $location.search(link);
             });
+        };
+        /**
+         * transforms the average speed into the speed range for displaying in barchart as a string
+         * @param  {number} avgspeed: average Speed of a way section
+         * @return {string} speedRange: speed range for popup and barchart display
+         */
+        orsUtilsService.getSpeedRange = (avgspeed) => {
+            let speedRange = 3;
+            angular.forEach(mappings.avgspeed, (value, key) => {
+                if (avgspeed >= mappings.avgspeed[key].rangeBot && avgspeed < mappings.avgspeed[key].rangeTop) {
+                    speedRange = key;
+                }
+            });
+            return speedRange;
         };
         return orsUtilsService;
     }]);

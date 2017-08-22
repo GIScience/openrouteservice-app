@@ -168,6 +168,7 @@
     "LOCALE_ISOCHRONE_RANDOMIZE_COLORS": "Randomized isochrone colors", 
     "DRAGTOADD": "Drag to add a via point. Click for point info", 
     "noise": "Noise index", 
-    "height": "Height",
-    "LOCALE_DISTANCE_MARKERS": "Distance markers (km)"
+    "height": "Height", 
+    "LOCALE_DISTANCE_MARKERS": "Distance markers (km)", 
+    "avgspeed": "Average speed"
 }

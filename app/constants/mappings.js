@@ -276,5 +276,121 @@ angular.module('orsApp')
                 text: 'LOCALE_TOLLWAY',
                 color: '#ffb347'
             }
+        },
+        avgspeed: {
+            '3': {
+                text: '3',
+                color: '#f2fdff',
+                rangeBot: '0',
+                rangeTop: '4'
+            },
+            '4': {
+                text: '4',
+                color: '#D8FAFF',
+                rangeBot: '4',
+                rangeTop: '5'
+            },
+            '5': {
+                text: '5',
+                color: 'bff7ff',
+                rangeBot: '5',
+                rangeTop: '6'
+            },
+            '6': {
+                text: '6-8',
+                color: '#f2f7ff',
+                rangeBot: '5',
+                rangeTop: '9'
+            },
+            '9': {
+                text: '9-12',
+                color: '#d8e9ff',
+                rangeBot: '9',
+                rangeTop: '13'
+            },
+            '13': {
+                text: '13-16',
+                color: '#bedaff',
+                rangeBot: '13',
+                rangeTop: '17'
+            },
+            '17': {
+                text: '17-20',
+                color: '#a5cbff',
+                rangeBot: '17',
+                rangeTop: '21'
+            },
+            '21': {
+                text: '21-24',
+                color: '#8cbcff',
+                rangeBot: '21',
+                rangeTop: '25'
+            },
+            '25': {
+                text: '25-29',
+                color: '#72aeff',
+                rangeBot: '25',
+                rangeTop: '30'
+            },
+            '30': {
+                text: '30-34',
+                color: '#599fff',
+                rangeBot: '30',
+                rangeTop: '35'
+            },
+            '35': {
+                text: '35-39',
+                color: '#3f91ff',
+                rangeBot: '35',
+                rangeTop: '40'
+            },
+            '40': {
+                text: '40-44',
+                color: '#2682ff',
+                rangeBot: '40',
+                rangeTop: '45'
+            },
+            '45': {
+                text: '45-49',
+                color: '#0d73ff',
+                rangeBot: '45',
+                rangeTop: '50'
+            },
+            '50': {
+                text: '50-59',
+                color: '#0067f2',
+                rangeBot: '50',
+                rangeTop: '60'
+            },
+            '60': {
+                text: '60-69',
+                color: '#005cd9',
+                rangeBot: '60',
+                rangeTop: '70'
+            },
+            '70': {
+                text: '70-79',
+                color: '#0051c0',
+                rangeBot: '70',
+                rangeTop: '80'
+            },
+            '80': {
+                text: '80-99',
+                color: '#0046a6',
+                rangeBot: '80',
+                rangeTop: '100'
+            },
+            '100': {
+                text: '100-119',
+                color: '#003c8d',
+                rangeBot: '100',
+                rangeTop: '120'
+            },
+            '120': {
+                text: '+120',
+                color: '#003174',
+                rangeBot: '120',
+                rangeTop: '300'
+            }
         }
     });

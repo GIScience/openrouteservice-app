@@ -1147,7 +1147,7 @@ angular.module('orsApp')
                     });
                 };
                 // add locations control
-                $scope.mapModel.map.addControl($scope.locationsControl());
+                // FIXME $scope.mapModel.map.addControl($scope.locationsControl());
                 /**
                  * Dispatches all commands sent by Mapservice by using id and then performing the corresponding function
                  */

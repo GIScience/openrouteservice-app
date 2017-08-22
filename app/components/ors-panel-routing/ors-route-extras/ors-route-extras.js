@@ -1,4 +1,4 @@
-angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart','orsApp.ors-route-extras-map'])
+angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart', 'orsApp.ors-route-extras-map'])
     .component('orsRouteExtras', {
         templateUrl: 'components/ors-panel-routing/ors-route-extras/ors-route-extras.html',
         bindings: {
@@ -6,7 +6,7 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart','orsApp.ors-r
             routeIndex: '<',
             checkboxes: '<'
         },
-        controller: ['$scope', 'mappings', 'orsRouteService', function($scope, mappings, orsRouteService) {
+        controller: ['$scope', 'mappings', 'orsRouteService', 'orsUtilsService', function($scope, mappings, orsRouteService, orsUtilsService) {
             let ctrl = this;
             ctrl.mappings = mappings;
             ctrl.processExtras = (currentRoute, key) => {
@@ -16,7 +16,12 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart','orsApp.ors-r
                     const fr = elem[0],
                         to = elem[1];
                     if (fr !== to) {
-                        const typeNumber = parseInt(elem[2]);
+                        let typeNumber = 0;
+                        if (key == 'avgspeed') {
+                            typeNumber = parseInt(orsUtilsService.getSpeedRange(elem[2]));
+                        } else {
+                            typeNumber = parseInt(elem[2]);
+                        }
                         const routeSegment = currentRoute.geometry.slice(fr, to);
                         if (typeNumber in extras) {
                             extras[typeNumber].intervals.push([fr, to]);
@@ -41,11 +46,23 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart','orsApp.ors-r
                 });
                 for (let i = 0; i < currentRoute.extras[key].summary.length; i++) {
                     const extra = currentRoute.extras[key].summary[i];
-                    extras[extra.value].distance = extra.distance;
-                    extras[extra.value].percentage = extra.amount;
-                    extras[extra.value].y0 = y0;
-                    extras[extra.value].y1 = y0 += +extra.amount;
-                    typesOrder.push(extra.value);
+                    // handle average Speed categories
+                    if (extras[extra.value] == undefined) {
+                        extra.value = parseInt(orsUtilsService.getSpeedRange(extra.value));
+                    }
+                    if (extras[extra.value].distance !== undefined) {
+                        extras[extra.value].distance += extra.distance;
+                        extras[extra.value].percentage += extra.amount;
+                        extras[extra.value].y1 += +extra.amount;
+                    } else {
+                        extras[extra.value].distance = extra.distance;
+                        extras[extra.value].percentage = extra.amount;
+                        extras[extra.value].y0 = y0;
+                        extras[extra.value].y1 = y0 += +extra.amount;
+                    }
+                    if (typesOrder.indexOf(extra.value) === -1) {
+                        typesOrder.push(extra.value);
+                    }
                 }
                 return {
                     extras: extras,
