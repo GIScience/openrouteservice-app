@@ -87,7 +87,7 @@ angular.module('orsApp.route-service', [])
             }
         };
         orsRouteService.addHeightgraph = (geometry) => {
-            console.log(geometry)
+            console.log(geometry);
             const heightgraph = orsObjectsFactory.createMapAction(-1, undefined, geometry, undefined, undefined);
             orsMapFactory.mapServiceSubject.onNext(heightgraph);
         };
@@ -112,7 +112,7 @@ angular.module('orsApp.route-service', [])
                 }
                 route.geometry = geometry;
                 route.point_information = orsRouteService.processPointExtras(route);
-                if (cnt == 0) {
+                if (cnt === 0) {
                     if (route.elevation) {
                         // get max and min elevation from nested array
                         // var values = actionPackage.geometry.map(function(elt) {
@@ -146,7 +146,7 @@ angular.module('orsApp.route-service', [])
                     } else if (mappings[key][values[idx]].type == 1) {
                         // red
                         extrasAtPoint[key] = '<strong><span style="color: red;">' + '~ ' + mappings[key][values[idx]].text + '</span></strong>';
-                    } else if (mappings[key][values[idx]].type == 0) {
+                    } else if (mappings[key][values[idx]].type === 0) {
                         extrasAtPoint[key] = '<strong><span>' + '~ ' + mappings[key][values[idx]].text + '</span></strong>';
                     } else {
                         extrasAtPoint[key] = mappings[key][values[idx]].text;
@@ -156,6 +156,7 @@ angular.module('orsApp.route-service', [])
             };
             // prepare extras object
             let extrasObj = {};
+            let avgspeedObj = [];
             (extrasObj = () => {
                 angular.forEach(route.extras, function(val, key) {
                     const list = [];
@@ -167,8 +168,12 @@ angular.module('orsApp.route-service', [])
                     // push last extra, not considered in above loop
                     list.push(val.values[val.values.length - 1][2]);
                     extrasObj[key] = list;
+                    if (key == 'avgspeed') {
+                        avgspeedObj = list;
+                    }
                 });
-            })();
+            })
+            .call();
             const info_array = [];
             const geometry = route.geometry;
             const segments = route.segments;
@@ -178,7 +183,9 @@ angular.module('orsApp.route-service', [])
                 distance = 0,
                 segment_distance = 0,
                 step_distance = 0,
-                point_distance = 0;
+                point_distance = 0,
+                duration = 0,
+                avgspeed = 0;
             // declare incrementing ids
             let segment_id = 0,
                 step_id = 0,
@@ -187,6 +194,7 @@ angular.module('orsApp.route-service', [])
             for (let i = 0; i < geometry.length; i++) {
                 const lat = geometry[i][0];
                 const lng = geometry[i][1];
+                avgspeed = avgspeedObj[i];
                 // store the segment_id of the point and reset the step_id
                 if (i > route.way_points[segment_id + 1]) {
                     segment_id += 1;
@@ -201,6 +209,7 @@ angular.module('orsApp.route-service', [])
                     step_distance += point_distance;
                     segment_distance += point_distance;
                     distance += point_distance;
+                    duration += point_distance / (avgspeedObj[i - 1] / 3.6);
                 }
                 // if last point of a step is reached
                 if (i == segments[segment_id].steps[step_id].way_points[1]) {
@@ -219,7 +228,8 @@ angular.module('orsApp.route-service', [])
                     coords: [lat, lng],
                     extras: fetchExtrasAtPoint(extrasObj, i),
                     distance: parseFloat(distance.toFixed(1)),
-                    // duration: null, // todo
+                    duration: parseFloat(duration.toFixed(1)),
+                    avgspeed: avgspeed,
                     segment_index: segment_id,
                     point_id: i,
                     heights: route.elevation && {
@@ -229,7 +239,7 @@ angular.module('orsApp.route-service', [])
                 point_id += 1;
                 info_array.push(pointobject);
             }
-            console.log(info_array)
+            console.log(info_array);
             return info_array;
         };
         /* process heightgraph geojson object */

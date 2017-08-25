@@ -4,7 +4,7 @@
             <i class="fa fa-lg fa-arrows-h" tooltip-side="top" tooltip-template="{{('DISTANCE' | translate)}}" tooltips="">
             </i>
         </span>
-        <span class="right" ng-bind-html="(distanceAtInterpolatedPoint | distance)">
+        <span class="right" ng-bind-html="(distanceAtInterpolatedPoint | distance) + ' (' + (interpolatedRoutePoint.duration | duration) + ')' ">
         </span>
     </div>
     <div class="item">
@@ -14,7 +14,6 @@
         </span>
         <span class="right" ng-bind-html="'<strong>' + (interpolatedRoutePoint.extras.surface | translate) + '</strong> (' + (interpolatedRoutePoint.extras.waytypes | translate) +  ' | ' + interpolatedRoutePoint.extras.suitability + ')' ">
         </span>
-        
     </div>
     <div class="item" ng-if="interpolatedRoutePoint.heights">
         <span class="left">

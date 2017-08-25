@@ -279,115 +279,115 @@ angular.module('orsApp')
         },
         avgspeed: {
             '3': {
-                text: '3',
+                text: '3 km/h',
                 color: '#f2fdff',
                 rangeBot: '0',
                 rangeTop: '4'
             },
             '4': {
-                text: '4',
+                text: '4 km/h',
                 color: '#D8FAFF',
                 rangeBot: '4',
                 rangeTop: '5'
             },
             '5': {
-                text: '5',
+                text: '5 km/h',
                 color: 'bff7ff',
                 rangeBot: '5',
                 rangeTop: '6'
             },
             '6': {
-                text: '6-8',
+                text: '6-8 km/h',
                 color: '#f2f7ff',
                 rangeBot: '5',
                 rangeTop: '9'
             },
             '9': {
-                text: '9-12',
+                text: '9-12 km/h',
                 color: '#d8e9ff',
                 rangeBot: '9',
                 rangeTop: '13'
             },
             '13': {
-                text: '13-16',
+                text: '13-16 km/h',
                 color: '#bedaff',
                 rangeBot: '13',
                 rangeTop: '17'
             },
             '17': {
-                text: '17-20',
+                text: '17-20 km/h',
                 color: '#a5cbff',
                 rangeBot: '17',
                 rangeTop: '21'
             },
             '21': {
-                text: '21-24',
+                text: '21-24 km/h',
                 color: '#8cbcff',
                 rangeBot: '21',
                 rangeTop: '25'
             },
             '25': {
-                text: '25-29',
+                text: '25-29 km/h',
                 color: '#72aeff',
                 rangeBot: '25',
                 rangeTop: '30'
             },
             '30': {
-                text: '30-34',
+                text: '30-34 km/h',
                 color: '#599fff',
                 rangeBot: '30',
                 rangeTop: '35'
             },
             '35': {
-                text: '35-39',
+                text: '35-39 km/h',
                 color: '#3f91ff',
                 rangeBot: '35',
                 rangeTop: '40'
             },
             '40': {
-                text: '40-44',
+                text: '40-44 km/h',
                 color: '#2682ff',
                 rangeBot: '40',
                 rangeTop: '45'
             },
             '45': {
-                text: '45-49',
+                text: '45-49 km/h',
                 color: '#0d73ff',
                 rangeBot: '45',
                 rangeTop: '50'
             },
             '50': {
-                text: '50-59',
+                text: '50-59 km/h',
                 color: '#0067f2',
                 rangeBot: '50',
                 rangeTop: '60'
             },
             '60': {
-                text: '60-69',
+                text: '60-69 km/h',
                 color: '#005cd9',
                 rangeBot: '60',
                 rangeTop: '70'
             },
             '70': {
-                text: '70-79',
+                text: '70-79 km/h',
                 color: '#0051c0',
                 rangeBot: '70',
                 rangeTop: '80'
             },
             '80': {
-                text: '80-99',
+                text: '80-99 km/h',
                 color: '#0046a6',
                 rangeBot: '80',
                 rangeTop: '100'
             },
             '100': {
-                text: '100-119',
+                text: '100-119 km/h',
                 color: '#003c8d',
                 rangeBot: '100',
                 rangeTop: '120'
             },
             '120': {
-                text: '+120',
+                text: '+120 km/h',
                 color: '#003174',
                 rangeBot: '120',
                 rangeTop: '300'

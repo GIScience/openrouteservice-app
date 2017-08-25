@@ -233,7 +233,7 @@ angular.module('orsApp.utils-service', [])
                     if (settings.profile.options.difficulty.avoidhills === true) options.avoid_features += 'hills' + '|';
                 }
             }
-            if (options.avoid_features.length == 0) {
+            if (options.avoid_features.length === 0) {
                 delete options.avoid_features;
             } else {
                 options.avoid_features = options.avoid_features.slice(0, -1);
@@ -294,10 +294,10 @@ angular.module('orsApp.utils-service', [])
             payload = {
                 format: 'json',
                 locations: orsUtilsService.roundCoordinate(settings.waypoints[0]._latlng.lng) + ',' + orsUtilsService.roundCoordinate(settings.waypoints[0]._latlng.lat),
-                range_type: settings.profile.options.analysis_options.method == 0 ? 'time' : 'distance',
-                range: settings.profile.options.analysis_options.method == 0 ? settings.profile.options.analysis_options.isovalue * 60 : settings.profile.options.analysis_options.isovalue * 1000,
-                interval: settings.profile.options.analysis_options.method == 0 ? settings.profile.options.analysis_options.isointerval * 60 : settings.profile.options.analysis_options.isointerval * 1000,
-                location_type: settings.profile.options.analysis_options.reverseflow == true ? lists.isochroneOptionList.reverseFlow.destination : lists.isochroneOptionList.reverseFlow.start,
+                range_type: settings.profile.options.analysis_options.method === 0 ? 'time' : 'distance',
+                range: settings.profile.options.analysis_options.method === 0 ? settings.profile.options.analysis_options.isovalue * 60 : settings.profile.options.analysis_options.isovalue * 1000,
+                interval: settings.profile.options.analysis_options.method === 0 ? settings.profile.options.analysis_options.isointerval * 60 : settings.profile.options.analysis_options.isointerval * 1000,
+                location_type: settings.profile.options.analysis_options.reverseflow === true ? lists.isochroneOptionList.reverseFlow.destination : lists.isochroneOptionList.reverseFlow.start,
                 profile: lists.profiles[settings.profile.type].request,
                 attributes: 'area|reachfactor',
                 options: JSON.stringify(orsUtilsService.generateOptions(settings))
