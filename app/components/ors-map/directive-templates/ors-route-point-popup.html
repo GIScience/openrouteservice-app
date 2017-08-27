@@ -1,7 +1,7 @@
 <div class="ors-route-point-popup">
     <div class="item">
         <span class="left">
-            <i class="fa fa-lg fa-arrows-h" tooltip-side="top" tooltip-template="{{('DISTANCE' | translate)}}" tooltips="">
+            <i class="fa fa-lg fa-arrows-h" tooltip-side="top" tooltip-template="{{('DISTANCE' | translate)}}{{' ('}}{{('DURATION' | translate)}}{{')'}}" tooltips="">
             </i>
         </span>
         <span class="right" ng-bind-html="(distanceAtInterpolatedPoint | distance) + ' (' + (interpolatedRoutePoint.duration | duration) + ')' ">
