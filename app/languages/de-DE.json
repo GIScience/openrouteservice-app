@@ -173,5 +173,6 @@
     "LOCALE_DISTANCE_MARKERS": "Distanz-Marker (km)", 
     "LOCALE_NO_TOLLWAY": "Mautfreie Straßen", 
     "LOCALE_TOLLWAY": "Mautstraßen", 
-    "avgspeed": "Durchschnittsgeschwindigkeit"
+    "avgspeed": "Durchschnittsgeschwindigkeit", 
+    "traildifficulty": "Schwierigkeitsgrad"
 }

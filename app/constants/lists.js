@@ -70,7 +70,8 @@ angular.module('orsApp')
                     waytype: true,
                     suitability: true,
                     AvgSpeed: true,
-                    steepness: true
+                    steepness: true,
+                    TrailDifficulty: true
                 }
             },
             BicycleMTB: {
@@ -84,7 +85,8 @@ angular.module('orsApp')
                     waytype: true,
                     suitability: true,
                     AvgSpeed: true,
-                    steepness: true
+                    steepness: true,
+                    TrailDifficulty: true
                 }
             },
             BicycleRacer: {
@@ -98,7 +100,8 @@ angular.module('orsApp')
                     waytype: true,
                     suitability: true,
                     AvgSpeed: true,
-                    steepness: true
+                    steepness: true,
+                    TrailDifficulty: true
                 }
             },
             BicycleTour: {
@@ -112,7 +115,8 @@ angular.module('orsApp')
                     waytype: true,
                     suitability: true,
                     AvgSpeed: true,
-                    steepness: true
+                    steepness: true,
+                    TrailDifficulty: true
                 }
             },
             BicycleSafety: {
@@ -126,7 +130,8 @@ angular.module('orsApp')
                     waytype: true,
                     suitability: true,
                     AvgSpeed: true,
-                    steepness: true
+                    steepness: true,
+                    TrailDifficulty: true
                 }
             },
             BicycleElectro: {
@@ -140,7 +145,8 @@ angular.module('orsApp')
                     waytype: true,
                     suitability: true,
                     AvgSpeed: true,
-                    steepness: true
+                    steepness: true,
+                    TrailDifficulty: true
                 }
             },
             Pedestrian: {
@@ -156,7 +162,8 @@ angular.module('orsApp')
                     AvgSpeed: true,
                     steepness: true,
                     green: true,
-                    noise: true
+                    noise: true,
+                    TrailDifficulty: true
                 }
             },
             PedestrianHiking: {
@@ -172,7 +179,8 @@ angular.module('orsApp')
                     AvgSpeed: true,
                     steepness: true,
                     green: true,
-                    noise: true
+                    noise: true,
+                    TrailDifficulty: true
                 }
             },
             Wheelchair: {

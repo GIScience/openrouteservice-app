@@ -111,7 +111,7 @@ angular.module('orsApp.route-service', [])
                     geometry[i][1] = lng;
                 }
                 route.geometry = geometry;
-                route.point_information = orsRouteService.processPointExtras(route);
+                route.point_information = orsRouteService.processPointExtras(route, profile);
                 if (cnt === 0) {
                     if (route.elevation) {
                         // get max and min elevation from nested array
@@ -133,13 +133,15 @@ angular.module('orsApp.route-service', [])
             orsRouteService.routesSubject.onNext(orsRouteService.data);
         };
         /** process point information */
-        orsRouteService.processPointExtras = (route) => {
+        orsRouteService.processPointExtras = (route, profile) => {
             const fetchExtrasAtPoint = (extrasObj, idx) => {
                 const extrasAtPoint = {};
                 angular.forEach(extrasObj, function(values, key) {
                     if (key == 'avgspeed') {
                         let value = orsUtilsService.getSpeedRange(values[idx]);
                         extrasAtPoint[key] = mappings[key][value].text;
+                    } else if (key == 'traildifficulty' && profile == 'Pedestrian') {
+                        extrasAtPoint[key] = mappings[key][values[idx]].text_hiking;
                     } else if (mappings[key][values[idx]].type == -1) {
                         // green
                         extrasAtPoint[key] = '<strong><span style="color: green;">' + '~ ' + mappings[key][values[idx]].text + '</span></strong>';

@@ -170,5 +170,6 @@
     "noise": "Noise index", 
     "height": "Height", 
     "LOCALE_DISTANCE_MARKERS": "Distance markers (km)", 
-    "avgspeed": "Average speed"
+    "avgspeed": "Average speed", 
+    "traildifficulty": "Trail difficulty"
 }

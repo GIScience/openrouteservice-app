@@ -392,5 +392,46 @@ angular.module('orsApp')
                 rangeBot: '120',
                 rangeTop: '300'
             }
+        },
+        traildifficulty: {
+            '0': {
+                text: 'no tag',
+                text_hiking: 'no_tag',
+                color: '#dfecec'
+            },
+            '1': {
+                text: 'S0',
+                text_hiking: 'T1',
+                color: '#9fc6c6'
+            },
+            '2': {
+                text: 'S1',
+                text_hiking: 'T2',
+                color: '#80b3b3'
+            },
+            '3': {
+                text: 'S2',
+                text_hiking: 'T3',
+                color: '#609f9f'
+            },
+            '4': {
+                text: 'S3',
+                text_hiking: 'T4',
+                color: '#4d8080'
+            },
+            '5': {
+                text: 'S4',
+                text_hiking: 'T5',
+                color: '#396060'
+            },
+            '6': {
+                text: 'S5',
+                text_hiking: 'T6',
+                color: '#264040'
+            },
+            '7': {
+                text: '>S5',
+                color: '#132020'
+            }
         }
     });

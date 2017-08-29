@@ -173,5 +173,6 @@
     "LOCALE_DISTANCE_MARKERS": "Distance markers (km)", 
     "LOCALE_NO_TOLLWAY": "Tollfree roads", 
     "LOCALE_TOLLWAY": "Tollroads ", 
-    "avgspeed": "Average speed"
+    "avgspeed": "Average speed", 
+    "traildifficulty": "Trail difficulty"
 }
