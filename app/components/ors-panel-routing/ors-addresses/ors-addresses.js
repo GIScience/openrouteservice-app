@@ -69,7 +69,12 @@ angular.module('orsApp.ors-addresses', ['orsApp.ors-exportRoute-controls'])
             };
             ctrl.select = (address) => {
                 ctrl.showGeocodingPanel = !ctrl.showGeocodingPanel;
-                const addressStrings = [address.processed.primary, address.processed.secondary];
+                let addressStrings;
+                if (address.processed.secondary.length > 0) {
+                    addressStrings = [address.processed.primary, address.processed.secondary];    
+                } else {
+                    addressStrings = [address.processed.primary];    
+                }
                 ctrl.waypoint._address = addressStrings.join(", ");
                 ctrl.waypoint._latlng = L.latLng(address.geometry.coordinates[1], address.geometry.coordinates[0]);
                 ctrl.waypoint._set = 1;
