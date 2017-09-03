@@ -19,19 +19,39 @@
     </ors-loading>
 </div>
 <div class="ors-addresses-container">
-    <div ng-if="!$ctrl.isLoading" class="addresses-list">
-        <div ng-repeat="feature in $ctrl.addresses" ng-click="$ctrl.select(feature)">
+    <div class="addresses-list" ng-if="!$ctrl.isLoading">
+        <div ng-click="$ctrl.select(feature)" ng-repeat="feature in $ctrl.addresses">
             <div class="content">
-                <div class="left">
-                    <i class="fa fa-lg fa-circle">
-                    </i>
+                <div class="left" ng-switch="" on="feature.processed.place_type">
+                    <div ng-switch-when="address|street|neighbourhood" ng-switch-when-separator="|">
+                        <i class="fa fa-lg fa-map-marker">
+                        </i>
+                    </div>
+                    <div ng-switch-when="venue">
+                        <i class="fa fa-lg fa-building">
+                        </i>
+                    </div>
+                    <div ng-switch-when="localadmin|locality" ng-switch-when-separator="|">
+                        <i class="fa fa-lg fa-image">
+                        </i>
+                    </div>
+                    <div ng-switch-when="country|macrocountry|region|macroregion" ng-switch-when-separator="|">
+                        <i class="fa fa-lg fa-globe">
+                        </i>
+                    </div>
+                    <div ng-switch-default="">
+                        <i class="fa fa-lg fa-circle">
+                        </i>
+                    </div>
                 </div>
                 <div class="right">
                     <div>
-                        <h3 ng-bind-html="feature.processed.primary"></h3>
+                        <h3 ng-bind-html="feature.processed.primary">
+                        </h3>
                     </div>
                     <div>
-                        <span ng-bind-html="feature.processed.secondary"></span>
+                        <span ng-bind-html="feature.processed.secondary">
+                        </span>
                     </div>
                 </div>
             </div>

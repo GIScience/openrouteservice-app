@@ -194,7 +194,7 @@ angular.module('orsApp.utils-service', [])
          * @param {number} limit: To limit the amount of responses
          * @return {Object} payload: Paylod object used in xhr request
          */
-        orsUtilsService.geocodingPayload = function(obj, reverse = false, language = 'en', limit = 20) {
+        orsUtilsService.geocodingPayload = function(obj, reverse = false, language = 'en', limit = 5) {
             let payload;
             if (!reverse) {
                 payload = {
@@ -345,8 +345,14 @@ angular.module('orsApp.utils-service', [])
                 const properties = feature.properties;
                 feature.processed = {};
                 // primary information
-                if ('name' in properties && properties.name !== properties.street + ' ' + properties.house_number) {
+                if ('name' in properties && properties.name !== properties.street + ' ' + properties.house_number && properties.name !== properties.street) {
                     feature.processed.primary = properties.name;
+                    if ('street' in properties) {
+                        feature.processed.primary += ', ' + properties.street;
+                        if ('house_number' in properties) {
+                            feature.processed.primary += ' ' + properties.house_number;
+                        }
+                    }
                 } else if ('street' in properties) {
                     const streetAddress = [];
                     // street and name can be the same, just needed once
@@ -369,19 +375,19 @@ angular.module('orsApp.utils-service', [])
                 if ('locality' in properties && properties.locality !== properties.name) {
                     secondary.push(properties.locality);
                 }
-                if ('state' in properties) {
+                if ('state' in properties && properties.state !== properties.name) {
                     secondary.push(properties.state);
-                } else if ('county' in properties) {
+                } else if ('region' in properties && properties.region !== properties.name) {
+                    secondary.push(properties.region);
+                } else if ('county' in properties && properties.county !== properties.name) {
                     secondary.push(properties.county);
-                } else if ('district' in properties) {
+                } else if ('district' in properties && properties.district !== properties.name) {
                     secondary.push(properties.district);
                 }
+                if (secondary.length <= 1 && properties.country !== properties.name) secondary.push(properties.country);
                 feature.processed.secondary = secondary.join(", ");
+                feature.processed.place_type = properties.place_type;
                 console.log(feature.processed)
-                // if ('country' in properties) {
-                //     shortAddress += properties.country;
-                //     shortAddress += ', ';
-                // }
             });
             return features;
         };

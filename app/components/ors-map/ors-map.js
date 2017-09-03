@@ -368,10 +368,12 @@ angular.module('orsApp')
                  * @param {boolean} switchApp: Whether accessibility layer should be cleared
                  */
                 $scope.clearMap = (switchApp = false) => {
+                    $scope.mapModel.map.closePopup();
                     $scope.mapModel.geofeatures.layerLocationMarker.clearLayers();
                     $scope.mapModel.geofeatures.layerRouteLines.clearLayers();
                     $scope.mapModel.geofeatures.layerEmph.clearLayers();
                     $scope.mapModel.geofeatures.layerRouteExtras.clearLayers();
+                    $scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
                     if ($scope.hg) $scope.hg.remove();
                     if (switchApp) {
                         $scope.mapModel.geofeatures.layerRoutePoints.clearLayers();
@@ -531,7 +533,6 @@ angular.module('orsApp')
                  * @param {Object} actionPackage - The action actionPackage
                  */
                 $scope.addFeatures = (actionPackage) => {
-                    console.log(actionPackage)
                     const isDistanceMarkers = orsSettingsFactory.getUserOptions()
                         .showDistanceMarkers === true ? true : false;
                     const polyLine = L.polyline(actionPackage.geometry, {
@@ -611,17 +612,6 @@ angular.module('orsApp')
                     $scope.hoverPolyLine.on("mousemove", (e) => {
                         $scope.addHoverPoint($scope.mapModel, $scope.hoverPolyLine, $scope.pointList, e.latlng);
                     });
-                    // careful using turf as a hack until we find a neater solution. Mouseout is called when the mouse is on the hoverpoint which is the problem
-                    // $scope.hoverPolyLine.on("mouseout", (e) => {
-                    //     const poly = turf.buffer(turf.helpers.point([$scope.hoverPoint.getLatLng()
-                    //         .lng, $scope.hoverPoint.getLatLng()
-                    //         .lat
-                    //     ]), 0.05);
-                    //     const pt = turf.helpers.point([e.latlng.lng, e.latlng.lat]);
-                    //     if (!turf.inside(pt, poly)) {
-                    //         if ($scope.hoverPoint) $scope.hoverPoint.removeFrom($scope.mapModel.geofeatures.layerRouteDrag);
-                    //     }
-                    // });
                 };
                 /** 
                  * adds interactive point over a polyLine 
@@ -662,7 +652,6 @@ angular.module('orsApp')
                             //$scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
                             $scope.distanceAtInterpolatedPoint = snappedPosition.factor * pointList[pointList.length - 1].distance;
                             $scope.interpolatedRoutePoint = pointList[snappedPosition.index];
-                            console.log($scope.interpolatedRoutePoint)
                             const popupDirective = '<ors-route-point-popup></ors-route-point-popup>';
                             const popupContent = $compile(popupDirective)($scope);
                             $scope.pointPopup.setContent(popupContent[0])
@@ -1030,10 +1019,6 @@ angular.module('orsApp')
                                 const request = orsLocationsService.fetchLocations(payload);
                                 orsLocationsService.requests.push(request);
                                 request.promise.then(function(response) {
-                                    // parse address string to json object
-                                    angular.forEach(response.features, function(feature) {
-                                        if (feature.properties.address) feature.properties.address = JSON.parse(feature.properties.address);
-                                    });
                                     orsLocationsService.addLocationsToMap(response);
                                     $scope.results = response.features;
                                     $scope.showResults = true;
