@@ -55,7 +55,6 @@ angular.module('orsApp')
                     surface: true,
                     waytype: true,
                     suitability: true,
-                    AvgSpeed: true,
                     tollways: true
                 }
             },
@@ -69,7 +68,6 @@ angular.module('orsApp')
                     surface: true,
                     waytype: true,
                     suitability: true,
-                    AvgSpeed: true,
                     steepness: true,
                     TrailDifficulty: true
                 }
@@ -84,7 +82,6 @@ angular.module('orsApp')
                     surface: true,
                     waytype: true,
                     suitability: true,
-                    AvgSpeed: true,
                     steepness: true,
                     TrailDifficulty: true
                 }
@@ -99,7 +96,6 @@ angular.module('orsApp')
                     surface: true,
                     waytype: true,
                     suitability: true,
-                    AvgSpeed: true,
                     steepness: true,
                     TrailDifficulty: true
                 }
@@ -114,7 +110,6 @@ angular.module('orsApp')
                     surface: true,
                     waytype: true,
                     suitability: true,
-                    AvgSpeed: true,
                     steepness: true,
                     TrailDifficulty: true
                 }
@@ -129,7 +124,6 @@ angular.module('orsApp')
                     surface: true,
                     waytype: true,
                     suitability: true,
-                    AvgSpeed: true,
                     steepness: true,
                     TrailDifficulty: true
                 }
@@ -144,7 +138,6 @@ angular.module('orsApp')
                     surface: true,
                     waytype: true,
                     suitability: true,
-                    AvgSpeed: true,
                     steepness: true,
                     TrailDifficulty: true
                 }
@@ -159,7 +152,6 @@ angular.module('orsApp')
                     surface: true,
                     waytype: true,
                     suitability: true,
-                    AvgSpeed: true,
                     steepness: true,
                     green: true,
                     noise: true,
@@ -176,7 +168,6 @@ angular.module('orsApp')
                     surface: true,
                     waytype: true,
                     suitability: true,
-                    AvgSpeed: true,
                     steepness: true,
                     green: true,
                     noise: true,
@@ -193,7 +184,6 @@ angular.module('orsApp')
                     surface: true,
                     waytype: true,
                     suitability: true,
-                    AvgSpeed: true,
                     steepness: true
                 }
             },
@@ -207,7 +197,6 @@ angular.module('orsApp')
                     surface: true,
                     waytype: true,
                     suitability: true,
-                    AvgSpeed: true,
                     tollways: true
                 }
             },
@@ -221,7 +210,6 @@ angular.module('orsApp')
                     surface: true,
                     waytype: true,
                     suitability: true,
-                    AvgSpeed: true,
                     tollways: true
                 }
             },
@@ -235,7 +223,6 @@ angular.module('orsApp')
                     surface: true,
                     waytype: true,
                     suitability: true,
-                    AvgSpeed: true,
                     tollways: true
                 }
             },
@@ -249,7 +236,6 @@ angular.module('orsApp')
                     surface: true,
                     waytype: true,
                     suitability: true,
-                    AvgSpeed: true,
                     tollways: true
                 }
             },
@@ -263,7 +249,6 @@ angular.module('orsApp')
                     surface: true,
                     waytype: true,
                     suitability: true,
-                    AvgSpeed: true,
                     tollways: true
                 }
             },
@@ -277,7 +262,6 @@ angular.module('orsApp')
                     surface: true,
                     waytype: true,
                     suitability: true,
-                    AvgSpeed: true,
                     tollways: true
                 }
             }

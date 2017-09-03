@@ -1088,7 +1088,6 @@ angular.module('orsApp')
                                 $scope.showSubcategories = $scope.showSubcategories === true ? false : true;
                             };
                             $scope.EmphPoi = (geometry, category) => {
-                                console.log('emph')
                                 if ($map.getZoom() >= 14) orsLocationsService.emphPoi(geometry, category);
                             };
                             $scope.DeEmphPoi = () => {
@@ -1133,7 +1132,7 @@ angular.module('orsApp')
                     });
                 };
                 // add locations control
-                // FIXME $scope.mapModel.map.addControl($scope.locationsControl());
+                $scope.mapModel.map.addControl($scope.locationsControl());
                 /**
                  * Dispatches all commands sent by Mapservice by using id and then performing the corresponding function
                  */

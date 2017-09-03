@@ -16,17 +16,15 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart', 'orsApp.ors-
                     const fr = elem[0],
                         to = elem[1];
                     if (fr !== to) {
-                        let typeNumber = 0;
-                        if (key == 'avgspeed') {
-                            typeNumber = parseInt(orsUtilsService.getSpeedRange(elem[2]));
-                        } else {
+                        let typeNumber;
+                       
                             typeNumber = parseInt(elem[2]);
-                        }
+                        
                         const routeSegment = currentRoute.geometry.slice(fr, to);
                         if (typeNumber in extras) {
                             extras[typeNumber].intervals.push([fr, to]);
                         } else {
-                            let text = '';
+                            let text;
                             // checks for Profile : Pedestrian and Cycling have different values https://github.com/GIScience/openrouteservice-docs/tree/4.2#trail-difficulty
                             if (key == 'traildifficulty' && orsRouteService.data.info.query.profile.substring(0, 4) == 'foot') {
                                 text = ctrl.mappings[key][typeNumber].text_hiking;
@@ -52,23 +50,16 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart', 'orsApp.ors-
                 });
                 for (let i = 0; i < currentRoute.extras[key].summary.length; i++) {
                     const extra = currentRoute.extras[key].summary[i];
-                    // handle average Speed categories
-                    if (extras[extra.value] == undefined) {
-                        extra.value = parseInt(orsUtilsService.getSpeedRange(extra.value));
-                    }
-                    if (extras[extra.value].distance !== undefined) {
-                        extras[extra.value].distance += extra.distance;
-                        extras[extra.value].percentage += extra.amount;
-                        extras[extra.value].y1 += +extra.amount;
-                    } else {
-                        extras[extra.value].distance = extra.distance;
-                        extras[extra.value].percentage = extra.amount;
-                        extras[extra.value].y0 = y0;
-                        extras[extra.value].y1 = y0 += +extra.amount;
-                    }
-                    if (typesOrder.indexOf(extra.value) === -1) {
-                        typesOrder.push(extra.value);
-                    }
+                    
+                  
+
+                    extras[extra.value].distance = extra.distance;
+                     extras[extra.value].percentage = extra.amount;
+                     extras[extra.value].y0 = y0;
+                     extras[extra.value].y1 = y0 += +extra.amount;
+                     typesOrder.push(extra.value);
+
+                   
                 }
                 return {
                     extras: extras,

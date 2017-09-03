@@ -137,10 +137,7 @@ angular.module('orsApp.route-service', [])
             const fetchExtrasAtPoint = (extrasObj, idx) => {
                 const extrasAtPoint = {};
                 angular.forEach(extrasObj, function(values, key) {
-                    if (key == 'avgspeed') {
-                        let value = orsUtilsService.getSpeedRange(values[idx]);
-                        extrasAtPoint[key] = mappings[key][value].text;
-                    } else if (key == 'traildifficulty' && profile == 'Pedestrian') {
+                    if (key == 'traildifficulty' && profile == 'Pedestrian') {
                         extrasAtPoint[key] = mappings[key][values[idx]].text_hiking;
                     } else if (mappings[key][values[idx]].type == -1) {
                         // green
@@ -158,7 +155,6 @@ angular.module('orsApp.route-service', [])
             };
             // prepare extras object
             let extrasObj = {};
-            let avgspeedObj = [];
             (extrasObj = () => {
                 angular.forEach(route.extras, function(val, key) {
                     const list = [];
@@ -170,9 +166,7 @@ angular.module('orsApp.route-service', [])
                     // push last extra, not considered in above loop
                     list.push(val.values[val.values.length - 1][2]);
                     extrasObj[key] = list;
-                    if (key == 'avgspeed') {
-                        avgspeedObj = list;
-                    }
+                    
                 });
             })
             .call();
@@ -185,9 +179,7 @@ angular.module('orsApp.route-service', [])
                 distance = 0,
                 segment_distance = 0,
                 step_distance = 0,
-                point_distance = 0,
-                duration = 0,
-                avgspeed = 0;
+                point_distance = 0;
             // declare incrementing ids
             let segment_id = 0,
                 step_id = 0,
@@ -196,7 +188,6 @@ angular.module('orsApp.route-service', [])
             for (let i = 0; i < geometry.length; i++) {
                 const lat = geometry[i][0];
                 const lng = geometry[i][1];
-                avgspeed = avgspeedObj[i];
                 // store the segment_id of the point and reset the step_id
                 if (i > route.way_points[segment_id + 1]) {
                     segment_id += 1;
@@ -211,7 +202,6 @@ angular.module('orsApp.route-service', [])
                     step_distance += point_distance;
                     segment_distance += point_distance;
                     distance += point_distance;
-                    duration += point_distance / (avgspeedObj[i - 1] / 3.6);
                 }
                 // if last point of a step is reached
                 if (i == segments[segment_id].steps[step_id].way_points[1]) {
@@ -230,8 +220,6 @@ angular.module('orsApp.route-service', [])
                     coords: [lat, lng],
                     extras: fetchExtrasAtPoint(extrasObj, i),
                     distance: parseFloat(distance.toFixed(1)),
-                    duration: parseFloat(duration.toFixed(1)),
-                    avgspeed: avgspeed,
                     segment_index: segment_id,
                     point_id: i,
                     heights: route.elevation && {
@@ -257,13 +245,7 @@ angular.module('orsApp.route-service', [])
                         const to = item[1];
                         const geometry = routeString.slice(from, to + 1);
                         chunk.line = geometry;
-                        let typenumber = 0;
-                        // get the right key for mappings
-                        if (key == 'avgspeed') {
-                            typenumber = parseInt(orsUtilsService.getSpeedRange(item[2]));
-                        } else {
-                            typenumber = item[2];
-                        }
+                        const typenumber = item[2];                        
                         chunk.attributeType = typenumber;
                         extra.push(chunk);
                     }
