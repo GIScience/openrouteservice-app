@@ -171,5 +171,6 @@
     "height": "Height", 
     "LOCALE_DISTANCE_MARKERS": "Distance markers (km)", 
     "avgspeed": "Average speed", 
-    "traildifficulty": "Trail difficulty"
+    "traildifficulty": "Trail difficulty",
+    "EXTRA_INFORMATION": "Extra information"
 }

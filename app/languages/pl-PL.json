@@ -173,5 +173,6 @@
     "LOCALE_NO_TOLLWAY": "Tollfree roads", 
     "LOCALE_TOLLWAY": "Tollroads ", 
     "avgspeed": "Average speed", 
-    "traildifficulty": "Trail difficulty"
+    "traildifficulty": "Trail difficulty",
+    "EXTRA_INFORMATION": "Extra information"
 }

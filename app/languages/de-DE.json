@@ -174,5 +174,6 @@
     "LOCALE_NO_TOLLWAY": "Mautfreie Straßen", 
     "LOCALE_TOLLWAY": "Mautstraßen", 
     "avgspeed": "Durchschnittsgeschwindigkeit", 
-    "traildifficulty": "Schwierigkeitsgrad"
+    "traildifficulty": "Schwierigkeitsgrad",
+    "EXTRA_INFORMATION": "Weitere Informationen der Route"
 }
