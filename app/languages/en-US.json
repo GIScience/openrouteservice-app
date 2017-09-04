@@ -175,5 +175,6 @@
     "LOCALE_TOLLWAY": "Tollroads ",
     "avgspeed": "Average speed",
     "traildifficulty": "Trail difficulty",
-    "EXTRA_INFORMATION": "Extra information"
+    "EXTRA_INFORMATION": "Extra information",
+    "LOCALE_EXTRAS_HELP": "Add further extra information in settings"
 }

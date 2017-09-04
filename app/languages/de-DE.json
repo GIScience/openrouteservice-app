@@ -175,5 +175,6 @@
     "LOCALE_TOLLWAY": "Mautstraßen", 
     "avgspeed": "Durchschnittsgeschwindigkeit", 
     "traildifficulty": "Schwierigkeitsgrad",
-    "EXTRA_INFORMATION": "Weitere Informationen der Route"
+    "EXTRA_INFORMATION": "Weitere Informationen der Route",
+    "LOCALE_EXTRAS_HELP": "Weitere Informationen können in Einstellungen hinzugefügt werden"
 }
