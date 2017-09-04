@@ -1,5 +1,11 @@
 angular.module('orsApp')
     .constant('mappings', {
+        default: {
+            '-1': {
+                text: 'default',
+                color: 'grey'
+            }
+        },
         steepness: {
             '-5': {
                 text: '16%+',
@@ -395,8 +401,8 @@ angular.module('orsApp')
         },
         traildifficulty: {
             '0': {
-                text: 'no tag',
-                text_hiking: 'no_tag',
+                text: 'Missing SAC tag',
+                text_hiking: 'Missing SAC tag',
                 color: '#dfecec'
             },
             '1': {

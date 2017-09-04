@@ -266,6 +266,16 @@ angular.module('orsApp')
                 }
             }
         },
+        extra_info: {
+            surface: ['Wheelchair', 'HeavyVehicle', 'Pedestrian', 'Bicycle', 'Car'],
+            waytype: ['Wheelchair', 'HeavyVehicle', 'Pedestrian', 'Bicycle', 'Car'],
+            suitability: ['Wheelchair', 'HeavyVehicle', 'Pedestrian', 'Bicycle', 'Car'],
+            tollways: ['HeavyVehicle', 'Car'],
+            steepness: ['Wheelchair', 'HeavyVehicle', 'Pedestrian', 'Bicycle', 'Car'],
+            green: ['Pedestrian', 'Bicycle'],
+            noise: ['Pedestrian', 'Bicycle'],
+            TrailDifficulty: ['Pedestrian', 'Bicycle']
+        },
         optionList: {
             weight: {
                 Fastest: {

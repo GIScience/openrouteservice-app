@@ -166,7 +166,6 @@ angular.module('orsApp.route-service', [])
                     // push last extra, not considered in above loop
                     list.push(val.values[val.values.length - 1][2]);
                     extrasObj[key] = list;
-                    
                 });
             })
             .call();
@@ -236,8 +235,24 @@ angular.module('orsApp.route-service', [])
         orsRouteService.processHeightgraphData = (route) => {
             const routeString = route.geometryRaw;
             let hgData = [];
+            // default
+            let extra = [];
+            let chunk = {};
+            const geometry = routeString;
+            chunk.line = geometry;
+            chunk.attributeType = -1;
+            extra.push(chunk);
+            extra = GeoJSON.parse(extra, {
+                LineString: 'line',
+                extraGlobal: {
+                    'Creator': 'openrouteservice.org',
+                    'records': extra.length,
+                    'summary': 'default'
+                }
+            });
+            hgData.push(extra);
             for (let key in route.extras) {
-                let extra = [];
+                extra = [];
                 if (key !== 'waycategory') {
                     for (let item of route.extras[key].values) {
                         let chunk = {};
@@ -245,14 +260,14 @@ angular.module('orsApp.route-service', [])
                         const to = item[1];
                         const geometry = routeString.slice(from, to + 1);
                         chunk.line = geometry;
-                        const typenumber = item[2];                        
+                        const typenumber = item[2];
                         chunk.attributeType = typenumber;
                         extra.push(chunk);
                     }
                     extra = GeoJSON.parse(extra, {
                         LineString: 'line',
                         extraGlobal: {
-                            'Creator': 'OpenRouteService.org',
+                            'Creator': 'openrouteservice.org',
                             'records': extra.length,
                             'summary': key
                         }

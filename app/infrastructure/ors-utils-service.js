@@ -23,6 +23,20 @@ angular.module('orsApp.utils-service', [])
             }
             return coordsTrimmed;
         };
+        /**
+         * Sets extra information
+         * @param {Object} obj - The settings object.
+         */
+        orsUtilsService.setExtraInformation = (obj) => {
+            orsUtilsService.extra_information = obj;
+        };
+        /**
+         * Gets extra information
+         * @return {Object} obj - The settings object.
+         */
+        orsUtilsService.getExtraInformation = () => {
+            return orsUtilsService.extra_information;
+        };
         orsUtilsService.isInt = (n) => {
             return Number(n) === n && n % 1 === 0;
         };
@@ -164,7 +178,6 @@ angular.module('orsApp.utils-service', [])
                 elevation: lists.profiles[settings.profile.type].elevation,
                 options: JSON.stringify(orsUtilsService.generateOptions(settings))
             };
-            console.warn(JSON.stringify(orsUtilsService.generateOptions(settings)))
             // remove options if empty
             if (payload.options.length == 2) delete payload.options;
             const subgroup = lists.profiles[settings.profile.type].subgroup;
@@ -180,10 +193,12 @@ angular.module('orsApp.utils-service', [])
             payload.coordinates = payload.coordinates.slice(0, -1);
             // extras
             payload.extra_info = [];
-            for (let extra in lists.profiles[settings.profile.type].extras) {
-                payload.extra_info.push(extra);
-            }
+            const extra_infos = orsUtilsService.getExtraInformation();
+            angular.forEach(extra_infos, function(value, key) {
+                if (value) payload.extra_info.push(key);
+            });
             payload.extra_info = payload.extra_info.join("|");
+            if (payload.extra_info.length == 0) delete payload.extra_info;
             return payload;
         };
         /** 
