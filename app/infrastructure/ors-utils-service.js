@@ -360,7 +360,7 @@ angular.module('orsApp.utils-service', [])
                 const properties = feature.properties;
                 feature.processed = {};
                 // primary information
-                if ('name' in properties && properties.name !== properties.street + ' ' + properties.house_number && properties.name !== properties.street) {
+                if ('name' in properties && properties.name.indexOf(properties.street) == -1 && properties.name !== properties.street) {
                     feature.processed.primary = properties.name;
                     if ('street' in properties) {
                         feature.processed.primary += ', ' + properties.street;
@@ -398,6 +398,9 @@ angular.module('orsApp.utils-service', [])
                     secondary.push(properties.county);
                 } else if ('district' in properties && properties.district !== properties.name) {
                     secondary.push(properties.district);
+                }
+                if ('country' in properties && properties.country !== properties.name) {
+                    secondary.push(properties.country);
                 }
                 if (secondary.length <= 1 && properties.country !== properties.name) secondary.push(properties.country);
                 feature.processed.secondary = secondary.join(", ");

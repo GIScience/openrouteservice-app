@@ -176,5 +176,7 @@
     "avgspeed": "Durchschnittsgeschwindigkeit", 
     "traildifficulty": "Schwierigkeitsgrad",
     "EXTRA_INFORMATION": "Weitere Informationen der Route",
-    "LOCALE_EXTRAS_HELP": "Weitere Informationen können in Einstellungen hinzugefügt werden"
+    "LOCALE_EXTRAS_HELP": "Weitere Informationen können in den Einstellungen hinzugefügt werden",
+    "LOCALE_SIGNUP_HEADER": "Start your API journey now",
+    "LOCALE_SIGNUP_MESSAGE": "If you are satisfied with the features of openrouteservice please sign up for the free to use API at <strong><a href='https://go.openrouteservice.org' target='_blank'>https://go.openrouteservice.org</a></strong>"
 }

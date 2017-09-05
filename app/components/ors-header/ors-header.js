@@ -8,7 +8,9 @@ angular.module('orsApp.ors-header', [])
             };
             ctrl.$onInit = () => {
                 ctrl.extra_infos = {
-                    steepness: true
+                    steepness: true,
+                    waytype: true,
+                    surface: true
                 };
                 ctrl.lists_extra_info = lists.extra_info;
                 ctrl.getActiveProfile = orsSettingsFactory.getActiveProfile;

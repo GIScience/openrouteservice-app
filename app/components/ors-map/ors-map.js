@@ -164,6 +164,17 @@ angular.module('orsApp')
                     }
                     mapInitSubject.dispose();
                 });
+                // sign up for API
+                $scope.signupBox = L.control({
+                    position: 'topleft'
+                });
+                $scope.signupBox.onAdd = function(map) {
+                    var div = $compile('<ors-signup-box></ors-signup-box>')($scope)[0];
+                    return div;
+                };
+                $timeout(function() {
+                    $scope.mapModel.map.addControl($scope.signupBox);
+                }, 500);
                 // hack to remove measure string from box
                 const el = angular.element(document.querySelector('.js-toggle'))
                     .empty();
@@ -1273,6 +1284,24 @@ angular.module('orsApp')
             </div>
             <div class="list">
                 <span ng-bind-html="('WELCOME_MESSAGE' | translate)">
+                </span>
+            </div>
+        </div>`,
+            link: (scope, elem, attr) => {
+                scope.show = true;
+            }
+        };
+    }]);
+angular.module('orsApp')
+    .directive('orsSignupBox', ['$translate', ($translate) => {
+        return {
+            restrict: 'E',
+            template: `<div ng-attr-class="{{ 'ui message ors-map-message fade green' }}" ng-show="show">
+            <i class="fa fa-close flright" data-ng-click="show = !show"></i>
+            <div class="header" ng-bind-html="('LOCALE_SIGNUP_HEADER' | translate)">
+            </div>
+            <div class="list">
+                <span ng-bind-html="('LOCALE_SIGNUP_MESSAGE' | translate)">
                 </span>
             </div>
         </div>`,
