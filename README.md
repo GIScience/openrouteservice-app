@@ -1,4 +1,4 @@
-# OpenRouteService
+# Openrouteservice
 
 OpenRouteService is an online route planning application that is based on open source software, open data and open standards.
 
