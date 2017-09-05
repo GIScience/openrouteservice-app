@@ -1,12 +1,12 @@
-# OpenRouteService
+# Openrouteservice
 
-OpenRouteService is an online route planning application that is based on open source software, open data and open standards.
+Openrouteservice is an online route planning application that is based on open source software, open data and open standards.
 
 ![preview](https://cloud.githubusercontent.com/assets/10322094/26202903/63ccd808-3bd9-11e7-9a89-f06ad50d583e.png)
 
 ## Translations
 
-Help us to provide the OpenRouteService in your language by translating some simple keywords!
+Help us to provide the openrouteservice in your language by translating some simple keywords!
 
 In this [spreadsheet](https://docs.google.com/spreadsheets/d/1GzFPlVrqJBmUatfWft7v-vS_tfENGtAy0RHOv_5n3SU/edit#gid=0) you can add a column for your language or check the already added words if they are correctly translated. Our service will be updated regularly with the latest language versions.
 
