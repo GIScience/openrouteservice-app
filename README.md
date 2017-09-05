@@ -10,7 +10,7 @@ Help us to provide the openrouteservice in your language by translating some sim
 
 In this [spreadsheet](https://docs.google.com/spreadsheets/d/1GzFPlVrqJBmUatfWft7v-vS_tfENGtAy0RHOv_5n3SU/edit#gid=0) you can add a column for your language or check the already added words if they are correctly translated. Our service will be updated regularly with the latest language versions.
 
-If there are further questions, please let us know.
+If there are further questions, please let us know!
 
 ## License
 
