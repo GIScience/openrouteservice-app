@@ -387,17 +387,23 @@ angular.module('orsApp.utils-service', [])
                 if ('postal_code' in properties) {
                     secondary.push(properties.postal_code);
                 }
+                if ('neighbourhood' in properties) {
+                    secondary.push(properties.neighbourhood);
+                }
+                if ('borough' in properties) {
+                    secondary.push(properties.borough);
+                }
                 if ('locality' in properties && properties.locality !== properties.name) {
                     secondary.push(properties.locality);
                 }
-                if ('state' in properties && properties.state !== properties.name) {
-                    secondary.push(properties.state);
-                } else if ('region' in properties && properties.region !== properties.name) {
-                    secondary.push(properties.region);
-                } else if ('county' in properties && properties.county !== properties.name) {
+                if ('municipality' in properties && properties.municipality !== properties.name && properties.municipality !== properties.locality) {
+                    secondary.push(properties.municipality);
+                }
+                if ('county' in properties && properties.county !== properties.name && properties.county !== properties.locality) {
                     secondary.push(properties.county);
-                } else if ('district' in properties && properties.district !== properties.name) {
-                    secondary.push(properties.district);
+                } 
+                if ('region' in properties && properties.region !== properties.name) {
+                    secondary.push(properties.region);
                 }
                 if ('country' in properties && properties.country !== properties.name) {
                     secondary.push(properties.country);
