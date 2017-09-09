@@ -507,17 +507,28 @@ angular.module('orsApp')
                             mouseover: highlightFeature,
                             mouseout: resetHighlight
                         });
-                        let popupContent = '<strong>' + feature.properties.name + '</strong>';
+                        let popupContent = '';
+                        if (feature.properties.name) popupContent += '<strong>' + feature.properties.name + '</strong><br>';
                         if (feature.properties.address) {
-                            popupContent += '<br>' + lists.locations_icons.address + ' ';
-                            angular.forEach(feature.properties.address, (addressObj, addressName) => {
-                                popupContent += addressObj + ', ';
-                            });
+                            popupContent += lists.locations_icons.address + ' ';
+                            if (feature.properties.address.street) popupContent += feature.properties.address.street + ', ';
+                            if (feature.properties.address.house_number) popupContent += feature.properties.address.house_number + ', ';
+                            if (feature.properties.address.postal_code) popupContent += feature.properties.address.postal_code + ', ';
+                            if (feature.properties.address.locality) popupContent += feature.properties.address.locality + ', ';
+                            if (feature.properties.address.region) popupContent += feature.properties.address.region + ', ';
+                            if (feature.properties.address.country) popupContent += feature.properties.address.country + ', ';
+                            popupContent = popupContent.slice(0, -2);
                         }
                         if (feature.properties.phone) popupContent += '<br>' + lists.locations_icons.phone + ' ' + feature.properties.phone;
                         if (feature.properties.website) popupContent += '<br>' + lists.locations_icons.website + ' ' + '<a href="' + feature.properties.website + '" target=_blank>' + feature.properties.website + '</a>';
                         if (feature.properties.wheelchair) popupContent += '<br>' + lists.locations_icons.wheelchair;
-                        popupContent += '<br><br><a href="http://www.openstreetmap.org/node/' + feature.properties.osm_id + '" target=_blank>Edit on OpenStreetMap</a>';
+                        if (feature.properties.osm_type == 0) {
+                            popupContent += '<br><br><a href="http://www.openstreetmap.org/relation/' + feature.properties.osm_id + '" target=_blank>Edit on OpenStreetMap</a>';
+                        } else if (feature.properties.osm_type == 1) {
+                            popupContent += '<br><br><a href="http://www.openstreetmap.org/node/' + feature.properties.osm_id + '" target=_blank>Edit on OpenStreetMap</a>';
+                        } else {
+                            popupContent += '<br><br><a href="http://www.openstreetmap.org/way/' + feature.properties.osm_id + '" target=_blank>Edit on OpenStreetMap</a>';
+                        }
                         popupContent += '<br>Source: © OpenStreetMap-Contributors';
                         layer.bindPopup(popupContent, {
                             className: 'location-popup'
@@ -950,9 +961,13 @@ angular.module('orsApp')
                                             <div class="icon">
                                                 <i class="fa fa-address-card"></i>
                                             </div>
-
                                             <div class="text">
-                                                <span ng-repeat="(addressItem, addressObj) in feature.properties.address" ng-bind-html="addressObj + ', '"></span>
+                                                <span ng-if=feature.properties.address.street ng-bind-html="feature.properties.address.street + ', '"></span>
+                                                <span ng-if=feature.properties.address.house_number ng-bind-html="feature.properties.address.house_number + ', '"></span>
+                                                <span ng-if=feature.properties.address.postal_code ng-bind-html="feature.properties.address.postal_code + ', '"></span>
+                                                <span ng-if=feature.properties.address.locality ng-bind-html="feature.properties.address.locality + ', '"></span>
+                                                <span ng-if=feature.properties.address.region ng-bind-html="feature.properties.address.region + ', '"></span>
+                                                <span ng-if=feature.properties.address.country ng-bind-html="feature.properties.address.country"></span>
                                             </div>                                        
                                         </div>
                                          <div class="poi-row" ng-if="feature.properties.phone">

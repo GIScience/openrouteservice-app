@@ -5,11 +5,11 @@ angular.module('orsApp')
     .constant('lists', {
         locationsIcon: {
             className: "ors-icon-locations",
-            iconSize: [25, 25],
+            iconSize: [20, 20],
         },
         locationsIconHighlight: {
             className: "ors-icon-locations-highlight",
-            iconSize: [25, 25],
+            iconSize: [20, 20],
         },
         waypointIcons: {
             0: {
@@ -679,8 +679,8 @@ angular.module('orsApp')
             Fords: 128, // 1 << 7;
         },
         locations_icons: {
-            100: '<i class="fa fa-lg fa-hotel"></i>',
-            120: '<i class="fa fa-lg fa-paw"></i>',
+            100: '<i class="fa fa-hotel"></i>',
+            120: '<i class="fa fa-paw"></i>',
             130: '<i class="fa fa-lg fa-paint-brush"></i>',
             150: '<i class="fa fa-lg fa-university"></i>',
             160: '<i class="fa fa-lg fa-building"></i>',

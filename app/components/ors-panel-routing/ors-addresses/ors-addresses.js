@@ -33,7 +33,10 @@ angular.module('orsApp.ors-addresses', ['orsApp.ors-exportRoute-controls'])
                             geometry: {
                                 coordinates: [lng, lat]
                             },
-                            shortaddress: positionString
+                            processed: {
+                                primary: positionString,
+                                secondary: ''
+                            }
                         }];
                     } else {
                         ctrl.contructPayLoad();
@@ -71,9 +74,9 @@ angular.module('orsApp.ors-addresses', ['orsApp.ors-exportRoute-controls'])
                 ctrl.showGeocodingPanel = !ctrl.showGeocodingPanel;
                 let addressStrings;
                 if (address.processed.secondary.length > 0) {
-                    addressStrings = [address.processed.primary, address.processed.secondary];    
+                    addressStrings = [address.processed.primary, address.processed.secondary];
                 } else {
-                    addressStrings = [address.processed.primary];    
+                    addressStrings = [address.processed.primary];
                 }
                 ctrl.waypoint._address = addressStrings.join(", ");
                 ctrl.waypoint._latlng = L.latLng(address.geometry.coordinates[1], address.geometry.coordinates[0]);
