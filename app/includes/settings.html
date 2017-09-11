@@ -45,10 +45,96 @@
 <section>
     <h2 ng-bind-html="('LOCALE_MAP_SETTINGS' | translate)">
     </h2>
-    <div class="ui checkbox">
-        <input data-ng-model="$ctrl.currentOptions.randomIsochronesColors" id="isochronescolors" name="orsRouteQuietRoutingInput" ng-change="$ctrl.changeOptions()" type="checkbox">
-            <label for="isochronescolors" ng-bind-html="('LOCALE_ISOCHRONE_RANDOMIZE_COLORS' | translate)">
-            </label>
-        </input>
+    <div class="ui form align-left">
+        <div class="grouped fields">
+            <div class="field">
+                <div class="ui checkbox">
+                    <input data-ng-model="$ctrl.currentOptions.randomIsochronesColors" id="isochronescolors" ng-change="$ctrl.changeOptions()" type="checkbox">
+                        <label for="isochronescolors" ng-bind-html="('LOCALE_ISOCHRONE_RANDOMIZE_COLORS' | translate)">
+                        </label>
+                    </input>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checkbox">
+                    <input data-ng-model="$ctrl.currentOptions.showDistanceMarkers" id="distancemarkers" ng-change="$ctrl.changeOptions()" type="checkbox">
+                        <label for="distancemarkers" ng-bind-html="('LOCALE_DISTANCE_MARKERS' | translate)">
+                        </label>
+                    </input>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <h2 ng-bind-html="('EXTRA_INFORMATION' | translate)">
+    </h2>
+    <div class="ui form align-left">
+        <div class="grouped fields">
+             <div class="field" ng-if="$ctrl.lists_extra_info.steepness | contains:$ctrl.getActiveProfile().type">
+                <div class="ui checkbox">
+                    <input data-ng-model="$ctrl.extra_infos.steepness" id="steepness_exin" type="checkbox" ng-change="$ctrl.changeExtras()">
+                        <label for="steepness_exin" ng-bind-html="('steepness' | translate)">
+                        </label>
+                    </input>
+                </div>
+            </div>
+            <div class="field" ng-if="$ctrl.lists_extra_info.surface | contains:$ctrl.getActiveProfile().type">
+                <div class="ui checkbox">
+                    <input data-ng-model="$ctrl.extra_infos.surface" id="surface_exin" ng-change="$ctrl.changeExtras()" type="checkbox">
+                        <label for="surface_exin" ng-bind-html="('surface' | translate)">
+                        </label>
+                    </input>
+                </div>
+            </div>
+            <div class="field" ng-if="$ctrl.lists_extra_info.waytype | contains:$ctrl.getActiveProfile().type">
+                <div class="ui checkbox">
+                    <input data-ng-model="$ctrl.extra_infos.waytype" id="waytype_exin" ng-change="$ctrl.changeExtras()" type="checkbox">
+                        <label for="waytype_exin" ng-bind-html="('waytypes' | translate)">
+                        </label>
+                    </input>
+                </div>
+            </div>
+            <div class="field" ng-if="$ctrl.lists_extra_info.suitability | contains:$ctrl.getActiveProfile().type">
+                <div class="ui checkbox">
+                    <input data-ng-model="$ctrl.extra_infos.suitability" id="suitability_exin" ng-change="$ctrl.changeExtras()" type="checkbox">
+                        <label for="suitability_exin" ng-bind-html="('suitability' | translate)">
+                        </label>
+                    </input>
+                </div>
+            </div>
+            <div class="field" ng-if="$ctrl.lists_extra_info.tollways | contains:$ctrl.getActiveProfile().type">
+                <div class="ui checkbox">
+                    <input data-ng-model="$ctrl.extra_infos.tollways" id="tollways_exin" ng-change="$ctrl.changeExtras()" type="checkbox">
+                        <label for="tollways_exin" ng-bind-html="('tollways' | translate)">
+                        </label>
+                    </input>
+                </div>
+            </div>
+            <div class="field" ng-if="$ctrl.lists_extra_info.green | contains:$ctrl.getActiveProfile().type">
+                <div class="ui checkbox">
+                    <input data-ng-model="$ctrl.extra_infos.green" id="green_exin" ng-change="$ctrl.changeExtras()" type="checkbox">
+                        <label for="green_exin" ng-bind-html="('green' | translate)">
+                        </label>
+                    </input>
+                </div>
+            </div>
+            <div class="field" ng-if="$ctrl.lists_extra_info.noise | contains:$ctrl.getActiveProfile().type">
+                <div class="ui checkbox">
+                    <input data-ng-model="$ctrl.extra_infos.noise" id="noise_exin" ng-change="$ctrl.changeExtras()" type="checkbox">
+                        <label for="noise_exin" ng-bind-html="('noise' | translate)">
+                        </label>
+                    </input>
+                </div>
+            </div>
+            <div class="field" ng-if="$ctrl.lists_extra_info.TrailDifficulty | contains:$ctrl.getActiveProfile().type">
+                <div class="ui checkbox">
+                    <input data-ng-model="$ctrl.extra_infos.TrailDifficulty" id="traildifficulty_exin" ng-change="$ctrl.changeExtras()" type="checkbox">
+                        <label for="traildifficulty_exin" ng-bind-html="('traildifficulty' | translate)">
+                        </label>
+                    </input>
+                </div>
+            </div>
+        </div>
     </div>
 </section>

@@ -66,5 +66,9 @@ angular.module('orsApp.locations-service', [])
             const locations = orsObjectsFactory.createMapAction(10, lists.layers[8], data, undefined, undefined);
             orsMapFactory.mapServiceSubject.onNext(locations);
         };
+        orsLocationsService.clearLocationsToMap = (data) => {
+            const locations = orsObjectsFactory.createMapAction(2, lists.layers[8], undefined, undefined, undefined);
+            orsMapFactory.mapServiceSubject.onNext(locations);
+        };
         return orsLocationsService;
     }]);

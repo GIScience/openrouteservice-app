@@ -12,6 +12,9 @@
     "@turf/helpers": "^3.13.0",
     "@turf/line-distance": "^3.13.0",
     "@turf/simplify": "^3.13.0",
+    "@turf/buffer": "^3.13.0",
+    "@turf/intersect": "^3.13.0",
+    "@turf/within": "^3.13.0",
     "browserify": "^14.1.0",
     "core-js": "2.4.0",
     "geojson": "^0.4.1",
@@ -21,6 +24,7 @@
     "leaflet-control-angular": "^0.1.4",
     "leaflet-geometryutil": "^0.8.0",
     "leaflet-omnivore": "^0.3.4",
+    "leaflet": "latest",
     "togpx": "^0.5.3",
     "tokml": "^0.4.0",
     "zone.js": "0.6.12"

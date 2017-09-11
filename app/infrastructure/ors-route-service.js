@@ -11,6 +11,8 @@ angular.module('orsApp.route-service', [])
             orsRouteService.routesSubject.onNext([]);
             let action = orsObjectsFactory.createMapAction(2, lists.layers[1], undefined, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
+            action = orsObjectsFactory.createMapAction(2, lists.layers[9], undefined, undefined);
+            orsMapFactory.mapServiceSubject.onNext(action);
             orsRouteService.DeColor();
         };
         orsRouteService.routingRequests = {};
@@ -73,17 +75,19 @@ angular.module('orsApp.route-service', [])
         orsRouteService.addRoute = (route, focusIdx) => {
             const routePadding = orsObjectsFactory.createMapAction(1, lists.layers[1], route.geometry, undefined, lists.layerStyles.routePadding());
             orsMapFactory.mapServiceSubject.onNext(routePadding);
-            const routeLine = orsObjectsFactory.createMapAction(40, lists.layers[1], route.geometry, undefined, lists.layerStyles.route(), {
+            const routeLine = orsObjectsFactory.createMapAction(40, lists.layers[1], route.geometry, undefined, lists.layerStyles.route());
+            orsMapFactory.mapServiceSubject.onNext(routeLine);
+            const routeHover = orsObjectsFactory.createMapAction(41, lists.layers[1], route.geometry, undefined, lists.layerStyles.routeHovering(), {
                 pointInformation: route.point_information
             });
-            orsMapFactory.mapServiceSubject.onNext(routeLine);
+            orsMapFactory.mapServiceSubject.onNext(routeHover);
             if (focusIdx) {
                 const zoomTo = orsObjectsFactory.createMapAction(0, lists.layers[1], route.geometry, undefined, undefined);
                 orsMapFactory.mapServiceSubject.onNext(zoomTo);
             }
         };
         orsRouteService.addHeightgraph = (geometry) => {
-            console.log(geometry)
+            console.log(geometry);
             const heightgraph = orsObjectsFactory.createMapAction(-1, undefined, geometry, undefined, undefined);
             orsMapFactory.mapServiceSubject.onNext(heightgraph);
         };
@@ -91,21 +95,11 @@ angular.module('orsApp.route-service', [])
             const heightgraph = orsObjectsFactory.createMapAction(-1, undefined, undefined, undefined, undefined);
             orsMapFactory.mapServiceSubject.onNext(heightgraph);
         };
-        orsRouteService.calculateDistance = (lat1, lon1, lat2, lon2) => { // generally used geo measurement function
-            var R = 6371; // 8.137; // Radius of earth in KM // Turf uses 6373.0
-            var dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
-            var dLon = lon2 * Math.PI / 180 - lon1 * Math.PI / 180;
-            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            var d = R * c;
-            return d * 1000; // meters
-        };
         /** prepare route to json */
         orsRouteService.processResponse = (data, profile, focusIdx) => {
             orsRouteService.data = data;
             let cnt = 0;
             angular.forEach(orsRouteService.data.routes, function(route) {
-                console.error(route)
                 //const geometry = orsUtilsService.decodePolyline(route.geometry, route.elevation);
                 route.geometryRaw = angular.copy(route.geometry.coordinates);
                 let geometry = route.geometry.coordinates;
@@ -117,8 +111,8 @@ angular.module('orsApp.route-service', [])
                     geometry[i][1] = lng;
                 }
                 route.geometry = geometry;
-                route.point_information = orsRouteService.processPointExtras(route);
-                if (cnt == 0) {
+                route.point_information = orsRouteService.processPointExtras(route, profile);
+                if (cnt === 0) {
                     if (route.elevation) {
                         // get max and min elevation from nested array
                         // var values = actionPackage.geometry.map(function(elt) {
@@ -139,32 +133,23 @@ angular.module('orsApp.route-service', [])
             orsRouteService.routesSubject.onNext(orsRouteService.data);
         };
         /** process point information */
-        orsRouteService.processPointExtras = (route) => {
-            const generateHeightInfo = (geometry, idx) => {
-                const obj = {};
-                obj.height = parseFloat(geometry[idx][2].toFixed(1));
-                if (idx > 0) {
-                    let last_z = geometry[(idx - 1)][2];
-                    if (obj.height < last_z) {
-                        let minus = last_z - obj.height;
-                        descent += minus;
-                    } else if (obj.height > last_z) {
-                        let plus = obj.height - last_z;
-                        ascent += plus;
-                    }
-                    if (ascent > 0) {
-                        obj.ascent = parseFloat(ascent.toFixed(1));
-                    }
-                    if (descent > 0) {
-                        obj.descent = parseFloat(descent.toFixed(1));
-                    }
-                }
-                return obj;
-            };
+        orsRouteService.processPointExtras = (route, profile) => {
             const fetchExtrasAtPoint = (extrasObj, idx) => {
                 const extrasAtPoint = {};
                 angular.forEach(extrasObj, function(values, key) {
-                    extrasAtPoint[key] = mappings[key][values[idx]].text;
+                    if (key == 'traildifficulty' && profile == 'Pedestrian') {
+                        extrasAtPoint[key] = mappings[key][values[idx]].text_hiking;
+                    } else if (mappings[key][values[idx]].type == -1) {
+                        // green
+                        extrasAtPoint[key] = '<strong><span style="color: green;">' + '~ ' + mappings[key][values[idx]].text + '</span></strong>';
+                    } else if (mappings[key][values[idx]].type == 1) {
+                        // red
+                        extrasAtPoint[key] = '<strong><span style="color: red;">' + '~ ' + mappings[key][values[idx]].text + '</span></strong>';
+                    } else if (mappings[key][values[idx]].type === 0) {
+                        extrasAtPoint[key] = '<strong><span>' + '~ ' + mappings[key][values[idx]].text + '</span></strong>';
+                    } else {
+                        extrasAtPoint[key] = mappings[key][values[idx]].text;
+                    }
                 });
                 return extrasAtPoint;
             };
@@ -182,22 +167,22 @@ angular.module('orsApp.route-service', [])
                     list.push(val.values[val.values.length - 1][2]);
                     extrasObj[key] = list;
                 });
-            });
+            })
+            .call();
             const info_array = [];
             const geometry = route.geometry;
             const segments = route.segments;
             // declare cumulative statistic variables
-            // a=b=c=d= 0 not working in strict mode
-            let descent = 0;
-            let ascent = 0;
-            let distance = 0;
-            let segment_distance = 0;
-            let step_distance = 0;
-            let point_distance = 0;
+            let descent = 0,
+                ascent = 0,
+                distance = 0,
+                segment_distance = 0,
+                step_distance = 0,
+                point_distance = 0;
             // declare incrementing ids
-            let segment_id = 0;
-            let step_id = 0;
-            let point_id = 0;
+            let segment_id = 0,
+                step_id = 0,
+                point_id = 0;
             // loop the geometry and calculate distances
             for (let i = 0; i < geometry.length; i++) {
                 const lat = geometry[i][0];
@@ -234,22 +219,40 @@ angular.module('orsApp.route-service', [])
                     coords: [lat, lng],
                     extras: fetchExtrasAtPoint(extrasObj, i),
                     distance: parseFloat(distance.toFixed(1)),
-                    // duration: null, // todo
                     segment_index: segment_id,
                     point_id: i,
-                    heights: route.elevation && generateHeightInfo(geometry, i)
+                    heights: route.elevation && {
+                        height: parseFloat(geometry[i][2].toFixed(1))
+                    }
                 };
                 point_id += 1;
                 info_array.push(pointobject);
             }
+            console.log(info_array);
             return info_array;
         };
         /* process heightgraph geojson object */
         orsRouteService.processHeightgraphData = (route) => {
             const routeString = route.geometryRaw;
             let hgData = [];
+            // default
+            let extra = [];
+            let chunk = {};
+            const geometry = routeString;
+            chunk.line = geometry;
+            chunk.attributeType = -1;
+            extra.push(chunk);
+            extra = GeoJSON.parse(extra, {
+                LineString: 'line',
+                extraGlobal: {
+                    'Creator': 'openrouteservice.org',
+                    'records': extra.length,
+                    'summary': 'default'
+                }
+            });
+            hgData.push(extra);
             for (let key in route.extras) {
-                let extra = [];
+                extra = [];
                 if (key !== 'waycategory') {
                     for (let item of route.extras[key].values) {
                         let chunk = {};
@@ -264,7 +267,7 @@ angular.module('orsApp.route-service', [])
                     extra = GeoJSON.parse(extra, {
                         LineString: 'line',
                         extraGlobal: {
-                            'Creator': 'OpenRouteService.org',
+                            'Creator': 'openrouteservice.org',
                             'records': extra.length,
                             'summary': key
                         }

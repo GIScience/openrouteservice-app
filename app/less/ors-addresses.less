@@ -1,0 +1,54 @@
+ors-addresses {
+    display: flex;
+    min-height: 0;
+    /* needed for FF */
+    flex-direction: column;
+}
+
+.ors-addresses-container {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    .addresses-list {
+        display: flex;
+        flex-direction: column;
+        -justify-content: space-between;
+        .content {
+            display: flex;
+            flex-direction: row;
+            -flex-wrap: wrap;
+            cursor: pointer;
+            .left {
+                padding: 0.5rem;
+                flex: 0 0 30px;
+                text-align: center;
+            }
+            .right {
+                padding: 0.5rem;
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+                word-break: break-word;
+                word-wrap: break-word;
+                div {
+                  padding-bottom: 5px;
+                }
+            }
+        }
+    }
+}
+
+.ors-addresses-input {
+    flex: 1 0 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    input {
+        width: 320px;
+    }
+}

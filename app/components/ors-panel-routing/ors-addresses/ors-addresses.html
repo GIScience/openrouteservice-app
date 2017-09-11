@@ -1,0 +1,62 @@
+<div class="ors-addresses-input">
+    <div class="ui left icon input">
+        <input ng-change="$ctrl.addressChanged()" ng-model="$ctrl.waypoint._address" ng-model-options="{debounce: 1000}" placeholder="{{$ctrl.getPlaceholder()}}" select-on-click="" type="text">
+        </input>
+        <i class="fa fa-search icon">
+        </i>
+    </div>
+    <div>
+        <button class="tiny ui basic button ors-control-button" ng-class="{show: hoverInput}" ng-click="$ctrl.showGeocodingPanel = !$ctrl.showGeocodingPanel">
+            <i class="fa fa-lg fa-remove">
+            </i>
+        </button>
+    </div>
+</div>
+<div class="bottom-border">
+</div>
+<div>
+    <ors-loading>
+    </ors-loading>
+</div>
+<div class="ors-addresses-container">
+    <div class="addresses-list" ng-if="!$ctrl.isLoading">
+        <div ng-click="$ctrl.select(feature)" ng-repeat="feature in $ctrl.addresses">
+            <div class="content">
+                <div class="left" ng-switch="" on="feature.processed.place_type">
+                    <div ng-switch-when="address|street|neighbourhood" ng-switch-when-separator="|">
+                        <i class="fa fa-lg fa-map-marker">
+                        </i>
+                    </div>
+                    <div ng-switch-when="venue">
+                        <i class="fa fa-lg fa-building">
+                        </i>
+                    </div>
+                    <div ng-switch-when="localadmin|locality" ng-switch-when-separator="|">
+                        <i class="fa fa-lg fa-image">
+                        </i>
+                    </div>
+                    <div ng-switch-when="country|macrocountry|region|macroregion" ng-switch-when-separator="|">
+                        <i class="fa fa-lg fa-globe">
+                        </i>
+                    </div>
+                    <div ng-switch-default="">
+                        <i class="fa fa-lg fa-circle">
+                        </i>
+                    </div>
+                </div>
+                <div class="right">
+                    <div>
+                        <h3 ng-bind-html="feature.processed.primary">
+                        </h3>
+                    </div>
+                    <div>
+                        <span ng-bind-html="feature.processed.secondary">
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-border">
+            </div>
+        </div>
+    </div>
+</div>

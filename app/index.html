@@ -13,6 +13,7 @@
     <link href="bower_components/angular-loading-bar/build/loading-bar.css" rel="stylesheet"></link>
     <link href="bower_components/semantic/dist/components/reset.css" rel="stylesheet"></link>
     <link href="bower_components/semantic/dist/components/input.css" rel="stylesheet"></link>
+
     <link href="bower_components/semantic/dist/components/button.css" rel="stylesheet"></link>
     <link href="bower_components/semantic/dist/components/divider.css" rel="stylesheet"></link>
     <link href="bower_components/semantic/dist/components/list.css" rel="stylesheet"></link>
@@ -24,10 +25,14 @@
     <link href="bower_components/semantic/dist/components/message.css" rel="stylesheet"></link>
     <link href="bower_components/semantic/dist/components/table.css" rel="stylesheet"></link>
     <link href="bower_components/semantic/dist/components/loader.css" rel="stylesheet"></link>
+    <link href="bower_components/semantic/dist/components/form.css" rel="stylesheet"></link>
+
     <link href="bower_components/angular-tooltips/dist/angular-tooltips.css" rel="stylesheet" type="text/css" />
-    <link href="bower_components/leaflet/dist/leaflet.css" rel="stylesheet"></link>
+    <link href="node_modules/leaflet/dist/leaflet.css" rel="stylesheet"></link>
     <link href="bower_components/leaflet-measure/dist/leaflet-measure.css" rel="stylesheet"></link>
     <link href="bower_components/leaflet.markercluster/dist/MarkerCluster.css" rel="stylesheet"></link>
+    <link href="bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css" rel="stylesheet"></link>
+    <link href="bower_components/leaflet-distance-markers/leaflet-distance-marker.css" rel="stylesheet"></link>    
     <!-- endbuild -->
     <!-- these scripts remain unbuilt as they contain relative paths -->
     <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet"></link>
@@ -49,6 +54,7 @@
     <link href="css/ors-leaflet.css" rel="stylesheet"></link>
     <link href="css/ors-loading.css" rel="stylesheet"></link>
     <link href="css/ors-modal.css" rel="stylesheet"></link>
+    <link href="css/ors-addresses.css" rel="stylesheet"></link>
     <!-- endbuild -->
     </meta>
 </head>
@@ -97,7 +103,7 @@
 <script src="node_modules/tokml/tokml.js"></script>
 <script src="node_modules/leaflet-omnivore/leaflet-omnivore.min.js"></script>
 <script src="node_modules/turf.js" type="text/javascript"></script>
-<script src="bower_components/leaflet/dist/leaflet.js"></script>
+<script src="node_modules/leaflet/dist/leaflet.js"></script>
 <script src="bower_components/leaflet-measure/dist/leaflet-measure.js"></script>
 <script src="node_modules/leaflet-control-angular/src/L.Control.Angular.js"></script>
 <script src="node_modules/leaflet-geometryutil/src/leaflet.geometryutil.js"></script>
@@ -105,6 +111,7 @@
 <script src="bower_components/leaflet.editable/src/Leaflet.Editable.js"></script>
 <script src="bower_components/leaflet.heightgraph/src/L.Control.Heightgraph.js"></script>
 <script src="bower_components/leaflet.locatecontrol/src/L.Control.Locate.js" charset="utf-8"></script>
+<script src="bower_components/leaflet-distance-markers/leaflet-distance-marker.js" charset="utf-8"></script>
 <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
 <script src="bower_components/angular-ui-sortable/sortable.js"></script>
 <script src="bower_components/angularjs-slider/dist/rzslider.js"></script>
@@ -125,6 +132,7 @@
 <script src="constants/namespaces.js"></script>
 <script src="constants/lists.js"></script>
 <script src="constants/mappings.js"></script>
+<script src="values/globals.js"></script>
 <script src="infrastructure/ors-settings-service.js"></script>
 <script src="infrastructure/ors-objects-service.js"></script>
 <script src="infrastructure/ors-map-service.js"></script>
@@ -146,6 +154,7 @@
 <script src="components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-route-controls.js"></script>
 <script src="components/ors-panel-routing/ors-waypoints/ors-route-controls/ors-options/ors-options.js"></script>
 <script src="components/ors-panel-routing/ors-instructions/ors-instructions.js"></script>
+<script src="components/ors-panel-routing/ors-addresses/ors-addresses.js"></script>
 <script src="components/ors-panel-routing/ors-route-extras/ors-route-extras.js"></script>
 <script src="components/ors-panel-routing/ors-route-extras/ors-bars-chart/ors-bars-chart.js"></script>
 <script src="components/ors-panel-routing/ors-route-extras/ors-route-extras-map/ors-route-extras-map.js"></script>

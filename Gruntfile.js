@@ -44,7 +44,7 @@ module.exports = function(grunt) {
                 src: ['build/*']
             },
             task_rm_build_unused: {
-                src: ['build/components', 'build/infrastructure', 'build/languages', 'build/js/', 'build/constants', 'build/css']
+                src: ['build/components', 'build/infrastructure', 'build/languages', 'build/js/', 'build/constants', 'build/values', 'build/css']
             },
         },
         jshint: {
@@ -141,7 +141,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: 'app/',
                     //src: ['js/**/*.js'],
-                    src: ['components/**/*.js', 'constants/**/*.js', 'infrastructure/**/*.js', 'js/**/*.js'],
+                    src: ['components/**/*.js', 'constants/**/*.js', 'values/**/*.js', 'infrastructure/**/*.js', 'js/**/*.js'],
                     dest: 'build/'
                 }]
             },
@@ -279,11 +279,11 @@ module.exports = function(grunt) {
                 constants: {
                     ENV: {
                         name: 'labs',
-                        geocoding: 'https://labs-api.openrouteservice.org/geocode',
-                        routing: 'https://labs-api.openrouteservice.org/routes',
-                        tmc: 'http://labs-api.openrouteservice.org/routes?tmc',
-                        analyse: 'https://labs-api.openrouteservice.org/isochrones',
-                        places: 'https://labs-api.openrouteservice.org/locations',
+                        geocoding: 'https://labs-api.openrouteservice.org/ors/geocode',
+                        routing: 'https://labs-api.openrouteservice.org/ors/routes',
+                        tmc: 'http://labs-api.openrouteservice.org/ors/routes?tmc',
+                        analyse: 'https://labs-api.openrouteservice.org/ors/isochrones',
+                        places: 'https://labs-api.openrouteservice.org/ors/locations',
                         shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
                     }
                 }
@@ -325,7 +325,8 @@ module.exports = function(grunt) {
                     "app/css/ors-panel-isochrones.css": "app/less/ors-panel-isochrones.less",
                     "app/css/ors-panel-routing.css": "app/less/ors-panel-routing.less",
                     "app/css/ors-sidebar-outlet.css": "app/less/ors-sidebar-outlet.less",
-                    "app/css/ors-tooltips.css": "app/less/ors-tooltips.less"
+                    "app/css/ors-tooltips.css": "app/less/ors-tooltips.less",
+                    "app/css/ors-addresses.css": "app/less/ors-addresses.less"
                 }
             }
         },
@@ -338,7 +339,7 @@ module.exports = function(grunt) {
         }
         // connect: {
         //     options: {
-        //         port: 3000,
+        //         port: 3000,öä
         //         // Change this to '0.0.0.0' to access the server from outside.
         //         hostname: 'localhost',
         //         //livereload: 35729

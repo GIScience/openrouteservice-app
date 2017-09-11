@@ -5,11 +5,11 @@ angular.module('orsApp')
     .constant('lists', {
         locationsIcon: {
             className: "ors-icon-locations",
-            iconSize: [25, 25],
+            iconSize: [20, 20],
         },
         locationsIconHighlight: {
             className: "ors-icon-locations-highlight",
-            iconSize: [25, 25],
+            iconSize: [20, 20],
         },
         waypointIcons: {
             0: {
@@ -36,232 +36,157 @@ angular.module('orsApp')
                 className: "ors-marker-highlight",
                 iconSize: [45, 45],
                 iconAnchor: [22, 45]
+            },
+            5: {
+                className: "ors-marker-hover",
+            },
+            6: {
+                className: "ors-marker-hover-drag",
             }
         },
+
         profiles: {
             Car: {
                 name: 'Car',
-                elevation: false,
+                elevation: true,
                 subgroup: 'Car',
                 request: 'driving-car',
                 shortValue: '0',
-                extras: {
-                    surface: true,
-                    waytype: true,
-                    suitability: true
-                }
             },
             Bicycle: {
                 name: 'Bicycle',
                 elevation: true,
                 subgroup: 'Bicycle',
                 request: 'cycling-regular',
-                shortValue: '1a',
-                extras: {
-                    surface: true,
-                    waytype: true,
-                    suitability: true,
-                    steepness: true
-                }
+                shortValue: '1a'
             },
             BicycleMTB: {
                 name: 'BicycleMTB',
                 elevation: true,
                 subgroup: 'Bicycle',
                 request: 'cycling-mountain',
-                shortValue: '1b',
-                extras: {
-                    surface: true,
-                    waytype: true,
-                    suitability: true,
-                    steepness: true
-                }
+                shortValue: '1b'
             },
             BicycleRacer: {
                 name: 'BicycleRacer',
                 elevation: true,
                 subgroup: 'Bicycle',
                 request: 'cycling-road',
-                shortValue: '1c',
-                extras: {
-                    surface: true,
-                    waytype: true,
-                    suitability: true,
-                    steepness: true
-                }
+                shortValue: '1c'
             },
             BicycleTour: {
                 name: 'BicycleTour',
                 elevation: true,
                 subgroup: 'Bicycle',
                 request: 'cycling-tour',
-                shortValue: '1d',
-                extras: {
-                    surface: true,
-                    waytype: true,
-                    suitability: true,
-                    steepness: true
-                }
+                shortValue: '1d'
             },
             BicycleSafety: {
                 name: 'BicycleSafety',
                 elevation: true,
                 subgroup: 'Bicycle',
                 request: 'cycling-safe',
-                shortValue: '1e',
-                extras: {
-                    surface: true,
-                    waytype: true,
-                    suitability: true,
-                    steepness: true
-                }
+                shortValue: '1e'
             },
             BicycleElectro: {
                 name: 'BicycleElectro',
                 elevation: true,
                 subgroup: 'Bicycle',
                 request: 'cycling-electric',
-                shortValue: '1f',
-                extras: {
-                    surface: true,
-                    waytype: true,
-                    suitability: true,
-                    steepness: true
-                }
+                shortValue: '1f'
             },
             Pedestrian: {
                 name: 'Pedestrian',
                 elevation: true,
                 subgroup: 'Pedestrian',
                 request: 'foot-walking',
-                shortValue: '2',
-                extras: {
-                    surface: true,
-                    waytype: true,
-                    suitability: true,
-                    steepness: true,
-                    green: true,
-                    noise: true
-                }
+                shortValue: '2'
             },
             PedestrianHiking: {
                 name: 'PedestrianHiking',
                 elevation: true,
                 subgroup: 'Pedestrian',
                 request: 'foot-hiking',
-                shortValue: '2b',
-                extras: {
-                    surface: true,
-                    waytype: true,
-                    suitability: true,
-                    steepness: true,
-                    green: true,
-                    noise: true
-                }
+                shortValue: '2b'
             },
             Wheelchair: {
                 name: 'Wheelchair',
                 elevation: true,
                 subgroup: 'Wheelchair',
                 request: 'wheelchair',
-                shortValue: '3',
-                extras: {
-                    surface: true,
-                    waytype: true,
-                    suitability: true,
-                    steepness: true
-                }
+                shortValue: '3'
             },
             hgv: {
                 name: 'hgv',
-                elevation: false,
+                elevation: true,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
-                shortValue: '4a',
-                extras: {
-                    surface: true,
-                    waytype: true,
-                    suitability: true
-                }
+                shortValue: '4a'
             },
             goods: {
                 name: 'goods',
-                elevation: false,
+                elevation: true,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
-                shortValue: '4b',
-                extras: {
-                    surface: true,
-                    waytype: true,
-                    suitability: true
-                }
+                shortValue: '4b'
             },
             bus: {
                 name: 'bus',
-                elevation: false,
+                elevation: true,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
-                shortValue: '4c',
-                extras: {
-                    surface: true,
-                    waytype: true,
-                    suitability: true
-                }
+                shortValue: '4c'
             },
             agricultural: {
                 name: 'agricultural',
-                elevation: false,
+                elevation: true,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
-                shortValue: '4d',
-                extras: {
-                    surface: true,
-                    waytype: true,
-                    suitability: true
-                }
+                shortValue: '4d'
             },
             forestry: {
                 name: 'forestry',
-                elevation: false,
+                elevation: true,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
-                shortValue: '4e',
-                extras: {
-                    surface: true,
-                    waytype: true,
-                    suitability: true
-                }
+                shortValue: '4e'
             },
             delivery: {
                 name: 'delivery',
-                elevation: false,
+                elevation: true,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
                 shortValue: '4f',
-                extras: {
-                    surface: true,
-                    waytype: true,
-                    suitability: true
-                }
             },
             EmergencyVehicle: {
                 name: 'EmergencyVehicle',
                 elevation: false,
                 subgroup: 'Emergency',
                 request: 'driving-emergency',   
-                shortValue: '5a',
-                extras: {
-                }
+                shortValue: '5a'
             },
             FireEngine: {
                 name: 'FireEngine',
                 elevation: false,
                 subgroup: 'Emergency',
                 request: 'driving-emergency',
-                shortValue: '5b',
-                extras: {
-                }
+                shortValue: '5b'
             }
+        },
+        extra_info: {
+            surface: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
+            waytype: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
+            suitability: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
+            tollways: ['hgv', 'Car'],
+            steepness: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
+            green: ['Pedestrian', 'Bicycle'],
+            noise: ['Pedestrian', 'Bicycle'],
+            TrailDifficulty: ['Pedestrian', 'Bicycle'],
+            HeavyVehicle: ['surface', 'waytype', 'suitability', 'tollways', 'steepness'],
+            Car: ['surface', 'waytype', 'suitability', 'tollways', 'steepness'],
+            Bicycle: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty'],
+            Pedestrian: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty'],
+            Wheelchair: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty']
         },
         optionList: {
             weight: {
@@ -693,7 +618,8 @@ angular.module('orsApp')
             5: 'layerAccessibilityAnalysisNumberedMarkers',
             6: 'layerRouteNumberedMarkers',
             7: 'layerRouteExtras',
-            8: 'layerLocations'
+            8: 'layerLocations',
+            9: 'layerRouteDrag'
         },
         layerStyles: {
             route: function() {
@@ -708,6 +634,13 @@ angular.module('orsApp')
                     color: '#fff',
                     weight: 9,
                     opacity: 1
+                };
+            },
+            routeHovering: function() {
+                return {
+                    color: '#FFF',
+                    weight: 50,
+                    opacity: 0
                 };
             },
             routeEmph: function() {
@@ -736,6 +669,20 @@ angular.module('orsApp')
                     color: '#FFF',
                     weight: 6,
                     opacity: 1
+                };
+            },
+            hoverPoint: function() {
+                return {
+                    radius: 5,
+                    weight: 2,
+                    color: '#000',
+                    fillColor: '#FFF',
+                    fillOpacity: 1,
+                    // interactive: true,
+                    draggable: 'true'
+                    // autoPan: true,
+                    // autoPanPadding: [50, 50],
+                    // autoPanSpeed: 10
                 };
             },
             rand: function(min, max) {
@@ -788,8 +735,8 @@ angular.module('orsApp')
             Fords: 128, // 1 << 7;
         },
         locations_icons: {
-            100: '<i class="fa fa-lg fa-hotel"></i>',
-            120: '<i class="fa fa-lg fa-paw"></i>',
+            100: '<i class="fa fa-hotel"></i>',
+            120: '<i class="fa fa-paw"></i>',
             130: '<i class="fa fa-lg fa-paint-brush"></i>',
             150: '<i class="fa fa-lg fa-university"></i>',
             160: '<i class="fa fa-lg fa-building"></i>',

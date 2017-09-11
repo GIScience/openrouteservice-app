@@ -73,7 +73,6 @@ angular.module('orsApp.settings-service', [])
         orsSettingsFactory.setActiveOptions = (options, fireRequest) => {
             orsSettingsFactory[currentSettingsObj].getValue()
                 .profile.options = options;
-            console.log(orsSettingsFactory[currentSettingsObj].getValue())
             if (fireRequest) orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
             if (orsSettingsFactory.isInitialized) {
                 orsUtilsService.parseSettingsToPermalink(orsSettingsFactory[currentSettingsObj].getValue(), orsSettingsFactory.getUserOptions());
@@ -234,16 +233,18 @@ angular.module('orsApp.settings-service', [])
          * @param {number} idx - Index of waypoint
          * @param {boolean} init - Init is true when the service is loaded over permalink with the correct indices of waypoints
          */
-        orsSettingsFactory.getAddress = (pos, idx, init) => {
+        orsSettingsFactory.getAddress = (pos, idx, init, fromHover = false) => {
             // if this function is called from a popup we have to translate the index
-            if (!init) {
-                const set = orsSettingsFactory[currentSettingsObj].getValue();
-                if (idx == 0) {
-                    idx = 0;
-                } else if (idx == 2) {
-                    idx = set.waypoints.length - 1;
-                } else if (idx == 1) {
-                    idx = set.waypoints.length - 2;
+            if (!fromHover) {
+                if (!init) {
+                    const set = orsSettingsFactory[currentSettingsObj].getValue();
+                    if (idx == 0) {
+                        idx = 0;
+                    } else if (idx == 2) {
+                        idx = set.waypoints.length - 1;
+                    } else if (idx == 1) {
+                        idx = set.waypoints.length - 2;
+                    }
                 }
             }
             const latLngString = orsUtilsService.parseLatLngString(pos);
@@ -255,9 +256,10 @@ angular.module('orsApp.settings-service', [])
             orsRequestService.geocodeRequests.updateRequest(request, idx, requestsQue);
             request.promise.then((data) => {
                 if (data.features.length > 0) {
-                    const addressData = orsUtilsService.addShortAddresses(data.features);
-                    console.log(addressData)
-                    orsSettingsFactory.updateWaypointAddress(idx, addressData[0].shortaddress, init);
+                    const addressData = orsUtilsService.addShortAddresses(data.features)[0];
+                    let addressStrings = [addressData.processed.primary, addressData.processed.secondary];
+                    addressStrings = addressStrings.join(", ");
+                    orsSettingsFactory.updateWaypointAddress(idx, addressStrings, init);
                 } else {
                     orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
                 }
@@ -290,20 +292,38 @@ angular.module('orsApp.settings-service', [])
             orsUtilsService.parseSettingsToPermalink(orsSettingsFactory[currentSettingsObj].getValue(), orsSettingsFactory.getUserOptions());
         };
         /**
+         * Sets waypoint into settings.
+         * @param {waypoints.<Object>} List of waypoint objects.
+         */
+        orsSettingsFactory.setWaypoint = (waypoint, idx, fireRequest = true) => {
+            console.log('setting..', waypoint);
+            orsSettingsFactory[currentSettingsObj].getValue()
+                .waypoints[idx] = waypoint;
+            /** fire a new request */
+            if (fireRequest) orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
+            orsSettingsFactory[currentWaypointsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue()
+                .waypoints);
+            orsUtilsService.parseSettingsToPermalink(orsSettingsFactory[currentSettingsObj].getValue(), orsSettingsFactory.getUserOptions());
+        };
+        /**
          * Inserts waypoint to settings waypoints when added on map. This can
          * either be a start, via or end
          * @param {number} idx - Type of wp which should be added: start, via or end.
          * @param {Object} wp - The waypoint object to be inserted to wp list.
          */
-        orsSettingsFactory.insertWaypointFromMap = (idx, wp, fireRequest = true) => {
-            console.log(wp)
-            if (idx == 0) {
-                orsSettingsFactory[currentSettingsObj].value.waypoints[idx] = wp;
-            } else if (idx == 2) {
-                orsSettingsFactory[currentSettingsObj].value.waypoints[orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1] = wp;
-            } else if (idx == 1) {
-                orsSettingsFactory[currentSettingsObj].value.waypoints.splice(orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1, 0, wp);
+        orsSettingsFactory.insertWaypointFromMap = (idx, wp, fireRequest = true, fromHover = false) => {
+            if (fromHover) {
+                orsSettingsFactory[currentSettingsObj].value.waypoints.splice(idx, 0, wp);
                 orsSettingsFactory.focusIdx = false;
+            } else {
+                if (idx == 0) {
+                    orsSettingsFactory[currentSettingsObj].value.waypoints[idx] = wp;
+                } else if (idx == 2) {
+                    orsSettingsFactory[currentSettingsObj].value.waypoints[orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1] = wp;
+                } else if (idx == 1) {
+                    orsSettingsFactory[currentSettingsObj].value.waypoints.splice(orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1, 0, wp);
+                    orsSettingsFactory.focusIdx = false;
+                }
             }
             /** Update Map. */
             orsSettingsFactory[currentWaypointsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue()

@@ -5,6 +5,8 @@ angular.module('orsApp.ors-waypoints', ['orsApp.ors-waypoint', 'orsApp.ors-route
         orsParams: '<',
         activeProfile: '<',
         activeSubgroup: '<',
+        showGeocodingPanel: '=',
+        showGeocodingPanelIdx: '='
     },
     controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRouteService', 'orsRequestService', 'orsParamsService', '$timeout', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRouteService, orsRequestService, orsParamsService, $timeout) {
         let ctrl = this;

@@ -1,4 +1,32 @@
 @import 'variables.less';
+
+// extras popup
+.ors-route-point-popup {
+    display: flex;
+    -flex-wrap: wrap;
+    flex-direction: column;
+    padding: 0px 5px 0px 5px;
+    justify-content: space-between;
+    .item {
+        display: flex;
+        flex-direction: row;
+        user-select: none;
+        .left {
+            flex: 0 0 25px;
+            text-align: center;
+            cursor: pointer;
+            i {
+                color: rgba(0, 0, 0, 0.7);
+            }
+        }
+        .right {
+            cursor: default;
+            flex: 1 0 auto;
+            padding: 0 10px 0 10px;
+        }
+    }
+}
+
 .cm-popup-option {
     cursor: pointer;
     padding: 5px 5px 0 5px;
@@ -92,9 +120,19 @@ a.leaflet-avoid-area:before {
     cursor: pointer;
 }
 
-.ors-marker-start, .ors-marker-via, .ors-marker-end, .ors-marker-location, .ors-marker-highlight {
+.ors-marker-start, .ors-marker-via, .ors-marker-end, .ors-marker-location, .ors-marker-highlight, .ors-marker-hover {
     text-align: center;
     line-height: 100%;
+}
+
+.ors-marker-dist {
+    font-size: 9px;
+    border: 2px solid #FFF;
+    border-radius: 10px;
+    text-align: center;
+    color: #FFF;
+    font-weight: bold;
+    background: #b5152b;
 }
 
 .ors-marker-start i, .ors-marker-via i, .ors-marker-end i, .ors-marker-location i {
@@ -112,6 +150,16 @@ a.leaflet-avoid-area:before {
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: @whiteColor;
     color: @markerHighlightColor;
+}
+
+.ors-marker-hover {
+    -pointer-events: none !important;
+}
+
+.ors-marker-hover i {
+    -webkit-text-fill-color: #FFF;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #000;
 }
 
 .ors-marker-start i {
@@ -202,4 +250,34 @@ a.leaflet-avoid-area:before {
     .textLabel-common;
     margin-left: 5px !important;
     margin-top: -50px !important;
+}
+
+// marker cluster styles
+.marker-cluster-small {
+    background-color: rgba(255, 132, 132, 0.48);
+}
+
+.marker-cluster-small div {
+    background-color: rgba(255, 132, 132, 0.8);
+}
+
+.marker-cluster-medium {
+    background-color: rgba(226, 140, 140, 0.48);
+}
+
+.marker-cluster-medium div {
+    background-color: rgba(255, 55, 55, 0.8);
+}
+
+.marker-cluster-large {
+    background-color: rgba(208, 25, 25, 0.48);
+}
+
+.marker-cluster-large div {
+    background-color: rgba(219, 40, 40, 0.8);
+}
+
+.marker-cluster div {
+    font-weight: bold;
+    color: #FFF
 }

@@ -171,5 +171,12 @@
     "EMERGENCYVEHICLE": "Basic Emergency Vehicle", 
     "FIREENGINE": "Fire Engine",
     "noise": "Noise index", 
-    "height": "Height"
+    "height": "Height", 
+    "LOCALE_DISTANCE_MARKERS": "Distance markers (km)", 
+    "avgspeed": "Average speed", 
+    "traildifficulty": "Trail difficulty",
+    "EXTRA_INFORMATION": "Extra information",
+    "LOCALE_EXTRAS_HELP": "Add further extra information in settings",
+    "LOCALE_SIGNUP_HEADER": "Start your API journey now",
+    "LOCALE_SIGNUP_MESSAGE": "If you are satisfied with the features of openrouteservice please sign up for the API at <a href='https://go.openrouteservice.org'>https://go.openrouteservice.org</a>!"
 }

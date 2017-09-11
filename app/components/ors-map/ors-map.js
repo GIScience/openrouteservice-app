@@ -7,7 +7,7 @@ angular.module('orsApp')
                 orsMap: '='
             },
             link: (scope, element, attrs) => {},
-            controller: ['$scope', '$filter', '$compile', '$timeout', 'orsSettingsFactory', 'orsLocationsService', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', 'lists', 'mappings', 'orsNamespaces', ($scope, $filter, $compile, $timeout, orsSettingsFactory, orsLocationsService, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsCookiesFactory, lists, mappings, orsNamespaces) => {
+            controller: ['$scope', '$filter', '$compile', '$timeout', 'orsSettingsFactory', 'orsLocationsService', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', 'lists', 'globals', 'mappings', 'orsNamespaces', ($scope, $filter, $compile, $timeout, orsSettingsFactory, orsLocationsService, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsCookiesFactory, lists, globals, mappings, orsNamespaces) => {
                 $scope.translateFilter = $filter('translate');
                 const mapsurfer = L.tileLayer(orsNamespaces.layerMapSurfer.url, {
                     attribution: orsNamespaces.layerMapSurfer.attribution
@@ -44,8 +44,19 @@ angular.module('orsApp')
                     layerTracks: L.featureGroup(),
                     layerRouteNumberedMarkers: L.featureGroup(),
                     layerRouteExtras: L.featureGroup(),
-                    layerLocations: L.featureGroup(),
                     layerRouteDrag: L.featureGroup(),
+                    layerLocations: new L.MarkerClusterGroup({
+                        showCoverageOnHover: false,
+                        disableClusteringAtZoom: 14,
+                        spiderLegPolylineOptions: {
+                            weight: 1.5,
+                            color: '#222',
+                            opacity: 0.5, // for defaults
+                            distanceMarkers: {
+                                lazy: true
+                            }, // for hiding the markers
+                        }
+                    }),
                     layerTmcMarker: L.featureGroup()
 
                 };
@@ -154,6 +165,17 @@ angular.module('orsApp')
                     }
                     mapInitSubject.dispose();
                 });
+                // sign up for API
+                $scope.signupBox = L.control({
+                    position: 'topleft'
+                });
+                $scope.signupBox.onAdd = function(map) {
+                    var div = $compile('<ors-signup-box></ors-signup-box>')($scope)[0];
+                    return div;
+                };
+                $timeout(function() {
+                    $scope.mapModel.map.addControl($scope.signupBox);
+                }, 500);
                 // hack to remove measure string from box
                 const el = angular.element(document.querySelector('.js-toggle'))
                     .empty();
@@ -238,6 +260,12 @@ angular.module('orsApp')
                     closeButton: false,
                     className: 'cm-popup'
                 });
+                $scope.pointPopup = L.popup({
+                    minWidth: 175,
+                    maxHeight: 300,
+                    closeButton: true,
+                    className: 'cm-popup'
+                });
                 $scope.mapModel.map.on('contextmenu', (e) => {
                     $scope.displayPos = e.latlng;
                     const popupDirective = $scope.routing === true ? '<ors-popup></ors-popup>' : '<ors-aa-popup></ors-aa-popup>';
@@ -269,6 +297,9 @@ angular.module('orsApp')
                 $scope.mapModel.map.on('moveend', (e) => {
                     $scope.setMapOptions();
                 });
+                $scope.mapModel.map.on('mouseover', (e) => {
+                    console.log(true)
+                });
                 $scope.setMapOptions = () => {
                     const mapCenter = $scope.mapModel.map.getCenter();
                     const mapZoom = $scope.mapModel.map.getZoom();
@@ -277,7 +308,6 @@ angular.module('orsApp')
                         lng: mapCenter.lng,
                         zoom: mapZoom
                     };
-                    console.log(mapOptions)
                     orsCookiesFactory.setMapOptions(mapOptions);
                     // update permalink 
                     let userOptions = orsSettingsFactory.getUserOptions();
@@ -287,17 +317,16 @@ angular.module('orsApp')
                     // dont set user options here, will otherwise end in a loop
                     orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), userOptions);
                 };
-                $scope.processMapWaypoint = (idx, pos, updateWp = false, fireRequest = true) => {
-                    console.error(pos)
+                $scope.processMapWaypoint = (idx, pos, updateWp = false, fireRequest = true, fromHover = false) => {
                     // add waypoint to map
                     // get the address from the response
                     if (updateWp) {
                         orsSettingsFactory.updateWaypoint(idx, '', pos, fireRequest);
                     } else {
                         const waypoint = orsObjectsFactory.createWaypoint('', pos, 1);
-                        orsSettingsFactory.insertWaypointFromMap(idx, waypoint, fireRequest);
+                        orsSettingsFactory.insertWaypointFromMap(idx, waypoint, fireRequest, fromHover);
                     }
-                    orsSettingsFactory.getAddress(pos, idx, updateWp);
+                    orsSettingsFactory.getAddress(pos, idx, updateWp, fromHover);
                     orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
                     // close the popup
                     $scope.mapModel.map.closePopup();
@@ -334,7 +363,10 @@ angular.module('orsApp')
                     let wayPointMarker = new L.marker(pos, {
                         icon: waypointIcon,
                         draggable: 'true',
-                        idx: idx
+                        idx: idx,
+                        autoPan: true,
+                        autoPanPadding: [50, 50],
+                        autoPanSpeed: 10
                     });
                     wayPointMarker.addTo($scope.mapModel.geofeatures.layerRoutePoints);
                     wayPointMarker.on('dragend', (event) => {
@@ -348,10 +380,12 @@ angular.module('orsApp')
                  * @param {boolean} switchApp: Whether accessibility layer should be cleared
                  */
                 $scope.clearMap = (switchApp = false) => {
+                    $scope.mapModel.map.closePopup();
                     $scope.mapModel.geofeatures.layerLocationMarker.clearLayers();
                     $scope.mapModel.geofeatures.layerRouteLines.clearLayers();
                     $scope.mapModel.geofeatures.layerEmph.clearLayers();
                     $scope.mapModel.geofeatures.layerRouteExtras.clearLayers();
+                    $scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
                     if ($scope.hg) $scope.hg.remove();
                     if (switchApp) {
                         $scope.mapModel.geofeatures.layerRoutePoints.clearLayers();
@@ -401,8 +435,9 @@ angular.module('orsApp')
                         } else if (actionPackage.featureId === undefined) {
                             if (actionPackage.geometry !== undefined) {
                                 if (actionPackage.geometry.lat && actionPackage.geometry.lng) {
-                                    console.log('panning')
-                                    $scope.mapModel.map.panTo(actionPackage.geometry);
+                                    $timeout(function() {
+                                        $scope.mapModel.map.panTo(actionPackage.geometry);
+                                    }, 100);
                                     //$scope.mapModel.map.setZoom(13);
                                 } else {
                                     let bounds = new L.LatLngBounds(actionPackage.geometry);
@@ -473,18 +508,28 @@ angular.module('orsApp')
                             mouseover: highlightFeature,
                             mouseout: resetHighlight
                         });
-                        let popupContent = '<strong>' + feature.properties.name + '</strong>';
+                        let popupContent = '';
+                        if (feature.properties.name) popupContent += '<strong>' + feature.properties.name + '</strong><br>';
                         if (feature.properties.address) {
-                            console.log(feature.properties.address)
-                            popupContent += '<br>' + lists.locations_icons.address + ' ';
-                            angular.forEach(feature.properties.address, (addressObj, addressName) => {
-                                popupContent += addressObj + ', ';
-                            });
+                            popupContent += lists.locations_icons.address + ' ';
+                            if (feature.properties.address.street) popupContent += feature.properties.address.street + ', ';
+                            if (feature.properties.address.house_number) popupContent += feature.properties.address.house_number + ', ';
+                            if (feature.properties.address.postal_code) popupContent += feature.properties.address.postal_code + ', ';
+                            if (feature.properties.address.locality) popupContent += feature.properties.address.locality + ', ';
+                            if (feature.properties.address.region) popupContent += feature.properties.address.region + ', ';
+                            if (feature.properties.address.country) popupContent += feature.properties.address.country + ', ';
+                            popupContent = popupContent.slice(0, -2);
                         }
                         if (feature.properties.phone) popupContent += '<br>' + lists.locations_icons.phone + ' ' + feature.properties.phone;
                         if (feature.properties.website) popupContent += '<br>' + lists.locations_icons.website + ' ' + '<a href="' + feature.properties.website + '" target=_blank>' + feature.properties.website + '</a>';
                         if (feature.properties.wheelchair) popupContent += '<br>' + lists.locations_icons.wheelchair;
-                        popupContent += '<br><br><a href="http://www.openstreetmap.org/node/' + feature.properties.osm_id + '" target=_blank>Edit on OpenStreetMap</a>';
+                        if (feature.properties.osm_type == 1) {
+                            popupContent += '<br><br><a href="http://www.openstreetmap.org/node/' + feature.properties.osm_id + '" target=_blank>Edit on OpenStreetMap</a>';
+                        } else if (feature.properties.osm_type == 2) {
+                            popupContent += '<br><br><a href="http://www.openstreetmap.org/way/' + feature.properties.osm_id + '" target=_blank>Edit on OpenStreetMap</a>';
+                        } else {
+                            popupContent += '<br><br><a href="http://www.openstreetmap.org/relation/' + feature.properties.osm_id + '" target=_blank>Edit on OpenStreetMap</a>';
+                        }
                         popupContent += '<br>Source: © OpenStreetMap-Contributors';
                         layer.bindPopup(popupContent, {
                             className: 'location-popup'
@@ -492,6 +537,10 @@ angular.module('orsApp')
                     };
                     let geojson = L.geoJson(actionPackage.geometry, {
                             pointToLayer: function(feature, latlng) {
+                                // let locationsIcon = L.icon({
+                                //     iconUrl: '/bower_components/Font-Awesome-SVG-PNG/black/png/22/btc.png',
+                                //     iconSize: [22, 22], // size of the icon
+                                // });
                                 let locationsIcon = L.divIcon(lists.locationsIcon);
                                 locationsIcon.options.html = lists.locations_icons[$scope.subcategoriesLookup[parseInt(feature.properties.category)]];
                                 return L.marker(latlng, {
@@ -507,9 +556,18 @@ angular.module('orsApp')
                  * @param {Object} actionPackage - The action actionPackage
                  */
                 $scope.addFeatures = (actionPackage) => {
-                    let polyLine = L.polyline(actionPackage.geometry, {
+                    const isDistanceMarkers = orsSettingsFactory.getUserOptions()
+                        .showDistanceMarkers === true ? true : false;
+                    const polyLine = L.polyline(actionPackage.geometry, {
                             index: !(actionPackage.featureId === undefined) ? actionPackage.featureId : null,
-                            interactive: true
+                            interactive: false,
+                            distanceMarkers: {
+                                lazy: !isDistanceMarkers,
+                                showAll: 13,
+                                offset: 500,
+                                cssClass: 'ors-marker-dist',
+                                iconSize: [18, 18]
+                            }
                         })
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     polyLine.setStyle(actionPackage.style);
@@ -519,72 +577,113 @@ angular.module('orsApp')
                  * @param {Object} actionPackage - The action actionPackage
                  */
                 $scope.addPolyline = (actionPackage) => {
-                    let polyLine = L.polyline(actionPackage.geometry, {
+                    $scope.mapModel.map.closePopup();
+                    const polyLine = L.polyline(actionPackage.geometry, {
                             index: !(actionPackage.featureId === undefined) ? actionPackage.featureId : null,
-                            interactive: true
+                            interactive: true,
+                            distanceMarkers: {
+                                lazy: true
+                            },
+                            //bubblingMouseEvents: true
                         })
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     polyLine.setStyle(actionPackage.style);
-                    const pointList = actionPackage.extraInformation.pointInformation;
-                    // polyLine.on("mouseover", (e) => {
-                    //     $scope.mapModel.map.closePopup();
-                    //     $scope.displayPos = e.latlng;
-                    //     addHoverPoint();
-                    //     function addHoverPoint() {
-                    //         // TODO
-                    //     };
-                    //     const popupDirective = '<div ng-bind-html="(\'DRAGTOADD\' | translate)"></div>';
-                    //     const popupContent = $compile(popupDirective)($scope);
-                    //     $scope.popup.setContent(popupContent[0])
-                    //         .setLatLng($scope.displayPos)
-                    //         .openOn($scope.mapModel.map);
-                    //     $timeout(function() {
-                    //         $scope.popup.update();
-                    //     }, 100);
-                    //     polyLine.on("mouseout", (e) => {
-                    //         $scope.mapModel.map.closePopup();
-                    //     });
-                    // });
-                    // polyLine.on("mousedown", (e) => {
-                    //     $scope.mapModel.map.closePopup();
-                    //     $scope.displayPos = e.latlng;
-                    //     // TODO: create waypoint and drag immediately
-                    //     const popupDirective = '<div ng-bind-html="(\'DRAGTOADD\' | translate)"></div>';
-                    //     console.log("down")
-                    //     polyLine.on("mouseout", (e) => {
-                    //         console.log("out")
-                    //     });
-                    // });
-                    polyLine.on("click", (e) => {
-                        // $scope.mapModel.map.closePopup();
-                        $scope.displayPos = e.latlng;
-                        $scope.interpolatedInformation = getPositionOnRoute($scope.mapModel.map, polyLine, e.latlng);
-                        $scope.distanceAtInterpolatedPoint = $scope.interpolatedInformation.factorAlongRoute * pointList[pointList.length - 1].distance;
-                        $scope.interpolatedRoutePoint = pointList[$scope.interpolatedInformation.predecessorIdx];
-                        const popupDirective = '<ors-interpolatedpoint-popup></ors-interpolatedpoint-popup>';
-                        const popupContent = $compile(popupDirective)($scope);
-                        $scope.popup.setContent(popupContent[0])
-                            .setLatLng($scope.displayPos)
-                            .openOn($scope.mapModel.map);
-                        $timeout(function() {
-                            $scope.popup.update();
-                        }, 300);
-                        // returns id of previous route point
-                        function getPositionOnRoute(map, polyLine, pos) {
-                            const factor = L.GeometryUtil.locateOnLine(map, polyLine, pos);
-                            const predecessorPoint = L.GeometryUtil.interpolateOnLine(map, polyLine, factor);
-                            // returns -1 for click between 0th and 1st point
-                            if (predecessorPoint.predecessor == -1) {
-                                predecessorPoint.predecessor = 0;
+                };
+                /**
+                 * returns the closest point on a polyline relative to another point
+                 * additionally returns 
+                 * @param {Object} map - the leaflet map object
+                 * @param {}
+                 */
+                $scope.getPositionOnRoute = (map, polyLine, pointList, pos) => {
+                    const factor = L.GeometryUtil.locateOnLine(map, polyLine, pos);
+                    const pointOnRoute = L.GeometryUtil.interpolateOnLine(map, polyLine, factor);
+                    if (pointOnRoute.predecessor == -1) {
+                        pointOnRoute.predecessor = 0;
+                    }
+                    return {
+                        factor: factor,
+                        latlng: pointOnRoute.latLng,
+                        index: pointOnRoute.predecessor
+                    };
+                };
+                $scope.addPolylineHover = (actionPackage) => {
+                    $scope.mapModel.map.closePopup();
+                    $scope.polylineZone = L.polyline(actionPackage.geometry, {
+                            distanceMarkers: {
+                                lazy: true
                             }
-                            return {
-                                predecessorIdx: predecessorPoint.predecessor,
-                                factorAlongRoute: factor
-                            };
-                        }
+                        })
+                        .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
+                    $scope.polylineZone.setStyle({
+                        color: '#FFF',
+                        weight: 100,
+                        opacity: 0
                     });
-                    // on mousedown creat viapoint
-                    // on dragend set viapoint -> at right position in route
+                    $scope.polylineZone.on("mouseover", (e) => {
+                        if ($scope.hoverPoint) $scope.hoverPoint.removeFrom($scope.mapModel.geofeatures.layerRouteDrag);
+                    });
+                    $scope.hoverPolyLine = L.polyline(actionPackage.geometry, {
+                            interactive: true,
+                            distanceMarkers: {
+                                lazy: true
+                            }
+                        })
+                        .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
+                    $scope.hoverPolyLine.setStyle(actionPackage.style);
+                    $scope.pointList = actionPackage.extraInformation.pointInformation;
+                    $scope.hoverPolyLine.on("mousemove", (e) => {
+                        $scope.addHoverPoint($scope.mapModel, $scope.hoverPolyLine, $scope.pointList, e.latlng);
+                    });
+                };
+                /** 
+                 * adds interactive point over a polyLine 
+                 * @param {Object} e - The event
+                 */
+                $scope.addHoverPoint = (mapModel, hoverPolyLine, pointList, latlng) => {
+                    if ($scope.hoverPoint) $scope.hoverPoint.removeFrom($scope.mapModel.geofeatures.layerRouteDrag);
+                    let snappedPosition = $scope.getPositionOnRoute(mapModel.map, hoverPolyLine, pointList, latlng);
+                    // center the point on the polyline
+                    const hoverIcon = L.divIcon(lists.waypointIcons[5]);
+                    hoverIcon.options.html = '<i class="fa fa-circle"></i>';
+                    // create the waypoint marker
+                    $scope.hoverPoint = new L.marker(snappedPosition.latlng, {
+                            icon: hoverIcon,
+                            draggable: 'true',
+                            //bubblingMouseEvents: true
+                        })
+                        .addTo(mapModel.geofeatures.layerRouteDrag)
+                        .on('dragend', (event) => {
+                            $scope.processMapWaypoint(pointList[snappedPosition.index].segment_index + 1, event.target._latlng, false, true, true);
+                            mapModel.geofeatures.layerRouteDrag.clearLayers();
+                        })
+                        .on('mousedown', (event) => {
+                            hoverPolyLine.off('mousemove');
+                            $scope.polylineZone.off('mouseover');
+                        })
+                        .on('mouseup', (event) => {
+                            hoverPolyLine.on("mousemove", (e) => {
+                                $scope.addHoverPoint(mapModel, hoverPolyLine, pointList, e.latlng);
+                            });
+                            $scope.polylineZone.on("mouseover", (e) => {
+                                if ($scope.hoverPoint) $scope.hoverPoint.removeFrom($scope.mapModel.geofeatures.layerRouteDrag);
+                            });
+                        })
+                        .on("click", (e) => {
+                            $scope.mapModel.map.closePopup();
+                            const snappedPosition = $scope.getPositionOnRoute(mapModel.map, hoverPolyLine, pointList, e.latlng);
+                            //$scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
+                            $scope.distanceAtInterpolatedPoint = snappedPosition.factor * pointList[pointList.length - 1].distance;
+                            $scope.interpolatedRoutePoint = pointList[snappedPosition.index];
+                            const popupDirective = '<ors-route-point-popup></ors-route-point-popup>';
+                            const popupContent = $compile(popupDirective)($scope);
+                            $scope.pointPopup.setContent(popupContent[0])
+                                .setLatLng(e.latlng)
+                                .openOn($scope.mapModel.map);
+                            $timeout(function() {
+                                $scope.pointPopup.update();
+                            });
+                        });
                 };
                 /**
                  * adds numbered marker if not yet added 
@@ -766,10 +865,18 @@ angular.module('orsApp')
                         <div>
                             <div class="categories" ng-show="!showSubcategories">
                                 <div class="c-nav">
-                                    <div>Locations</div>
-                                    <div ng-click="show = !show">
-                                        <i class="fa fa-remove"></i>
+                                    <div>
+                                        <div>Locations</div>
                                     </div>
+                                    <div>
+                                        <div ng-click="clearLocations()">
+                                                <i class="fa fa-trash"></i>
+                                        </div>
+                                        <div ng-click="show = !show">
+                                            <i class="fa fa-remove"></i>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                                 <div class="c-list">
                                     <div class="ui grid">
@@ -823,34 +930,45 @@ angular.module('orsApp')
                             </div>
                         </div>
                         <div class="result-list" ng-show="results.length > 0">
-                            <div class="poi-items">
+                             <div class="poi-header">
+                                <div>
+                                     <div ng-click="showResults = !showResults">
+                                        <i ng-class="showResults ? 'fa fa-window-minimize' : 'fa fa-expand'"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div ng-bind-html="('DETAILS' | translate)"></div>
+                                    <div ng-bind-html="'OSM'"></div>
+                                </div>
+                            </div>
+                            <div class="poi-items" ng-show="showResults">
                                 <div class="poi-item" ng-repeat="feature in results" ng-click="panTo(feature.geometry.coordinates);" ng-mouseout="DeEmphPoi();" ng-mouseover="EmphPoi(feature.geometry.coordinates, feature.properties.category);">
                                     <div class="poi-row">
                                         <div class="icon" ng-bind-html='categoryIcons[subcategoriesLookup[feature.properties.category]]'></div>
                                         <div class="text" ng-bind-html='feature.properties.name'></div>   
                                         <div class="icon pointer" ng-click="poiDetails = !poiDetails; $event.stopPropagation();" ng-show='feature.properties.address || feature.properties.phone || feature.properties.wheelchair || feature.properties.website'>
-                                            <div tooltip-side="left" tooltip-template="{{('DETAILS' | translate)}}" tooltips="">
-                                                <i ng-class="getClass(poiDetails)" >
-                                                </i>
-                                            </div>  
+                                            <i ng-class="getClass(poiDetails)" >
+                                            </i>
                                         </div>
                                         <div class="icon pointer">
-                                             <div tooltip-side="left" tooltip-template="OSM" tooltips="">
-                                                <a target="_blank" ng-href="{{makeUrl(feature.properties.osm_id)}}">
-                                                    <i class="fa fa-map">
-                                                    </i>
-                                                </a> 
-                                            </div>  
+                                            <a target="_blank" ng-href="{{makeUrl(feature.properties.osm_id)}}">
+                                                <i class="fa fa-map">
+                                                </i>
+                                            </a> 
                                         </div>
-                                    </div>
+                                    </div>                                  
                                     <div class="collapsable poi-details" ng-class="{ showMe: poiDetails }">    
                                         <div class="poi-row" ng-if="feature.properties.address">
                                             <div class="icon">
                                                 <i class="fa fa-address-card"></i>
                                             </div>
-
                                             <div class="text">
-                                                <span ng-repeat="(addressItem, addressObj) in feature.properties.address" ng-bind-html="addressObj + ', '"></span>
+                                                <span ng-if=feature.properties.address.street ng-bind-html="feature.properties.address.street + ', '"></span>
+                                                <span ng-if=feature.properties.address.house_number ng-bind-html="feature.properties.address.house_number + ', '"></span>
+                                                <span ng-if=feature.properties.address.postal_code ng-bind-html="feature.properties.address.postal_code + ', '"></span>
+                                                <span ng-if=feature.properties.address.locality ng-bind-html="feature.properties.address.locality + ', '"></span>
+                                                <span ng-if=feature.properties.address.region ng-bind-html="feature.properties.address.region + ', '"></span>
+                                                <span ng-if=feature.properties.address.country ng-bind-html="feature.properties.address.country"></span>
                                             </div>                                        
                                         </div>
                                          <div class="poi-row" ng-if="feature.properties.phone">
@@ -872,6 +990,7 @@ angular.module('orsApp')
                                             </div>                                       
                                         </div> 
                                     </div> 
+                                    
                                 </div>
                             </div>     
                         </div>
@@ -894,6 +1013,10 @@ angular.module('orsApp')
                             };
                             $scope.makeUrl = (osmId) => {
                                 return "http://www.openstreetmap.org/node/" + osmId;
+                            };
+                            $scope.clearLocations = () => {
+                                $scope.results = [];
+                                orsLocationsService.clearLocationsToMap();
                             };
                             $scope.callLocations = () => {
                                 $scope.loading = true;
@@ -923,12 +1046,9 @@ angular.module('orsApp')
                                 const request = orsLocationsService.fetchLocations(payload);
                                 orsLocationsService.requests.push(request);
                                 request.promise.then(function(response) {
-                                    // parse address string to json object
-                                    angular.forEach(response.features, function(feature) {
-                                        if (feature.properties.address) feature.properties.address = JSON.parse(feature.properties.address);
-                                    });
                                     orsLocationsService.addLocationsToMap(response);
                                     $scope.results = response.features;
+                                    $scope.showResults = true;
                                     $scope.loading = false;
                                 }, function(response) {
                                     console.error(response);
@@ -995,8 +1115,7 @@ angular.module('orsApp')
                                 $scope.showSubcategories = $scope.showSubcategories === true ? false : true;
                             };
                             $scope.EmphPoi = (geometry, category) => {
-                                console.log('emph')
-                                orsLocationsService.emphPoi(geometry, category);
+                                if ($map.getZoom() >= 14) orsLocationsService.emphPoi(geometry, category);
                             };
                             $scope.DeEmphPoi = () => {
                                 orsLocationsService.DeEmphPoi();
@@ -1040,16 +1159,26 @@ angular.module('orsApp')
                     });
                 };
                 // add locations control
-                //$scope.mapModel.map.addControl($scope.locationsControl());
+                $scope.mapModel.map.addControl($scope.locationsControl());
                 /**
                  * Dispatches all commands sent by Mapservice by using id and then performing the corresponding function
                  */
                 orsMapFactory.subscribeToMapFunctions(function onNext(params) {
                     switch (params._actionCode) {
                         case -1:
+                            $scope.hg.options.expand = globals.showHeightgraph;
                             $scope.mapModel.map.addControl($scope.hg);
+                            const toggle = angular.element(document.querySelector('.heightgraph-toggle-icon'));
+                            const close = angular.element(document.querySelector('.heightgraph-close-icon'));
+                            toggle.bind('click', function(e) {
+                                globals.showHeightgraph = true;
+                            });
+                            close.bind('click', function(e) {
+                                globals.showHeightgraph = false;
+                            });
                             if (params._package.geometry) {
                                 $scope.hg.addData(params._package.geometry);
+                                if (globals.showHeightgraph) globals.showHeightgraph = true;
                             } else {
                                 $scope.hg.remove();
                             }
@@ -1104,6 +1233,8 @@ angular.module('orsApp')
                         case 40:
                             $scope.addPolyline(params._package);
                             break;
+                        case 41:
+                            $scope.addPolylineHover(params._package);
                         default:
                             break;
                     }
@@ -1152,7 +1283,7 @@ angular.module('orsApp')
         };
     }]);
 angular.module('orsApp')
-    .directive('orsInterpolatedpointPopup', ['$translate', ($translate) => {
+    .directive('orsRoutePointPopup', ['$translate', ($translate) => {
         return {
             restrict: 'E',
             templateUrl: 'components/ors-map/directive-templates/ors-route-point-popup.html',
@@ -1169,6 +1300,24 @@ angular.module('orsApp')
             </div>
             <div class="list">
                 <span ng-bind-html="('WELCOME_MESSAGE' | translate)">
+                </span>
+            </div>
+        </div>`,
+            link: (scope, elem, attr) => {
+                scope.show = true;
+            }
+        };
+    }]);
+angular.module('orsApp')
+    .directive('orsSignupBox', ['$translate', ($translate) => {
+        return {
+            restrict: 'E',
+            template: `<div ng-attr-class="{{ 'ui message ors-map-message fade green' }}" ng-show="show">
+            <i class="fa fa-close flright" data-ng-click="show = !show"></i>
+            <div class="header" ng-bind-html="('LOCALE_SIGNUP_HEADER' | translate)">
+            </div>
+            <div class="list">
+                <span ng-bind-html="('LOCALE_SIGNUP_MESSAGE' | translate)">
                 </span>
             </div>
         </div>`,

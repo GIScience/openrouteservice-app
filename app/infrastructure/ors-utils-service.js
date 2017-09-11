@@ -1,5 +1,5 @@
 angular.module('orsApp.utils-service', [])
-    .factory('orsUtilsService', ['$q', '$http', '$timeout', '$location', 'lists', 'ENV', ($q, $http, $timeout, $location, lists, ENV) => {
+    .factory('orsUtilsService', ['$q', '$http', '$timeout', '$location', 'lists', 'mappings', 'ENV', ($q, $http, $timeout, $location, lists, mappings, ENV) => {
         let orsUtilsService = {};
         /**
          * trims coordinates
@@ -22,6 +22,20 @@ angular.module('orsApp.utils-service', [])
                 }
             }
             return coordsTrimmed;
+        };
+        /**
+         * Sets extra information
+         * @param {Object} obj - The settings object.
+         */
+        orsUtilsService.setExtraInformation = (obj) => {
+            orsUtilsService.extra_information = obj;
+        };
+        /**
+         * Gets extra information
+         * @return {Object} obj - The settings object.
+         */
+        orsUtilsService.getExtraInformation = () => {
+            return orsUtilsService.extra_information;
         };
         orsUtilsService.isInt = (n) => {
             return Number(n) === n && n % 1 === 0;
@@ -164,7 +178,6 @@ angular.module('orsApp.utils-service', [])
                 elevation: lists.profiles[settings.profile.type].elevation,
                 options: JSON.stringify(orsUtilsService.generateOptions(settings))
             };
-            console.warn(JSON.stringify(orsUtilsService.generateOptions(settings)))
             // remove options if empty
             if (payload.options.length == 2) delete payload.options;
             const subgroup = lists.profiles[settings.profile.type].subgroup;
@@ -180,10 +193,12 @@ angular.module('orsApp.utils-service', [])
             payload.coordinates = payload.coordinates.slice(0, -1);
             // extras
             payload.extra_info = [];
-            for (let extra in lists.profiles[settings.profile.type].extras) {
-                payload.extra_info.push(extra);
-            }
+            const extra_infos = orsUtilsService.getExtraInformation();
+            angular.forEach(extra_infos, function(value, key) {
+                if (value && lists.extra_info[lists.profiles[settings.profile.type].subgroup].indexOf(key) >= 0) payload.extra_info.push(key);
+            });
             payload.extra_info = payload.extra_info.join("|");
+            if (payload.extra_info.length == 0) delete payload.extra_info;
             return payload;
         };
         /** 
@@ -194,7 +209,7 @@ angular.module('orsApp.utils-service', [])
          * @param {number} limit: To limit the amount of responses
          * @return {Object} payload: Paylod object used in xhr request
          */
-        orsUtilsService.geocodingPayload = function(obj, reverse = false, language = 'en', limit = 20) {
+        orsUtilsService.geocodingPayload = function(obj, reverse = false, language = 'en', limit = 5) {
             let payload;
             if (!reverse) {
                 payload = {
@@ -233,7 +248,7 @@ angular.module('orsApp.utils-service', [])
                     if (settings.profile.options.difficulty.avoidhills === true) options.avoid_features += 'hills' + '|';
                 }
             }
-            if (options.avoid_features.length == 0) {
+            if (options.avoid_features.length === 0) {
                 delete options.avoid_features;
             } else {
                 options.avoid_features = options.avoid_features.slice(0, -1);
@@ -296,10 +311,10 @@ angular.module('orsApp.utils-service', [])
             payload = {
                 format: 'json',
                 locations: orsUtilsService.roundCoordinate(settings.waypoints[0]._latlng.lng) + ',' + orsUtilsService.roundCoordinate(settings.waypoints[0]._latlng.lat),
-                range_type: settings.profile.options.analysis_options.method == 0 ? 'time' : 'distance',
-                range: settings.profile.options.analysis_options.method == 0 ? settings.profile.options.analysis_options.isovalue * 60 : settings.profile.options.analysis_options.isovalue * 1000,
-                interval: settings.profile.options.analysis_options.method == 0 ? settings.profile.options.analysis_options.isointerval * 60 : settings.profile.options.analysis_options.isointerval * 1000,
-                location_type: settings.profile.options.analysis_options.reverseflow == true ? lists.isochroneOptionList.reverseFlow.destination : lists.isochroneOptionList.reverseFlow.start,
+                range_type: settings.profile.options.analysis_options.method === 0 ? 'time' : 'distance',
+                range: settings.profile.options.analysis_options.method === 0 ? settings.profile.options.analysis_options.isovalue * 60 : settings.profile.options.analysis_options.isovalue * 1000,
+                interval: settings.profile.options.analysis_options.method === 0 ? settings.profile.options.analysis_options.isointerval * 60 : settings.profile.options.analysis_options.isointerval * 1000,
+                location_type: settings.profile.options.analysis_options.reverseflow === true ? lists.isochroneOptionList.reverseFlow.destination : lists.isochroneOptionList.reverseFlow.start,
                 profile: lists.profiles[settings.profile.type].request,
                 attributes: 'area|reachfactor',
                 options: JSON.stringify(orsUtilsService.generateOptions(settings))
@@ -345,46 +360,60 @@ angular.module('orsApp.utils-service', [])
         orsUtilsService.addShortAddresses = function(features) {
             angular.forEach(features, function(feature) {
                 const properties = feature.properties;
-                let shortAddress = '',
-                    streetAddress = '';
-                if ('name' in properties) {
-                    shortAddress += properties.name;
-                    shortAddress += ', ';
-                }
-                if ('street' in properties) {
-                    // street and name can be the same, just needed once
-                    if (properties.street && properties.street !== properties.name) {
-                        streetAddress += properties.street;
+                feature.processed = {};
+                // primary information
+                if ('name' in properties && properties.name.indexOf(properties.street) == -1 && properties.name !== properties.street) {
+                    feature.processed.primary = properties.name;
+                    if ('street' in properties) {
+                        feature.processed.primary += ', ' + properties.street;
+                        if ('house_number' in properties) {
+                            feature.processed.primary += ' ' + properties.house_number;
+                        }
                     }
+                } else if ('street' in properties) {
+                    const streetAddress = [];
+                    // street and name can be the same, just needed once
+                    streetAddress.push(properties.street);
                     if ('house_number' in properties) {
-                        streetAddress += ' ' + properties.house_number;
+                        streetAddress.push(properties.house_number);
                     }
                     // street address with house number can also be the same as name
-                    if (streetAddress.length > 0 && streetAddress !== properties.name) {
-                        shortAddress += streetAddress + ', ';
+                    if (streetAddress.length > 0) {
+                        feature.processed.primary = streetAddress.join(' ');
                     }
+                } else if ('locality' in properties) {
+                    feature.processed.primary = properties.locality;
                 }
-                //if ('postal_code' in properties) shortAddress += properties.postal_code;
-                if ('city' in properties) {
-                    shortAddress += properties.city;
-                    shortAddress += ', ';
+                // secondary information
+                const secondary = [];
+                if ('postal_code' in properties) {
+                    secondary.push(properties.postal_code);
                 }
-                if ('state' in properties) {
-                    shortAddress += properties.state;
-                    shortAddress += ', ';
-                } else if ('county' in properties) {
-                    shortAddress += properties.county;
-                    shortAddress += ', ';
-                } else if ('district' in properties) {
-                    shortAddress += properties.district;
-                    shortAddress += ', ';
+                if ('neighbourhood' in properties) {
+                    secondary.push(properties.neighbourhood);
                 }
-                // if ('country' in properties) {
-                //     shortAddress += properties.country;
-                //     shortAddress += ', ';
-                // }
-                shortAddress = shortAddress.slice(0, -2);
-                feature.shortaddress = shortAddress;
+                if ('borough' in properties) {
+                    secondary.push(properties.borough);
+                }
+                if ('locality' in properties && properties.locality !== properties.name) {
+                    secondary.push(properties.locality);
+                }
+                if ('municipality' in properties && properties.municipality !== properties.name && properties.municipality !== properties.locality) {
+                    secondary.push(properties.municipality);
+                }
+                if ('county' in properties && properties.county !== properties.name && properties.county !== properties.locality) {
+                    secondary.push(properties.county);
+                }
+                if ('region' in properties && properties.region !== properties.name) {
+                    secondary.push(properties.region);
+                }
+                if ('country' in properties && properties.country !== properties.name) {
+                    secondary.push(properties.country);
+                }
+                if (secondary.length <= 1 && properties.country !== properties.name) secondary.push(properties.country);
+                feature.processed.secondary = secondary.join(", ");
+                feature.processed.place_type = properties.place_type;
+                console.log(feature.processed)
             });
             return features;
         };
@@ -469,7 +498,7 @@ angular.module('orsApp.utils-service', [])
          * @useroptions: useroptions
          */
         orsUtilsService.parseSettingsToPermalink = (settings, userOptions) => {
-            console.info("parseSettingsToPermalink", settings, userOptions);
+            //console.info("parseSettingsToPermalink", settings, userOptions);
             if (settings.profile === undefined) return;
             let link = '';
             if (userOptions.lat && userOptions.lng) {

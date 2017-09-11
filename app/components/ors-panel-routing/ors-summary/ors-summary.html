@@ -8,14 +8,20 @@
             <div class="bottom-border">
             </div>
             <div class="options-box" ng-if="route.extras">
-                <div class="pointer margin-bottom-6" ng-init="showRouteExtras = true;" ng-click="showRouteExtras = !showRouteExtras">
-                    <i ng-class="$ctrl.getClass(showRouteExtras)">
-                    </i>
+                <div class="pointer margin-bottom-6" ng-click="showRouteExtras = !showRouteExtras" ng-init="showRouteExtras = true;">
+                    <span>
+                        <i ng-class="$ctrl.getClass(showRouteExtras)">
+                        </i>
+                    </span>
                     <span ng-bind-html="('EXTRAS' | translate)">
+                    </span>
+                    <span tooltip-side="top" tooltip-template="{{('LOCALE_EXTRAS_HELP' | translate)}}" tooltips="">
+                        <i class="fa fa-fw fa-info-circle">
+                        </i>
                     </span>
                 </div>
                 <div class="collapsable" ng-class="{ showMe: showRouteExtras }">
-                    <ors-route-extras current-route="route" route-index="$index">
+                    <ors-route-extras checkboxes="$ctrl.checkboxes" current-route="route" route-index="$index">
                     </ors-route-extras>
                 </div>
             </div>

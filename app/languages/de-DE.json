@@ -70,7 +70,7 @@
     "Shortest": "Kürzeste", 
     "BICYCLENORMAL": "Normal", 
     "BICYCLESAFEST": "Sichere Route", 
-    "BICYCLETOUR": "Tourenrad", 
+    "BICYCLETOUR": "Trekkingrad", 
     "BICYCLEMTB": "Mountainbike", 
     "BICYCLERACING": "Rennrad", 
     "BICYCLEELECTRO": "E-Bike", 
@@ -147,6 +147,7 @@
     "waytypes": "Wegtypen", 
     "surface": "Oberflächenbeschaffenheit", 
     "green": "Grünflächen index", 
+    "tollways": "Mautstraßen", 
     "FROM": "from", 
     "TO": "to", 
     "SHARE_LINK": "Link teilen", 
@@ -171,5 +172,14 @@
     "EMERGENCYVEHICLE": "Einsatzfahrzeug", 
     "FIREENGINE": "Feuerwehrfahrzeug",
     "noise": "Lautstärkeindex", 
-    "height": "Höhe"
+    "height": "Höhe", 
+    "LOCALE_DISTANCE_MARKERS": "Distanz-Marker (km)", 
+    "LOCALE_NO_TOLLWAY": "Mautfreie Straßen", 
+    "LOCALE_TOLLWAY": "Mautstraßen", 
+    "avgspeed": "Durchschnittsgeschwindigkeit", 
+    "traildifficulty": "Schwierigkeitsgrad",
+    "EXTRA_INFORMATION": "Weitere Informationen der Route",
+    "LOCALE_EXTRAS_HELP": "Weitere Informationen können in den Einstellungen hinzugefügt werden",
+    "LOCALE_SIGNUP_HEADER": "Start your API journey now",
+    "LOCALE_SIGNUP_MESSAGE": "If you are satisfied with the features of openrouteservice please sign up for the free to use API at <strong><a href='https://go.openrouteservice.org' target='_blank'>https://go.openrouteservice.org</a></strong>"
 }
