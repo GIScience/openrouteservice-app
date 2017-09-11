@@ -44,13 +44,14 @@ angular.module('orsApp')
                 className: "ors-marker-hover-drag",
             }
         },
+
         profiles: {
             Car: {
                 name: 'Car',
-                elevation: false,
+                elevation: true,
                 subgroup: 'Car',
                 request: 'driving-car',
-                shortValue: '0'
+                shortValue: '0',
             },
             Bicycle: {
                 name: 'Bicycle',
@@ -117,56 +118,61 @@ angular.module('orsApp')
             },
             hgv: {
                 name: 'hgv',
-                elevation: false,
+                elevation: true,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
                 shortValue: '4a'
             },
             goods: {
                 name: 'goods',
-                elevation: false,
+                elevation: true,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
                 shortValue: '4b'
             },
             bus: {
                 name: 'bus',
-                elevation: false,
+                elevation: true,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
                 shortValue: '4c'
             },
             agricultural: {
                 name: 'agricultural',
-                elevation: false,
+                elevation: true,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
                 shortValue: '4d'
             },
             forestry: {
                 name: 'forestry',
-                elevation: false,
+                elevation: true,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
                 shortValue: '4e'
             },
             delivery: {
                 name: 'delivery',
-                elevation: false,
+                elevation: true,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
                 shortValue: '4f'
             }
         },
         extra_info: {
-            surface: ['Wheelchair', 'HeavyVehicle', 'Pedestrian', 'Bicycle', 'Car'],
-            waytype: ['Wheelchair', 'HeavyVehicle', 'Pedestrian', 'Bicycle', 'Car'],
-            suitability: ['Wheelchair', 'HeavyVehicle', 'Pedestrian', 'Bicycle', 'Car'],
-            tollways: ['HeavyVehicle', 'Car'],
-            steepness: ['Wheelchair', 'HeavyVehicle', 'Pedestrian', 'Bicycle', 'Car'],
+            surface: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
+            waytype: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
+            suitability: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
+            tollways: ['hgv', 'Car'],
+            steepness: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
             green: ['Pedestrian', 'Bicycle'],
             noise: ['Pedestrian', 'Bicycle'],
-            TrailDifficulty: ['Pedestrian', 'Bicycle']
+            TrailDifficulty: ['Pedestrian', 'Bicycle'],
+            HeavyVehicle: ['surface', 'waytype', 'suitability', 'tollways', 'steepness'],
+            Car: ['surface', 'waytype', 'suitability', 'tollways', 'steepness'],
+            Bicycle: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty'],
+            Pedestrian: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty'],
+            Wheelchair: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty']
         },
         optionList: {
             weight: {

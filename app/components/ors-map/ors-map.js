@@ -522,12 +522,12 @@ angular.module('orsApp')
                         if (feature.properties.phone) popupContent += '<br>' + lists.locations_icons.phone + ' ' + feature.properties.phone;
                         if (feature.properties.website) popupContent += '<br>' + lists.locations_icons.website + ' ' + '<a href="' + feature.properties.website + '" target=_blank>' + feature.properties.website + '</a>';
                         if (feature.properties.wheelchair) popupContent += '<br>' + lists.locations_icons.wheelchair;
-                        if (feature.properties.osm_type == 0) {
-                            popupContent += '<br><br><a href="http://www.openstreetmap.org/relation/' + feature.properties.osm_id + '" target=_blank>Edit on OpenStreetMap</a>';
-                        } else if (feature.properties.osm_type == 1) {
+                        if (feature.properties.osm_type == 1) {
                             popupContent += '<br><br><a href="http://www.openstreetmap.org/node/' + feature.properties.osm_id + '" target=_blank>Edit on OpenStreetMap</a>';
-                        } else {
+                        } else if (feature.properties.osm_type == 2) {
                             popupContent += '<br><br><a href="http://www.openstreetmap.org/way/' + feature.properties.osm_id + '" target=_blank>Edit on OpenStreetMap</a>';
+                        } else {
+                            popupContent += '<br><br><a href="http://www.openstreetmap.org/relation/' + feature.properties.osm_id + '" target=_blank>Edit on OpenStreetMap</a>';
                         }
                         popupContent += '<br>Source: © OpenStreetMap-Contributors';
                         layer.bindPopup(popupContent, {

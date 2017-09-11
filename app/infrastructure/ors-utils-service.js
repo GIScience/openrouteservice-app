@@ -195,7 +195,7 @@ angular.module('orsApp.utils-service', [])
             payload.extra_info = [];
             const extra_infos = orsUtilsService.getExtraInformation();
             angular.forEach(extra_infos, function(value, key) {
-                if (value) payload.extra_info.push(key);
+                if (value && lists.extra_info[lists.profiles[settings.profile.type].subgroup].indexOf(key) >= 0) payload.extra_info.push(key);
             });
             payload.extra_info = payload.extra_info.join("|");
             if (payload.extra_info.length == 0) delete payload.extra_info;
@@ -401,7 +401,7 @@ angular.module('orsApp.utils-service', [])
                 }
                 if ('county' in properties && properties.county !== properties.name && properties.county !== properties.locality) {
                     secondary.push(properties.county);
-                } 
+                }
                 if ('region' in properties && properties.region !== properties.name) {
                     secondary.push(properties.region);
                 }
