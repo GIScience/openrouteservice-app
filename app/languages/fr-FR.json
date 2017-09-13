@@ -153,7 +153,7 @@
     "SHARE_LINK": "Partager le lien",
     "SHORTEN": "URL raccourcie",
     "SHORTEN_HINT": "Vous pouvez également copier le lien depuis la barre d'adresse de votre navigateur.",
-    "GREEN_ROUTING": "Préférer les zones vertes",
+    "GREEN_ROUTING": "Préférer les zones vertes (for Germany only)",
     "DONATE": "Donnez !",
     "DONATE_TEXT": "Veuillez apporter vos données géographiques à",
     "INFO_I": "OpenRouteService.org propose un service de calcul d'itinéraire en utilisant des données fournies par les utilisateurs de façon collaborative, collectées de OpenStreetMap. Veuillez apporter s'il-vous-plaît vos données géographiques à openstreetmap.org !",
