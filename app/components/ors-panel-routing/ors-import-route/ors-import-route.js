@@ -49,7 +49,6 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
             if (file.preview) {
                 //gets the Geometry from the opened file
                 const geometry = orsImportFactory.importFile(file.extension, file.content);
-                console.log(geometry)
                 // create map action and add geom to layer tracks. Adds the track when checkbox is checked
                 let trackPadding = orsObjectsFactory.createMapAction(1, lists.layers[4], geometry, file.index, lists.layerStyles.trackPadding());
                 orsMapFactory.mapServiceSubject.onNext(trackPadding);
@@ -66,13 +65,12 @@ angular.module('orsApp.ors-importRoute-controls', []).component('orsImportRouteC
         };
         ctrl.importRoute = (file) => {
             const geometry = orsImportFactory.importFile(file.extension, file.content);
-            console.log(geometry)
-            let linestring = L.polyline(geometry).toGeoJSON();
-            linestring = turf.simplify(linestring, 0.007, true);
-            console.log(linestring);
+            let linestring = turf.helpers.lineString(geometry);
+            let tolerance = turf.lineDistance(linestring, 'kilometers') > 100 ? 0.015 : 0.007;
+            linestring = turf.simplify(linestring, tolerance, true);
             let waypoints = [];
             for (let coord of linestring.geometry.coordinates) {
-                const latLng = new L.latLng([parseFloat(coord[1]), parseFloat(coord[0])]);
+                const latLng = new L.latLng([parseFloat(coord[0]), parseFloat(coord[1])]);
                 const latLngString = orsUtilsService.parseLatLngString(latLng);
                 const wpObj = orsObjectsFactory.createWaypoint(latLngString, latLng, 1);
                 waypoints.push(wpObj);
