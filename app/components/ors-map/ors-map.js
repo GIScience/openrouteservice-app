@@ -516,7 +516,22 @@ angular.module('orsApp')
                         }
                         if (feature.properties.phone) popupContent += '<br>' + lists.locations_icons.phone + ' ' + feature.properties.phone;
                         if (feature.properties.website) popupContent += '<br>' + lists.locations_icons.website + ' ' + '<a href="' + feature.properties.website + '" target=_blank>' + feature.properties.website + '</a>';
-                        if (feature.properties.wheelchair) popupContent += '<br>' + lists.locations_icons.wheelchair;
+                        // Always include the wheelchair icon and use text instead to show accessibility
+                        popupContent += '<br>' + lists.locations_icons.wheelchair + ' <a href="https://wheelmap.org/map#/popup/' 
+                        	+ feature.properties.osm_id 
+                        	+ '?lat=' + feature.geometry.coordinates[1] 
+                        	+ '&lon=' + feature.geometry.coordinates[0] + '&zoom=19'
+                        	+ '" target="_blank">';
+                        if(feature.properties.wheelchair) {
+                        	if(feature.properties.wheelchair.length > 1)
+                        		popupContent += feature.properties.wheelchair.charAt(0).toUpperCase() + feature.properties.wheelchair.slice(1);
+                        	else
+                        		popupContent += feature.properties.wheelchair.charAt(0).toUpperCase();
+                        } else {
+                        	popupContent += 'Unknown';
+                        }
+                        popupContent += '</a>';
+                        //if (feature.properties.wheelchair) popupContent += '<br>' + lists.locations_icons.wheelchair;
                         popupContent += '<br><br><a href="http://www.openstreetmap.org/node/' + feature.properties.osm_id + '" target=_blank>Edit on OpenStreetMap</a>';
                         popupContent += '<br>Source: © OpenStreetMap-Contributors';
                         layer.bindPopup(popupContent, {
