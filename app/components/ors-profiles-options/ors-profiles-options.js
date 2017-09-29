@@ -7,7 +7,7 @@ angular.module('orsApp.ors-profiles-options', []).component('orsProfilesOptions'
         showOptions: '=',
         profiles: '<'
     },
-    controller: ['orsSettingsFactory', function(orsSettingsFactory) {
+    controller: ['orsSettingsFactory', '$window', function(orsSettingsFactory, $window) {
         let ctrl = this;
         ctrl.currentProfile = {};
         // load permalink infos and set active profile
@@ -33,6 +33,9 @@ angular.module('orsApp.ors-profiles-options', []).component('orsProfilesOptions'
         };
         ctrl.callOptions = () => {
             ctrl.showOptions = ctrl.showOptions == false ? true : false;
+        };
+        ctrl.callUrl = (link) => {
+            $window.location.href = link;
         };
     }]
 });
