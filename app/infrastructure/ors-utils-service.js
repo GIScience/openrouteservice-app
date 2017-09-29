@@ -195,7 +195,7 @@ angular.module('orsApp.utils-service', [])
             payload.extra_info = [];
             const extra_infos = orsUtilsService.getExtraInformation();
             angular.forEach(extra_infos, function(value, key) {
-                if (value) payload.extra_info.push(key);
+                if (value && lists.extra_info[lists.profiles[settings.profile.type].subgroup].indexOf(key) >= 0) payload.extra_info.push(key);
             });
             payload.extra_info = payload.extra_info.join("|");
             if (payload.extra_info.length == 0) delete payload.extra_info;
@@ -264,14 +264,15 @@ angular.module('orsApp.utils-service', [])
             }
             if (settings.profile.options.maxspeed) options.maximum_speed = settings.profile.options.maxspeed.toString();
             if (subgroup == 'Bicycle') {
-                options.profile_params.weightings.fitness = {};
+                console.log(settings.profile.options);
                 if (settings.profile.options.steepness > 0 & settings.profile.options.steepness <= 15) {
-                    options.profile_params.weightings.fitness.maximum_gradient = settings.profile.options.steepness.toString();
+                    options.profile_params.restrictions.gradient = settings.profile.options.steepness.toString();
                 }
                 if (settings.profile.options.fitness >= 0 & settings.profile.options.fitness <= 3) {
-                    options.profile_params.weightings.fitness.difficulty_level = settings.profile.options.fitness.toString();
+                    options.profile_params.weightings.steepness_difficulty = {
+                        level: settings.profile.options.fitness.toString()
+                    };
                 }
-                if (angular.equals(options.profile_params.weightings.fitness, {})) delete options.profile_params.weightings.fitness;
             }
             if (subgroup == 'Pedestrian') {
                 if (settings.profile.options.green) {
@@ -296,7 +297,8 @@ angular.module('orsApp.utils-service', [])
                 if (settings.profile.options.curb) options.profile_params.maximum_sloped_curb = settings.profile.options.curb.toString();
                 if (settings.profile.options.incline) options.profile_params.maximum_incline = settings.profile.options.incline.toString();
             }
-            if (angular.equals(options.profile_params.weightings, {}) && angular.equals(options.profile_params.restrictions, {})) delete options.profile_params;
+            if (angular.equals(options.profile_params.weightings, {})) delete options.profile_params.weightings;
+            if (angular.equals(options.profile_params.restrictions, {})) delete options.profile_params.restrictions;
             return options;
         };
         /** 
@@ -401,7 +403,7 @@ angular.module('orsApp.utils-service', [])
                 }
                 if ('county' in properties && properties.county !== properties.name && properties.county !== properties.locality) {
                     secondary.push(properties.county);
-                } 
+                }
                 if ('region' in properties && properties.region !== properties.name) {
                     secondary.push(properties.region);
                 }
