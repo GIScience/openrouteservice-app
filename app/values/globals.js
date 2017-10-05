@@ -3,5 +3,5 @@
  */
 angular.module('orsApp')
     .value('globals', {
-        showHeightgraph: true
+        showHeightgraph: false
     });

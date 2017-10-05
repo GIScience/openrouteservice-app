@@ -10,7 +10,8 @@ angular.module('orsApp.ors-header', [])
                 ctrl.extra_infos = {
                     steepness: true,
                     waytype: true,
-                    surface: true
+                    surface: true,
+                    avgspeed: true
                 };
                 ctrl.lists_extra_info = lists.extra_info;
                 ctrl.getActiveProfile = orsSettingsFactory.getActiveProfile;

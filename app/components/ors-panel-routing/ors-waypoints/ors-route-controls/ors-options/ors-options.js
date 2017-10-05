@@ -490,6 +490,7 @@ angular.module('orsApp.ors-options', [])
                         ctrl.hgvWeight = true;
                         ctrl.hgvHeightCb = true;
                         if (ctrl.activeProfile == 'FireEngine') {
+                            ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
                             ctrl.currentOptions.height = ctrl.optionList.hgvDefaults.FireEngine.height;
                             ctrl.currentOptions.hgvWeight = ctrl.optionList.hgvDefaults.FireEngine.hgvWeight;
                             ctrl.currentOptions.width = ctrl.optionList.hgvDefaults.FireEngine.width;

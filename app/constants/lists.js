@@ -158,25 +158,25 @@ angular.module('orsApp').constant('lists', {
         },
         EmergencyVehicle: {
             name: 'EmergencyVehicle',
-            elevation: false,
+            elevation: true,
             subgroup: 'Emergency',
             request: 'driving-emergency',
             shortValue: '5a'
         },
         FireEngine: {
             name: 'FireEngine',
-            elevation: false,
+            elevation: true,
             subgroup: 'Emergency',
             request: 'driving-emergency',
             shortValue: '5b'
         }
     },
     extra_info: {
-        surface: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
-        waytype: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
+        surface: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car', 'Emergency'],
+        waytype: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car', 'Emergency'],
         suitability: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
         tollways: ['hgv', 'Car'],
-        steepness: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
+        steepness: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car', 'Emergency'],
         green: ['Pedestrian', 'Bicycle'],
         noise: ['Pedestrian', 'Bicycle'],
         TrailDifficulty: ['Pedestrian', 'Bicycle'],
@@ -185,8 +185,7 @@ angular.module('orsApp').constant('lists', {
         Bicycle: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty'],
         Pedestrian: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty'],
         Wheelchair: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty'],
-        EmergencyVehicle: ['type', 'weight', 'maxspeed'],
-        FireEngine: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload']
+        Emergency: ['surface', 'waytype', 'steepness', 'avgspeed']
     },
     optionList: {
         weight: {
