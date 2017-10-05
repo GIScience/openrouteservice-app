@@ -186,7 +186,8 @@ angular.module('orsApp')
             Car: ['surface', 'waytype', 'suitability', 'tollways', 'steepness'],
             Bicycle: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty'],
             Pedestrian: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty'],
-            Wheelchair: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty']
+            Wheelchair: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty'],
+            Emergency: ['avgspeed']
         },
         optionList: {
             weight: {

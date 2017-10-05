@@ -215,11 +215,11 @@ module.exports = function(grunt) {
                 constants: {
                     ENV: {
                         name: 'development',
-                        geocoding: 'https://disaster-api.openrouteservice.org/emergency/geocode',
-                        routing: 'https://disaster-api.openrouteservice.org/emergency/routes',
-                        tmc: 'https://disaster-api.openrouteservice.org/emergency/routes?tmc',
-                        analyse: 'https://disaster-api.openrouteservice.org/emergency/isochrones',
-                        places: 'https://disaster-api.openrouteservice.org/emergency/locations',
+                        geocoding: 'http://localhost:8082/openrouteservice-4.3.0/geocode',
+                        routing: 'http://localhost:8082/openrouteservice-4.3.0/routes',
+                        tmc: 'http://localhost:8082/openrouteservice-4.3.0/routes?tmc',
+                        analyse: 'http://localhost:8082/openrouteservice-4.3.0/isochrones',
+                        places: 'http://localhost:8082/openrouteservice-4.3.0/locations',
                         shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
                     }
                 },
