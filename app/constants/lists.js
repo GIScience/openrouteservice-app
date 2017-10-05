@@ -1,770 +1,785 @@
 /**
  * various keyword lists used in the client
  */
-angular.module('orsApp')
-    .constant('lists', {
-        locationsIcon: {
-            className: "ors-icon-locations",
-            iconSize: [20, 20],
+angular.module('orsApp').constant('lists', {
+    locationsIcon: {
+        className: "ors-icon-locations",
+        iconSize: [20, 20],
+    },
+    locationsIconHighlight: {
+        className: "ors-icon-locations-highlight",
+        iconSize: [20, 20],
+    },
+    waypointIcons: {
+        0: {
+            className: "ors-marker-start",
+            iconSize: [45, 45],
+            iconAnchor: [22, 45]
         },
-        locationsIconHighlight: {
-            className: "ors-icon-locations-highlight",
-            iconSize: [20, 20],
+        1: {
+            className: "ors-marker-via",
+            iconSize: [45, 45],
+            iconAnchor: [22, 45]
         },
-        waypointIcons: {
-            0: {
-                className: "ors-marker-start",
-                iconSize: [45, 45],
-                iconAnchor: [22, 45]
-            },
-            1: {
-                className: "ors-marker-via",
-                iconSize: [45, 45],
-                iconAnchor: [22, 45]
-            },
-            2: {
-                className: "ors-marker-end",
-                iconSize: [45, 45],
-                iconAnchor: [22, 45]
-            },
-            3: {
-                className: "ors-marker-location",
-                iconSize: [45, 45],
-                iconAnchor: [22, 45]
-            },
-            4: {
-                className: "ors-marker-highlight",
-                iconSize: [45, 45],
-                iconAnchor: [22, 45]
-            },
-            5: {
-                className: "ors-marker-hover",
-            },
-            6: {
-                className: "ors-marker-hover-drag",
-            }
+        2: {
+            className: "ors-marker-end",
+            iconSize: [45, 45],
+            iconAnchor: [22, 45]
         },
-
-        profiles: {
-            Car: {
-                name: 'Car',
-                elevation: true,
-                subgroup: 'Car',
-                request: 'driving-car',
-                shortValue: '0',
+        3: {
+            className: "ors-marker-location",
+            iconSize: [45, 45],
+            iconAnchor: [22, 45]
+        },
+        4: {
+            className: "ors-marker-highlight",
+            iconSize: [45, 45],
+            iconAnchor: [22, 45]
+        },
+        5: {
+            className: "ors-marker-hover",
+        },
+        6: {
+            className: "ors-marker-hover-drag",
+        }
+    },
+    profiles: {
+        Car: {
+            name: 'Car',
+            elevation: true,
+            subgroup: 'Car',
+            request: 'driving-car',
+            shortValue: '0',
+        },
+        Bicycle: {
+            name: 'Bicycle',
+            elevation: true,
+            subgroup: 'Bicycle',
+            request: 'cycling-regular',
+            shortValue: '1a'
+        },
+        BicycleMTB: {
+            name: 'BicycleMTB',
+            elevation: true,
+            subgroup: 'Bicycle',
+            request: 'cycling-mountain',
+            shortValue: '1b'
+        },
+        BicycleRacer: {
+            name: 'BicycleRacer',
+            elevation: true,
+            subgroup: 'Bicycle',
+            request: 'cycling-road',
+            shortValue: '1c'
+        },
+        BicycleTour: {
+            name: 'BicycleTour',
+            elevation: true,
+            subgroup: 'Bicycle',
+            request: 'cycling-tour',
+            shortValue: '1d'
+        },
+        BicycleSafety: {
+            name: 'BicycleSafety',
+            elevation: true,
+            subgroup: 'Bicycle',
+            request: 'cycling-safe',
+            shortValue: '1e'
+        },
+        BicycleElectro: {
+            name: 'BicycleElectro',
+            elevation: true,
+            subgroup: 'Bicycle',
+            request: 'cycling-electric',
+            shortValue: '1f'
+        },
+        Pedestrian: {
+            name: 'Pedestrian',
+            elevation: true,
+            subgroup: 'Pedestrian',
+            request: 'foot-walking',
+            shortValue: '2'
+        },
+        PedestrianHiking: {
+            name: 'PedestrianHiking',
+            elevation: true,
+            subgroup: 'Pedestrian',
+            request: 'foot-hiking',
+            shortValue: '2b'
+        },
+        Wheelchair: {
+            name: 'Wheelchair',
+            elevation: true,
+            subgroup: 'Wheelchair',
+            request: 'wheelchair',
+            shortValue: '3'
+        },
+        hgv: {
+            name: 'hgv',
+            elevation: true,
+            subgroup: 'HeavyVehicle',
+            request: 'driving-hgv',
+            shortValue: '4a'
+        },
+        goods: {
+            name: 'goods',
+            elevation: true,
+            subgroup: 'HeavyVehicle',
+            request: 'driving-hgv',
+            shortValue: '4b'
+        },
+        bus: {
+            name: 'bus',
+            elevation: true,
+            subgroup: 'HeavyVehicle',
+            request: 'driving-hgv',
+            shortValue: '4c'
+        },
+        agricultural: {
+            name: 'agricultural',
+            elevation: true,
+            subgroup: 'HeavyVehicle',
+            request: 'driving-hgv',
+            shortValue: '4d'
+        },
+        forestry: {
+            name: 'forestry',
+            elevation: true,
+            subgroup: 'HeavyVehicle',
+            request: 'driving-hgv',
+            shortValue: '4e'
+        },
+        delivery: {
+            name: 'delivery',
+            elevation: true,
+            subgroup: 'HeavyVehicle',
+            request: 'driving-hgv',
+            shortValue: '4f',
+        },
+        EmergencyVehicle: {
+            name: 'EmergencyVehicle',
+            elevation: false,
+            subgroup: 'Emergency',
+            request: 'driving-emergency',
+            shortValue: '5a'
+        },
+        FireEngine: {
+            name: 'FireEngine',
+            elevation: false,
+            subgroup: 'Emergency',
+            request: 'driving-emergency',
+            shortValue: '5b'
+        }
+    },
+    extra_info: {
+        surface: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
+        waytype: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
+        suitability: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
+        tollways: ['hgv', 'Car'],
+        steepness: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
+        green: ['Pedestrian', 'Bicycle'],
+        noise: ['Pedestrian', 'Bicycle'],
+        TrailDifficulty: ['Pedestrian', 'Bicycle'],
+        HeavyVehicle: ['surface', 'waytype', 'suitability', 'tollways', 'steepness'],
+        Car: ['surface', 'waytype', 'suitability', 'tollways', 'steepness'],
+        Bicycle: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty'],
+        Pedestrian: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty'],
+        Wheelchair: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty']
+    },
+    optionList: {
+        weight: {
+            Fastest: {
+                value: 'Fastest',
+                shortValue: '0'
             },
-            Bicycle: {
-                name: 'Bicycle',
-                elevation: true,
-                subgroup: 'Bicycle',
-                request: 'cycling-regular',
-                shortValue: '1a'
+            Shortest: {
+                value: 'Shortest',
+                shortValue: '1'
             },
-            BicycleMTB: {
-                name: 'BicycleMTB',
-                elevation: true,
-                subgroup: 'Bicycle',
-                request: 'cycling-mountain',
-                shortValue: '1b'
-            },
-            BicycleRacer: {
-                name: 'BicycleRacer',
-                elevation: true,
-                subgroup: 'Bicycle',
-                request: 'cycling-road',
-                shortValue: '1c'
-            },
-            BicycleTour: {
-                name: 'BicycleTour',
-                elevation: true,
-                subgroup: 'Bicycle',
-                request: 'cycling-tour',
-                shortValue: '1d'
-            },
-            BicycleSafety: {
-                name: 'BicycleSafety',
-                elevation: true,
-                subgroup: 'Bicycle',
-                request: 'cycling-safe',
-                shortValue: '1e'
-            },
-            BicycleElectro: {
-                name: 'BicycleElectro',
-                elevation: true,
-                subgroup: 'Bicycle',
-                request: 'cycling-electric',
-                shortValue: '1f'
-            },
-            Pedestrian: {
-                name: 'Pedestrian',
-                elevation: true,
-                subgroup: 'Pedestrian',
-                request: 'foot-walking',
+            Recommended: {
+                value: 'Recommended',
                 shortValue: '2'
-            },
-            PedestrianHiking: {
-                name: 'PedestrianHiking',
-                elevation: true,
-                subgroup: 'Pedestrian',
-                request: 'foot-hiking',
-                shortValue: '2b'
-            },
-            Wheelchair: {
-                name: 'Wheelchair',
-                elevation: true,
-                subgroup: 'Wheelchair',
-                request: 'wheelchair',
-                shortValue: '3'
-            },
-            hgv: {
-                name: 'hgv',
-                elevation: true,
-                subgroup: 'HeavyVehicle',
-                request: 'driving-hgv',
-                shortValue: '4a'
-            },
-            goods: {
-                name: 'goods',
-                elevation: true,
-                subgroup: 'HeavyVehicle',
-                request: 'driving-hgv',
-                shortValue: '4b'
-            },
-            bus: {
-                name: 'bus',
-                elevation: true,
-                subgroup: 'HeavyVehicle',
-                request: 'driving-hgv',
-                shortValue: '4c'
-            },
-            agricultural: {
-                name: 'agricultural',
-                elevation: true,
-                subgroup: 'HeavyVehicle',
-                request: 'driving-hgv',
-                shortValue: '4d'
-            },
-            forestry: {
-                name: 'forestry',
-                elevation: true,
-                subgroup: 'HeavyVehicle',
-                request: 'driving-hgv',
-                shortValue: '4e'
-            },
-            delivery: {
-                name: 'delivery',
-                elevation: true,
-                subgroup: 'HeavyVehicle',
-                request: 'driving-hgv',
-                shortValue: '4f',
-            },
-            EmergencyVehicle: {
-                name: 'EmergencyVehicle',
-                elevation: false,
-                subgroup: 'Emergency',
-                request: 'driving-emergency',   
-                shortValue: '5a'
-            },
-            FireEngine: {
-                name: 'FireEngine',
-                elevation: false,
-                subgroup: 'Emergency',
-                request: 'driving-emergency',
-                shortValue: '5b'
             }
         },
-        extra_info: {
-            surface: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
-            waytype: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
-            suitability: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
-            tollways: ['hgv', 'Car'],
-            steepness: ['Wheelchair', 'hgv', 'Pedestrian', 'Bicycle', 'Car'],
-            green: ['Pedestrian', 'Bicycle'],
-            noise: ['Pedestrian', 'Bicycle'],
-            TrailDifficulty: ['Pedestrian', 'Bicycle'],
-            HeavyVehicle: ['surface', 'waytype', 'suitability', 'tollways', 'steepness'],
-            Car: ['surface', 'waytype', 'suitability', 'tollways', 'steepness'],
-            Bicycle: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty'],
-            Pedestrian: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty'],
-            Wheelchair: ['surface', 'waytype', 'suitability', 'steepness', 'green', 'noise', 'TrailDifficulty']
-        },
-        optionList: {
-            weight: {
-                Fastest: {
-                    value: 'Fastest',
-                    shortValue: '0'
+        difficulty: {
+            fitness: {
+                '-1': {
+                    name: 'Unset',
+                    value: -1
                 },
-                Shortest: {
-                    value: 'Shortest',
-                    shortValue: '1'
+                '0': {
+                    name: 'Novice',
+                    value: 0
                 },
-                Recommended: {
-                    value: 'Recommended',
-                    shortValue: '2'
+                '1': {
+                    name: 'Moderate',
+                    value: 1
+                },
+                '2': {
+                    name: 'Amateur',
+                    value: 2
+                },
+                '3': {
+                    name: 'Pro',
+                    value: 3
                 }
             },
-            difficulty: {
-                fitness: {
-                    '-1': {
-                        name: 'Unset',
-                        value: -1
-                    },
-                    '0': {
-                        name: 'Novice',
-                        value: 0
-                    },
-                    '1': {
-                        name: 'Moderate',
-                        value: 1
-                    },
-                    '2': {
-                        name: 'Amateur',
-                        value: 2
-                    },
-                    '3': {
-                        name: 'Pro',
-                        value: 3
-                    }
-                },
-                steepness: {
-                    min: 0,
-                    max: 15
-                }
-            },
-            avoidables: {
-                ferry: {
-                    name: 'ferries',
-                    subgroups: ['Car', 'Bicycle', 'HeavyVehicle', 'Wheelchair', 'Pedestrian','Emergency']
-                },
-                unpaved: {
-                    name: 'unpavedroads',
-                    subgroups: ['Car', 'Bicycle', 'HeavyVehicle','Emergency']
-                },
-                paved: {
-                    name: 'pavedroads',
-                    subgroups: ['Car', 'Bicycle', 'HeavyVehicle','Emergency']
-                },
-                fords: {
-                    name: 'fords',
-                    subgroups: ['Car', 'Bicycle', 'HeavyVehicle', 'Wheelchair', 'Pedestrian','Emergency']
-                },
-                steps: {
-                    name: 'steps',
-                    subgroups: ['Wheelchair', 'Pedestrian', 'Bicycle']
-                },
-                highways: {
-                    name: 'highways',
-                    subgroups: ['Car', 'HeavyVehicle','Emergency']
-                },
-                tollroads: {
-                    name: 'tollways',
-                    subgroups: ['Car', 'HeavyVehicle','Emergency']
-                },
-                tunnels: {
-                    name: 'tunnels',
-                    subgroups: ['Car', 'HeavyVehicle','Emergency']
-                },
-                tracks: {
-                    name: 'tracks',
-                    subgroups: ['Car', 'HeavyVehicle','Emergency']
-                }
-            },
-            wheelchair: {
-                Surface: {
-                    'concrete': {
-                        name: 'Concrete, asphalt',
-                        value: 'concrete'
-                    },
-                    'cobblestone:flattened': {
-                        name: 'Flattened Cobblestone and better',
-                        value: 'cobblestone:flattened'
-                    },
-                    'cobblestone': {
-                        name: 'Cobblestone and better',
-                        value: 'cobblestone'
-                    },
-                    'compacted': {
-                        name: 'Compacted',
-                        value: 'compacted'
-                    },
-                    'any': {
-                        name: 'All traversable surfaces',
-                        value: 'any'
-                    }
-                },
-                Incline: {
-                    '3': {
-                        name: 'Up to 3%',
-                        value: 3
-                    },
-                    '6': {
-                        name: 'Up to 6%',
-                        value: 6
-                    },
-                    '10': {
-                        name: 'Up to 10%',
-                        value: 10
-                    },
-                    '15': {
-                        name: 'Up to 15%',
-                        value: 15
-                    },
-                    '31': {
-                        name: 'Flexible',
-                        value: 31
-                    }
-                },
-                Curb: {
-                    '0.03': {
-                        name: 'Up to 3cm',
-                        value: 0.03
-                    },
-                    '0.06': {
-                        name: 'Up to 6cm',
-                        value: 0.06
-                    },
-                    '0.1': {
-                        name: 'Up to 10cm',
-                        value: 0.1
-                    },
-                    '0.31': {
-                        name: 'Flexible',
-                        value: 0.31
-                    }
-                },
-            },
-            hgvParams: {
-                length: {
-                    min: 2,
-                    max: 15,
-                    value: 'length'
-                },
-                height: {
-                    min: 2,
-                    max: 5,
-                    value: 'height'
-                },
-                width: {
-                    min: 2,
-                    max: 5,
-                    value: 'width'
-                },
-                hgvWeight: {
-                    min: 1,
-                    max: 100,
-                    value: 'weight'
-                },
-                axleload: {
-                    min: 1,
-                    max: 100,
-                    value: 'axleload'
-                }
-            },
-            hgvDefaults:{
-                FireEngine: {
-                    height: 3,
-                    width: 2.5,
-                    hgvWeight: 7.5,
-                    axleload: 1,
-                    length: 7
-                },
-            },
-            maxspeeds: {
-                Car: {
-                    min: 30,
-                    max: 300,
-                    default: 100,
-                    step: 5
-                },
-                Bicycle: {
-                    min: 5,
-                    max: 50,
-                    default: 25,
-                    step: 1
-                },
-                BicycleMTB: {
-                    min: 5,
-                    max: 50,
-                    default: 20,
-                    step: 1
-                },
-                BicycleRacer: {
-                    min: 5,
-                    max: 50,
-                    default: 30,
-                    step: 1
-                },
-                BicycleTour: {
-                    min: 5,
-                    max: 50,
-                    default: 25,
-                    step: 1
-                },
-                BicycleSafety: {
-                    min: 5,
-                    max: 50,
-                    default: 20,
-                    step: 1
-                },
-                BicycleElectro: {
-                    min: 5,
-                    max: 50,
-                    default: 20,
-                    step: 1
-                },
-                Pedestrian: {
-                    min: 3,
-                    max: 15,
-                    default: 6,
-                    step: 1
-                },
-                Wheelchair: {
-                    min: 5,
-                    max: 50,
-                    default: 8,
-                    step: 1
-                },
-                hgv: {
-                    min: 30,
-                    max: 200,
-                    default: 100,
-                    step: 5
-                },
-                HeavyVehicle: {
-                    min: 30,
-                    max: 200,
-                    default: 100,
-                    step: 5
-                },
-                goods: {
-                    min: 30,
-                    max: 200,
-                    default: 100,
-                    step: 5
-                },
-                bus: {
-                    min: 30,
-                    max: 200,
-                    default: 100,
-                    step: 5
-                },
-                agricultural: {
-                    min: 30,
-                    max: 200,
-                    default: 100,
-                    step: 5
-                },
-                forestry: {
-                    min: 30,
-                    max: 200,
-                    default: 100,
-                    step: 5
-                },
-                delivery: {
-                    min: 30,
-                    max: 200,
-                    default: 100,
-                    step: 5
-                },
-                Emergency: {
-                    min: 30,
-                    max: 200,
-                    default: 130,
-                    step: 5
-                },
-                EmergencyVehicle: {
-                    min: 30,
-                    max: 220,
-                    default: 130,
-                    step: 5
-                },
-                FireEngine: {
-                    min: 30,
-                    max: 200,
-                    default: 80,
-                    step: 5,
-                },
-            },
-            green: {
-                min: 0.1,
-                max: 1
-            },
-            quiet: {
-                min: 0.1,
-                max: 1
+            steepness: {
+                min: 0,
+                max: 15
             }
         },
-        isochroneOptionList: {
-            methodOptions: {
-                TIME: {
-                    id: 0,
-                    name: 'Time'
+        avoidables: {
+            ferry: {
+                name: 'ferries',
+                subgroups: ['Car', 'Bicycle', 'HeavyVehicle', 'Wheelchair', 'Pedestrian', 'Emergency']
+            },
+            unpaved: {
+                name: 'unpavedroads',
+                subgroups: ['Car', 'Bicycle', 'HeavyVehicle', 'Emergency']
+            },
+            paved: {
+                name: 'pavedroads',
+                subgroups: ['Car', 'Bicycle', 'HeavyVehicle', 'Emergency']
+            },
+            fords: {
+                name: 'fords',
+                subgroups: ['Car', 'Bicycle', 'HeavyVehicle', 'Wheelchair', 'Pedestrian', 'Emergency']
+            },
+            steps: {
+                name: 'steps',
+                subgroups: ['Wheelchair', 'Pedestrian', 'Bicycle']
+            },
+            highways: {
+                name: 'highways',
+                subgroups: ['Car', 'HeavyVehicle', 'Emergency']
+            },
+            tollroads: {
+                name: 'tollways',
+                subgroups: ['Car', 'HeavyVehicle', 'Emergency']
+            },
+            tunnels: {
+                name: 'tunnels',
+                subgroups: ['Car', 'HeavyVehicle', 'Emergency']
+            },
+            tracks: {
+                name: 'tracks',
+                subgroups: ['Car', 'HeavyVehicle', 'Emergency']
+            }
+        },
+        wheelchair: {
+            Surface: {
+                'concrete': {
+                    name: 'Concrete, asphalt',
+                    value: 'concrete'
                 },
-                DISTANCE: {
-                    id: 1,
-                    name: 'Distance'
+                'cobblestone:flattened': {
+                    name: 'Flattened Cobblestone and better',
+                    value: 'cobblestone:flattened'
+                },
+                'cobblestone': {
+                    name: 'Cobblestone and better',
+                    value: 'cobblestone'
+                },
+                'compacted': {
+                    name: 'Compacted',
+                    value: 'compacted'
+                },
+                'any': {
+                    name: 'All traversable surfaces',
+                    value: 'any'
                 }
             },
-            reverseFlow: {
-                start: 'start',
-                destination: 'destination'
+            Incline: {
+                '3': {
+                    name: 'Up to 3%',
+                    value: 3
+                },
+                '6': {
+                    name: 'Up to 6%',
+                    value: 6
+                },
+                '10': {
+                    name: 'Up to 10%',
+                    value: 10
+                },
+                '15': {
+                    name: 'Up to 15%',
+                    value: 15
+                },
+                '31': {
+                    name: 'Flexible',
+                    value: 31
+                }
             },
-            valueOptions: {
+            Curb: {
+                '0.03': {
+                    name: 'Up to 3cm',
+                    value: 0.03
+                },
+                '0.06': {
+                    name: 'Up to 6cm',
+                    value: 0.06
+                },
+                '0.1': {
+                    name: 'Up to 10cm',
+                    value: 0.1
+                },
+                '0.31': {
+                    name: 'Flexible',
+                    value: 0.31
+                }
+            },
+        },
+        hgvParams: {
+            length: {
+                min: 2,
+                max: 15,
+                value: 'length'
+            },
+            height: {
+                min: 2,
+                max: 5,
+                value: 'height'
+            },
+            width: {
+                min: 2,
+                max: 5,
+                value: 'width'
+            },
+            hgvWeight: {
                 min: 1,
                 max: 100,
-                step: 1,
-                default: 30
+                value: 'weight'
             },
-            intervalOptions: {
+            axleload: {
                 min: 1,
-                step: 1,
-                default: 15
-            },
-            velocities: {
-                Pedestrian: 5,
-                Car: 100,
-                Bicycle: 20,
-                Wheelchair: 5,
-                HeavyVehicle: 80,
-                Emergency: 80,
+                max: 100,
+                value: 'axleload'
             }
         },
-        userOptions: {
-            languages: {
-                default: 'en-US',
-                all: ['de-DE', 'en-US', 'en-GB', 'zh-CN', 'pt-PT', 'es-ES', 'ru-RU', 'fr-FR', 'pl-PL']
+        hgvDefaults: {
+            FireEngine: {
+                height: 3,
+                width: 2.5,
+                hgvWeight: 7.5,
+                axleload: 1,
+                length: 7
             },
-            routinglanguages: {
-                default: 'en-US',
-                all: ['de', 'en-US', 'pt', 'gr', 'ru', 'hu', 'fr', 'it', 'nl', 'zh-CN', 'es']
-            },
-            units: {
-                default: 'km',
-                km: 'km',
-                mi: 'mi'
-            }
         },
-        permalinkFilters: {
-            avoidables: ['ferry', 'unpaved', 'paved', 'fords', 'steps', 'highways', 'tollroads', 'tunnels', 'tracks'],
-            analysis: ['method', 'isovalue', 'isointerval', 'reverseflow'],
-            Car: ['type', 'weight', 'maxspeed'],
-            hgv: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload', 'hazmat'],
-            goods: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload', 'hazmat'],
-            bus: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload', 'hazmat'],
-            agricultural: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload', 'hazmat'],
-            forestry: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload', 'hazmat'],
-            delivery: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload', 'hazmat'],
-            Bicycle: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
-            BicycleSafety: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
-            BicycleMTB: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
-            BicycleRacer: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
-            BicycleElectro: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
-            BicycleTour: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
-            Pedestrian: ['type', 'weight', 'maxspeed', 'fitness', 'steepness', 'green'],
-            PedestrianHiking: ['type', 'weight', 'maxspeed', 'fitness', 'steepness', 'green'],
-            Wheelchair: ['type', 'weight', 'maxspeed', 'incline', 'curb', 'surface'],
-            EmergencyVehicle: ['type', 'weight', 'maxspeed'],
-            FireEngine: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload']
+        maxspeeds: {
+            Car: {
+                min: 30,
+                max: 300,
+                default: 100,
+                step: 5
+            },
+            Bicycle: {
+                min: 5,
+                max: 50,
+                default: 25,
+                step: 1
+            },
+            BicycleMTB: {
+                min: 5,
+                max: 50,
+                default: 20,
+                step: 1
+            },
+            BicycleRacer: {
+                min: 5,
+                max: 50,
+                default: 30,
+                step: 1
+            },
+            BicycleTour: {
+                min: 5,
+                max: 50,
+                default: 25,
+                step: 1
+            },
+            BicycleSafety: {
+                min: 5,
+                max: 50,
+                default: 20,
+                step: 1
+            },
+            BicycleElectro: {
+                min: 5,
+                max: 50,
+                default: 20,
+                step: 1
+            },
+            Pedestrian: {
+                min: 3,
+                max: 15,
+                default: 6,
+                step: 1
+            },
+            Wheelchair: {
+                min: 5,
+                max: 50,
+                default: 8,
+                step: 1
+            },
+            hgv: {
+                min: 30,
+                max: 200,
+                default: 100,
+                step: 5
+            },
+            HeavyVehicle: {
+                min: 30,
+                max: 200,
+                default: 100,
+                step: 5
+            },
+            goods: {
+                min: 30,
+                max: 200,
+                default: 100,
+                step: 5
+            },
+            bus: {
+                min: 30,
+                max: 200,
+                default: 100,
+                step: 5
+            },
+            agricultural: {
+                min: 30,
+                max: 200,
+                default: 100,
+                step: 5
+            },
+            forestry: {
+                min: 30,
+                max: 200,
+                default: 100,
+                step: 5
+            },
+            delivery: {
+                min: 30,
+                max: 200,
+                default: 100,
+                step: 5
+            },
+            Emergency: {
+                min: 30,
+                max: 200,
+                default: 130,
+                step: 5
+            },
+            EmergencyVehicle: {
+                min: 30,
+                max: 220,
+                default: 130,
+                step: 5
+            },
+            FireEngine: {
+                min: 30,
+                max: 200,
+                default: 80,
+                step: 5,
+            },
         },
-        //Whitelist for settings to be stored in permalink
-        permalinkKeys: {
-            wps: 'a',
-            type: 'b',
-            weight: 'c',
-            maxspeed: 'd',
-            hgvWeight: 'f1',
-            width: 'f2',
-            height: 'f3',
-            axleload: 'f4',
-            length: 'f5',
-            hazmat: 'f6',
-            fitness: 'g1',
-            steepness: 'g2',
-            surface: 'h1',
-            incline: 'h2',
-            curb: 'h3',
-            method: 'i',
-            isovalue: 'j1',
-            isointerval: 'j2',
-            reverseflow: 'j3',
-            routinglang: 'k1',
-            units: 'k2',
-            ferry: 'l1',
-            unpaved: 'l2',
-            paved: 'l3',
-            fords: 'l4',
-            highways: 'l5',
-            tollroads: 'l6',
-            tunnels: 'l7',
-            tracks: 'l8',
-            green: 'm1',
-            lat: 'n1',
-            lng: 'n2',
-            zoom: 'n3'
+        green: {
+            min: 0.1,
+            max: 1
         },
-        reversePermalinkKeys: function(obj) {
-            var rev = {};
-            for (var key in obj) {
-                rev[obj[key]] = key;
-            }
-            return rev;
-        },
-        layers: {
-            0: 'layerRoutePoints',
-            1: 'layerRouteLines',
-            2: 'layerEmph',
-            3: 'layerAccessibilityAnalysis',
-            4: 'layerTracks',
-            5: 'layerAccessibilityAnalysisNumberedMarkers',
-            6: 'layerRouteNumberedMarkers',
-            7: 'layerRouteExtras',
-            8: 'layerLocations',
-            9: 'layerRouteDrag'
-        },
-        layerStyles: {
-            route: function() {
-                return {
-                    color: '#b5152b',
-                    weight: 5,
-                    opacity: 1
-                };
-            },
-            routePadding: function() {
-                return {
-                    color: '#fff',
-                    weight: 9,
-                    opacity: 1
-                };
-            },
-            routeHovering: function() {
-                return {
-                    color: '#FFF',
-                    weight: 50,
-                    opacity: 0
-                };
-            },
-            routeEmph: function() {
-                return {
-                    color: '#FFF',
-                    weight: 3,
-                    opacity: 1
-                };
-            },
-            isochroneEmph: function() {
-                return {
-                    color: '#FFF',
-                    weight: 3,
-                    opacity: 1
-                };
-            },
-            track: function() {
-                return {
-                    color: this.get_random_color(),
-                    weight: 3,
-                    opacity: 1
-                };
-            },
-            trackPadding: function() {
-                return {
-                    color: '#FFF',
-                    weight: 6,
-                    opacity: 1
-                };
-            },
-            hoverPoint: function() {
-                return {
-                    radius: 5,
-                    weight: 2,
-                    color: '#000',
-                    fillColor: '#FFF',
-                    fillOpacity: 1,
-                    // interactive: true,
-                    draggable: 'true'
-                    // autoPan: true,
-                    // autoPanPadding: [50, 50],
-                    // autoPanSpeed: 10
-                };
-            },
-            rand: function(min, max) {
-                return parseInt(Math.random() * (max - min + 1), 10) + min;
-            },
-            get_random_color: function() {
-                var h = this.rand(150, 250);
-                var s = this.rand(30, 100);
-                var l = this.rand(20, 70);
-                return 'hsl(' + h + ',' + s + '%,' + l + '%)';
-            },
-            getStyle: function(c, w, o) {
-                return {
-                    color: c,
-                    weight: w,
-                    opacity: o
-                };
-            }
-        },
-        isochronesColorsRanges: [
-            360, 300, 240, 180, 120, 60
-        ],
-        errors: {
-            CONNECTION: {
-                translate: 'CONNECTION',
-                color: -1
-            },
-            GEOCODE: {
-                translate: 'GEOCODE',
-                color: 0
-            },
-            ROUTE: {
-                translate: 'ROUTE',
-                color: 0
-            },
-            GENERALERROR: {
-                translate: 'GENERALERROR',
-                color: 1
-            }
-        },
-        avoidFlags: {
-            Highways: 1, // 1 << 0;
-            Tollways: 2, // 1 << 1;
-            Steps: 2, // 1 << 1;
-            Ferries: 4, // 1 << 2;
-            UnpavedRoads: 8, // 1 << 3;
-            Tracks: 16, // 1 << 4;
-            Tunnels: 32, // 1 << 5;
-            PavedRoads: 64, // 1 << 6;
-            Fords: 128, // 1 << 7;
-        },
-        locations_icons: {
-            100: '<i class="fa fa-hotel"></i>',
-            120: '<i class="fa fa-paw"></i>',
-            130: '<i class="fa fa-lg fa-paint-brush"></i>',
-            150: '<i class="fa fa-lg fa-university"></i>',
-            160: '<i class="fa fa-lg fa-building"></i>',
-            190: '<i class="fa fa-lg fa-dollar"></i>',
-            200: '<i class="fa fa-lg fa-hospital-o"></i>',
-            220: '<i class="fa fa-lg fa-fort-awesome"></i>',
-            260: '<i class="fa fa-lg fa-film"></i>',
-            330: '<i class="fa fa-lg fa-tree"></i>',
-            360: '<i class="fa fa-lg fa-map-signs"></i>',
-            390: '<i class="fa fa-lg fa-camera"></i>',
-            420: '<i class="fa fa-lg fa-shopping-cart"></i>',
-            560: '<i class="fa fa-lg fa-cutlery"></i>',
-            580: '<i class="fa fa-lg fa-bus"></i>',
-            620: '<i class="fa fa-lg fa-suitcase"></i>',
-            phone: '<i class="fa fa-phone"></i>',
-            address: '<i class="fa fa-address-card"></i>',
-            website: '<i class="fa fa-globe"></i>',
-            wheelchair: '<i class="fa fa-wheelchair-alt"></i>'
-        },
-        measure_locale: {
-            'de-DE': 'de',
-            'en-US': 'en',
-            'en-GB': 'en_UK',
-            'zh-CN': 'cn',
-            'pt-PT': 'pt_PT',
-            'es-ES': 'es',
-            'ru-RU': 'ru',
-            'fr-FR': 'fr',
-            'pl-PL': 'pl'
+        quiet: {
+            min: 0.1,
+            max: 1
         }
-    });
+    },
+    isochroneOptionList: {
+        methodOptions: {
+            TIME: {
+                id: 0,
+                name: 'Time'
+            },
+            DISTANCE: {
+                id: 1,
+                name: 'Distance'
+            }
+        },
+        reverseFlow: {
+            start: 'start',
+            destination: 'destination'
+        },
+        valueOptions: {
+            min: 1,
+            max: 100,
+            step: 1,
+            default: 30
+        },
+        intervalOptions: {
+            min: 1,
+            step: 1,
+            default: 15
+        },
+        velocities: {
+            Pedestrian: 5,
+            Car: 100,
+            Bicycle: 20,
+            Wheelchair: 5,
+            HeavyVehicle: 80,
+            Emergency: 80,
+        }
+    },
+    userOptions: {
+        languages: {
+            default: 'en-US',
+            all: ['de-DE', 'en-US', 'en-GB', 'zh-CN', 'pt-PT', 'es-ES', 'ru-RU', 'fr-FR', 'pl-PL']
+        },
+        routinglanguages: {
+            default: 'en-US',
+            all: ['de', 'en-US', 'pt', 'gr', 'ru', 'hu', 'fr', 'it', 'nl', 'zh-CN', 'es']
+        },
+        units: {
+            default: 'km',
+            km: 'km',
+            mi: 'mi'
+        }
+    },
+    permalinkFilters: {
+        avoidables: ['ferry', 'unpaved', 'paved', 'fords', 'steps', 'highways', 'tollroads', 'tunnels', 'tracks'],
+        analysis: ['method', 'isovalue', 'isointerval', 'reverseflow'],
+        Car: ['type', 'weight', 'maxspeed'],
+        hgv: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload', 'hazmat'],
+        goods: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload', 'hazmat'],
+        bus: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload', 'hazmat'],
+        agricultural: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload', 'hazmat'],
+        forestry: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload', 'hazmat'],
+        delivery: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload', 'hazmat'],
+        Bicycle: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
+        BicycleSafety: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
+        BicycleMTB: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
+        BicycleRacer: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
+        BicycleElectro: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
+        BicycleTour: ['type', 'weight', 'maxspeed', 'fitness', 'incline', 'steepness'],
+        Pedestrian: ['type', 'weight', 'maxspeed', 'fitness', 'steepness', 'green'],
+        PedestrianHiking: ['type', 'weight', 'maxspeed', 'fitness', 'steepness', 'green'],
+        Wheelchair: ['type', 'weight', 'maxspeed', 'incline', 'curb', 'surface'],
+        EmergencyVehicle: ['type', 'weight', 'maxspeed'],
+        FireEngine: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload']
+    },
+    //Whitelist for settings to be stored in permalink
+    permalinkKeys: {
+        wps: 'a',
+        type: 'b',
+        weight: 'c',
+        maxspeed: 'd',
+        hgvWeight: 'f1',
+        width: 'f2',
+        height: 'f3',
+        axleload: 'f4',
+        length: 'f5',
+        hazmat: 'f6',
+        fitness: 'g1',
+        steepness: 'g2',
+        surface: 'h1',
+        incline: 'h2',
+        curb: 'h3',
+        method: 'i',
+        isovalue: 'j1',
+        isointerval: 'j2',
+        reverseflow: 'j3',
+        routinglang: 'k1',
+        units: 'k2',
+        ferry: 'l1',
+        unpaved: 'l2',
+        paved: 'l3',
+        fords: 'l4',
+        highways: 'l5',
+        tollroads: 'l6',
+        tunnels: 'l7',
+        tracks: 'l8',
+        green: 'm1',
+        lat: 'n1',
+        lng: 'n2',
+        zoom: 'n3'
+    },
+    reversePermalinkKeys: function(obj) {
+        var rev = {};
+        for (var key in obj) {
+            rev[obj[key]] = key;
+        }
+        return rev;
+    },
+    layers: {
+        0: 'layerRoutePoints',
+        1: 'layerRouteLines',
+        2: 'layerEmph',
+        3: 'layerAccessibilityAnalysis',
+        4: 'layerTracks',
+        5: 'layerAccessibilityAnalysisNumberedMarkers',
+        6: 'layerRouteNumberedMarkers',
+        7: 'layerRouteExtras',
+        8: 'layerLocations',
+        9: 'layerRouteDrag'
+    },
+    layerStyles: {
+        route: function() {
+            return {
+                color: '#b5152b',
+                weight: 5,
+                opacity: 1
+            };
+        },
+        routePadding: function() {
+            return {
+                color: '#fff',
+                weight: 9,
+                opacity: 1
+            };
+        },
+        routeHovering: function() {
+            return {
+                color: '#FFF',
+                weight: 50,
+                opacity: 0
+            };
+        },
+        routeEmph: function() {
+            return {
+                color: '#FFF',
+                weight: 3,
+                opacity: 1
+            };
+        },
+        isochroneEmph: function() {
+            return {
+                color: '#FFF',
+                weight: 3,
+                opacity: 1
+            };
+        },
+        track: function() {
+            return {
+                color: this.get_random_color(),
+                weight: 3,
+                opacity: 1
+            };
+        },
+        trackPadding: function() {
+            return {
+                color: '#FFF',
+                weight: 6,
+                opacity: 1
+            };
+        },
+        hoverPoint: function() {
+            return {
+                radius: 5,
+                weight: 2,
+                color: '#000',
+                fillColor: '#FFF',
+                fillOpacity: 1,
+                // interactive: true,
+                draggable: 'true'
+                // autoPan: true,
+                // autoPanPadding: [50, 50],
+                // autoPanSpeed: 10
+            };
+        },
+        rand: function(min, max) {
+            return parseInt(Math.random() * (max - min + 1), 10) + min;
+        },
+        get_random_color: function() {
+            var h = this.rand(150, 250);
+            var s = this.rand(30, 100);
+            var l = this.rand(20, 70);
+            return 'hsl(' + h + ',' + s + '%,' + l + '%)';
+        },
+        getStyle: function(c, w, o) {
+            return {
+                color: c,
+                weight: w,
+                opacity: o
+            };
+        },
+        boundary: function() {
+            return {
+                "color": "#cf5f5f",
+                "weight": 4,
+                "opacity": 0.1,
+                //"fillOpacity": 0.5
+            };
+        }
+    },
+    isochronesColorsRanges: [
+        360, 300, 240, 180, 120, 60
+    ],
+    errors: {
+        CONNECTION: {
+            translate: 'CONNECTION',
+            color: -1
+        },
+        GEOCODE: {
+            translate: 'GEOCODE',
+            color: 0
+        },
+        ROUTE: {
+            translate: 'ROUTE',
+            color: 0
+        },
+        GENERALERROR: {
+            translate: 'GENERALERROR',
+            color: 1
+        }
+    },
+    avoidFlags: {
+        Highways: 1, // 1 << 0;
+        Tollways: 2, // 1 << 1;
+        Steps: 2, // 1 << 1;
+        Ferries: 4, // 1 << 2;
+        UnpavedRoads: 8, // 1 << 3;
+        Tracks: 16, // 1 << 4;
+        Tunnels: 32, // 1 << 5;
+        PavedRoads: 64, // 1 << 6;
+        Fords: 128, // 1 << 7;
+    },
+    locations_icons: {
+        100: '<i class="fa fa-hotel"></i>',
+        120: '<i class="fa fa-paw"></i>',
+        130: '<i class="fa fa-lg fa-paint-brush"></i>',
+        150: '<i class="fa fa-lg fa-university"></i>',
+        160: '<i class="fa fa-lg fa-building"></i>',
+        190: '<i class="fa fa-lg fa-dollar"></i>',
+        200: '<i class="fa fa-lg fa-hospital-o"></i>',
+        220: '<i class="fa fa-lg fa-fort-awesome"></i>',
+        260: '<i class="fa fa-lg fa-film"></i>',
+        330: '<i class="fa fa-lg fa-tree"></i>',
+        360: '<i class="fa fa-lg fa-map-signs"></i>',
+        390: '<i class="fa fa-lg fa-camera"></i>',
+        420: '<i class="fa fa-lg fa-shopping-cart"></i>',
+        560: '<i class="fa fa-lg fa-cutlery"></i>',
+        580: '<i class="fa fa-lg fa-bus"></i>',
+        620: '<i class="fa fa-lg fa-suitcase"></i>',
+        phone: '<i class="fa fa-phone"></i>',
+        address: '<i class="fa fa-address-card"></i>',
+        website: '<i class="fa fa-globe"></i>',
+        wheelchair: '<i class="fa fa-wheelchair-alt"></i>'
+    },
+    measure_locale: {
+        'de-DE': 'de',
+        'en-US': 'en',
+        'en-GB': 'en_UK',
+        'zh-CN': 'cn',
+        'pt-PT': 'pt_PT',
+        'es-ES': 'es',
+        'ru-RU': 'ru',
+        'fr-FR': 'fr',
+        'pl-PL': 'pl'
+    },
+    boundary: {
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                                                                  
+"features": [
+{ "type": "Feature", "properties": { "USE": 3, "RS": "097", "RS_ALT": "097000000000", "GEN": "Schwaben", "SHAPE_LENG": 799677.071025, "SHAPE_AREA": 9984468160.285940 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 10.472065325941189, 47.569644554369795 ], [ 10.473193225905298, 47.570812922226985 ], [ 10.479761181955315, 47.581399158785572 ], [ 10.481512933675448, 47.584589289305249 ], [ 10.472281527365553, 47.586662973601868 ], [ 10.43557558396215, 47.583520477661949 ], [ 10.430300007406395, 47.576292923261313 ], [ 10.436046978482764, 47.568083838152681 ], [ 10.451142248519457, 47.554694623243222 ], [ 10.454578888068468, 47.55586417160891 ], [ 10.439233806620251, 47.524211114219383 ], [ 10.431568350844241, 47.503720973072198 ], [ 10.440220638107807, 47.486690977915579 ], [ 10.443297990146615, 47.484733979246677 ], [ 10.446214339394524, 47.484367081554645 ], [ 10.451660923314524, 47.485313036654517 ], [ 10.463167855418414, 47.482532319321564 ], [ 10.468128394503827, 47.476855607915425 ], [ 10.470028547667184, 47.468374727560978 ], [ 10.475835797288857, 47.433283155626619 ], [ 10.47496264915654, 47.431845481410782 ], [ 10.454782961090231, 47.418901732666171 ], [ 10.446394992606539, 47.414971847055739 ], [ 10.425966476167115, 47.383111679527097 ], [ 10.386133311322071, 47.356548198142022 ], [ 10.357224643550058, 47.336570472513735 ], [ 10.346067721298315, 47.320501886733219 ], [ 10.282147539096091, 47.288564551204928 ], [ 10.259288659260827, 47.281473362706308 ], [ 10.242096409130184, 47.27734643806977 ], [ 10.174006060226846, 47.270362326720381 ], [ 10.17246290135064, 47.274247287499257 ], [ 10.175172421987671, 47.287900692593738 ], [ 10.175663019087581, 47.289608956936824 ], [ 10.178268501562632, 47.295060530063921 ], [ 10.179754759559964, 47.295972234133231 ], [ 10.181524112224189, 47.295977462271203 ], [ 10.183950002034612, 47.294475414043752 ], [ 10.185471516266345, 47.29399477195453 ], [ 10.188072348695975, 47.294047215050078 ], [ 10.199180864189163, 47.297770788930059 ], [ 10.210316863596704, 47.306155574477508 ], [ 10.215224997578808, 47.311657385577789 ], [ 10.210665713392673, 47.318903770766426 ], [ 10.200305768474795, 47.326008409529045 ], [ 10.200587281327397, 47.327536332518285 ], [ 10.204901086922565, 47.337636620127292 ], [ 10.217918215083138, 47.354039433120057 ], [ 10.235158894196321, 47.371098128772829 ], [ 10.236481729001508, 47.373526980748132 ], [ 10.235869506131285, 47.381763682636674 ], [ 10.227311552520925, 47.389037392008582 ], [ 10.181794337446188, 47.392578617423553 ], [ 10.169719942458716, 47.385885363619217 ], [ 10.168914983324925, 47.377608714572474 ], [ 10.169697106684431, 47.371340409102537 ], [ 10.165851633879061, 47.368938907887923 ], [ 10.155863247008881, 47.367667845412846 ], [ 10.143279206944845, 47.367016202556066 ], [ 10.137890269847427, 47.367995504903007 ], [ 10.119360119195099, 47.375460382746382 ], [ 10.100426815402532, 47.354918064601854 ], [ 10.099420965428548, 47.35505807558156 ], [ 10.083010265489754, 47.393617807033785 ], [ 10.071330232971153, 47.407210103940784 ], [ 10.069537095063101, 47.409502943710528 ], [ 10.074550273830171, 47.414482057081955 ], [ 10.078902388601106, 47.414777552728708 ], [ 10.08564265532795, 47.414399274790625 ], [ 10.095146800138986, 47.417561727992656 ], [ 10.105266855167125, 47.428362223491604 ], [ 10.093156228478319, 47.447409323867824 ], [ 10.083418954216084, 47.457219389746378 ], [ 10.044540729562398, 47.487413475375796 ], [ 10.040488025869518, 47.488483536372016 ], [ 10.037914122511715, 47.48873317996852 ], [ 10.034154608918847, 47.488186985408547 ], [ 10.02279135370145, 47.484372931180758 ], [ 10.01232273657085, 47.482772000995702 ], [ 10.006522871712789, 47.482224639079931 ], [ 10.001109202103306, 47.482828814096045 ], [ 9.995518879298055, 47.486468794758395 ], [ 9.965194798423415, 47.520718297407157 ], [ 9.964546696013732, 47.523015314207484 ], [ 9.96753734970374, 47.546023423043906 ], [ 9.962123404756817, 47.536139794922178 ], [ 9.960708482324622, 47.534470511764944 ], [ 9.92252559551037, 47.529700590853778 ], [ 9.916966248048668, 47.530883902560745 ], [ 9.91528572323895, 47.531638617579802 ], [ 9.913440808308158, 47.532832702211202 ], [ 9.877752852061528, 47.540118887549454 ], [ 9.874994215272533, 47.530488648019926 ], [ 9.874648704171399, 47.529480306472308 ], [ 9.873917575640157, 47.528541598449166 ], [ 9.858389776608977, 47.534156667166364 ], [ 9.839449792924299, 47.54265114910487 ], [ 9.821315430603017, 47.554858542193763 ], [ 9.825387138703407, 47.559017290480867 ], [ 9.825757460581762, 47.5600978680203 ], [ 9.826818170282355, 47.577860233197363 ], [ 9.826253657863605, 47.580318843243759 ], [ 9.824055613953211, 47.586685147955031 ], [ 9.802216188545859, 47.595470133359363 ], [ 9.799466181851777, 47.595479402972856 ], [ 9.77597297164119, 47.594085391133873 ], [ 9.765221798380889, 47.588082497506676 ], [ 9.756617458046474, 47.579011109892633 ], [ 9.740901905706382, 47.553239028477378 ], [ 9.735652876913543, 47.544126693672787 ], [ 9.729769399283024, 47.533266453128114 ], [ 9.728848945392759, 47.53529965580865 ], [ 9.727473557539161, 47.537572229173598 ], [ 9.725654900270936, 47.540183057069662 ], [ 9.72407338379937, 47.542040773511779 ], [ 9.721541333113096, 47.544421810069089 ], [ 9.717879951590502, 47.546866576198248 ], [ 9.713068339452281, 47.549006351918912 ], [ 9.7105623444263, 47.549689051173168 ], [ 9.708050862227157, 47.549877426610095 ], [ 9.681731719338325, 47.553096909264923 ], [ 9.65474938903345, 47.556861988902916 ], [ 9.652296048052079, 47.557498844568876 ], [ 9.612843028027921, 47.570204412028524 ], [ 9.608743229324434, 47.572255629594203 ], [ 9.607476383762121, 47.573296597096316 ], [ 9.606645328565373, 47.574466921666719 ], [ 9.605667789244571, 47.576399886084609 ], [ 9.60227499610685, 47.584117927693306 ], [ 9.633651679004172, 47.59373613859016 ], [ 9.640884883426793, 47.601045397621156 ], [ 9.656243388423244, 47.612030043417661 ], [ 9.65703910060927, 47.612126061078833 ], [ 9.692121991297316, 47.610514283300404 ], [ 9.694213705033784, 47.605263886786915 ], [ 9.69954637394979, 47.602508578062839 ], [ 9.705927348281634, 47.601459075739797 ], [ 9.746896424149176, 47.603574785615493 ], [ 9.817102961756293, 47.650020771132006 ], [ 9.826084848197507, 47.656511036622966 ], [ 9.827069772665187, 47.657442731474063 ], [ 9.827512094678047, 47.65817334790276 ], [ 9.828047485437413, 47.661861098231078 ], [ 9.828629106369169, 47.668038393801858 ], [ 9.829035353378655, 47.669478740757214 ], [ 9.829645829931668, 47.670578838725831 ], [ 9.830353767551118, 47.671356042954677 ], [ 9.832990577742505, 47.673151572905056 ], [ 9.843310501349393, 47.677545824647211 ], [ 9.844146729831254, 47.677703645242339 ], [ 9.852171986031651, 47.678605407295528 ], [ 9.874770682576781, 47.675106991871232 ], [ 9.879470516168871, 47.673803863706013 ], [ 9.882881689860795, 47.672331493415129 ], [ 9.883313212572642, 47.671866660486991 ], [ 9.884145249377903, 47.670217853280938 ], [ 9.884887292124718, 47.669386292513373 ], [ 9.887305462743328, 47.667485836661797 ], [ 9.888672508865248, 47.666666773089062 ], [ 9.896208920770109, 47.663923052248876 ], [ 9.930258154100413, 47.653952068788307 ], [ 9.958472842758296, 47.652209018514583 ], [ 9.970321649141146, 47.653543381995476 ], [ 9.975939436354661, 47.656823609985381 ], [ 9.977885201555948, 47.661514804456637 ], [ 9.982351307083773, 47.668212972450434 ], [ 9.989439320740399, 47.674959257993592 ], [ 10.00283739839484, 47.681653256318718 ], [ 10.004390408496899, 47.682046731368523 ], [ 10.0274170794612, 47.685707727737046 ], [ 10.058684819904602, 47.680465083792349 ], [ 10.064084046718124, 47.674780508980881 ], [ 10.075148850342829, 47.65828055115314 ], [ 10.071865440682116, 47.650341886032372 ], [ 10.071735662337076, 47.64379947836963 ], [ 10.074129781538669, 47.640618823598381 ], [ 10.07682538268482, 47.63947014075152 ], [ 10.080141202172243, 47.654597613495703 ], [ 10.093173779657826, 47.664495977166077 ], [ 10.109339977985387, 47.667412832072472 ], [ 10.122838472965585, 47.673238584139916 ], [ 10.130461314739165, 47.676922151532281 ], [ 10.140039500867525, 47.699222493668422 ], [ 10.138714023717329, 47.703927022299872 ], [ 10.12829571674925, 47.708484085231781 ], [ 10.125085977619571, 47.710378246436598 ], [ 10.121055975896418, 47.713293915066473 ], [ 10.120074143963706, 47.714575571785339 ], [ 10.117252999257616, 47.719517321274921 ], [ 10.116696791086028, 47.720836421283124 ], [ 10.11366685634898, 47.740533596758382 ], [ 10.113818592295043, 47.7415765975677 ], [ 10.117610382646777, 47.749174875253871 ], [ 10.119269578498335, 47.760432260995124 ], [ 10.118850730074611, 47.761167727649216 ], [ 10.083025266984802, 47.772099625424403 ], [ 10.075875038809722, 47.780430039144676 ], [ 10.070107083140945, 47.789017164239219 ], [ 10.08639303858053, 47.796674306040401 ], [ 10.110795383305202, 47.805949035532805 ], [ 10.133674198751034, 47.814979577517505 ], [ 10.132074985615514, 47.820105989927697 ], [ 10.125475432077236, 47.822860648227817 ], [ 10.109672154863199, 47.840142118138616 ], [ 10.084357188881297, 47.869231622842399 ], [ 10.104937813765309, 47.883032337749043 ], [ 10.111523402069665, 47.93426072192311 ], [ 10.111498521831777, 47.935725710358398 ], [ 10.111006970469637, 47.937000290253607 ], [ 10.110278381291495, 47.937797652886886 ], [ 10.095088732383068, 47.943647793499849 ], [ 10.091364577267502, 47.9458899956837 ], [ 10.089853105798593, 47.947466291980945 ], [ 10.087819283151308, 47.950703422390454 ], [ 10.087295704921269, 47.952517111326706 ], [ 10.086764795207406, 47.96160235176864 ], [ 10.086921891632244, 47.963616346377762 ], [ 10.087326483974772, 47.964849300420873 ], [ 10.088828642976919, 47.967677317125101 ], [ 10.089901597157382, 47.969020630517029 ], [ 10.091258241679988, 47.970059384291226 ], [ 10.093083305951305, 47.971108831695211 ], [ 10.095178937540371, 47.97181770267116 ], [ 10.105919753067337, 47.974445572666788 ], [ 10.115548413829053, 47.97563930541056 ], [ 10.114841343673959, 47.989056710388432 ], [ 10.120052982674435, 48.004328643950878 ], [ 10.127369512789695, 48.01097843718491 ], [ 10.132166714407257, 48.014374418323676 ], [ 10.136803042616949, 48.023333697382348 ], [ 10.127610025929505, 48.03058380890517 ], [ 10.126757791253921, 48.031632616205997 ], [ 10.126049104262353, 48.03319426450242 ], [ 10.126168371959297, 48.035136268953821 ], [ 10.132022292138361, 48.037331389594776 ], [ 10.136743442532229, 48.038704449566431 ], [ 10.141248892060556, 48.049497044910936 ], [ 10.141980438780518, 48.052142179369717 ], [ 10.142623450693142, 48.055910681561592 ], [ 10.143304884394846, 48.063652463733924 ], [ 10.14280315421761, 48.075525458015179 ], [ 10.139410364702691, 48.095578316573558 ], [ 10.137136941740719, 48.105450083938777 ], [ 10.136889095279388, 48.106294256644837 ], [ 10.135858249803146, 48.107756111283926 ], [ 10.117262386965308, 48.120628651052613 ], [ 10.11605887887684, 48.121730121138341 ], [ 10.11143641273619, 48.12903133792603 ], [ 10.101647735852957, 48.1522164439032 ], [ 10.084832568547053, 48.193057891560031 ], [ 10.068436037505109, 48.222886744652179 ], [ 10.067919126519309, 48.223531998082976 ], [ 10.063178515430137, 48.234670119554032 ], [ 10.06221945060107, 48.244133058272894 ], [ 10.061962855380672, 48.257815333462993 ], [ 10.06299971003037, 48.26989361142288 ], [ 10.044255917415621, 48.292914302269089 ], [ 10.012212871457919, 48.331293494795467 ], [ 9.995738117592566, 48.350747707842714 ], [ 9.994704550457033, 48.360723032946673 ], [ 9.992852950648807, 48.367556726941714 ], [ 9.990292684311884, 48.369810698795646 ], [ 9.988195633298693, 48.370331476305509 ], [ 9.983208738212621, 48.368483057499795 ], [ 9.98278701782532, 48.367527997296683 ], [ 9.985435245331987, 48.363341509758072 ], [ 9.98528138395308, 48.362576588370452 ], [ 9.984154139397683, 48.361995894327514 ], [ 9.98159621715442, 48.361471412237513 ], [ 9.979989507259054, 48.361580745369324 ], [ 9.978987798825369, 48.361890684860725 ], [ 9.968855151198016, 48.370617714388537 ], [ 9.967677303768381, 48.372212460716 ], [ 9.967253886452948, 48.373918723022548 ], [ 9.967494207986068, 48.375403416766751 ], [ 9.968596607157465, 48.377036137915006 ], [ 9.97139971440693, 48.379917795611036 ], [ 9.991864492951859, 48.393905339502716 ], [ 10.028120612046637, 48.424052284875437 ], [ 10.029338031136984, 48.435125925273951 ], [ 10.028061817518914, 48.437152543337326 ], [ 10.030641365418026, 48.452790802564678 ], [ 10.034322371195362, 48.458012494731726 ], [ 10.051417179053972, 48.457193017473436 ], [ 10.056836907798566, 48.457313774215905 ], [ 10.06206352504757, 48.457865117313958 ], [ 10.072937628719627, 48.460353358001143 ], [ 10.087112039823433, 48.464390482825515 ], [ 10.100146471514762, 48.470885375721203 ], [ 10.118472688966891, 48.470374663325423 ], [ 10.127667606581387, 48.45615438357612 ], [ 10.134327147635283, 48.454980732514798 ], [ 10.158230608457872, 48.4582042580383 ], [ 10.185822571243492, 48.47699752541785 ], [ 10.218036857407716, 48.488512708158389 ], [ 10.23541868776098, 48.488510682812745 ], [ 10.240554672461547, 48.491840764810803 ], [ 10.233716950940849, 48.505410969810043 ], [ 10.230726615488571, 48.510295249646461 ], [ 10.276224503173928, 48.516025449610829 ], [ 10.297631798663224, 48.516983851840784 ], [ 10.312144781372693, 48.522997938466467 ], [ 10.313769624506248, 48.526417576025622 ], [ 10.314728016638179, 48.555687815456352 ], [ 10.31042013742009, 48.576739894932821 ], [ 10.306355557423487, 48.583378039379788 ], [ 10.293899035997789, 48.590108685627484 ], [ 10.296823320255397, 48.603980064318108 ], [ 10.301577758573712, 48.605130690190741 ], [ 10.30881872718569, 48.60501753937239 ], [ 10.319548137651518, 48.603866519266354 ], [ 10.322674996953065, 48.609015134719435 ], [ 10.294597019153764, 48.63036842268945 ], [ 10.268755412861504, 48.647160407152612 ], [ 10.254213486269373, 48.664817464178377 ], [ 10.256497146553308, 48.680523603011515 ], [ 10.269045053146799, 48.703436879819094 ], [ 10.277449374375111, 48.701709430333963 ], [ 10.303978750104891, 48.685824337217163 ], [ 10.309552774555549, 48.687866389021494 ], [ 10.32809503681929, 48.690927155294851 ], [ 10.330064557512703, 48.690930186329943 ], [ 10.332714574235343, 48.690538511968676 ], [ 10.334836110510873, 48.689759360533685 ], [ 10.338471826575759, 48.686994955799669 ], [ 10.346360766859799, 48.679056643429696 ], [ 10.347547498061594, 48.677358686633852 ], [ 10.351940116018215, 48.666267775255555 ], [ 10.350230633582889, 48.665914769465985 ], [ 10.347230435443768, 48.665883714956955 ], [ 10.352247875880686, 48.654326116691365 ], [ 10.362903838813253, 48.653818214722605 ], [ 10.389542598720016, 48.667624466723822 ], [ 10.392083370865024, 48.678975614646887 ], [ 10.391484516155685, 48.685683534893791 ], [ 10.391631273452694, 48.686861713392148 ], [ 10.392673363552055, 48.688544346384525 ], [ 10.407799133998919, 48.698288034529895 ], [ 10.413612673570436, 48.69872434912245 ], [ 10.431980485686124, 48.698134595495809 ], [ 10.435161619007708, 48.696436886209007 ], [ 10.437106282292845, 48.694810317707613 ], [ 10.437722321415645, 48.691087706619342 ], [ 10.434834605301532, 48.687021366820133 ], [ 10.424780429170596, 48.680603266086159 ], [ 10.408277957683202, 48.66764152784453 ], [ 10.410719976281621, 48.661195885102302 ], [ 10.449796136570187, 48.666094378866291 ], [ 10.464957191581519, 48.670659433410016 ], [ 10.491823914292901, 48.686131918133228 ], [ 10.487026794134662, 48.696787791958911 ], [ 10.480855844683932, 48.705905528125513 ], [ 10.473773312429365, 48.71276552814421 ], [ 10.463221538719857, 48.721629454024196 ], [ 10.438586580309472, 48.738165430320528 ], [ 10.424123904547823, 48.744604426132803 ], [ 10.417278149130217, 48.748160740880301 ], [ 10.420869151743897, 48.772669346701761 ], [ 10.429769732295529, 48.770984612615194 ], [ 10.433585919405502, 48.776023067914878 ], [ 10.448105481681852, 48.813073739933202 ], [ 10.453684566369029, 48.859994633446554 ], [ 10.45698725696727, 48.916772685609786 ], [ 10.456806474912945, 48.920549994422672 ], [ 10.45134310043192, 48.938616298190873 ], [ 10.424905062696586, 48.960816555773945 ], [ 10.409159258763969, 48.966731896552332 ], [ 10.403899986027865, 48.966772454267939 ], [ 10.402041352967162, 48.973930058512963 ], [ 10.403500506881498, 48.975289434462773 ], [ 10.410451329847607, 48.977174953293428 ], [ 10.425317680314304, 48.976673224496956 ], [ 10.426682746163189, 48.977492592353812 ], [ 10.422014193899397, 48.991798958528548 ], [ 10.425687667761533, 49.002675334718575 ], [ 10.469085468437873, 49.011626966688951 ], [ 10.488911252840895, 49.011567733975035 ], [ 10.497908141291186, 49.008861013321578 ], [ 10.498947308568452, 49.006405625716027 ], [ 10.539304747603754, 49.005544285232148 ], [ 10.545295367760822, 49.00834817511376 ], [ 10.543086128471655, 49.014644970193999 ], [ 10.53778641706703, 49.022004135364845 ], [ 10.552418228149582, 49.033339960231991 ], [ 10.574855956318919, 49.035935522119026 ], [ 10.588754620871052, 49.035925355428887 ], [ 10.594416296053138, 49.035012306576839 ], [ 10.599382103534204, 49.028424208807913 ], [ 10.629648065097159, 49.017177420213926 ], [ 10.642076176894273, 49.016478752459406 ], [ 10.636739143958627, 48.990879070062668 ], [ 10.641590427897604, 48.986025239148709 ], [ 10.649881580123365, 48.984746248365035 ], [ 10.661239283697931, 48.98528807703272 ], [ 10.666143076285719, 48.984660291420532 ], [ 10.672485112753513, 48.981187964976428 ], [ 10.687826455758778, 48.959100911484406 ], [ 10.695118132314489, 48.945102844362374 ], [ 10.69239287436737, 48.939630275500754 ], [ 10.668851955637406, 48.922894878877891 ], [ 10.668503318243559, 48.920754882846282 ], [ 10.669370111329108, 48.91885587326508 ], [ 10.671193798242516, 48.917441064469266 ], [ 10.679310600696722, 48.913003389982208 ], [ 10.711238500025845, 48.900059469067955 ], [ 10.718002087451621, 48.899488839946059 ], [ 10.722917642849746, 48.900504426426998 ], [ 10.727997496029703, 48.904496364151193 ], [ 10.737135779484936, 48.920747033120414 ], [ 10.769846087812207, 48.925205616097351 ], [ 10.786307347216823, 48.93691959543478 ], [ 10.807095907284243, 48.949311931023409 ], [ 10.814898624999087, 48.948049033822343 ], [ 10.825546037572385, 48.931262784937751 ], [ 10.832537844046257, 48.913776097434408 ], [ 10.830841689375234, 48.913169561006804 ], [ 10.82011042746565, 48.910187943828994 ], [ 10.808701938174337, 48.907773774163211 ], [ 10.809413504826731, 48.905964072952543 ], [ 10.814274185469765, 48.902316989564959 ], [ 10.827185769031814, 48.89512983444839 ], [ 10.868230071448064, 48.87548548498259 ], [ 10.874585357680623, 48.875680157774468 ], [ 10.905643638444197, 48.881983971211973 ], [ 10.919839706075132, 48.874151861409629 ], [ 10.936604422957425, 48.862926293920424 ], [ 10.969912343297837, 48.860803218792491 ], [ 10.975943218695086, 48.858646106960521 ], [ 10.995559083499915, 48.836166471863287 ], [ 11.005910197949236, 48.822809473710976 ], [ 10.978335317981713, 48.80956703764199 ], [ 10.97468826783669, 48.777746150097407 ], [ 10.998081739435374, 48.764693569036623 ], [ 10.998339193283222, 48.761940486809536 ], [ 10.995177339281234, 48.749337168343892 ], [ 10.985316079252939, 48.746448873697311 ], [ 10.983813617470918, 48.723918758848576 ], [ 10.984208115821732, 48.692540645096699 ], [ 11.001346854241195, 48.667113833876421 ], [ 11.016644550255871, 48.652745270549438 ], [ 11.031905977773322, 48.649552706072456 ], [ 11.038328457017469, 48.647372487663539 ], [ 11.039859326723754, 48.645908213456536 ], [ 11.041385388616614, 48.628140349867294 ], [ 11.038670744878992, 48.626777694339822 ], [ 11.02294748495861, 48.620360328684335 ], [ 11.037664910866688, 48.608150069204292 ], [ 11.047413378385068, 48.603201472510541 ], [ 11.050975321903568, 48.601646118062177 ], [ 11.063439214520688, 48.601970146364167 ], [ 11.093827771056594, 48.604518289778682 ], [ 11.10769090339579, 48.608229017582381 ], [ 11.119693505945085, 48.607299297395556 ], [ 11.154991240727821, 48.594237051658347 ], [ 11.162219327957898, 48.588429886137035 ], [ 11.165144906599506, 48.580310155133006 ], [ 11.157462647795334, 48.563369337770389 ], [ 11.156555265154047, 48.562385577650552 ], [ 11.16422390729406, 48.5445170976759 ], [ 11.181884358752558, 48.538753618215665 ], [ 11.202232310045419, 48.52997590540113 ], [ 11.207531680200546, 48.526633014483807 ], [ 11.210657983779473, 48.514473562819639 ], [ 11.209808967240258, 48.504479772057103 ], [ 11.211421221471472, 48.499038200220077 ], [ 11.213954151385241, 48.495523982585198 ], [ 11.258143354901174, 48.467795311680455 ], [ 11.266847904201455, 48.464129494700728 ], [ 11.268752842567062, 48.464035338071596 ], [ 11.27307744941313, 48.466477985679013 ], [ 11.274751440539816, 48.472284060054477 ], [ 11.276788121067618, 48.473654545002141 ], [ 11.280635346763283, 48.474068069450389 ], [ 11.295397317713954, 48.474556328392985 ], [ 11.311576228422762, 48.452030737880762 ], [ 11.301589021039071, 48.449684813045984 ], [ 11.279880315107953, 48.446234377869338 ], [ 11.264173469583021, 48.444401865868201 ], [ 11.248048604418953, 48.44078058474112 ], [ 11.187767684571003, 48.418090673404812 ], [ 11.183531528136559, 48.411697000050488 ], [ 11.189351611600483, 48.398200550549241 ], [ 11.17547095935037, 48.376644076046595 ], [ 11.166455633138385, 48.368723596430335 ], [ 11.166083767950754, 48.368168395367206 ], [ 11.164751651869771, 48.343585551807877 ], [ 11.130038121700379, 48.323838244358853 ], [ 11.120698174918299, 48.314477724319886 ], [ 11.117670599877618, 48.30954075846784 ], [ 11.116952967771116, 48.288919901371294 ], [ 11.120397177497736, 48.275765159251101 ], [ 11.119170724109754, 48.271429564308768 ], [ 11.115318881545109, 48.267117705037698 ], [ 11.105584263215595, 48.261768334961481 ], [ 11.103904917465334, 48.260977399973058 ], [ 11.100539541732163, 48.259934903028665 ], [ 11.097188081091648, 48.260025070838644 ], [ 11.089090708100997, 48.269670590261235 ], [ 11.087265124009086, 48.271289647520554 ], [ 11.072393523464818, 48.281356513149511 ], [ 11.070586068118448, 48.281141133508285 ], [ 11.061993716210145, 48.274208573260658 ], [ 11.06047471100154, 48.272103527291272 ], [ 11.05992528847904, 48.271162322609037 ], [ 11.064943326992854, 48.266030064059592 ], [ 11.066874916079316, 48.257218427074214 ], [ 11.066602399908005, 48.255772357730386 ], [ 11.057050714338907, 48.240959943574133 ], [ 11.049809630036338, 48.239737690426637 ], [ 11.050142044968794, 48.197320129798982 ], [ 11.034658762153947, 48.19306329822377 ], [ 11.034256509529833, 48.194404772734998 ], [ 11.033122725716453, 48.195246344391755 ], [ 11.024475507333291, 48.198910916949039 ], [ 10.988927927406294, 48.207723154332619 ], [ 10.966802242840419, 48.200537300781164 ], [ 10.947424631054284, 48.212403827952954 ], [ 10.946693960203053, 48.219329185920664 ], [ 10.939323530214903, 48.225535084368971 ], [ 10.926018738310388, 48.235036111909402 ], [ 10.923438624634159, 48.235459620528282 ], [ 10.903904541932905, 48.237789577092954 ], [ 10.898190452685119, 48.211909794412215 ], [ 10.890480241677269, 48.191215492874335 ], [ 10.872032147607715, 48.16969483518308 ], [ 10.860502708034765, 48.157039751629512 ], [ 10.848425024963223, 48.147693517653686 ], [ 10.84374444708666, 48.146854229085967 ], [ 10.829604997340169, 48.147652684917624 ], [ 10.825257355251406, 48.15038949568244 ], [ 10.814145730077692, 48.152201778491971 ], [ 10.807643249911303, 48.15215725012785 ], [ 10.786498377570883, 48.149966993329762 ], [ 10.78627330145194, 48.143602953054732 ], [ 10.797263222745396, 48.115131070722192 ], [ 10.80211483109492, 48.105085724753899 ], [ 10.816299512064097, 48.104803050103392 ], [ 10.816281500176462, 48.101998435780914 ], [ 10.808226904259428, 48.086631748540121 ], [ 10.798173844901848, 48.081508731175227 ], [ 10.784150553519222, 48.076062557382315 ], [ 10.75656588802155, 48.046475795730117 ], [ 10.756735735622842, 48.040479817032754 ], [ 10.76062473489641, 48.035760475754628 ], [ 10.76554808229695, 48.034130679593957 ], [ 10.775776727175108, 48.03463575582726 ], [ 10.783736994558792, 48.036853667031252 ], [ 10.795437374750293, 48.039034013439938 ], [ 10.803163345981734, 48.037763470152733 ], [ 10.81563774879996, 48.030869788649177 ], [ 10.824276825872879, 48.003653618982426 ], [ 10.826577570924643, 47.995107606633681 ], [ 10.825680655246659, 47.991101350656976 ], [ 10.815468134960687, 47.972929548051418 ], [ 10.801788354546364, 47.953256631448156 ], [ 10.790004047592706, 47.937918616705275 ], [ 10.787250876779087, 47.938312367911635 ], [ 10.774024744965878, 47.931596190717876 ], [ 10.773000007493229, 47.930097735826358 ], [ 10.771097485128534, 47.888029800746956 ], [ 10.76722278664109, 47.85348168898544 ], [ 10.766927844995548, 47.843362442732932 ], [ 10.764426427452083, 47.839953306005064 ], [ 10.753470970035055, 47.817367029886739 ], [ 10.748619970078925, 47.797300740095359 ], [ 10.75485951315776, 47.789009196652287 ], [ 10.780392155005364, 47.780975049817393 ], [ 10.782891498753667, 47.775010214026985 ], [ 10.782029014182294, 47.773385804531983 ], [ 10.777153014987491, 47.766837806706683 ], [ 10.773464099661789, 47.765049741751874 ], [ 10.764691407311341, 47.767174323835086 ], [ 10.756299688583232, 47.76836265983173 ], [ 10.740356208922952, 47.768255179700496 ], [ 10.738170067870884, 47.765483019004144 ], [ 10.737520384880254, 47.763426447433901 ], [ 10.731490749481816, 47.7195482477049 ], [ 10.719091097519586, 47.713193443999096 ], [ 10.715835106761691, 47.705453610696125 ], [ 10.720746518761235, 47.699198191170375 ], [ 10.73297532517098, 47.689701099332325 ], [ 10.73862932471315, 47.686444782587905 ], [ 10.747654063553286, 47.686793082169501 ], [ 10.754915693702397, 47.688465757978996 ], [ 10.773614347604838, 47.700498081062634 ], [ 10.782582509500813, 47.706783670683485 ], [ 10.788734008708024, 47.711458499913448 ], [ 10.791715799511962, 47.715853961940205 ], [ 10.792747360482934, 47.716911608724658 ], [ 10.7955817092069, 47.718800116527909 ], [ 10.806987171719785, 47.724097641584947 ], [ 10.829759670097046, 47.727805495501869 ], [ 10.82996410935594, 47.71849473637868 ], [ 10.8205417054332, 47.711171855518323 ], [ 10.817856200636649, 47.709732903424282 ], [ 10.800982527200658, 47.69368608072881 ], [ 10.781843144696207, 47.670363936246638 ], [ 10.780431115573485, 47.667689718128102 ], [ 10.77832416565408, 47.662042831289654 ], [ 10.797176904102152, 47.65606213812741 ], [ 10.8236918599225, 47.657262512509128 ], [ 10.833662203106318, 47.660467433435471 ], [ 10.856724092871977, 47.661948890302085 ], [ 10.887428882768999, 47.655670438140497 ], [ 10.903613093954469, 47.637414781097725 ], [ 10.935846410265823, 47.616829417704089 ], [ 10.956937919320914, 47.616895580676946 ], [ 10.943920102525265, 47.5982410317446 ], [ 10.941924612091952, 47.596434043601519 ], [ 10.925164706147074, 47.586131433058853 ], [ 10.915938030681515, 47.583435500002196 ], [ 10.901218068732668, 47.579546181619484 ], [ 10.890342651279243, 47.579639704152605 ], [ 10.873238345701244, 47.572565290316795 ], [ 10.872046054523722, 47.562272064956097 ], [ 10.880200057590672, 47.541820166488201 ], [ 10.880948072597349, 47.540730331141901 ], [ 10.881857369488522, 47.539909488350467 ], [ 10.884388069557899, 47.537708164315092 ], [ 10.885366505541464, 47.53726441166112 ], [ 10.85327467941231, 47.534174866243511 ], [ 10.813128821123614, 47.526049720206721 ], [ 10.795935446074369, 47.521353834746613 ], [ 10.763696721153879, 47.527582720279753 ], [ 10.762597127218859, 47.530379738905935 ], [ 10.760407570172539, 47.532802006885113 ], [ 10.75740606158293, 47.5347679156175 ], [ 10.750797734824657, 47.537200391360798 ], [ 10.729655215703694, 47.538774642088512 ], [ 10.694994331885509, 47.544817547418468 ], [ 10.690584692491244, 47.554205916611501 ], [ 10.677620540782844, 47.558891263310279 ], [ 10.617507427266062, 47.566745251954366 ], [ 10.608040129926255, 47.566117090559473 ], [ 10.596341186802155, 47.564699428859619 ], [ 10.580648669362306, 47.55605040475622 ], [ 10.57918379929688, 47.553032437443406 ], [ 10.5816874939374, 47.550101419642161 ], [ 10.58180392916519, 47.548259359123804 ], [ 10.573647423073309, 47.533897973392676 ], [ 10.523497359098737, 47.53562758133473 ], [ 10.514621442182147, 47.536527647396959 ], [ 10.48943782101983, 47.540077226828494 ], [ 10.461045560521335, 47.552542152515272 ], [ 10.454578888068468, 47.55586417160891 ], [ 10.472065325941189, 47.569644554369795 ] ] ] } }
+]
+}
+
+});
