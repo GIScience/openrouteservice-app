@@ -137,7 +137,10 @@ angular.module('orsApp.route-service', [])
             const fetchExtrasAtPoint = (extrasObj, idx) => {
                 const extrasAtPoint = {};
                 angular.forEach(extrasObj, function(values, key) {
-                    if (key == 'traildifficulty' && profile == 'Pedestrian') {
+                    if (key == 'avgspeed') {
+                        let value = orsUtilsService.getSpeedRange(values[idx]);
+                        extrasAtPoint[key] = mappings[key][value].text;
+                    } else if(key == 'traildifficulty' && profile == 'Pedestrian') {
                         extrasAtPoint[key] = mappings[key][values[idx]].text_hiking;
                     } else if (mappings[key][values[idx]].type == -1) {
                         // green
@@ -228,7 +231,6 @@ angular.module('orsApp.route-service', [])
                 point_id += 1;
                 info_array.push(pointobject);
             }
-            console.log(info_array);
             return info_array;
         };
         /* process heightgraph geojson object */
@@ -260,7 +262,11 @@ angular.module('orsApp.route-service', [])
                         const to = item[1];
                         const geometry = routeString.slice(from, to + 1);
                         chunk.line = geometry;
-                        const typenumber = item[2];
+                        if (key == 'avgspeed') {
+                            typenumber = parseInt(orsUtilsService.getSpeedRange(item[2]));
+                        } else {
+                            typenumber = item[2];
+                        }
                         chunk.attributeType = typenumber;
                         extra.push(chunk);
                     }

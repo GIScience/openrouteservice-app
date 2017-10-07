@@ -321,15 +321,15 @@ angular.module('orsApp')
                 rangeTop: '17'
             },
             '17': {
-                text: '17-20 km/h',
+                text: '17-19 km/h',
                 color: '#a5cbff',
                 rangeBot: '17',
-                rangeTop: '21'
+                rangeTop: '20'
             },
-            '21': {
-                text: '21-24 km/h',
+            '20': {
+                text: '20-24 km/h',
                 color: '#8cbcff',
-                rangeBot: '21',
+                rangeBot: '20',
                 rangeTop: '25'
             },
             '25': {
