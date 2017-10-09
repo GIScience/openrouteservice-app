@@ -92,10 +92,10 @@ angular.module('orsApp').directive('orsMap', () => {
             }).addTo($scope.geofeatures.layerEmergencyBoundary);
             $scope.emergencyBoundaryShow = true;
             // set bounds 
-            // $scope.orsMap.setMaxBounds([
-            //     [47.070122, 9.129639],
-            //     [49.488884, 12.189331]
-            // ]);
+            $scope.orsMap.setMaxBounds([
+                [47.070122, 9.129639],
+                [49.488884, 12.189331]
+            ]);
             //add control to show and hide
             $scope.boundarySwitcher = L.control({
                 position: 'bottomright'
