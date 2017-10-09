@@ -27,6 +27,22 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
                         .toGeoJSON();
                     exportData = tokml(geojsonData);
                     break;
+                case 'rawjson':
+                    // removing nodes from the geometry data that is for sure not needed
+                    // by 3'rd party...
+                    delete geometry.extras;
+                    delete geometry.geometryRaw;
+                    delete geometry.$$hashKey;
+
+                    // MARQ24: point_information have an massive effect on the actual file size!
+                    // So I am not 100% sure if this should be included or not in the exported
+                    // json data - personally I do not have any need for this info on my mobile
+                    // client - that's why IMHO it can/should be removed from the raw output
+                    delete geometry.point_information;
+
+                    exportData = JSON.stringify(geometry);
+                    extension = '.json';
+                    break;
                 case 'geojson':
                     if (geomType == 'linestring') {
                         exportData = JSON.stringify(L.polyline(geometry)
