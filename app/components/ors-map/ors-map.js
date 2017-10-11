@@ -601,14 +601,15 @@ angular.module('orsApp')
                         lengths = L.GeometryUtil.accumulatedLengths(latlngs),
                         total_length = lengths[lengths.length - 1];
                     let portion = 0,
-                        found = false;
-                    let i;
+                        found = false,
+                        foundIndex = 0;
                     for (let i = 0, n = latlngs.length - 1; i < n; i++) {
                         let l1 = latlngs[i],
                             l2 = latlngs[i + 1];
                         portion = lengths[i];
                         if (L.GeometryUtil.belongsSegment(point, l1, l2)) {
                             portion += l1.distanceTo(point);
+                            foundIndex = i;
                             found = true;
                             break;
                         }
@@ -619,7 +620,7 @@ angular.module('orsApp')
                     return {
                         factor: portion / total_length,
                         latlng: point,
-                        index: i
+                        index: foundIndex
                     };
                 };
                 $scope.addPolylineHover = (actionPackage) => {
