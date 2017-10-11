@@ -17,6 +17,9 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
         }, {
             text: "GeoJSON (.geojson)",
             value: "geojson"
+        }, {
+            text: "RawJSON (.json)",
+            value: "rawjson"
         }];
         ctrl.selected_fileformat = ctrl.fileFormat[0]; //this is the default selected value on the dropdown menu
         ctrl.currentFileFormat = ctrl.selected_fileformat.value; //this is the default value for the current selected option
@@ -51,6 +54,7 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
                     ctrl.geojsonOptShow = false;
                     break;
                 case 'geojson':
+                case 'rawjson':
                     ctrl.gpxOptShow = false;
                     ctrl.tcxOptShow = false;
                     ctrl.kmlOptShow = false;
@@ -70,7 +74,12 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
         };
         ctrl.exportRoute = () => {
             let options = {};
-            let currentRoute = orsRouteService.data.routes[orsRouteService.getCurrentRouteIdx()].geometry;
+            let currentRoute = null;
+            if(ctrl.currentFileFormat == 'rawjson'){
+                currentRoute = orsRouteService.data.routes[orsRouteService.getCurrentRouteIdx()];
+            } else {
+                currentRoute = orsRouteService.data.routes[orsRouteService.getCurrentRouteIdx()].geometry;
+            }
             orsExportFactory.exportFile(currentRoute, 'linestring', options, ctrl.currentFileFormat, ctrl.filename);
         };
     }]
