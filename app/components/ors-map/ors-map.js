@@ -212,7 +212,7 @@ angular.module('orsApp')
                     setSettings();
                 };
                 $scope.baseLayers = {
-                    "MapSurfer": mapsurfer,
+                    //"MapSurfer": mapsurfer,
                     "OpenStreetMap": openstreetmap,
                     "OpenCycleMap": opencyclemap,
                     "Transport Dark": transportdark,
@@ -222,7 +222,8 @@ angular.module('orsApp')
                     "Hillshade": hillshade
                 };
                 $scope.mapModel.map.on("load", (evt) => {
-                    mapsurfer.addTo($scope.orsMap);
+                    //mapsurfer.addTo($scope.orsMap);
+                    openstreetmap.addTo($scope.orsMap);
                     $scope.mapModel.geofeatures.layerRoutePoints.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerRouteLines.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerRouteNumberedMarkers.addTo($scope.mapModel.map);
@@ -594,22 +595,17 @@ angular.module('orsApp')
                 */
                 $scope.locateOnLineCopiedFromGeometryUtil = (map, polyline, latlng) => {
                     const latlngs = polyline.getLatLngs();
-                    if (latlng.equals(latlngs[0]))
-                        return 0.0;
-                    if (latlng.equals(latlngs[latlngs.length-1]))
-                        return 1.0;
-
+                    if (latlng.equals(latlngs[0])) return 0.0;
+                    if (latlng.equals(latlngs[latlngs.length - 1])) return 1.0;
                     const point = L.GeometryUtil.closest(map, polyline, latlng, false),
                         lengths = L.GeometryUtil.accumulatedLengths(latlngs),
-                        total_length = lengths[lengths.length-1];
-
+                        total_length = lengths[lengths.length - 1];
                     let portion = 0,
                         found = false;
-
                     let i;
-                    for (i=0, n = latlngs.length-1; i < n; i++) {
+                    for (let i = 0, n = latlngs.length - 1; i < n; i++) {
                         let l1 = latlngs[i],
-                            l2 = latlngs[i+1];
+                            l2 = latlngs[i + 1];
                         portion = lengths[i];
                         if (L.GeometryUtil.belongsSegment(point, l1, l2)) {
                             portion += l1.distanceTo(point);
@@ -623,7 +619,8 @@ angular.module('orsApp')
                     return {
                         factor: portion / total_length,
                         latlng: point,
-                        index: i};
+                        index: i
+                    };
                 };
                 $scope.addPolylineHover = (actionPackage) => {
                     $scope.mapModel.map.closePopup();
