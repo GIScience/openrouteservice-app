@@ -588,23 +588,41 @@ angular.module('orsApp')
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     polyLine.setStyle(actionPackage.style);
                 };
-                /**
-                 * returns the closest point on a polyline relative to another point
-                 * additionally returns 
-                 * @param {Object} map - the leaflet map object
-                 * @param {}
-                 */
-                $scope.getPositionOnRoute = (map, polyLine, pointList, pos) => {
-                    const factor = L.GeometryUtil.locateOnLine(map, polyLine, pos);
-                    const pointOnRoute = L.GeometryUtil.interpolateOnLine(map, polyLine, factor);
-                    if (pointOnRoute.predecessor == -1) {
-                        pointOnRoute.predecessor = 0;
+                /*  copied from https://github.com/makinacorpus/Leaflet.GeometryUtil/blob/master/src/leaflet.geometryutil.js
+                    @param {L.PolyLine} polyline Polyline on which the latlng will be search
+                    @param {L.LatLng} latlng The position to search
+                */
+                $scope.locateOnLineCopiedFromGeometryUtil = (map, polyline, latlng) => {
+                    const latlngs = polyline.getLatLngs();
+                    if (latlng.equals(latlngs[0]))
+                        return 0.0;
+                    if (latlng.equals(latlngs[latlngs.length-1]))
+                        return 1.0;
+
+                    const point = L.GeometryUtil.closest(map, polyline, latlng, false),
+                        lengths = L.GeometryUtil.accumulatedLengths(latlngs),
+                        total_length = lengths[lengths.length-1];
+
+                    let portion = 0,
+                        found = false;
+
+                    for (let i=0, n = latlngs.length-1; i < n; i++) {
+                        let l1 = latlngs[i],
+                            l2 = latlngs[i+1];
+                        portion = lengths[i];
+                        if (L.GeometryUtil.belongsSegment(point, l1, l2)) {
+                            portion += l1.distanceTo(point);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        throw "Could not interpolate " + latlng.toString() + " within " + polyline.toString();
                     }
                     return {
-                        factor: factor,
-                        latlng: pointOnRoute.latLng,
-                        index: pointOnRoute.predecessor
-                    };
+                        factor: portion / total_length,
+                        latlng: point,
+                        index: i};
                 };
                 $scope.addPolylineHover = (actionPackage) => {
                     $scope.mapModel.map.closePopup();
@@ -641,7 +659,7 @@ angular.module('orsApp')
                  */
                 $scope.addHoverPoint = (mapModel, hoverPolyLine, pointList, latlng) => {
                     if ($scope.hoverPoint) $scope.hoverPoint.removeFrom($scope.mapModel.geofeatures.layerRouteDrag);
-                    let snappedPosition = $scope.getPositionOnRoute(mapModel.map, hoverPolyLine, pointList, latlng);
+                    let snappedPosition = $scope.locateOnLineCopiedFromGeometryUtil(mapModel.map, hoverPolyLine, latlng);
                     // center the point on the polyline
                     const hoverIcon = L.divIcon(lists.waypointIcons[5]);
                     hoverIcon.options.html = '<i class="fa fa-circle"></i>';
@@ -670,7 +688,7 @@ angular.module('orsApp')
                         })
                         .on("click", (e) => {
                             $scope.mapModel.map.closePopup();
-                            const snappedPosition = $scope.getPositionOnRoute(mapModel.map, hoverPolyLine, pointList, e.latlng);
+                            const snappedPosition = $scope.locateOnLineCopiedFromGeometryUtil(mapModel.map, hoverPolyLine, e.latlng);
                             //$scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
                             $scope.distanceAtInterpolatedPoint = snappedPosition.factor * pointList[pointList.length - 1].distance;
                             $scope.interpolatedRoutePoint = pointList[snappedPosition.index];
