@@ -606,7 +606,8 @@ angular.module('orsApp')
                     let portion = 0,
                         found = false;
 
-                    for (let i=0, n = latlngs.length-1; i < n; i++) {
+                    let i;
+                    for (i=0, n = latlngs.length-1; i < n; i++) {
                         let l1 = latlngs[i],
                             l2 = latlngs[i+1];
                         portion = lengths[i];
