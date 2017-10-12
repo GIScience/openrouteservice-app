@@ -221,7 +221,7 @@ angular.module('orsApp').directive('orsMap', () => {
                 "Hillshade": hillshade
             };
             $scope.mapModel.map.on("load", (evt) => {
-                mapsurfer.addTo($scope.orsMap);
+                openstreetmap.addTo($scope.orsMap);
                 $scope.mapModel.geofeatures.layerRoutePoints.addTo($scope.mapModel.map);
                 $scope.mapModel.geofeatures.layerRouteLines.addTo($scope.mapModel.map);
                 $scope.mapModel.geofeatures.layerRouteNumberedMarkers.addTo($scope.mapModel.map);
