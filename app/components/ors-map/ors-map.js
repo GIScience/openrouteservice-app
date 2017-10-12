@@ -87,10 +87,10 @@ angular.module('orsApp').directive('orsMap', () => {
             });
             //Emergency boundaries from disaster ors
             //add land shape and show
-            L.geoJSON(lists.boundary, {
-                style: lists.layerStyles.boundary()
-            }).addTo($scope.geofeatures.layerEmergencyBoundary);
-            $scope.emergencyBoundaryShow = true;
+            // L.geoJSON(lists.boundary, {
+            //     style: lists.layerStyles.boundary()
+            // }).addTo($scope.geofeatures.layerEmergencyBoundary);
+            $scope.emergencyBoundaryShow = false;
             // set bounds 
             $scope.orsMap.setMaxBounds([
                 [47.070122, 9.129639],
