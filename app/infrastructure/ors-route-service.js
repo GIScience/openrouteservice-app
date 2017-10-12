@@ -262,6 +262,7 @@ angular.module('orsApp.route-service', [])
                         const to = item[1];
                         const geometry = routeString.slice(from, to + 1);
                         chunk.line = geometry;
+                        var typenumber;
                         if (key == 'avgspeed') {
                             typenumber = parseInt(orsUtilsService.getSpeedRange(item[2]));
                         } else {
