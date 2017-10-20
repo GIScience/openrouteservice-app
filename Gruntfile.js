@@ -231,10 +231,10 @@ module.exports = function(grunt) {
                 constants: {
                     ENV: {
                         name: 'local',
-                        geocoding: 'http://localhost:8082/openrouteservice-4.3.0/geocode',
-                        routing: 'http://localhost:8082/openrouteservice-4.3.0/routes',
-                        analyse: 'http://localhost:8082/openrouteservice-4.3.0/isochrones',
-                        places: 'http://localhost:8082/openrouteservice-4.3.0/locations',
+                        geocoding: 'http://localhost:8082/openrouteservice-4.4.0/geocode',
+                        routing: 'http://localhost:8082/openrouteservice-4.4.0/routes',
+                        analyse: 'http://localhost:8082/openrouteservice-4.4.0/isochrones',
+                        places: 'http://localhost:8082/openrouteservice-4.4.0/locations',
                         shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
                     }
                 },

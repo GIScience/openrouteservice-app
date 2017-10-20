@@ -33,6 +33,14 @@ angular.module('orsApp')
                     transparent: true,
                     attribution: '<a href="http://srtm.csi.cgiar.org/">SRTM</a>; ASTER GDEM is a product of <a href="http://www.meti.go.jp/english/press/data/20090626_03.html">METI</a> and <a href="https://lpdaac.usgs.gov/products/aster_policies">NASA</a>'
                 });
+                const bkgtopplus = L.tileLayer.wms(orsNamespaces.layerBkgTopPlus.url, {
+                    layers: 'web',
+                    attribution: '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2017, <a href="http://sg.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>'
+                });
+                const bkgtopplusgrey = L.tileLayer.wms(orsNamespaces.layerBkgTopPlus.url, {
+                    layers: 'web_grau',
+                    attribution: '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2017, <a href="http://sg.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>'
+                });
                 $scope.geofeatures = {
                     layerLocationMarker: L.featureGroup(),
                     layerRoutePoints: L.featureGroup(),
@@ -212,7 +220,9 @@ angular.module('orsApp')
                     setSettings();
                 };
                 $scope.baseLayers = {
-                    //"MapSurfer": mapsurfer,
+                    "MapSurfer": mapsurfer,
+                    "TopPlus-Web-Open": bkgtopplus,
+                    "TopPlus-Web-Open Greyscale": bkgtopplusgrey,
                     "OpenStreetMap": openstreetmap,
                     "OpenCycleMap": opencyclemap,
                     "Transport Dark": transportdark,
@@ -222,8 +232,8 @@ angular.module('orsApp')
                     "Hillshade": hillshade
                 };
                 $scope.mapModel.map.on("load", (evt) => {
-                    //mapsurfer.addTo($scope.orsMap);
-                    openstreetmap.addTo($scope.orsMap);
+                    mapsurfer.addTo($scope.orsMap);
+                    //openstreetmap.addTo($scope.orsMap);
                     $scope.mapModel.geofeatures.layerRoutePoints.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerRouteLines.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerRouteNumberedMarkers.addTo($scope.mapModel.map);

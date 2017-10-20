@@ -80,5 +80,9 @@ angular.module('orsApp').constant('orsNamespaces', {
     },
     overlayHillshade: {
         url: 'https://korona.geog.uni-heidelberg.de/tiles/asterh/x={x}&y={y}&z={z}'
+    },
+    layerBkgTopPlus: {
+        GetCapabilities: 'http://sg.geodatenzentrum.de/wms_topplus_web_open?request=GetCapabilities&service=wms',
+        url: 'http://sg.geodatenzentrum.de/wms_topplus_web_open?'
     }
 });
