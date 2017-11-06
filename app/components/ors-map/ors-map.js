@@ -1156,7 +1156,7 @@ angular.module('orsApp')
                                 request.promise.then(function(response) {
                                     // intermediate state is needed as we are using a tri-state checkbox
                                     $scope.loading = $scope.showSubcategories = $scope.isIntermediate = false;
-                                    $scope.show = $scope.disabled = true;
+                                    $scope.show = $scope.disabled = false;
                                     $scope.categories = {};
                                     $scope.subcategoriesLookup = {};
                                     angular.forEach(response.categories, (categoryObj, categoryName) => {
