@@ -147,7 +147,7 @@ angular.module('orsApp')
                 });
                 // mapOptionsInitSubject is a replay subject and only subscribes once
                 let mapInitSubject = orsSettingsFactory.mapOptionsInitSubject.subscribe(settings => {
-                    console.error('ONCE', JSON.stringify(settings))
+                    console.error('ONCE', JSON.stringify(settings));
                     if (settings.lat && settings.lng && settings.zoom) {
                         $scope.orsMap.setView({
                             lat: settings.lat,
@@ -308,7 +308,7 @@ angular.module('orsApp')
                     $scope.setMapOptions();
                 });
                 $scope.mapModel.map.on('mouseover', (e) => {
-                    console.log(true)
+                    console.log(true);
                 });
                 $scope.setMapOptions = () => {
                     const mapCenter = $scope.mapModel.map.getCenter();
@@ -364,7 +364,7 @@ angular.module('orsApp')
                         waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="location-number-circle"><div class="via-number-text"></div></div></i>';
                     } else if (idx > 0 && idx < waypointsLength - 1) {
                         waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="via-number-circle"><div class="via-number-text">' + idx + '</div></div></i>';
-                    } else if (idx == 0) {
+                    } else if (idx === 0) {
                         waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="start-number-circle"><div class="via-number-text"> ' + 'A' + ' </div></div></i>';
                     } else {
                         waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="end-number-circle"><div class="via-number-text"> ' + 'B' + ' </div></div></i>';
@@ -421,7 +421,7 @@ angular.module('orsApp')
                     if (setCnt == 1) $scope.clearLayer('layerRouteLines');
                 };
                 $scope.reshuffleIndicesText = (actionPackage) => {
-                    console.log(actionPackage)
+                    console.log(actionPackage);
                     let i = 0;
                     $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
                         let markerIcon;
@@ -479,7 +479,7 @@ angular.module('orsApp')
                         .length;
                     if (actionPackage.featureId > 0 && actionPackage.featureId < waypointsLength - 1) {
                         waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="highlight-number-circle"><div class="via-number-text">' + actionPackage.featureId + '</div></div></i>';
-                    } else if (actionPackage.featureId == 0) {
+                    } else if (actionPackage.featureId === 0) {
                         waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="highlight-number-circle"><div class="via-number-text">' + 'A' + '</div></div></i>';
                     } else {
                         waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="highlight-number-circle"><div class="via-number-text">' + 'B' + '</div></div></i>';
@@ -796,7 +796,7 @@ angular.module('orsApp')
                 };
                 $scope.opacityIsochrones = () => {
                     const mapPanes = $scope.mapModel.map.getPanes();
-                    console.log(mapPanes)
+                    console.log(mapPanes);
                     for (let pane in mapPanes) {
                         if (pane.startsWith("isochronesPane")) {
                             let svg = d3.select(mapPanes[pane]);
@@ -1056,9 +1056,9 @@ angular.module('orsApp')
                                     }
                                     if (cObj.selected.length === 0) {
                                         angular.forEach(cObj.subCategories, function(scObj, index) {
-                                            console.log(scObj)
+                                            console.log(scObj);
                                             if (scObj.selected) {
-                                                console.log(index)
+                                                console.log(index);
                                                 settings.subCategories.push(index);
                                             }
                                         });
@@ -1261,6 +1261,7 @@ angular.module('orsApp')
                             break;
                         case 41:
                             $scope.addPolylineHover(params._package);
+                            break;
                         default:
                             break;
                     }

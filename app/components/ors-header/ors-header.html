@@ -5,17 +5,9 @@
         </a>
     </li>
     <li>
-        <div class="ui simple dropdown item">
+        <div class="ui simple dropdown item" ng-click="$ctrl.showSettings = !$ctrl.showSettings" tooltips tooltip-template="{{('SETTINGS' | translate)}}" tooltip-side="bottom">
             <i class="fa fa-cog fa-lg">
             </i>
-            <div class="menu">
-                <div class="item" ng-click="$ctrl.showSettings = !$ctrl.showSettings">
-                    <i class="fa fa-fw fa-cog">
-                    </i>
-                    <span ng-bind-html="('SETTINGS' | translate)">
-                    </span>
-                </div>
-            </div>
         </div>
     </li>
     <li>
