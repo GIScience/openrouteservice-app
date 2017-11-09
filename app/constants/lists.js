@@ -571,6 +571,25 @@ angular.module('orsApp')
             8: 'layerLocations',
             9: 'layerRouteDrag'
         },
+        baseLayers: {
+            'MapSurfer': 0,
+            'TopPlus-Web-Open': 1,
+            'TopPlus-Web-Open Greyscale': 2,
+            'OpenStreetMap': 3,
+            'OpenCycleMap': 4,
+            'Transport Dark': 5,
+            'Outdoors': 6
+        },
+        reverseBaseLayers: {
+            0: 'MapSurfer',
+            1: 'TopPlus-Web-Open',
+            2: 'TopPlus-Web-Open Greyscale',
+            3: 'OpenStreetMap',
+            4: 'OpenCycleMap',
+            5: 'Transport Dark',
+            6: 'Outdoors',
+            7: 'Hillshade'
+        },
         layerStyles: {
             route: function() {
                 return {
