@@ -32,16 +32,16 @@ angular.module('orsApp').constant('orsNamespaces', {
      * metadata used when generating (export) files on the openrouteservice
      */
     metadata: {
-        name: 'OpenRouteService Route',
-        description: 'Route exported using GIScience Universität Heidelberg OpenRouteService',
+        name: 'Openrouteservice Route',
+        description: 'Route exported using GIScience Universität Heidelberg Openrouteservice',
         authorName: 'GIScience Universität Heidelberg',
         authorEmailId: 'some_person',
         authorEmailDomain: 'geog.uni-heidelberg.de',
-        copyright: 'OpenRouteService - GIScience Universität Heidelberg',
+        copyright: 'Openrouteservice - GIScience Universität Heidelberg',
         license: 'MIT',
         link: 'http://www.geog.uni-heidelberg.de/gis/index_en.html',
-        keywords: 'OpenRouteService. Routing. GIS. Universität Heidelberg',
-        src: 'Route point logged using OpenRouteService'
+        keywords: 'Openrouteservice. Routing. GIS. Universität Heidelberg',
+        src: 'Route point logged using Openrouteservice'
     },
     /**
      * map layers used on the openlayers map
