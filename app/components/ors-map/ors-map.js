@@ -137,17 +137,15 @@ angular.module('orsApp').directive('orsMap', () => {
                     const el = angular.element(document.querySelector('.js-toggle')).empty();
                 }
             });
-            //
-            $scope.basecount = 0;
+            $scope.basecount = orsCookiesFactory.getMapOptions() ? orsCookiesFactory.getMapOptions().bl : 0 ;
             // mapOptionsInitSubject is a replay subject and only subscribes once
             let mapInitSubject = orsSettingsFactory.mapOptionsInitSubject.subscribe(settings => {
                 console.error('ONCE', JSON.stringify(settings));
-                if (settings.lat && settings.lng && settings.zoom && settings.bl) {
+                if (settings.lat && settings.lng && settings.zoom) {
                     $scope.orsMap.setView({
                         lat: settings.lat,
                         lng: settings.lng
                     }, settings.zoom);
-                    $scope.basecount = 4;
                 } else {
                     // Heidelberg
                     $scope.orsMap.setView([49.409445, 8.692953], 13);
@@ -163,7 +161,6 @@ angular.module('orsApp').directive('orsMap', () => {
                         $timeout(function() {
                             $scope.mapModel.map.addControl($scope.welcomeMsgBox);
                         }, 500);
-                        $scope.basecount = 5;
                     }
                 }
                 console.log($scope.basecount);
@@ -227,7 +224,6 @@ angular.module('orsApp').directive('orsMap', () => {
                 "Hillshade": hillshade
             };
             $scope.mapModel.map.on("load", (evt) => {
-                console.log($scope.basecount)
                 $scope.baseLayers[lists.reverseBaseLayers[$scope.basecount]].addTo($scope.orsMap);
                 $scope.mapModel.geofeatures.layerRoutePoints.addTo($scope.mapModel.map);
                 $scope.mapModel.geofeatures.layerRouteLines.addTo($scope.mapModel.map);
@@ -260,9 +256,9 @@ angular.module('orsApp').directive('orsMap', () => {
                             console.log(key)
                             $scope.basecount = lists.baseLayers[key];
                         }
-                        // basecount++;
                     });
                     console.log($scope.basecount)
+                    $scope.setMapOptions();
                 });
             });
             /**
@@ -317,7 +313,6 @@ angular.module('orsApp').directive('orsMap', () => {
                     zoom: mapZoom,
                     bl: $scope.basecount
                 };
-                console.log(mapOptions)
                 orsCookiesFactory.setMapOptions(mapOptions);
                 // update permalink 
                 let userOptions = orsSettingsFactory.getUserOptions();
@@ -419,7 +414,6 @@ angular.module('orsApp').directive('orsMap', () => {
                 if (setCnt == 1) $scope.clearLayer('layerRouteLines');
             };
             $scope.reshuffleIndicesText = (actionPackage) => {
-                console.log(actionPackage);
                 let i = 0;
                 $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
                     let markerIcon;
