@@ -9,36 +9,43 @@ angular.module('orsApp').directive('orsMap', () => {
         controller: ['$scope', '$filter', '$compile', '$timeout', 'orsSettingsFactory', 'orsLocationsService', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', 'lists', 'globals', 'mappings', 'orsNamespaces', ($scope, $filter, $compile, $timeout, orsSettingsFactory, orsLocationsService, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsCookiesFactory, lists, globals, mappings, orsNamespaces) => {
             $scope.translateFilter = $filter('translate');
             const mapsurfer = L.tileLayer(orsNamespaces.layerMapSurfer.url, {
-                attribution: orsNamespaces.layerMapSurfer.attribution
+                attribution: orsNamespaces.layerMapSurfer.attribution,
+                id: 0
+            });
+            const bkgtopplus = L.tileLayer.wms(orsNamespaces.layerBkgTopPlus.url, {
+                layers: 'web',
+                attribution: '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2017, <a href="http://sg.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>',
+                id: 1
+            });
+            const bkgtopplusgrey = L.tileLayer.wms(orsNamespaces.layerBkgTopPlus.url, {
+                layers: 'web_grau',
+                attribution: '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2017, <a href="http://sg.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>',
+                id: 2
             });
             const openstreetmap = L.tileLayer(orsNamespaces.layerOSM.url, {
-                attribution: orsNamespaces.layerOSM.attribution
+                attribution: orsNamespaces.layerOSM.attribution,
+                id: 3
             });
             const opencyclemap = L.tileLayer(orsNamespaces.layerOSMCycle.url, {
-                attribution: orsNamespaces.layerOSMCycle.attribution
+                attribution: orsNamespaces.layerOSMCycle.attribution,
+                id: 4
             });
             const transportdark = L.tileLayer(orsNamespaces.layerOSMDark.url, {
-                attribution: orsNamespaces.layerOSMDark.attribution
+                attribution: orsNamespaces.layerOSMDark.attribution,
+                id: 5
             });
             const outdoors = L.tileLayer(orsNamespaces.layerOutdoors.url, {
-                attribution: orsNamespaces.layerOutdoors.attribution
+                attribution: orsNamespaces.layerOutdoors.attribution,
+                id: 6
             });
-            const stamen = L.tileLayer(orsNamespaces.layerStamen.url, {
-                attribution: orsNamespaces.layerStamen.attribution
-            });
+            // const stamen = L.tileLayer(orsNamespaces.layerStamen.url, {
+            //     attribution: orsNamespaces.layerStamen.attribution,
+            // });
             const hillshade = L.tileLayer(orsNamespaces.overlayHillshade.url, {
                 format: 'image/png',
                 opacity: 0.45,
                 transparent: true,
-                attribution: '<a href="http://srtm.csi.cgiar.org/">SRTM</a>; ASTER GDEM is a product of <a href="http://www.meti.go.jp/english/press/data/20090626_03.html">METI</a> and <a href="https://lpdaac.usgs.gov/products/aster_policies">NASA</a>'
-            });
-            const bkgtopplus = L.tileLayer.wms(orsNamespaces.layerBkgTopPlus.url, {
-                layers: 'web',
-                attribution: '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2017, <a href="http://sg.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>'
-            });
-            const bkgtopplusgrey = L.tileLayer.wms(orsNamespaces.layerBkgTopPlus.url, {
-                layers: 'web_grau',
-                attribution: '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2017, <a href="http://sg.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>'
+                attribution: '<a href="http://srtm.csi.cgiar.org/">SRTM</a>; ASTER GDEM is a product of <a href="http://www.meti.go.jp/english/press/data/20090626_03.html">METI</a> and <a href="https://lpdaac.usgs.gov/products/aster_policies">NASA</a>',
             });
             $scope.geofeatures = {
                 layerLocationMarker: L.featureGroup(),
@@ -137,7 +144,8 @@ angular.module('orsApp').directive('orsMap', () => {
                     const el = angular.element(document.querySelector('.js-toggle')).empty();
                 }
             });
-            $scope.basecount = orsCookiesFactory.getMapOptions() ? orsCookiesFactory.getMapOptions().bl : 0 ;
+            // set default map style from cookies
+            $scope.mapStyleId = orsCookiesFactory.getMapOptions() ? orsCookiesFactory.getMapOptions().msi : 0;
             // mapOptionsInitSubject is a replay subject and only subscribes once
             let mapInitSubject = orsSettingsFactory.mapOptionsInitSubject.subscribe(settings => {
                 console.error('ONCE', JSON.stringify(settings));
@@ -163,7 +171,6 @@ angular.module('orsApp').directive('orsMap', () => {
                         }, 500);
                     }
                 }
-                console.log($scope.basecount);
                 mapInitSubject.dispose();
             });
             // sign up for API
@@ -224,7 +231,12 @@ angular.module('orsApp').directive('orsMap', () => {
                 "Hillshade": hillshade
             };
             $scope.mapModel.map.on("load", (evt) => {
-                $scope.baseLayers[lists.reverseBaseLayers[$scope.basecount]].addTo($scope.orsMap);
+                // add mapstyle 
+                angular.forEach($scope.baseLayers, (value, key) => {
+                    if (value.options.id == $scope.mapStyleId) {
+                        $scope.baseLayers[key].addTo($scope.orsMap);
+                    }
+                });
                 $scope.mapModel.geofeatures.layerRoutePoints.addTo($scope.mapModel.map);
                 $scope.mapModel.geofeatures.layerRouteLines.addTo($scope.mapModel.map);
                 $scope.mapModel.geofeatures.layerRouteNumberedMarkers.addTo($scope.mapModel.map);
@@ -249,15 +261,11 @@ angular.module('orsApp').directive('orsMap', () => {
                 $scope.mapModel.map.on('editable:vertex:dragend', setSettings);
                 $scope.mapModel.map.on('editable:vertex:altclick', deleteVertex);
                 $scope.mapModel.map.on('baselayerchange', function(e) {
-                    console.log(e, $scope.basecount)
                     angular.forEach($scope.baseLayers, (value, key) => {
                         if (e.name == key) {
-                            console.log($scope.basecount);
-                            console.log(key)
-                            $scope.basecount = lists.baseLayers[key];
+                            $scope.mapStyleId = value.options.id;
                         }
                     });
-                    console.log($scope.basecount)
                     $scope.setMapOptions();
                 });
             });
@@ -311,7 +319,7 @@ angular.module('orsApp').directive('orsMap', () => {
                     lat: mapCenter.lat,
                     lng: mapCenter.lng,
                     zoom: mapZoom,
-                    bl: $scope.basecount
+                    msi: $scope.mapStyleId
                 };
                 orsCookiesFactory.setMapOptions(mapOptions);
                 // update permalink 

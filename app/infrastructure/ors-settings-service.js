@@ -36,7 +36,6 @@ angular.module('orsApp.settings-service', [])
          * @param {Object} options- Consists of routing instruction language and units km/mi
          */
         orsSettingsFactory.setUserOptions = (params) => {
-            console.log(JSON.stringify(params));
             if (params === undefined) return;
             //get current settings and add new params/replace existing params
             let set = orsSettingsFactory.userOptionsSubject.getValue();
@@ -44,7 +43,6 @@ angular.module('orsApp.settings-service', [])
                 set[k] = params[k];
             }
             orsSettingsFactory.userOptionsSubject.onNext(set);
-            console.log(JSON.stringify(set));
             orsSettingsFactory.mapOptionsInitSubject.onNext(set);
         };
         /** 
