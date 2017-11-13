@@ -559,18 +559,6 @@ angular.module('orsApp')
             }
             return rev;
         },
-        layers: {
-            0: 'layerRoutePoints',
-            1: 'layerRouteLines',
-            2: 'layerEmph',
-            3: 'layerAccessibilityAnalysis',
-            4: 'layerTracks',
-            5: 'layerAccessibilityAnalysisNumberedMarkers',
-            6: 'layerRouteNumberedMarkers',
-            7: 'layerRouteExtras',
-            8: 'layerLocations',
-            9: 'layerRouteDrag'
-        },
         layerStyles: {
             route: function() {
                 return {
