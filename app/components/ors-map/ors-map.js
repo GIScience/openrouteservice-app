@@ -735,8 +735,8 @@ angular.module('orsApp').directive('orsMap', () => {
             $scope.toggleIsochroneIntervals = (actionPackage) => {
                 const toggle = actionPackage.extraInformation.toggle;
                 const idx = actionPackage.extraInformation.idx;
-                const iIdx = actionPackage.extraInformation.iIdx;
-                $scope.mapModel.geofeatures[actionPackage.layerCode].getLayers()[idx].getLayers()[iIdx].setStyle({
+                const revIIdx = actionPackage.extraInformation.revIIdx;
+                $scope.mapModel.geofeatures[actionPackage.layerCode].getLayers()[idx].getLayers()[revIIdx].setStyle({
                     opacity: toggle === true ? 0 : 1,
                     weight: toggle === true ? 0 : 1,
                     fillOpacity: toggle === true ? 0 : 1

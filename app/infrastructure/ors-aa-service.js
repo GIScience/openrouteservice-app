@@ -55,12 +55,12 @@
                     orsMapFactory.mapServiceSubject.onNext(action);
                 }
             };
-            orsAaService.toggleInterval = (idx, iIdx, toggle) => {
+            orsAaService.toggleInterval = (idx, revIIdx, toggle) => {
                 let action;
                 action = orsObjectsFactory.createMapAction(32, lists.layers[3], undefined, idx, undefined, {
                     toggle: toggle,
                     idx: idx,
-                    iIdx: iIdx
+                    revIIdx: revIIdx
                 });
                 orsMapFactory.mapServiceSubject.onNext(action);
             };
