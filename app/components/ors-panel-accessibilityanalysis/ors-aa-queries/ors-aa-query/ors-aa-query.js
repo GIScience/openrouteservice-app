@@ -94,10 +94,12 @@ angular.module('orsApp.ors-aa-query', [])
             ctrl.toggleInterval = (intervalIdx, event) => {
                 event.preventDefault();
                 event.stopPropagation();
+                let reverseIndex = ctrl.attributes.info.query.ranges.length -1 - intervalIdx;
                 ctrl.onToggleInterval({
                     obj: {
                         isoidx: ctrl.isochroneIdx,
                         isoIidx: intervalIdx,
+                        revIsoIidx: reverseIndex,
                         toggle: ctrl.showIntervals[intervalIdx]
                     }
                 });
