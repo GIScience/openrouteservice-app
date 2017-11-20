@@ -71,16 +71,6 @@ angular.module('orsApp')
                     map: $scope.orsMap,
                     geofeatures: $scope.geofeatures
                 };
-                $scope.locateControl = L.control.locate({
-                        locateOptions: {
-                            enableHighAccuracy: true,
-                            showPopup: false,
-                            strings: {
-                                title: ""
-                            }
-                        }
-                    })
-                    .addTo($scope.mapModel.map);
                 /* HEIGHTGRAPH CONTROLLER */
                 $scope.hg = L.control.heightgraph({
                     width: 800,
@@ -134,6 +124,17 @@ angular.module('orsApp')
                 };
                 $scope.measureControl = new L.control.measure(measureControlOptions)
                     .addTo($scope.mapModel.map);
+                $scope.locateControl = L.control.locate({
+                        locateOptions: {
+                            enableHighAccuracy: true,
+                            showPopup: false,
+                            strings: {
+                                title: ""
+                            }
+                        },
+                        position: 'bottomleft'
+                    })
+                    .addTo($scope.mapModel.map);
                 // if user settings change..
                 orsSettingsFactory.userOptionsSubject.subscribe(settings => {
                     if (settings.language) {
@@ -172,6 +173,17 @@ angular.module('orsApp')
                     }
                     mapInitSubject.dispose();
                 });
+                // brand
+                // logos
+                $scope.brand = L.control({
+                    position: 'topleft'
+                });
+                $scope.brand.onAdd = function(map) {
+                    var div = L.DomUtil.create('div', 'ors-brand');
+                    div.innerHTML = '<a href="http://www.geog.uni-heidelberg.de/gis/heigit.html" target="_blank"><img src="img/brand.png"></a>';
+                    return div;
+                };
+                $scope.mapModel.map.addControl($scope.brand);
                 // sign up for API
                 $scope.signupBox = L.control({
                     position: 'topleft'
