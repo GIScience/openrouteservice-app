@@ -36,7 +36,6 @@ angular.module('orsApp.settings-service', [])
          * @param {Object} options- Consists of routing instruction language and units km/mi
          */
         orsSettingsFactory.setUserOptions = (params) => {
-            console.log(JSON.stringify(params))
             if (params === undefined) return;
             //get current settings and add new params/replace existing params
             let set = orsSettingsFactory.userOptionsSubject.getValue();
@@ -44,7 +43,6 @@ angular.module('orsApp.settings-service', [])
                 set[k] = params[k];
             }
             orsSettingsFactory.userOptionsSubject.onNext(set);
-            console.log(JSON.stringify(set))
             orsSettingsFactory.mapOptionsInitSubject.onNext(set);
         };
         /** 
@@ -238,7 +236,7 @@ angular.module('orsApp.settings-service', [])
             if (!fromHover) {
                 if (!init) {
                     const set = orsSettingsFactory[currentSettingsObj].getValue();
-                    if (idx == 0) {
+                    if (idx === 0) {
                         idx = 0;
                     } else if (idx == 2) {
                         idx = set.waypoints.length - 1;
@@ -316,7 +314,7 @@ angular.module('orsApp.settings-service', [])
                 orsSettingsFactory[currentSettingsObj].value.waypoints.splice(idx, 0, wp);
                 orsSettingsFactory.focusIdx = false;
             } else {
-                if (idx == 0) {
+                if (idx === 0) {
                     orsSettingsFactory[currentSettingsObj].value.waypoints[idx] = wp;
                 } else if (idx == 2) {
                     orsSettingsFactory[currentSettingsObj].value.waypoints[orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1] = wp;
@@ -362,7 +360,7 @@ angular.module('orsApp.settings-service', [])
          */
         orsSettingsFactory.getIconIdx = (idx) => {
             let iconIdx;
-            if (idx == 0) {
+            if (idx === 0) {
                 iconIdx = 0;
             } else if (idx == orsSettingsFactory[currentSettingsObj].getValue()
                 .waypoints.length - 1) {

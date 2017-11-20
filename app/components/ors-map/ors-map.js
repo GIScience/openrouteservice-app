@@ -10,36 +10,43 @@ angular.module('orsApp')
             controller: ['$scope', '$filter', '$compile', '$timeout', 'orsSettingsFactory', 'orsLocationsService', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', 'lists', 'globals', 'mappings', 'orsNamespaces', ($scope, $filter, $compile, $timeout, orsSettingsFactory, orsLocationsService, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsCookiesFactory, lists, globals, mappings, orsNamespaces) => {
                 $scope.translateFilter = $filter('translate');
                 const mapsurfer = L.tileLayer(orsNamespaces.layerMapSurfer.url, {
-                    attribution: orsNamespaces.layerMapSurfer.attribution
+                    attribution: orsNamespaces.layerMapSurfer.attribution,
+                    id: 0
+                });
+                const bkgtopplus = L.tileLayer.wms(orsNamespaces.layerBkgTopPlus.url, {
+                    layers: 'web',
+                    attribution: '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2017, <a href="http://sg.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>',
+                    id: 1
+                });
+                const bkgtopplusgrey = L.tileLayer.wms(orsNamespaces.layerBkgTopPlus.url, {
+                    layers: 'web_grau',
+                    attribution: '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2017, <a href="http://sg.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>',
+                    id: 2
                 });
                 const openstreetmap = L.tileLayer(orsNamespaces.layerOSM.url, {
-                    attribution: orsNamespaces.layerOSM.attribution
+                    attribution: orsNamespaces.layerOSM.attribution,
+                    id: 3
                 });
                 const opencyclemap = L.tileLayer(orsNamespaces.layerOSMCycle.url, {
-                    attribution: orsNamespaces.layerOSMCycle.attribution
+                    attribution: orsNamespaces.layerOSMCycle.attribution,
+                    id: 4
                 });
                 const transportdark = L.tileLayer(orsNamespaces.layerOSMDark.url, {
-                    attribution: orsNamespaces.layerOSMDark.attribution
+                    attribution: orsNamespaces.layerOSMDark.attribution,
+                    id: 5
                 });
                 const outdoors = L.tileLayer(orsNamespaces.layerOutdoors.url, {
-                    attribution: orsNamespaces.layerOutdoors.attribution
+                    attribution: orsNamespaces.layerOutdoors.attribution,
+                    id: 6
                 });
-                const stamen = L.tileLayer(orsNamespaces.layerStamen.url, {
-                    attribution: orsNamespaces.layerStamen.attribution
-                });
+                // const stamen = L.tileLayer(orsNamespaces.layerStamen.url, {
+                //     attribution: orsNamespaces.layerStamen.attribution,
+                // });
                 const hillshade = L.tileLayer(orsNamespaces.overlayHillshade.url, {
                     format: 'image/png',
                     opacity: 0.45,
                     transparent: true,
-                    attribution: '<a href="http://srtm.csi.cgiar.org/">SRTM</a>; ASTER GDEM is a product of <a href="http://www.meti.go.jp/english/press/data/20090626_03.html">METI</a> and <a href="https://lpdaac.usgs.gov/products/aster_policies">NASA</a>'
-                });
-                const bkgtopplus = L.tileLayer.wms(orsNamespaces.layerBkgTopPlus.url, {
-                    layers: 'web',
-                    attribution: '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2017, <a href="http://sg.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>'
-                });
-                const bkgtopplusgrey = L.tileLayer.wms(orsNamespaces.layerBkgTopPlus.url, {
-                    layers: 'web_grau',
-                    attribution: '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2017, <a href="http://sg.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>'
+                    attribution: '<a href="http://srtm.csi.cgiar.org/">SRTM</a>; ASTER GDEM is a product of <a href="http://www.meti.go.jp/english/press/data/20090626_03.html">METI</a> and <a href="https://lpdaac.usgs.gov/products/aster_policies">NASA</a>',
                 });
                 $scope.geofeatures = {
                     layerLocationMarker: L.featureGroup(),
@@ -71,6 +78,16 @@ angular.module('orsApp')
                     map: $scope.orsMap,
                     geofeatures: $scope.geofeatures
                 };
+                $scope.locateControl = L.control.locate({
+                        locateOptions: {
+                            enableHighAccuracy: true,
+                            showPopup: false,
+                            strings: {
+                                title: ""
+                            }
+                        }
+                    })
+                    .addTo($scope.mapModel.map);
                 /* HEIGHTGRAPH CONTROLLER */
                 $scope.hg = L.control.heightgraph({
                     width: 800,
@@ -124,17 +141,6 @@ angular.module('orsApp')
                 };
                 $scope.measureControl = new L.control.measure(measureControlOptions)
                     .addTo($scope.mapModel.map);
-                $scope.locateControl = L.control.locate({
-                        locateOptions: {
-                            enableHighAccuracy: true,
-                            showPopup: false,
-                            strings: {
-                                title: ""
-                            }
-                        },
-                        position: 'bottomleft'
-                    })
-                    .addTo($scope.mapModel.map);
                 // if user settings change..
                 orsSettingsFactory.userOptionsSubject.subscribe(settings => {
                     if (settings.language) {
@@ -146,9 +152,12 @@ angular.module('orsApp')
                             .empty();
                     }
                 });
+                // set default map style from cookies
+                $scope.mapStyleId = orsCookiesFactory.getMapOptions() ? orsCookiesFactory.getMapOptions()
+                    .msi : 0;
                 // mapOptionsInitSubject is a replay subject and only subscribes once
                 let mapInitSubject = orsSettingsFactory.mapOptionsInitSubject.subscribe(settings => {
-                    console.error('ONCE', JSON.stringify(settings))
+                    console.error('ONCE', JSON.stringify(settings));
                     if (settings.lat && settings.lng && settings.zoom) {
                         $scope.orsMap.setView({
                             lat: settings.lat,
@@ -173,17 +182,6 @@ angular.module('orsApp')
                     }
                     mapInitSubject.dispose();
                 });
-                // brand
-                // logos
-                $scope.brand = L.control({
-                    position: 'topleft'
-                });
-                $scope.brand.onAdd = function(map) {
-                    var div = L.DomUtil.create('div', 'ors-brand');
-                    div.innerHTML = '<a href="http://www.geog.uni-heidelberg.de/gis/heigit.html" target="_blank"><img src="img/brand.png"></a>';
-                    return div;
-                };
-                $scope.mapModel.map.addControl($scope.brand);
                 // sign up for API
                 $scope.signupBox = L.control({
                     position: 'topleft'
@@ -195,6 +193,16 @@ angular.module('orsApp')
                 $timeout(function() {
                     $scope.mapModel.map.addControl($scope.signupBox);
                 }, 500);
+                // brand
+                $scope.brand = L.control({
+                    position: 'topleft'
+                });
+                $scope.brand.onAdd = function(map) {
+                    var div = L.DomUtil.create('div', 'ors-brand');
+                    div.innerHTML = '<a href="http://www.geog.uni-heidelberg.de/gis/heigit.html" target="_blank"><img src="img/brand.png"></a>';
+                    return div;
+                };
+                $scope.mapModel.map.addControl($scope.brand);
                 // hack to remove measure string from box
                 const el = angular.element(document.querySelector('.js-toggle'))
                     .empty();
@@ -244,8 +252,12 @@ angular.module('orsApp')
                     "Hillshade": hillshade
                 };
                 $scope.mapModel.map.on("load", (evt) => {
-                    mapsurfer.addTo($scope.orsMap);
-                    //openstreetmap.addTo($scope.orsMap);
+                    // add mapstyle 
+                    angular.forEach($scope.baseLayers, (value, key) => {
+                        if (value.options.id == $scope.mapStyleId) {
+                            $scope.baseLayers[key].addTo($scope.orsMap);
+                        }
+                    });
                     $scope.mapModel.geofeatures.layerRoutePoints.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerRouteLines.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerRouteNumberedMarkers.addTo($scope.mapModel.map);
@@ -272,6 +284,14 @@ angular.module('orsApp')
                     $scope.mapModel.map.on('editable:vertex:deleted', setSettings);
                     $scope.mapModel.map.on('editable:vertex:dragend', setSettings);
                     $scope.mapModel.map.on('editable:vertex:altclick', deleteVertex);
+                    $scope.mapModel.map.on('baselayerchange', function(e) {
+                        angular.forEach($scope.baseLayers, (value, key) => {
+                            if (e.name == key) {
+                                $scope.mapStyleId = value.options.id;
+                            }
+                        });
+                        $scope.setMapOptions();
+                    });
                 });
                 /**
                  * Listens to left mouse click on map
@@ -320,7 +340,7 @@ angular.module('orsApp')
                     $scope.setMapOptions();
                 });
                 $scope.mapModel.map.on('mouseover', (e) => {
-                    console.log(true)
+                    console.log(true);
                 });
                 $scope.setMapOptions = () => {
                     const mapCenter = $scope.mapModel.map.getCenter();
@@ -328,7 +348,8 @@ angular.module('orsApp')
                     const mapOptions = {
                         lat: mapCenter.lat,
                         lng: mapCenter.lng,
-                        zoom: mapZoom
+                        zoom: mapZoom,
+                        msi: $scope.mapStyleId
                     };
                     orsCookiesFactory.setMapOptions(mapOptions);
                     // update permalink 
@@ -376,7 +397,7 @@ angular.module('orsApp')
                         waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="location-number-circle"><div class="via-number-text"></div></div></i>';
                     } else if (idx > 0 && idx < waypointsLength - 1) {
                         waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="via-number-circle"><div class="via-number-text">' + idx + '</div></div></i>';
-                    } else if (idx == 0) {
+                    } else if (idx === 0) {
                         waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="start-number-circle"><div class="via-number-text"> ' + 'A' + ' </div></div></i>';
                     } else {
                         waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="end-number-circle"><div class="via-number-text"> ' + 'B' + ' </div></div></i>';
@@ -433,7 +454,6 @@ angular.module('orsApp')
                     if (setCnt == 1) $scope.clearLayer('layerRouteLines');
                 };
                 $scope.reshuffleIndicesText = (actionPackage) => {
-                    console.log(actionPackage)
                     let i = 0;
                     $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer((layer) => {
                         let markerIcon;
@@ -491,7 +511,7 @@ angular.module('orsApp')
                         .length;
                     if (actionPackage.featureId > 0 && actionPackage.featureId < waypointsLength - 1) {
                         waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="highlight-number-circle"><div class="via-number-text">' + actionPackage.featureId + '</div></div></i>';
-                    } else if (actionPackage.featureId == 0) {
+                    } else if (actionPackage.featureId === 0) {
                         waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="highlight-number-circle"><div class="via-number-text">' + 'A' + '</div></div></i>';
                     } else {
                         waypointIcon.options.html = '<i class="fa fa-map-marker"><div class="highlight-number-circle"><div class="via-number-text">' + 'B' + '</div></div></i>';
@@ -767,8 +787,8 @@ angular.module('orsApp')
                 $scope.toggleIsochroneIntervals = (actionPackage) => {
                     const toggle = actionPackage.extraInformation.toggle;
                     const idx = actionPackage.extraInformation.idx;
-                    const iIdx = actionPackage.extraInformation.iIdx;
-                    $scope.mapModel.geofeatures[actionPackage.layerCode].getLayers()[idx].getLayers()[iIdx].setStyle({
+                    const revIIdx = actionPackage.extraInformation.revIIdx;
+                    $scope.mapModel.geofeatures[actionPackage.layerCode].getLayers()[idx].getLayers()[revIIdx].setStyle({
                         opacity: toggle === true ? 0 : 1,
                         weight: toggle === true ? 0 : 1,
                         fillOpacity: toggle === true ? 0 : 1
@@ -808,7 +828,7 @@ angular.module('orsApp')
                 };
                 $scope.opacityIsochrones = () => {
                     const mapPanes = $scope.mapModel.map.getPanes();
-                    console.log(mapPanes)
+                    console.log(mapPanes);
                     for (let pane in mapPanes) {
                         if (pane.startsWith("isochronesPane")) {
                             let svg = d3.select(mapPanes[pane]);
@@ -1068,9 +1088,9 @@ angular.module('orsApp')
                                     }
                                     if (cObj.selected.length === 0) {
                                         angular.forEach(cObj.subCategories, function(scObj, index) {
-                                            console.log(scObj)
+                                            console.log(scObj);
                                             if (scObj.selected) {
-                                                console.log(index)
+                                                console.log(index);
                                                 settings.subCategories.push(index);
                                             }
                                         });
@@ -1168,7 +1188,7 @@ angular.module('orsApp')
                                 request.promise.then(function(response) {
                                     // intermediate state is needed as we are using a tri-state checkbox
                                     $scope.loading = $scope.showSubcategories = $scope.isIntermediate = false;
-                                    $scope.show = $scope.disabled = true;
+                                    $scope.show = $scope.disabled = false;
                                     $scope.categories = {};
                                     $scope.subcategoriesLookup = {};
                                     angular.forEach(response.categories, (categoryObj, categoryName) => {
@@ -1273,6 +1293,7 @@ angular.module('orsApp')
                             break;
                         case 41:
                             $scope.addPolylineHover(params._package);
+                            break;
                         default:
                             break;
                     }
