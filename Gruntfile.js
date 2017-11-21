@@ -408,5 +408,5 @@ module.exports = function(grunt) {
     grunt.registerTask('serve', 'Run local server', ['less:development', 'browserify:turf', 'ngtemplates', 'ngconstant:development', 'connect:dev', 'watch']);
     grunt.registerTask('servelocal', 'Run local server on local tomcat', ['less:development', 'browserify:turf', 'ngtemplates', 'ngconstant:local', 'connect:dev', 'watch']);
     grunt.registerTask('labs', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'clean:task_rm_build', 'copy:build', 'ngconstant:labs', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:labs', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
-    grunt.registerTask('servelabs', 'Run local server', ['browserify:turf', 'less:development', 'ngconstant:labs', 'connect:dev', 'watch']);
+    grunt.registerTask('local', 'Run local server', ['browserify:turf', 'less:development', 'ngconstant:local', 'connect:dev', 'watch']);
 };
