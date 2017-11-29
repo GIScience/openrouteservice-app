@@ -154,7 +154,9 @@ angular.module('orsApp')
                 });
                 // set default map style from cookies
                 $scope.mapStyleId = orsCookiesFactory.getMapOptions() ? orsCookiesFactory.getMapOptions()
-                    .msi : 0;
+                    .msi : 3;
+                // override cookies if mapsurfer in cookies
+                if ($scope.mapStyleId == 0) {$scope.mapStyleId = 3;}
                 // mapOptionsInitSubject is a replay subject and only subscribes once
                 let mapInitSubject = orsSettingsFactory.mapOptionsInitSubject.subscribe(settings => {
                     console.error('ONCE', JSON.stringify(settings));
