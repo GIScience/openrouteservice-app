@@ -7,7 +7,7 @@ angular.module('orsApp')
                 orsMap: '='
             },
             link: (scope, element, attrs) => {},
-            controller: ['$scope', '$filter', '$compile', '$timeout', 'orsSettingsFactory', 'orsLocationsService', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', 'lists', 'globals', 'mappings', 'orsNamespaces', ($scope, $filter, $compile, $timeout, orsSettingsFactory, orsLocationsService, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsCookiesFactory, lists, globals, mappings, orsNamespaces) => {
+            controller: ['$scope', '$filter', '$compile', '$timeout', '$window', 'orsSettingsFactory', 'orsLocationsService', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', 'lists', 'globals', 'mappings', 'orsNamespaces', ($scope, $filter, $compile, $timeout, $window, orsSettingsFactory, orsLocationsService, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsCookiesFactory, lists, globals, mappings, orsNamespaces) => {
                 $scope.translateFilter = $filter('translate');
                 const mapsurfer = L.tileLayer(orsNamespaces.layerMapSurfer.url, {
                     attribution: orsNamespaces.layerMapSurfer.attribution,
@@ -156,7 +156,9 @@ angular.module('orsApp')
                 $scope.mapStyleId = orsCookiesFactory.getMapOptions() ? orsCookiesFactory.getMapOptions()
                     .msi : 3;
                 // override cookies if mapsurfer in cookies
-                if ($scope.mapStyleId == 0) {$scope.mapStyleId = 3;}
+                if ($scope.mapStyleId == 0) {
+                    $scope.mapStyleId = 3;
+                }
                 // mapOptionsInitSubject is a replay subject and only subscribes once
                 let mapInitSubject = orsSettingsFactory.mapOptionsInitSubject.subscribe(settings => {
                     console.error('ONCE', JSON.stringify(settings));
@@ -178,7 +180,7 @@ angular.module('orsApp')
                                 return div;
                             };
                             $timeout(function() {
-                                $scope.mapModel.map.addControl($scope.welcomeMsgBox);
+                                if (!$scope.smallScreen) $scope.mapModel.map.addControl($scope.welcomeMsgBox);
                             }, 500);
                         }
                     }
@@ -193,7 +195,7 @@ angular.module('orsApp')
                     return div;
                 };
                 $timeout(function() {
-                    $scope.mapModel.map.addControl($scope.signupBox);
+                    if (!$scope.smallScreen) $scope.mapModel.map.addControl($scope.signupBox);
                 }, 500);
                 // brand
                 $scope.brand = L.control({
@@ -294,6 +296,15 @@ angular.module('orsApp')
                         });
                         $scope.setMapOptions();
                     });
+                    const w = angular.element($window);
+                    $scope.getWindowDimensions = function() {
+                        return {
+                            'h': w.height(),
+                            'w': w.width()
+                        };
+                    };
+                    $scope.smallScreen = $scope.getWindowDimensions()
+                        .w < 720 ? true : false;
                 });
                 /**
                  * Listens to left mouse click on map
@@ -1058,15 +1069,7 @@ angular.module('orsApp')
                      `,
                         controllerAs: 'leaflet',
                         controller: function($scope, $element, $map, lists, orsUtilsService, orsLocationsService, $timeout) {
-                            const lControl = angular.element(document.querySelector('.angular-control-leaflet'))
-                                .addClass('leaflet-bar')[0];
-                            if (!L.Browser.touch) {
-                                L.DomEvent.disableClickPropagation(lControl)
-                                    .disableScrollPropagation(lControl);
-                            } else {
-                                L.DomEvent.disableClickPropagation(lControl)
-                                    .disableScrollPropagation(lControl);
-                            }
+                            console.log('leleleelrle')
                             $scope.getClass = (bool) => {
                                 if (bool === true) return "fa fa-minus";
                                 else return "fa fa-plus";
@@ -1219,28 +1222,43 @@ angular.module('orsApp')
                     });
                 };
                 // add locations control
-                $scope.mapModel.map.addControl($scope.locationsControl());
+                $timeout(function() {
+                    if (!$scope.smallScreen) {
+                        $scope.mapModel.map.addControl($scope.locationsControl());
+                        const lControl = angular.element(document.querySelector('.angular-control-leaflet'))
+                            .addClass('leaflet-bar')[0];
+                        if (!L.Browser.touch) {
+                            L.DomEvent.disableClickPropagation(lControl)
+                                .disableScrollPropagation(lControl);
+                        } else {
+                            L.DomEvent.disableClickPropagation(lControl)
+                                .disableScrollPropagation(lControl);
+                        }
+                    }
+                }, 500);
                 /**
                  * Dispatches all commands sent by Mapservice by using id and then performing the corresponding function
                  */
                 orsMapFactory.subscribeToMapFunctions(function onNext(params) {
                     switch (params._actionCode) {
                         case -1:
-                            $scope.hg.options.expand = globals.showHeightgraph;
-                            $scope.mapModel.map.addControl($scope.hg);
-                            const toggle = angular.element(document.querySelector('.heightgraph-toggle-icon'));
-                            const close = angular.element(document.querySelector('.heightgraph-close-icon'));
-                            toggle.bind('click', function(e) {
-                                globals.showHeightgraph = true;
-                            });
-                            close.bind('click', function(e) {
-                                globals.showHeightgraph = false;
-                            });
-                            if (params._package.geometry) {
-                                $scope.hg.addData(params._package.geometry);
-                                if (globals.showHeightgraph) globals.showHeightgraph = true;
-                            } else {
-                                $scope.hg.remove();
+                            if (!$scope.smallScreen) {
+                                $scope.hg.options.expand = globals.showHeightgraph;
+                                $scope.mapModel.map.addControl($scope.hg);
+                                const toggle = angular.element(document.querySelector('.heightgraph-toggle-icon'));
+                                const close = angular.element(document.querySelector('.heightgraph-close-icon'));
+                                toggle.bind('click', function(e) {
+                                    globals.showHeightgraph = true;
+                                });
+                                close.bind('click', function(e) {
+                                    globals.showHeightgraph = false;
+                                });
+                                if (params._package.geometry) {
+                                    $scope.hg.addData(params._package.geometry);
+                                    if (globals.showHeightgraph) globals.showHeightgraph = true;
+                                } else {
+                                    $scope.hg.remove();
+                                }
                             }
                             break;
                             /** zoom to features */
