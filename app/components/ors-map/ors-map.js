@@ -202,11 +202,19 @@ angular.module('orsApp')
                     position: 'topleft'
                 });
                 $scope.brand.onAdd = function(map) {
-                    var div = L.DomUtil.create('div', 'ors-brand');
-                    div.innerHTML = '<a href="http://www.geog.uni-heidelberg.de/gis/heigit.html" target="_blank"><img src="img/brand.png"></a>';
-                    return div;
+                    if ($scope.smallScreen) {
+                        var divs = L.DomUtil.create('div', 'ors-brand-small');
+                        divs.innerHTML = '<a href="http://www.geog.uni-heidelberg.de/gis/heigit.html" target="_blank"><img src="img/brand.png"></a>';
+                        return divs;
+                    } else {
+                        var div = L.DomUtil.create('div', 'ors-brand');
+                        div.innerHTML = '<a href="http://www.geog.uni-heidelberg.de/gis/heigit.html" target="_blank"><img src="img/brand.png"></a>';
+                        return div;
+                    }
                 };
-                $scope.mapModel.map.addControl($scope.brand);
+                $timeout(function() {
+                    $scope.mapModel.map.addControl($scope.brand);
+                }, 500);
                 // hack to remove measure string from box
                 const el = angular.element(document.querySelector('.js-toggle'))
                     .empty();
@@ -352,9 +360,9 @@ angular.module('orsApp')
                 $scope.mapModel.map.on('moveend', (e) => {
                     $scope.setMapOptions();
                 });
-                $scope.mapModel.map.on('mouseover', (e) => {
-                    console.log(true);
-                });
+                // $scope.mapModel.map.on('mouseover', (e) => {
+                //     console.log(true);
+                // });
                 $scope.setMapOptions = () => {
                     const mapCenter = $scope.mapModel.map.getCenter();
                     const mapZoom = $scope.mapModel.map.getZoom();
