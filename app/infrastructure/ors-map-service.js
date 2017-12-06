@@ -19,7 +19,8 @@ angular.module('orsApp.map-service', []).factory('orsMapFactory', [
                     tap: true,
                     editable: true,
                     maxBounds: bounds,
-                    minZoom: 2
+                    minZoom: 2,
+                    maxZoom: 17
                 });
             }
         };
