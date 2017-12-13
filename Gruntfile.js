@@ -41,7 +41,7 @@ module.exports = function(grunt) {
         // Clean stuff up
         clean: {
             task_rm_build: {
-                src: ['build/*']
+                src: ['build/*', 'build']
             },
             task_rm_build_unused: {
                 src: ['build/components', 'build/infrastructure', 'build/languages', 'build/js/', 'build/constants', 'build/values', 'build/css']
