@@ -4,22 +4,39 @@ module.exports = function(grunt) {
     grunt.initConfig({
         copy: {
             all: {
+                expand: true,
                 cwd: 'app',
                 src: ['**'],
-                dest: 'build',
-                expand: true
+                dest: 'build'
             },
             build: {
                 expand: true,
                 cwd: 'app',
-                dest: 'build',
-                src: ['img/**/*.png', 'languages/**/*.json', 'css/*.css', '*.html', '*.js', 'favicon.ico']
+                src: ['img/**/*.png', 'languages/**/*.json', 'css/*.css', '*.html', '*.js', 'favicon.ico'],
+                dest: 'build'
             },
             libs: {
                 expand: true,
                 cwd: './',
-                dest: 'build',
-                src: ['bower_components/font-awesome/**', 'bower_components/leaflet/**', 'bower_components/leaflet.heightgraph/**']
+                src: ['bower_components/font-awesome/**', 'bower_components/leaflet/**', 'bower_components/leaflet.heightgraph/**'],
+                dest: 'build'
+            },
+            // copies the slidervariables into the related bower_component
+            sliderLess: {
+                expand: true,
+                cwd: './',
+                src: ['app/less/angularjs-slider.variables.less'],
+                dest: 'bower_components/angularjs-slider/src/',
+                rename: function(dest) {
+                    return dest + 'variables.less';
+                },
+            }
+        },
+        // compiles slider less to css
+        grunt: {
+            sliderMakeCss: {
+                gruntfile: 'bower_components/angularjs-slider/Gruntfile.js',
+                task: 'css'
             }
         },
         watch: {
@@ -27,8 +44,12 @@ module.exports = function(grunt) {
                 livereload: true,
             },
             less: {
-                files: ['app/less/**/*.less'],
+                files: ['app/less/**/*.less', '!app/less/angularjs-slider.variables.less'],
                 tasks: ['less:development']
+            },
+            less_sliders: {
+                files: ['app/less/angularjs-slider.variables.less'],
+                tasks: ['copy:sliderLess', 'grunt:sliderMakeCss']
             },
             js: {
                 files: ['app/**/*.js']
@@ -402,11 +423,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-strip-debug');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-angular-templates');
-    grunt.registerTask('staging', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:development', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
-    grunt.registerTask('production', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:production', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
-    grunt.registerTask('zugspitze', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:zugspitze', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
-    grunt.registerTask('serve', 'Run local server', ['less:development', 'browserify:turf', 'ngtemplates', 'ngconstant:development', 'connect:dev', 'watch']);
-    grunt.registerTask('servelocal', 'Run local server on local tomcat', ['less:development', 'browserify:turf', 'ngtemplates', 'ngconstant:local', 'connect:dev', 'watch']);
-    grunt.registerTask('labs', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'clean:task_rm_build', 'copy:build', 'ngconstant:labs', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:labs', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
-    grunt.registerTask('local', 'Run local server', ['browserify:turf', 'less:development', 'ngconstant:local', 'connect:dev', 'watch']);
+    grunt.loadNpmTasks('grunt-grunt');
+    grunt.registerTask('staging', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:development', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
+    grunt.registerTask('production', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:production', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
+    grunt.registerTask('zugspitze', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:zugspitze', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
+    grunt.registerTask('serve', 'Run local server', ['less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'browserify:turf', 'ngtemplates', 'ngconstant:development', 'connect:dev', 'watch']);
+    grunt.registerTask('servelocal', 'Run local server on local tomcat', ['less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'browserify:turf', 'ngtemplates', 'ngconstant:local', 'connect:dev', 'watch']);
+    grunt.registerTask('labs', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'clean:task_rm_build', 'copy:build', 'ngconstant:labs', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:labs', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
+    grunt.registerTask('local', 'Run local server', ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'ngconstant:local', 'connect:dev', 'watch']);
 };
