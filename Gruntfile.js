@@ -1,5 +1,8 @@
 module.exports = function(grunt) {
     require('time-grunt')(grunt);
+    require('load-grunt-tasks')(grunt, {
+        pattern: ['grunt-*', '!grunt-cli*']
+    });
     var modRewrite = require('connect-modrewrite');
     grunt.initConfig({
         copy: {
@@ -402,28 +405,6 @@ module.exports = function(grunt) {
         //     }
         // }
     });
-    grunt.loadNpmTasks('grunt-cache-bust');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-htmlhint');
-    grunt.loadNpmTasks("grunt-contrib-copy");
-    grunt.loadNpmTasks("grunt-contrib-concat");
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-usemin');
-    grunt.loadNpmTasks('grunt-preprocess');
-    grunt.loadNpmTasks('grunt-jsdoc');
-    grunt.loadNpmTasks("grunt-remove-logging");
-    grunt.loadNpmTasks('grunt-traceur');
-    grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-script-link-tags');
-    grunt.loadNpmTasks('grunt-browserify');
-    grunt.loadNpmTasks('grunt-ng-constant');
-    grunt.loadNpmTasks('grunt-strip-debug');
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-angular-templates');
-    grunt.loadNpmTasks('grunt-grunt');
     grunt.registerTask('staging', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:development', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
     grunt.registerTask('production', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:production', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
     grunt.registerTask('zugspitze', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:zugspitze', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
