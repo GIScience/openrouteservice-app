@@ -6,7 +6,7 @@ angular.module('orsApp.ors-options', [])
             activeProfile: '<',
             showOptions: '<'
         },
-        controller: ['orsSettingsFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', '$scope', '$timeout', 'lists', function(orsSettingsFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService, $scope, $timeout, lists) {
+        controller: ['orsSettingsFactory','orsCookiesFactory' , 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', '$scope', '$timeout', 'lists', 'countries', function(orsSettingsFactory,orsCookiesFactory , orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService, $scope, $timeout, lists, countries) {
             let ctrl = this;
             ctrl.optionList = lists.optionList;
             ctrl.$onInit = () => {
@@ -474,5 +474,21 @@ angular.module('orsApp.ors-options', [])
             };
             //ctrl.reCalcViewDimensions();
             ctrl.refreshSlider();
+
+            ctrl.removeCountries = () => {
+                for (var i = 0; i < Things.length; i++) {
+                    Things[i];
+                }
+            };
+
+            ctrl.addCountries = (idx) => {
+                // console.log(idx)
+                ctrl.avoidCountries = true;
+            };
+
+            ctrl.countries = countries.list;
+            $scope.search = (row) => {
+                return !!((row.official_en_name.indexOf(ctrl.queryCountries || '') !== -1 || row.cid.indexOf(ctrl.queryCountries || '') !== -1 || row.country_code.indexOf(ctrl.queryCountries || '') !== -1 || row.native_names.indexOf(ctrl.queryCountries || '') !== -1 ));
+            };
         }]
     });

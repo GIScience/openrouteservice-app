@@ -253,6 +253,14 @@ angular.module('orsApp')
                 tracks: {
                     name: 'tracks',
                     subgroups: ['Car', 'HeavyVehicle']
+                },
+                borders: {
+                    name: 'borders',
+                    subgroups: ['Car', 'HeavyVehicle']
+                },
+                controlledborders: {
+                    name: 'controlledborders',
+                    subgroups: ['Car', 'HeavyVehicle']
                 }
             },
             wheelchair: {
@@ -497,7 +505,7 @@ angular.module('orsApp')
             }
         },
         permalinkFilters: {
-            avoidables: ['ferry', 'unpaved', 'paved', 'fords', 'steps', 'highways', 'tollroads', 'tunnels', 'tracks'],
+            avoidables: ['ferry', 'unpaved', 'paved', 'fords', 'steps', 'highways', 'tollroads', 'tunnels', 'tracks', 'borders', 'controlledborders'],
             analysis: ['method', 'isovalue', 'isointerval', 'reverseflow'],
             Car: ['type', 'weight', 'maxspeed'],
             hgv: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload', 'hazmat'],
@@ -547,6 +555,8 @@ angular.module('orsApp')
             tollroads: 'l6',
             tunnels: 'l7',
             tracks: 'l8',
+            borders: 'l9',
+            controlledborders: 'l10',
             green: 'm1',
             lat: 'n1',
             lng: 'n2',

@@ -155,6 +155,12 @@ angular.module('orsApp.params-service', [])
                     if (permalinkKeysReversed[key] == 'tracks') {
                         settings.profile.options.avoidables.tracks = orsParamsService.parseStringToBool(value);
                     }
+                    if (permalinkKeysReversed[key] == 'borders') {
+                        settings.profile.options.avoidables.tracks = orsParamsService.parseStringToBool(value);
+                    }
+                    if (permalinkKeysReversed[key] == 'controlledborders') {
+                        settings.profile.options.avoidables.tracks = orsParamsService.parseStringToBool(value);
+                    }
                 }
             });
             return {

@@ -177,5 +177,10 @@
     "EXTRA_INFORMATION": "Informação adicional",
     "LOCALE_EXTRAS_HELP": "Adicionar informação extra as definições",
     "LOCALE_SIGNUP_HEADER": "Descubra o nosso API",
-    "LOCALE_SIGNUP_MESSAGE": "Se esta satisfeito com as funcionalidades do openrouteservice, por favor registe-se na API em <a href='https://go.openrouteservice.org'>https://go.openrouteservice.org</a>!"
+    "LOCALE_SIGNUP_MESSAGE": "Se esta satisfeito com as funcionalidades do openrouteservice, por favor registe-se na API em <a href='https://go.openrouteservice.org'>https://go.openrouteservice.org</a>!",
+    "AVOIDBORDERS": "Avoid borders",
+    "CONTROLLEDBORDERS": "Controlled Borders",
+    "BORDERS": "All borders",
+    "COUNTRYBORDERS": "Country borders",
+    "SEARCHAVOIDCOUNTRIES": "Search for countries to avoid"
 }
