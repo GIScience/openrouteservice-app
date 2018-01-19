@@ -113,7 +113,7 @@
         <ul class="ors-options-menu">
             <li>
                 <div class="ui checkbox">
-                    <input id="borders" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.borders" type="checkbox">
+                    <input id="borders" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.borders" ng-disable="$ctrl.avoidCountries || $ctrl.currentOptions.avoidables.controlledborders" type="checkbox">
                         <label for="borders" ng-bind-html="('BORDERS' | translate)">
                         </label>
                     </input>
@@ -121,7 +121,7 @@
             </li>
             <li>
                 <div class="ui checkbox">
-                    <input id="controlledborders" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.controlledborders" type="checkbox">
+                    <input id="controlledborders" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.controlledborders" ng-disabled="$ctrl.currentOptions.avoidables.borders" type="checkbox">
                         <label for="controlledborders" ng-bind-html="('CONTROLLEDBORDERS' | translate)">
                         </label>
                     </input>
@@ -140,7 +140,7 @@
             </li>
             <li>
                 <div class="row ui input">
-                    <input type="text" placeholder="{{('SEARCHAVOIDCOUNTRIES' | translate)}}" ng-model="$ctrl.queryCountries" focus-if="avoidBorders" ng-model-options="{debounce: 300}"  select-on-click="">
+                    <input type="text" placeholder="{{('SEARCHAVOIDCOUNTRIES' | translate)}}" ng-model="$ctrl.queryCountries" ng-disabled="$ctrl.currentOptions.avoidables.borders" focus-if="avoidBorders" ng-model-options="{debounce: 300}"  select-on-click="">
                     </input>
                 </div>
             </li>
@@ -148,15 +148,24 @@
                 <div class="row">
                     <table id="results">
                         <tbody>
-                        <tr ng-if="$ctrl.queryCountries" ng-repeat="country in $ctrl.countries | filter: search ">
+                        <tr ng-repeat="country in $ctrl.countries | filter: checked ">
                             <td>
-                                <input class="ui checkbox" id="c_{{country.cid}}" name="orsRouteAvoidablesCountries" ng-change="$ctrl.addCountries(country.cid)" ng-model="$ctrl.countries[country.cid - 1].check" type="checkbox">
+                                <input class="ui checkbox" id="c_{{country.cid}}" name="orsRouteAvoidablesCountries" ng-change="$ctrl.addCountries(country.cid, country.id)" ng-model="$ctrl.countries[country.id].check" type="checkbox">
                                 </input>
                             </td>
-                            <td id="cname">{{country."en-US"}}</td>
-                            <td id="cid" align="right">({{country.cid}})</td>
-                            <td id="ename">{{country[en-GB]}}</td>
-                            <td id="ccode" hidden="false">{{country.country_code}}</td>
+                            <td id="cname">{{country[$ctrl.language]}}</td>
+                            <td id="ename"><i><small>  ({{country.official_en_name}})</small></i></td>
+                        </tr>
+                        <tr ng-if="$ctrl.queryCountries" ng-repeat="country in $ctrl.countries | filter: search ">
+                            <td>
+                                <input class="ui checkbox" id="c_{{country.cid}}" name="orsRouteAvoidablesCountries" ng-change="$ctrl.addCountries(country.cid, country.id)" ng-model="$ctrl.countries[country.id].check" type="checkbox">
+                                </input>
+                            </td>
+                            <td id="cname">{{country[$ctrl.language]}}</td>
+                            <td id="cid" align="right" hidden="">({{country.cid}})</td>
+                            <td id="ename"><i><small>  ({{country.official_en_name}})</small></i></td>
+                            <td id="nname" hidden="">{{country.native_names}}</td>
+                            <td id="ccode" hidden="">{{country.country_code}}</td>
                         </tr>
                         </tbody>
                     </table>

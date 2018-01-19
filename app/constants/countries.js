@@ -7,6 +7,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Owganystan, Afghanistan, \u0627\u0641\u063a\u0627\u0646\u0633\u062a\u0627\u0646", 
         "ru-RU": "\u0410\u0444\u0433\u0430\u043d\u0438\u0441\u0442\u0430\u043d", 
         "en-US": "Afghanistan", 
+        "id": 0, 
         "zh-CN": "\u963f\u5bcc\u6c57", 
         "de-DE": "Afghanistan", 
         "fr-FR": "Afghanistan", 
@@ -21,6 +22,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Shqip\u00ebria, Albania", 
         "ru-RU": "\u0410\u043b\u0431\u0430\u043d\u0438\u044f", 
         "en-US": "Albania", 
+        "id": 1, 
         "zh-CN": "\u963f\u5c14\u5df4\u5c3c\u4e9a", 
         "de-DE": "Albanien", 
         "fr-FR": "Albanie", 
@@ -35,6 +37,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "\u0627\u0644\u062c\u0632\u0627\u0626\u0631, Algeria", 
         "ru-RU": "\u0410\u043b\u0436\u0438\u0440", 
         "en-US": "Algeria", 
+        "id": 2, 
         "zh-CN": "\u963f\u5c14\u53ca\u5229\u4e9a", 
         "de-DE": "Algerien", 
         "fr-FR": "Alg\u00e9rie", 
@@ -49,6 +52,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Andorra", 
         "ru-RU": "\u0410\u043d\u0434\u043e\u0440\u0440\u0430", 
         "en-US": "Andorra", 
+        "id": 3, 
         "zh-CN": "\u5b89\u9053\u5c14", 
         "de-DE": "Andorra", 
         "fr-FR": "Andorre", 
@@ -63,6 +67,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Angola", 
         "ru-RU": "\u0410\u043d\u0433\u043e\u043b\u0430", 
         "en-US": "Angola", 
+        "id": 4, 
         "zh-CN": "\u5b89\u54e5\u62c9", 
         "de-DE": "Angola", 
         "fr-FR": "Angola", 
@@ -82,7 +87,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "6", 
         "fr-FR": "Anguilla", 
         "country_code": "AIA", 
-        "es-ES": "Anguilla"
+        "es-ES": "Anguilla", 
+        "id": 5
     }, 
     {
         "en-GB": "Antigua and Barbuda", 
@@ -91,6 +97,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Antigua and Barbuda", 
         "ru-RU": "\u0410\u043d\u0442\u0438\u0433\u0443\u0430 \u0438 \u0411\u0430\u0440\u0431\u0443\u0434\u0430", 
         "en-US": "Antigua and Barbuda", 
+        "id": 6, 
         "zh-CN": "\u5b89\u63d0\u74dc\u548c\u5df4\u5e03\u8fbe", 
         "de-DE": "Antigua und Barbuda", 
         "fr-FR": "Antigua-et-Barbuda", 
@@ -105,6 +112,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Argentina", 
         "ru-RU": "\u0410\u0440\u0433\u0435\u043d\u0442\u0438\u043d\u0430", 
         "en-US": "Argentina", 
+        "id": 7, 
         "zh-CN": "\u963f\u6839\u5ef7", 
         "de-DE": "Argentinien", 
         "fr-FR": "Argentine", 
@@ -116,9 +124,10 @@ angular.module('orsApp').constant('countries', {
         "en-GB": "Armenia", 
         "official_en_name": "Republic of Armenia", 
         "cid": "9", 
-        "native_names": "\u0410\u0440\u043c\u0435\u043d\u0438\u044f, Armenia, \u0540\u0561\u0575\u0561\u057d\u057f\u0561\u0576", 
+        "native_names": "\u0540\u0561\u0575\u0561\u057d\u057f\u0561\u0576, Armenia", 
         "ru-RU": "\u0410\u0440\u043c\u0435\u043d\u0438\u044f", 
         "en-US": "Armenia", 
+        "id": 8, 
         "zh-CN": "\u4e9a\u7f8e\u5c3c\u4e9a", 
         "de-DE": "Armenien", 
         "fr-FR": "Arm\u00e9nie", 
@@ -133,6 +142,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Australia", 
         "ru-RU": "\u0410\u0432\u0441\u0442\u0440\u0430\u043b\u0438\u044f", 
         "en-US": "Australia", 
+        "id": 9, 
         "zh-CN": "\u6fb3\u5927\u5229\u4e9a", 
         "de-DE": "Australien", 
         "fr-FR": "Australie", 
@@ -147,6 +157,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "\u00d6sterreich, Austria", 
         "ru-RU": "\u0410\u0432\u0441\u0442\u0440\u0438\u044f", 
         "en-US": "Austria", 
+        "id": 10, 
         "zh-CN": "\u5965\u5730\u5229", 
         "de-DE": "\u00d6sterreich", 
         "fr-FR": "Autriche", 
@@ -161,6 +172,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "\u0410\u0437\u0435\u0440\u0431\u0430\u0439\u0434\u0436\u0430\u043d, Azerbaijan, Az\u0259rbaycan", 
         "ru-RU": "\u0410\u0437\u0435\u0440\u0431\u0430\u0439\u0434\u0436\u0430\u043d", 
         "en-US": "Azerbaijan", 
+        "id": 11, 
         "zh-CN": "\u963f\u585e\u62dc\u7586", 
         "de-DE": "Aserbaidschan", 
         "fr-FR": "Azerba\u00efdjan", 
@@ -175,6 +187,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "\u200f\u0627\u0644\u0628\u062d\u0631\u064a\u0646, Bahrain", 
         "ru-RU": "\u0411\u0430\u0445\u0440\u0435\u0439\u043d", 
         "en-US": "Bahrain", 
+        "id": 12, 
         "zh-CN": "\u5df4\u6797", 
         "de-DE": "Bahrain", 
         "fr-FR": "Bahre\u00efn", 
@@ -189,6 +202,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "\u09ac\u09be\u0982\u09b2\u09be\u09a6\u09c7\u09b6, Bangladesh", 
         "ru-RU": "\u0411\u0430\u043d\u0433\u043b\u0430\u0434\u0435\u0448", 
         "en-US": "Bangladesh", 
+        "id": 13, 
         "zh-CN": "\u5b5f\u52a0\u62c9\u56fd", 
         "de-DE": "Bangladesch", 
         "fr-FR": "Bangladesh", 
@@ -203,6 +217,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Barbados", 
         "ru-RU": "\u0411\u0430\u0440\u0431\u0430\u0434\u043e\u0441", 
         "en-US": "Barbados", 
+        "id": 14, 
         "zh-CN": "\u5df4\u5df4\u591a\u65af", 
         "de-DE": "Barbados", 
         "fr-FR": "Barbade", 
@@ -217,6 +232,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "\u0411\u0435\u043b\u0430\u0440\u0443\u0441\u044c, Belarus, \u0411\u0435\u043b\u0430\u0440\u0443\u0301\u0441\u044c", 
         "ru-RU": "\u0411\u0435\u043b\u0430\u0440\u0443\u0441\u044c", 
         "en-US": "Belarus", 
+        "id": 15, 
         "zh-CN": "\u767d\u4fc4\u7f57\u65af", 
         "de-DE": "Wei\u00dfrussland", 
         "fr-FR": "Bi\u00e9lorussie", 
@@ -231,6 +247,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Belgique, Belgium, Belgien, Belgi\u00eb", 
         "ru-RU": "\u0411\u0435\u043b\u044c\u0433\u0438\u044f", 
         "en-US": "Belgium", 
+        "id": 16, 
         "zh-CN": "\u6bd4\u5229\u65f6", 
         "de-DE": "Belgien", 
         "fr-FR": "Belgique", 
@@ -245,6 +262,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Belice, Belize", 
         "ru-RU": "\u0411\u0435\u043b\u0438\u0437", 
         "en-US": "Belize", 
+        "id": 17, 
         "zh-CN": "\u4f2f\u5229\u5179", 
         "de-DE": "Belize", 
         "fr-FR": "Belize", 
@@ -259,6 +277,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "B\u00e9nin, Benin", 
         "ru-RU": "\u0411\u0435\u043d\u0438\u043d", 
         "en-US": "Benin", 
+        "id": 18, 
         "zh-CN": "\u8d1d\u5b81", 
         "de-DE": "Benin", 
         "fr-FR": "B\u00e9nin", 
@@ -273,6 +292,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Bermuda", 
         "ru-RU": "\u0411\u0435\u0440\u043c\u0443\u0434\u0441\u043a\u0438\u0435 \u041e\u0441\u0442\u0440\u043e\u0432\u0430", 
         "en-US": "Bermuda", 
+        "id": 19, 
         "zh-CN": "\u767e\u6155\u5927", 
         "de-DE": "Bermuda", 
         "fr-FR": "Bermudes", 
@@ -287,6 +307,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "\u0f60\u0f56\u0fb2\u0f74\u0f42\u0f0b\u0f61\u0f74\u0f63\u0f0b, Bhutan", 
         "ru-RU": "\u0411\u0443\u0442\u0430\u043d", 
         "en-US": "Bhutan", 
+        "id": 20, 
         "zh-CN": "\u4e0d\u4e39", 
         "de-DE": "Bhutan", 
         "fr-FR": "Bhoutan", 
@@ -301,6 +322,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Wuliwya, Bolivia, Vol\u00edvia, Buliwya", 
         "ru-RU": "\u0411\u043e\u043b\u0438\u0432\u0438\u044f", 
         "en-US": "Bolivia", 
+        "id": 21, 
         "zh-CN": "\u73bb\u5229\u7ef4\u4e9a", 
         "de-DE": "Bolivien", 
         "fr-FR": "Bolivie", 
@@ -315,6 +337,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Bosna i Hercegovina, Bosnia and Herzegovina, \u0411\u043e\u0441\u043da \u0438 \u0425\u0435\u0440\u0446\u0435\u0433\u043e\u0432\u0438\u043d\u0430", 
         "ru-RU": "\u0411\u043e\u0441\u043d\u0438\u044f \u0438 \u0413\u0435\u0440\u0446\u0435\u0433\u043e\u0432\u0438\u043d\u0430", 
         "en-US": "Bosnia and Herzegovina", 
+        "id": 22, 
         "zh-CN": "\u6ce2\u65af\u5c3c\u4e9a\u548c\u9ed1\u585e\u54e5\u7ef4\u90a3", 
         "de-DE": "Bosnien und Herzegowina", 
         "fr-FR": "Bosnie-Herz\u00e9govine", 
@@ -334,7 +357,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "24", 
         "fr-FR": "Botswana", 
         "country_code": "BWA", 
-        "es-ES": "Botswana"
+        "es-ES": "Botswana", 
+        "id": 23
     }, 
     {
         "en-GB": "Brazil", 
@@ -343,6 +367,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Brasil, Brazil", 
         "ru-RU": "\u0411\u0440\u0430\u0437\u0438\u043b\u0438\u044f", 
         "en-US": "Brazil", 
+        "id": 24, 
         "zh-CN": "\u5df4\u897f", 
         "de-DE": "Brasilien", 
         "fr-FR": "Br\u00e9sil", 
@@ -357,6 +382,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "British Indian Ocean Territory", 
         "ru-RU": "\u0411\u0440\u0438\u0442\u0430\u043d\u0441\u043a\u0430\u044f \u0442\u0435\u0440\u0440\u0438\u0442\u043e\u0440\u0438\u044f \u0432 \u0418\u043d\u0434\u0438\u0439\u0441\u043a\u043e\u043c \u043e\u043a\u0435\u0430\u043d\u0435", 
         "en-US": "British Indian Ocean Territory", 
+        "id": 25, 
         "zh-CN": "\u82f1\u5c5e\u5370\u5ea6\u6d0b\u9886\u5730", 
         "de-DE": "Britisches Territorium im Indischen Ozean", 
         "fr-FR": "Territoire britannique de l'oc\u00e9an Indien", 
@@ -376,7 +402,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "28", 
         "fr-FR": "\u00celes Vierges britanniques", 
         "country_code": "VGB", 
-        "es-ES": "Islas V\u00edrgenes del Reino Unido"
+        "es-ES": "Islas V\u00edrgenes del Reino Unido", 
+        "id": 26
     }, 
     {
         "en-GB": "Brunei", 
@@ -385,6 +412,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Negara Brunei Darussalam", 
         "ru-RU": "\u0411\u0440\u0443\u043d\u0435\u0439", 
         "en-US": "Brunei", 
+        "id": 27, 
         "zh-CN": "\u6587\u83b1", 
         "de-DE": "Brunei", 
         "fr-FR": "Brunei", 
@@ -399,6 +427,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "\u0411\u044a\u043b\u0433\u0430\u0440\u0438\u044f, Bulgaria", 
         "ru-RU": "\u0411\u043e\u043b\u0433\u0430\u0440\u0438\u044f", 
         "en-US": "Bulgaria", 
+        "id": 28, 
         "zh-CN": "\u4fdd\u52a0\u5229\u4e9a", 
         "de-DE": "Bulgarien", 
         "fr-FR": "Bulgarie", 
@@ -413,6 +442,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Burkina Faso", 
         "ru-RU": "\u0411\u0443\u0440\u043a\u0438\u043d\u0430-\u0424\u0430\u0441\u043e", 
         "en-US": "Burkina Faso", 
+        "id": 29, 
         "zh-CN": "\u5e03\u57fa\u7eb3\u6cd5\u7d22", 
         "de-DE": "Burkina Faso", 
         "fr-FR": "Burkina Faso", 
@@ -427,6 +457,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Burundi, Uburundi", 
         "ru-RU": "\u0411\u0443\u0440\u0443\u043d\u0434\u0438", 
         "en-US": "Burundi", 
+        "id": 30, 
         "zh-CN": "\u5e03\u9686\u8fea", 
         "de-DE": "Burundi", 
         "fr-FR": "Burundi", 
@@ -441,6 +472,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "K\u00e2mp\u016dch\u00e9a, Cambodia", 
         "ru-RU": "\u041a\u0430\u043c\u0431\u043e\u0434\u0436\u0430", 
         "en-US": "Cambodia", 
+        "id": 31, 
         "zh-CN": "\u67ec\u57d4\u5be8", 
         "de-DE": "Kambodscha", 
         "fr-FR": "Cambodge", 
@@ -455,6 +487,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Cameroun, Cameroon", 
         "ru-RU": "\u041a\u0430\u043c\u0435\u0440\u0443\u043d", 
         "en-US": "Cameroon", 
+        "id": 32, 
         "zh-CN": "\u5580\u9ea6\u9686", 
         "de-DE": "Kamerun", 
         "fr-FR": "Cameroun", 
@@ -469,6 +502,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Canada", 
         "ru-RU": "\u041a\u0430\u043d\u0430\u0434\u0430", 
         "en-US": "Canada", 
+        "id": 33, 
         "zh-CN": "\u52a0\u62ff\u5927", 
         "de-DE": "Kanada", 
         "fr-FR": "Canada", 
@@ -483,6 +517,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Cabo Verde, Cape Verde", 
         "ru-RU": "\u041a\u0430\u0431\u043e-\u0412\u0435\u0440\u0434\u0435", 
         "en-US": "Cape Verde", 
+        "id": 34, 
         "zh-CN": "\u4f5b\u5f97\u89d2", 
         "de-DE": "Kap Verde", 
         "fr-FR": "\u00celes du Cap-Vert", 
@@ -497,6 +532,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Cayman Islands", 
         "ru-RU": "\u041a\u0430\u0439\u043c\u0430\u043d\u043e\u0432\u044b \u043e\u0441\u0442\u0440\u043e\u0432\u0430", 
         "en-US": "Cayman Islands", 
+        "id": 35, 
         "zh-CN": "\u5f00\u66fc\u7fa4\u5c9b", 
         "de-DE": "Kaimaninseln", 
         "fr-FR": "\u00celes Ca\u00efmans", 
@@ -511,6 +547,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "R\u00e9publique centrafricaine, Central African Republic, B\u00eaafr\u00eeka", 
         "ru-RU": "\u0426\u0435\u043d\u0442\u0440\u0430\u043b\u044c\u043d\u043e\u0430\u0444\u0440\u0438\u043a\u0430\u043d\u0441\u043a\u0430\u044f \u0420\u0435\u0441\u043f\u0443\u0431\u043b\u0438\u043a\u0430", 
         "en-US": "Central African Republic", 
+        "id": 36, 
         "zh-CN": "\u4e2d\u975e\u5171\u548c\u56fd", 
         "de-DE": "Zentralafrikanische Republik", 
         "fr-FR": "R\u00e9publique centrafricaine", 
@@ -525,6 +562,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "\u062a\u0634\u0627\u062f\u200e, Chad, Tchad", 
         "ru-RU": "\u0427\u0430\u0434", 
         "en-US": "Chad", 
+        "id": 37, 
         "zh-CN": "\u4e4d\u5f97", 
         "de-DE": "Tschad", 
         "fr-FR": "Tchad", 
@@ -539,6 +577,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Chile", 
         "ru-RU": "\u0427\u0438\u043b\u0438", 
         "en-US": "Chile", 
+        "id": 38, 
         "zh-CN": "\u667a\u5229", 
         "de-DE": "Chile", 
         "fr-FR": "Chili", 
@@ -557,7 +596,8 @@ angular.module('orsApp').constant('countries', {
         "de-DE": "China", 
         "fr-FR": "Chine", 
         "country_code": "CHN", 
-        "es-ES": "China"
+        "es-ES": "China", 
+        "id": 39
     }, 
     {
         "en-GB": "Colombia", 
@@ -566,6 +606,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Colombia", 
         "ru-RU": "\u041a\u043e\u043b\u0443\u043c\u0431\u0438\u044f", 
         "en-US": "Colombia", 
+        "id": 40, 
         "zh-CN": "\u54e5\u4f26\u6bd4\u4e9a", 
         "de-DE": "Kolumbien", 
         "fr-FR": "Colombie", 
@@ -580,6 +621,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "\u0627\u0644\u0642\u0645\u0631\u200e, Comoros, Comores, Komori", 
         "ru-RU": "\u041a\u043e\u043c\u043e\u0440\u044b", 
         "en-US": "Comoros", 
+        "id": 41, 
         "zh-CN": "\u79d1\u6469\u7f57", 
         "de-DE": "Union der Komoren", 
         "fr-FR": "Comores", 
@@ -594,6 +636,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "R\u00e9publique du Congo, Republic of the Congo, Republ\u00edki ya Kong\u00f3, Repubilika ya Kongo", 
         "ru-RU": "\u0420\u0435\u0441\u043f\u0443\u0431\u043b\u0438\u043a\u0430 \u041a\u043e\u043d\u0433\u043e", 
         "en-US": "Republic of the Congo", 
+        "id": 42, 
         "zh-CN": "\u521a\u679c", 
         "de-DE": "Kongo", 
         "fr-FR": "Congo", 
@@ -608,6 +651,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Jamhuri ya Kidemokrasia ya Kongo, DR Congo, Ditunga dia Kongu wa Mungalaata, RD Congo, Republiki ya Kong\u00f3 Demokratiki, Repubilika ya Kongo Demokratiki", 
         "ru-RU": "\u0414\u0435\u043c\u043e\u043a\u0440\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0430\u044f \u0420\u0435\u0441\u043f\u0443\u0431\u043b\u0438\u043a\u0430 \u041a\u043e\u043d\u0433\u043e", 
         "en-US": "DR Congo", 
+        "id": 43, 
         "zh-CN": "\u6c11\u4e3b\u521a\u679c", 
         "de-DE": "Kongo (Dem. Rep.)", 
         "fr-FR": "Congo (R\u00e9p. d\u00e9m.)", 
@@ -622,6 +666,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "K\u016bki '\u0100irani, Cook Islands", 
         "ru-RU": "\u041e\u0441\u0442\u0440\u043e\u0432\u0430 \u041a\u0443\u043a\u0430", 
         "en-US": "Cook Islands", 
+        "id": 44, 
         "zh-CN": "\u5e93\u514b\u7fa4\u5c9b", 
         "de-DE": "Cookinseln", 
         "fr-FR": "\u00celes Cook", 
@@ -636,6 +681,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Costa Rica", 
         "ru-RU": "\u041a\u043e\u0441\u0442\u0430-\u0420\u0438\u043a\u0430", 
         "en-US": "Costa Rica", 
+        "id": 45, 
         "zh-CN": "\u54e5\u65af\u8fbe\u9ece\u52a0", 
         "de-DE": "Costa Rica", 
         "fr-FR": "Costa Rica", 
@@ -655,7 +701,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "48", 
         "fr-FR": "C\u00f4te d'Ivoire", 
         "country_code": "CIV", 
-        "es-ES": "Costa de Marfil"
+        "es-ES": "Costa de Marfil", 
+        "id": 46
     }, 
     {
         "en-GB": "Croatia", 
@@ -664,6 +711,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Hrvatska, Croatia", 
         "ru-RU": "\u0425\u043e\u0440\u0432\u0430\u0442\u0438\u044f", 
         "en-US": "Croatia", 
+        "id": 47, 
         "zh-CN": "\u514b\u7f57\u5730\u4e9a", 
         "de-DE": "Kroatien", 
         "fr-FR": "Croatie", 
@@ -678,6 +726,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Cuba", 
         "ru-RU": "\u041a\u0443\u0431\u0430", 
         "en-US": "Cuba", 
+        "id": 48, 
         "zh-CN": "\u53e4\u5df4", 
         "de-DE": "Kuba", 
         "fr-FR": "Cuba", 
@@ -692,6 +741,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "K\u0131br\u0131s, Cyprus, \u039a\u03cd\u03c0\u03c1\u03bf\u03c2", 
         "ru-RU": "\u041a\u0438\u043f\u0440", 
         "en-US": "Cyprus", 
+        "id": 49, 
         "zh-CN": "\u585e\u6d66\u8def\u65af", 
         "de-DE": "Zypern", 
         "fr-FR": "Chypre", 
@@ -706,6 +756,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "\u010cesko, Czechia", 
         "ru-RU": "\u0427\u0435\u0445\u0438\u044f", 
         "en-US": "Czechia", 
+        "id": 50, 
         "zh-CN": "\u6377\u514b", 
         "de-DE": "Tschechien", 
         "fr-FR": "Tch\u00e9quie", 
@@ -720,6 +771,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Danmark, Denmark", 
         "ru-RU": "\u0414\u0430\u043d\u0438\u044f", 
         "en-US": "Denmark", 
+        "id": 51, 
         "zh-CN": "\u4e39\u9ea6", 
         "de-DE": "D\u00e4nemark", 
         "fr-FR": "Danemark", 
@@ -734,6 +786,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "\u062c\u064a\u0628\u0648\u062a\u064a\u200e, Djibouti", 
         "ru-RU": "\u0414\u0436\u0438\u0431\u0443\u0442\u0438", 
         "en-US": "Djibouti", 
+        "id": 52, 
         "zh-CN": "\u5409\u5e03\u63d0", 
         "de-DE": "Dschibuti", 
         "fr-FR": "Djibouti", 
@@ -748,6 +801,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Dominica", 
         "ru-RU": "\u0414\u043e\u043c\u0438\u043d\u0438\u043a\u0430", 
         "en-US": "Dominica", 
+        "id": 53, 
         "zh-CN": "\u591a\u7c73\u5c3c\u52a0", 
         "de-DE": "Dominica", 
         "fr-FR": "Dominique", 
@@ -762,6 +816,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Rep\u00fablica Dominicana, Dominican Republic", 
         "ru-RU": "\u0414\u043e\u043c\u0438\u043d\u0438\u043a\u0430\u043d\u0441\u043a\u0430\u044f \u0420\u0435\u0441\u043f\u0443\u0431\u043b\u0438\u043a\u0430", 
         "en-US": "Dominican Republic", 
+        "id": 54, 
         "zh-CN": "\u591a\u660e\u5c3c\u52a0", 
         "de-DE": "Dominikanische Republik", 
         "fr-FR": "R\u00e9publique dominicaine", 
@@ -781,7 +836,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "57", 
         "fr-FR": "Timor oriental", 
         "country_code": "TLS", 
-        "es-ES": "Timor Oriental"
+        "es-ES": "Timor Oriental", 
+        "id": 55
     }, 
     {
         "en-GB": "Ecuador", 
@@ -790,6 +846,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Ecuador", 
         "ru-RU": "\u042d\u043a\u0432\u0430\u0434\u043e\u0440", 
         "en-US": "Ecuador", 
+        "id": 56, 
         "zh-CN": "\u5384\u74dc\u591a\u5c14", 
         "de-DE": "Ecuador", 
         "fr-FR": "\u00c9quateur", 
@@ -804,6 +861,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "\u0645\u0635\u0631, Egypt", 
         "ru-RU": "\u0415\u0433\u0438\u043f\u0435\u0442", 
         "en-US": "Egypt", 
+        "id": 57, 
         "zh-CN": "\u57c3\u53ca", 
         "de-DE": "\u00c4gypten", 
         "fr-FR": "\u00c9gypte", 
@@ -818,6 +876,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "El Salvador", 
         "ru-RU": "\u0421\u0430\u043b\u044c\u0432\u0430\u0434\u043e\u0440", 
         "en-US": "El Salvador", 
+        "id": 58, 
         "zh-CN": "\u8428\u5c14\u74e6\u591a", 
         "de-DE": "El Salvador", 
         "fr-FR": "Salvador", 
@@ -832,6 +891,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Guinea Ecuatorial, Equatorial Guinea, Guin\u00e9e \u00e9quatoriale, Guin\u00e9 Equatorial", 
         "ru-RU": "\u042d\u043a\u0432\u0430\u0442\u043e\u0440\u0438\u0430\u043b\u044c\u043d\u0430\u044f \u0413\u0432\u0438\u043d\u0435\u044f", 
         "en-US": "Equatorial Guinea", 
+        "id": 59, 
         "zh-CN": "\u8d64\u9053\u51e0\u5185\u4e9a", 
         "de-DE": "\u00c4quatorialguinea", 
         "fr-FR": "Guin\u00e9e \u00e9quatoriale", 
@@ -846,6 +906,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "\u0625\u0631\u062a\u0631\u064a\u0627\u200e, Eritrea, \u12a4\u122d\u1275\u122b", 
         "ru-RU": "\u042d\u0440\u0438\u0442\u0440\u0435\u044f", 
         "en-US": "Eritrea", 
+        "id": 60, 
         "zh-CN": "\u5384\u7acb\u7279\u91cc\u4e9a", 
         "de-DE": "Eritrea", 
         "fr-FR": "\u00c9rythr\u00e9e", 
@@ -860,6 +921,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Eesti, Estonia", 
         "ru-RU": "\u042d\u0441\u0442\u043e\u043d\u0438\u044f", 
         "en-US": "Estonia", 
+        "id": 61, 
         "zh-CN": "\u7231\u6c99\u5c3c\u4e9a", 
         "de-DE": "Estland", 
         "fr-FR": "Estonie", 
@@ -874,6 +936,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "\u12a2\u1275\u12ee\u1335\u12eb, Ethiopia", 
         "ru-RU": "\u042d\u0444\u0438\u043e\u043f\u0438\u044f", 
         "en-US": "Ethiopia", 
+        "id": 62, 
         "zh-CN": "\u57c3\u585e\u4fc4\u6bd4\u4e9a", 
         "de-DE": "\u00c4thiopien", 
         "fr-FR": "\u00c9thiopie", 
@@ -893,7 +956,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "65", 
         "fr-FR": "\u00celes Malouines", 
         "country_code": "FLK", 
-        "es-ES": "Islas Malvinas"
+        "es-ES": "Islas Malvinas", 
+        "id": 63
     }, 
     {
         "en-GB": "Faroe Islands", 
@@ -907,7 +971,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "66", 
         "fr-FR": "\u00celes F\u00e9ro\u00e9", 
         "country_code": "FRO", 
-        "es-ES": "Islas Faroe"
+        "es-ES": "Islas Faroe", 
+        "id": 64
     }, 
     {
         "en-GB": "Micronesia", 
@@ -921,7 +986,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "67", 
         "fr-FR": "Micron\u00e9sie", 
         "country_code": "FSM", 
-        "es-ES": "Micronesia"
+        "es-ES": "Micronesia", 
+        "id": 65
     }, 
     {
         "en-GB": "Fiji", 
@@ -935,7 +1001,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "68", 
         "fr-FR": "Fidji", 
         "country_code": "FJI", 
-        "es-ES": "Fiyi"
+        "es-ES": "Fiyi", 
+        "id": 66
     }, 
     {
         "en-GB": "Finland", 
@@ -949,7 +1016,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "69", 
         "fr-FR": "Finlande", 
         "country_code": "FIN", 
-        "es-ES": "Finlandia"
+        "es-ES": "Finlandia", 
+        "id": 67
     }, 
     {
         "en-GB": "France", 
@@ -963,7 +1031,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "70", 
         "fr-FR": "France", 
         "country_code": "FRA", 
-        "es-ES": "Francia"
+        "es-ES": "Francia", 
+        "id": 68
     }, 
     {
         "en-GB": "Gabon", 
@@ -977,7 +1046,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "71", 
         "fr-FR": "Gabon", 
         "country_code": "GAB", 
-        "es-ES": "Gab\u00f3n"
+        "es-ES": "Gab\u00f3n", 
+        "id": 69
     }, 
     {
         "en-GB": "Gambia", 
@@ -991,7 +1061,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "72", 
         "fr-FR": "Gambie", 
         "country_code": "GMB", 
-        "es-ES": "Gambia"
+        "es-ES": "Gambia", 
+        "id": 70
     }, 
     {
         "en-GB": "Georgia", 
@@ -1005,7 +1076,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "73", 
         "fr-FR": "G\u00e9orgie", 
         "country_code": "GEO", 
-        "es-ES": "Georgia"
+        "es-ES": "Georgia", 
+        "id": 71
     }, 
     {
         "en-GB": "Germany", 
@@ -1019,7 +1091,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "74", 
         "fr-FR": "Allemagne", 
         "country_code": "DEU", 
-        "es-ES": "Alemania"
+        "es-ES": "Alemania", 
+        "id": 72
     }, 
     {
         "en-GB": "Ghana", 
@@ -1033,7 +1106,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "76", 
         "fr-FR": "Ghana", 
         "country_code": "GHA", 
-        "es-ES": "Ghana"
+        "es-ES": "Ghana", 
+        "id": 73
     }, 
     {
         "en-GB": "Gibraltar", 
@@ -1047,7 +1121,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "77", 
         "fr-FR": "Gibraltar", 
         "country_code": "GIB", 
-        "es-ES": "Gibraltar"
+        "es-ES": "Gibraltar", 
+        "id": 74
     }, 
     {
         "en-GB": "Greece", 
@@ -1061,7 +1136,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "78", 
         "fr-FR": "Gr\u00e8ce", 
         "country_code": "GRC", 
-        "es-ES": "Grecia"
+        "es-ES": "Grecia", 
+        "id": 75
     }, 
     {
         "en-GB": "Greenland", 
@@ -1075,7 +1151,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "79", 
         "fr-FR": "Groenland", 
         "country_code": "GRL", 
-        "es-ES": "Groenlandia"
+        "es-ES": "Groenlandia", 
+        "id": 76
     }, 
     {
         "en-GB": "Grenada", 
@@ -1089,7 +1166,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "80", 
         "fr-FR": "Grenade", 
         "country_code": "GRD", 
-        "es-ES": "Grenada"
+        "es-ES": "Grenada", 
+        "id": 77
     }, 
     {
         "en-GB": "Guatemala", 
@@ -1103,7 +1181,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "81", 
         "fr-FR": "Guatemala", 
         "country_code": "GTM", 
-        "es-ES": "Guatemala"
+        "es-ES": "Guatemala", 
+        "id": 78
     }, 
     {
         "en-GB": "Guernsey", 
@@ -1117,7 +1196,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "82", 
         "fr-FR": "Guernesey", 
         "country_code": "GGY", 
-        "es-ES": "Guernsey"
+        "es-ES": "Guernsey", 
+        "id": 79
     }, 
     {
         "en-GB": "Guinea", 
@@ -1131,7 +1211,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "83", 
         "fr-FR": "Guin\u00e9e", 
         "country_code": "GIN", 
-        "es-ES": "Guinea"
+        "es-ES": "Guinea", 
+        "id": 80
     }, 
     {
         "en-GB": "Guinea-Bissau", 
@@ -1145,7 +1226,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "84", 
         "fr-FR": "Guin\u00e9e-Bissau", 
         "country_code": "GNB", 
-        "es-ES": "Guinea-Bis\u00e1u"
+        "es-ES": "Guinea-Bis\u00e1u", 
+        "id": 81
     }, 
     {
         "en-GB": "Guyana", 
@@ -1159,7 +1241,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "85", 
         "fr-FR": "Guyana", 
         "country_code": "GUY", 
-        "es-ES": "Guyana"
+        "es-ES": "Guyana", 
+        "id": 82
     }, 
     {
         "en-GB": "Haiti", 
@@ -1173,7 +1256,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "86", 
         "fr-FR": "Ha\u00efti", 
         "country_code": "HTI", 
-        "es-ES": "Haiti"
+        "es-ES": "Haiti", 
+        "id": 83
     }, 
     {
         "en-GB": "Honduras", 
@@ -1187,7 +1271,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "87", 
         "fr-FR": "Honduras", 
         "country_code": "HND", 
-        "es-ES": "Honduras"
+        "es-ES": "Honduras", 
+        "id": 84
     }, 
     {
         "en-GB": "Hungary", 
@@ -1201,7 +1286,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "88", 
         "fr-FR": "Hongrie", 
         "country_code": "HUN", 
-        "es-ES": "Hungr\u00eda"
+        "es-ES": "Hungr\u00eda", 
+        "id": 85
     }, 
     {
         "en-GB": "Iceland", 
@@ -1215,7 +1301,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "89", 
         "fr-FR": "Islande", 
         "country_code": "ISL", 
-        "es-ES": "Islandia"
+        "es-ES": "Islandia", 
+        "id": 86
     }, 
     {
         "en-GB": "India", 
@@ -1229,7 +1316,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "90", 
         "fr-FR": "Inde", 
         "country_code": "IND", 
-        "es-ES": "India"
+        "es-ES": "India", 
+        "id": 87
     }, 
     {
         "en-GB": "Indonesia", 
@@ -1243,7 +1331,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "91", 
         "fr-FR": "Indon\u00e9sie", 
         "country_code": "IDN", 
-        "es-ES": "Indonesia"
+        "es-ES": "Indonesia", 
+        "id": 88
     }, 
     {
         "en-GB": "Iran", 
@@ -1257,7 +1346,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "92", 
         "fr-FR": "Iran", 
         "country_code": "IRN", 
-        "es-ES": "Iran"
+        "es-ES": "Iran", 
+        "id": 89
     }, 
     {
         "en-GB": "Iraq", 
@@ -1271,7 +1361,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "93", 
         "fr-FR": "Irak", 
         "country_code": "IRQ", 
-        "es-ES": "Irak"
+        "es-ES": "Irak", 
+        "id": 90
     }, 
     {
         "en-GB": "Ireland", 
@@ -1285,7 +1376,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "94", 
         "fr-FR": "Irlande", 
         "country_code": "IRL", 
-        "es-ES": "Irlanda"
+        "es-ES": "Irlanda", 
+        "id": 91
     }, 
     {
         "en-GB": "Isle of Man", 
@@ -1299,7 +1391,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "95", 
         "fr-FR": "\u00cele de Man", 
         "country_code": "IMN", 
-        "es-ES": "Isla de Man"
+        "es-ES": "Isla de Man", 
+        "id": 92
     }, 
     {
         "en-GB": "Israel", 
@@ -1313,13 +1406,14 @@ angular.module('orsApp').constant('countries', {
         "cid": "96", 
         "fr-FR": "Isra\u00ebl", 
         "country_code": "ISR", 
-        "es-ES": "Israel"
+        "es-ES": "Israel", 
+        "id": 93
     }, 
     {
         "en-GB": "Italy", 
         "official_en_name": "Italian Republic", 
         "zh-CN": "\u610f\u5927\u5229", 
-        "native_names": "Italien, Italy, Italia", 
+        "native_names": "Italia, Italy", 
         "ru-RU": "\u0418\u0442\u0430\u043b\u0438\u044f", 
         "en-US": "Italy", 
         "pt-PT": "It\u00e1lia", 
@@ -1327,7 +1421,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "97", 
         "fr-FR": "Italie", 
         "country_code": "ITA", 
-        "es-ES": "Italia"
+        "es-ES": "Italia", 
+        "id": 94
     }, 
     {
         "en-GB": "Jamaica", 
@@ -1341,7 +1436,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "98", 
         "fr-FR": "Jama\u00efque", 
         "country_code": "JAM", 
-        "es-ES": "Jamaica"
+        "es-ES": "Jamaica", 
+        "id": 95
     }, 
     {
         "en-GB": "Japan", 
@@ -1355,7 +1451,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "100", 
         "fr-FR": "Japon", 
         "country_code": "JPN", 
-        "es-ES": "Jap\u00f3n"
+        "es-ES": "Jap\u00f3n", 
+        "id": 96
     }, 
     {
         "en-GB": "Jersey", 
@@ -1369,7 +1466,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "101", 
         "fr-FR": "Jersey", 
         "country_code": "JEY", 
-        "es-ES": "Jersey"
+        "es-ES": "Jersey", 
+        "id": 97
     }, 
     {
         "en-GB": "Jordan", 
@@ -1383,7 +1481,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "102", 
         "fr-FR": "Jordanie", 
         "country_code": "JOR", 
-        "es-ES": "Jordania"
+        "es-ES": "Jordania", 
+        "id": 98
     }, 
     {
         "en-GB": "Kazakhstan", 
@@ -1397,7 +1496,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "103", 
         "fr-FR": "Kazakhstan", 
         "country_code": "KAZ", 
-        "es-ES": "Kazajist\u00e1n"
+        "es-ES": "Kazajist\u00e1n", 
+        "id": 99
     }, 
     {
         "en-GB": "Kenya", 
@@ -1411,7 +1511,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "104", 
         "fr-FR": "Kenya", 
         "country_code": "KEN", 
-        "es-ES": "Kenia"
+        "es-ES": "Kenia", 
+        "id": 100
     }, 
     {
         "en-GB": "Kiribati", 
@@ -1425,7 +1526,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "105", 
         "fr-FR": "Kiribati", 
         "country_code": "KIR", 
-        "es-ES": "Kiribati"
+        "es-ES": "Kiribati", 
+        "id": 101
     }, 
     {
         "en-GB": "Kosovo", 
@@ -1439,7 +1541,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "106", 
         "fr-FR": "Kosovo", 
         "country_code": "UNK", 
-        "es-ES": "Kosovo"
+        "es-ES": "Kosovo", 
+        "id": 102
     }, 
     {
         "en-GB": "Kuwait", 
@@ -1453,7 +1556,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "107", 
         "fr-FR": "Kowe\u00eft", 
         "country_code": "KWT", 
-        "es-ES": "Kuwait"
+        "es-ES": "Kuwait", 
+        "id": 103
     }, 
     {
         "en-GB": "Kyrgyzstan", 
@@ -1467,7 +1571,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "108", 
         "fr-FR": "Kirghizistan", 
         "country_code": "KGZ", 
-        "es-ES": "Kirguizist\u00e1n"
+        "es-ES": "Kirguizist\u00e1n", 
+        "id": 104
     }, 
     {
         "en-GB": "Laos", 
@@ -1481,7 +1586,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "109", 
         "fr-FR": "Laos", 
         "country_code": "LAO", 
-        "es-ES": "Laos"
+        "es-ES": "Laos", 
+        "id": 105
     }, 
     {
         "en-GB": "Latvia", 
@@ -1495,7 +1601,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "110", 
         "fr-FR": "Lettonie", 
         "country_code": "LVA", 
-        "es-ES": "Letonia"
+        "es-ES": "Letonia", 
+        "id": 106
     }, 
     {
         "en-GB": "Lebanon", 
@@ -1509,7 +1616,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "111", 
         "fr-FR": "Liban", 
         "country_code": "LBN", 
-        "es-ES": "L\u00edbano"
+        "es-ES": "L\u00edbano", 
+        "id": 107
     }, 
     {
         "en-GB": "Lesotho", 
@@ -1523,7 +1631,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "112", 
         "fr-FR": "Lesotho", 
         "country_code": "LSO", 
-        "es-ES": "Lesotho"
+        "es-ES": "Lesotho", 
+        "id": 108
     }, 
     {
         "en-GB": "Liberia", 
@@ -1537,7 +1646,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "113", 
         "fr-FR": "Liberia", 
         "country_code": "LBR", 
-        "es-ES": "Liberia"
+        "es-ES": "Liberia", 
+        "id": 109
     }, 
     {
         "en-GB": "Libya", 
@@ -1551,7 +1661,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "114", 
         "fr-FR": "Libye", 
         "country_code": "LBY", 
-        "es-ES": "Libia"
+        "es-ES": "Libia", 
+        "id": 110
     }, 
     {
         "en-GB": "Liechtenstein", 
@@ -1565,7 +1676,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "115", 
         "fr-FR": "Liechtenstein", 
         "country_code": "LIE", 
-        "es-ES": "Liechtenstein"
+        "es-ES": "Liechtenstein", 
+        "id": 111
     }, 
     {
         "en-GB": "Lithuania", 
@@ -1579,7 +1691,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "116", 
         "fr-FR": "Lituanie", 
         "country_code": "LTU", 
-        "es-ES": "Lituania"
+        "es-ES": "Lituania", 
+        "id": 112
     }, 
     {
         "en-GB": "Luxembourg", 
@@ -1593,7 +1706,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "117", 
         "fr-FR": "Luxembourg", 
         "country_code": "LUX", 
-        "es-ES": "Luxemburgo"
+        "es-ES": "Luxemburgo", 
+        "id": 113
     }, 
     {
         "en-GB": "Macedonia", 
@@ -1607,7 +1721,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "118", 
         "fr-FR": "Mac\u00e9doine", 
         "country_code": "MKD", 
-        "es-ES": "Macedonia"
+        "es-ES": "Macedonia", 
+        "id": 114
     }, 
     {
         "en-GB": "Madagascar", 
@@ -1621,7 +1736,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "119", 
         "fr-FR": "Madagascar", 
         "country_code": "MDG", 
-        "es-ES": "Madagascar"
+        "es-ES": "Madagascar", 
+        "id": 115
     }, 
     {
         "en-GB": "Malawi", 
@@ -1635,7 +1751,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "120", 
         "fr-FR": "Malawi", 
         "country_code": "MWI", 
-        "es-ES": "Malawi"
+        "es-ES": "Malawi", 
+        "id": 116
     }, 
     {
         "en-GB": "Malaysia", 
@@ -1649,7 +1766,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "121", 
         "fr-FR": "Malaisie", 
         "country_code": "MYS", 
-        "es-ES": "Malasia"
+        "es-ES": "Malasia", 
+        "id": 117
     }, 
     {
         "en-GB": "Maldives", 
@@ -1662,7 +1780,9 @@ angular.module('orsApp').constant('countries', {
         "de-DE": "Malediven", 
         "cid": "122", 
         "fr-FR": "Maldives", 
-        "country_code": "MDV"
+        "country_code": "MDV", 
+        "es-ES": "Maldivas", 
+        "id": 118
     }, 
     {
         "en-GB": "Mali", 
@@ -1676,7 +1796,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "123", 
         "fr-FR": "Mali", 
         "country_code": "MLI", 
-        "es-ES": "Mali"
+        "es-ES": "Mali", 
+        "id": 119
     }, 
     {
         "en-GB": "Malta", 
@@ -1690,7 +1811,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "124", 
         "fr-FR": "Malte", 
         "country_code": "MLT", 
-        "es-ES": "Malta"
+        "es-ES": "Malta", 
+        "id": 120
     }, 
     {
         "en-GB": "Marshall Islands", 
@@ -1704,7 +1826,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "125", 
         "fr-FR": "\u00celes Marshall", 
         "country_code": "MHL", 
-        "es-ES": "Islas Marshall"
+        "es-ES": "Islas Marshall", 
+        "id": 121
     }, 
     {
         "en-GB": "Mauritania", 
@@ -1718,7 +1841,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "126", 
         "fr-FR": "Mauritanie", 
         "country_code": "MRT", 
-        "es-ES": "Mauritania"
+        "es-ES": "Mauritania", 
+        "id": 122
     }, 
     {
         "en-GB": "Mauritius", 
@@ -1732,7 +1856,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "127", 
         "fr-FR": "\u00cele Maurice", 
         "country_code": "MUS", 
-        "es-ES": "Mauricio"
+        "es-ES": "Mauricio", 
+        "id": 123
     }, 
     {
         "en-GB": "Mexico", 
@@ -1746,7 +1871,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "128", 
         "fr-FR": "Mexique", 
         "country_code": "MEX", 
-        "es-ES": "M\u00e9xico"
+        "es-ES": "M\u00e9xico", 
+        "id": 124
     }, 
     {
         "en-GB": "Moldova", 
@@ -1760,7 +1886,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "129", 
         "fr-FR": "Moldavie", 
         "country_code": "MDA", 
-        "es-ES": "Moldavia"
+        "es-ES": "Moldavia", 
+        "id": 125
     }, 
     {
         "en-GB": "Monaco", 
@@ -1774,7 +1901,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "130", 
         "fr-FR": "Monaco", 
         "country_code": "MCO", 
-        "es-ES": "M\u00f3naco"
+        "es-ES": "M\u00f3naco", 
+        "id": 126
     }, 
     {
         "en-GB": "Mongolia", 
@@ -1788,7 +1916,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "131", 
         "fr-FR": "Mongolie", 
         "country_code": "MNG", 
-        "es-ES": "Mongolia"
+        "es-ES": "Mongolia", 
+        "id": 127
     }, 
     {
         "en-GB": "Montenegro", 
@@ -1802,7 +1931,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "132", 
         "fr-FR": "Mont\u00e9n\u00e9gro", 
         "country_code": "MNE", 
-        "es-ES": "Montenegro"
+        "es-ES": "Montenegro", 
+        "id": 128
     }, 
     {
         "en-GB": "Montserrat", 
@@ -1816,7 +1946,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "133", 
         "fr-FR": "Montserrat", 
         "country_code": "MSR", 
-        "es-ES": "Montserrat"
+        "es-ES": "Montserrat", 
+        "id": 129
     }, 
     {
         "en-GB": "Morocco", 
@@ -1830,7 +1961,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "134", 
         "fr-FR": "Maroc", 
         "country_code": "MAR", 
-        "es-ES": "Marruecos"
+        "es-ES": "Marruecos", 
+        "id": 130
     }, 
     {
         "en-GB": "Mozambique", 
@@ -1844,7 +1976,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "135", 
         "fr-FR": "Mozambique", 
         "country_code": "MOZ", 
-        "es-ES": "Mozambique"
+        "es-ES": "Mozambique", 
+        "id": 131
     }, 
     {
         "en-GB": "Myanmar", 
@@ -1858,7 +1991,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "136", 
         "fr-FR": "Birmanie", 
         "country_code": "MMR", 
-        "es-ES": "Myanmar"
+        "es-ES": "Myanmar", 
+        "id": 132
     }, 
     {
         "en-GB": "Namibia", 
@@ -1872,7 +2006,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "138", 
         "fr-FR": "Namibie", 
         "country_code": "NAM", 
-        "es-ES": "Namibia"
+        "es-ES": "Namibia", 
+        "id": 133
     }, 
     {
         "en-GB": "Nauru", 
@@ -1886,7 +2021,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "139", 
         "fr-FR": "Nauru", 
         "country_code": "NRU", 
-        "es-ES": "Nauru"
+        "es-ES": "Nauru", 
+        "id": 134
     }, 
     {
         "en-GB": "Nepal", 
@@ -1900,7 +2036,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "140", 
         "fr-FR": "N\u00e9pal", 
         "country_code": "NPL", 
-        "es-ES": "Nepal"
+        "es-ES": "Nepal", 
+        "id": 135
     }, 
     {
         "en-GB": "Netherlands", 
@@ -1914,7 +2051,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "141", 
         "fr-FR": "Pays-Bas", 
         "country_code": "NLD", 
-        "es-ES": "Pa\u00edses Bajos"
+        "es-ES": "Pa\u00edses Bajos", 
+        "id": 136
     }, 
     {
         "en-GB": "New Zealand", 
@@ -1928,7 +2066,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "142", 
         "fr-FR": "Nouvelle-Z\u00e9lande", 
         "country_code": "NZL", 
-        "es-ES": "Nueva Zelanda"
+        "es-ES": "Nueva Zelanda", 
+        "id": 137
     }, 
     {
         "en-GB": "Nicaragua", 
@@ -1942,7 +2081,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "143", 
         "fr-FR": "Nicaragua", 
         "country_code": "NIC", 
-        "es-ES": "Nicaragua"
+        "es-ES": "Nicaragua", 
+        "id": 138
     }, 
     {
         "en-GB": "Niger", 
@@ -1956,7 +2096,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "144", 
         "fr-FR": "Niger", 
         "country_code": "NER", 
-        "es-ES": "N\u00edger"
+        "es-ES": "N\u00edger", 
+        "id": 139
     }, 
     {
         "en-GB": "Nigeria", 
@@ -1970,7 +2111,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "145", 
         "fr-FR": "Nig\u00e9ria", 
         "country_code": "NGA", 
-        "es-ES": "Nigeria"
+        "es-ES": "Nigeria", 
+        "id": 140
     }, 
     {
         "en-GB": "Niue", 
@@ -1984,7 +2126,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "146", 
         "fr-FR": "Niue", 
         "country_code": "NIU", 
-        "es-ES": "Niue"
+        "es-ES": "Niue", 
+        "id": 141
     }, 
     {
         "en-GB": "North Korea", 
@@ -1998,7 +2141,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "147", 
         "fr-FR": "Cor\u00e9e du Nord", 
         "country_code": "PRK", 
-        "es-ES": "Corea del Norte"
+        "es-ES": "Corea del Norte", 
+        "id": 142
     }, 
     {
         "en-GB": "Norway", 
@@ -2012,7 +2156,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "148", 
         "fr-FR": "Norv\u00e8ge", 
         "country_code": "NOR", 
-        "es-ES": "Noruega"
+        "es-ES": "Noruega", 
+        "id": 143
     }, 
     {
         "en-GB": "Oman", 
@@ -2026,7 +2171,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "149", 
         "fr-FR": "Oman", 
         "country_code": "OMN", 
-        "es-ES": "Om\u00e1n"
+        "es-ES": "Om\u00e1n", 
+        "id": 144
     }, 
     {
         "en-GB": "Pakistan", 
@@ -2040,7 +2186,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "150", 
         "fr-FR": "Pakistan", 
         "country_code": "PAK", 
-        "es-ES": "Pakist\u00e1n"
+        "es-ES": "Pakist\u00e1n", 
+        "id": 145
     }, 
     {
         "en-GB": "Palau", 
@@ -2054,7 +2201,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "151", 
         "fr-FR": "Palaos (Palau)", 
         "country_code": "PLW", 
-        "es-ES": "Palau"
+        "es-ES": "Palau", 
+        "id": 146
     }, 
     {
         "en-GB": "Panama", 
@@ -2068,7 +2216,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "153", 
         "fr-FR": "Panama", 
         "country_code": "PAN", 
-        "es-ES": "Panam\u00e1"
+        "es-ES": "Panam\u00e1", 
+        "id": 147
     }, 
     {
         "en-GB": "Papua New Guinea", 
@@ -2082,7 +2231,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "154", 
         "fr-FR": "Papouasie-Nouvelle-Guin\u00e9e", 
         "country_code": "PNG", 
-        "es-ES": "Pap\u00faa Nueva Guinea"
+        "es-ES": "Pap\u00faa Nueva Guinea", 
+        "id": 148
     }, 
     {
         "en-GB": "Paraguay", 
@@ -2096,7 +2246,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "155", 
         "fr-FR": "Paraguay", 
         "country_code": "PRY", 
-        "es-ES": "Paraguay"
+        "es-ES": "Paraguay", 
+        "id": 149
     }, 
     {
         "en-GB": "Peru", 
@@ -2110,7 +2261,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "156", 
         "fr-FR": "P\u00e9rou", 
         "country_code": "PER", 
-        "es-ES": "Per\u00fa"
+        "es-ES": "Per\u00fa", 
+        "id": 150
     }, 
     {
         "en-GB": "Philippines", 
@@ -2124,7 +2276,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "157", 
         "fr-FR": "Philippines", 
         "country_code": "PHL", 
-        "es-ES": "Filipinas"
+        "es-ES": "Filipinas", 
+        "id": 151
     }, 
     {
         "en-GB": "Pitcairn Islands", 
@@ -2138,7 +2291,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "158", 
         "fr-FR": "\u00celes Pitcairn", 
         "country_code": "PCN", 
-        "es-ES": "Islas Pitcairn"
+        "es-ES": "Islas Pitcairn", 
+        "id": 152
     }, 
     {
         "en-GB": "Poland", 
@@ -2152,7 +2306,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "159", 
         "fr-FR": "Pologne", 
         "country_code": "POL", 
-        "es-ES": "Polonia"
+        "es-ES": "Polonia", 
+        "id": 153
     }, 
     {
         "en-GB": "Portugal", 
@@ -2166,7 +2321,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "160", 
         "fr-FR": "Portugal", 
         "country_code": "PRT", 
-        "es-ES": "Portugal"
+        "es-ES": "Portugal", 
+        "id": 154
     }, 
     {
         "en-GB": "Qatar", 
@@ -2180,7 +2336,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "161", 
         "fr-FR": "Qatar", 
         "country_code": "QAT", 
-        "es-ES": "Catar"
+        "es-ES": "Catar", 
+        "id": 155
     }, 
     {
         "en-GB": "Romania", 
@@ -2194,7 +2351,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "162", 
         "fr-FR": "Roumanie", 
         "country_code": "ROU", 
-        "es-ES": "Rumania"
+        "es-ES": "Rumania", 
+        "id": 156
     }, 
     {
         "en-GB": "Russia", 
@@ -2208,7 +2366,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "163", 
         "fr-FR": "Russie", 
         "country_code": "RUS", 
-        "es-ES": "Rusia"
+        "es-ES": "Rusia", 
+        "id": 157
     }, 
     {
         "en-GB": "Rwanda", 
@@ -2222,7 +2381,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "164", 
         "fr-FR": "Rwanda", 
         "country_code": "RWA", 
-        "es-ES": "Ruanda"
+        "es-ES": "Ruanda", 
+        "id": 158
     }, 
     {
         "en-GB": "Western Sahara", 
@@ -2236,7 +2396,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "165", 
         "fr-FR": "Sahara Occidental", 
         "country_code": "ESH", 
-        "es-ES": "Sahara Occidental"
+        "es-ES": "Sahara Occidental", 
+        "id": 159
     }, 
     {
         "en-GB": "Saint Kitts and Nevis", 
@@ -2250,7 +2411,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "167", 
         "fr-FR": "Saint-Christophe-et-Ni\u00e9v\u00e8s", 
         "country_code": "KNA", 
-        "es-ES": "San Crist\u00f3bal y Nieves"
+        "es-ES": "San Crist\u00f3bal y Nieves", 
+        "id": 160
     }, 
     {
         "en-GB": "Saint Lucia", 
@@ -2264,7 +2426,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "168", 
         "fr-FR": "Sainte-Lucie", 
         "country_code": "LCA", 
-        "es-ES": "Santa Luc\u00eda"
+        "es-ES": "Santa Luc\u00eda", 
+        "id": 161
     }, 
     {
         "en-GB": "Saint Vincent and the Grenadines", 
@@ -2278,7 +2441,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "169", 
         "fr-FR": "Saint-Vincent-et-les-Grenadines", 
         "country_code": "VCT", 
-        "es-ES": "San Vicente y Granadinas"
+        "es-ES": "San Vicente y Granadinas", 
+        "id": 162
     }, 
     {
         "en-GB": "Samoa", 
@@ -2292,7 +2456,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "170", 
         "fr-FR": "Samoa", 
         "country_code": "WSM", 
-        "es-ES": "Samoa"
+        "es-ES": "Samoa", 
+        "id": 163
     }, 
     {
         "en-GB": "San Marino", 
@@ -2306,7 +2471,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "171", 
         "fr-FR": "Saint-Marin", 
         "country_code": "SMR", 
-        "es-ES": "San Marino"
+        "es-ES": "San Marino", 
+        "id": 164
     }, 
     {
         "en-GB": "S\u00e3o Tom\u00e9 and Pr\u00edncipe", 
@@ -2319,7 +2485,9 @@ angular.module('orsApp').constant('countries', {
         "de-DE": "S\u00e3o Tom\u00e9 und Pr\u00edncipe", 
         "cid": "172", 
         "fr-FR": "S\u00e3o Tom\u00e9 et Pr\u00edncipe", 
-        "country_code": "STP"
+        "country_code": "STP", 
+        "es-ES": "Santo Tom\u00e9 y Pr\u00edncipe", 
+        "id": 165
     }, 
     {
         "en-GB": "Saudi Arabia", 
@@ -2333,7 +2501,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "173", 
         "fr-FR": "Arabie Saoudite", 
         "country_code": "SAU", 
-        "es-ES": "Arabia Saud\u00ed"
+        "es-ES": "Arabia Saud\u00ed", 
+        "id": 166
     }, 
     {
         "en-GB": "Senegal", 
@@ -2347,7 +2516,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "174", 
         "fr-FR": "S\u00e9n\u00e9gal", 
         "country_code": "SEN", 
-        "es-ES": "Senegal"
+        "es-ES": "Senegal", 
+        "id": 167
     }, 
     {
         "en-GB": "Serbia", 
@@ -2361,7 +2531,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "175", 
         "fr-FR": "Serbie", 
         "country_code": "SRB", 
-        "es-ES": "Serbia"
+        "es-ES": "Serbia", 
+        "id": 168
     }, 
     {
         "en-GB": "Seychelles", 
@@ -2375,7 +2546,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "176", 
         "fr-FR": "Seychelles", 
         "country_code": "SYC", 
-        "es-ES": "Seychelles"
+        "es-ES": "Seychelles", 
+        "id": 169
     }, 
     {
         "en-GB": "Sierra Leone", 
@@ -2389,7 +2561,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "177", 
         "fr-FR": "Sierra Leone", 
         "country_code": "SLE", 
-        "es-ES": "Sierra Leone"
+        "es-ES": "Sierra Leone", 
+        "id": 170
     }, 
     {
         "en-GB": "Singapore", 
@@ -2402,7 +2575,8 @@ angular.module('orsApp').constant('countries', {
         "de-DE": "Singapur", 
         "fr-FR": "Singapour", 
         "country_code": "SGP", 
-        "es-ES": "Singapur"
+        "es-ES": "Singapur", 
+        "id": 171
     }, 
     {
         "en-GB": "Slovakia", 
@@ -2416,7 +2590,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "179", 
         "fr-FR": "Slovaquie", 
         "country_code": "SVK", 
-        "es-ES": "Rep\u00fablica Eslovaca"
+        "es-ES": "Rep\u00fablica Eslovaca", 
+        "id": 172
     }, 
     {
         "en-GB": "Slovenia", 
@@ -2430,7 +2605,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "180", 
         "fr-FR": "Slov\u00e9nie", 
         "country_code": "SVN", 
-        "es-ES": "Eslovenia"
+        "es-ES": "Eslovenia", 
+        "id": 173
     }, 
     {
         "en-GB": "Solomon Islands", 
@@ -2444,7 +2620,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "181", 
         "fr-FR": "\u00celes Salomon", 
         "country_code": "SLB", 
-        "es-ES": "Islas Salom\u00f3n"
+        "es-ES": "Islas Salom\u00f3n", 
+        "id": 174
     }, 
     {
         "en-GB": "Somalia", 
@@ -2458,7 +2635,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "182", 
         "fr-FR": "Somalie", 
         "country_code": "SOM", 
-        "es-ES": "Somalia"
+        "es-ES": "Somalia", 
+        "id": 175
     }, 
     {
         "en-GB": "South Africa", 
@@ -2472,7 +2650,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "183", 
         "fr-FR": "Afrique du Sud", 
         "country_code": "ZAF", 
-        "es-ES": "Rep\u00fablica de Sud\u00e1frica"
+        "es-ES": "Rep\u00fablica de Sud\u00e1frica", 
+        "id": 176
     }, 
     {
         "en-GB": "South Georgia", 
@@ -2486,7 +2665,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "184", 
         "fr-FR": "G\u00e9orgie du Sud-et-les \u00celes Sandwich du Sud", 
         "country_code": "SGS", 
-        "es-ES": "Islas Georgias del Sur y Sandwich del Sur"
+        "es-ES": "Islas Georgias del Sur y Sandwich del Sur", 
+        "id": 177
     }, 
     {
         "en-GB": "South Korea", 
@@ -2500,7 +2680,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "185", 
         "fr-FR": "Cor\u00e9e du Sud", 
         "country_code": "KOR", 
-        "es-ES": "Corea del Sur"
+        "es-ES": "Corea del Sur", 
+        "id": 178
     }, 
     {
         "en-GB": "South Sudan", 
@@ -2514,13 +2695,14 @@ angular.module('orsApp').constant('countries', {
         "cid": "186", 
         "fr-FR": "Soudan du Sud", 
         "country_code": "SSD", 
-        "es-ES": "Sud\u00e1n del Sur"
+        "es-ES": "Sud\u00e1n del Sur", 
+        "id": 179
     }, 
     {
         "en-GB": "Spain", 
         "official_en_name": "Kingdom of Spain", 
         "zh-CN": "\u897f\u73ed\u7259", 
-        "native_names": "Espanha, Spain, Espa\u00f1a, Espainia, Espanya", 
+        "native_names": "Espa\u00f1a, Spain", 
         "ru-RU": "\u0418\u0441\u043f\u0430\u043d\u0438\u044f", 
         "en-US": "Spain", 
         "pt-PT": "Espanha", 
@@ -2528,7 +2710,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "187", 
         "fr-FR": "Espagne", 
         "country_code": "ESP", 
-        "es-ES": "Espa\u00f1a"
+        "es-ES": "Espa\u00f1a", 
+        "id": 180
     }, 
     {
         "en-GB": "Sri Lanka", 
@@ -2542,7 +2725,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "188", 
         "fr-FR": "Sri Lanka", 
         "country_code": "LKA", 
-        "es-ES": "Sri Lanka"
+        "es-ES": "Sri Lanka", 
+        "id": 181
     }, 
     {
         "en-GB": "Sudan", 
@@ -2556,7 +2740,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "189", 
         "fr-FR": "Soudan", 
         "country_code": "SDN", 
-        "es-ES": "Sud\u00e1n"
+        "es-ES": "Sud\u00e1n", 
+        "id": 182
     }, 
     {
         "en-GB": "Suriname", 
@@ -2570,7 +2755,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "190", 
         "fr-FR": "Surinam", 
         "country_code": "SUR", 
-        "es-ES": "Surinam"
+        "es-ES": "Surinam", 
+        "id": 183
     }, 
     {
         "en-GB": "Swaziland", 
@@ -2584,7 +2770,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "191", 
         "fr-FR": "Swaziland", 
         "country_code": "SWZ", 
-        "es-ES": "Suazilandia"
+        "es-ES": "Suazilandia", 
+        "id": 184
     }, 
     {
         "en-GB": "Sweden", 
@@ -2598,7 +2785,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "192", 
         "fr-FR": "Su\u00e8de", 
         "country_code": "SWE", 
-        "es-ES": "Suecia"
+        "es-ES": "Suecia", 
+        "id": 185
     }, 
     {
         "en-GB": "Switzerland", 
@@ -2612,7 +2800,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "193", 
         "fr-FR": "Suisse", 
         "country_code": "CHE", 
-        "es-ES": "Suiza"
+        "es-ES": "Suiza", 
+        "id": 186
     }, 
     {
         "en-GB": "Syria", 
@@ -2626,7 +2815,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "194", 
         "fr-FR": "Syrie", 
         "country_code": "SYR", 
-        "es-ES": "Siria"
+        "es-ES": "Siria", 
+        "id": 187
     }, 
     {
         "en-GB": "Taiwan", 
@@ -2639,7 +2829,8 @@ angular.module('orsApp').constant('countries', {
         "de-DE": "Taiwan", 
         "fr-FR": "Ta\u00efwan", 
         "country_code": "TWN", 
-        "es-ES": "Taiw\u00e1n"
+        "es-ES": "Taiw\u00e1n", 
+        "id": 188
     }, 
     {
         "en-GB": "Tajikistan", 
@@ -2653,7 +2844,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "196", 
         "fr-FR": "Tadjikistan", 
         "country_code": "TJK", 
-        "es-ES": "Tayikist\u00e1n"
+        "es-ES": "Tayikist\u00e1n", 
+        "id": 189
     }, 
     {
         "en-GB": "Tanzania", 
@@ -2667,7 +2859,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "197", 
         "fr-FR": "Tanzanie", 
         "country_code": "TZA", 
-        "es-ES": "Tanzania"
+        "es-ES": "Tanzania", 
+        "id": 190
     }, 
     {
         "en-GB": "Thailand", 
@@ -2681,7 +2874,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "198", 
         "fr-FR": "Tha\u00eflande", 
         "country_code": "THA", 
-        "es-ES": "Tailandia"
+        "es-ES": "Tailandia", 
+        "id": 191
     }, 
     {
         "en-GB": "Bahamas", 
@@ -2690,6 +2884,7 @@ angular.module('orsApp').constant('countries', {
         "native_names": "Bahamas", 
         "ru-RU": "\u0411\u0430\u0433\u0430\u043c\u0441\u043a\u0438\u0435 \u041e\u0441\u0442\u0440\u043e\u0432\u0430", 
         "en-US": "Bahamas", 
+        "id": 192, 
         "zh-CN": "\u5df4\u54c8\u9a6c", 
         "de-DE": "Bahamas", 
         "fr-FR": "Bahamas", 
@@ -2709,7 +2904,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "201", 
         "fr-FR": "Togo", 
         "country_code": "TGO", 
-        "es-ES": "Togo"
+        "es-ES": "Togo", 
+        "id": 193
     }, 
     {
         "en-GB": "Tokelau", 
@@ -2723,7 +2919,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "202", 
         "fr-FR": "Tokelau", 
         "country_code": "TKL", 
-        "es-ES": "Islas Tokelau"
+        "es-ES": "Islas Tokelau", 
+        "id": 194
     }, 
     {
         "en-GB": "Tonga", 
@@ -2737,7 +2934,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "203", 
         "fr-FR": "Tonga", 
         "country_code": "TON", 
-        "es-ES": "Tonga"
+        "es-ES": "Tonga", 
+        "id": 195
     }, 
     {
         "en-GB": "Trinidad and Tobago", 
@@ -2751,7 +2949,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "204", 
         "fr-FR": "Trinit\u00e9-et-Tobago", 
         "country_code": "TTO", 
-        "es-ES": "Trinidad y Tobago"
+        "es-ES": "Trinidad y Tobago", 
+        "id": 196
     }, 
     {
         "en-GB": "Tunisia", 
@@ -2765,7 +2964,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "205", 
         "fr-FR": "Tunisie", 
         "country_code": "TUN", 
-        "es-ES": "T\u00fanez"
+        "es-ES": "T\u00fanez", 
+        "id": 197
     }, 
     {
         "en-GB": "Turkey", 
@@ -2779,7 +2979,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "206", 
         "fr-FR": "Turquie", 
         "country_code": "TUR", 
-        "es-ES": "Turqu\u00eda"
+        "es-ES": "Turqu\u00eda", 
+        "id": 198
     }, 
     {
         "en-GB": "Turkmenistan", 
@@ -2793,7 +2994,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "207", 
         "fr-FR": "Turkm\u00e9nistan", 
         "country_code": "TKM", 
-        "es-ES": "Turkmenist\u00e1n"
+        "es-ES": "Turkmenist\u00e1n", 
+        "id": 199
     }, 
     {
         "en-GB": "Turks and Caicos Islands", 
@@ -2807,7 +3009,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "208", 
         "fr-FR": "\u00celes Turques-et-Ca\u00efques", 
         "country_code": "TCA", 
-        "es-ES": "Islas Turks y Caicos"
+        "es-ES": "Islas Turks y Caicos", 
+        "id": 200
     }, 
     {
         "en-GB": "Tuvalu", 
@@ -2821,7 +3024,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "209", 
         "fr-FR": "Tuvalu", 
         "country_code": "TUV", 
-        "es-ES": "Tuvalu"
+        "es-ES": "Tuvalu", 
+        "id": 201
     }, 
     {
         "en-GB": "Uganda", 
@@ -2835,7 +3039,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "210", 
         "fr-FR": "Ouganda", 
         "country_code": "UGA", 
-        "es-ES": "Uganda"
+        "es-ES": "Uganda", 
+        "id": 202
     }, 
     {
         "en-GB": "Ukraine", 
@@ -2849,7 +3054,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "211", 
         "fr-FR": "Ukraine", 
         "country_code": "UKR", 
-        "es-ES": "Ucrania"
+        "es-ES": "Ucrania", 
+        "id": 203
     }, 
     {
         "en-GB": "United Arab Emirates", 
@@ -2863,7 +3069,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "212", 
         "fr-FR": "\u00c9mirats arabes unis", 
         "country_code": "ARE", 
-        "es-ES": "Emiratos \u00c1rabes Unidos"
+        "es-ES": "Emiratos \u00c1rabes Unidos", 
+        "id": 204
     }, 
     {
         "en-GB": "United Kingdom", 
@@ -2877,7 +3084,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "213", 
         "fr-FR": "Royaume-Uni", 
         "country_code": "GBR", 
-        "es-ES": "Reino Unido"
+        "es-ES": "Reino Unido", 
+        "id": 205
     }, 
     {
         "en-GB": "United States", 
@@ -2891,7 +3099,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "214", 
         "fr-FR": "\u00c9tats-Unis", 
         "country_code": "USA", 
-        "es-ES": "Estados Unidos"
+        "es-ES": "Estados Unidos", 
+        "id": 206
     }, 
     {
         "en-GB": "Uruguay", 
@@ -2905,7 +3114,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "215", 
         "fr-FR": "Uruguay", 
         "country_code": "URY", 
-        "es-ES": "Uruguay"
+        "es-ES": "Uruguay", 
+        "id": 207
     }, 
     {
         "en-GB": "Uzbekistan", 
@@ -2919,7 +3129,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "216", 
         "fr-FR": "Ouzb\u00e9kistan", 
         "country_code": "UZB", 
-        "es-ES": "Uzbekist\u00e1n"
+        "es-ES": "Uzbekist\u00e1n", 
+        "id": 208
     }, 
     {
         "en-GB": "Vanuatu", 
@@ -2933,7 +3144,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "217", 
         "fr-FR": "Vanuatu", 
         "country_code": "VUT", 
-        "es-ES": "Vanuatu"
+        "es-ES": "Vanuatu", 
+        "id": 209
     }, 
     {
         "en-GB": "Vatican City", 
@@ -2947,7 +3159,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "218", 
         "fr-FR": "Cit\u00e9 du Vatican", 
         "country_code": "VAT", 
-        "es-ES": "Ciudad del Vaticano"
+        "es-ES": "Ciudad del Vaticano", 
+        "id": 210
     }, 
     {
         "en-GB": "Venezuela", 
@@ -2961,7 +3174,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "219", 
         "fr-FR": "Venezuela", 
         "country_code": "VEN", 
-        "es-ES": "Venezuela"
+        "es-ES": "Venezuela", 
+        "id": 211
     }, 
     {
         "en-GB": "Vietnam", 
@@ -2975,7 +3189,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "220", 
         "fr-FR": "Vi\u00eat Nam", 
         "country_code": "VNM", 
-        "es-ES": "Vietnam"
+        "es-ES": "Vietnam", 
+        "id": 212
     }, 
     {
         "en-GB": "Yemen", 
@@ -2989,7 +3204,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "221", 
         "fr-FR": "Y\u00e9men", 
         "country_code": "YEM", 
-        "es-ES": "Yemen"
+        "es-ES": "Yemen", 
+        "id": 213
     }, 
     {
         "en-GB": "Zambia", 
@@ -3003,7 +3219,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "222", 
         "fr-FR": "Zambie", 
         "country_code": "ZMB", 
-        "es-ES": "Zambia"
+        "es-ES": "Zambia", 
+        "id": 214
     }, 
     {
         "en-GB": "Zimbabwe", 
@@ -3017,7 +3234,8 @@ angular.module('orsApp').constant('countries', {
         "cid": "223", 
         "fr-FR": "Zimbabwe", 
         "country_code": "ZWE", 
-        "es-ES": "Zimbabue"
+        "es-ES": "Zimbabue", 
+        "id": 215
     }
 ]
 });

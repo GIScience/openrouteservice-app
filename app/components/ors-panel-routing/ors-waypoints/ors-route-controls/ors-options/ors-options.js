@@ -34,6 +34,7 @@ angular.module('orsApp.ors-options', [])
                         }
                     }
                 };
+                ctrl.locale = orsCookiesFactory.getCookies().language;
                 // set maxspeed slider from params
                 ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeSubgroup];
                 // enable or disable checkbox depending on whether maxspeed is set
@@ -476,19 +477,26 @@ angular.module('orsApp.ors-options', [])
             ctrl.refreshSlider();
 
             ctrl.removeCountries = () => {
-                for (var i = 0; i < Things.length; i++) {
-                    Things[i];
+                for (var i = 0; i < ctrl.countries.length; i++) {
+                    ctrl.countries[i].check = false;
                 }
             };
 
-            ctrl.addCountries = (idx) => {
-                // console.log(idx)
+            ctrl.addCountries = (cid, idx) => {
+                console.log(ctrl.countries[idx])
+
                 ctrl.avoidCountries = true;
             };
-
+            ctrl.getSettingsLanguage = () => {
+                ctrl.language = orsCookiesFactory.getCookies().language.toString();
+            };
+            ctrl.getSettingsLanguage();
             ctrl.countries = countries.list;
+            $scope.checked = (row) => {
+                return !!((row.hasOwnProperty('check')) && row['check'] === true );
+            }
             $scope.search = (row) => {
-                return !!((row.official_en_name.indexOf(ctrl.queryCountries || '') !== -1 || row.cid.indexOf(ctrl.queryCountries || '') !== -1 || row.country_code.indexOf(ctrl.queryCountries || '') !== -1 || row.native_names.indexOf(ctrl.queryCountries || '') !== -1 ));
+                return !!((row.official_en_name.indexOf(ctrl.queryCountries || '') !== -1 || row.cid.indexOf(ctrl.queryCountries || '') !== -1 || row.country_code.indexOf(ctrl.queryCountries || '') !== -1 || row.native_names.indexOf(ctrl.queryCountries || '') !== -1 || row[ctrl.language].indexOf(ctrl.queryCountries || '') !== -1 ) && (!(row.hasOwnProperty('check')) || row['check'] === false ));
             };
         }]
     });
