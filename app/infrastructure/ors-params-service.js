@@ -8,7 +8,8 @@ angular.module('orsApp.params-service', [])
                     type: 'Car',
                     options: {
                         analysis_options: {},
-                        avoidables: {}
+                        avoidables: {},
+                        borders: {}
                     }
                 }
             };
@@ -155,11 +156,18 @@ angular.module('orsApp.params-service', [])
                     if (permalinkKeysReversed[key] == 'tracks') {
                         settings.profile.options.avoidables.tracks = orsParamsService.parseStringToBool(value);
                     }
-                    if (permalinkKeysReversed[key] == 'borders') {
-                        settings.profile.options.avoidables.tracks = orsParamsService.parseStringToBool(value);
+                    if (permalinkKeysReversed[key] == 'all') {
+                        console.log(settings.profile.options)
+                        if (orsParamsService.parseStringToBool(value)) {
+                            settings.profile.options.borders.all = orsParamsService.parseStringToBool(value);
+                        }
                     }
-                    if (permalinkKeysReversed[key] == 'controlledborders') {
-                        settings.profile.options.avoidables.tracks = orsParamsService.parseStringToBool(value);
+                    if (permalinkKeysReversed[key] == 'controlled') {
+                        if (orsParamsService.parseStringToBool(value)) {
+                            settings.profile.options.borders.controlled = orsParamsService.parseStringToBool(value);
+                        }                    }
+                    if (permalinkKeysReversed[key] == 'country') {
+                        settings.profile.options.borders.country = value.replace(/,/g,'|');
                     }
                 }
             });

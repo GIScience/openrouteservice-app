@@ -6,7 +6,7 @@ angular.module('orsApp.ors-options', [])
             activeProfile: '<',
             showOptions: '<'
         },
-        controller: ['orsSettingsFactory','orsCookiesFactory' , 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', '$scope', '$timeout', 'lists', 'countries', function(orsSettingsFactory,orsCookiesFactory , orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService, $scope, $timeout, lists, countries) {
+        controller: ['orsSettingsFactory', 'orsCookiesFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', '$scope', '$timeout', 'lists', 'countries', function(orsSettingsFactory, orsCookiesFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService, $scope, $timeout, lists, countries) {
             let ctrl = this;
             ctrl.optionList = lists.optionList;
             ctrl.$onInit = () => {
@@ -34,7 +34,6 @@ angular.module('orsApp.ors-options', [])
                         }
                     }
                 };
-                ctrl.locale = orsCookiesFactory.getCookies().language;
                 // set maxspeed slider from params
                 ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeSubgroup];
                 // enable or disable checkbox depending on whether maxspeed is set
@@ -417,6 +416,18 @@ angular.module('orsApp.ors-options', [])
                         }
                     }
                 };
+                if (ctrl.currentOptions.borders.country !== undefined) {
+                    let numbers = ctrl.currentOptions.borders.country.split('|');
+                    // parse cid to real ID and pass it to checktCountries + checkbox model
+                    for (var i = 0; i < ctrl.countries.length; i++) {
+                        if (numbers.indexOf(ctrl.countries[i].cid) != -1) {
+                            ctrl.checkedCountries.push(ctrl.countries[i].id);
+                            ctrl.countries[i].check = true;
+                            ctrl.avoidCountries  = true;
+
+                        }
+                    }
+                }
             };
             ctrl.avoidHillsCheckbox = () => {
                 let avoidhillsCheckbox = angular.element(document.querySelector('#cb-avoidhills'));
@@ -455,7 +466,6 @@ angular.module('orsApp.ors-options', [])
             });
             ctrl.changeOptions = () => {
                 // call setoptions
-                console.log(ctrl.currentOptions)
                 if (ctrl.currentOptions.difficulty) ctrl.difficultySliders.Fitness.options.disabled = ctrl.currentOptions.difficulty.avoidhills === true ? true : false;
                 orsSettingsFactory.setActiveOptions(ctrl.currentOptions, ctrl.routing);
             };
@@ -475,28 +485,65 @@ angular.module('orsApp.ors-options', [])
             };
             //ctrl.reCalcViewDimensions();
             ctrl.refreshSlider();
-
-            ctrl.removeCountries = () => {
-                for (var i = 0; i < ctrl.countries.length; i++) {
-                    ctrl.countries[i].check = false;
-                }
-            };
-
-            ctrl.addCountries = (cid, idx) => {
-                console.log(ctrl.countries[idx])
-
-                ctrl.avoidCountries = true;
-            };
+            // get locale -> TODO works only on site reload after on-session-switch
             ctrl.getSettingsLanguage = () => {
                 ctrl.language = orsCookiesFactory.getCookies().language.toString();
             };
             ctrl.getSettingsLanguage();
+            ctrl.checkedCountries = [];
             ctrl.countries = countries.list;
+            /**
+             * Unchecks all countries and removes them from ctrl.checkedCountries
+             */
+            ctrl.removeCountries = () => {
+                for (var i = 0; i < ctrl.checkedCountries.length; i++) {
+                    ctrl.countries[ctrl.checkedCountries[i]].check = false;
+                }
+                ctrl.checkedCountries = [];
+                ctrl.queryCountries = "";
+                ctrl.passBordersToOptions();
+                ctrl.avoidCountries = false;
+            };
+            /**
+             * Adds or Removes a country from ctrl.checkedCountries
+             * @param {int} idx: position of the country in ctrl.countries array
+             */
+            ctrl.toggleCountries = (idx) => {
+                if (ctrl.countries[idx].check) {
+                    ctrl.checkedCountries.push(idx);
+                    ctrl.avoidCountries = true;
+                } else {
+                    var position = ctrl.checkedCountries.indexOf(idx);
+                    ctrl.checkedCountries.splice(position, 1);
+                }
+                ctrl.passBordersToOptions();
+            };
+            /**
+            * Generates the avoid_countries value and passes it to options
+            */
+            ctrl.passBordersToOptions = () => {
+                let cstring = "";
+                if(ctrl.avoidCountries){
+                    for (var i = 0; i < ctrl.checkedCountries.length; i++) {
+                        let country = ctrl.countries[ctrl.checkedCountries[i]].cid;
+                        if (cstring === "") cstring += country;
+                        else cstring += '|' + country;
+                    }
+                }
+                if (ctrl.currentOptions.borders !== undefined)
+                    ctrl.currentOptions.borders.country = cstring;
+                else
+                    ctrl.currentOptions.borders = {
+                        "country": cstring
+                    };
+
+                ctrl.changeOptions();
+            };
             $scope.checked = (row) => {
-                return !!((row.hasOwnProperty('check')) && row['check'] === true );
-            }
+                return !!((row.hasOwnProperty('check')) && row.check === true);
+            };
             $scope.search = (row) => {
-                return !!((row.official_en_name.indexOf(ctrl.queryCountries || '') !== -1 || row.cid.indexOf(ctrl.queryCountries || '') !== -1 || row.country_code.indexOf(ctrl.queryCountries || '') !== -1 || row.native_names.indexOf(ctrl.queryCountries || '') !== -1 || row[ctrl.language].indexOf(ctrl.queryCountries || '') !== -1 ) && (!(row.hasOwnProperty('check')) || row['check'] === false ));
+                return !!((row.official_en_name.indexOf(ctrl.queryCountries || '') !== -1 || row.cid.indexOf(ctrl.queryCountries || '') !== -1 || row.country_code.indexOf(ctrl.queryCountries || '') !== -1 || row.native_names.indexOf(ctrl.queryCountries || '') !== -1 || row[ctrl.language].indexOf(ctrl.queryCountries || '') !== -1) && (!(row.hasOwnProperty('check')) || row.check === false));
             };
         }]
     });

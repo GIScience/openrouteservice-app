@@ -230,6 +230,8 @@ angular.module('orsApp.utils-service', [])
             const subgroup = lists.profiles[settings.profile.type].subgroup;
             let options = {
                 avoid_features: '',
+                avoid_borders: '',
+                avoid_countries: '',
                 profile_params: {
                     weightings: {},
                     restrictions: {}
@@ -243,6 +245,7 @@ angular.module('orsApp.utils-service', [])
                     }
                 }
             });
+
             if (subgroup == 'Bicycle') {
                 if (!angular.isUndefined(settings.profile.options.difficulty)) {
                     if (settings.profile.options.difficulty.avoidhills === true) options.avoid_features += 'hills' + '|';
@@ -253,6 +256,24 @@ angular.module('orsApp.utils-service', [])
             } else {
                 options.avoid_features = options.avoid_features.slice(0, -1);
             }
+            if (subgroup == 'Car' || subgroup == 'HeavyVehicle') {
+                if (!angular.isUndefined(settings.profile.options.borders)) {
+                    let borders = settings.profile.options.borders;
+                    // if all borders are avoided only pass avoid_borders="all"
+                    if (borders.all) {
+                        options.avoid_borders = 'all';
+                    } else {
+                    // otherwise check for controlled borders and countries
+                        options.avoid_borders = borders.controlled ? 'controlled' : '';
+                        options.avoid_countries = borders.country;
+                        if (!angular.isUndefined(borders.country)) options.avoid_countries = borders.country;
+                    }
+                }
+                // remove if empty
+                if (angular.equals(options.avoid_borders, '')) delete options.avoid_borders;
+                if (angular.equals(options.avoid_countries, '')) delete options.avoid_countries;
+            }
+            console.log((options))
             if (subgroup == 'HeavyVehicle') {
                 options.vehicle_type = settings.profile.type;
                 if (!angular.isUndefined(settings.profile.options.width)) options.profile_params.restrictions.width = settings.profile.options.width.toString();
@@ -299,7 +320,9 @@ angular.module('orsApp.utils-service', [])
             }
             if (angular.equals(options.profile_params.weightings, {})) delete options.profile_params.weightings;
             if (angular.equals(options.profile_params.restrictions, {})) delete options.profile_params.restrictions;
-            return options;
+            if (angular.equals(options.profile_params, {})) delete options.profile_params;
+            // removes 'undefined' keys from JSON Object
+            return JSON.parse(JSON.stringify(options));
         };
         /** 
          * generates object for request and serializes it to http parameters   
@@ -517,8 +540,25 @@ angular.module('orsApp.utils-service', [])
                     if (typeof obj[o] == "object") {
                         getProp(obj[o]);
                     } else {
+                        // check for borders first or country value will get caught by next condition
+                        if (lists.optionList.borders[o]){
+                            if (lists.optionList.borders[o].subgroups.includes(settings.profile.type)) {
+                                // converts the pipes to commas to keep permalink clean
+                                if (o == "country") {
+                                    if (obj[o] !== '') {
+                                        let c = obj[o].replace(/\|/g,',');
+                                        link += '&' + lists.permalinkKeys[o] + '=' + c ;
+                                    }
+                                } else {
+                                    if (obj[o] === true) {
+                                        link += '&' + lists.permalinkKeys[o] + '=1';
+                                    } else if (obj[o] === false) {} else {
+                                        link += '&' + lists.permalinkKeys[o] + '=' + obj[o];
+                                    }
+                                }
+                            }
                         // Filter functions and properties of other types
-                        if (typeof obj[o] != "function" && o.toString()
+                        } else if (typeof obj[o] != "function" && o.toString()
                             .charAt(0) != '_' && (lists.permalinkFilters[settings.profile.type].includes(o) || lists.permalinkFilters.analysis.includes(o))) {
                             if (obj[o] in lists.profiles) {
                                 link += '&' + lists.permalinkKeys[o] + '=' + lists.profiles[obj[o]].shortValue;

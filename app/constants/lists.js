@@ -44,7 +44,6 @@ angular.module('orsApp')
                 className: "ors-marker-hover-drag",
             }
         },
-
         profiles: {
             Car: {
                 name: 'Car',
@@ -217,6 +216,17 @@ angular.module('orsApp')
                     max: 15
                 }
             },
+            borders: {
+                all: {
+                    subgroups: ['Car', 'HeavyVehicle']
+                },
+                controlled: {
+                    subgroups: ['Car', 'HeavyVehicle']
+                },
+                country: {
+                    subgroups: ['Car', 'HeavyVehicle']
+                }
+            },
             avoidables: {
                 ferry: {
                     name: 'ferries',
@@ -252,14 +262,6 @@ angular.module('orsApp')
                 },
                 tracks: {
                     name: 'tracks',
-                    subgroups: ['Car', 'HeavyVehicle']
-                },
-                borders: {
-                    name: 'borders',
-                    subgroups: ['Car', 'HeavyVehicle']
-                },
-                controlledborders: {
-                    name: 'controlledborders',
                     subgroups: ['Car', 'HeavyVehicle']
                 }
             },
@@ -505,7 +507,7 @@ angular.module('orsApp')
             }
         },
         permalinkFilters: {
-            avoidables: ['ferry', 'unpaved', 'paved', 'fords', 'steps', 'highways', 'tollroads', 'tunnels', 'tracks', 'borders', 'controlledborders'],
+            avoidables: ['ferry', 'unpaved', 'paved', 'fords', 'steps', 'highways', 'tollroads', 'tunnels', 'tracks'],
             analysis: ['method', 'isovalue', 'isointerval', 'reverseflow'],
             Car: ['type', 'weight', 'maxspeed'],
             hgv: ['type', 'weight', 'maxspeed', 'height', 'width', 'length', 'hgvWeight', 'axleload', 'hazmat'],
@@ -555,12 +557,13 @@ angular.module('orsApp')
             tollroads: 'l6',
             tunnels: 'l7',
             tracks: 'l8',
-            borders: 'l9',
-            controlledborders: 'l10',
             green: 'm1',
             lat: 'n1',
             lng: 'n2',
-            zoom: 'n3'
+            zoom: 'n3',
+            all: 'o1',
+            controlled: 'o2',
+            country: 'o3'
         },
         reversePermalinkKeys: function(obj) {
             var rev = {};
