@@ -543,7 +543,7 @@ angular.module('orsApp.ors-options', [])
                 return !!((row.hasOwnProperty('check')) && row.check === true);
             };
             $scope.search = (row) => {
-                return !!((row.official_en_name.indexOf(ctrl.queryCountries || '') !== -1 || row.cid.indexOf(ctrl.queryCountries || '') !== -1 || row.country_code.indexOf(ctrl.queryCountries || '') !== -1 || row.native_names.indexOf(ctrl.queryCountries || '') !== -1 || row[ctrl.language].indexOf(ctrl.queryCountries || '') !== -1) && (!(row.hasOwnProperty('check')) || row.check === false));
+                return !!((row.official_en_name.toLowerCase().indexOf(ctrl.queryCountries.toLowerCase() || '') !== -1 || row.cid.indexOf(ctrl.queryCountries || '') !== -1 || row.country_code.toLowerCase().indexOf(ctrl.queryCountries.toLowerCase() || '') !== -1 || row.native_names.toLowerCase().indexOf(ctrl.queryCountries.toLowerCase() || '') !== -1 || row[ctrl.language].toLowerCase().indexOf(ctrl.queryCountries.toLowerCase() || '') !== -1) && (!(row.hasOwnProperty('check')) || row.check === false));
             };
         }]
     });

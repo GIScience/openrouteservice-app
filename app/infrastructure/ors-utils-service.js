@@ -540,7 +540,7 @@ angular.module('orsApp.utils-service', [])
                     if (typeof obj[o] == "object") {
                         getProp(obj[o]);
                     } else {
-                        // check for borders first or country value will get caught by next condition
+                        // check for borders first or country value will get caught by Filter functions
                         if (lists.optionList.borders[o]){
                             if (lists.optionList.borders[o].subgroups.includes(settings.profile.type)) {
                                 // converts the pipes to commas to keep permalink clean

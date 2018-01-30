@@ -157,7 +157,6 @@ angular.module('orsApp.params-service', [])
                         settings.profile.options.avoidables.tracks = orsParamsService.parseStringToBool(value);
                     }
                     if (permalinkKeysReversed[key] == 'all') {
-                        console.log(settings.profile.options)
                         if (orsParamsService.parseStringToBool(value)) {
                             settings.profile.options.borders.all = orsParamsService.parseStringToBool(value);
                         }
