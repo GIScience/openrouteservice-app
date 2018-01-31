@@ -877,12 +877,16 @@ angular.module('orsApp').directive('orsMap', () => {
                 request.promise.then((data) => {
                     $scope.address = {};
                     if (data.features.length > 0) {
-                        const addressObj = orsUtilsService.addShortAddresses(data.features)[0];
-                        $scope.address.info = addressObj.shortaddress;
+                        $scope.address.info = orsUtilsService.addShortAddresses(data.features)[0];
+                        $scope.address.info.processed.secondary = "<i>" + $scope.address.info.processed.secondary + "</i>";
                     } else {
-                        $scope.address.info = $scope.translateFilter('NO_ADDRESS');
+                        $scope.address.info = {
+                            'processed': {
+                                'primary': $scope.translateFilter('NO_ADDRESS')
+                            }
+                        };
                     }
-                    $scope.address.position = latLngString;
+                    $scope.address.position = "<small>" + latLngString + "</small>";
                     $scope.mapModel.map.addControl($scope.hereControl);
                 }, (response) => {
                     orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);

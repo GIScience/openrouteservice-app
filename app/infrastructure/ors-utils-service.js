@@ -413,7 +413,6 @@ angular.module('orsApp.utils-service', [])
                 if (secondary.length <= 1 && properties.country !== properties.name) secondary.push(properties.country);
                 feature.processed.secondary = secondary.join(", ");
                 feature.processed.place_type = properties.place_type;
-                console.log(feature.processed)
             });
             return features;
         };
