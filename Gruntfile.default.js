@@ -15,7 +15,7 @@ module.exports = function(grunt) {
             build: {
                 expand: true,
                 cwd: 'app',
-                src: ['img/**/*.png', 'languages/**/*.json', 'css/*.css', '*.html', '*.js', 'favicon.ico'],
+                src: ['img/**/*.png', 'languages/**/*.json', 'css/*.css', '*.html', '*.js', 'favicon.ico', 'weathercheck.txt'],
                 dest: 'build'
             },
             libs: {
@@ -62,7 +62,7 @@ module.exports = function(grunt) {
                 tasks: ['ngtemplates']
             }
         },
-        // Clean stuff up
+        // Clean build folder up
         clean: {
             task_rm_build: {
                 src: ['build/*', 'build']
@@ -111,16 +111,6 @@ module.exports = function(grunt) {
             html: ['build/index.html'],
             css: ['build/index.html']
         },
-        // uglify: {
-        //     build: {
-        //         options: {
-        //             mangle: true
-        //         },
-        //         files: {
-        //             'build/application.js': ['build/js/**/*.js', 'build/pages/**/*.js']
-        //         }
-        //     }
-        // },
         uglify: {
             options: {
                 preserveComments: 'false', //"some", "all",
@@ -164,7 +154,6 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: 'app/',
-                    //src: ['js/**/*.js'],
                     src: ['components/**/*.js', 'constants/**/*.js', 'values/**/*.js', 'infrastructure/**/*.js', 'js/**/*.js'],
                     dest: 'build/'
                 }]
@@ -180,7 +169,6 @@ module.exports = function(grunt) {
                     open: true,
                     middleware: function(connect, options, middlewares) {
                         return [
-                            //modRewrite(['^[^\\.]*$ /index.html [L]']),
                             modRewrite(['!\\.html|\\.js|\\.txt|\\.ico|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]']),
                             connect().use('/bower_components', connect.static('./bower_components')),
                             connect().use('/node_modules', connect.static('./node_modules')),
@@ -230,22 +218,6 @@ module.exports = function(grunt) {
                 name: 'config',
             },
             // Environment targets
-            development: {
-                options: {
-                    dest: 'app/js/config.js'
-                },
-                constants: {
-                    ENV: {
-                        name: 'development',
-                        geocoding: 'http://129.206.7.188:8080/ors/geocode',
-                        routing: 'http://129.206.7.188:8080/ors/routes',
-                        tmc: 'http://129.206.228.188:8080/ors/routes?tmc',
-                        analyse: 'http://129.206.7.188:8080/ors/isochrones',
-                        places: 'http://129.206.7.188:8080/ors/locations',
-                        shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
-                    }
-                },
-            },
             local: {
                 options: {
                     dest: 'app/js/config.js'
@@ -253,58 +225,26 @@ module.exports = function(grunt) {
                 constants: {
                     ENV: {
                         name: 'local',
-                        geocoding: 'http://localhost:8082/openrouteservice-4.4.0/geocode',
-                        routing: 'http://localhost:8082/openrouteservice-4.4.0/routes',
-                        analyse: 'http://localhost:8082/openrouteservice-4.4.0/isochrones',
-                        places: 'http://localhost:8082/openrouteservice-4.4.0/locations',
+                        // change name_of_war_archive to the name of the ors backend war version you are using (e.g. openrouteservice-4.4.0)
+                        geocoding: 'http://localhost:8082/name_of_war_archive/geocode',
+                        routing: 'http://localhost:8082/name_of_war_archive/routes',
+                        analyse: 'http://localhost:8082/name_of_war_archive/isochrones',
+                        places: 'http://localhost:8082/name_of_war_archive/locations',
                         shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
                     }
                 },
             },
-            zugspitze: {
-                options: {
-                    dest: 'app/js/config.js'
-                },
-                constants: {
-                    ENV: {
-                        name: 'development',
-                        geocoding: 'http://129.206.228.124:8080/ors/geocode',
-                        routing: 'http://129.206.228.124:8080/ors/routes',
-                        tmc: 'http://129.206.228.124:8080/ors/routes?tmc',
-                        analyse: 'http://129.206.228.124:8080/ors/isochrones',
-                        places: 'http://129.206.228.124:8080/ors/locations',
-                        shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
-                    }
-                },
-            },
-            production: {
+            ors: {
                 options: {
                     dest: 'app/js/config.js'
                 },
                 constants: {
                     ENV: {
                         name: 'production',
-                        geocoding: 'https://api.openrouteservice.org/pgeocoding',
-                        routing: 'https://api.openrouteservice.org/pdirections',
-                        tmc: 'http://129.206.228.124/routing-test?tmc',
-                        analyse: 'https://api.openrouteservice.org/pisochrones',
-                        places: 'https://api.openrouteservice.org/pplaces',
-                        shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
-                    }
-                }
-            },
-            labs: {
-                options: {
-                    dest: 'app/js/config.js'
-                },
-                constants: {
-                    ENV: {
-                        name: 'labs',
-                        geocoding: 'https://labs-api.openrouteservice.org/ors/geocode',
-                        routing: 'https://labs-api.openrouteservice.org/ors/routes',
-                        tmc: 'http://labs-api.openrouteservice.org/ors/routes?tmc',
-                        analyse: 'https://labs-api.openrouteservice.org/ors/isochrones',
-                        places: 'https://labs-api.openrouteservice.org/ors/locations',
+                        geocoding: 'https://api.openrouteservice.org/geocoding',
+                        routing: 'https://api.openrouteservice.org/directions',
+                        analyse: 'https://api.openrouteservice.org/isochrones',
+                        places: 'https://api.openrouteservice.org/places',
                         shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
                     }
                 }
@@ -358,59 +298,8 @@ module.exports = function(grunt) {
                 dest: 'app/js/templates.js'
             }
         }
-        // connect: {
-        //     options: {
-        //         port: 3000,öä
-        //         // Change this to '0.0.0.0' to access the server from outside.
-        //         hostname: 'localhost',
-        //         //livereload: 35729
-        //     },
-        //     livereload: {
-        //         options: {
-        //             open: true,
-        //             middleware: function(connect) {
-        //                 return [
-        //                     modRewrite(['^[^\\.]*$ /index.html [L]']),
-        //                     connect().use('/bower_components', connect.static('./bower_components')),
-        //                     connect().use('/node_modules', connect.static('./node_modules')),
-        //                     connect.static('./app')
-        //                 ];
-        //             }
-        //         }
-        //     },
-        //     dist: {
-        //         options: {
-        //             open: true,
-        //             base: './build'
-        //         }
-        //     }
-        // }
-        // connect: {
-        //     app: {
-        //         options: {
-        //             port: 3000,
-        //             //base: '/app',
-        //             open: true,
-        //             livereload: true,
-        //             hostname: 'localhost',
-        //             middleware: function(connect) {
-        //                 return [
-        //                     modRewrite(['^[^\\.]*$ /index.html [L]']),
-        //                     connect().use('/bower_components', connect.static('./bower_components')),
-        //                     connect().use('/node_modules', connect.static('./node_modules')),
-        //                     connect.static('./app')
-        //                 ];
-        //             }
-        //         }
-        //     }
-        // }
     });
-    grunt.registerTask('staging', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:development', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
-    grunt.registerTask('production', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:production', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
-    grunt.registerTask('zugspitze', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:zugspitze', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
-    grunt.registerTask('serve', 'Run local server', ['less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'browserify:turf', 'ngtemplates', 'ngconstant:development', 'connect:dev', 'watch']);
-    grunt.registerTask('servelocal', 'Run local server on local tomcat', ['less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'browserify:turf', 'ngtemplates', 'ngconstant:local', 'connect:dev', 'watch']);
-    grunt.registerTask('labs', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'clean:task_rm_build', 'copy:build', 'ngconstant:labs', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:labs', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
-    grunt.registerTask('local', 'Run local server', ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'ngconstant:local', 'connect:dev', 'watch']);
-    grunt.registerTask('beta', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:development', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'ngconstant:development', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
+    grunt.registerTask('ors', 'Compiles all of the assets and copies the files to the build directory.',    ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:ors', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
+    grunt.registerTask('dev', 'Run local server for development purposes', ['less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'browserify:turf', 'ngtemplates', 'ngconstant:ors', 'connect:dev', 'watch']);
+    grunt.registerTask('ors_local', 'Run local ors frontend server on local ors backend tomcat', ['less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'browserify:turf', 'ngtemplates', 'ngconstant:local', 'connect:dev', 'watch']);
 };
