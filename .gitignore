@@ -8,3 +8,4 @@ app/js/templates.js
 build/
 .tmp/
 app/css/
+Gruntfile.js
