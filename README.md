@@ -50,7 +50,7 @@ node_modules/bower/bin/bower install
 
 - Install required modules for slider layout:
 
-*(This step is for layout purposes only. If you want to skip it remove `grunt:sliderMakeCss` from the task queue in `Gruntfile.default.js`)*
+*(This step is for layout purposes only. If you want to skip it remove `grunt:sliderMakeCss` from the task queue in the renamed `Gruntfile.js` [see next step])*
 ```sh
 # Switch to bower_components/angular folder:
 cd bower_components/angularjs-slider
