@@ -311,9 +311,9 @@ angular.module('orsApp.utils-service', [])
             payload = {
                 format: 'json',
                 locations: orsUtilsService.roundCoordinate(settings.waypoints[0]._latlng.lng) + ',' + orsUtilsService.roundCoordinate(settings.waypoints[0]._latlng.lat),
-                range_type: settings.profile.options.analysis_options.method === 0 ? 'time' : 'distance',
-                range: settings.profile.options.analysis_options.method === 0 ? settings.profile.options.analysis_options.isovalue * 60 : settings.profile.options.analysis_options.isovalue * 1000,
-                interval: settings.profile.options.analysis_options.method === 0 ? settings.profile.options.analysis_options.isointerval * 60 : settings.profile.options.analysis_options.isointerval * 1000,
+                range_type: parseInt(settings.profile.options.analysis_options.method) === 0 ? 'time' : 'distance',
+                range: parseInt(settings.profile.options.analysis_options.method) === 0 ? settings.profile.options.analysis_options.isovalue * 60 : settings.profile.options.analysis_options.isovalue * 1000,
+                interval: parseInt(settings.profile.options.analysis_options.method) === 0 ? settings.profile.options.analysis_options.isointerval * 60 : settings.profile.options.analysis_options.isointerval * 1000,
                 location_type: settings.profile.options.analysis_options.reverseflow === true ? lists.isochroneOptionList.reverseFlow.destination : lists.isochroneOptionList.reverseFlow.start,
                 profile: lists.profiles[settings.profile.type].request,
                 attributes: 'area|reachfactor',
@@ -413,7 +413,6 @@ angular.module('orsApp.utils-service', [])
                 if (secondary.length <= 1 && properties.country !== properties.name) secondary.push(properties.country);
                 feature.processed.secondary = secondary.join(", ");
                 feature.processed.place_type = properties.place_type;
-                console.log(feature.processed)
             });
             return features;
         };

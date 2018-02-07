@@ -1,7 +1,7 @@
 {
   "name": "openrouteservice.org",
   "description": "angular version of openrouteservice.org",
-  "version": "2.1.0",
+  "version": "0.1.1",
   "homepage": "http://www.uni-heidelberg.de",
   "license": "MIT",
   "private": true,
@@ -28,7 +28,8 @@
     "leaflet.heightgraph": "^0.1.6",
     "leaflet-measure": "^2.1.7",
     "leaflet.locatecontrol": "^0.62.0",
-    "leaflet-distance-markers": "https://github.com/adoroszlai/leaflet-distance-markers.git"
+    "leaflet-distance-markers": "https://github.com/adoroszlai/leaflet-distance-markers.git",
+    "ng-focus-if": "^1.0.7"
   },
   "resolutions": {
     "angular": "~1.5.10"

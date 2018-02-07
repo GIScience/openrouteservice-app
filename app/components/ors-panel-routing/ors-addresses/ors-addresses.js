@@ -1,4 +1,4 @@
-angular.module('orsApp.ors-addresses', ['orsApp.ors-exportRoute-controls']).component('orsAddresses', {
+angular.module('orsApp.ors-addresses', ['orsApp.ors-exportRoute-controls', 'focus-if']).component('orsAddresses', {
     templateUrl: 'components/ors-panel-routing/ors-addresses/ors-addresses.html',
     bindings: {
         showGeocodingPanel: '=',
