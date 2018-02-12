@@ -9,3 +9,4 @@ build/
 .tmp/
 app/css/
 Gruntfile.js
+.idea/
