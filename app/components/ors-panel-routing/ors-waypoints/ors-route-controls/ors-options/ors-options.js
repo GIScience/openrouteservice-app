@@ -492,6 +492,7 @@ angular.module('orsApp.ors-options', [])
             ctrl.getSettingsLanguage();
             ctrl.checkedCountries = [];
             ctrl.countries = countries.list;
+            ctrl.queryCountries = "";
             /**
              * Unchecks all countries and removes them from ctrl.checkedCountries
              */
