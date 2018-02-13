@@ -254,13 +254,25 @@ angular.module('orsApp.utils-service', [])
                 options.avoid_features = options.avoid_features.slice(0, -1);
             }
             if (subgroup == 'HeavyVehicle') {
-                options.vehicle_type = settings.profile.type;
-                if (!angular.isUndefined(settings.profile.options.width)) options.profile_params.restrictions.width = settings.profile.options.width.toString();
-                if (!angular.isUndefined(settings.profile.options.height)) options.profile_params.restrictions.height = settings.profile.options.height.toString();
-                if (!angular.isUndefined(settings.profile.options.hgvWeight)) options.profile_params.restrictions.weight = settings.profile.options.hgvWeight.toString();
-                if (!angular.isUndefined(settings.profile.options.length)) options.profile_params.restrictions.length = settings.profile.options.length.toString();
-                if (!angular.isUndefined(settings.profile.options.axleload)) options.profile_params.restrictions.axleload = settings.profile.options.axleload.toString();
-                if (!angular.isUndefined(settings.profile.options.hazmat)) options.profile_params.restrictions.hazmat = settings.profile.options.hazmat;
+                let vt = 0;
+                if (!angular.isUndefined(settings.profile.options.width)) {
+                    options.profile_params.restrictions.width = settings.profile.options.width.toString(); ++vt;
+                }
+                if (!angular.isUndefined(settings.profile.options.height)) {
+                    options.profile_params.restrictions.height = settings.profile.options.height.toString(); ++vt;
+                }
+                if (!angular.isUndefined(settings.profile.options.hgvWeight)) {
+                    options.profile_params.restrictions.weight = settings.profile.options.hgvWeight.toString(); ++vt;
+                }
+                if (!angular.isUndefined(settings.profile.options.length)) {
+                    options.profile_params.restrictions.length = settings.profile.options.length.toString(); ++vt;
+                }
+                if (!angular.isUndefined(settings.profile.options.axleload)) {
+                    options.profile_params.restrictions.axleload = settings.profile.options.axleload.toString(); ++vt;
+                }
+                if (!angular.isUndefined(settings.profile.options.hazmat)) {options.profile_params.restrictions.hazmat = settings.profile.options.hazmat; ++vt;
+                }
+                if (vt != 0) options.vehicle_type = settings.profile.type;
             }
             if (settings.profile.options.maxspeed) options.maximum_speed = settings.profile.options.maxspeed.toString();
             if (subgroup == 'Bicycle') {
@@ -299,6 +311,7 @@ angular.module('orsApp.utils-service', [])
             }
             if (angular.equals(options.profile_params.weightings, {})) delete options.profile_params.weightings;
             if (angular.equals(options.profile_params.restrictions, {})) delete options.profile_params.restrictions;
+            if (angular.equals(options.profile_params, {})) delete options.profile_params;
             return options;
         };
         /** 
