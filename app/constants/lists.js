@@ -484,7 +484,7 @@ angular.module('orsApp')
         userOptions: {
             languages: {
                 default: 'en-US',
-                all: ['de-DE', 'en-US', 'en-GB', 'zh-CN', 'pt-PT', 'es-ES', 'ru-RU', 'fr-FR', 'pl-PL']
+                all: ['de-DE', 'en-US', 'en-GB', 'zh-CN', 'pt-PT', 'es-ES', 'ru-RU', 'fr-FR', 'pl-PL', 'it-IT']
             },
             routinglanguages: {
                 default: 'en-US',
