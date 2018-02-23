@@ -137,7 +137,7 @@
     "START": "Route von hier", 
     "VIA": "Als Wegpunkt hinzufügen", 
     "CENTER": "Als Zentrum nutzen", 
-    "WELCOME": "Willkommen bei openrouteservice.org!", 
+    "WELCOME": "Willkommen bei Openrouteservice!",
     "WELCOME_MESSAGE": "Oben rechts kannst du vermeidbare Polygone zeichnen. Im linken Menü findest du eine Vielzahl von Optionen zum Individualisieren deiner Route. Unsere neue Service API für Erreichbarkeitsanalysen findest du ebenfalls im linken Menü.", 
     "EXTRAS": "Weitere Informationen", 
     "WHATSHERE": "Was ist hier?", 
@@ -157,8 +157,8 @@
     "QUIET_ROUTING": "Ruhige Wege bevorzugen (Eingeschränkt auf Deutschland)", 
     "DONATE": "Spenden Sie Daten!", 
     "DONATE_TEXT": "Helfen Sie mit und fügen Sie Ihre geographischen Daten hinzu auf", 
-    "INFO_I": "Entwickelt vom Heidelberg Institute for Geoinformation Technology (HeiGIT) bietet openrouteservice.org Routing Services auf Basis nutzergenerierter, gemeinschaftlich erhobener, freier geographischer Daten von OpenStreetMap an. Bitte fügen Sie Ihre geographischen Daten auf openstreetmap.org hinzu!", 
-    "INFO_II": "Wir verwenden Cookies, System Logs und weitere Datenspeicher-Technologien um (a) Informationen zu speichern, damit der Benutzer diese nicht während des aktuellen oder eines künftigen Besuchs erneut eingeben muss; (b)  Sitzungen für authentifizierter Benutzer aufrecht zu erhalten; und (c) Überwachung der Daten der gesamten Website-Nutzung, z. B. Gesamtzahl der Besucher und besuchten Seiten zu ermöglichen. Falls Sie Cookies deaktivieren könnten Teile der openrouteservice.org Website nicht richtig funktionieren. Wir erheben und speichern jedoch keine persönlichen Daten, außer Sie teilen uns diese im Rahmen eines direkten Kontaktes mit. Wir geben keine analytischen Daten an Dritte weiter.", 
+    "INFO_I": "Entwickelt vom Heidelberg Institute for Geoinformation Technology (HeiGIT) bietet Openrouteservice Routing Services auf Basis nutzergenerierter, gemeinschaftlich erhobener, freier geographischer Daten von OpenStreetMap an. Bitte fügen Sie Ihre geographischen Daten auf openstreetmap.org hinzu!",
+    "INFO_II": "Wir verwenden Cookies, System Logs und weitere Datenspeicher-Technologien um (a) Informationen zu speichern, damit der Benutzer diese nicht während des aktuellen oder eines künftigen Besuchs erneut eingeben muss; (b)  Sitzungen für authentifizierter Benutzer aufrecht zu erhalten; und (c) Überwachung der Daten der gesamten Website-Nutzung, z. B. Gesamtzahl der Besucher und besuchten Seiten zu ermöglichen. Falls Sie Cookies deaktivieren könnten Teile der Openrouteservice Website nicht richtig funktionieren. Wir erheben und speichern jedoch keine persönlichen Daten, außer Sie teilen uns diese im Rahmen eines direkten Kontaktes mit. Wir geben keine analytischen Daten an Dritte weiter.",
     "INFO_III": "Falls Sie weitere Fragen, Anliegen oder Feedback für uns haben, kontaktieren Sie uns bitte per E-Mail:", 
     "INFO_IV": "Openrouteservice nimmt sich Zeit für Ihre Anfragen, Probleme, Fragen etc. Wir legen großen Wert darauf Ihnen so schnell wie möglich zu antworten. Nachdem Sie unsere automatische E-Mail erhalten die Ihnen bestätigt, dass wir Ihre Anfrage erhalten haben, werden wir uns bald mit Ihnen in Verbindung setzen. Bitte geben Sie uns etwas Zeit ihre Anfrage zu bearbeiten, da wir sehr viele Anfragen erhalten.", 
     "ADD_EXTRAS": "Add to map", 
@@ -178,5 +178,5 @@
     "EXTRA_INFORMATION": "Weitere Informationen der Route",
     "LOCALE_EXTRAS_HELP": "Weitere Informationen können in den Einstellungen hinzugefügt werden",
     "LOCALE_SIGNUP_HEADER": "Start your API journey now",
-    "LOCALE_SIGNUP_MESSAGE": "If you are satisfied with the features of openrouteservice please sign up for the free to use API at <strong><a href='https://go.openrouteservice.org' target='_blank'>https://go.openrouteservice.org</a></strong>"
+    "LOCALE_SIGNUP_MESSAGE": "If you are satisfied with the features of openrouteservice please sign up for the free to use API at <strong><a href='https://openrouteservice.org' target='_blank'>https://openrouteservice.org</a></strong>"
 }

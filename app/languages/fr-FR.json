@@ -137,7 +137,7 @@
     "START": "Itinéraire depuis ce point",
     "VIA": "Ajouter un point de passage",
     "CENTER": "Utiliser comme centre",
-    "WELCOME": "Bienvenue sur OpenRouteService.org",
+    "WELCOME": "Bienvenue sur Openrouteservice",
     "WELCOME_MESSAGE": "Pour ajouter des zones à éviter, utilisez le bouton en haut à droite de la carte. Sinon, n'hésitez pas à parcourir les nombreuses options du panneau de gauche. Allez également découvrir les nouvelles fonctionnalités isochrones dans le menu du panneau de gauche.",
     "EXTRAS": "Information supplémentaire",
     "WHATSHERE": "Qu'y a t'il ici ?",
@@ -157,7 +157,7 @@
     "DONATE": "Donnez !",
     "DONATE_TEXT": "Veuillez apporter vos données géographiques à",
     "INFO_I": "OpenRouteService.org propose un service de calcul d'itinéraire en utilisant des données fournies par les utilisateurs de façon collaborative, collectées de OpenStreetMap. Veuillez apporter s'il-vous-plaît vos données géographiques à openstreetmap.org !",
-    "INFO_II": "Nous utilisons des cookies, logs systèmes et autres technologies de stockage de données pour (a) conserver les informations qui vous permettra de ne pas les entrer à nouveau durant votre visite ou les visites ultérieurs; (b) conserver les sessions pour les utilisateurs authentifiés; (c) suivre des métriques agrégées comme le nombre total de visiteurs et de pages vues. Si vous désactivez les cookies de OpenRouteService.org, le site peut ne pas fonctionner comme prévu. Nous ne collectons pas ni stockons des informations personnelles vous concernant ou des informations personnellement indentifiables à propos de vous, à l'exception de ce que vous fournissez volontairement par contact direct. Nous ne partageons pas de données analytiques avec des fournisseurs de services ou des partenaires.",
+    "INFO_II": "Nous utilisons des cookies, logs systèmes et autres technologies de stockage de données pour (a) conserver les informations qui vous permettra de ne pas les entrer à nouveau durant votre visite ou les visites ultérieurs; (b) conserver les sessions pour les utilisateurs authentifiés; (c) suivre des métriques agrégées comme le nombre total de visiteurs et de pages vues. Si vous désactivez les cookies de Openrouteservice, le site peut ne pas fonctionner comme prévu. Nous ne collectons pas ni stockons des informations personnelles vous concernant ou des informations personnellement indentifiables à propos de vous, à l'exception de ce que vous fournissez volontairement par contact direct. Nous ne partageons pas de données analytiques avec des fournisseurs de services ou des partenaires.",
     "INFO_III": "Dans le cas où vous avez d'autres questions, problèmes ou remarques, veuillez nous contacter via e-mail :",
     "INFO_IV": "OpenRouteService s'occupe de vos demandes de renseignements, problèmes, questions etc. Comme il y aura toujours un flot de demande de rensignements, nous prenons la responsabilité de vous répondre le plus vite possible. Après que vous ayez reçu notre email de réponse automatique pour vous indiquer que nous avons bien reçu votre demande, nous répondrons généralemment rapidement. Veuillez s'il-vous-plaît nous laisser le temps de regarder votre problème correctement avant de revenir vers vous.",
     "ADD_EXTRAS": "AJouter à la carte",
@@ -177,5 +177,5 @@
     "EXTRA_INFORMATION": "Extra information",
     "LOCALE_EXTRAS_HELP": "Add further extra information in settings",
     "LOCALE_SIGNUP_HEADER": "Start your API journey now",
-    "LOCALE_SIGNUP_MESSAGE": "If you are satisfied with the features of openrouteservice please sign up for the API at <a href='https://go.openrouteservice.org'>https://go.openrouteservice.org</a>!"
+    "LOCALE_SIGNUP_MESSAGE": "If you are satisfied with the features of openrouteservice please sign up for the API at <a href='https://openrouteservice.org'>https://openrouteservice.org</a>!"
 }
