@@ -187,7 +187,7 @@ angular.module('orsApp').directive('orsMap', () => {
             };
             $timeout(function() {
                 if (!$scope.smallScreen) $scope.mapModel.map.addControl($scope.signupBox);
-            }, 500);
+            }, 300000);
             // brand
             $scope.brand = L.control({
                 position: 'topleft'
