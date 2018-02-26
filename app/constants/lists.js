@@ -44,7 +44,6 @@ angular.module('orsApp')
                 className: "ors-marker-hover-drag",
             }
         },
-
         profiles: {
             Car: {
                 name: 'Car',
@@ -215,6 +214,17 @@ angular.module('orsApp')
                 steepness: {
                     min: 0,
                     max: 15
+                }
+            },
+            borders: {
+                all: {
+                    subgroups: ['Car', 'HeavyVehicle']
+                },
+                controlled: {
+                    subgroups: ['Car', 'HeavyVehicle']
+                },
+                country: {
+                    subgroups: ['Car', 'HeavyVehicle']
                 }
             },
             avoidables: {
@@ -550,7 +560,10 @@ angular.module('orsApp')
             green: 'm1',
             lat: 'n1',
             lng: 'n2',
-            zoom: 'n3'
+            zoom: 'n3',
+            all: 'o1',
+            controlled: 'o2',
+            country: 'o3'
         },
         reversePermalinkKeys: function(obj) {
             var rev = {};

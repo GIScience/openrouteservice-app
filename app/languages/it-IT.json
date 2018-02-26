@@ -157,7 +157,7 @@
     "DONATE": "Donato!", 
     "DONATE": "Dona!", 
     "DONATE_TEXT": "Per favore dona i tuoi dati geografici a", 
-    "INFO_I": "Openrouteservice.org è sviluppato e fornito dal Heidelberg Institute for Geoinformation Technology (HeiGIT) e offre servizi di Navigazione usando dati geografici liberi, generati dagli utenti e collettivamente raccolti su OpenStreetMap. Per favore dona i tuoi dati geografici ad openstreetmap.org!", 
+    "INFO_I": "Openrouteservice è sviluppato e fornito dal Heidelberg Institute for Geoinformation Technology (HeiGIT) e offre servizi di Navigazione usando dati geografici liberi, generati dagli utenti e collettivamente raccolti su OpenStreetMap. Per favore dona i tuoi dati geografici ad openstreetmap.org!",
     "INFO_II": "Noi usiamo i cookies, i log di sistema a altre tecnologie di conservazione dei dati per (a) preservare informazioni così che tu non debba reniserirle urante la tua visita o per visite successice; (b) mantenere le sessioni degli utenti autenticati; e (c) monitorare i dati aggregati come il numero totale di visitatori e le pagine visualizzate. Se disattivi i cookies parti del sito web principale di Openrouteservice potrebbero non funzionare correttamente. non collezioniamo o conserviamo nessuna informazione personale su di te o informazioni personali a te riconducibili, eccetto quelle che tu volontariamente fornisci tramite contatto diretto. Non condividiamo dati analitici a nessuno provider di servizi o partner.",
     "INFO_III": "Se hai qualsiasi ulteriore dubbio, preoccupazione o consiglio, per favore contattaci tramit e-mail:", 
     "INFO_IV": "Openrouteservice è interessato ai tuoi dubbi, problemi domande ecc. In quanto ci sarà sempre un flusso di dubbi noi prendiamo molto seriamente la responsabilità di rispondere nel più breve tempo possibile. Dopo aver ricevuto una risposta email automatica per farvi sapere che abbiamo ricevuto la vostra richiesta, solitamente rispondiamo dopo breve tempo. Per piacere dateci il tempo di controllare la vostra segnalazione in maniera apropriata prima di ricontattarvi.", 
@@ -176,5 +176,10 @@
     "EXTRA_INFORMATION": "Informazioni aggiuntive",
     "LOCALE_EXTRAS_HELP": "Aggiungi ulteriori informazioni aggiuntive nelle impostazioni",
     "LOCALE_SIGNUP_HEADER": "Incomincia il tuo viaggio API adesso",
-    "LOCALE_SIGNUP_MESSAGE": "Se sei soddisfatto con le funzionalità di openrouteservice per piacere iscriiviti per le API al <a href='https://openrouteservice.org'>https://openrouteservice.org</a>!"
+    "LOCALE_SIGNUP_MESSAGE": "Se sei soddisfatto con le funzionalità di Openrouteservice per piacere iscriiviti per le API al <a href='https://openrouteservice.org'>https://openrouteservice.org</a>!",
+    "AVOIDBORDERS": "Avoid borders",
+    "CONTROLLEDBORDERS": "Controlled Borders",
+    "BORDERS": "All borders",
+    "COUNTRYBORDERS": "Country borders",
+    "SEARCHAVOIDCOUNTRIES": "Search for countries to avoid"
 }

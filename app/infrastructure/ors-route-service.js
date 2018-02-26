@@ -87,7 +87,6 @@ angular.module('orsApp.route-service', [])
             }
         };
         orsRouteService.addHeightgraph = (geometry) => {
-            console.log(geometry);
             const heightgraph = orsObjectsFactory.createMapAction(-1, undefined, geometry, undefined, undefined);
             orsMapFactory.mapServiceSubject.onNext(heightgraph);
         };
@@ -228,7 +227,6 @@ angular.module('orsApp.route-service', [])
                 point_id += 1;
                 info_array.push(pointobject);
             }
-            console.log(info_array);
             return info_array;
         };
         /* process heightgraph geojson object */
