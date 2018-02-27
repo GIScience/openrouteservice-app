@@ -47,7 +47,7 @@ angular.module('orsApp')
         profiles: {
             Car: {
                 name: 'Car',
-                elevation: true,
+                elevation: false,
                 subgroup: 'Car',
                 request: 'driving-car',
                 shortValue: '0',
@@ -117,42 +117,42 @@ angular.module('orsApp')
             },
             hgv: {
                 name: 'hgv',
-                elevation: true,
+                elevation: false,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
                 shortValue: '4a'
             },
             goods: {
                 name: 'goods',
-                elevation: true,
+                elevation: false,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
                 shortValue: '4b'
             },
             bus: {
                 name: 'bus',
-                elevation: true,
+                elevation: false,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
                 shortValue: '4c'
             },
             agricultural: {
                 name: 'agricultural',
-                elevation: true,
+                elevation: false,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
                 shortValue: '4d'
             },
             forestry: {
                 name: 'forestry',
-                elevation: true,
+                elevation: false,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
                 shortValue: '4e'
             },
             delivery: {
                 name: 'delivery',
-                elevation: true,
+                elevation: false,
                 subgroup: 'HeavyVehicle',
                 request: 'driving-hgv',
                 shortValue: '4f'

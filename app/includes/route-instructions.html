@@ -53,12 +53,12 @@
                     </div>
                 </div>
                 <div class="group">
-                    <div class="summary-item" ng-if="segment.detour_factor" tooltip-side="top" tooltip-template="{{('DETOUR_FACTOR' | translate)}}" tooltips="">
+                    <div class="summary-item" ng-if="segment.detourfactor" tooltip-side="top" tooltip-template="{{('DETOUR_FACTOR' | translate)}}" tooltips="">
                         <span>
                             <i class="fa fa-lastfm">
                             </i>
                         </span>
-                        <span ng-bind-html="'<b>' + (route.summary.distance  / (segment.detour_factor * route.summary.distance) | number: 1 ) + '</b>'">
+                        <span ng-bind-html="'<b>' + (route.summary.distance  / (segment.detourfactor * route.summary.distance) | number: 1 ) + '</b>'">
                         </span>
                     </div>
                     <div class="summary-item" ng-if="segment.percentage" tooltip-side="top" tooltip-template="{{('PERCENTAGE_OF_ROUTE' | translate)}}" tooltips="">
