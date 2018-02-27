@@ -102,6 +102,107 @@
         </ul>
     </div>
 </div>
+<div class="options-box" ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'HeavyVehicle'">
+    <div class="pointer" ng-click="avoidBorders = !avoidBorders">
+        <i ng-class="$ctrl.getClass(avoidBorders)">
+        </i>
+        <span ng-bind-html="('AVOIDBORDERS' | translate)">
+        </span>
+    </div>
+    <div class="collapsable" ng-class="{ showMe: avoidBorders }">
+        <ul class="ors-options-menu">
+            <li>
+                <div class="ui checkbox">
+                    <input id="borders" name="orsRouteAvoidablesInput" ng-change="$ctrl.passBordersToOptions()" ng-disable="$ctrl.avoidCountries || $ctrl.currentOptions.borders.controlled" ng-model="$ctrl.currentOptions.borders.all" type="checkbox">
+                        <label for="borders" ng-bind-html="('BORDERS' | translate)">
+                        </label>
+                    </input>
+                </div>
+            </li>
+            <li>
+                <div class="ui checkbox">
+                    <input id="controlledborders" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-disabled="$ctrl.currentOptions.borders.all" ng-model="$ctrl.currentOptions.borders.controlled" type="checkbox">
+                        <label for="controlledborders" ng-bind-html="('CONTROLLEDBORDERS' | translate)">
+                        </label>
+                    </input>
+                </div>
+            </li>
+            <li>
+                <div class="bottom-border">
+                </div>
+            </li>
+            <li>
+                <span class="ui checkbox">
+                    <input id="av_countries" name="orsRouteAvoidablesCountries" ng-disabled="$ctrl.currentOptions.borders.all" ng-model="$ctrl.avoidCountries" ng-change="$ctrl.passBordersToOptions()" type="checkbox">
+                        <label for="av_countries" ng-bind-html="('COUNTRYBORDERS' | translate)">
+                        </label>
+                    </input>
+                </span>
+                <span tooltip-side="right" tooltip-template="{{('RESET' | translate)}}" tooltips="">
+                    <button class="ors-controls-button" ng-disabled="$ctrl.currentOptions.borders.all" ng-click="$ctrl.removeCountries()">
+                        <i class="fa fa-remove">
+                        </i>
+                    </button>
+                </span>
+            </li>
+            <li>
+                <div class="row ui input">
+                    <input focus-if="avoidBorders" ng-disabled="$ctrl.currentOptions.borders.all" ng-model="$ctrl.queryCountries" ng-model-options="{debounce: 300}" placeholder="{{('SEARCHAVOIDCOUNTRIES' | translate)}}" select-on-click="" type="text">
+                    </input>
+                </div>
+            </li>
+            <li>
+                <div class="row">
+                    <table id="results">
+                        <tbody>
+                            <tr ng-repeat="country in $ctrl.countries | filter: checked ">
+                                <td>
+                                    <input class="ui checkbox" id="c_{{country.cid}}" name="orsRouteAvoidablesCountries" ng-change="$ctrl.toggleCountries(country.id)" ng-disabled="!$ctrl.avoidCountries || $ctrl.currentOptions.borders.all" ng-model="$ctrl.countries[country.id].check" type="checkbox">
+                                    </input>
+                                </td>
+                                <td id="cname">
+                                    {{country[$ctrl.language]}}
+                                </td>
+                                <td id="ename">
+                                    <i>
+                                        <small>
+                                            ({{country.official_en_name}})
+                                        </small>
+                                    </i>
+                                </td>
+                            </tr>
+                            <tr ng-if="$ctrl.queryCountries" ng-repeat="country in $ctrl.countries | filter: search ">
+                                <td>
+                                    <input class="ui checkbox" id="c_{{country.cid}}" name="orsRouteAvoidablesCountries" ng-change="$ctrl.toggleCountries(country.id)" ng-disabled="$ctrl.currentOptions.borders.all" ng-model="$ctrl.countries[country.id].check" type="checkbox">
+                                    </input>
+                                </td>
+                                <td id="cname">
+                                    {{country[$ctrl.language]}}
+                                </td>
+                                <td align="right" hidden="" id="cid">
+                                    ({{country.cid}})
+                                </td>
+                                <td id="ename">
+                                    <i>
+                                        <small>
+                                            ({{country.official_en_name}})
+                                        </small>
+                                    </i>
+                                </td>
+                                <td hidden="" id="nname">
+                                    {{country.native_names}}
+                                </td>
+                                <td hidden="" id="ccode">
+                                    {{country.country_code}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
 <div class="options-box" ng-show="$ctrl.activeSubgroup == 'Bicycle'">
     <div class="pointer" ng-click="difficultyOptions = !difficultyOptions">
         <i ng-class="$ctrl.getClass(difficultyOptions)">
@@ -147,7 +248,7 @@
     </div>
     <div class="collapsable" ng-class="{ showMe: hgvOptions }">
         <div class="ors-options-menu">
-           <rzslider rz-slider-model="$ctrl.hgvSliders.Length.value" rz-slider-options="$ctrl.hgvSliders.Length.options">
+            <rzslider rz-slider-model="$ctrl.hgvSliders.Length.value" rz-slider-options="$ctrl.hgvSliders.Length.options">
             </rzslider>
             <div class="ui checkbox">
                 <input id="hgv-length-cb" name="orsRouteHgvOpts" ng-change="$ctrl.toggleHgvOptSlider('length')" ng-model="$ctrl.hgvLengthCb" type="checkbox">
@@ -155,7 +256,8 @@
                     </label>
                 </input>
             </div>
-            <div class="ui divider"></div>
+            <div class="ui divider">
+            </div>
             <rzslider rz-slider-model="$ctrl.hgvSliders.Width.value" rz-slider-options="$ctrl.hgvSliders.Width.options">
             </rzslider>
             <div class="ui checkbox">
@@ -164,7 +266,8 @@
                     </label>
                 </input>
             </div>
-            <div class="ui divider"></div>
+            <div class="ui divider">
+            </div>
             <rzslider rz-slider-model="$ctrl.hgvSliders.Height.value" rz-slider-options="$ctrl.hgvSliders.Height.options">
             </rzslider>
             <div class="ui checkbox">
@@ -173,7 +276,8 @@
                     </label>
                 </input>
             </div>
-            <div class="ui divider"></div>
+            <div class="ui divider">
+            </div>
             <rzslider rz-slider-model="$ctrl.hgvSliders.Weight.value" rz-slider-options="$ctrl.hgvSliders.Weight.options">
             </rzslider>
             <div class="ui checkbox">
@@ -182,8 +286,9 @@
                     </label>
                 </input>
             </div>
-            <div class="ui divider"></div>
-             <rzslider rz-slider-model="$ctrl.hgvSliders.AxleLoad.value" rz-slider-options="$ctrl.hgvSliders.AxleLoad.options">
+            <div class="ui divider">
+            </div>
+            <rzslider rz-slider-model="$ctrl.hgvSliders.AxleLoad.value" rz-slider-options="$ctrl.hgvSliders.AxleLoad.options">
             </rzslider>
             <div class="ui checkbox">
                 <input id="hgv-axleload-cb" name="orsRouteHgvOpts" ng-change="$ctrl.toggleHgvOptSlider('axleload')" ng-model="$ctrl.hgvAxleloadCb" type="checkbox">
@@ -192,7 +297,8 @@
                 </input>
             </div>
         </div>
-        <div class="ui divider"></div>
+        <div class="ui divider">
+        </div>
         <ul class="ors-options-menu">
             <li>
                 <div class="ui checkbox">

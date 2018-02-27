@@ -187,21 +187,15 @@ angular.module('orsApp').directive('orsMap', () => {
             };
             $timeout(function() {
                 if (!$scope.smallScreen) $scope.mapModel.map.addControl($scope.signupBox);
-            }, 500);
+            }, 300000);
             // brand
             $scope.brand = L.control({
                 position: 'topleft'
             });
             $scope.brand.onAdd = function(map) {
-                if ($scope.smallScreen) {
-                    var divs = L.DomUtil.create('div', 'ors-brand-small');
-                    divs.innerHTML = '<a href="http://www.geog.uni-heidelberg.de/gis/heigit.html" target="_blank"><img src="img/brand.png"></a>';
-                    return divs;
-                } else {
-                    var div = L.DomUtil.create('div', 'ors-brand');
-                    div.innerHTML = '<a href="http://www.geog.uni-heidelberg.de/gis/heigit.html" target="_blank"><img src="img/brand.png"></a>';
-                    return div;
-                }
+                var divs = L.DomUtil.create('div', 'ors-brand-small');
+                divs.innerHTML = '<img src="img/brand.png">';
+                return divs;
             };
             $timeout(function() {
                 $scope.mapModel.map.addControl($scope.brand);

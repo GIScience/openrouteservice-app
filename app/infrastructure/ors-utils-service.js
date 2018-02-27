@@ -156,8 +156,8 @@ angular.module('orsApp.utils-service', [])
                 cancel: cancel
             };
         };
-        /** 
-         * generates object for request and serializes it to http parameters   
+        /**
+         * generates object for request and serializes it to http parameters
          * @param {Object} settings: route settings object
          * @param {Object} userSettings: To limit the amount of responses
          * @return {Object} payload: Paylod object used in xhr request
@@ -201,8 +201,8 @@ angular.module('orsApp.utils-service', [])
             if (payload.extra_info.length == 0) delete payload.extra_info;
             return payload;
         };
-        /** 
-         * generates object for request and serializes it to http parameters   
+        /**
+         * generates object for request and serializes it to http parameters
          * @param {String} str: Free form address
          * @param {boolean} reverse: if reversed geocoding, default false
          * @param {string} language: Desired language of response
@@ -230,6 +230,8 @@ angular.module('orsApp.utils-service', [])
             const subgroup = lists.profiles[settings.profile.type].subgroup;
             let options = {
                 avoid_features: '',
+                avoid_borders: '',
+                avoid_countries: '',
                 profile_params: {
                     weightings: {},
                     restrictions: {}
@@ -253,6 +255,24 @@ angular.module('orsApp.utils-service', [])
             } else {
                 options.avoid_features = options.avoid_features.slice(0, -1);
             }
+            if (subgroup == 'Car' || subgroup == 'HeavyVehicle') {
+                if (!angular.isUndefined(settings.profile.options.borders)) {
+                    let borders = settings.profile.options.borders;
+                    // if all borders are avoided only pass avoid_borders="all"
+                    if (borders.all) {
+                        options.avoid_borders = 'all';
+                    } else {
+                    // otherwise check for controlled borders and countries
+                        options.avoid_borders = borders.controlled ? 'controlled' : '';
+                        options.avoid_countries = borders.country;
+                        if (!angular.isUndefined(borders.country)) options.avoid_countries = borders.country;
+                    }
+                }
+                // remove if empty
+                if (angular.equals(options.avoid_borders, '')) delete options.avoid_borders;
+                if (angular.equals(options.avoid_countries, '')) delete options.avoid_countries;
+            }
+            console.log((options))
             if (subgroup == 'HeavyVehicle') {
                 let vt = 0;
                 if (!angular.isUndefined(settings.profile.options.width)) {
@@ -312,10 +332,11 @@ angular.module('orsApp.utils-service', [])
             if (angular.equals(options.profile_params.weightings, {})) delete options.profile_params.weightings;
             if (angular.equals(options.profile_params.restrictions, {})) delete options.profile_params.restrictions;
             if (angular.equals(options.profile_params, {})) delete options.profile_params;
-            return options;
+            // removes 'undefined' keys from JSON Object
+            return JSON.parse(JSON.stringify(options));
         };
-        /** 
-         * generates object for request and serializes it to http parameters   
+        /**
+         * generates object for request and serializes it to http parameters
          * @param {Object} settings: Settings object for payload
          * @return {Object} payload: Paylod object used in xhr request
          */
@@ -340,8 +361,8 @@ angular.module('orsApp.utils-service', [])
             }
             return payload;
         };
-        /** 
-         * generates object for request and serializes it to http parameters   
+        /**
+         * generates object for request and serializes it to http parameters
          * @param {Object} settings: Settings object for payload
          * @return {Object} payload: Paylod object used in xhr request
          */
@@ -352,9 +373,9 @@ angular.module('orsApp.utils-service', [])
             };
             return payload;
         };
-        /** 
-         * generates object for request and serializes it to http parameters   
-         * @param {Object} settings: Settings object for payload         
+        /**
+         * generates object for request and serializes it to http parameters
+         * @param {Object} settings: Settings object for payload
          * @return {Object} payload: Paylod object used in xhr request
          */
         orsUtilsService.locationsPayload = (settings) => {
@@ -529,8 +550,25 @@ angular.module('orsApp.utils-service', [])
                     if (typeof obj[o] == "object") {
                         getProp(obj[o]);
                     } else {
+                        // check for borders first or country value will get caught by Filter functions
+                        if (lists.optionList.borders[o]){
+                            if (lists.optionList.borders[o].subgroups.includes(settings.profile.type)) {
+                                // converts the pipes to commas to keep permalink clean
+                                if (o == "country") {
+                                    if (obj[o] !== '') {
+                                        let c = obj[o].replace(/\|/g,',');
+                                        link += '&' + lists.permalinkKeys[o] + '=' + c ;
+                                    }
+                                } else {
+                                    if (obj[o] === true) {
+                                        link += '&' + lists.permalinkKeys[o] + '=1';
+                                    } else if (obj[o] === false) {} else {
+                                        link += '&' + lists.permalinkKeys[o] + '=' + obj[o];
+                                    }
+                                }
+                            }
                         // Filter functions and properties of other types
-                        if (typeof obj[o] != "function" && o.toString()
+                        } else if (typeof obj[o] != "function" && o.toString()
                             .charAt(0) != '_' && (lists.permalinkFilters[settings.profile.type].includes(o) || lists.permalinkFilters.analysis.includes(o))) {
                             if (obj[o] in lists.profiles) {
                                 link += '&' + lists.permalinkKeys[o] + '=' + lists.profiles[obj[o]].shortValue;
