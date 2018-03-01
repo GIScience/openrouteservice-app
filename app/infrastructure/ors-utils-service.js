@@ -350,7 +350,7 @@ angular.module('orsApp.utils-service', [])
                 interval: parseInt(settings.profile.options.analysis_options.method) === 0 ? settings.profile.options.analysis_options.isointerval * 60 : settings.profile.options.analysis_options.isointerval * 1000,
                 location_type: settings.profile.options.analysis_options.reverseflow === true ? lists.isochroneOptionList.reverseFlow.destination : lists.isochroneOptionList.reverseFlow.start,
                 profile: lists.profiles[settings.profile.type].request,
-                attributes: 'area|reachfactor',
+                attributes: 'area|reachfactor|total_pop',
                 options: JSON.stringify(orsUtilsService.generateOptions(settings))
             };
             // remove options if empty
