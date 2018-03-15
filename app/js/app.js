@@ -2,15 +2,15 @@
  *|                                                     University of Heidelberg
  *|   _____ _____  _____      _                         Department of Geography
  *|  / ____|_   _|/ ____|    (_)                        Chair of GIScience
- *| | |  __  | | | (___   ___ _  ___ _ __   ___ ___     (C) 2017
+ *| | |  __  | | | (___   ___ _  ___ _ __   ___ ___     (C) 2018
  *| | | |_ | | |  \___ \ / __| |/ _ \ '_ \ / __/ _ \
- *| | |__| |_| |_ ____) | (__| |  __/ | | | (_|  __/    Berliner Strasse 48
+ *| | |__| |_| |_ ____) | (__| |  __/ | | | (_|  __/    Berliner Strasse 45
  *|  \_____|_____|_____/ \___|_|\___|_| |_|\___\___|    D-69120 Heidelberg, Germany
  *|                                                     http://www.giscience.uni-hd.de
  *|------------------------------------------------------------------------------------*/
 /**
- * @author: Timothy Ellersiek, timothy.ellersiek@geog.uni-heidelberg.de, Hendrik Leuschner, hendrik.leuschner@uni-heidelberg.de
- * @version: 1.0
+ * @author: Amandus Butzer, amandus@openrouteservice.org, Timothy Ellersiek, timothy@openrouteservice.de, Hendrik Leuschner, hendrik@openrouteservice.de
+ * @version: 0.2.2
  */
 (function() {
     fetchData()
