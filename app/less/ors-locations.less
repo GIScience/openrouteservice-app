@@ -1,3 +1,4 @@
+@import 'variables.less';
 /** locations control styles */
 
 .locations {
@@ -46,7 +47,7 @@
             -border-bottom: .1rem solid #d9d9d9;
         }
         // &:hover {
-        //     color: #cf5f5f;
+        //     color: @orsColor;
         // }
         .category-checkbox {
             margin-top: -5px;
@@ -74,7 +75,7 @@
     flex-direction: row;
     -border-bottom: .1rem solid #d9d9d9;
     justify-content: space-between;
-    background-color: #cf5f5f;
+    background-color: @orsColor;
     color: rgba(255, 255, 255, 0.75);
     font-weight: bold;
 }
@@ -109,7 +110,7 @@
 .ors-icon-locations {
     height: 18px;
     width: 18px;
-    background-color: #cf5f5f;
+    background-color: @orsColor;
     position: absolute;
     padding-top: 3px;
     text-align: center;
@@ -172,7 +173,7 @@ a.leaflet-locations {
     .poi-header {
         display: flex;
         flex-direction: row;
-        background-color: #cf5f5f;
+        background-color: @orsColor;
         color: rgba(255, 255, 255, 0.75);
         font-weight: bold;
         justify-content: space-between;
