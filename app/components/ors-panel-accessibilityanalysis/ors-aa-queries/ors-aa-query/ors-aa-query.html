@@ -94,13 +94,16 @@
                         </span>
                     </th>
                     <th>
+                        <span ng-bind-html="('TOTALPOP' | translate)"
+                    </th>
+                    <th>
                         <span>
                             <i class="fa fa-check"></i>
                         </span>
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody align="right">
                 <tr class="pointer" ng-class="{highlight: hover}" ng-click="$ctrl.zoomTo($index); $event.stopPropagation();" ng-mouseout="$ctrl.deEmph(); hover=false;" ng-mouseover="$ctrl.emph($index); hover=true;" ng-repeat="isochrone in $ctrl.attributes.info.query.ranges" ng-switch="$ctrl.attributes.info.query.range_type">
                     <td>
                         <span ng-bind-html="(isochrone | distance:true)" ng-switch-when="distance">
@@ -116,6 +119,10 @@
                     </td>
                     <td ng-switch-when="time">
                         <span ng-bind-html="($ctrl.attributes.features[$index].properties.reachfactor | number: 2)">
+                        </span>
+                    </td>
+                    <td>
+                        <span ng-bind-html="($ctrl.attributes.features[$index].properties.total_pop)">
                         </span>
                     </td>
                     <td>

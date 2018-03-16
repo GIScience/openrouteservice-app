@@ -183,5 +183,6 @@
     "CONTROLLEDBORDERS": "Kontrollierte Grenzen",
     "BORDERS": "Alle Grenzen",
     "COUNTRYBORDERS": "Ländergrenzen",
-    "SEARCHAVOIDCOUNTRIES": "Suche zu vermeidende Länder"
+    "SEARCHAVOIDCOUNTRIES": "Suche zu vermeidende Länder",
+    "TOTALPOP": "Einwohnerzahl"
 }

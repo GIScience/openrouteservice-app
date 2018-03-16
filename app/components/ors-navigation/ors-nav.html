@@ -1,18 +1,23 @@
 <div class="ors-navigation">
-    <ul>
-        <li>
-            <button tooltips tooltip-template="{{('ROUTING' | translate)}}" tooltip-side="right" class="ors-button" ng-click="$ctrl.activeMenu = '/directions'" ng-link='["Directions"]'>
-                <i class="fa fa-lg fa-road" ng-class="{active : $ctrl.activeMenu === '/directions'}">
-                </i>
-            </button>
-        </li>
-        <li>
-            <button tooltips tooltip-template="{{('AA' | translate)}}" tooltip-side="right" class="ors-button" ng-click="$ctrl.activeMenu = '/reach'" ng-link='["Reach"]'>
-                <i class="fa fa-lg fa-bullseye" ng-class="{active : $ctrl.activeMenu === '/reach'}">
-                </i>
-            </button>
-        </li>
-    </ul>
+    <div class="ors-features">
+        <ul>
+            <li>
+                <button tooltips tooltip-template="{{('ROUTING' | translate)}}" tooltip-side="right" class="ors-button" ng-click="$ctrl.activeMenu = '/directions'" ng-link='["Directions"]'>
+                    <i class="fa fa-lg fa-road" ng-class="{active : $ctrl.activeMenu === '/directions'}">
+                    </i>
+                </button>
+            </li>
+            <li>
+                <button tooltips tooltip-template="{{('AA' | translate)}}" tooltip-side="right" class="ors-button" ng-click="$ctrl.activeMenu = '/reach'" ng-link='["Reach"]'>
+                    <i class="fa fa-lg fa-bullseye" ng-class="{active : $ctrl.activeMenu === '/reach'}">
+                    </i>
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="ors-version">
+        <a href="https://github.com/GIScience/openrouteservice-app/tree/master">{{$ctrl.version}}</a>
+    </div>
 </div>
 <ng-outlet class="ors-outlet">
 </ng-outlet>

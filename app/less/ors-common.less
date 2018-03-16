@@ -41,7 +41,7 @@ h3, h4, h5 {
     color: #444;
     outline: none;
     &:hover {
-        color: #cd6060;
+        color: @orsHoverColor;
     }
 }
 
@@ -67,13 +67,13 @@ span tooltip {
     }
     i {
         &:hover {
-            color: #cd6060;
+            color: @orsHoverColor;
         }
     }
     span {
         i {
             &:hover {
-                color: #cd6060;
+                color: @orsHoverColor;
             }
         }
     }
@@ -156,7 +156,7 @@ tooltip._multiline {
 
 #loading-bar {
     .bar {
-        background: #b5152b;
+        background: @orsColor;
         height: 3px;
     }
 }
@@ -205,11 +205,32 @@ label, .label {
         }
     }
 }
-
-.ors-summary, .ors-navigation {
+.ors-navigation {
+    display: flex;
+    flex-direction: column;
+}
+.ors-summary, .ors-features {
+    align-self: start;
     ul {
         padding: 0;
         margin: 0;
+    }
+}
+
+.ors-version {
+    margin-top:auto;
+    padding-bottom: 3px;
+    text-align: center;
+    font-size: 11px;
+    font-style: italic;
+    a {
+        color: silver;
+        &:hover, &:visited, &:active, &:link {
+            text-decoration: none;
+        };
+        &:hover {
+            color: @orsHoverColor;
+        }
     }
 }
 
@@ -228,7 +249,7 @@ button.summary-select {
     border: none;
     padding-bottom: 5px !important;
     font-weight: bold;
-    color: #cd6060;
+    color: @orsHoverColor;
     display: block;
     outline: none !important;
 }

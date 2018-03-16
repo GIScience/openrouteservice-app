@@ -182,5 +182,6 @@
     "CONTROLLEDBORDERS": "Controlled Borders",
     "BORDERS": "All borders",
     "COUNTRYBORDERS": "Country borders",
-    "SEARCHAVOIDCOUNTRIES": "Search for countries to avoid"
+    "SEARCHAVOIDCOUNTRIES": "Search for countries to avoid",
+    "TOTALPOP": "População"
 }
