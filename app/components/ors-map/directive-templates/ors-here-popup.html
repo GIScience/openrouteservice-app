@@ -10,5 +10,15 @@
     <div class="list">
         <span ng-bind-html="address.position">
         </span>
+        <span tooltips tooltip-template="{{('COPYYX' | translate)}}" tooltip-side="top">
+            <button class="ors-button" ngclipboard data-clipboard-text="{{address.latLng}}">
+                <i class="fa fa-copy"></i>
+            </button>
+        </span>
+        <span tooltips tooltip-template="{{('COPYXY' | translate)}}" tooltip-side="top">
+            <button class="ors-button" ngclipboard data-clipboard-text="{{address.lngLat}}">
+                <i class="fa fa-copy fa-mirror"></i>
+            </button>
+        </span>
     </div>
 </div>

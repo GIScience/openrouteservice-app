@@ -881,6 +881,8 @@ angular.module('orsApp').directive('orsMap', () => {
                         };
                     }
                     $scope.address.position = "<small>" + latLngString + "</small>";
+                    $scope.address.lngLat = lngLatString;
+                    $scope.address.latLng = latLngString;
                     $scope.mapModel.map.addControl($scope.hereControl);
                 }, (response) => {
                     orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
