@@ -184,5 +184,7 @@
     "BORDERS": "Alle Grenzen",
     "COUNTRYBORDERS": "Ländergrenzen",
     "SEARCHAVOIDCOUNTRIES": "Suche zu vermeidende Länder",
-    "TOTALPOP": "Einwohnerzahl"
+    "TOTALPOP": "Einwohnerzahl",
+    "COPYYX": "Copy Lat,Lng",
+    "COPYXY": "Copy Lng,Lat"
 }
