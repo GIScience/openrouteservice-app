@@ -591,7 +591,7 @@ angular.module('orsApp').directive('orsMap', () => {
                     distanceMarkers: {
                         lazy: !isDistanceMarkers,
                         showAll: 13,
-                        offset: 500,
+                        offset: 1000,
                         cssClass: 'ors-marker-dist',
                         iconSize: [18, 18]
                     }
