@@ -147,6 +147,7 @@
     "waytypes": "Tipi di strade",
     "surface": "Superfici",
     "green": "Indice di verde (solo in Germania)",
+    "tollways": "Strade a pedaggio",
     "FROM": "da",
     "TO": "a",
     "SHARE_LINK": "Condividi link",
@@ -170,6 +171,8 @@
     "noise": "Indice di rumore (solo in Germania)",
     "height": "Altezza",
     "LOCALE_DISTANCE_MARKERS": "Segnali di distanza (km)",
+    "LOCALE_NO_TOLLWAY": "Strade senza pedaggio",
+    "LOCALE_TOLLWAY": "Strade a pedaggio",
     "avgspeed": "Velocità media",
     "traildifficulty": "Difficoltà pista",
     "EXTRA_INFORMATION": "Informazioni aggiuntive",
@@ -181,6 +184,7 @@
     "BORDERS": "Tutti i confini",
     "COUNTRYBORDERS": "Confini Nazionali",
     "SEARCHAVOIDCOUNTRIES": "Cerca gli stati da evitare",
+    "TOTALPOP": "Popolazione",
     "COPYYX": "Copy Lat,Lng",
     "COPYXY": "Copy Lng,Lat"
 }
