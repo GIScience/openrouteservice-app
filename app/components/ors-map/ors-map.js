@@ -333,9 +333,9 @@ angular.module('orsApp').directive('orsMap', () => {
             $scope.mapModel.map.on('moveend', (e) => {
                 $scope.setMapOptions();
             });
-            // $scope.mapModel.map.on('mouseover', (e) => {
-            //     console.log(true);
-            // });
+            $scope.mapModel.map.on('click', (e) => {
+                $scope.showHereMessage(e.latlng);
+            });
             $scope.setMapOptions = () => {
                 const mapCenter = $scope.mapModel.map.getCenter();
                 const mapZoom = $scope.mapModel.map.getZoom();
