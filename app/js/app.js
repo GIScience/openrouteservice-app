@@ -43,7 +43,7 @@
                     'request': function(config) {
                         const apiKey = orsApikeyFactory.getApiKey() === undefined ? weathercheck : orsApikeyFactory.getApiKey();
                         let ak = '?api_key=' + apiKey;
-                        if (config.url == ENV.geocoding ||  config.url == ENV.routing || config.url == ENV.analyse || config.url == ENV.places) {
+                        if (config.url == ENV.geocoding ||  config.url == ENV.routing || config.url == ENV.analyse || config.url == ENV.pois) {
                             config.url = config.url + ak;
                         }
                         return config || $q.when(config);
