@@ -92,6 +92,17 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
             const geometry = routeString.slice(pair[0], pair[1] + 1);
             orsRouteService.Emph(geometry);
         };
+        ctrl.EmphStepLm = (lms) => {
+            if(lms && lms.features.length > 0) {
+                    const lm = lms.features[0];
+                        if(lm.properties.suitability > 0) {
+                            orsRouteService.EmphLandmark(lm);
+                        }
+                }
+        };
+        ctrl.DeEmphStepLm = () => {
+            orsRouteService.DeEmphLandmark();
+        };
         ctrl.zoomTo = (idx, destination = false) => {
             const routeString = $scope.route.geometry;
             let geometry;

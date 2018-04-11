@@ -60,6 +60,8 @@ angular.module('orsApp')
                     layerRouteNumberedMarkers: L.featureGroup(),
                     layerRouteExtras: L.featureGroup(),
                     layerRouteDrag: L.featureGroup(),
+                    layerLandmarks: L.featureGroup(),
+                    layerLandmarksEmph: L.featureGroup(),
                     layerLocations: new L.MarkerClusterGroup({
                         showCoverageOnHover: false,
                         disableClusteringAtZoom: 14,
@@ -276,6 +278,8 @@ angular.module('orsApp')
                     $scope.mapModel.geofeatures.layerRouteExtras.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerLocations.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerRouteDrag.addTo($scope.mapModel.map);
+                    $scope.mapModel.geofeatures.layerLandmarks.addTo($scope.mapModel.map);
+                    $scope.mapModel.geofeatures.layerLandmarksEmph.addTo($scope.mapModel.map);
                     // add layer control
                     $scope.layerControls = L.control.layers($scope.baseLayers, $scope.overlays)
                         .addTo($scope.mapModel.map);
@@ -445,6 +449,8 @@ angular.module('orsApp')
                     $scope.mapModel.geofeatures.layerEmph.clearLayers();
                     $scope.mapModel.geofeatures.layerRouteExtras.clearLayers();
                     $scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
+                    $scope.mapModel.geofeatures.layerLandmarks.clearLayers();
+                    $scope.mapModel.geofeatures.layerLandmarksEmph.clearLayers();
                     if ($scope.hg) $scope.hg.remove();
                     if (switchApp) {
                         $scope.mapModel.geofeatures.layerRoutePoints.clearLayers();
@@ -458,6 +464,7 @@ angular.module('orsApp')
                 };
                 $scope.reAddWaypoints = (waypoints, fireRequest = true, aaIcon = false) => {
                     $scope.clearLayer('layerRoutePoints');
+                    $scope.clearLayer('layerLandmarks');
                     let setCnt = 0;
                     angular.forEach(waypoints, (waypoint, idx) => {
                         var iconIdx = orsSettingsFactory.getIconIdx(idx);
@@ -608,6 +615,47 @@ angular.module('orsApp')
                             },
                             onEachFeature: onEachFeature
                         })
+                        .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
+                };
+                /**
+                 * add a point feature to the map as a landmark
+                 * @param {Object} actionPackage - The action actionPackage
+                 */
+                $scope.addLandmark = (actionPackage) => {
+                    const onEachFeature = (feature, layer) => {
+                        let popupContent = '';
+                        var type = feature.properties.type.charAt(0).toUpperCase() + feature.properties.type.replace(/_/g, ' ').slice(1);
+
+                        if (feature.properties.name && feature.properties.name !== 'Unknown') {
+                            popupContent = '<strong>' + feature.properties.name + '</strong>';
+                            popupContent += '<br/>' + type;
+                        } else {
+                            popupContent = '<strong>' + type + '</strong>';
+                        }
+
+                        popupContent += '<br>Source: © OpenStreetMap-Contributors';
+
+                        layer.bindPopup(popupContent, {
+                            className: 'location-popup'
+                        });
+                    };
+                    let geojson = L.geoJson(actionPackage.geometry, {
+                        pointToLayer: function(feature, latlng) {
+                            let landmarksIcon = null;
+                            if (actionPackage.style) {
+                                landmarksIcon = L.divIcon(actionPackage.style);
+                            } else {
+                                landmarksIcon = L.divIcon(lists.landmarkIcon);
+                            }
+                            landmarksIcon.options.html = '<span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-map-marker"></i><i class="fa fa-stack-1x icon-back"></i>' + lists.landmark_icons[feature.properties.type] + '</span>';
+                            //locationsIcon.options.html = lists.landmark_icons[feature.properties.type];//'<i class="fa fa-map-marker"><i class="fa fa-lg fa-institution"></i></i>';
+                            return L.marker(latlng, {
+                                icon: landmarksIcon,
+                                draggable: 'false'
+                            });
+                        },
+                        onEachFeature: onEachFeature
+                    })
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                 };
                 /** 
@@ -1308,6 +1356,9 @@ angular.module('orsApp')
                             break;
                         case 11:
                             $scope.highlightPoi(params._package);
+                            break;
+                        case 13:
+                            $scope.addLandmark(params._package);
                             break;
                         case 30:
                             $scope.addIsochrones(params._package);

@@ -74,7 +74,7 @@
         </div>
         <div class="steps">
             <div class="collapsable" ng-class="{ showMe: steps }">
-                <div class="step" data-ng-repeat="step in segment.steps" ng-class="{highlight: hoverStep}" ng-click="$ctrl.zoomToStep(step.way_points);" ng-if="step.type !== 10" ng-mouseout="$ctrl.DeEmph(); hoverStep=false;" ng-mouseover="$ctrl.EmphStep(step.way_points); hoverStep=true;">
+                <div class="step" data-ng-repeat="step in segment.steps" ng-class="{highlight: hoverStep}" ng-click="$ctrl.zoomToStep(step.way_points);" ng-if="step.type !== 10" ng-mouseout="$ctrl.DeEmph(); hoverStep=false; $ctrl.DeEmphStepLm(step.landmarks);" ng-mouseover="$ctrl.EmphStep(step.way_points); hoverStep=true; $ctrl.EmphStepLm(step.landmarks);">
                     <div class="header">
                         <div class="icon">
                             <i ng-class="$ctrl.getIcon(step.type)">
