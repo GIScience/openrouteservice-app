@@ -10,7 +10,7 @@
  *|------------------------------------------------------------------------------------*/
 /**
  * @author: Amandus Butzer, amandus@openrouteservice.org, Timothy Ellersiek, timothy@openrouteservice.de, Hendrik Leuschner, hendrik@openrouteservice.de
- * @version: 0.2.4
+ * @version: 0.2.5
  */
 (function() {
     fetchData()
@@ -35,7 +35,7 @@
                 angular.bootstrap(document, ["orsApp"]);
             });
     }
-    let orsApp = angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.ors-panel-accessibilityanalysis', 'orsApp.ors-header', 'orsApp.ors-error', 'orsApp.ors-loading', 'orsApp.ors-modal', 'ui.sortable', 'orsApp.messaging-service', 'orsApp.map-service', 'orsApp.objects-service', 'orsApp.locations-service', 'orsApp.params-service', 'orsApp.request-service', 'orsApp.settings-service', 'orsApp.utils-service', 'orsApp.route-service', 'orsApp.cookies-service', 'orsApp.aa-service', 'orsApp.apikey-factory', 'orsApp.GeoFileHandler-service', 'ngCookies', 'rzModule', 'ngAnimate', 'ngSanitize', 'pascalprecht.translate', 'angular-loading-bar', '720kb.tooltips', 'orsApp.ors-filters', 'orsApp.ors-route-extras', 'config', 'ngclipboard'])
+    let orsApp = angular.module('orsApp', ['orsApp.ors-nav', 'orsApp.ors-panel-routing', 'orsApp.ors-panel-accessibilityanalysis', 'orsApp.ors-header', 'orsApp.ors-error', 'orsApp.ors-loading', 'orsApp.ors-modal', 'ui.sortable', 'orsApp.messaging-service', 'orsApp.map-service', 'orsApp.objects-service', 'orsApp.locations-service', 'orsApp.params-service', 'orsApp.request-service', 'orsApp.settings-service', 'orsApp.utils-service', 'orsApp.route-service', 'orsApp.landmark-service', 'orsApp.cookies-service', 'orsApp.aa-service', 'orsApp.apikey-factory', 'orsApp.GeoFileHandler-service', 'ngCookies', 'rzModule', 'ngAnimate', 'ngSanitize', 'pascalprecht.translate', 'angular-loading-bar', '720kb.tooltips', 'orsApp.ors-filters', 'orsApp.ors-route-extras', 'config', 'ngclipboard'])
         .config(function($locationProvider, $httpProvider) {
             $locationProvider.html5Mode(true);
             $httpProvider.interceptors.push(function($q, $document, $injector, lists, orsNamespaces, ENV, orsApikeyFactory, weathercheck) {
@@ -43,7 +43,7 @@
                     'request': function(config) {
                         const apiKey = orsApikeyFactory.getApiKey() === undefined ? weathercheck : orsApikeyFactory.getApiKey();
                         let ak = '?api_key=' + apiKey;
-                        if (config.url == ENV.geocoding ||  config.url == ENV.routing || config.url == ENV.analyse || config.url == ENV.places) {
+                        if (config.url == ENV.geocoding ||  config.url == ENV.routing || config.url == ENV.analyse || config.url == ENV.pois) {
                             config.url = config.url + ak;
                         }
                         return config || $q.when(config);

@@ -31,7 +31,7 @@ angular.module('orsApp.settings-service', [])
             /** Fire request */
             orsSettingsFactory[currentSettingsObj].onNext(set);
         };
-        /** 
+        /**
          * Sets user specific options in settings (language, routinglang and units). Can be used for any key-value pair. Is used by both permalink and Cookies
          * @param {Object} options- Consists of routing instruction language and units km/mi
          */
@@ -45,7 +45,7 @@ angular.module('orsApp.settings-service', [])
             orsSettingsFactory.userOptionsSubject.onNext(set);
             orsSettingsFactory.mapOptionsInitSubject.onNext(set);
         };
-        /** 
+        /**
          * Gets user specific options in settings (language and units)
          * @return {Object} The user settings
          */
@@ -121,7 +121,7 @@ angular.module('orsApp.settings-service', [])
             return orsSettingsFactory[currentSettingsObj].getValue()
                 .waypoints;
         };
-        /** 
+        /**
          * Updates waypoint address and position in settings.
          * @param {number} idx - Which is the index of the to be updated wp.
          * @param {string} address - Which is the string of the address.
@@ -149,7 +149,7 @@ angular.module('orsApp.settings-service', [])
                 .avoidable_polygons = avoidablePolygons;
             orsSettingsFactory[currentSettingsObj].onNext(orsSettingsFactory[currentSettingsObj].getValue());
         };
-        /** 
+        /**
          * This is basically the heart of navigation. If the panels are switched between
          * routing and accessibility analysis the subject references are updated.
          * @param {string} newRoute - Path of current location.
@@ -197,7 +197,7 @@ angular.module('orsApp.settings-service', [])
                 request.promise.then(function(response) {
                     orsSettingsFactory.requestSubject.onNext(false);
                     const profile = settings.profile.type;
-                    orsRouteService.processResponse(response, profile, orsSettingsFactory.focusIdx);
+                    orsRouteService.processResponse(response, profile, orsSettingsFactory.focusIdx, settings.profile.options.landmarks);
                 }, function(response) {
                     console.error(response);
                     orsSettingsFactory.requestSubject.onNext(false);

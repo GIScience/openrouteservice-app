@@ -262,7 +262,7 @@ angular.module('orsApp.utils-service', [])
                     if (borders.all) {
                         options.avoid_borders = 'all';
                     } else {
-                    // otherwise check for controlled borders and countries
+                        // otherwise check for controlled borders and countries
                         options.avoid_borders = borders.controlled ? 'controlled' : '';
                         options.avoid_countries = borders.country;
                         if (!angular.isUndefined(borders.country)) options.avoid_countries = borders.country;
@@ -276,21 +276,28 @@ angular.module('orsApp.utils-service', [])
             if (subgroup == 'HeavyVehicle') {
                 let vt = 0;
                 if (!angular.isUndefined(settings.profile.options.width)) {
-                    options.profile_params.restrictions.width = settings.profile.options.width.toString(); ++vt;
+                    options.profile_params.restrictions.width = settings.profile.options.width.toString();
+                    ++vt;
                 }
                 if (!angular.isUndefined(settings.profile.options.height)) {
-                    options.profile_params.restrictions.height = settings.profile.options.height.toString(); ++vt;
+                    options.profile_params.restrictions.height = settings.profile.options.height.toString();
+                    ++vt;
                 }
                 if (!angular.isUndefined(settings.profile.options.hgvWeight)) {
-                    options.profile_params.restrictions.weight = settings.profile.options.hgvWeight.toString(); ++vt;
+                    options.profile_params.restrictions.weight = settings.profile.options.hgvWeight.toString();
+                    ++vt;
                 }
                 if (!angular.isUndefined(settings.profile.options.length)) {
-                    options.profile_params.restrictions.length = settings.profile.options.length.toString(); ++vt;
+                    options.profile_params.restrictions.length = settings.profile.options.length.toString();
+                    ++vt;
                 }
                 if (!angular.isUndefined(settings.profile.options.axleload)) {
-                    options.profile_params.restrictions.axleload = settings.profile.options.axleload.toString(); ++vt;
+                    options.profile_params.restrictions.axleload = settings.profile.options.axleload.toString();
+                    ++vt;
                 }
-                if (!angular.isUndefined(settings.profile.options.hazmat)) {options.profile_params.restrictions.hazmat = settings.profile.options.hazmat; ++vt;
+                if (!angular.isUndefined(settings.profile.options.hazmat)) {
+                    options.profile_params.restrictions.hazmat = settings.profile.options.hazmat;
+                    ++vt;
                 }
                 if (vt != 0) options.vehicle_type = settings.profile.type;
             }
@@ -369,7 +376,7 @@ angular.module('orsApp.utils-service', [])
         orsUtilsService.locationsCategoryPayload = () => {
             let payload;
             payload = {
-                request: 'category_list'
+                request: 'list'
             };
             return payload;
         };
@@ -382,13 +389,19 @@ angular.module('orsApp.utils-service', [])
             let payload;
             payload = {
                 request: 'pois',
-                bbox: settings.bbox,
-                limit: 200,
-                details: 'address|contact|attributes'
+                geometry: {
+                    bbox: settings.bbox
+                },
+                limit: 2000,
+                filters: {}
+
+
+                //limit: 200,
+                //details: 'address|contact|attributes'
             };
-            if (settings.nameFilter) payload.name = settings.nameFilter;
-            if (settings.categories.length > 0) payload.category_group_ids = settings.categories.join(',');
-            if (settings.subCategories.length > 0) payload.category_ids = settings.subCategories.join(',');
+            //if (settings.nameFilter) payload.name = settings.nameFilter;
+            if (settings.categories.length > 0) payload.filters.category_group_ids = settings.categories.map(Number);
+            if (settings.subCategories.length > 0) payload.filters.category_ids = settings.subCategories.map(Number);
             return payload;
         };
         orsUtilsService.addShortAddresses = function(features) {
@@ -551,13 +564,13 @@ angular.module('orsApp.utils-service', [])
                         getProp(obj[o]);
                     } else {
                         // check for borders first or country value will get caught by Filter functions
-                        if (lists.optionList.borders[o]){
+                        if (lists.optionList.borders[o]) {
                             if (lists.optionList.borders[o].subgroups.includes(lists.profiles[settings.profile.type].subgroup)) {
                                 // converts the pipes to commas to keep permalink clean
                                 if (o == "country") {
                                     if (obj[o] !== '') {
-                                        let c = obj[o].replace(/\|/g,',');
-                                        link += '&' + lists.permalinkKeys[o] + '=' + c ;
+                                        let c = obj[o].replace(/\|/g, ',');
+                                        link += '&' + lists.permalinkKeys[o] + '=' + c;
                                     }
                                 } else {
                                     if (obj[o] === true) {
@@ -567,7 +580,7 @@ angular.module('orsApp.utils-service', [])
                                     }
                                 }
                             }
-                        // Filter functions and properties of other types
+                            // Filter functions and properties of other types
                         } else if (typeof obj[o] != "function" && o.toString()
                             .charAt(0) != '_' && (lists.permalinkFilters[settings.profile.type].includes(o) || lists.permalinkFilters.analysis.includes(o))) {
                             if (obj[o] in lists.profiles) {

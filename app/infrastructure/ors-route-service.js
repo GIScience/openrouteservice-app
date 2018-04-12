@@ -1,5 +1,5 @@
 angular.module('orsApp.route-service', [])
-    .factory('orsRouteService', ['$q', '$http', 'orsUtilsService', 'orsMapFactory', 'orsObjectsFactory', 'lists', 'mappings', 'ENV', ($q, $http, orsUtilsService, orsMapFactory, orsObjectsFactory, lists, mappings, ENV) => {
+    .factory('orsRouteService', ['$q', '$http', 'orsUtilsService', 'orsLandmarkService', 'orsMapFactory', 'orsObjectsFactory', 'lists', 'mappings', 'ENV', ($q, $http, orsUtilsService, orsLandmarkService, orsMapFactory, orsObjectsFactory, lists, mappings, ENV) => {
         /**
          * Requests geocoding from ORS backend
          * @param {String} requestData: XML for request payload
@@ -63,6 +63,14 @@ angular.module('orsApp.route-service', [])
             let action = orsObjectsFactory.createMapAction(1, lists.layers[2], geom, undefined, lists.layerStyles.routeEmph());
             orsMapFactory.mapServiceSubject.onNext(action);
         };
+        orsRouteService.EmphLandmark = (geom) => {
+            let action = orsObjectsFactory.createMapAction(13, lists.layers[10], geom, undefined, lists.landmarkIconEmph);
+            orsMapFactory.mapServiceSubject.onNext(action);
+        };
+        orsRouteService.DeEmphLandmark = () => {
+            let action = orsObjectsFactory.createMapAction(2, lists.layers[10], undefined, undefined);
+            orsMapFactory.mapServiceSubject.onNext(action);
+        };
         orsRouteService.Color = (geom, color) => {
             let style = lists.layerStyles.getStyle(color, 6, 1);
             let action = orsObjectsFactory.createMapAction(1, lists.layers[7], geom, undefined, style);
@@ -95,7 +103,7 @@ angular.module('orsApp.route-service', [])
             orsMapFactory.mapServiceSubject.onNext(heightgraph);
         };
         /** prepare route to json */
-        orsRouteService.processResponse = (data, profile, focusIdx) => {
+        orsRouteService.processResponse = (data, profile, focusIdx, includeLandmarks) => {
             orsRouteService.data = data;
             let cnt = 0;
             angular.forEach(orsRouteService.data.routes, function(route) {
@@ -111,6 +119,41 @@ angular.module('orsApp.route-service', [])
                 }
                 route.geometry = geometry;
                 route.point_information = orsRouteService.processPointExtras(route, profile);
+                // landmark stuff here
+                orsLandmarkService.clearAll();
+                if (includeLandmarks) {
+                    const lmPayload = orsLandmarkService.prepareQuery(route.geometry, route.segments);
+                    const lmRequest = orsLandmarkService.promise(lmPayload);
+                    lmRequest.promise.then(function(response) {
+                        // save to route object ...
+                        // attach the landmarks to the corresponding segment
+                        var lmCnt = 0;
+                        for (var i = 0; i < route.segments.length; i++) {
+                            var segment = route.segments[i];
+                            for (var j = 1; j < segment.steps.length; j++) { // Don't attach to the start of the segment
+                                var step = segment.steps[j];
+                                step['landmarks'] = response[lmCnt];
+                                // update the instruction
+                                if (step.landmarks && step.landmarks.features && step.landmarks.features.length > 0) {
+                                    // show the feature in the instruction
+                                    var lm = step.landmarks.features[0];
+                                    var instr = step.instruction;
+                                    if (lm.properties.suitability > 0) {
+                                        var lmStr = (lm.properties.position === 'before' ? 'after ' : 'before ') + 'the ' + (lm.properties.name && lm.properties.name !== 'Unknown' ? '&quot;' + lm.properties.name + '&quot; ' : '') + lm.properties.type.replace(/_/, ' ');
+                                        instr = instr + ' ' + lmStr;
+                                        orsLandmarkService.addLandmark(lm);
+                                    }
+                                    step.instruction = instr;
+                                } else {
+                                    console.log("No landmarks found :(");
+                                }
+                                lmCnt = lmCnt + 1;
+                            }
+                        }
+                    }, function(response) {
+                        console.error(response);
+                    });
+                }
                 if (cnt === 0) {
                     if (route.elevation) {
                         // get max and min elevation from nested array

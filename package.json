@@ -1,9 +1,9 @@
 {
   "name": "maps.openrouteservice.org",
-  "version": "0.2.4",
-  "repository" :
-  { "type" : "git"
-  , "url" : "https://github.com/GIScience/openrouteservice-app.git"
+  "version": "0.2.5",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GIScience/openrouteservice-app.git"
   },
   "scripts": {
     "start": "npm run lite",

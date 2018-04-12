@@ -185,5 +185,6 @@
     "SEARCHAVOIDCOUNTRIES": "Search for countries to avoid",
     "TOTALPOP": "População",
     "COPYYX": "Copy Lat,Lng",
-    "COPYXY": "Copy Lng,Lat"
+    "COPYXY": "Copy Lng,Lat",
+    "SHOWLANDMARKS": "Include landmarks in routing instructions"
 }

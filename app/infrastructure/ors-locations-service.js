@@ -17,13 +17,13 @@ angular.module('orsApp.locations-service', [])
          * @param {String} requestData: XML for request payload
          */
         orsLocationsService.fetchLocations = (requestData) => {
-            var url = ENV.places;
+            console.log(requestData)
+            var url = ENV.pois;
             var canceller = $q.defer();
             var cancel = (reason) => {
                 canceller.resolve(reason);
             };
-            var promise = $http.get(url, {
-                    params: requestData,
+            var promise = $http.post(url, requestData, {
                     timeout: canceller.promise
                 })
                 .then((response) => {

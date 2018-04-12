@@ -44,6 +44,16 @@ angular.module('orsApp')
                 className: "ors-marker-hover-drag",
             }
         },
+        landmarkIcon: {
+            className: "ors-marker-landmark",
+            iconSize: [45, 45],
+            iconAnchor: [22, 45]
+        },
+        landmarkIconEmph: {
+            className: "ors-marker-landmark-highlight",
+            iconSize: [45, 45],
+            iconAnchor: [22, 45]
+        },
         profiles: {
             Car: {
                 name: 'Car',
@@ -582,7 +592,9 @@ angular.module('orsApp')
             6: 'layerRouteNumberedMarkers',
             7: 'layerRouteExtras',
             8: 'layerLocations',
-            9: 'layerRouteDrag'
+            9: 'layerRouteDrag',
+            10: 'layerLandmarks',
+            11: 'layerLandmarksEmph'
         },
         layerStyles: {
             route: function() {
@@ -663,6 +675,14 @@ angular.module('orsApp')
                     weight: w,
                     opacity: o
                 };
+            },
+            boundary: function() {
+                return {
+                    "color": "#cf5f5f",
+                    "weight": 10,
+                    "opacity": 1,
+                    "fillOpacity": 0
+                };
             }
         },
         isochronesColorsRanges: [
@@ -718,6 +738,117 @@ angular.module('orsApp')
             address: '<i class="fa fa-address-card"></i>',
             website: '<i class="fa fa-globe"></i>',
             wheelchair: '<i class="fa fa-wheelchair-alt"></i>'
+        },
+        landmark_icons: {
+            arts_centre: '<i class="fa fa-stack-1x fa-paint-brush"></i>',
+            artwork: '<i class="fa fa-stack-1x fa-paint-brush"></i>',
+            attraction: '<i class="fa fa-stack-1x fa-camera"></i>',
+            bank: '<i class="fa fa-stack-1x fa-dollar"></i>',
+            bar: '<i class="fa fa-stack-1x fa-glass"</i>>',
+            cafe: '<i class="fa fa-stack-1x fa-coffee icon"></i>',
+            clock: '<i class="fa fa-stack-1x fa-clock-o"></i>',
+            courthouse: '<i class="fa fa-stack-1x fa-legal"></i>',
+            embassy: '<i class="fa fa-stack-1x fa-flag"></i>',
+            fast_food: '<i class="fa fa-stack-1x fa-cutlery"></i>',
+            fuel: '<i class="fa fa-stack-1x fa-car"></i>',
+            gallery: '<i class="fa fa-stack-1x fa-photo"></i>',
+            hotel: '<i class="fa fa-stack-1x fa-stack-1x fa-hotel"></i>',
+            information: '<i class="fa fa-stack-1x fa-info"></i>',
+            memorial: '<i class="fa fa-stack-1x fa-institution"></i>',
+            monument: '<i class="fa fa-stack-1x fa-institution"></i>',
+            museum: '<i class="fa fa-stack-1x fa-institution"></i>',
+            park: '<i class="fa fa-stack-1x fa-tree"></i>',
+            pharmacy: '<i class="fa fa-stack-1x fa-medkit"></i>',
+            pitch: '<i class="fa fa-stack-1x fa-futbol-o"></i>',
+            place_of_worship: '<i class="fa fa-stack-1x fa-building"></i>',
+            playground: '<i class="fa fa-stack-1x fa-futbol-o"></i>',
+            pub: '<i class="fa fa-stack-1x fa-beer"></i>',
+            restaurant: '<i class="fa fa-stack-1x fa-cutlery"></i>',
+            shop: '<i class="fa fa-stack-1x fa-shopping-bag"></i>',
+            sports_centre: '<i class="fa fa-stack-1x fa-futbol-o"></i>',
+            station: '<i class="fa fa-stack-1x fa-train"></i>',
+            statue: '<i class="fa fa-stack-1x fa-institution"></i>',
+            subway_entrance: '<i class="fa fa-stack-1x fa-subway"></i>',
+            swimming_pool: '<i class="fa fa-stack-1x fa-dollar-o"></i>',
+            theatre: '<i class="fa fa-stack-1x fa-ticket"></i>',
+            town_hall: '<i class="fa fa-stack-1x fa-institution"></i>',
+            traffic_signals: '<i class="fa fa-stack-1x fa-car"></i>',
+            tram_stop: '<i class="fa fa-stack-1x fa-bus"></i>'
+        },
+        boundary: {
+            "type": "FeatureCollection",
+            "features": [{
+                "type": "Feature",
+                "id": "DEU",
+                "properties": {
+                    "name": "Germany"
+                },
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [9.921906, 54.983104],
+                            [9.93958, 54.596642],
+                            [10.950112, 54.363607],
+                            [10.939467, 54.008693],
+                            [11.956252, 54.196486],
+                            [12.51844, 54.470371],
+                            [13.647467, 54.075511],
+                            [14.119686, 53.757029],
+                            [14.353315, 53.248171],
+                            [14.074521, 52.981263],
+                            [14.4376, 52.62485],
+                            [14.685026, 52.089947],
+                            [14.607098, 51.745188],
+                            [15.016996, 51.106674],
+                            [14.570718, 51.002339],
+                            [14.307013, 51.117268],
+                            [14.056228, 50.926918],
+                            [13.338132, 50.733234],
+                            [12.966837, 50.484076],
+                            [12.240111, 50.266338],
+                            [12.415191, 49.969121],
+                            [12.521024, 49.547415],
+                            [13.031329, 49.307068],
+                            [13.595946, 48.877172],
+                            [13.243357, 48.416115],
+                            [12.884103, 48.289146],
+                            [13.025851, 47.637584],
+                            [12.932627, 47.467646],
+                            [12.62076, 47.672388],
+                            [12.141357, 47.703083],
+                            [11.426414, 47.523766],
+                            [10.544504, 47.566399],
+                            [10.402084, 47.302488],
+                            [9.896068, 47.580197],
+                            [9.594226, 47.525058],
+                            [8.522612, 47.830828],
+                            [8.317301, 47.61358],
+                            [7.466759, 47.620582],
+                            [7.593676, 48.333019],
+                            [8.099279, 49.017784],
+                            [6.65823, 49.201958],
+                            [6.18632, 49.463803],
+                            [6.242751, 49.902226],
+                            [6.043073, 50.128052],
+                            [6.156658, 50.803721],
+                            [5.988658, 51.851616],
+                            [6.589397, 51.852029],
+                            [6.84287, 52.22844],
+                            [7.092053, 53.144043],
+                            [6.90514, 53.482162],
+                            [7.100425, 53.693932],
+                            [7.936239, 53.748296],
+                            [8.121706, 53.527792],
+                            [8.800734, 54.020786],
+                            [8.572118, 54.395646],
+                            [8.526229, 54.962744],
+                            [9.282049, 54.830865],
+                            [9.921906, 54.983104]
+                        ]
+                    ]
+                }
+            }]
         },
         measure_locale: {
             'de-DE': 'de',
