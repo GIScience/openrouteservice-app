@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.2.5] - 2018-04-12
+
+### Added
+- Functionality to left-click map for a "What's Here" request ([#203](https://github.com/GIScience/openrouteservice-app/issues/203))
+- Landmarks option to routing instructions ([#205](https://github.com/GIScience/openrouteservice-app/issues/205))
+
+### Changed
+- Locations to Pois as it is now the external [Openpoiservice](https://github.com/GIScience/openpoiservice) ([#200](https://github.com/GIScience/openrouteservice-app/issues/200))
+
+### Fixed
+- Distance markers placed at 500m instead of 1km ([#201](https://github.com/GIScience/openrouteservice-app/issues/201))
+
 ## [0.2.4] - 2018-03-17
 
 ### Added
