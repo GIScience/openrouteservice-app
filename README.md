@@ -10,7 +10,7 @@ The openrouteservice client requires **nodejs** and a valid **Api-Key** to acces
 
 - [git](https://git-scm.com/downloads)
 - [nodejs](https://nodejs.org/en/download/package-manager/)
-- [Api-key](https://go.openrouteservice.org/sign-up/)
+- [Api-key](https://openrouteservice.org/sign-up/)
 
 ### Permission Issues
 If you encounter any [permission issues](https://github.com/npm/npm/issues/18380) during the installation:
