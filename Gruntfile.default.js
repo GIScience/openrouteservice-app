@@ -4,6 +4,7 @@ module.exports = function(grunt) {
         pattern: ['grunt-*', '!grunt-cli*']
     });
     var modRewrite = require('connect-modrewrite');
+    var serveStatic = require('serve-static');
     grunt.initConfig({
         copy: {
             all: {
@@ -170,9 +171,9 @@ module.exports = function(grunt) {
                     middleware: function(connect, options, middlewares) {
                         return [
                             modRewrite(['!\\.html|\\.js|\\.txt|\\.ico|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]']),
-                            connect().use('/bower_components', connect.static('./bower_components')),
-                            connect().use('/node_modules', connect.static('./node_modules')),
-                            connect.static('./app')
+                            connect().use('/bower_components', serveStatic('./bower_components')),
+                            connect().use('/node_modules', serveStatic('./node_modules')),
+                            serveStatic('./app')
                         ];
                     }
                 }
@@ -187,7 +188,7 @@ module.exports = function(grunt) {
                         return [
                             //modRewrite(['^[^\\.]*$ /index.html [L]']),
                             modRewrite(['!\\.html|\\.js|\\.txt|\\.ico|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]']),
-                            connect.static('./build')
+                            serveStatic('./build')
                         ];
                     }
                 }
