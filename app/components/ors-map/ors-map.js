@@ -545,7 +545,7 @@ angular.module('orsApp')
                     wayPointMarker.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                 };
                 $scope.highlightPoi = (actionPackage) => {
-                    console.log(actionPackage)
+                    console.log(actionPackage) // TODO
                     let locationsIcon = L.divIcon(lists.locationsIconHighlight);
                     locationsIcon.options.html = lists.locations_icons[$scope.subcategoriesLookup[parseInt(actionPackage.style)]];
                     let locationsMarker = L.marker(actionPackage.geometry, {
@@ -575,20 +575,20 @@ angular.module('orsApp')
                             mouseout: resetHighlight
                         });
                         let popupContent = '';
-                        if (feature.properties.name) popupContent += '<strong>' + feature.properties.name + '</strong><br>';
-                        if (feature.properties.address) {
+                        if (feature.properties['osm_tags'].name) popupContent += '<strong>' + feature.properties['osm_tags'].name + '</strong><br>';
+                        if (feature.properties['osm_tags'].address) {
                             popupContent += lists.locations_icons.address + ' ';
-                            if (feature.properties.address.street) popupContent += feature.properties.address.street + ', ';
-                            if (feature.properties.address.house_number) popupContent += feature.properties.address.house_number + ', ';
-                            if (feature.properties.address.postal_code) popupContent += feature.properties.address.postal_code + ', ';
-                            if (feature.properties.address.locality) popupContent += feature.properties.address.locality + ', ';
-                            if (feature.properties.address.region) popupContent += feature.properties.address.region + ', ';
-                            if (feature.properties.address.country) popupContent += feature.properties.address.country + ', ';
+                            if (feature.properties['osm_tags'].address.street) popupContent += feature.properties['osm_tags'].address.street + ', ';
+                            if (feature.properties['osm_tags'].address.house_number) popupContent += feature.properties['osm_tags'].address.house_number + ', ';
+                            if (feature.properties['osm_tags'].address.postal_code) popupContent += feature.properties['osm_tags'].address.postal_code + ', ';
+                            if (feature.properties['osm_tags'].address.locality) popupContent += feature.properties['osm_tags'].address.locality + ', ';
+                            if (feature.properties['osm_tags'].address.region) popupContent += feature.properties['osm_tags'].address.region + ', ';
+                            if (feature.properties['osm_tags'].address.country) popupContent += feature.properties['osm_tags'].address.country + ', ';
                             popupContent = popupContent.slice(0, -2);
                         }
-                        if (feature.properties.phone) popupContent += '<br>' + lists.locations_icons.phone + ' ' + feature.properties.phone;
-                        if (feature.properties.website) popupContent += '<br>' + lists.locations_icons.website + ' ' + '<a href="' + feature.properties.website + '" target=_blank>' + feature.properties.website + '</a>';
-                        if (feature.properties.wheelchair) popupContent += '<br>' + lists.locations_icons.wheelchair;
+                        if (feature.properties['osm_tags'].phone) popupContent += '<br>' + lists.locations_icons.phone + ' ' + feature.properties['osm_tags'].phone;
+                        if (feature.properties['osm_tags'].website) popupContent += '<br>' + lists.locations_icons.website + ' ' + '<a href="' + feature.properties['osm_tags'].website + '" target=_blank>' + feature.properties['osm_tags'].website + '</a>';
+                        if (feature.properties['osm_tags'].wheelchair) popupContent += '<br>' + lists.locations_icons.wheelchair;
                         if (feature.properties.osm_type == 1) {
                             popupContent += '<br><br><a href="http://www.openstreetmap.org/node/' + feature.properties.osm_id + '" target=_blank>Edit on OpenStreetMap</a>';
                         } else if (feature.properties.osm_type == 2) {
@@ -608,7 +608,7 @@ angular.module('orsApp')
                                 //     iconSize: [22, 22], // size of the icon
                                 // });
                                 let locationsIcon = L.divIcon(lists.locationsIcon);
-                                locationsIcon.options.html = lists.locations_icons[$scope.subcategoriesLookup[parseInt(feature.properties.category_id)]];
+                                locationsIcon.options.html = lists.locations_icons[$scope.subcategoriesLookup[parseInt(Object.keys(feature.properties.category_ids))]];
                                 return L.marker(latlng, {
                                     icon: locationsIcon
                                 });
@@ -1073,11 +1073,11 @@ angular.module('orsApp')
                                 </div>
                             </div>
                             <div class="poi-items" ng-show="showResults">
-                                <div class="poi-item" ng-repeat="feature in results" ng-click="panTo(feature.geometry.coordinates);" ng-mouseout="DeEmphPoi();" ng-mouseover="EmphPoi(feature.geometry.coordinates, feature.properties.category_id);">
+                                <div class="poi-item" ng-repeat="feature in results" ng-click="panTo(feature.geometry.coordinates);" ng-mouseout="DeEmphPoi();" ng-mouseover="EmphPoi(feature.geometry.coordinates, feature.properties.category_ids);">
                                     <div class="poi-row">
                                         <div class="icon" ng-bind-html='categoryIcons[subcategoriesLookup[feature.properties.category]]'></div>
-                                        <div class="text" ng-bind-html='feature.properties.name'></div>   
-                                        <div class="icon pointer" ng-click="poiDetails = !poiDetails; $event.stopPropagation();" ng-show='feature.properties.address || feature.properties.phone || feature.properties.wheelchair || feature.properties.website'>
+                                        <div class="text" ng-bind-html='feature.properties["osm_tags"].name'></div>
+                                        <div class="icon pointer" ng-click="poiDetails = !poiDetails; $event.stopPropagation();" ng-show='feature.properties["osm_tags"].address || feature.properties["osm_tags"].phone || feature.properties["osm_tags"].wheelchair || feature.properties["osm_tags"].website'>
                                             <i ng-class="getClass(poiDetails)" >
                                             </i>
                                         </div>
@@ -1089,34 +1089,34 @@ angular.module('orsApp')
                                         </div>
                                     </div>                                  
                                     <div class="collapsable poi-details" ng-class="{ showMe: poiDetails }">    
-                                        <div class="poi-row" ng-if="feature.properties.address">
+                                        <div class="poi-row" ng-if="feature.properties['osm_tags'].address">
                                             <div class="icon">
                                                 <i class="fa fa-address-card"></i>
                                             </div>
                                             <div class="text">
-                                                <span ng-if=feature.properties.address.street ng-bind-html="feature.properties.address.street + ', '"></span>
-                                                <span ng-if=feature.properties.address.house_number ng-bind-html="feature.properties.address.house_number + ', '"></span>
-                                                <span ng-if=feature.properties.address.postal_code ng-bind-html="feature.properties.address.postal_code + ', '"></span>
-                                                <span ng-if=feature.properties.address.locality ng-bind-html="feature.properties.address.locality + ', '"></span>
-                                                <span ng-if=feature.properties.address.region ng-bind-html="feature.properties.address.region + ', '"></span>
-                                                <span ng-if=feature.properties.address.country ng-bind-html="feature.properties.address.country"></span>
+                                                <span ng-if=feature.properties['osm_tags'].address.street ng-bind-html="feature.properties['osm_tags'].address.street + ', '"></span>
+                                                <span ng-if=feature.properties['osm_tags'].address.house_number ng-bind-html="feature.properties['osm_tags'].address.house_number + ', '"></span>
+                                                <span ng-if=feature.properties['osm_tags'].address.postal_code ng-bind-html="feature.properties['osm_tags'].address.postal_code + ', '"></span>
+                                                <span ng-if=feature.properties['osm_tags'].address.locality ng-bind-html="feature.properties['osm_tags'].address.locality + ', '"></span>
+                                                <span ng-if=feature.properties['osm_tags'].address.region ng-bind-html="feature.properties['osm_tags'].address.region + ', '"></span>
+                                                <span ng-if=feature.properties['osm_tags'].address.country ng-bind-html="feature.properties['osm_tags'].address.country"></span>
                                             </div>                                        
                                         </div>
-                                         <div class="poi-row" ng-if="feature.properties.phone">
+                                         <div class="poi-row" ng-if="feature.properties['osm_tags'].phone">
                                             <div class="icon">
                                                 <i class="fa fa-phone"></i>
                                             </div>
-                                            <div class="text" ng-bind-html='feature.properties.phone'></div>                                        
+                                            <div class="text" ng-bind-html='feature.properties["osm_tags"].phone'></div>
                                         </div>
-                                         <div class="poi-row" ng-if="feature.properties.website">
+                                         <div class="poi-row" ng-if="feature.properties['osm_tags'].website">
                                             <div class="icon">
                                                 <i class="fa fa-globe"></i>
                                             </div> 
-                                            <div class="text" ng-bind-html="feature.properties.website">
+                                            <div class="text" ng-bind-html="feature.properties['osm_tags'].website">
                                             </div>
                                         </div>
-                                        <div class="poi-row" ng-if="feature.properties.wheelchair">
-                                             <div ng-if="feature.properties.wheelchair">
+                                        <div class="poi-row" ng-if="feature.properties['osm_tags'].wheelchair">
+                                             <div ng-if="feature.properties['osm_tags'].wheelchair">
                                                 <i class="fa fa-wheelchair-alt"></i>
                                             </div>                                       
                                         </div> 
@@ -1152,9 +1152,7 @@ angular.module('orsApp')
                                     }
                                     if (cObj.selected.length === 0) {
                                         angular.forEach(cObj.subCategories, function(scObj, index) {
-                                            console.log(scObj);
                                             if (scObj.selected) {
-                                                console.log(index);
                                                 settings.subCategories.push(index);
                                             }
                                         });
@@ -1263,11 +1261,8 @@ angular.module('orsApp')
                                     $scope.subcategoriesLookup = {};
                                     angular.forEach(response, (categoryObj, categoryName) => {
                                         let subCategories = {};
-                                        console.log(categoryObj, categoryName)
                                         angular.forEach(categoryObj.children, (childObj, childName) => {
-                                            console.log(childObj, childName)
                                             angular.forEach(childObj, (subCategoryId, subCategoryName) => {
-                                                console.log(subCategoryId, subCategoryName)
                                                 $scope.subcategoriesLookup[subCategoryId] = categoryObj.id;
                                                 subCategories[subCategoryId] = {
                                                     name: subCategoryName,
