@@ -230,7 +230,7 @@ module.exports = function(grunt) {
                         geocoding: 'http://localhost:8082/name_of_war_archive/geocode',
                         routing: 'http://localhost:8082/name_of_war_archive/routes',
                         analyse: 'http://localhost:8082/name_of_war_archive/isochrones',
-                        places: 'http://localhost:8082/name_of_war_archive/locations',
+                        pois: 'http://localhost:8082/name_of_war_archive/locations',
                         shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
                     }
                 },
@@ -245,7 +245,7 @@ module.exports = function(grunt) {
                         geocoding: 'https://api.openrouteservice.org/geocoding',
                         routing: 'https://api.openrouteservice.org/directions',
                         analyse: 'https://api.openrouteservice.org/isochrones',
-                        places: 'https://api.openrouteservice.org/places',
+                        pois: 'https://api.openrouteservice.org/places',
                         shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
                     }
                 }
