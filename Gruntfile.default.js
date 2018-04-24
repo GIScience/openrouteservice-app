@@ -272,23 +272,24 @@ module.exports = function(grunt) {
         less: {
             development: {
                 files: {
-                    "app/css/ors-layout.css": "app/less/ors-layout.less",
-                    "app/css/ors-leaflet.css": "app/less/ors-leaflet.less",
+                    "app/css/ors-addresses.css": "app/less/ors-addresses.less",
                     "app/css/ors-common.css": "app/less/ors-common.less",
-                    "app/css/ors-header.css": "app/less/ors-header.less",
                     "app/css/ors-error.css": "app/less/ors-error.less",
+                    "app/css/ors-extras.css": "app/less/ors-extras.less",
+                    "app/css/ors-header.css": "app/less/ors-header.less",
                     "app/css/ors-icons.css": "app/less/ors-icons.less",
                     "app/css/ors-instructions.css": "app/less/ors-instructions.less",
+                    "app/css/ors-landmark.css": "app/less/ors-lanmark.less",
+                    "app/css/ors-layout.css": "app/less/ors-layout.less",
+                    "app/css/ors-leaflet.css": "app/less/ors-leaflet.less",
                     "app/css/ors-loading.css": "app/less/ors-loading.less",
-                    "app/css/ors-modal.css": "app/less/ors-modal.less",
                     "app/css/ors-locations.css": "app/less/ors-locations.less",
-                    "app/css/ors-extras.css": "app/less/ors-extras.less",
+                    "app/css/ors-modal.css": "app/less/ors-modal.less",
                     "app/css/ors-nav-profiles.css": "app/less/ors-nav-profiles.less",
                     "app/css/ors-panel-isochrones.css": "app/less/ors-panel-isochrones.less",
                     "app/css/ors-panel-routing.css": "app/less/ors-panel-routing.less",
                     "app/css/ors-sidebar-outlet.css": "app/less/ors-sidebar-outlet.less",
-                    "app/css/ors-tooltips.css": "app/less/ors-tooltips.less",
-                    "app/css/ors-addresses.css": "app/less/ors-addresses.less"
+                    "app/css/ors-tooltips.css": "app/less/ors-tooltips.less"
                 }
             }
         },
