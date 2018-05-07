@@ -903,6 +903,19 @@ angular.module('orsApp')
                         }
                     }
                 };
+                /**
+                 * changes the opacity of Isochrones
+                 * @param {Object} iso - The isochrone object
+                 * @param {number} iso.idx - The isochrone index
+                 * @param {number} iso.opacity - The opacity of the isochrone in percent
+                 */
+                $scope.$on('isoOpacityChange', function (event, iso) {
+                    // 'isochronesPane0' for first isochrone, 'isochronesPane1' for second etc.
+                    let paneName = "isochronesPane" + iso.idx.toString();
+                    let currentPanes = $scope.mapModel.map.getPanes();
+                    let svg = d3.select(currentPanes[paneName]);
+                    svg.style("opacity", iso.opacity/100);
+                    });
                 /** 
                  * clears layer entirely or specific layer in layer
                  */
@@ -1196,7 +1209,7 @@ angular.module('orsApp')
                                 });
                                 const scLength = Object.keys($scope.categories[selectedCategoryId].subCategories)
                                     .length;
-                                if (cnt == scLength) {
+                                if (cnt === scLength) {
                                     $scope.categories[selectedCategoryId].selected = true;
                                     $scope.isIntermediate = false;
                                 } else if (cnt > 0 && cnt < scLength) {
@@ -1227,14 +1240,13 @@ angular.module('orsApp')
                             };
                             //10 seconds delay
                             $scope.isAnySelected = () => {
-                                let active = false;
+                                let inactive = true;
                                 angular.forEach($scope.categories, (categoryObj, categoryName) => {
                                     if (categoryObj.selected || categoryObj.selected.length === 0) {
-                                        active = true;
+                                        inactive = false;
                                     }
                                 });
-                                if (active) $scope.disabled = false;
-                                else $scope.disabled = true;
+                                $scope.disabled = inactive;
                             };
                             $scope.toggleSubcategories = function(categoryId) {
                                 if (categoryId) $scope.selectedCategoryId = categoryId;
