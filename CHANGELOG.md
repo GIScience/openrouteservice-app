@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.2.9] - 2018-05-07
+
+### Added
+- slider to adjust isochrone transparency ([#179](https://github.com/GIScience/openrouteservice-app/issues/179))
+
+### Changed
+- color of angularjs-sliders to basic ors color
+
+### Fixed
+- 'sochrones' typo to 'isochrones' in welcome message
+- empty borders options for requests with pedestrian or bike profile
+
 ## [0.2.8] - 2018-04-24
 
 ### Fixed
