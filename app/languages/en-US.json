@@ -138,7 +138,7 @@
     "VIA": "Add as via point",
     "CENTER": "Use as center",
     "WELCOME": "Welcome to Openrouteservice",
-    "WELCOME_MESSAGE": "To add avoidable areas please use the control in the top right of the map. Otherwise feel free to browse through the plethora of options in the left panel. Also check out our new sochrones functionalities in the left menu panel.",
+    "WELCOME_MESSAGE": "To add avoidable areas please use the control in the top right of the map. Otherwise feel free to browse through the plethora of options in the left panel. Also check out our new Isochrones functionality in the left menu panel.",
     "EXTRAS": "Additional information",
     "WHATSHERE": "What is here?",
     "NO_ADDRESS": "No address could be found.",

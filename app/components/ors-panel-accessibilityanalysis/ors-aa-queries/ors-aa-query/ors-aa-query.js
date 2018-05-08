@@ -16,10 +16,34 @@ angular.module('orsApp.ors-aa-query', [])
             onAdd: '&',
             intervalsLength: '<'
         },
-        controller: ['orsMessagingService', 'orsAaService', '$timeout', '$location', function(orsMessagingService, orsAaService, $timeout, $location) {
+        controller: ['orsMessagingService', 'orsAaService', '$timeout', '$location' ,'$scope', '$rootScope', function(orsMessagingService, orsAaService, $timeout, $location, $scope, $rootScope) {
             let ctrl = this;
             ctrl.intervalsHidden = [];
+            ctrl.isochroneOpacitySlider = {
+                value: 50,
+                options: {
+                    floor: 0,
+                    ceil: 100,
+                    step: 5,
+                    vertical: true,
+                    translate: (value) => {
+                        return value / 100;
+                    },
+                    /**
+                     * Broadcasts isochrone index and value to be accessible from ors-maps.js
+                     */
+                    onChange: () => {
+                        $rootScope.$broadcast('isoOpacityChange', {
+                            idx: ctrl.isochroneIdx,
+                            opacity: ctrl.isochroneOpacitySlider.value
+                        });
+                    },
+                    hideLimitLabels: true,
+                    hidePointerLabels: true
+                }
+            };
             ctrl.$onInit = () => {
+                ctrl.refreshSlider();
                 ctrl.showOnMap = true;
                 ctrl.showIntervals = Array.apply(null, Array(ctrl.intervalsLength))
                     .map(function() {
@@ -116,6 +140,14 @@ angular.module('orsApp.ors-aa-query', [])
                     ctrl.showOnMap = true;
                 }
                 ctrl.show();
+            };
+            /**
+             * Refreshes the angularjs-sliders
+             */
+            ctrl.refreshSlider = () => {
+                $timeout(() => {
+                    $scope.$broadcast('rzSliderForceRender');
+                });
             };
             ctrl.download = () => {
                 ctrl.onDownload({

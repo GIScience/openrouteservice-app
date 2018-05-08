@@ -268,11 +268,10 @@ angular.module('orsApp.utils-service', [])
                         if (!angular.isUndefined(borders.country)) options.avoid_countries = borders.country;
                     }
                 }
-                // remove if empty
-                if (angular.equals(options.avoid_borders, '')) delete options.avoid_borders;
-                if (angular.equals(options.avoid_countries, '')) delete options.avoid_countries;
             }
-            console.log((options))
+            // remove if empty
+            if (angular.equals(options.avoid_borders, '')) delete options.avoid_borders;
+            if (angular.equals(options.avoid_countries, '')) delete options.avoid_countries;
             if (subgroup == 'HeavyVehicle') {
                 let vt = 0;
                 if (!angular.isUndefined(settings.profile.options.width)) {
