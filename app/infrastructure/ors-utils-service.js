@@ -1,5 +1,5 @@
 angular.module('orsApp.utils-service', [])
-    .factory('orsUtilsService', ['$q', '$http', '$timeout', '$location', 'lists', 'mappings', 'ENV', ($q, $http, $timeout, $location, lists, mappings, ENV) => {
+    .factory('orsUtilsService', ['$q', '$http', '$timeout', '$location', '$injector', 'lists', 'mappings', 'ENV', ($q, $http, $timeout, $location, $injector, lists, mappings, ENV) => {
         let orsUtilsService = {};
         /**
          * trims coordinates
@@ -209,19 +209,24 @@ angular.module('orsApp.utils-service', [])
          * @param {number} limit: To limit the amount of responses
          * @return {Object} payload: Paylod object used in xhr request
          */
-        orsUtilsService.geocodingPayload = function(obj, reverse = false, language = 'en', limit = 5) {
+        orsUtilsService.geocodingPayload = function(obj, reverse = false, language = 'en-US', limit = 5) {
             let payload;
+            let orsSettingsFactory = $injector.get('orsSettingsFactory');
             if (!reverse) {
                 payload = {
-                    query: obj,
+                    text: obj,
                     lang: language,
-                    limit: limit
+                    size: limit,
+                    'focus.point.lat': orsSettingsFactory.getUserOptions().lat ,
+                    'focus.point.lon': orsSettingsFactory.getUserOptions().lng
                 };
             } else {
                 payload = {
-                    location: obj,
+                    'point.lat': obj.split(', ')[1],
+                    'point.lon': obj.split(', ')[0],
+                    // location: obj,
                     lang: language,
-                    limit: 1
+                    size: 1
                 };
             }
             return payload;
@@ -412,16 +417,16 @@ angular.module('orsApp.utils-service', [])
                     feature.processed.primary = properties.name;
                     if ('street' in properties) {
                         feature.processed.primary += ', ' + properties.street;
-                        if ('house_number' in properties) {
-                            feature.processed.primary += ' ' + properties.house_number;
+                        if ('housenumber' in properties) {
+                            feature.processed.primary += ' ' + properties.housenumber;
                         }
                     }
                 } else if ('street' in properties) {
                     const streetAddress = [];
                     // street and name can be the same, just needed once
                     streetAddress.push(properties.street);
-                    if ('house_number' in properties) {
-                        streetAddress.push(properties.house_number);
+                    if ('housenumber' in properties) {
+                        streetAddress.push(properties.housenumber);
                     }
                     // street address with house number can also be the same as name
                     if (streetAddress.length > 0) {
@@ -432,8 +437,8 @@ angular.module('orsApp.utils-service', [])
                 }
                 // secondary information
                 const secondary = [];
-                if ('postal_code' in properties) {
-                    secondary.push(properties.postal_code);
+                if ('postalcode' in properties) {
+                    secondary.push(properties.postalcode);
                 }
                 if ('neighbourhood' in properties) {
                     secondary.push(properties.neighbourhood);
@@ -458,7 +463,7 @@ angular.module('orsApp.utils-service', [])
                 }
                 if (secondary.length <= 1 && properties.country !== properties.name) secondary.push(properties.country);
                 feature.processed.secondary = secondary.join(", ");
-                feature.processed.place_type = properties.place_type;
+                feature.processed.place_type = properties.layer;
             });
             return features;
         };
