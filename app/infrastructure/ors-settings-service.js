@@ -249,7 +249,7 @@ angular.module('orsApp.settings-service', [])
             const lngLatString = orsUtilsService.parseLngLatString(pos);
             orsSettingsFactory.updateWaypointAddress(idx, latLngString, init);
             const payload = orsUtilsService.geocodingPayload(lngLatString, true);
-            const request = orsRequestService.geocode(payload);
+            const request = orsRequestService.geocode(payload, true);
             const requestsQue = orsSettingsFactory.ngRouteSubject.getValue() == 'directions' ? 'routeRequests' : 'aaRequests';
             orsRequestService.geocodeRequests.updateRequest(request, idx, requestsQue);
             request.promise.then((data) => {

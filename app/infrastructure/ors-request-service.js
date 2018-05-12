@@ -21,7 +21,7 @@ angular.module('orsApp.request-service', [])
          * Replaces request if new one is fired on same index
          * @param {Object} request: xhr request
          * @param {number} idx: WP idx
-         * @param {string} panel: Current requests que
+         * @param {string} panel: Current requests queue
          */
         orsRequestService.geocodeRequests.updateRequest = (request, idx, requestsQue) => {
             if (typeof orsRequestService.geocodeRequests[requestsQue][idx] === 'undefined') {
@@ -32,9 +32,9 @@ angular.module('orsApp.request-service', [])
             }
         };
         /** 
-         * Removes requests from the que, used if waypoints are removed from list
+         * Removes requests from the queue, used if waypoints are removed from list
          * @param {number} idx: WP idx
-         * @param {string} requestsQue: Current requests que
+         * @param {string} requestsQue: Current requests queue
          */
         orsRequestService.geocodeRequests.removeRequest = (idx, requestsQue) => {
             if (typeof orsRequestService.geocodeRequests[requestsQue][idx] !== 'undefined') {
@@ -55,8 +55,15 @@ angular.module('orsApp.request-service', [])
             let action = orsObjectsFactory.createMapAction(0, lists.layers[0], geom, undefined);
             orsMapFactory.mapServiceSubject.onNext(action);
         };
-        orsRequestService.geocode = (requestData) => {
+        /**
+         *
+         * @param requestData -
+         * @param reverse - true for reverse geocoding request
+         * @returns {{promise: *, cancel: cancel}}
+         */
+        orsRequestService.geocode = (requestData, reverse = false) => {
             var url = ENV.geocoding;
+            reverse ? url += '/reverse' : url += '/search';
             var canceller = $q.defer();
             var cancel = function(reason) {
                 canceller.resolve(reason);

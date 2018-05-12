@@ -976,7 +976,7 @@ angular.module('orsApp')
                     const latLngString = orsUtilsService.parseLatLngString(pos);
                     // get the information of the rightclick location 
                     const payload = orsUtilsService.geocodingPayload(lngLatString, true);
-                    const request = orsRequestService.geocode(payload);
+                    const request = orsRequestService.geocode(payload, true);
                     request.promise.then((data) => {
                         $scope.address = {};
                         if (data.features.length > 0) {
