@@ -545,9 +545,8 @@ angular.module('orsApp')
                     wayPointMarker.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                 };
                 $scope.highlightPoi = (actionPackage) => {
-                    console.log(actionPackage) // TODO
                     let locationsIcon = L.divIcon(lists.locationsIconHighlight);
-                    locationsIcon.options.html = lists.locations_icons[$scope.subcategoriesLookup[parseInt(actionPackage.style)]];
+                    locationsIcon.options.html = lists.locations_icons[actionPackage.style];
                     let locationsMarker = L.marker(actionPackage.geometry, {
                         icon: locationsIcon
                     });
@@ -575,7 +574,15 @@ angular.module('orsApp')
                             mouseout: resetHighlight
                         });
                         let popupContent = '';
+                        let cIds = feature.properties['category_ids'];
                         if (feature.properties['osm_tags'].name) popupContent += '<strong>' + feature.properties['osm_tags'].name + '</strong><br>';
+                        // use category_name with space instead of underscore if no name tag available
+                        else {
+                            let noUnderscoreName = cIds[Object.keys(cIds)[0]].category_name.split('_').join(' ');
+                            popupContent += '<strong>' + noUnderscoreName + '</strong>';
+                            feature.properties['noUnderscoreName'] = noUnderscoreName;
+                        }
+                        feature.properties['categoryGroupId'] = orsLocationsService.getSubcategoriesLookup()[parseInt(Object.keys(cIds)[0])];
                         if (feature.properties['osm_tags'].address) {
                             popupContent += lists.locations_icons.address + ' ';
                             if (feature.properties['osm_tags'].address.street) popupContent += feature.properties['osm_tags'].address.street + ', ';
@@ -1086,10 +1093,11 @@ angular.module('orsApp')
                                 </div>
                             </div>
                             <div class="poi-items" ng-show="showResults">
-                                <div class="poi-item" ng-repeat="feature in results" ng-click="panTo(feature.geometry.coordinates);" ng-mouseout="DeEmphPoi();" ng-mouseover="EmphPoi(feature.geometry.coordinates, feature.properties.category_ids);">
+                                <div class="poi-item" ng-repeat="feature in results" ng-click="panTo(feature.geometry.coordinates);" ng-mouseout="DeEmphPoi();" ng-mouseover="EmphPoi(feature.geometry.coordinates, feature.properties.categoryGroupId);">
                                     <div class="poi-row">
-                                        <div class="icon" ng-bind-html='categoryIcons[subcategoriesLookup[feature.properties.category]]'></div>
-                                        <div class="text" ng-bind-html='feature.properties["osm_tags"].name'></div>
+                                        <div class="icon" ng-bind-html='categoryIcons[feature.properties.categoryGroupId]'></div>
+                                        <div class="text" ng-if="feature.properties['osm_tags'].name === undefined" ng-bind-html="feature.properties.noUnderscoreName"></div>
+                                        <div class="text" ng-if="feature.properties['osm_tags'].name" ng-bind-html='feature.properties["osm_tags"].name'></div>
                                         <div class="icon pointer" ng-click="poiDetails = !poiDetails; $event.stopPropagation();" ng-show='feature.properties["osm_tags"].address || feature.properties["osm_tags"].phone || feature.properties["osm_tags"].wheelchair || feature.properties["osm_tags"].website'>
                                             <i ng-class="getClass(poiDetails)" >
                                             </i>
