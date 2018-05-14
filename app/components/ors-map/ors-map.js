@@ -121,6 +121,7 @@ angular.module('orsApp')
                         link.title = 'Create a new area avoid polygon';
                         L.DomEvent.on(link, 'click', L.DomEvent.stop)
                             .on(link, 'click', function() {
+                                $scope.mapModel.map.avoidPolygons = true;
                                 map.editTools.startPolygon();
                             });
                         return container;
@@ -359,9 +360,6 @@ angular.module('orsApp')
                 $scope.mapModel.map.on('moveend', (e) => {
                     $scope.setMapOptions();
                 });
-                $scope.mapModel.map.on('click', (e) => {
-                    $scope.showHereMessage(e.latlng);
-                });
                 $scope.setMapOptions = () => {
                     const mapCenter = $scope.mapModel.map.getCenter();
                     const mapZoom = $scope.mapModel.map.getZoom();
@@ -372,7 +370,7 @@ angular.module('orsApp')
                         msi: $scope.mapStyleId
                     };
                     orsCookiesFactory.setMapOptions(mapOptions);
-                    // update permalink 
+                    // update permalink
                     let userOptions = orsSettingsFactory.getUserOptions();
                     userOptions.lat = mapCenter.lat;
                     userOptions.lng = mapCenter.lng;
@@ -380,6 +378,20 @@ angular.module('orsApp')
                     // dont set user options here, will otherwise end in a loop
                     orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), userOptions);
                 };
+                /**
+                 *  Reverse geocoding request upon leftclick
+                 *  Disabled if the avoid polygon tool is used
+                 */
+                $scope.mapModel.map.on('click', (e) => {
+                    if (!$scope.mapModel.map.avoidPolygons) $scope.showHereMessage(e.latlng);
+                });
+                /**
+                 * Enables Reverse geocoding request upon leftclick again
+                 * after finishing a polygon
+                 */
+                $scope.mapModel.map.on('editable:vertex:clicked', (e) => {
+                    $scope.mapModel.map.avoidPolygons = false;
+                });
                 $scope.processMapWaypoint = (idx, pos, updateWp = false, fireRequest = true, fromHover = false) => {
                     // add waypoint to map
                     // get the address from the response
@@ -1462,7 +1474,7 @@ angular.module('orsApp')
         return {
             restrict: 'E',
             template: `<div ng-attr-class="{{ 'ui message ors-map-message fade blue' }}" ng-show="show">
-            <i class="fa fa-close flright" data-ng-click="show = !show"></i>
+            <i class="fa fa-close flright" data-ng-click="show = !show; $event.stopPropagation();"></i>
             <div class="header" ng-bind-html="('WELCOME' | translate)">
             </div>
             <div class="list">
@@ -1480,7 +1492,7 @@ angular.module('orsApp')
         return {
             restrict: 'E',
             template: `<div ng-attr-class="{{ 'ui message ors-map-message fade green' }}" ng-show="show">
-            <i class="fa fa-close flright" data-ng-click="show = !show"></i>
+            <i class="fa fa-close flright" data-ng-click="show = !show; $event.stopPropagation();"></i>
             <div class="header" ng-bind-html="('LOCALE_SIGNUP_HEADER' | translate)">
             </div>
             <div class="list">
