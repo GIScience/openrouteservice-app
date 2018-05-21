@@ -103,6 +103,30 @@ angular.module('orsApp')
                     position: "bottomright",
                     mappings: mappings
                 });
+                /* FULLWIDTH CONTROLLER */
+                L.FullwidthControl = L.Control.extend({
+                    options: {
+                        position: 'topleft'
+                    },
+                    onAdd: function(map) {
+                        var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control', container),
+                            link = L.DomUtil.create('a', 'leaflet-fullwidth', container);
+                        link.href = '#';
+                        link.title = 'Hide/show menu';
+                        L.DomEvent.on(link, 'click', L.DomEvent.stop)
+                            .on(link, 'click', function() {
+                                let orsLeft = document.getElementsByClassName("ors-left");
+                                orsLeft = angular.element(orsLeft);
+                                if (orsLeft.css('display') == 'none') {
+                                    orsLeft.show();
+                                } else {
+                                    orsLeft.hide();
+                                }
+                                map.invalidateSize();
+                            });
+                        return container;
+                    }
+                });
                 $scope.zoomControl = new L.Control.Zoom({
                         position: 'topright'
                     })
@@ -217,6 +241,7 @@ angular.module('orsApp')
                 const el = angular.element(document.querySelector('.js-toggle'))
                     .empty();
                 $scope.mapModel.map.addControl(new L.NewPolygonControl());
+                $scope.mapModel.map.addControl(new L.FullwidthControl());
                 const deleteShape = function(e) {
                     if ((e.originalEvent.altKey || e.originalEvent.metaKey) && this.editEnabled()) {
                         this.editor.deleteShapeAt(e.latlng);
@@ -590,7 +615,8 @@ angular.module('orsApp')
                         if (feature.properties['osm_tags'].name) popupContent += '<strong>' + feature.properties['osm_tags'].name + '</strong><br>';
                         // use category_name with space instead of underscore if no name tag available
                         else {
-                            let noUnderscoreName = cIds[Object.keys(cIds)[0]].category_name.split('_').join(' ');
+                            let noUnderscoreName = cIds[Object.keys(cIds)[0]].category_name.split('_')
+                                .join(' ');
                             popupContent += '<strong>' + noUnderscoreName + '</strong>';
                             feature.properties['noUnderscoreName'] = noUnderscoreName;
                         }
@@ -643,38 +669,37 @@ angular.module('orsApp')
                 $scope.addLandmark = (actionPackage) => {
                     const onEachFeature = (feature, layer) => {
                         let popupContent = '';
-                        var type = feature.properties.type.charAt(0).toUpperCase() + feature.properties.type.replace(/_/g, ' ').slice(1);
-
+                        var type = feature.properties.type.charAt(0)
+                            .toUpperCase() + feature.properties.type.replace(/_/g, ' ')
+                            .slice(1);
                         if (feature.properties.name && feature.properties.name !== 'Unknown') {
                             popupContent = '<strong>' + feature.properties.name + '</strong>';
                             popupContent += '<br/>' + type;
                         } else {
                             popupContent = '<strong>' + type + '</strong>';
                         }
-
                         popupContent += '<br>Source: © OpenStreetMap-Contributors';
-
                         layer.bindPopup(popupContent, {
                             className: 'location-popup'
                         });
                     };
                     let geojson = L.geoJson(actionPackage.geometry, {
-                        pointToLayer: function(feature, latlng) {
-                            let landmarksIcon = null;
-                            if (actionPackage.style) {
-                                landmarksIcon = L.divIcon(actionPackage.style);
-                            } else {
-                                landmarksIcon = L.divIcon(lists.landmarkIcon);
-                            }
-                            landmarksIcon.options.html = '<span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-map-marker"></i><i class="fa fa-stack-1x icon-back"></i>' + lists.landmark_icons[feature.properties.type] + '</span>';
-                            //locationsIcon.options.html = lists.landmark_icons[feature.properties.type];//'<i class="fa fa-map-marker"><i class="fa fa-lg fa-institution"></i></i>';
-                            return L.marker(latlng, {
-                                icon: landmarksIcon,
-                                draggable: 'false'
-                            });
-                        },
-                        onEachFeature: onEachFeature
-                    })
+                            pointToLayer: function(feature, latlng) {
+                                let landmarksIcon = null;
+                                if (actionPackage.style) {
+                                    landmarksIcon = L.divIcon(actionPackage.style);
+                                } else {
+                                    landmarksIcon = L.divIcon(lists.landmarkIcon);
+                                }
+                                landmarksIcon.options.html = '<span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-map-marker"></i><i class="fa fa-stack-1x icon-back"></i>' + lists.landmark_icons[feature.properties.type] + '</span>';
+                                //locationsIcon.options.html = lists.landmark_icons[feature.properties.type];//'<i class="fa fa-map-marker"><i class="fa fa-lg fa-institution"></i></i>';
+                                return L.marker(latlng, {
+                                    icon: landmarksIcon,
+                                    draggable: 'false'
+                                });
+                            },
+                            onEachFeature: onEachFeature
+                        })
                         .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                 };
                 /** 
@@ -928,13 +953,13 @@ angular.module('orsApp')
                  * @param {number} iso.idx - The isochrone index
                  * @param {number} iso.opacity - The opacity of the isochrone in percent
                  */
-                $scope.$on('isoOpacityChange', function (event, iso) {
+                $scope.$on('isoOpacityChange', function(event, iso) {
                     // 'isochronesPane0' for first isochrone, 'isochronesPane1' for second etc.
                     let paneName = "isochronesPane" + iso.idx.toString();
                     let currentPanes = $scope.mapModel.map.getPanes();
                     let svg = d3.select(currentPanes[paneName]);
-                    svg.style("opacity", iso.opacity/100);
-                    });
+                    svg.style("opacity", iso.opacity / 100);
+                });
                 /** 
                  * clears layer entirely or specific layer in layer
                  */

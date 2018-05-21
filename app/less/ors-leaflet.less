@@ -81,7 +81,7 @@ div.leaflet-control-measure.leaflet-control {
     box-shadow: @leafletPopupShadow;
 }
 
-a.leaflet-control-layers-toggle, a.leaflet-avoid-area, div.leaflet-control-measure>a {
+a.leaflet-control-layers-toggle, a.leaflet-avoid-area, a.leaflet-fullwidth, div.leaflet-control-measure>a {
     position: relative;
     text-align: center;
     background-image: none !important;
@@ -110,6 +110,14 @@ a.leaflet-control-layers-toggle:before {
 
 a.leaflet-avoid-area:before {
     content: "\f248";
+    font-family: @fa;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+}
+
+a.leaflet-fullwidth:before {
+    content: "\f07e";
     font-family: @fa;
     display: inline-block;
     cursor: pointer;

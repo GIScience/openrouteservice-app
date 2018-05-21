@@ -9,7 +9,7 @@
  *|                                                     http://www.giscience.uni-hd.de
  *|------------------------------------------------------------------------------------*/
 /**
- * @author: Amandus Butzer, amandus@openrouteservice.org, Timothy Ellersiek, timothy@openrouteservice.de, Hendrik Leuschner, hendrik@openrouteservice.de
+ * @author: Amandus Butzer, amandus@openrouteservice.org, Timothy Ellersiek, timothy@openrouteservice.org
  * @version: 0.2.9
  */
 (function() {
