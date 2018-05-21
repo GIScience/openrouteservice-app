@@ -190,5 +190,6 @@
     "TOTALPOP": "Population",
     "COPYYX": "Copy Lat,Lng",
     "COPYXY": "Copy Lng,Lat",
-    "SHOWLANDMARKS": "Include landmarks in routing instructions"
+    "SHOWLANDMARKS": "Include landmarks in routing instructions",
+    "CUSTOM_MARKER": "Add custom marker to map"
 }
