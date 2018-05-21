@@ -128,7 +128,7 @@ a.leaflet-fullwidth:before {
     cursor: pointer;
 }
 
-.ors-marker-start, .ors-marker-via, .ors-marker-end, .ors-marker-location, .ors-marker-highlight, .ors-marker-hover {
+.ors-marker-start, .ors-marker-via, .ors-marker-end, .ors-marker-custom, .ors-marker-location, .ors-marker-highlight, .ors-marker-hover {
     text-align: center;
     line-height: 100%;
 }
@@ -143,7 +143,7 @@ a.leaflet-fullwidth:before {
     background: @orsColor;
 }
 
-.ors-marker-start i, .ors-marker-via i, .ors-marker-end i, .ors-marker-location i {
+.ors-marker-start i, .ors-marker-via i, .ors-marker-end i, .ors-marker-custom i, .ors-marker-location i {
     width: 100%;
     height: 100%;
     font-size: 40px;
@@ -182,6 +182,9 @@ a.leaflet-fullwidth:before {
     -webkit-text-fill-color: @markerEndColor;
 }
 
+.ors-marker-custom i {
+     -webkit-text-fill-color: @markerCustomColor;
+}
 .ors-marker-location i {
     -webkit-text-fill-color: @blueColor;
 }

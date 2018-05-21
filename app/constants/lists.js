@@ -44,6 +44,11 @@ angular.module('orsApp')
                 className: "ors-marker-hover-drag",
             }
         },
+        customMarkerIcon: {
+            className: "ors-marker-custom",
+            iconSize: [45, 45],
+            iconAnchor: [22, 45]
+        },
         landmarkIcon: {
             className: "ors-marker-landmark",
             iconSize: [45, 45],

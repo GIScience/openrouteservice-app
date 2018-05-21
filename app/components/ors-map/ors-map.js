@@ -7,7 +7,7 @@ angular.module('orsApp')
                 orsMap: '='
             },
             link: (scope, element, attrs) => {},
-            controller: ['$scope', '$filter', '$compile', '$timeout', '$window', 'orsSettingsFactory', 'orsLocationsService', 'orsObjectsFactory', 'orsRequestService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', 'lists', 'globals', 'mappings', 'orsNamespaces', ($scope, $filter, $compile, $timeout, $window, orsSettingsFactory, orsLocationsService, orsObjectsFactory, orsRequestService, orsUtilsService, orsMapFactory, orsCookiesFactory, lists, globals, mappings, orsNamespaces) => {
+            controller: ['$scope', '$filter', '$compile', '$timeout', '$window', 'orsSettingsFactory', 'orsLocationsService', 'orsObjectsFactory', 'orsRequestService', 'orsMessagingService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', 'lists', 'globals', 'mappings', 'orsNamespaces', ($scope, $filter, $compile, $timeout, $window, orsSettingsFactory, orsLocationsService, orsObjectsFactory, orsRequestService, orsMessagingService, orsUtilsService, orsMapFactory, orsCookiesFactory, lists, globals, mappings, orsNamespaces) => {
                 $scope.translateFilter = $filter('translate');
                 const mapsurfer = L.tileLayer(orsNamespaces.layerMapSurfer.url, {
                     attribution: orsNamespaces.layerMapSurfer.attribution,
@@ -62,6 +62,7 @@ angular.module('orsApp')
                     layerRouteDrag: L.featureGroup(),
                     layerLandmarks: L.featureGroup(),
                     layerLandmarksEmph: L.featureGroup(),
+                    layerHereMarkers: L.featureGroup(),
                     layerLocations: new L.MarkerClusterGroup({
                         showCoverageOnHover: false,
                         disableClusteringAtZoom: 14,
@@ -74,7 +75,8 @@ angular.module('orsApp')
                             }, // for hiding the markers
                         }
                     }),
-                    layerTmcMarker: L.featureGroup()
+                    layerTmcMarker: L.featureGroup(),
+                    layerCustomMarkers: L.featureGroup()
                 };
                 $scope.mapModel = {
                     map: $scope.orsMap,
@@ -294,6 +296,7 @@ angular.module('orsApp')
                         }
                     });
                     $scope.mapModel.geofeatures.layerRoutePoints.addTo($scope.mapModel.map);
+                    $scope.mapModel.geofeatures.layerCustomMarkers.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerRouteLines.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerRouteNumberedMarkers.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerAvoid.addTo($scope.mapModel.map);
@@ -306,6 +309,7 @@ angular.module('orsApp')
                     $scope.mapModel.geofeatures.layerRouteDrag.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerLandmarks.addTo($scope.mapModel.map);
                     $scope.mapModel.geofeatures.layerLandmarksEmph.addTo($scope.mapModel.map);
+                    $scope.mapModel.geofeatures.layerHereMarkers.addTo($scope.mapModel.map);
                     // add layer control
                     $scope.layerControls = L.control.layers($scope.baseLayers, $scope.overlays)
                         .addTo($scope.mapModel.map);
@@ -476,15 +480,33 @@ angular.module('orsApp')
                         $scope.processMapWaypoint(idx, pos, true, fireRequest);
                     });
                 };
+                // adds custom marker
+                $scope.addCustomMarker = (pos) => {
+                    let customMarkerIcon = L.divIcon(lists.customMarkerIcon);
+                    customMarkerIcon.options.html = '<i class="fa fa-map-marker"></i>';
+                    let customMarker = new L.marker(pos, {
+                        icon: customMarkerIcon
+                    });
+                    customMarker.addTo($scope.mapModel.geofeatures.layerCustomMarkers)
+                        .bindTooltip('@ ' + orsUtilsService.roundCoordinate(pos.lat) + ', ' + orsUtilsService.roundCoordinate(pos.lng), {
+                            permanent: true
+                        });
+                    console.log(customMarker)
+                    // close the popup
+                    $scope.mapModel.map.closePopup();
+                    console.log('adding', pos)
+                };
                 /** Clears the map
                  * @param {boolean} switchApp: Whether accessibility layer should be cleared
                  */
                 $scope.clearMap = (switchApp = false) => {
                     $scope.mapModel.map.closePopup();
                     $scope.mapModel.geofeatures.layerLocationMarker.clearLayers();
+                    $scope.mapModel.geofeatures.layerCustomMarkers.clearLayers();
                     $scope.mapModel.geofeatures.layerRouteLines.clearLayers();
                     $scope.mapModel.geofeatures.layerEmph.clearLayers();
                     $scope.mapModel.geofeatures.layerRouteExtras.clearLayers();
+                    $scope.mapModel.geofeatures.layerHereMarkers.clearLayers();
                     $scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
                     $scope.mapModel.geofeatures.layerLandmarks.clearLayers();
                     $scope.mapModel.geofeatures.layerLandmarksEmph.clearLayers();
@@ -1015,6 +1037,7 @@ angular.module('orsApp')
                     return div;
                 };
                 $scope.showHereMessage = (pos) => {
+                    $scope.mapModel.geofeatures.layerHereMarkers.clearLayers();
                     $scope.mapModel.map.closePopup();
                     const lngLatString = orsUtilsService.parseLngLatString(pos);
                     const latLngString = orsUtilsService.parseLatLngString(pos);
@@ -1037,6 +1060,17 @@ angular.module('orsApp')
                         $scope.address.lngLat = lngLatString;
                         $scope.address.latLng = latLngString;
                         $scope.mapModel.map.addControl($scope.hereControl);
+                        // add temporary circle marker
+                        var circleMarkerOptions = {
+                            radius: 5,
+                            fillColor: "#FFF",
+                            color: "#000",
+                            weight: 2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        };
+                        L.circleMarker(pos, circleMarkerOptions)
+                            .addTo($scope.mapModel.geofeatures.layerHereMarkers);
                     }, (response) => {
                         orsMessagingService.messageSubject.onNext(lists.errors.GEOCODE);
                     });
@@ -1472,6 +1506,10 @@ angular.module('orsApp')
                 scope.add = (idx) => {
                     //fourth argument to not fire a request on add waypoint
                     scope.processMapWaypoint(idx, scope.displayPos, false, false);
+                };
+                //add custom marker
+                scope.addMarker = () => {
+                    scope.addCustomMarker(scope.displayPos);
                 };
             }
         };
