@@ -1,15 +1,16 @@
 angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
-    /**
-    /*** Export Factory
-    **/
+/**
+ /*** Export Factory
+ **/
     .factory('orsExportFactory', ['FileSaver', 'Blob', 'orsNamespaces', (FileSaver, Blob, orsNamespaces) => {
         var orsExportFactory = {};
         /**
          * Export any vector element on the map to GPX
          * @param {Object} geometry: the route object (leaflet object) to export
-         * @param {String} geomType: the type of geometry which is passed 
-         * @param {Object} options: export options 
+         * @param {String} geomType: the type of geometry which is passed
+         * @param {Object} options: export options
          * @param {String} format: the file format to export
+         * @param {String} filename: the filename of the exported file
          */
         orsExportFactory.exportFile = (geometry, geomType, options, format, filename) => {
             let exportData, geojsonData, extension;
@@ -45,6 +46,11 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
                     break;
                 case 'geojson':
                     if (geomType == 'linestring') {
+                        if (!options.elevation) {
+                            angular.forEach(geometry, function (value) {
+                                value = value.splice(2, 1);
+                            });
+                        }
                         exportData = JSON.stringify(L.polyline(geometry)
                             .toGeoJSON());
                     } else if (geomType == 'polygon') {
@@ -82,8 +88,8 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
         return orsExportFactory;
     }])
     /**
-    /*** Import Factory
-    **/
+     /*** Import Factory
+     **/
     .factory('orsImportFactory', ['orsNamespaces', (orsNamespaces) => {
         var orsImportFactory = {};
         /**

@@ -190,5 +190,6 @@
     "COPYYX": "Copy Lat,Lng",
     "COPYXY": "Copy Lng,Lat",
     "SHOWLANDMARKS": "Include landmarks in routing instructions",
-    "CUSTOM_MARKER": "Add custom marker to map"
+    "CUSTOM_MARKER": "Add custom marker to map",
+    "ELEVATION": "Elevation"
 }
