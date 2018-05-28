@@ -16,8 +16,13 @@
     <div>
         <label ng-bind-html="('FILE_FORMAT' | translate)">
         </label>
-        <select ng-change="$ctrl.change_fileFormat($ctrl.selected_fileformat)" ng-model="$ctrl.selected_fileformat" ng-options="fileFormatOpt.text for fileFormatOpt in $ctrl.fileFormat">
+        <select ng-change="$ctrl.change_fileFormat($ctrl.selected_fileformat)" ng-model="$ctrl.selected_fileformat"
+                ng-options="fileFormatOpt.text for fileFormatOpt in $ctrl.fileFormat">
         </select>
+    </div>
+    <div ng-if="$ctrl.selected_fileformat.value == 'geojson'">
+        <label ng-bind-html="('ELEVATION' | translate)"></label>
+        <input type="checkbox" ng-model="$ctrl.elevation"/>
     </div>
     <div class="ui divider">
     </div>

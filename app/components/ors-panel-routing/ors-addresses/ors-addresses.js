@@ -54,11 +54,8 @@ angular.module('orsApp.ors-addresses', ['orsApp.ors-exportRoute-controls', 'focu
             orsRequestService.geocodeRequests.updateRequest(request, ctrl.idx, 'routeRequests');
             orsRequestService.requestSubject.onNext(true);
             request.promise.then((data) => {
-                console.log(data.features.length)
-                console.log(data)
                 if (data.features.length > 0) {
                     ctrl.addresses = orsUtilsService.addShortAddresses(data.features);
-                    console.log(ctrl.addresses)
                     if (ctrl.isDirections) {
                         orsRequestService.savedRequests.directions[ctrl.showGeocodingPanelIdx] = ctrl.addresses;
                     } else {
@@ -70,7 +67,6 @@ angular.module('orsApp.ors-addresses', ['orsApp.ors-exportRoute-controls', 'focu
                 orsRequestService.requestSubject.onNext(false);
             }, (response) => {
                 // this will be caught my the httpinterceptor
-                console.log(response);
                 orsRequestService.requestSubject.onNext(false);
             });
         };

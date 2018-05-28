@@ -81,7 +81,7 @@ div.leaflet-control-measure.leaflet-control {
     box-shadow: @leafletPopupShadow;
 }
 
-a.leaflet-control-layers-toggle, a.leaflet-avoid-area, div.leaflet-control-measure>a {
+a.leaflet-control-layers-toggle, a.leaflet-avoid-area, a.leaflet-fullwidth, div.leaflet-control-measure>a {
     position: relative;
     text-align: center;
     background-image: none !important;
@@ -116,11 +116,19 @@ a.leaflet-avoid-area:before {
     text-align: center;
 }
 
+a.leaflet-fullwidth:before {
+    content: "\f07e";
+    font-family: @fa;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+}
+
 .angular-control-leaflet {
     cursor: pointer;
 }
 
-.ors-marker-start, .ors-marker-via, .ors-marker-end, .ors-marker-location, .ors-marker-highlight, .ors-marker-hover {
+.ors-marker-start, .ors-marker-via, .ors-marker-end, .ors-marker-custom, .ors-marker-location, .ors-marker-highlight, .ors-marker-hover {
     text-align: center;
     line-height: 100%;
 }
@@ -135,7 +143,7 @@ a.leaflet-avoid-area:before {
     background: @orsColor;
 }
 
-.ors-marker-start i, .ors-marker-via i, .ors-marker-end i, .ors-marker-location i {
+.ors-marker-start i, .ors-marker-via i, .ors-marker-end i, .ors-marker-custom i, .ors-marker-location i {
     width: 100%;
     height: 100%;
     font-size: 40px;
@@ -174,6 +182,9 @@ a.leaflet-avoid-area:before {
     -webkit-text-fill-color: @markerEndColor;
 }
 
+.ors-marker-custom i {
+     -webkit-text-fill-color: @markerCustomColor;
+}
 .ors-marker-location i {
     -webkit-text-fill-color: @blueColor;
 }

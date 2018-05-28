@@ -9,8 +9,8 @@
  *|                                                     http://www.giscience.uni-hd.de
  *|------------------------------------------------------------------------------------*/
 /**
- * @author: Amandus Butzer, amandus@openrouteservice.org, Timothy Ellersiek, timothy@openrouteservice.de, Hendrik Leuschner, hendrik@openrouteservice.de
- * @version: 0.2.9
+ * @author: Amandus Butzer, amandus@openrouteservice.org, Timothy Ellersiek, timothy@openrouteservice.org
+ * @version: 0.3.0
  */
 (function() {
     fetchData()
@@ -43,7 +43,7 @@
                     'request': function(config) {
                         const apiKey = orsApikeyFactory.getApiKey() === undefined ? weathercheck : orsApikeyFactory.getApiKey();
                         let ak = '?api_key=' + apiKey;
-                        if (config.url == ENV.geocoding ||  config.url == ENV.routing || config.url == ENV.analyse || config.url == ENV.pois) {
+                        if (config.url === ENV.geocoding + '/search' || config.url === ENV.geocoding + '/reverse' || config.url === ENV.routing || config.url === ENV.analyse || config.url === ENV.pois) {
                             config.url = config.url + ak;
                         }
                         return config || $q.when(config);

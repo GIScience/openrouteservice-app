@@ -1,4 +1,4 @@
-<header>
+<header style="margin-top: 0">
     <img height="auto" src="img/logo@2x.png" width="200px"/>
 </header>
 <div class="ui divider">
@@ -25,49 +25,35 @@
     <h4 ng-bind-html="'Software & Libraries'">
     </h4>
     <p>
-        Map Background Layer:
+        MapSurfer Background Layer:
         <a class="link" href="https://korona.geog.uni-heidelberg.de/contact.html" target="_blank">
             OpenMapSurfer Tiles & WMS
         </a>
     </p>
-    <p class="textjustify">
-        Hillshade Layer:
-        <a class="link" href="http://srtm.csi.cgiar.org" target="_blank">
-            CIAT-CSI SRTM
-        </a>
-        . Users are prohibited from any commercial, non-free resale, or redistribution without explicit written permission from CIAT. Original data by Jarvis A., H.I. Reuter, A. Nelson, E. Guevara, 2008, Hole-filled seamless SRTM data V4, International Centre for Tropical Agriculture (CIAT)
+    <p class="textjustify" ng-bind-html="('INFO_III' | translate)">
     </p>
-    <p>
+<!--    <p>
         TMC traffic Messages:
         <a class="link" href="http://www.bast.de" target="_blank">
             BASt
         </a>
-    </p>
-     <p class="info">
-        We use different open source libraries to supporting the development of this web application. These can be found within the corresponding package files on 
-        <a class="link" href="https://github.com/GIScience/openrouteservice-app/" target="_blank">
-            github
-        </a>
-        .
-    </p>
-    <p>
-        Please report and feel free to commit your changes on
-        <a class="link" href="https://github.com/GIScience/openrouteservice-app/issues" target="_blank">
-            github
-        </a>
-        .
-    </p>
+    </p>-->
+     <p class="info" ng-bind-html="('INFO_II_I' | translate)"></p>
+     <p ng-bind-html="('INFO_II_II' | translate)"></p>
 </section>
 <div class="ui divider">
 </div>
 <section>
     <a href="http://www.geog.uni-heidelberg.de/gis/heigit_en.html" target="_blank">
-        <img height="auto" ng-src="img/brand.png" style="float: left; margin: 0 20px 20px 0;" width="150px"/>
+        <img height="auto" ng-src="img/brand.png" style="float: left; margin: 0 20px 40px 0;" width="150px"/>
     </a>
-    <p class="textjustify" ng-bind-html="('INFO_III' | translate)">
-    </p>
-    <p ng-bind-html="'<strong>support[at]openrouteservice.org</strong>'">
-    </p>
     <p class="textjustify" ng-bind-html="('INFO_IV' | translate)">
+    </p>
+    <span>
+        <a href="https://groups.google.com/forum/?utm_medium=email&utm_source=footer#!forum/openrouteservice" target="_blank">
+            <img height="auto" ng-src="img/googlegroups.png" width="120px"/>
+        </a>
+    </span>
+    <p class="textjustify" ng-bind-html="('INFO_V' | translate)">
     </p>
 </section>

@@ -1,5 +1,5 @@
 <div ng-attr-class="{{ 'ui message ors-map-message fade white' }}" ng-show="hereShow">
-	<div class="flright textcenter" data-ng-click="hereShow = !hereShow" ng-style="{'width': 13 + 'px', 'height': 15 + 'px'}">
+	<div class="flright textcenter" data-ng-click="hereShow = !hereShow; mapModel.geofeatures.layerHereMarkers.clearLayers();" ng-style="{'width': 13 + 'px', 'height': 15 + 'px'}">
 	    <i class="fa fa-close">
 	    </i>
 	</div>

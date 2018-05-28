@@ -2,6 +2,7 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
     templateUrl: 'components/ors-panel-routing/ors-export-route/ors-export-route.html',
     controller: ['orsExportFactory', 'orsRouteService', function(orsExportFactory, orsRouteService) {
         let ctrl = this;
+        ctrl.elevation = true;
         ctrl.filename = "ors-export-linestring";
         ctrl.gpxOptShow = true;
         ctrl.tcxOptShow = false;
@@ -73,7 +74,9 @@ angular.module('orsApp.ors-exportRoute-controls', []).component('orsExportRouteC
             ctrl.currentFileFormat = fileformat.value;
         };
         ctrl.exportRoute = () => {
-            let options = {};
+            let options = {
+                elevation : ctrl.elevation
+            };
             let currentRoute = null;
             if(ctrl.currentFileFormat == 'rawjson'){
                 currentRoute = orsRouteService.data.routes[orsRouteService.getCurrentRouteIdx()];

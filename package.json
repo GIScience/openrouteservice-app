@@ -1,13 +1,15 @@
 {
   "name": "maps.openrouteservice.org",
-  "version": "0.2.9",
+  "version": "0.3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/GIScience/openrouteservice-app.git"
   },
   "scripts": {
     "start": "npm run lite",
-    "lite": "lite-server"
+    "lite": "lite-server",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "license": "ISC",
   "dependencies": {
@@ -32,7 +34,8 @@
     "serve-static": "^1.13.2",
     "togpx": "^0.5.3",
     "tokml": "^0.4.0",
-    "zone.js": "0.6.12"
+    "zone.js": "0.6.12",
+    "snyk": "^1.80.1"
   },
   "devDependencies": {
     "bower": "^1.8.2",
@@ -66,5 +69,6 @@
     "load-grunt-tasks": "^3.5.2",
     "time-grunt": "^1.4.0",
     "traceur": "0.0.111"
-  }
+  },
+  "snyk": true
 }

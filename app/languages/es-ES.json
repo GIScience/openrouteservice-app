@@ -158,8 +158,11 @@
     "DONATE_TEXT": "Please donate your geographic data to",
     "INFO_I": "Openrouteservice as offers Routing services by using user-generated, collaboratively collected free geographic data from OpenStreetMap. Please donate your geographic data to openstreetmap.org!",
     "INFO_II": "We use cookies, system logs and other data storage technologies to (a) preserve information so you will not have to re-enter it during your visit or in subsequent visits; (b) maintain sessions for authenticated users; and (c) monitor aggregate metrics such as total number of visitors and pages viewed. If you disable cookies parts of the main website may not work as intended. We do not collect or store any personal information about you or personally identifiable information about you, except what you voluntarily provide through direct contact. We do not share analytic data with any service providers or partners.",
-    "INFO_III": "In case you have any further questions, concerns or feedback, please contact us via e-mail:",
-    "INFO_IV": "Openrouteservice cares about your inquiries, problems, questions etc. As there will always be a stream of inquiries, we take strong responsibility to respond to you in short time. After you have received our automatic response email to let you know we have received your inquiry, we will usually respond shortly. Please give us time to look into your reported issue properly before getting back.",
+    "INFO_II_I": "Usamos diferentes bibliotecas de código abierto para aplicaciones web. Estos se pueden encontrar en los archivos de paquetes correspondientes en <a class='link' href='https://github.com/GIScience/openrouteservice-app/' target='_blank'>github</a>.",
+    "INFO_II_II": "Por favor, siéntase libre de reportar errores en <a class='link' href='https://github.com/GIScience/openrouteservice-app/issues/new' target='_blank'>github</a> o arreglarlos usted mismo y hacer una solicitud de extracción.",
+    "INFO_III": "Hillshade Layer: <a class='link' href='http://srtm.csi.cgiar.org' target='_blank'>CIAT-CSI SRTM</a>. Users are prohibited from any commercial, non-free resale, or redistribution without explicit written permission from CIAT. Original data by Jarvis A., H.I. Reuter, A. Nelson, E. Guevara, 2008, Hole-filled seamless SRTM data V4, International Centre for Tropical Agriculture (CIAT)",
+    "INFO_IV": "In case you have any further questions, concerns or feedback, please contact us via:",
+    "INFO_V": "Openrouteservice cares about your inquiries, problems, questions etc. As there will always be a stream of inquiries, we take strong responsibility to respond to you in short time. After you have received our automatic response email to let you know we have received your inquiry, we will usually respond shortly. Please give us time to look into your reported issue properly before getting back.",
     "ADD_EXTRAS": "Add to map",
     "GENERATE_ISOCHRONES": "Generate isochrones",
     "DETOUR_FACTOR": "Detour factor",
@@ -186,5 +189,7 @@
     "TOTALPOP": "Popolazione",
     "COPYYX": "Copy Lat,Lng",
     "COPYXY": "Copy Lng,Lat",
-    "SHOWLANDMARKS": "Include landmarks in routing instructions"
+    "SHOWLANDMARKS": "Include landmarks in routing instructions",
+    "CUSTOM_MARKER": "Add custom marker to map",
+    "ELEVATION": "Elevation"
 }
