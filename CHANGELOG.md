@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2018-05-28
+
+### Added
+- foldable sidebar ([#183](https://github.com/GIScience/openrouteservice-app/issues/183))
+- temporary marker to map on "What's Here?" request ([#216](https://github.com/GIScience/openrouteservice-app/issues/216))
+- custom markers for isochrones view ([#221](https://github.com/GIScience/openrouteservice-app/issues/221))
+- option to export GeoJSON routes without elevation ([#218](https://github.com/GIScience/openrouteservice-app/issues/218))
+
+### Changed
+- geocoding endpoint from deprecated 'geocoding' to 'geocode/search' and 'geocode/reverse' ([#196](https://github.com/GIScience/openrouteservice-app/issues/196))
+- pois logic to support multiple categories for one entry ([#207](https://github.com/GIScience/openrouteservice-app/issues/207))
+
+### Fixed
+- left-click event triggered upon closing map popups ([#215](https://github.com/GIScience/openrouteservice-app/issues/215))
+- font-family of geocoding input fields
+- vulnerability issue with kml converter (tokml.js)
+- width of isochrone result table ([#214](https://github.com/GIScience/openrouteservice-app/issues/214))
+
 ## [0.2.9] - 2018-05-07
 
 ### Added
