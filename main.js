@@ -6,5 +6,4 @@ module.exports = {
     buffer: require("@turf/buffer"),
     intersect: require("@turf/intersect"),
     within: require("@turf/within"),
-    inside: require("@turf/inside")
 };
