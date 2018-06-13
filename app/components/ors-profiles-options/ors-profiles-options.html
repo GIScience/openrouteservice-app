@@ -126,8 +126,8 @@
         </span>
     </li>
     <li>
-        <button tooltips tooltip-template="{{('WHEELCHAIR' | translate)}}" tooltip-side="bottom"  class="ors-button flleft" ng-click="">
-            <i class="fa fa-lg fa-wheelchair-alt">
+        <button tooltips tooltip-template="{{('WHEELCHAIR' | translate)}}" tooltip-side="bottom"  class="ors-button flleft" ng-click="$ctrl.changeProfile($ctrl.profiles.Wheelchair.name)">
+            <i class="fa fa-lg fa-wheelchair-alt" ng-class="{active : $ctrl.activeSubgroup === $ctrl.profiles.Wheelchair.name}">
             </i>
         </button>
     </li>
