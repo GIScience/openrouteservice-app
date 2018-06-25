@@ -59,7 +59,7 @@ angular.module('orsApp.ors-instructions', ['orsApp.ors-exportRoute-controls']).c
                     arrow += 'fa-rotate-135';
                     break;
                 case 4:
-                    arrow += 'fa-rotate-270';
+                    arrow += 'fa-rotate-315';
                     break;
                 case 5:
                     arrow += 'fa-rotate-45';
