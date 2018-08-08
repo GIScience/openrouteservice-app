@@ -24,11 +24,17 @@ angular.module('orsApp.ors-header', [])
                 ctrl.currentOptions = settings;
                 $translate.use(ctrl.currentOptions.language);
             });
-            ctrl.changeOptions = (langChange) => {
-                if (langChange) $translate.use(ctrl.currentOptions.language);
+            ctrl.changeOptions = (setting) => {
+                if (setting === 'language') $translate.use(ctrl.currentOptions.language);
+                console.log(ctrl.currentOptions.showHeightgraph)
                 orsSettingsFactory.setUserOptions(ctrl.currentOptions);
                 orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions);
                 orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions());
+                let payload = {
+                    options: ctrl.currentOptions,
+                    setting: setting
+                }
+                $rootScope.$broadcast('changeOptions', payload)
                 // TODO: Reload site if site language is changed, we need this due to translations
                 // update slider units!
                 $timeout(() => {

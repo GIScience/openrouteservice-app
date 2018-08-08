@@ -7,7 +7,7 @@
     </h2>
     <div class="field ors-inline">
         <div class="ui radio checkbox">
-            <input name="orsUnits" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.units" ng-value="$ctrl.optionList.units.km" type="radio">
+            <input name="orsUnits" ng-change="$ctrl.changeOptions('units')" ng-model="$ctrl.currentOptions.units" ng-value="$ctrl.optionList.units.km" type="radio">
                 <label ng-bind-html="('KILOMETERS' | translate)">
                 </label>
             </input>
@@ -15,7 +15,7 @@
     </div>
     <div class="field ors-inline">
         <div class="ui radio checkbox">
-            <input name="orsUnits" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.units" ng-value="$ctrl.optionList.units.mi" type="radio">
+            <input name="orsUnits" ng-change="$ctrl.changeOptions('units')" ng-model="$ctrl.currentOptions.units" ng-value="$ctrl.optionList.units.mi" type="radio">
                 <label ng-bind-html="('MILES' | translate)">
                 </label>
             </input>
@@ -29,7 +29,7 @@
     </h2>
     <label ng-bind-html="('CHOOSELANG' | translate)">
     </label>
-    <select data-ng-model="$ctrl.currentOptions.language" data-ng-options="(language) for language in $ctrl.optionList.languages.all" name="language" ng-change="$ctrl.changeOptions(true)">
+    <select data-ng-model="$ctrl.currentOptions.language" data-ng-options="(language) for language in $ctrl.optionList.languages.all" name="language" ng-change="$ctrl.changeOptions('language')">
     </select>
 </section>
 <div class="ui divider">
@@ -39,7 +39,7 @@
     </h2>
     <label ng-bind-html="('CHOOSELANG' | translate)">
     </label>
-    <select data-ng-model="$ctrl.currentOptions.routinglang" data-ng-options="(language) for language in $ctrl.optionList.routinglanguages.all" name="routinglanguage" ng-change="$ctrl.changeOptions()">
+    <select data-ng-model="$ctrl.currentOptions.routinglang" data-ng-options="(language) for language in $ctrl.optionList.routinglanguages.all" name="routinglanguage" ng-change="$ctrl.changeOptions('routinglang)">
     </select>
 </section>
 <section>
@@ -49,7 +49,7 @@
         <div class="grouped fields">
             <div class="field">
                 <div class="ui checkbox">
-                    <input data-ng-model="$ctrl.currentOptions.randomIsochronesColors" id="isochronescolors" ng-change="$ctrl.changeOptions()" type="checkbox">
+                    <input data-ng-model="$ctrl.currentOptions.randomIsoColor" id="isochronescolors" ng-change="$ctrl.changeOptions('randomIsoColor')" type="checkbox">
                         <label for="isochronescolors" ng-bind-html="('LOCALE_ISOCHRONE_RANDOMIZE_COLORS' | translate)">
                         </label>
                     </input>
@@ -57,9 +57,17 @@
             </div>
             <div class="field">
                 <div class="ui checkbox">
-                    <input data-ng-model="$ctrl.currentOptions.showDistanceMarkers" id="distancemarkers" ng-change="$ctrl.changeOptions()" type="checkbox">
+                    <input data-ng-model="$ctrl.currentOptions.distanceMarkers" id="distancemarkers" ng-change="$ctrl.changeOptions('distanceMarkers')" type="checkbox">
                         <label for="distancemarkers" ng-bind-html="('LOCALE_DISTANCE_MARKERS' | translate)">
                         </label>
+                    </input>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checkbox">
+                    <input data-ng-model="$ctrl.currentOptions.showHeightgraph" id="heightgraph" ng-change="$ctrl.changeOptions('heightgraph')" type="checkbox">
+                    <label for="heightgraph" ng-bind-html="('LOCALE_HEIGHTGRAPH' | translate)">
+                    </label>
                     </input>
                 </div>
             </div>
