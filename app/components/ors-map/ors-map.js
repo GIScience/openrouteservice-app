@@ -8,7 +8,7 @@ angular.module('orsApp')
             },
             link: (scope, element, attrs) => {
             },
-            controller: ['$scope', '$filter', '$compile', '$timeout', '$window', 'orsSettingsFactory', 'orsLocationsService', 'orsObjectsFactory', 'orsRequestService', 'orsMessagingService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', 'lists', 'globals', 'mappings', 'orsNamespaces', ($scope, $filter, $compile, $timeout, $window, orsSettingsFactory, orsLocationsService, orsObjectsFactory, orsRequestService, orsMessagingService, orsUtilsService, orsMapFactory, orsCookiesFactory, lists, globals, mappings, orsNamespaces) => {
+            controller: ['$rootScope', '$scope', '$filter', '$compile', '$timeout', '$window', 'orsSettingsFactory', 'orsLocationsService', 'orsObjectsFactory', 'orsRequestService', 'orsMessagingService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', 'lists', 'globals', 'mappings', 'orsNamespaces', 'orsRouteService', ($rootScope, $scope, $filter, $compile, $timeout, $window, orsSettingsFactory, orsLocationsService, orsObjectsFactory, orsRequestService, orsMessagingService, orsUtilsService, orsMapFactory, orsCookiesFactory, lists, globals, mappings, orsNamespaces, orsRouteService) => {
                 $scope.translateFilter = $filter('translate');
                 const mapsurfer = L.tileLayer(orsNamespaces.layerMapSurfer.url, {
                     attribution: orsNamespaces.layerMapSurfer.attribution,
@@ -106,6 +106,61 @@ angular.module('orsApp')
                     position: "bottomright",
                     mappings: mappings
                 });
+
+                /**
+                 * Listens to changeOptions event from ors-header.js
+                 * @param payload.options {Object} - holds the current Settings Object
+                 * @param payload.setting {String} - holds the changed Setting
+                 */
+                $scope.$on('changeOptions', (func, payload) => {
+                    let options = payload.options
+                    let setting = payload.setting
+                    if (setting === 'heightgraph') {
+                        if (options.showHeightgraph) {
+                            $scope.showHeightgraph = true
+                            if (Object.keys($scope.mapModel.geofeatures.layerRouteLines['_layers']).length !== undefined && orsSettingsFactory.ngRouteSubject.getValue() === 'directions') {
+                                $scope.hg.options.expand = globals.showHeightgraph;
+                                $scope.mapModel.map.addControl($scope.hg);
+                                const toggle = angular.element(document.querySelector('.heightgraph-toggle-icon'));
+                                const close = angular.element(document.querySelector('.heightgraph-close-icon'));
+                                toggle.bind('click', () => {
+                                    globals.showHeightgraph = true;
+                                });
+                                close.bind('click', () => {
+                                    globals.showHeightgraph = false;
+                                });
+                                let idx = orsRouteService.getCurrentRouteIdx() === undefined ? 0 : orsRouteService.getCurrentRouteIdx();
+                                if (angular.isDefined(orsRouteService.data) && angular.isDefined(orsRouteService.data.routes)) {
+                                    if (orsRouteService.data.routes.length > 0) {
+                                        let data = orsRouteService.data;
+                                        let route = data.routes[idx];
+                                        if (route.elevation) {
+                                            const hgGeojson = orsRouteService.processHeightgraphData(route);
+                                            orsRouteService.addHeightgraph(hgGeojson);
+                                        }
+                                    }
+                                } else {
+                                    $scope.hg.remove();
+                                }
+                            }
+                        } else {
+                            $scope.showHeightgraph = false;
+                            $scope.hg.remove();
+                        }
+                    }
+                    if (setting === 'distanceMarkers') {
+                        // get Leaflet route object
+                        let lines = $scope.mapModel.geofeatures.layerRouteLines['_layers']
+                        let route = lines[Object.keys(lines)[0]]
+
+                        if (options.distanceMarkers === true) {
+                            route.addDistanceMarkers()
+                        } else {
+                            route.removeDistanceMarkers()
+                            }
+                    }
+                });
+
                 /* FULLWIDTH CONTROLLER */
                 L.FullwidthControl = L.Control.extend({
                     options: {
@@ -193,6 +248,7 @@ angular.module('orsApp')
                 // mapOptionsInitSubject is a replay subject and only subscribes once
                 let mapInitSubject = orsSettingsFactory.mapOptionsInitSubject.subscribe(settings => {
                     console.error('ONCE', JSON.stringify(settings));
+                    $scope.showHeightgraph = angular.isDefined(settings.showHeightgraph) ? settings.showHeightgraph : !$scope.smallScreen
                     if (settings.lat && settings.lng && settings.zoom) {
                         $scope.orsMap.setView({
                             lat: settings.lat,
@@ -342,7 +398,7 @@ angular.module('orsApp')
                         };
                     };
                     $scope.smallScreen = $scope.getWindowDimensions()
-                        .w < 720 ? true : false;
+                        .w < 720;
                 });
                 /**
                  * Listens to left mouse click on map
@@ -731,8 +787,8 @@ angular.module('orsApp')
                  */
                 $scope.addFeatures = (actionPackage) => {
                     const isDistanceMarkers = orsSettingsFactory.getUserOptions()
-                        .showDistanceMarkers === true ? true : false;
-                    const polyLine = L.polyline(actionPackage.geometry, {
+                        .distanceMarkers === true;
+                    let polyLine = L.polyline(actionPackage.geometry, {
                         index: !(actionPackage.featureId === undefined) ? actionPackage.featureId : null,
                         interactive: false,
                         distanceMarkers: {
@@ -742,8 +798,12 @@ angular.module('orsApp')
                             cssClass: 'ors-marker-dist',
                             iconSize: [18, 18]
                         }
+                    });
+                    polyLine.on('addDistanceMarkers', () => {
+                        polyLine.addDistanceMarkers
                     })
-                        .addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
+                    polyLine.on('removeDistanceMarkers', polyLine.removeDistanceMarkers)
+                    polyLine.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
                     polyLine.setStyle(actionPackage.style);
                 };
                 /**
@@ -1399,7 +1459,7 @@ angular.module('orsApp')
                 orsMapFactory.subscribeToMapFunctions(function onNext(params) {
                     switch (params._actionCode) {
                         case -1:
-                            if (!$scope.smallScreen) {
+                            if ($scope.showHeightgraph) {
                                 $scope.hg.options.expand = globals.showHeightgraph;
                                 $scope.mapModel.map.addControl($scope.hg);
                                 const toggle = angular.element(document.querySelector('.heightgraph-toggle-icon'));
