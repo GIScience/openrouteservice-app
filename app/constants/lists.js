@@ -519,6 +519,12 @@ angular.module('orsApp')
                 default: 'km',
                 km: 'km',
                 mi: 'mi'
+            },
+            randomIsoColor: {
+                default: false
+            },
+            distanceMarkers: {
+                default: false
             }
         },
         permalinkFilters: {
