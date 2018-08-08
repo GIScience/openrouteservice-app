@@ -193,5 +193,6 @@
     "CUSTOM_MARKER": "Add custom marker to map",
     "ELEVATION": "Elevation",
     "INFO_SUPPORT": "Please Support openrouteservice.org",
-    "INFO_SUPPORT_TEXT": "Openrouteservice offers free services and relies on donations for a majority of its funding. If you would like to support the further development of features and server infrastructure donations are very welcome."
+    "INFO_SUPPORT_TEXT": "Openrouteservice offers free services and relies on donations for a majority of its funding. If you would like to support the further development of features and server infrastructure donations are very welcome.",
+    "LOCALE_HEIGHTGRAPH": "Elevation profile"
 }

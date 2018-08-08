@@ -194,5 +194,6 @@
     "CUSTOM_MARKER": "Als Marker hinzufügen",
     "ELEVATION": "Höhe",
     "INFO_SUPPORT": "Unterstützen Sie openrouteservice.org",
-    "INFO_SUPPORT_TEXT": "Openrouteservice bietet kostenlose Dienstleistungen an und ist für einen Großteil seiner Finanzierung auf Spenden angewiesen. Wenn Sie die Weiterentwicklung von Features und Serverinfrastruktur unterstützen möchten, sind Spenden sehr willkommen."
+    "INFO_SUPPORT_TEXT": "Openrouteservice bietet kostenlose Dienstleistungen an und ist für einen Großteil seiner Finanzierung auf Spenden angewiesen. Wenn Sie die Weiterentwicklung von Features und Serverinfrastruktur unterstützen möchten, sind Spenden sehr willkommen.",
+    "LOCALE_HEIGHTGRAPH": "Höhenprofil"
 }
