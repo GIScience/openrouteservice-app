@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - Support for additional Turn instructions keep left/keep right (provided by graphhopper 0.10)
+- Custom endpoint settings (gear icon in bottom left corner of the settings) ([#243](https://github.com/GIScience/openrouteservice-app/issues/243))
 
 ## [0.3.0] - 2018-05-28
 
