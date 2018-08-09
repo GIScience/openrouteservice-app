@@ -1,11 +1,15 @@
 <div ng-attr-class="{{ 'ui message ors-map-message fade white' }}" ng-show="hereShow">
-	<div class="flright textcenter" data-ng-click="hereShow = !hereShow; mapModel.geofeatures.layerHereMarkers.clearLayers();" ng-style="{'width': 13 + 'px', 'height': 15 + 'px'}">
-	    <i class="fa fa-close">
-	    </i>
-	</div>
-    <div class="header" ng-bind-html="address.info.processed.primary">
+    <div class="flright textcenter"
+         data-ng-click="hereShow = !hereShow; mapModel.geofeatures.layerHereMarkers.clearLayers();"
+         ng-style="{'width': 13 + 'px', 'height': 15 + 'px'}">
+        <i class="fa fa-close">
+        </i>
     </div>
-    <div ng-bind-html="address.info.processed.secondary">
+    <div tooltips tooltip-template="source: {{address.info.properties.source}}">
+        <div class="header" ng-bind-html="address.info.processed.primary">
+        </div>
+        <div ng-bind-html="address.info.processed.secondary">
+        </div>
     </div>
     <div class="list">
         <span ng-bind-html="address.position">

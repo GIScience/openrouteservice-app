@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Support for additional Turn instructions keep left/keep right (provided by graphhopper 0.10)
 - Custom endpoint settings (gear icon in bottom left corner of the settings) ([#243](https://github.com/GIScience/openrouteservice-app/issues/243))
 - Personalized isochrone-color, distance marker and elevation profile settings ([#234](https://github.com/GIScience/openrouteservice-app/issues/234))
+- Tooltip for geocode results that show the datasource ([#245](https://github.com/GIScience/openrouteservice-app/issues/245)) 
 
 ### Changed
 - Heightgraph (aka. elevation profile) visibility on mobile devices (see 5194fac1f1f5e58667b7fac64e1a6964330b1968)
