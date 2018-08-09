@@ -28,7 +28,7 @@ angular.module('orsApp.route-service', [])
          * @param {String} requestData: XML for request payload
          */
         orsRouteService.fetchRoute = (requestData) => {
-            const url = ENV.routing
+            const url = ENV.directions
             const canceller = $q.defer()
             const cancel = (reason) => {
                 canceller.resolve(reason)
