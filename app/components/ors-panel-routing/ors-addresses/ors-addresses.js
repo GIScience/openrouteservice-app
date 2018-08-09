@@ -7,7 +7,7 @@ angular.module('orsApp.ors-addresses', ['orsApp.ors-exportRoute-controls', 'focu
     controller: ['orsSettingsFactory', 'orsMapFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsMessagingService', 'lists', function(orsSettingsFactory, orsMapFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsMessagingService, lists) {
         let ctrl = this;
         ctrl.$onInit = () => {
-            ctrl.isDirections = ctrl.showGeocodingPanelIdx === undefined ? false : true;
+            ctrl.isDirections = ctrl.showGeocodingPanelIdx !== undefined;
             if (ctrl.isDirections) {
                 ctrl.waypoint = orsSettingsFactory.getWaypoints()[ctrl.showGeocodingPanelIdx];
                 ctrl.addresses = orsRequestService.savedRequests.directions[ctrl.showGeocodingPanelIdx];
@@ -38,16 +38,16 @@ angular.module('orsApp.ors-addresses', ['orsApp.ors-exportRoute-controls', 'focu
                             }
                         }];
                     } else {
-                        ctrl.contructPayLoad();
+                        ctrl.constructPayLoad();
                     }
                 } else {
-                    ctrl.contructPayLoad();
+                    ctrl.constructPayLoad();
                 }
             } else {
                 ctrl.addresses = [];
             }
         };
-        ctrl.contructPayLoad = () => {
+        ctrl.constructPayLoad = () => {
             ctrl.addresses = [];
             const payload = orsUtilsService.geocodingPayload(ctrl.waypoint._address);
             const request = orsRequestService.geocode(payload);
