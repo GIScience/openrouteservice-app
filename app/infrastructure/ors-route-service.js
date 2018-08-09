@@ -28,18 +28,18 @@ angular.module('orsApp.route-service', [])
          * @param {String} requestData: XML for request payload
          */
         orsRouteService.fetchRoute = (requestData) => {
-            var url = ENV.routing;
-            var canceller = $q.defer();
-            var cancel = (reason) => {
-                canceller.resolve(reason);
-            };
-            var promise = $http.get(url, {
-                    params: requestData,
-                    timeout: canceller.promise
-                })
+            const url = ENV.directions
+            const canceller = $q.defer()
+            const cancel = (reason) => {
+                canceller.resolve(reason)
+            }
+            const promise = $http.get(url, {
+                params: requestData,
+                timeout: canceller.promise
+            })
                 .then((response) => {
-                    return response.data;
-                });
+                    return response.data
+                })
             return {
                 promise: promise,
                 cancel: cancel
@@ -113,8 +113,7 @@ angular.module('orsApp.route-service', [])
                 // reverse order, needed as leaflet ISO 6709
                 for (let i = 0; i < geometry.length; i++) {
                     let lng = geometry[i][0];
-                    let lat = geometry[i][1];
-                    geometry[i][0] = lat;
+                    geometry[i][0] = geometry[i][1];
                     geometry[i][1] = lng;
                 }
                 route.geometry = geometry;
@@ -127,19 +126,19 @@ angular.module('orsApp.route-service', [])
                     lmRequest.promise.then(function(response) {
                         // save to route object ...
                         // attach the landmarks to the corresponding segment
-                        var lmCnt = 0;
-                        for (var i = 0; i < route.segments.length; i++) {
-                            var segment = route.segments[i];
-                            for (var j = 1; j < segment.steps.length; j++) { // Don't attach to the start of the segment
-                                var step = segment.steps[j];
+                        let lmCnt = 0;
+                        for (let i = 0; i < route.segments.length; i++) {
+                            const segment = route.segments[i]
+                            for (let j = 1; j < segment.steps.length; j++) { // Don't attach to the start of the segment
+                                const step = segment.steps[j]
                                 step['landmarks'] = response[lmCnt];
                                 // update the instruction
                                 if (step.landmarks && step.landmarks.features && step.landmarks.features.length > 0) {
                                     // show the feature in the instruction
-                                    var lm = step.landmarks.features[0];
-                                    var instr = step.instruction;
+                                    const lm = step.landmarks.features[0]
+                                    let instr = step.instruction
                                     if (lm.properties.suitability > 0) {
-                                        var lmStr = (lm.properties.position === 'before' ? 'after ' : 'before ') + 'the ' + (lm.properties.name && lm.properties.name !== 'Unknown' ? '&quot;' + lm.properties.name + '&quot; ' : '') + lm.properties.type.replace(/_/, ' ');
+                                        const lmStr = (lm.properties.position === 'before' ? 'after ' : 'before ') + 'the ' + (lm.properties.name && lm.properties.name !== 'Unknown' ? '&quot;' + lm.properties.name + '&quot; ' : '') + lm.properties.type.replace(/_/, ' ')
                                         instr = instr + ' ' + lmStr;
                                         orsLandmarkService.addLandmark(lm);
                                     }
@@ -147,7 +146,7 @@ angular.module('orsApp.route-service', [])
                                 } else {
                                     console.log("No landmarks found :(");
                                 }
-                                lmCnt = lmCnt + 1;
+                                lmCnt++;
                             }
                         }
                     }, function(response) {

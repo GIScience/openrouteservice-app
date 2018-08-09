@@ -227,9 +227,10 @@ module.exports = function(grunt) {
                     ENV: {
                         name: 'local',
                         // change name_of_war_archive to the name of the ors backend war version you are using (e.g. openrouteservice-4.4.0)
-                        geocoding: 'http://localhost:8082/name_of_war_archive/geocode',
-                        routing: 'http://localhost:8082/name_of_war_archive/routes',
-                        analyse: 'http://localhost:8082/name_of_war_archive/isochrones',
+                        geocode: 'http://localhost:8082/name_of_war_archive/geocode',
+                        directions: 'http://localhost:8082/name_of_war_archive/routes',
+                        isochrones: 'http://localhost:8082/name_of_war_archive/isochrones',
+                        matrix: 'http://localhost:8082/name_of_war_archive/matrix',
                         pois: 'http://localhost:8082/name_of_war_archive/locations',
                         shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
                     }
@@ -242,9 +243,10 @@ module.exports = function(grunt) {
                 constants: {
                     ENV: {
                         name: 'production',
-                        geocoding: 'https://api.openrouteservice.org/geocoding',
-                        routing: 'https://api.openrouteservice.org/directions',
-                        analyse: 'https://api.openrouteservice.org/isochrones',
+                        geocode: 'https://api.openrouteservice.org/geocoding',
+                        directions: 'https://api.openrouteservice.org/directions',
+                        isochrones: 'https://api.openrouteservice.org/isochrones',
+                        matrix: 'https://api.openrouteservice.org/matrix',
                         pois: 'https://api.openrouteservice.org/places',
                         shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
                     }

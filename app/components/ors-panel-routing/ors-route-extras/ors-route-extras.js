@@ -26,7 +26,7 @@ angular.module('orsApp.ors-route-extras', ['orsApp.ors-bars-chart', 'orsApp.ors-
                         } else {
                             let text;
                             // checks for Profile : Pedestrian and Cycling have different values https://github.com/GIScience/openrouteservice-docs/tree/4.2#trail-difficulty
-                            if (key == 'traildifficulty' && orsRouteService.data.info.query.profile.substring(0, 4) == 'foot') {
+                            if (key === 'traildifficulty' && orsRouteService.data.info.query.profile.substring(0, 4) === 'foot') {
                                 text = ctrl.mappings[key][typeNumber].text_hiking;
                             } else {
                                 text = ctrl.mappings[key][typeNumber].text;
