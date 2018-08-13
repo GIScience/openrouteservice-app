@@ -62,7 +62,7 @@ angular.module('orsApp.request-service', [])
          * @returns {{promise: *, cancel: cancel}}
          */
         orsRequestService.geocode = (requestData, reverse = false) => {
-            var url = ENV.geocoding;
+            var url = ENV.geocode;
             reverse ? url += '/reverse' : url += '/search';
             var canceller = $q.defer();
             var cancel = function(reason) {

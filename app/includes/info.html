@@ -10,12 +10,23 @@
         </div>
         <span class="textjustify" ng-bind-html="('DONATE_TEXT' | translate)">
         </span>
-        <a class="link" href="http://www.OpenStreetMap.org">
+        <a class="link" href="http://www.OpenStreetMap.org" target="_blank">
             OpenStreetMap.org
         </a>
     </div>
     <p class="textjustify" ng-bind-html="('INFO_I' | translate)">
     </p>
+    </div>
+    <div class="ui positive message textleft">
+        <div class="header">
+            {{ 'INFO_SUPPORT' | translate }}
+        </div>
+        <div class="textjustify">
+            <a class="link" href="https://openrouteservice.org/donations/" target="_blank">{{ 'INFO_SUPPORT_TEXT' | translate }}</a>
+        </div>
+    </div>
+    <div class="ui divider">
+    </div>
     <p class="textjustify" ng-bind-html="('INFO_II' | translate)">
     </p>
 </section>
@@ -32,12 +43,6 @@
     </p>
     <p class="textjustify" ng-bind-html="('INFO_III' | translate)">
     </p>
-<!--    <p>
-        TMC traffic Messages:
-        <a class="link" href="http://www.bast.de" target="_blank">
-            BASt
-        </a>
-    </p>-->
      <p class="info" ng-bind-html="('INFO_II_I' | translate)"></p>
      <p ng-bind-html="('INFO_II_II' | translate)"></p>
 </section>
@@ -56,4 +61,9 @@
     </span>
     <p class="textjustify" ng-bind-html="('INFO_V' | translate)">
     </p>
+    <div class="ui divider">
+    </div>
+    <h4>
+        <a class="link" href="https://www.uni-heidelberg.de/privacypolicy_web.html" target="_blank">Privacy Policy</a>
+    </h4>
 </section>

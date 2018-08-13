@@ -1,140 +1,216 @@
-<header>
-    <h1 ng-bind-html="('SETTINGS' | translate)">
-    </h1>
-</header>
-<section>
-    <h2 ng-bind-html="('UNITS' | translate)">
-    </h2>
-    <div class="field ors-inline">
-        <div class="ui radio checkbox">
-            <input name="orsUnits" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.units" ng-value="$ctrl.optionList.units.km" type="radio">
-                <label ng-bind-html="('KILOMETERS' | translate)">
-                </label>
-            </input>
-        </div>
+<div class="ors-settings">
+    <header>
+        <h1 ng-bind-html="('SETTINGS' | translate)">
+        </h1>
+    </header>
+    <div class="locale-settings">
+        <section class="">
+            <h2 ng-bind-html="('UNITS' | translate)">
+            </h2>
+            <div class="field ors-inline">
+                <div class="ui radio checkbox">
+                    <input name="orsUnits" ng-change="$ctrl.changeOptions('units')"
+                           ng-model="$ctrl.currentOptions.units"
+                           ng-value="$ctrl.optionList.units.km" type="radio">
+                    <label ng-bind-html="('KILOMETERS' | translate)">
+                    </label>
+                </div>
+            </div>
+            <div class="field ors-inline">
+                <div class="ui radio checkbox">
+                    <input
+                            name="orsUnits" ng-change="$ctrl.changeOptions('units')"
+                            ng-model="$ctrl.currentOptions.units"
+                            ng-value="$ctrl.optionList.units.mi" type="radio">
+                    <label ng-bind-html="('MILES' | translate)">
+                    </label>
+                </div>
+            </div>
+        </section>
     </div>
-    <div class="field ors-inline">
-        <div class="ui radio checkbox">
-            <input name="orsUnits" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.units" ng-value="$ctrl.optionList.units.mi" type="radio">
-                <label ng-bind-html="('MILES' | translate)">
-                </label>
-            </input>
-        </div>
+    <div class="ui divider">
     </div>
-</section>
-<div class="ui divider">
-</div>
-<section>
-    <h2 ng-bind-html="('LANGUAGE' | translate)">
-    </h2>
-    <label ng-bind-html="('CHOOSELANG' | translate)">
-    </label>
-    <select data-ng-model="$ctrl.currentOptions.language" data-ng-options="(language) for language in $ctrl.optionList.languages.all" name="language" ng-change="$ctrl.changeOptions(true)">
-    </select>
-</section>
-<div class="ui divider">
-</div>
-<section>
-    <h2 ng-bind-html="('LANGROUTING' | translate)">
-    </h2>
-    <label ng-bind-html="('CHOOSELANG' | translate)">
-    </label>
-    <select data-ng-model="$ctrl.currentOptions.routinglang" data-ng-options="(language) for language in $ctrl.optionList.routinglanguages.all" name="routinglanguage" ng-change="$ctrl.changeOptions()">
-    </select>
-</section>
-<section>
-    <h2 ng-bind-html="('LOCALE_MAP_SETTINGS' | translate)">
-    </h2>
-    <div class="ui form align-left">
-        <div class="grouped fields">
-            <div class="field">
-                <div class="ui checkbox">
-                    <input data-ng-model="$ctrl.currentOptions.randomIsochronesColors" id="isochronescolors" ng-change="$ctrl.changeOptions()" type="checkbox">
+    <section>
+        <h2 ng-bind-html="('LANGUAGE' | translate)">
+        </h2>
+        <label for="language"
+               ng-bind-html="('CHOOSELANG' | translate)">
+        </label>
+        <select id="language"
+                data-ng-model="$ctrl.currentOptions.language"
+                data-ng-options="(language) for language in $ctrl.optionList.languages.all" name="language"
+                ng-change="$ctrl.changeOptions('language')">
+        </select>
+    </section>
+    <div class="ui divider">
+    </div>
+    <section>
+        <h2 ng-bind-html="('LANGROUTING' | translate)">
+        </h2>
+        <label ng-bind-html="('CHOOSELANG' | translate)">
+        </label>
+        <select data-ng-model="$ctrl.currentOptions.routinglang"
+                data-ng-options="(language) for language in $ctrl.optionList.routinglanguages.all"
+                name="routinglanguage" ng-change="$ctrl.changeOptions('routinglang)">
+        </select>
+    </section>
+    <section>
+        <h2 ng-bind-html="('LOCALE_MAP_SETTINGS' | translate)">
+        </h2>
+        <div class="ui form align-left">
+            <div class="grouped fields">
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input data-ng-model="$ctrl.currentOptions.randomIsoColor" id="isochronescolors"
+                               ng-change="$ctrl.changeOptions('randomIsoColor')" type="checkbox">
                         <label for="isochronescolors" ng-bind-html="('LOCALE_ISOCHRONE_RANDOMIZE_COLORS' | translate)">
                         </label>
-                    </input>
+                    </div>
                 </div>
-            </div>
-            <div class="field">
-                <div class="ui checkbox">
-                    <input data-ng-model="$ctrl.currentOptions.showDistanceMarkers" id="distancemarkers" ng-change="$ctrl.changeOptions()" type="checkbox">
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input data-ng-model="$ctrl.currentOptions.distanceMarkers" id="distancemarkers"
+                               ng-change="$ctrl.changeOptions('distanceMarkers')" type="checkbox">
                         <label for="distancemarkers" ng-bind-html="('LOCALE_DISTANCE_MARKERS' | translate)">
                         </label>
-                    </input>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input data-ng-model="$ctrl.currentOptions.showHeightgraph" id="heightgraph"
+                               ng-change="$ctrl.changeOptions('heightgraph')" type="checkbox">
+                        <label for="heightgraph" ng-bind-html="('LOCALE_HEIGHTGRAPH' | translate)">
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<section>
-    <h2 ng-bind-html="('EXTRA_INFORMATION' | translate)">
-    </h2>
-    <div class="ui form align-left">
-        <div class="grouped fields">
-             <div class="field" ng-if="$ctrl.lists_extra_info.steepness | contains:$ctrl.getActiveProfile().type">
-                <div class="ui checkbox">
-                    <input data-ng-model="$ctrl.extra_infos.steepness" id="steepness_exin" type="checkbox" ng-change="$ctrl.changeExtras()">
+    </section>
+    <section>
+        <h2 ng-bind-html="('EXTRA_INFORMATION' | translate)">
+        </h2>
+        <div class="ui form align-left">
+            <div class="grouped fields">
+                <div class="field" ng-if="$ctrl.lists_extra_info.steepness | contains:$ctrl.getActiveProfile().type">
+                    <div class="ui checkbox">
+                        <input data-ng-model="$ctrl.extra_infos.steepness" id="steepness_exin" type="checkbox"
+                               ng-change="$ctrl.changeExtras()">
                         <label for="steepness_exin" ng-bind-html="('steepness' | translate)">
                         </label>
-                    </input>
+                    </div>
                 </div>
-            </div>
-            <div class="field" ng-if="$ctrl.lists_extra_info.surface | contains:$ctrl.getActiveProfile().type">
-                <div class="ui checkbox">
-                    <input data-ng-model="$ctrl.extra_infos.surface" id="surface_exin" ng-change="$ctrl.changeExtras()" type="checkbox">
+                <div class="field" ng-if="$ctrl.lists_extra_info.surface | contains:$ctrl.getActiveProfile().type">
+                    <div class="ui checkbox">
+                        <input data-ng-model="$ctrl.extra_infos.surface" id="surface_exin"
+                               ng-change="$ctrl.changeExtras()" type="checkbox">
                         <label for="surface_exin" ng-bind-html="('surface' | translate)">
                         </label>
-                    </input>
+                    </div>
                 </div>
-            </div>
-            <div class="field" ng-if="$ctrl.lists_extra_info.waytype | contains:$ctrl.getActiveProfile().type">
-                <div class="ui checkbox">
-                    <input data-ng-model="$ctrl.extra_infos.waytype" id="waytype_exin" ng-change="$ctrl.changeExtras()" type="checkbox">
+                <div class="field" ng-if="$ctrl.lists_extra_info.waytype | contains:$ctrl.getActiveProfile().type">
+                    <div class="ui checkbox">
+                        <input data-ng-model="$ctrl.extra_infos.waytype" id="waytype_exin"
+                               ng-change="$ctrl.changeExtras()" type="checkbox">
                         <label for="waytype_exin" ng-bind-html="('waytypes' | translate)">
                         </label>
-                    </input>
+                    </div>
                 </div>
-            </div>
-            <div class="field" ng-if="$ctrl.lists_extra_info.suitability | contains:$ctrl.getActiveProfile().type">
-                <div class="ui checkbox">
-                    <input data-ng-model="$ctrl.extra_infos.suitability" id="suitability_exin" ng-change="$ctrl.changeExtras()" type="checkbox">
+                <div class="field" ng-if="$ctrl.lists_extra_info.suitability | contains:$ctrl.getActiveProfile().type">
+                    <div class="ui checkbox">
+                        <input data-ng-model="$ctrl.extra_infos.suitability" id="suitability_exin"
+                               ng-change="$ctrl.changeExtras()" type="checkbox">
                         <label for="suitability_exin" ng-bind-html="('suitability' | translate)">
                         </label>
-                    </input>
+                    </div>
                 </div>
-            </div>
-            <div class="field" ng-if="$ctrl.lists_extra_info.tollways | contains:$ctrl.getActiveProfile().type">
-                <div class="ui checkbox">
-                    <input data-ng-model="$ctrl.extra_infos.tollways" id="tollways_exin" ng-change="$ctrl.changeExtras()" type="checkbox">
+                <div class="field" ng-if="$ctrl.lists_extra_info.tollways | contains:$ctrl.getActiveProfile().type">
+                    <div class="ui checkbox">
+                        <input data-ng-model="$ctrl.extra_infos.tollways" id="tollways_exin"
+                               ng-change="$ctrl.changeExtras()" type="checkbox">
                         <label for="tollways_exin" ng-bind-html="('tollways' | translate)">
                         </label>
-                    </input>
+                    </div>
                 </div>
-            </div>
-            <div class="field" ng-if="$ctrl.lists_extra_info.green | contains:$ctrl.getActiveProfile().type">
-                <div class="ui checkbox">
-                    <input data-ng-model="$ctrl.extra_infos.green" id="green_exin" ng-change="$ctrl.changeExtras()" type="checkbox">
+                <div class="field" ng-if="$ctrl.lists_extra_info.green | contains:$ctrl.getActiveProfile().type">
+                    <div class="ui checkbox">
+                        <input data-ng-model="$ctrl.extra_infos.green" id="green_exin" ng-change="$ctrl.changeExtras()"
+                               type="checkbox">
                         <label for="green_exin" ng-bind-html="('green' | translate)">
                         </label>
-                    </input>
+                    </div>
                 </div>
-            </div>
-            <div class="field" ng-if="$ctrl.lists_extra_info.noise | contains:$ctrl.getActiveProfile().type">
-                <div class="ui checkbox">
-                    <input data-ng-model="$ctrl.extra_infos.noise" id="noise_exin" ng-change="$ctrl.changeExtras()" type="checkbox">
+                <div class="field" ng-if="$ctrl.lists_extra_info.noise | contains:$ctrl.getActiveProfile().type">
+                    <div class="ui checkbox">
+                        <input data-ng-model="$ctrl.extra_infos.noise" id="noise_exin" ng-change="$ctrl.changeExtras()"
+                               type="checkbox">
                         <label for="noise_exin" ng-bind-html="('noise' | translate)">
                         </label>
-                    </input>
+                    </div>
                 </div>
-            </div>
-            <div class="field" ng-if="$ctrl.lists_extra_info.TrailDifficulty | contains:$ctrl.getActiveProfile().type">
-                <div class="ui checkbox">
-                    <input data-ng-model="$ctrl.extra_infos.TrailDifficulty" id="traildifficulty_exin" ng-change="$ctrl.changeExtras()" type="checkbox">
+                <div class="field"
+                     ng-if="$ctrl.lists_extra_info.TrailDifficulty | contains:$ctrl.getActiveProfile().type">
+                    <div class="ui checkbox">
+                        <input data-ng-model="$ctrl.extra_infos.TrailDifficulty" id="traildifficulty_exin"
+                               ng-change="$ctrl.changeExtras()" type="checkbox">
                         <label for="traildifficulty_exin" ng-bind-html="('traildifficulty' | translate)">
                         </label>
-                    </input>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+    <button class="ors-button pull-left" ng-click="$ctrl.showDev = !$ctrl.showDev">
+        <i class="fa fa-cog fa-lg" style="opacity: 0.05">
+        </i>
+    </button>
+    <section ng-show="$ctrl.showDev">
+        <h2 ng-bind-html="('DEVELOPER_SETTINGS' | translate)">
+        </h2>
+        <label>Auto Fill: </label>
+        <button ng-click="$ctrl.setEndpoints('local')">Local</button>
+        <button ng-click="$ctrl.setEndpoints('api')">Api</button>
+        <br>
+        <label ng-bind-html="'BaseUrl: '"></label>
+        <input data-ng-model="$ctrl.envBase"
+               id="baseUrl"
+               name="baseUrl" ng-change="$ctrl.changeOptions('baseUrl'); $ctrl.setDefaultValues($ctrl.envBase)"
+               ng-model-options="{debounce: 500}"
+               style="width: 50%"/>
+        <button ng-click="$ctrl.editEndpoints = !$ctrl.editEndpoints">Specify Endpoints</button>
+        <br>
+        <div ng-show="$ctrl.editEndpoints">
+            <label ng-bind-html="'Geocode: '"></label>
+            <input data-ng-model="$ctrl.env.geocode"
+                   ng-model-options="{debounce: 500}"
+                   ng-change="$ctrl.changeOptions('geocode')"
+                   style="width: 70%"/>
+            <br>
+            <label ng-bind-html="'Directions: '"></label>
+            <input data-ng-model="$ctrl.env.directions"
+                   ng-model-options="{debounce: 500}"
+                   ng-change="$ctrl.changeOptions('directions')"
+                   style="width: 70%"/>
+            <br>
+            <label ng-bind-html="'Isochrones: '"></label>
+            <input data-ng-model="$ctrl.env.isochrones"
+                   ng-model-options="{debounce: 500}"
+                   ng-change="$ctrl.changeOptions('isochrones')"
+                   style="width: 70%"/>
+            <br>
+            <label ng-bind-html="'Matrix: '"></label>
+            <input data-ng-model="$ctrl.env.matrix"
+                   ng-model-options="{debounce: 500}"
+                   ng-change="$ctrl.changeOptions('matrix')"
+                   style="width: 70%"/>
+            <br>
+            <label ng-bind-html="'Pois: '"></label>
+            <input data-ng-model="$ctrl.env.pois"
+                   ng-model-options="{debounce: 500}"
+                   ng-change="$ctrl.changeOptions('pois')"
+                   style="width: 70%"/>
+        </div>
+        <br>
+        <button ng-click="$ctrl.resetEndpoints()">Reset</button>
+        <button ng-click="$ctrl.changeEndpoints()">Change Endpoints</button>
+    </section>
+</div>

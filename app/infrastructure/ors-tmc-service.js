@@ -3,7 +3,7 @@ angular.module('orsApp.tmc-service', []).factory('orsTmcService', ['$q', '$http'
     let orsTmcService = {}; 
 
     orsTmcService.fetchTmc = (requestData) => {
-        var url = ENV.routing;
+        var url = ENV.directions;
         var canceller = $q.defer();
         var cancel = function(reason) {
             canceller.resolve(reason);

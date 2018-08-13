@@ -1,8 +1,8 @@
 angular.module('orsApp.cookies-service', ['ngCookies'])
-    .factory('orsCookiesFactory', ['$cookies', '$window', '$translate', 'orsSettingsFactory', 'lists', ($cookies, $window, $translate, orsSettingsFactory, lists) => {
+    .factory('orsCookiesFactory', ['$cookies', '$window', '$translate', 'orsSettingsFactory', 'lists', 'ENV', ($cookies, $window, $translate, orsSettingsFactory, lists, ENV) => {
         let orsCookiesFactory = {};
         orsCookiesFactory.getCookies = () => {
-            let routinglang, language, units;
+            let routinglang, language, units, showHeightgraph, randomIsoColor, distanceMarkers, env;
             let cookieUserOptions = $cookies.getObject('userOptions') ? $cookies.getObject('userOptions') : {};
             console.warn(cookieUserOptions)
             if ('language' in cookieUserOptions) {
@@ -11,7 +11,7 @@ angular.module('orsApp.cookies-service', ['ngCookies'])
                 const locale = orsCookiesFactory.getLocale();
                 // if language is not available in ngtranslate use default
                 if ($translate.getAvailableLanguageKeys()
-                    .indexOf(locale) == -1) {
+                    .indexOf(locale) === -1) {
                     language = lists.userOptions.languages.default;
                 } else {
                     language = locale;
@@ -27,36 +27,65 @@ angular.module('orsApp.cookies-service', ['ngCookies'])
             } else {
                 units = lists.userOptions.units.default;
             }
-            let currentUserOptions = {
+            if ('showHeightgraph' in cookieUserOptions) {
+                showHeightgraph = cookieUserOptions.showHeightgraph;
+            } else {
+                showHeightgraph = angular.element($window).width() > 720;
+            }
+            if('randomIsoColor' in cookieUserOptions) {
+                randomIsoColor = cookieUserOptions.randomIsoColor
+            } else {
+                randomIsoColor = lists.userOptions.randomIsoColor.default
+            }
+            if ('distanceMarkers' in cookieUserOptions) {
+                distanceMarkers = cookieUserOptions.distanceMarkers
+            } else {
+                distanceMarkers = lists.userOptions.distanceMarkers.default
+            }
+            if ('env' in cookieUserOptions) {
+                env = cookieUserOptions.env
+            } else {
+                env = {
+                    geocode: ENV.geocode,
+                    directions: ENV.directions,
+                    isochrones: ENV.isochrones,
+                    matrix:ENV.matrix,
+                    pois: ENV.pois
+                }
+            }
+            return {
                 language: language,
                 routinglang: routinglang,
-                units: units
+                units: units,
+                showHeightgraph: showHeightgraph,
+                randomIsoColor: randomIsoColor,
+                distanceMarkers: distanceMarkers,
+                env: env
             };
-            return currentUserOptions;
         };
         orsCookiesFactory.getLocale = () => {
             // get localization
-            let locale = $window.navigator.language || $window.navigator.userLanguage;
+            let locale = $window.navigator.language;
             locale = locale.split('-');
-            if (locale.length == 1) locale = locale[0] + '-' + locale[0].toUpperCase();
+            if (locale.length === 1) locale = locale[0] + '-' + locale[0].toUpperCase();
             else locale = locale[0] + '-' + locale[1].toUpperCase();
             return locale;
         };
-        /** 
+        /**
          * Sets user specific options in cookies (language and units)
-         * @param {Object} options- Consists of routing instruction language and units km/mi
+         * @param {Object} options - Consists of routing instruction language and units km/mi
          */
         orsCookiesFactory.setCookieUserOptions = (options) => {
             $cookies.putObject('userOptions', options);
         };
-        /** 
+        /**
          * Sets map specific options in cookies
          * @param {Object} options - Consists of map options
          */
         orsCookiesFactory.setMapOptions = (options) => {
             $cookies.putObject('mapOptions', options);
         };
-        /** 
+        /**
          * Gets map settings from cookies
          */
         orsCookiesFactory.getMapOptions = () => {

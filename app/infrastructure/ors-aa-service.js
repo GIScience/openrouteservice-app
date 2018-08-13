@@ -116,7 +116,7 @@
              */
             orsAaService.getIsochrones = (requestData) => {
                 console.log(requestData)
-                var url = ENV.analyse;
+                var url = ENV.isochrones;
                 var canceller = $q.defer();
                 var cancel = (reason) => {
                     canceller.resolve(reason);

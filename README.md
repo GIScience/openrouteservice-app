@@ -100,7 +100,7 @@ For minor bugfixes use the development branch:
 
 For new features, please create a new branch:
 
-	`git chekout -b feature_branch`
+	`git checkout -b feature_branch`
 
 In every case do a [pull request](https://help.github.com/articles/creating-a-pull-request/) to our development branch. Be sure to pull the latest changes beforehand and fix any emerging conflicts.
 

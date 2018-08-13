@@ -167,7 +167,7 @@ angular.module('orsApp')
                 color: '#acb6ee'
             },
             '14': {
-                text: 'Salt',
+                text: 'Paving Stones',
                 color: '#b6c0f2'
             },
             '15': {

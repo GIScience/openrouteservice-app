@@ -19,6 +19,7 @@ angular.module('orsApp.GeoFileHandler-service', ['ngFileSaver'])
                 case 'gpx':
                     geojsonData = L.polyline(geometry)
                         .toGeoJSON();
+                    geojsonData.properties.name = filename;  // togpx is looking for name tag https://www.npmjs.com/package/togpx#gpx
                     exportData = togpx(geojsonData, {
                         creator: "OpenRouteService.org"
                     });

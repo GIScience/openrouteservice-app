@@ -21,7 +21,7 @@
 <div class="ors-addresses-container">
     <div class="addresses-list" ng-if="!$ctrl.isLoading">
         <div ng-click="$ctrl.select(feature)" ng-repeat="feature in $ctrl.addresses">
-            <div class="content">
+            <div class="content" tooltip-side="{{$index == 0 ? 'bottom' : 'top'}}" tooltip-template="source: {{feature.properties.source}}"  tooltips="">
                 <div class="left" ng-switch="" on="feature.processed.place_type">
                     <div ng-switch-when="address|street|neighbourhood" ng-switch-when-separator="|">
                         <i class="fa fa-lg fa-map-marker">
