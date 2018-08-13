@@ -5,7 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased]
+## [v0.3.1] - 2019-08-13
+
 ### Added
 - Support for additional Turn instructions keep left/keep right (provided by graphhopper 0.10)
 - Custom endpoint settings (gear icon in bottom left corner of the settings) ([#243](https://github.com/GIScience/openrouteservice-app/issues/243))
@@ -15,7 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Heightgraph (aka. elevation profile) visibility on mobile devices (see 5194fac1f1f5e58667b7fac64e1a6964330b1968)
 
-## [0.3.0] - 2018-05-28
+## [v0.3.0] - 2018-05-28
 
 ### Added
 - foldable sidebar ([#183](https://github.com/GIScience/openrouteservice-app/issues/183))

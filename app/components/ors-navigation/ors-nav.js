@@ -9,7 +9,7 @@ angular.module('orsApp.ors-nav', ['ngComponentRouter']).component('orsSidebar', 
         if ($location.path() == '/') {
             ctrl.activeMenu = '/directions';
         } else ctrl.activeMenu = $location.path();
-        ctrl.version = '0.3.0';
+        ctrl.version = '0.3.1';
     }],
     $routeConfig: [{
         path: '/directions',
