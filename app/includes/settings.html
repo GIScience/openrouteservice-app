@@ -20,8 +20,8 @@
                 <div class="ui radio checkbox">
                     <input
                             name="orsUnits" ng-change="$ctrl.changeOptions('units')"
-                           ng-model="$ctrl.currentOptions.units"
-                           ng-value="$ctrl.optionList.units.mi" type="radio">
+                            ng-model="$ctrl.currentOptions.units"
+                            ng-value="$ctrl.optionList.units.mi" type="radio">
                     <label ng-bind-html="('MILES' | translate)">
                     </label>
                 </div>
@@ -34,7 +34,7 @@
         <h2 ng-bind-html="('LANGUAGE' | translate)">
         </h2>
         <label for="language"
-                ng-bind-html="('CHOOSELANG' | translate)">
+               ng-bind-html="('CHOOSELANG' | translate)">
         </label>
         <select id="language"
                 data-ng-model="$ctrl.currentOptions.language"
@@ -174,49 +174,40 @@
         <input data-ng-model="$ctrl.envBase"
                id="baseUrl"
                name="baseUrl" ng-change="$ctrl.changeOptions('baseUrl'); $ctrl.setDefaultValues($ctrl.envBase)"
-               ng-model-options="{debounce: 500}"/>
+               ng-model-options="{debounce: 500}"
+               style="width: 50%"/>
         <button ng-click="$ctrl.editEndpoints = !$ctrl.editEndpoints">Specify Endpoints</button>
         <br>
         <div ng-show="$ctrl.editEndpoints">
             <label ng-bind-html="'Geocode: '"></label>
-            <input data-ng-model="$ctrl.env.geocode.base"
+            <input data-ng-model="$ctrl.env.geocode"
                    ng-model-options="{debounce: 500}"
-                   ng-change="$ctrl.changeOptions('geocode')"/>/
-            <input data-ng-model="$ctrl.env.geocode.end"
-                   ng-model-options="{debounce: 500}"
-                   ng-change="$ctrl.changeOptions('geocode')"/>
+                   ng-change="$ctrl.changeOptions('geocode')"
+                   style="width: 70%"/>
             <br>
             <label ng-bind-html="'Directions: '"></label>
-            <input data-ng-model="$ctrl.env.directions.base"
+            <input data-ng-model="$ctrl.env.directions"
                    ng-model-options="{debounce: 500}"
-                   ng-change="$ctrl.changeOptions('directions')"/>/
-            <input data-ng-model="$ctrl.env.directions.end"
-                   ng-model-options="{debounce: 500}"
-                   ng-change="$ctrl.changeOptions('directions')"/>
+                   ng-change="$ctrl.changeOptions('directions')"
+                   style="width: 70%"/>
             <br>
             <label ng-bind-html="'Isochrones: '"></label>
-            <input data-ng-model="$ctrl.env.isochrones.base"
+            <input data-ng-model="$ctrl.env.isochrones"
                    ng-model-options="{debounce: 500}"
-                   ng-change="$ctrl.changeOptions('isochrones')"/>/
-            <input data-ng-model="$ctrl.env.isochrones.end"
-                   ng-model-options="{debounce: 500}"
-                   ng-change="$ctrl.changeOptions('isochrones')"/>
+                   ng-change="$ctrl.changeOptions('isochrones')"
+                   style="width: 70%"/>
             <br>
             <label ng-bind-html="'Matrix: '"></label>
-            <input data-ng-model="$ctrl.env.matrix.base"
+            <input data-ng-model="$ctrl.env.matrix"
                    ng-model-options="{debounce: 500}"
-                   ng-change="$ctrl.changeOptions('matrix')"/>/
-            <input data-ng-model="$ctrl.env.matrix.end"
-                   ng-model-options="{debounce: 500}"
-                   ng-change="$ctrl.changeOptions('matrix')"/>
+                   ng-change="$ctrl.changeOptions('matrix')"
+                   style="width: 70%"/>
             <br>
             <label ng-bind-html="'Pois: '"></label>
-            <input data-ng-model="$ctrl.env.pois.base"
+            <input data-ng-model="$ctrl.env.pois"
                    ng-model-options="{debounce: 500}"
-                   ng-change="$ctrl.changeOptions('pois')"/>/
-            <input data-ng-model="$ctrl.env.pois.end"
-                   ng-model-options="{debounce: 500}"
-                   ng-change="$ctrl.changeOptions('pois')"/>
+                   ng-change="$ctrl.changeOptions('pois')"
+                   style="width: 70%"/>
         </div>
         <br>
         <button ng-click="$ctrl.resetEndpoints()">Reset</button>

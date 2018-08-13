@@ -5,30 +5,13 @@ angular.module('orsApp.ors-header', [])
             let ctrl = this
 
             ctrl.$onInit = () => {
-                /* initialize endpoint urls from app/js/config.js*/
-                ctrl.envBase = ENV.directions.split("/").slice(0, 3).join("/")
-                ctrl.env = {
-                    geocode: {
-                        base: ENV.geocode.split("/").slice(0, 3).join("/"),
-                        end: ENV.geocode.split("/").slice(3).join("/")
-                    },
-                    directions: {
-                        base: ENV.directions.split("/").slice(0, 3).join("/"),
-                        end: ENV.directions.split("/").slice(3).join("/")
-                    },
-                    isochrones: {
-                        base: ENV.isochrones.split("/").slice(0, 3).join("/"),
-                        end: ENV.isochrones.split("/").slice(3).join("/")
-                    },
-                    matrix: {
-                        base: ENV.matrix.split("/").slice(0, 3).join("/"),
-                        end: ENV.matrix.split("/").slice(3).join("/")
-                    },
-                    pois: {
-                        base: ENV.pois.split("/").slice(0, 3).join("/"),
-                        end: ENV.pois.split("/").slice(3).join("/")
-                    }
-                }
+                // uncomment for settings development
+                // ctrl.showSettings = ctrl.showDev = ctrl.editEndpoints =  true;
+
+                /* initialize endpoint urls from cookies */
+                ctrl.env = orsCookiesFactory.getCookies().env
+                ctrl.changeEndpoints()
+                ctrl.envBase = ctrl.env.directions.split("/").slice(0, 3).join("/")
                 ctrl.backup = JSON.parse(JSON.stringify(ctrl.env))
                 ctrl.extra_infos = {
                     steepness: true,
@@ -49,7 +32,9 @@ angular.module('orsApp.ors-header', [])
              */
             ctrl.resetEndpoints = () => {
                 ctrl.env = JSON.parse(JSON.stringify(ctrl.backup))
-                ctrl.envBase = ctrl.env.directions.base;
+                ctrl.envBase = ctrl.env.directions.split("/").slice(0, 3).join("/")
+                ctrl.currentOptions.env = ctrl.env
+                orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions)
             }
 
             /**
@@ -59,36 +44,38 @@ angular.module('orsApp.ors-header', [])
             ctrl.setEndpoints = (fill) => {
                 console.log(fill)
                 if (fill === "local") {
-                    angular.forEach(ctrl.env, (endpoint, key) => {
-                        endpoint.base = ctrl.envBase = "http://localhost:8082/openrouteservice-4.5.1"
-                        endpoint.end = key
+                    console.log(ctrl.env)
+                    angular.forEach(Object.keys(ctrl.env), (key) => {
+                        ctrl.envBase = "http://localhost:8082/openrouteservice-4.5.1"
+                        ctrl.env[key] = ctrl.envBase + "/" + key
                     })
                 } else if (fill === "api") {
-                    angular.forEach(ctrl.env, (endpoint, key) => {
-                        endpoint.base = ctrl.envBase = "https://api.openrouteservice.org"
-                        endpoint.end = key
+                    angular.forEach(Object.keys(ctrl.env), (key) => {
+                        ctrl.envBase = "https://api.openrouteservice.org"
+                        ctrl.env[key] = ctrl.envBase + "/" + key
                     })
                 }
             }
             /**
              * Set baseURL for every endpoint with value from input field
-             * @param {String} value -
+             * @param {String} value - the baseURL
              */
             ctrl.setDefaultValues = (value) => {
-                angular.forEach(ctrl.env, (endpoint) => {
-                    console.log(endpoint)
-                    endpoint.base = value
+                angular.forEach(Object.keys(ctrl.env), (key) => {
+                    ctrl.env[key] = [value, ctrl.env[key].split("/").slice(3).join("/")].join("/")
                 })
             }
             /**
              * Change endpoints in the app/js/config.js file to take immediate effect
              */
             ctrl.changeEndpoints = () => {
-                ENV.directions = [ctrl.env.directions.base, ctrl.env.directions.end].join("/")
-                ENV.analyse = [ctrl.env.isochrones.base, ctrl.env.isochrones.end].join("/")
-                ENV.geocode = [ctrl.env.geocode.base, ctrl.env.geocode.end].join("/")
-                ENV.matrix = [ctrl.env.matrix.base, ctrl.env.matrix.end].join("/")
-                ENV.pois = [ctrl.env.pois.base, ctrl.env.pois.end].join("/")
+                ENV.directions = ctrl.env.directions
+                ENV.analyse = ctrl.env.isochrones
+                ENV.geocode = ctrl.env.geocode
+                ENV.matrix = ctrl.env.matrix
+                ENV.pois = ctrl.env.pois
+                ctrl.currentOptions.env = ctrl.env
+                orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions)
             }
 
             /** subscription to settings, when permalink is used with lang params
