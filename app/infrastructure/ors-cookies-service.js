@@ -1,8 +1,8 @@
 angular.module('orsApp.cookies-service', ['ngCookies'])
-    .factory('orsCookiesFactory', ['$cookies', '$window', '$translate', 'orsSettingsFactory', 'lists', ($cookies, $window, $translate, orsSettingsFactory, lists) => {
+    .factory('orsCookiesFactory', ['$cookies', '$window', '$translate', 'orsSettingsFactory', 'lists', 'ENV', ($cookies, $window, $translate, orsSettingsFactory, lists, ENV) => {
         let orsCookiesFactory = {};
         orsCookiesFactory.getCookies = () => {
-            let routinglang, language, units, showHeightgraph, randomIsoColor, distanceMarkers;
+            let routinglang, language, units, showHeightgraph, randomIsoColor, distanceMarkers, env;
             let cookieUserOptions = $cookies.getObject('userOptions') ? $cookies.getObject('userOptions') : {};
             console.warn(cookieUserOptions)
             if ('language' in cookieUserOptions) {
@@ -42,13 +42,25 @@ angular.module('orsApp.cookies-service', ['ngCookies'])
             } else {
                 distanceMarkers = lists.userOptions.distanceMarkers.default
             }
+            if ('env' in cookieUserOptions) {
+                env = cookieUserOptions.env
+            } else {
+                env = {
+                    geocode: ENV.geocode,
+                    directions: ENV.directions,
+                    isochrones: ENV.isochrones,
+                    matrix:ENV.matrix,
+                    pois: ENV.pois
+                }
+            }
             return {
                 language: language,
                 routinglang: routinglang,
                 units: units,
                 showHeightgraph: showHeightgraph,
                 randomIsoColor: randomIsoColor,
-                distanceMarkers: distanceMarkers
+                distanceMarkers: distanceMarkers,
+                env: env
             };
         };
         orsCookiesFactory.getLocale = () => {
