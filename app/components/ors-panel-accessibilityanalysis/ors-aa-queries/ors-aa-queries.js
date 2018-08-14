@@ -6,8 +6,10 @@ angular.module('orsApp.ors-aa-queries', ['orsApp.ors-aa-query', 'orsApp.ors-expo
         ctrl.aaQueries = orsAaService.aaQueries;
         ctrl.showExport = false;
         ctrl.showShare = false;
+        /** if we are returning to this panel, dispose all old subscriptions */
         try {
-            $rootScope.isochronesSubscription.dispose();
+            if($rootScope.isochronesSubscription !== undefined)
+                $rootScope.isochronesSubscription.dispose();
         } catch (error) {
             console.warn(error);
         }
