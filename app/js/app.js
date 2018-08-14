@@ -10,7 +10,7 @@
  *|------------------------------------------------------------------------------------*/
 /**
  * @author: Amandus Butzer, amandus@openrouteservice.org, Timothy Ellersiek, timothy@openrouteservice.org
- * @version: 0.3.1
+ * @version: 0.3.2
  */
 (function() {
     fetchData()

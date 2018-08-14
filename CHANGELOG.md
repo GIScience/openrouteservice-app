@@ -5,7 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [v0.3.1] - 2019-08-13
+## [v0.3.2] -  2018-08-14
+
+### Fixed
+- map settings not loading from cookies
+- TopPlus maplayers not showing
+
+### Removed
+- korona map layers due to instability
+
+## [v0.3.1] - 2018-08-13
 
 ### Added
 - Support for additional Turn instructions keep left/keep right (provided by graphhopper 0.10)
