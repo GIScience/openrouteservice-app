@@ -47,12 +47,12 @@ angular.module('orsApp').constant('orsNamespaces', {
      * map layers used on the openlayers map
      */
     //url to Open Map Surfer layer
-    layerMapSurfer: {
+    /*layerMapSurfer: {
         url: 'https://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}',
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, powered by <a href="http://mapsurfernet.com/">MapSurfer.NET</a>'
     },
     //url to hillshade overlay
-    layerHs: 'https://korona.geog.uni-heidelberg.de/tiles/asterh/x={x}&y={y}&z={z}',
+    layerHs: 'https://korona.geog.uni-heidelberg.de/tiles/asterh/x={x}&y={y}&z={z}',*/
     //url to OSM layer
     layerOSM: {
         url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -82,7 +82,7 @@ angular.module('orsApp').constant('orsNamespaces', {
         url: 'https://korona.geog.uni-heidelberg.de/tiles/asterh/x={x}&y={y}&z={z}'
     },
     layerBkgTopPlus: {
-        GetCapabilities: 'http://sg.geodatenzentrum.de/wms_topplus_web_open?request=GetCapabilities&service=wms',
-        url: 'http://sg.geodatenzentrum.de/wms_topplus_web_open?'
+        GetCapabilities: 'https://sgx.geodatenzentrum.de/wms_topplus_web_open?request=GetCapabilities&service=wms',
+        url: 'https://sgx.geodatenzentrum.de/wms_topplus_web_open?'
     }
 });
