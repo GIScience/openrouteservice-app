@@ -167,8 +167,8 @@
         <h2 ng-bind-html="('DEVELOPER_SETTINGS' | translate)">
         </h2>
         <label>Auto Fill: </label>
-        <button ng-click="$ctrl.setEndpoints('local')">Local</button>
-        <button ng-click="$ctrl.setEndpoints('api')">Api</button>
+        <button ng-click="$ctrl.presetEndpoints('local'); $ctrl.api = false">Local</button>
+        <button ng-click="$ctrl.presetEndpoints('api'); $ctrl.api = true">Api</button>
         <br>
         <label ng-bind-html="'BaseUrl: '"></label>
         <input data-ng-model="$ctrl.envBase"
@@ -180,37 +180,42 @@
         <br>
         <div ng-show="$ctrl.editEndpoints">
             <label ng-bind-html="'Geocode: '"></label>
-            <input data-ng-model="$ctrl.env.geocode"
+            <input data-ng-model="$ctrl.currentOptions.env.geocode"
                    ng-model-options="{debounce: 500}"
                    ng-change="$ctrl.changeOptions('geocode')"
                    style="width: 70%"/>
             <br>
             <label ng-bind-html="'Directions: '"></label>
-            <input data-ng-model="$ctrl.env.directions"
+            <input data-ng-model="$ctrl.currentOptions.env.directions"
                    ng-model-options="{debounce: 500}"
                    ng-change="$ctrl.changeOptions('directions')"
                    style="width: 70%"/>
             <br>
             <label ng-bind-html="'Isochrones: '"></label>
-            <input data-ng-model="$ctrl.env.isochrones"
+            <input data-ng-model="$ctrl.currentOptions.env.isochrones"
                    ng-model-options="{debounce: 500}"
                    ng-change="$ctrl.changeOptions('isochrones')"
                    style="width: 70%"/>
             <br>
             <label ng-bind-html="'Matrix: '"></label>
-            <input data-ng-model="$ctrl.env.matrix"
+            <input data-ng-model="$ctrl.currentOptions.env.matrix"
                    ng-model-options="{debounce: 500}"
                    ng-change="$ctrl.changeOptions('matrix')"
                    style="width: 70%"/>
             <br>
             <label ng-bind-html="'Pois: '"></label>
-            <input data-ng-model="$ctrl.env.pois"
+            <input data-ng-model="$ctrl.currentOptions.env.pois"
                    ng-model-options="{debounce: 500}"
                    ng-change="$ctrl.changeOptions('pois')"
                    style="width: 70%"/>
         </div>
+        <div ng-show="$ctrl.api">
+            <br>
+            <label>Api-Key</label>
+            <input data-ng-model="$ctrl.apikey" ng-change="$ctrl.saveKey()"/>
+        </div>
         <br>
         <button ng-click="$ctrl.resetEndpoints()">Reset</button>
-        <button ng-click="$ctrl.changeEndpoints()">Change Endpoints</button>
+        <button ng-click="$ctrl.setENV(); $ctrl.saveEndpoints()">Change Endpoints</button>
     </section>
 </div>
