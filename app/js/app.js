@@ -10,7 +10,7 @@
  *|------------------------------------------------------------------------------------*/
 /**
  * @author: Amandus Butzer, amandus@openrouteservice.org, Timothy Ellersiek, timothy@openrouteservice.org
- * @version: 0.3.1
+ * @version: 0.3.2
  */
 (function() {
     fetchData()
@@ -41,7 +41,7 @@
             $httpProvider.interceptors.push(function($q, $document, $injector, lists, orsNamespaces, ENV, orsApikeyFactory, weathercheck) {
                 return {
                     'request': function(config) {
-                        const apiKey = orsApikeyFactory.getApiKey() === undefined ? weathercheck : orsApikeyFactory.getApiKey();
+                        const apiKey = ENV.key !== undefined ? ENV.key : orsApikeyFactory.getApiKey() === undefined ? weathercheck : orsApikeyFactory.getApiKey();
                         let ak = '?api_key=' + apiKey;
                         if (config.url === ENV.geocode + '/search' || config.url === ENV.geocode + '/reverse' || config.url === ENV.directions || config.url === ENV.isochrones || config.url === ENV.pois || config.url === ENV.matrix) {
                             config.url = config.url + ak;

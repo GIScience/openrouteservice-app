@@ -38,7 +38,8 @@ angular.module('orsApp.ors-summary', ['orsApp.ors-exportRoute-controls', 'orsApp
             }
             /** if we are returning to this panel, dispose all old subscriptions */
             try {
-                $rootScope.routeSubscription.dispose();
+                if ($rootScope.routeSubscription !== undefined)
+                    $rootScope.routeSubscription.dispose();
             } catch (error) {
                 console.warn(error);
             }

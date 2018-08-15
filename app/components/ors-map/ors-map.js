@@ -10,18 +10,20 @@ angular.module('orsApp')
             },
             controller: ['$rootScope', '$scope', '$filter', '$compile', '$timeout', '$window', 'orsSettingsFactory', 'orsLocationsService', 'orsObjectsFactory', 'orsRequestService', 'orsMessagingService', 'orsUtilsService', 'orsMapFactory', 'orsCookiesFactory', 'lists', 'globals', 'mappings', 'orsNamespaces', 'orsRouteService', ($rootScope, $scope, $filter, $compile, $timeout, $window, orsSettingsFactory, orsLocationsService, orsObjectsFactory, orsRequestService, orsMessagingService, orsUtilsService, orsMapFactory, orsCookiesFactory, lists, globals, mappings, orsNamespaces, orsRouteService) => {
                 $scope.translateFilter = $filter('translate');
-                const mapsurfer = L.tileLayer(orsNamespaces.layerMapSurfer.url, {
+                /*const mapsurfer = L.tileLayer(orsNamespaces.layerMapSurfer.url, {
                     attribution: orsNamespaces.layerMapSurfer.attribution,
                     id: 0
-                });
+                });*/
                 const bkgtopplus = L.tileLayer.wms(orsNamespaces.layerBkgTopPlus.url, {
                     layers: 'web',
-                    attribution: '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2017, <a href="http://sg.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>',
+                    format: 'image/png',
+                    attribution: '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2017, <a href="https://sgx.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>',
                     id: 1
                 });
                 const bkgtopplusgrey = L.tileLayer.wms(orsNamespaces.layerBkgTopPlus.url, {
                     layers: 'web_grau',
-                    attribution: '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2017, <a href="http://sg.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>',
+                    format: 'image/png',
+                    attribution: '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2017, <a href="https://sgx.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>',
                     id: 2
                 });
                 const openstreetmap = L.tileLayer(orsNamespaces.layerOSM.url, {
@@ -43,12 +45,12 @@ angular.module('orsApp')
                 // const stamen = L.tileLayer(orsNamespaces.layerStamen.url, {
                 //     attribution: orsNamespaces.layerStamen.attribution,
                 // });
-                const hillshade = L.tileLayer(orsNamespaces.overlayHillshade.url, {
+                /*const hillshade = L.tileLayer(orsNamespaces.overlayHillshade.url, {
                     format: 'image/png',
                     opacity: 0.45,
                     transparent: true,
                     attribution: '<a href="http://srtm.csi.cgiar.org/">SRTM</a>; ASTER GDEM is a product of <a href="http://www.meti.go.jp/english/press/data/20090626_03.html">METI</a> and <a href="https://lpdaac.usgs.gov/products/aster_policies">NASA</a>',
-                });
+                });*/
                 $scope.geofeatures = {
                     layerLocationMarker: L.featureGroup(),
                     layerRoutePoints: L.featureGroup(),
@@ -334,7 +336,7 @@ angular.module('orsApp')
                     setSettings();
                 };
                 $scope.baseLayers = {
-                    "MapSurfer": mapsurfer,
+                    // "MapSurfer": mapsurfer,
                     "TopPlus-Web-Open": bkgtopplus,
                     "TopPlus-Web-Open Greyscale": bkgtopplusgrey,
                     "OpenStreetMap": openstreetmap,
@@ -343,7 +345,7 @@ angular.module('orsApp')
                     "Outdoors": outdoors
                 };
                 $scope.overlays = {
-                    "Hillshade": hillshade
+                    // "Hillshade": hillshade
                 };
                 $scope.mapModel.map.on("load", (evt) => {
                     // add mapstyle 

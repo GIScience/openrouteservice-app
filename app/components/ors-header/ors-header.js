@@ -9,10 +9,10 @@ angular.module('orsApp.ors-header', [])
                 // ctrl.showSettings = ctrl.showDev = ctrl.editEndpoints =  true;
 
                 /* initialize endpoint urls from cookies */
-                ctrl.env = orsCookiesFactory.getCookies().env
-                ctrl.changeEndpoints()
-                ctrl.envBase = ctrl.env.directions.split("/").slice(0, 3).join("/")
-                ctrl.backup = JSON.parse(JSON.stringify(ctrl.env))
+                ctrl.currentOptions.env = orsCookiesFactory.getCookies().env
+                ctrl.setENV()
+                ctrl.envBase = ctrl.currentOptions.env.directions.split("/").slice(0, 3).join("/")
+                ctrl.backup = JSON.parse(JSON.stringify(ctrl.currentOptions.env))
                 ctrl.extra_infos = {
                     steepness: true,
                     waytype: true,
@@ -28,54 +28,63 @@ angular.module('orsApp.ors-header', [])
                 orsUtilsService.setExtraInformation(ctrl.extra_infos)
             }
             /**
-             * Reset all endpoint URLs to their initial state
-             */
-            ctrl.resetEndpoints = () => {
-                ctrl.env = JSON.parse(JSON.stringify(ctrl.backup))
-                ctrl.envBase = ctrl.env.directions.split("/").slice(0, 3).join("/")
-                ctrl.currentOptions.env = ctrl.env
-                orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions)
-            }
-
-            /**
              * Presets for setting Requests to a Local ORS server or directly to the ORS API
+             * Overwrites the current ctrl.env object
              * @param {String} fill - name of the preset to apply
              */
-            ctrl.setEndpoints = (fill) => {
-                console.log(fill)
+            ctrl.presetEndpoints = (fill) => {
                 if (fill === "local") {
-                    console.log(ctrl.env)
-                    angular.forEach(Object.keys(ctrl.env), (key) => {
+                    angular.forEach(Object.keys(ctrl.currentOptions.env), (key) => {
                         ctrl.envBase = "http://localhost:8082/openrouteservice-4.5.1"
-                        ctrl.env[key] = ctrl.envBase + "/" + key
+                        ctrl.currentOptions.env[key] = ctrl.envBase + "/" + key
                     })
                 } else if (fill === "api") {
-                    angular.forEach(Object.keys(ctrl.env), (key) => {
+                    angular.forEach(Object.keys(ctrl.currentOptions.env), (key) => {
                         ctrl.envBase = "https://api.openrouteservice.org"
-                        ctrl.env[key] = ctrl.envBase + "/" + key
+                        ctrl.currentOptions.env[key] = ctrl.envBase + "/" + key
                     })
                 }
             }
+
             /**
              * Set baseURL for every endpoint with value from input field
              * @param {String} value - the baseURL
              */
             ctrl.setDefaultValues = (value) => {
-                angular.forEach(Object.keys(ctrl.env), (key) => {
-                    ctrl.env[key] = [value, ctrl.env[key].split("/").slice(3).join("/")].join("/")
+                angular.forEach(Object.keys(ctrl.currentOptions.env), (key) => {
+                    ctrl.currentOptions.env[key] = [value, ctrl.currentOptions.env[key].split("/").slice(3).join("/")].join("/")
                 })
             }
             /**
-             * Change endpoints in the app/js/config.js file to take immediate effect
+             * Writes the endpoint settings to app/js/config.js to take immediate effect
              */
-            ctrl.changeEndpoints = () => {
-                ENV.directions = ctrl.env.directions
-                ENV.analyse = ctrl.env.isochrones
-                ENV.geocode = ctrl.env.geocode
-                ENV.matrix = ctrl.env.matrix
-                ENV.pois = ctrl.env.pois
-                ctrl.currentOptions.env = ctrl.env
+            ctrl.setENV = () => {
+                ENV.directions = ctrl.currentOptions.env.directions
+                ENV.analyse = ctrl.currentOptions.env.isochrones
+                ENV.geocode = ctrl.currentOptions.env.geocode
+                ENV.matrix = ctrl.currentOptions.env.matrix
+                ENV.pois = ctrl.currentOptions.env.pois
+            }
+            /**
+             * Save Endpoints to cookies
+             */
+            ctrl.saveEndpoints = () => {
                 orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions)
+            }
+            /**
+             * Reset all endpoint URLs to their initial state
+             */
+            ctrl.resetEndpoints = () => {
+                ctrl.currentOptions.env = JSON.parse(JSON.stringify(ctrl.backup))
+                ctrl.envBase = ctrl.currentOptions.env.directions.split("/").slice(0, 3).join("/")
+                orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions)
+            }
+
+            /**
+             * Save the apikey for this session to ENV
+             */
+            ctrl.saveKey = () => {
+                ENV.key = ctrl.apikey
             }
 
             /** subscription to settings, when permalink is used with lang params
