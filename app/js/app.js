@@ -72,7 +72,11 @@
                                 });
                                 break;
                             case 404:
-                                messagingService.messageSubject.onNext(lists.errors.CONNECTION);
+                                //messagingService.messageSubject.onNext(lists.errors.CONNECTION);
+                                messagingService.messageSubject.onNext({
+                                    text: 'Code ' + rejection.data.error.code + ': ' + rejection.data.error.message,
+                                    color: 0
+                                });
                                 break;
                             case 405:
                                 messagingService.messageSubject.onNext({
