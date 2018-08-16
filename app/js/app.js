@@ -52,7 +52,6 @@
                         return response;
                     },
                     'requestError': function(rejection) {
-                        console.log(rejection.status)
                         return $q.reject(rejection);
                     },
                     'responseError': function(rejection) {
@@ -66,6 +65,12 @@
                                 });
                                 break;
                             case 401:
+                                messagingService.messageSubject.onNext({
+                                    text: 'Code ' + rejection.data.error.code + ': ' + rejection.data.error.message,
+                                    color: 0
+                                });
+                                break;
+                            case 403:
                                 messagingService.messageSubject.onNext({
                                     text: 'Code ' + rejection.data.error.code + ': ' + rejection.data.error.message,
                                     color: 0
