@@ -10,7 +10,7 @@
  *|------------------------------------------------------------------------------------*/
 /**
  * @author: Amandus Butzer, amandus@openrouteservice.org, Timothy Ellersiek, timothy@openrouteservice.org
- * @version: 0.3.2
+ * @version: 0.3.3
  */
 (function() {
     fetchData()
@@ -52,7 +52,6 @@
                         return response;
                     },
                     'requestError': function(rejection) {
-                        console.log(rejection.status)
                         return $q.reject(rejection);
                     },
                     'responseError': function(rejection) {
@@ -71,8 +70,18 @@
                                     color: 0
                                 });
                                 break;
+                            case 403:
+                                messagingService.messageSubject.onNext({
+                                    text: 'Code ' + rejection.data.error.code + ': ' + rejection.data.error.message,
+                                    color: 0
+                                });
+                                break;
                             case 404:
-                                messagingService.messageSubject.onNext(lists.errors.CONNECTION);
+                                //messagingService.messageSubject.onNext(lists.errors.CONNECTION);
+                                messagingService.messageSubject.onNext({
+                                    text: 'Code ' + rejection.data.error.code + ': ' + rejection.data.error.message,
+                                    color: 0
+                                });
                                 break;
                             case 405:
                                 messagingService.messageSubject.onNext({
