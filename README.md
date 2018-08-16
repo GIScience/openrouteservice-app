@@ -82,13 +82,13 @@ vim app/weathercheck.txt
 
 For the standard openrouteservice version do:
 
-	`grunt ors`
+	grunt ors
 
 If you want to use the openrouteservice client with a [local backend version of openrouteservice](https://github.com/GIScience/openrouteservice) you have to adjust the *endpoint paths* to the *backend war version* you are using in `Grunfile.js`.
 
 Afterwards do:
 
-	`grunt ors_local`
+	grunt ors_local
 
 ## Contribution
 
@@ -96,17 +96,17 @@ If you would like to contribute, please note that we are using a [branching mode
 
 For minor bugfixes use the development branch:
 
-	`git checkout development`
+	git checkout development
 
 For new features, please create a new branch:
 
-	`git checkout -b feature_branch`
+	git checkout -b feature_branch
 
 In every case do a [pull request](https://help.github.com/articles/creating-a-pull-request/) to our development branch. Be sure to pull the latest changes beforehand and fix any emerging conflicts.
 
 To enable console output information and logging for bugfixing and feature development do:
 
-	`grunt dev`
+	grunt dev
 
 ## Translations
 
