@@ -248,7 +248,8 @@ module.exports = function(grunt) {
                         isochrones: 'https://api.openrouteservice.org/isochrones',
                         matrix: 'https://api.openrouteservice.org/matrix',
                         pois: 'https://api.openrouteservice.org/places',
-                        shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
+                        shortenlink: 'https://api-ssl.bitly.com/v3/shorten',
+                        mapsurfer: 'https://api.openrouteservice.org/mapsurfer/{z}/{x}/{y}.png'
                     }
                 }
             }
