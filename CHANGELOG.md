@@ -4,8 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v0.3.3] - 2018-08-16
 
-## [v0.3.2] -  2018-08-14
+### Added
+- default endpoint setting for current domain
+- popup to inform user of changed endpoints
+- checkbox to decide if endpoints will be saved to cookies
+
+### Fixed
+- system error not fading ([161](https://github.com/GIScience/openrouteservice-app/issues/161))
+- showing false internet connection error ([235](https://github.com/GIScience/openrouteservice-app/issues/235))
+
+## [v0.3.2] - 2018-08-14
 
 ### Fixed
 - map settings not loading from cookies
