@@ -6,8 +6,9 @@ angular.module('orsApp.ors-options', [])
             activeProfile: '<',
             showOptions: '<'
         },
-        controller: ['orsSettingsFactory', 'orsCookiesFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', '$scope', '$timeout', 'lists', 'countries', function(orsSettingsFactory, orsCookiesFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService, $scope, $timeout, lists, countries) {
+        controller: ['orsSettingsFactory', 'orsCookiesFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', '$scope', '$timeout', 'lists', 'countries', 'carBrands', 'carCategories', function(orsSettingsFactory, orsCookiesFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService, $scope, $timeout, lists, countries, carBrands, carCategories) {
             let ctrl = this;
+            ctrl.fuelSettings = true
             ctrl.optionList = lists.optionList;
             ctrl.$onInit = () => {
                 /** This is a reference of the settings object, if we change here, it is updated in settings */
@@ -546,5 +547,17 @@ angular.module('orsApp.ors-options', [])
             $scope.search = (row) => {
                 return !!((row.official_en_name.toLowerCase().indexOf(ctrl.queryCountries.toLowerCase() || '') !== -1 || row.cid.indexOf(ctrl.queryCountries || '') !== -1 || row.country_code.toLowerCase().indexOf(ctrl.queryCountries.toLowerCase() || '') !== -1 || row.native_names.toLowerCase().indexOf(ctrl.queryCountries.toLowerCase() || '') !== -1 || row[ctrl.language].toLowerCase().indexOf(ctrl.queryCountries.toLowerCase() || '') !== -1) && (!(row.hasOwnProperty('check')) || row.check === false));
             };
+            ctrl.queryBrand = ""
+            ctrl.carCategories = carCategories
+            ctrl.brands = carBrands
+
+            ctrl.ofs = {
+                filters: {
+                    fuel_type: 'gasoline'
+                }
+            }
+            $scope.searchBrand = (row) => {
+                return !!((row.toLowerCase().indexOf(ctrl.queryBrand.toLowerCase() || '') !== -1 ));
+            }
         }]
     });
