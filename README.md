@@ -1,5 +1,7 @@
 # Openrouteservice
 
+[![Build Status](https://travis-ci.org/GIScience/openrouteservice-app.svg?branch=development)](https://travis-ci.org/GIScience/openrouteservice-app)
+
 Openrouteservice is a online route planning application that is based on open source software, open data and open standards.
 
 ![preview](https://cloud.githubusercontent.com/assets/10322094/26202903/63ccd808-3bd9-11e7-9a89-f06ad50d583e.png)
