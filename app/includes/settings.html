@@ -169,6 +169,7 @@
         <label>Auto Fill: </label>
         <button ng-click="$ctrl.presetEndpoints('local'); $ctrl.api = false">Local</button>
         <button ng-click="$ctrl.presetEndpoints('api'); $ctrl.api = true">Api</button>
+        <button ng-click="$ctrl.presetEndpoints('default'); $ctrl.api = false">Default</button>
         <br>
         <label ng-bind-html="'BaseUrl: '"></label>
         <input data-ng-model="$ctrl.envBase"
@@ -215,7 +216,12 @@
             <input data-ng-model="$ctrl.apikey" ng-change="$ctrl.saveKey()"/>
         </div>
         <br>
-        <button ng-click="$ctrl.resetEndpoints()">Reset</button>
-        <button ng-click="$ctrl.setENV(); $ctrl.saveEndpoints()">Change Endpoints</button>
+        <button ng-click="$ctrl.resetEndpoints(); $ctrl.showPopup()">Reset</button>
+        <button ng-click="$ctrl.setENV(); $ctrl.saveEndpoints(); $ctrl.showPopup()">Change Endpoints</button>
+        <div class="ui checkbox">
+            <input data-ng-model="$ctrl.saveCookies" id="saveCookies" type="checkbox">
+            <label for="saveCookies" ng-bind-html="'Save to cookies'">
+            </label>
+        </div>
     </section>
 </div>

@@ -35,14 +35,20 @@ angular.module('orsApp.ors-header', [])
             ctrl.presetEndpoints = (fill) => {
                 if (fill === "local") {
                     angular.forEach(Object.keys(ctrl.currentOptions.env), (key) => {
-                        ctrl.envBase = "http://localhost:8082/openrouteservice-4.5.1"
-                        ctrl.currentOptions.env[key] = ctrl.envBase + "/" + key
+                        ctrl.envBase = "http://localhost:8082/openrouteservice-4.5.0"
+                        ctrl.currentOptions.env[key] = key === "directions" ? ctrl.envBase + "/routes" : ctrl.envBase + "/" + key // backend directions endpoint is called routes...
                     })
                 } else if (fill === "api") {
                     angular.forEach(Object.keys(ctrl.currentOptions.env), (key) => {
                         ctrl.envBase = "https://api.openrouteservice.org"
                         ctrl.currentOptions.env[key] = ctrl.envBase + "/" + key
                     })
+                } else if (fill === "default") {
+                    angular.forEach(Object.keys(ctrl.currentOptions.env), (key) => {
+                        ctrl.currentOptions.env[key] = ENV.default[key]
+                    })
+
+                    ctrl.envBase = ctrl.currentOptions.env.directions.split("/").slice(0, 3).join("/")
                 }
             }
 
@@ -66,10 +72,21 @@ angular.module('orsApp.ors-header', [])
                 ENV.pois = ctrl.currentOptions.env.pois
             }
             /**
+             * Informs the user about changed Endpoints
+             */
+            ctrl.showPopup = () => {
+                alert(`Endpoints have been changed to
+geocode:     ${ENV.geocode}
+directions:   ${ENV.directions}
+isochrones:  ${ENV.analyse}
+matrix:        ${ENV.matrix}
+pois:            ${ENV.pois}`)
+            }
+            /**
              * Save Endpoints to cookies
              */
             ctrl.saveEndpoints = () => {
-                orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions)
+                if (ctrl.saveCookies) orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions)
             }
             /**
              * Reset all endpoint URLs to their initial state
@@ -77,7 +94,7 @@ angular.module('orsApp.ors-header', [])
             ctrl.resetEndpoints = () => {
                 ctrl.currentOptions.env = JSON.parse(JSON.stringify(ctrl.backup))
                 ctrl.envBase = ctrl.currentOptions.env.directions.split("/").slice(0, 3).join("/")
-                orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions)
+                if (ctrl.saveCookies) orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions)
             }
 
             /**
@@ -96,9 +113,15 @@ angular.module('orsApp.ors-header', [])
             })
             ctrl.changeOptions = (setting) => {
                 if (setting === 'language') $translate.use(ctrl.currentOptions.language)
-                console.log(ctrl.currentOptions.showHeightgraph)
                 orsSettingsFactory.setUserOptions(ctrl.currentOptions)
-                orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions)
+                // if endpoints should not be saved to cookies pass current options without them
+                if (!ctrl.saveCookies) {
+                    let withoutEnv = JSON.parse(JSON.stringify(ctrl.currentOptions))
+                    delete withoutEnv.env
+                    orsCookiesFactory.setCookieUserOptions(withoutEnv)
+                } else {
+                    orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions)
+                }
                 orsUtilsService.parseSettingsToPermalink(orsSettingsFactory.getSettings(), orsSettingsFactory.getUserOptions())
                 let payload = {
                     options: ctrl.currentOptions,
