@@ -550,10 +550,24 @@ angular.module('orsApp.ors-options', [])
             ctrl.queryBrand = ""
             ctrl.carCategories = carCategories
             ctrl.brands = carBrands
-
+            ctrl.drivingSpeed = 60
+            ctrl.drivingStyle = true
+            ctrl.chooseCategory = () => {
+                console.log(ctrl.vehicleCategory)
+                console.log(ctrl.ofs)
+            }
+            //
+            //
             ctrl.ofs = {
                 filters: {
-                    fuel_type: 'gasoline'
+                    "data_source":"cfd",
+                    "fuel_type": "gasoline",
+                    "vehicle_type":"car",
+                    "driving_style": "moderate",
+                    "driving_speed": 60,
+                    "vehicle_categories": ["b"],
+                    "fuel_consumptions": {},
+                    "tank_sizes": {}
                 }
             }
             $scope.searchBrand = (row) => {

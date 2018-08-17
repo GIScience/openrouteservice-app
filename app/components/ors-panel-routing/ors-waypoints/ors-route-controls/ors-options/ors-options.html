@@ -238,67 +238,98 @@
     <div class="collapsable" ng-class="{ showMe: $ctrl.fuelSettings }">
         <ul class="ors-options-menu">
             <li>
-                <div class="ui checkbox">
-                    <select id="fuelType" ng-model="$ctrl.ofs.filters.fuel_type"
-                    ng-options="fueltype for fueltype in ['gasoline','diesel']"></select>
+                <div>
                     <label for="fuelType" ng-bind-html="('FUEL_TYPE' | translate)">
                     </label>
-                    </input>
+                    <select id="fuelType" ng-model="$ctrl.ofs.filters.fuel_type"
+                            ng-options="fueltype for fueltype in ['gasoline','diesel']"></select>
                 </div>
             </li>
             <li>
-                <div class="ui checkbox">
-                    <input id="controlledborders" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()"
-                           ng-disabled="$ctrl.currentOptions.borders.all"
-                           ng-model="$ctrl.currentOptions.borders.controlled" type="checkbox">
-                    <label for="controlledborders" ng-bind-html="('VEHICLE_TYPE' | translate)">
+                <div>
+                    <label for="vehicleCategory" ng-bind-html="('VEHICLE_CATEGORY' | translate)">
                     </label>
-                    </input>
+                    <select id="vehicleCategory"
+                            ng-model="$ctrl.ofs.filters.vehicle_categories[0]"
+                            ng-change="$ctrl.chooseCategory()"
+                            ng-options="category.short as category.en for category in $ctrl.carCategories"></select>
                 </div>
             </li>
             <li>
+                <div>
+                    <input type="checkbox" value="$ctrl.drivingSpeed" ng-model="$ctrl.drivingSpeed" ng-click="$ctrl.drivingStyle != $ctrl.drivingSpeed">
+                    <label for="drivingSpeed" ng-bind-html="('DRIVING_SPEED' | translate)">
+                    </label>
+                    <input id="drivingSpeed"
+                           ng-disabled="$ctrl.drivingStyle"
+                           ng-model="$ctrl.ofs.filters.driving_speed"
+                    >
+                </div>
+            </li>
+            <li>
+                <div>
+                    <input type="checkbox" value="$ctrl.drivingStyle" ng-model="$ctrl.drivingStyle" ng-click="$ctrl.drivingSpeed != $ctrl.drivingStyle">
+                    <label for="drivingStyle" ng-bind-html="('DRIVING_STYLE' | translate)">
+                    </label>
+                    <select id="drivingStyle"
+                            ng-model="$ctrl.ofs.filters.driving_style"
+                            ng-disabled="$ctrl.drivingSpeed"
+                            ng-options="style for style in ['moderate', 'fast']"></select>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <input type="checkbox" value="$ctrl.fuelConsumption" ng-model="$ctrl.fuelConsumption" ng-click="$ctrl.fuelConsumption != $ctrl.fuelConsumption">
+                    <label for="fuelConsumption" ng-bind-html="('SPECIFIC_FUEL_CONSUMPTION' | translate)">
+                    </label>
+                    <input id="fuelConsumption"
+                           ng-disabled="!$ctrl.fuelConsumption"
+                           ng-model="$ctrl.ofs.filters.fuel_consumptions[$ctrl.ofs.filters.categories[0]]"
+                    >
+                </div>
+            </li>
+            <li>
+                <div>
+                    <input type="checkbox" value="$ctrl.tankSize" ng-model="$ctrl.tankSize" ng-click="$ctrl.tankSize != $ctrl.tankSize">
+                    <label for="tankSize" ng-bind-html="('TANK_SIZE' | translate)">
+                    </label>
+                    <input id="tankSize"
+                           ng-disabled="!$ctrl.tankSize"
+                           ng-model="$ctrl.ofs.filters.tanksizes[$ctrl.ofs.filters.categories[0]]"
+                    >
+                </div>
+            </li>
+            <!--<li>
                 <div class="row ui input">
                     <label ng-bind-html="('CAR_BRAND' | translate)"></label>
                     <input focus-if="$ctrl.fuelSettings" ng-model="$ctrl.queryBrand" ng-model-options="{debounce: 300}"
                            placeholder="{{('SEARCH_CAR_BRANDS' | translate)}}" select-on-click="" type="text">
                 </div>
-            </li>
-            <li>
+            </li>-->
+            <!--<li>
                 <div class="row">
                     <table id="results">
                         <tbody>
                         <tr ng-if="$ctrl.queryBrand" ng-repeat="car in $ctrl.brands | filter: searchBrand">
-                            <!--ng-if="$ctrl.queryBrand"-->
+                            &lt;!&ndash;ng-if="$ctrl.queryBrand"&ndash;&gt;
                             <td>
                                 <div ng-click>{{car}}</div>
-                                <!--<input class="ui checkbox" id="c2_{{car}}" name="orsRouteAvoidablesCountries" ng-change="$ctrl.toggleCountries(country.id)" ng-disabled="$ctrl.currentOptions.borders.all" ng-model="$ctrl.countries[country.id].check" type="checkbox">-->
+                                &lt;!&ndash;<input class="ui checkbox" id="c2_{{car}}" name="orsRouteAvoidablesCountries" ng-change="$ctrl.toggleCountries(country.id)" ng-disabled="$ctrl.currentOptions.borders.all" ng-model="$ctrl.countries[country.id].check" type="checkbox">&ndash;&gt;
                                 </input>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-            </li>
-            <li>
-                <div class="bottom-border">
-                </div>
-            </li>
-            <li>
-            <span class="ui checkbox">
-            <input id="av_countries" name="orsRouteAvoidablesCountries" ng-disabled="$ctrl.currentOptions.borders.all"
-                   ng-model="$ctrl.avoidCountries" ng-change="$ctrl.passBordersToOptions()" type="checkbox">
-            <label for="av_countries" ng-bind-html="('COUNTRYBORDERS' | translate)">
-            </label>
-                </input>
-            </span>
-                <span tooltip-side="right" tooltip-template="{{('RESET' | translate)}}" tooltips="">
+            </li>-->
+            <!--<span tooltip-side="right" tooltip-template="{{('RESET' | translate)}}" tooltips="">
             <button class="ors-controls-button" ng-disabled="$ctrl.currentOptions.borders.all"
                     ng-click="$ctrl.removeCountries()">
             <i class="fa fa-remove">
             </i>
             </button>
             </span>
-            </li>
+            </li>-->
         </ul>
     </div>
 </div>

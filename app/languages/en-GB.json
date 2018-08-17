@@ -194,6 +194,13 @@
     "INFO_SUPPORT_TEXT": "Openrouteservice offers free services and relies on donations for a majority of its funding. If you would like to support the further development of features and server infrastructure donations are very welcome.",
     "LOCALE_HEIGHTGRAPH": "Elevation profile",
     "DEVELOPER_SETTINGS": "Developer Settings",
-    "FUEL_CONSUMPTION": "Fuel consumption",
-    "SEARCH_CAR_BRANDS": "Search for car brands"
+    "SEARCH_CAR_BRANDS": "Search for car brands",
+    "FUEL_CONSUMPTION": "Fuel consumption (experimental)",
+    "FUEL_TYPE": "Fuel type",
+    "CAR_BRAND": "Car brand",
+    "DRIVING_STYLE": "Driving style",
+    "DRIVING_SPEED": "Driving speed",
+    "VEHICLE_CATEGORY": "Vehicle category",
+    "TANK_SIZE": "Tank size",
+    "SPECIFIC_FUEL_CONSUMPTION": "Specific fuel consumption"
 }
