@@ -69,7 +69,7 @@ module.exports = function(grunt) {
                 src: ['build/*', 'build']
             },
             task_rm_build_unused: {
-                src: ['build/components', 'build/infrastructure', 'build/languages', 'build/js/', 'build/constants', 'build/values', 'build/css']
+                src: ['build/components', 'build/infrastructure', 'build/languages', 'build/js/', 'build/constants', 'build/values', 'build/css', '.tmp']
             },
         },
         jshint: {
@@ -248,7 +248,8 @@ module.exports = function(grunt) {
                         isochrones: 'https://api.openrouteservice.org/isochrones',
                         matrix: 'https://api.openrouteservice.org/matrix',
                         pois: 'https://api.openrouteservice.org/places',
-                        shortenlink: 'https://api-ssl.bitly.com/v3/shorten'
+                        shortenlink: 'https://api-ssl.bitly.com/v3/shorten',
+                        mapsurfer: 'https://api.openrouteservice.org/mapsurfer/{z}/{x}/{y}.png'
                     }
                 }
             }
@@ -281,7 +282,7 @@ module.exports = function(grunt) {
                     "app/css/ors-header.css": "app/less/ors-header.less",
                     "app/css/ors-icons.css": "app/less/ors-icons.less",
                     "app/css/ors-instructions.css": "app/less/ors-instructions.less",
-                    "app/css/ors-landmark.css": "app/less/ors-lanmark.less",
+                    "app/css/ors-landmark.css": "app/less/ors-landmark.less",
                     "app/css/ors-layout.css": "app/less/ors-layout.less",
                     "app/css/ors-leaflet.css": "app/less/ors-leaflet.less",
                     "app/css/ors-loading.css": "app/less/ors-loading.less",
@@ -303,7 +304,8 @@ module.exports = function(grunt) {
             }
         }
     });
-    grunt.registerTask('ors', 'Compiles all of the assets and copies the files to the build directory.',    ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:ors', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
+    grunt.registerTask('ors', 'Compiles all of the assets and copies the files to the build directory.', ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:ors', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust', 'connect:build:keepalive']);
     grunt.registerTask('dev', 'Run local server for development purposes', ['less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'browserify:turf', 'ngtemplates', 'ngconstant:ors', 'connect:dev', 'watch']);
+    grunt.registerTask('ci', 'Test build process with Travis', ['browserify:turf', 'less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'ngtemplates', 'clean:task_rm_build', 'copy:build', 'ngconstant:ors', 'traceur', 'useminPrepare', 'concat', 'copy:libs', 'uglify', 'cssmin', 'usemin', 'preprocess', 'tags', 'clean:task_rm_build_unused', 'stripDebug', 'cacheBust']);
     grunt.registerTask('ors_local', 'Run local ors frontend server on local ors backend tomcat', ['less:development', 'copy:sliderLess', 'grunt:sliderMakeCss', 'browserify:turf', 'ngtemplates', 'ngconstant:local', 'connect:dev', 'watch']);
 };

@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+- "6"
+- "7"
+branches:
+  only:
+  - master
+  - development
+  - /^release-v.*$/ # this should check release-v* branches
+script:
+- npm install grunt-cli -g
+- npm install
+- node_modules/bower/bin/bower install
+- cd bower_components/angularjs-slider && npm install && cd ../..
+- cp Gruntfile.default.js Gruntfile.js
+- grunt ci
