@@ -43,6 +43,7 @@ angular.module('orsApp.cookies-service', ['ngCookies'])
                 distanceMarkers = lists.userOptions.distanceMarkers.default
             }
             // save a copy of the default endpoint setup to ENV once
+            console.log(typeof(ENV.default) === "undefined")
             if (typeof(ENV.default) === "undefined") {
                 ENV.default = {
                     geocode: JSON.parse(JSON.stringify(ENV)).geocode,
@@ -63,6 +64,7 @@ angular.module('orsApp.cookies-service', ['ngCookies'])
                     pois: ENV.pois
                 }
             }
+            console.log(env)
             return {
                 language: language,
                 routinglang: routinglang,

@@ -239,7 +239,7 @@
         <ul class="ors-options-menu">
             <li>
                 <div>
-                    <label for="fuelType" ng-bind-html="('FUEL_TYPE' | translate)">
+                    <label for="fuelType" ng-bind-html="('FUEL_TYPE' | translate) + ': '">
                     </label>
                     <select id="fuelType" ng-model="$ctrl.ofs.filters.fuel_type"
                             ng-options="fueltype for fueltype in ['gasoline','diesel']"></select>
@@ -247,7 +247,7 @@
             </li>
             <li>
                 <div>
-                    <label for="vehicleCategory" ng-bind-html="('VEHICLE_CATEGORY' | translate)">
+                    <label for="vehicleCategory" ng-bind-html="('VEHICLE_CATEGORY' | translate) + ': '">
                     </label>
                     <select id="vehicleCategory"
                             ng-model="$ctrl.ofs.filters.vehicle_categories[0]"
@@ -257,46 +257,54 @@
             </li>
             <li>
                 <div>
-                    <input type="checkbox" value="$ctrl.drivingSpeed" ng-model="$ctrl.drivingSpeed" ng-click="$ctrl.drivingStyle != $ctrl.drivingSpeed">
-                    <label for="drivingSpeed" ng-bind-html="('DRIVING_SPEED' | translate)">
+                    <input type="checkbox"
+                           ng-model="$ctrl.drivingSpeed"
+                           ng-click="$ctrl.check('style')">
+                    <label for="drivingSpeed" ng-bind-html="('DRIVING_SPEED' | translate) + ': '">
                     </label>
                     <input id="drivingSpeed"
-                           ng-disabled="$ctrl.drivingStyle"
+                           ng-disabled="!$ctrl.drivingSpeed"
                            ng-model="$ctrl.ofs.filters.driving_speed"
                     >
                 </div>
             </li>
             <li>
                 <div>
-                    <input type="checkbox" value="$ctrl.drivingStyle" ng-model="$ctrl.drivingStyle" ng-click="$ctrl.drivingSpeed != $ctrl.drivingStyle">
-                    <label for="drivingStyle" ng-bind-html="('DRIVING_STYLE' | translate)">
+                    <input type="checkbox"
+                           ng-model="$ctrl.drivingStyle"
+                           ng-click="$ctrl.check('speed')"/>
+                    <label for="drivingStyle" ng-bind-html="('DRIVING_STYLE' | translate) + ': '">
                     </label>
                     <select id="drivingStyle"
                             ng-model="$ctrl.ofs.filters.driving_style"
-                            ng-disabled="$ctrl.drivingSpeed"
+                            ng-disabled="!$ctrl.drivingStyle"
                             ng-options="style for style in ['moderate', 'fast']"></select>
                 </div>
             </li>
             <li>
                 <div>
-                    <input type="checkbox" value="$ctrl.fuelConsumption" ng-model="$ctrl.fuelConsumption" ng-click="$ctrl.fuelConsumption != $ctrl.fuelConsumption">
-                    <label for="fuelConsumption" ng-bind-html="('SPECIFIC_FUEL_CONSUMPTION' | translate)">
+                    <input type="checkbox" value="$ctrl.fuelConsumption" ng-model="$ctrl.fuelConsumption"
+                           ng-click="$ctrl.fuelConsumption != $ctrl.fuelConsumption">
+                    <label for="fuelConsumption" ng-bind-html="('SPECIFIC_FUEL_CONSUMPTION' | translate) + ': '">
                     </label>
                     <input id="fuelConsumption"
                            ng-disabled="!$ctrl.fuelConsumption"
-                           ng-model="$ctrl.ofs.filters.fuel_consumptions[$ctrl.ofs.filters.categories[0]]"
-                    >
+                           ng-model="$ctrl.ofs.filters.fuel_consumptions[$ctrl.ofs.filters.vehicle_categories[0]]"
+                           style="width : 30px"
+                    > liters
                 </div>
             </li>
             <li>
                 <div>
-                    <input type="checkbox" value="$ctrl.tankSize" ng-model="$ctrl.tankSize" ng-click="$ctrl.tankSize != $ctrl.tankSize">
-                    <label for="tankSize" ng-bind-html="('TANK_SIZE' | translate)">
+                    <input type="checkbox" value="$ctrl.tankSize" ng-model="$ctrl.tankSize"
+                           ng-click="$ctrl.tankSize != $ctrl.tankSize">
+                    <label for="tankSize" ng-bind-html="('TANK_SIZE' | translate) + ': '">
                     </label>
                     <input id="tankSize"
                            ng-disabled="!$ctrl.tankSize"
-                           ng-model="$ctrl.ofs.filters.tanksizes[$ctrl.ofs.filters.categories[0]]"
-                    >
+                           ng-model="$ctrl.ofs.filters.tank_sizes[$ctrl.ofs.filters.vehicle_categories[0]]"
+                           style="width : 30px"
+                    > l / 100 km
                 </div>
             </li>
             <!--<li>

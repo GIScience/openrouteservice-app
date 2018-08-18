@@ -6,7 +6,7 @@ angular.module('orsApp.ors-options', [])
             activeProfile: '<',
             showOptions: '<'
         },
-        controller: ['orsSettingsFactory', 'orsCookiesFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', '$scope', '$timeout', 'lists', 'countries', 'carBrands', 'carCategories', function(orsSettingsFactory, orsCookiesFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService, $scope, $timeout, lists, countries, carBrands, carCategories) {
+        controller: ['orsSettingsFactory', 'orsCookiesFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', '$scope', '$timeout', 'lists', 'countries', 'carBrands', 'carCategories', function (orsSettingsFactory, orsCookiesFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService, $scope, $timeout, lists, countries, carBrands, carCategories) {
             let ctrl = this;
             ctrl.fuelSettings = true
             ctrl.optionList = lists.optionList;
@@ -424,7 +424,7 @@ angular.module('orsApp.ors-options', [])
                         if (numbers.indexOf(ctrl.countries[i].cid) != -1) {
                             ctrl.checkedCountries.push(ctrl.countries[i].id);
                             ctrl.countries[i].check = true;
-                            ctrl.avoidCountries  = true;
+                            ctrl.avoidCountries = true;
 
                         }
                     }
@@ -521,11 +521,11 @@ angular.module('orsApp.ors-options', [])
                 ctrl.passBordersToOptions();
             };
             /**
-            * Generates the avoid_countries value and passes it to options
-            */
+             * Generates the avoid_countries value and passes it to options
+             */
             ctrl.passBordersToOptions = () => {
                 let cstring = "";
-                if(ctrl.avoidCountries){
+                if (ctrl.avoidCountries) {
                     for (var i = 0; i < ctrl.checkedCountries.length; i++) {
                         let country = ctrl.countries[ctrl.checkedCountries[i]].cid;
                         if (cstring === "") cstring += country;
@@ -550,19 +550,40 @@ angular.module('orsApp.ors-options', [])
             ctrl.queryBrand = ""
             ctrl.carCategories = carCategories
             ctrl.brands = carBrands
-            ctrl.drivingSpeed = 60
+            ctrl.drivingSpeed = false
             ctrl.drivingStyle = true
             ctrl.chooseCategory = () => {
-                console.log(ctrl.vehicleCategory)
+                // rename Object key of the filters.fuel_consumptions and keep value
+                renameKey = (o, newKey) => {
+                    if (Object.keys(o)[0] !== newKey) {
+                        Object.defineProperty(o, newKey,
+                            Object.getOwnPropertyDescriptor(o, Object.keys(o)[0]));
+                        delete o[Object.keys(o)[0]];
+                    }
+                }
+                if (ctrl.tankSize)
+                    renameKey(ctrl.ofs.filters.tank_sizes, ctrl.ofs.filters.vehicle_categories[0])
+                if (ctrl.fuelConsumption)
+                    renameKey(ctrl.ofs.filters.fuel_consumptions, ctrl.ofs.filters.vehicle_categories[0])
                 console.log(ctrl.ofs)
+            }
+            ctrl.check = (what) => {
+                switch (what) {
+                    case 'speed':
+                        if (ctrl.drivingSpeed) ctrl.drivingSpeed = false
+                        break;
+                    case 'style':
+                        if (ctrl.drivingStyle) ctrl.drivingStyle = false
+                        break;
+                }
             }
             //
             //
             ctrl.ofs = {
                 filters: {
-                    "data_source":"cfd",
+                    "data_source": "cfd",
                     "fuel_type": "gasoline",
-                    "vehicle_type":"car",
+                    "vehicle_type": "car",
                     "driving_style": "moderate",
                     "driving_speed": 60,
                     "vehicle_categories": ["b"],
@@ -571,7 +592,7 @@ angular.module('orsApp.ors-options', [])
                 }
             }
             $scope.searchBrand = (row) => {
-                return !!((row.toLowerCase().indexOf(ctrl.queryBrand.toLowerCase() || '') !== -1 ));
+                return !!((row.toLowerCase().indexOf(ctrl.queryBrand.toLowerCase() || '') !== -1));
             }
         }]
     });
