@@ -55,7 +55,7 @@ angular.module("orsApp").constant("orsNamespaces", {
     url: "https://api.openrouteservice.org/mapsurfer/{z}/{x}/{y}.png",
     attribution:
       'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, powered by <a href="http://mapsurfernet.com/">MapSurfer.NET</a>',
-    maxZoom: 10,
+    maxZoom: 18,
     minZoom: 0
   },
   //url to hillshade overlay
