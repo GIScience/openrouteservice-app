@@ -1,5 +1,5 @@
-angular.module('orsApp.ors-modal', []).component('orsModal', {
-    template: `
+angular.module("orsApp.ors-modal", []).component("orsModal", {
+  template: `
 			<div class="ors-modal-container" ng-show="$ctrl.show">
 				<form class="ors-dialog">
 				<ng-transclude></ng-transclude>
@@ -10,11 +10,11 @@ angular.module('orsApp.ors-modal', []).component('orsModal', {
 				</form>
 			</div>
     `,
-    transclude: true,
-    bindings: {
-        show: '=',
-    },
-    controller() {
-        let ctrl = this;
-    }
+  transclude: true,
+  bindings: {
+    show: "="
+  },
+  controller() {
+    let ctrl = this;
+  }
 });
