@@ -9,6 +9,7 @@ angular
       function(orsExportFactory, orsRouteService) {
         let ctrl = this;
         ctrl.elevation = true;
+        ctrl.instructions = false;
         ctrl.filename = "ors-export-linestring";
         ctrl.gpxOptShow = true;
         ctrl.tcxOptShow = false;
@@ -86,7 +87,8 @@ angular
         };
         ctrl.exportRoute = () => {
           let options = {
-            elevation: ctrl.elevation
+            elevation: ctrl.elevation,
+            instructions: ctrl.instructions
           };
           let currentRoute = null;
           if (ctrl.currentFileFormat == "rawjson") {

@@ -12,8 +12,16 @@ angular
       "$scope",
       "orsRouteService",
       "orsSettingsFactory",
+      "orsRequestService",
       "lists",
-      function($rootScope, $scope, orsRouteService, orsSettingsFactory, lists) {
+      function(
+        $rootScope,
+        $scope,
+        orsRouteService,
+        orsSettingsFactory,
+        orsRequestService,
+        lists
+      ) {
         let ctrl = this;
         ctrl.profiles = lists.profiles;
         /** use scope in order to share same template ng-include with summaries */

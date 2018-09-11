@@ -34,6 +34,7 @@
     "clipboard": "^2.0.0"
   },
   "resolutions": {
-    "angular": "~1.5.10"
+    "angular": "~1.5.10",
+    "leaflet": ">= 1.3.1"
   }
 }

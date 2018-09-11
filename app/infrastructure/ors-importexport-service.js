@@ -2,12 +2,23 @@ angular
   .module("orsApp.GeoFileHandler-service", ["ngFileSaver"])
   /**
  /*** Export Factory
- **/
-  .factory("orsExportFactory", [
+ **/ .factory("orsExportFactory", [
     "FileSaver",
     "Blob",
     "orsNamespaces",
-    (FileSaver, Blob, orsNamespaces) => {
+    "orsRequestService",
+    "orsSettingsFactory",
+    "orsUtilsService",
+    "orsRouteService",
+    (
+      FileSaver,
+      Blob,
+      orsNamespaces,
+      orsRequestService,
+      orsSettingsFactory,
+      orsUtilsService,
+      orsRouteService
+    ) => {
       var orsExportFactory = {};
       /**
        * Export any vector element on the map to GPX
@@ -27,12 +38,44 @@ angular
         let exportData, geojsonData, extension;
         extension = "." + format;
         switch (format) {
+            /**
+             * To generate the gpx file the ORS API is called with format=gpx and current settings.
+             * Instructions can be included when needed.
+             */
           case "gpx":
-            geojsonData = L.polyline(geometry).toGeoJSON();
-            geojsonData.properties.name = filename; // togpx is looking for name tag https://www.npmjs.com/package/togpx#gpx
-            exportData = togpx(geojsonData, {
-              creator: "OpenRouteService.org"
-            });
+            let userOptions = orsSettingsFactory.getUserOptions();
+            let settings = orsSettingsFactory.getSettings();
+            let payload = orsUtilsService.routingPayload(settings, userOptions);
+            payload.format = "gpx";
+            if (!options.instructions) payload.instructions = false;
+            const request = orsRouteService.fetchRoute(payload);
+            orsRouteService.routingRequests.requests.push(request);
+            request.promise.then(
+              function(response) {
+                // parsing xml to js object using https://www.npmjs.com/package/xml-js
+                exportData = xml2js(response);
+                let metadata = exportData.elements[0].elements[0].elements;
+                metadata[0].elements[0].text = filename;
+                metadata[1].elements[0].text = options.instruction
+                  ? "This route and instructions were generated from maps.openrouteservice"
+                  : "This route was generated from maps.openrouteservice";
+                // parsing back to xml string + saving
+                exportData = js2xml(exportData);
+                exportData = new Blob([exportData], {
+                  type: "application/xml;charset=utf-8"
+                });
+                FileSaver.saveAs(exportData, filename + extension);
+              },
+              function(error) {
+                orsSettingsFactory.requestSubject.onNext(false);
+                alert("There was an error generating the gpx file: " + error);
+              }
+            );
+            // geojsonData = L.polyline(geometry).toGeoJSON();
+            // geojsonData.properties.name = filename; // togpx is looking for name tag https://www.npmjs.com/package/togpx#gpx
+            // exportData = togpx(geojsonData, {
+            //   creator: "OpenRouteService.org"
+            // });
             break;
           case "kml":
             geojsonData = L.polyline(geometry).toGeoJSON();
@@ -90,18 +133,21 @@ angular
             break;
           default:
         }
-        exportData = new Blob([exportData], {
-          type: "application/xml;charset=utf-8"
-        });
-        FileSaver.saveAs(exportData, filename + extension);
+        // as gpx generation is async we have to save it upon returned promise
+        // therefore skipping saving for gpx here
+        if (format !== "gpx") {
+          exportData = new Blob([exportData], {
+            type: "application/xml;charset=utf-8"
+          });
+          FileSaver.saveAs(exportData, filename + extension);
+        }
       };
       return orsExportFactory;
     }
   ])
   /**
-     /*** Import Factory
-     **/
-  .factory("orsImportFactory", [
+ /*** Import Factory
+ **/ .factory("orsImportFactory", [
     "orsNamespaces",
     orsNamespaces => {
       var orsImportFactory = {};
