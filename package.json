@@ -1,6 +1,6 @@
 {
   "name": "maps.openrouteservice.org",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "repository": {
     "type": "git",
     "url": "https://github.com/GIScience/openrouteservice-app.git"
@@ -24,16 +24,17 @@
     "browserify": "^14.1.0",
     "core-js": "2.4.0",
     "geojson": "^0.4.1",
-    "grunt-contrib-watch": "^1.0.0",
+    "grunt-contrib-watch": "^1.1.0",
     "grunt-remove-logging": "^0.2.0",
     "leaflet": "latest",
     "leaflet-control-angular": "^0.1.4",
     "leaflet-geometryutil": "^0.8.0",
     "leaflet-omnivore": "^0.3.4",
+    "snyk": "^1.80.1",
     "togpx": "^0.5.3",
     "tokml": "^0.4.0",
-    "zone.js": "0.6.12",
-    "snyk": "^1.80.1"
+    "xml-js": "^1.6.7",
+    "zone.js": "0.6.12"
   },
   "devDependencies": {
     "bower": "^1.8.2",
@@ -54,7 +55,7 @@
     "grunt-contrib-less": "^1.4.1",
     "grunt-contrib-uglify": "^0.9.1",
     "grunt-grunt": "^0.2.5",
-    "grunt-htmlhint": "^0.4.1",
+    "grunt-htmlhint": "^0.9.13",
     "grunt-jsdoc": "^2.1.0",
     "grunt-ng-constant": "^1.1.0",
     "grunt-npm-command": "^0.1.2",

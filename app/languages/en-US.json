@@ -196,5 +196,6 @@
     "INFO_SUPPORT": "Please Support openrouteservice.org",
     "INFO_SUPPORT_TEXT": "Openrouteservice offers free services and relies on donations for a majority of its funding. If you would like to support the further development of features and server infrastructure donations are very welcome.",
     "LOCALE_HEIGHTGRAPH": "Elevation profile",
-    "DEVELOPER_SETTINGS": "Developer Settings"
+    "DEVELOPER_SETTINGS": "Developer Settings",
+    "INCLUDE_INSTRUCTIONS": "Include Instructions"
 }
