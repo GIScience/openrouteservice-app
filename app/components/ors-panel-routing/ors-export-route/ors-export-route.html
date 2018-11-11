@@ -30,10 +30,29 @@
     </div>
     <div ng-if="$ctrl.gpxOptShow">
         <br>
-        <div class="ui checkbox">
-            <input type="checkbox" id="instructions" data-ng-model="$ctrl.instructions"
-                   ng-click="$ctrl.instructions != $ctrl.instructions">
-            <label for="instructions" ng-bind-html="('INCLUDE_INSTRUCTIONS' | translate)"></label>
+        <div class="field ors-inline">
+            <div class="ui radio checkbox">
+                <input ng-model="$ctrl.toGpx"
+                       ng-value=true type="radio">
+                <label ng-click="$ctrl.toGpx = true">togpx
+                </label>
+            </div>
+        </div>
+        <div class="field ors-inline">
+            <div class="ui radio checkbox">
+                <input  ng-model="$ctrl.toGpx"
+                        ng-value=false type="radio">
+                <label ng-click="$ctrl.toGpx = false">Ors API
+                </label>
+            </div>
+        </div>
+        <div ng-if="!$ctrl.toGpx">
+            <br>
+            <div class="ui checkbox">
+                <input type="checkbox" id="instructions" data-ng-model="$ctrl.instructions"
+                       ng-click="$ctrl.instructions != $ctrl.instructions">
+                <label for="instructions" ng-bind-html="('INCLUDE_INSTRUCTIONS' | translate)"></label>
+            </div>
         </div>
     </div>
     <div class="ui divider">
