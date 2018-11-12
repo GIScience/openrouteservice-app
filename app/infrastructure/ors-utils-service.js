@@ -336,7 +336,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
           options.profile_params.restrictions.axleload = settings.profile.options.axleload.toString();
           ++vt;
         }
-        if (!angular.isUndefined(settings.profile.options.hazmat)) {
+        if (!angular.isUndefined(settings.profile.options.hazmat) && settings.profile.options.hazmat) {
           options.profile_params.restrictions.hazmat =
             settings.profile.options.hazmat;
           ++vt;
