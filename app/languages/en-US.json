@@ -3,7 +3,7 @@
     "CAR": "Car",
     "HGV": "Heavy Vehicle",
     "PEDESTRIAN": "Pedestrian",
-    "WHEELCHAIR": "Wheelchair is currently under revision",
+    "WHEELCHAIR": "Wheelchair",
     "DISTANCE": "Distance",
     "DURATION": "Time",
     "SETTINGS": "Settings",

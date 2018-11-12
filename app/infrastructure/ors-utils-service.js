@@ -107,7 +107,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
      * @returns {Array}
      */
     orsUtilsService.decodePolyline = function(str, elevation, precision) {
-      var index = 0,
+      let index = 0,
         lat = 0,
         lng = 0,
         coordinates = [],
@@ -153,12 +153,12 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
         access_token: "d9c484e2c240975de02bfd2f2f4211ad3a0bab6d",
         longUrl: location
       };
-      var url = ENV.shortenlink;
-      var canceller = $q.defer();
-      var cancel = reason => {
+      const url = ENV.shortenlink;
+      const canceller = $q.defer();
+      let cancel = reason => {
         canceller.resolve(reason);
       };
-      var promise = $http
+      let promise = $http
         .get(url, {
           params: requestData,
           timeout: canceller.promise
@@ -283,7 +283,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
           }
         }
       });
-      if (subgroup == "Bicycle") {
+      if (subgroup === "Bicycle") {
         if (!angular.isUndefined(settings.profile.options.difficulty)) {
           if (settings.profile.options.difficulty.avoidhills === true)
             options.avoid_features += "hills" + "|";
@@ -294,7 +294,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
       } else {
         options.avoid_features = options.avoid_features.slice(0, -1);
       }
-      if (subgroup == "Car" || subgroup == "HeavyVehicle") {
+      if (subgroup === "Car" || subgroup === "HeavyVehicle") {
         if (!angular.isUndefined(settings.profile.options.borders)) {
           let borders = settings.profile.options.borders;
           // if all borders are avoided only pass avoid_borders="all"
@@ -314,7 +314,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
         delete options.avoid_borders;
       if (angular.equals(options.avoid_countries, ""))
         delete options.avoid_countries;
-      if (subgroup == "HeavyVehicle") {
+      if (subgroup === "HeavyVehicle") {
         let vt = 0;
         if (!angular.isUndefined(settings.profile.options.width)) {
           options.profile_params.restrictions.width = settings.profile.options.width.toString();
@@ -341,11 +341,11 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
             settings.profile.options.hazmat;
           ++vt;
         }
-        if (vt != 0) options.vehicle_type = settings.profile.type;
+        if (vt !== 0) options.vehicle_type = settings.profile.type;
       }
       if (settings.profile.options.maxspeed)
         options.maximum_speed = settings.profile.options.maxspeed.toString();
-      if (subgroup == "Bicycle") {
+      if (subgroup === "Bicycle") {
         console.log(settings.profile.options);
         if (
           (settings.profile.options.steepness > 0) &
@@ -362,7 +362,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
           };
         }
       }
-      if (subgroup == "Pedestrian") {
+      if (subgroup === "Pedestrian") {
         if (settings.profile.options.green) {
           options.profile_params.weightings.green = {
             factor: settings.profile.options.green
@@ -381,15 +381,15 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
       ) {
         options.avoid_polygons = settings.avoidable_polygons;
       }
-      if (subgroup == "Wheelchair") {
+      if (subgroup === "Wheelchair") {
         if (settings.profile.options.surface)
-          options.profile_params.surface_type = settings.profile.options.surface.toString();
+          options.profile_params.restrictions.surface_type = settings.profile.options.surface.toString();
         //options.profile_params.track_type = '';
         //options.profile_params.smoothness_type = '';
         if (settings.profile.options.curb)
-          options.profile_params.maximum_sloped_curb = settings.profile.options.curb.toString();
+          options.profile_params.restrictions.maximum_sloped_curb = settings.profile.options.curb.toString();
         if (settings.profile.options.incline)
-          options.profile_params.maximum_incline = settings.profile.options.incline.toString();
+          options.profile_params.restrictions.maximum_incline = settings.profile.options.incline.toString();
       }
       if (angular.equals(options.profile_params.weightings, {}))
         delete options.profile_params.weightings;
@@ -413,6 +413,8 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
           orsUtilsService.roundCoordinate(settings.waypoints[0]._latlng.lng) +
           "," +
           orsUtilsService.roundCoordinate(settings.waypoints[0]._latlng.lat),
+        // this will suppress the jshint error for linebreak before ternary
+        /*jshint -W014 */
         range_type:
           parseInt(settings.profile.options.analysis_options.method) === 0
             ? "time"
@@ -429,6 +431,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
           settings.profile.options.analysis_options.reverseflow === true
             ? lists.isochroneOptionList.reverseFlow.destination
             : lists.isochroneOptionList.reverseFlow.start,
+          /*jshint +W014 */
         profile: lists.profiles[settings.profile.type].request,
         attributes: "area|reachfactor|total_pop",
         options: JSON.stringify(orsUtilsService.generateOptions(settings))
@@ -572,7 +575,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
     ) {
       if (element.getElementsByTagNameNS) {
         if (collection) {
-          var collectionArr = [];
+          let collectionArr = [];
           collectionArr.push(element.getElementsByTagNameNS(ns, tagName));
           return collectionArr;
         }
@@ -586,7 +589,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
      */
     orsUtilsService.convertDistanceFormat = function(distance, uom) {
       uom = uom.toLowerCase();
-      var origDistance = parseFloat(distance);
+      const origDistance = parseFloat(distance);
       distance = parseFloat(distance);
       if (distance >= 1000) {
         uom = "km";
@@ -693,8 +696,8 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
               }
               // Filter functions and properties of other types
             } else if (
-              typeof obj[o] != "function" &&
-              o.toString().charAt(0) != "_" &&
+              typeof obj[o] !== "function" &&
+              o.toString().charAt(0) !== "_" &&
               (lists.permalinkFilters[settings.profile.type].includes(o) ||
                 lists.permalinkFilters.analysis.includes(o))
             ) {
