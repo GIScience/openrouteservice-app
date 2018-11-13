@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v0.3.6] - 2018-11-13
+
+### Changed
+- Forum link to ask.openrouteservice.org (([#262](https://github.com/GIScience/openrouteservice-app/issues/262)))
+- GPX export file generation supports both old and new method (([#256](https://github.com/GIScience/openrouteservice-app/issues/256)))
+
+### Fixed
+- incorrect Wheelchair parameters ([#264](https://github.com/GIScience/openrouteservice-app/issues/264))
+- unchecking hgv settings leaves setting=false remnant in request' ([#263](https://github.com/GIScience/openrouteservice-app/issues/263))
+- broken Isochrone toggle ([#260](https://github.com/GIScience/openrouteservice-app/issues/260))
+
 ## [v0.3.5] - 2018-09-11
 
 ### Changed
