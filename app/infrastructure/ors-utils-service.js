@@ -336,7 +336,10 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
           options.profile_params.restrictions.axleload = settings.profile.options.axleload.toString();
           ++vt;
         }
-        if (!angular.isUndefined(settings.profile.options.hazmat) && settings.profile.options.hazmat) {
+        if (
+          !angular.isUndefined(settings.profile.options.hazmat) &&
+          settings.profile.options.hazmat
+        ) {
           options.profile_params.restrictions.hazmat =
             settings.profile.options.hazmat;
           ++vt;
@@ -431,7 +434,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
           settings.profile.options.analysis_options.reverseflow === true
             ? lists.isochroneOptionList.reverseFlow.destination
             : lists.isochroneOptionList.reverseFlow.start,
-          /*jshint +W014 */
+        /*jshint +W014 */
         profile: lists.profiles[settings.profile.type].request,
         attributes: "area|reachfactor|total_pop",
         options: JSON.stringify(orsUtilsService.generateOptions(settings))

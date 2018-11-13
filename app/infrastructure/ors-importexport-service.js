@@ -19,59 +19,62 @@ angular
       orsUtilsService,
       orsRouteService
     ) => {
-        /**
-         * Creates the GPX data to export from the vector geometries on the map
-         * using togpx: https://github.com/tyrasd/togpx
-         * @param geometry - geometry to convert
-         * @param filename - filename of the export file
-         * @returns - the gpx data in xml format
-         */
-        let gpxExportFromMap = (geometry, filename) => {
-            let geojsonData = L.polyline(geometry).toGeoJSON()
-            geojsonData.properties.name = filename // togpx is looking for name tag https://www.npmjs.com/package/togpx#gpx
-            return togpx(geojsonData, {
-                creator: "OpenRouteService.org"
-            })
-        };
-        /**
-         * Save GPX file by doing an additional api call
-         * using format=gpx with the same options
-         * @param options - route options
-         * @param filename - filename of the export file
-         */
-        let saveGpxFromApi = (options, filename) => {
-            let userOptions = orsSettingsFactory.getUserOptions();
-            let settings = orsSettingsFactory.getSettings();
-            let payload = orsUtilsService.routingPayload(settings, userOptions);
-            payload.format = "gpx";
-            if (!options.instructions) payload.instructions = false;
-            const request = orsRouteService.fetchRoute(payload);
-            orsRouteService.routingRequests.requests.push(request);
-            request.promise.then(function (response) {
-                // parsing xml to js object using https://www.npmjs.com/package/xml-js
-                let exportData = xml2js(response);
-                let metadata = exportData.elements[0].elements[0].elements;
-                metadata[0].elements[0].text = filename;
-                // description node can be <desc></desc> so the parsed object wont have an elements array
-                if (metadata[1].elements == null) {
-                    metadata[1].elements = [{text: "", type: "text"}];
-                }
-                // this will suppress the jshint error for linebreak before ternary
-                /*jshint -W014 */
-                metadata[1].elements[0].text = options.instruction
-                    ? "This route and instructions were generated from maps.openrouteservice"
-                    : "This route was generated from maps.openrouteservice";
-                // parsing back to xml string + saving
-                exportData = js2xml(exportData);
-                exportData = new Blob([exportData], {
-                    type: "application/xml;charset=utf-8"
-                });
-                FileSaver.saveAs(exportData, filename + '.gpx');
-            }, function (error) {
-                orsSettingsFactory.requestSubject.onNext(false);
-                alert("There was an error generating the gpx file: " + error);
+      /**
+       * Creates the GPX data to export from the vector geometries on the map
+       * using togpx: https://github.com/tyrasd/togpx
+       * @param geometry - geometry to convert
+       * @param filename - filename of the export file
+       * @returns - the gpx data in xml format
+       */
+      let gpxExportFromMap = (geometry, filename) => {
+        let geojsonData = L.polyline(geometry).toGeoJSON();
+        geojsonData.properties.name = filename; // togpx is looking for name tag https://www.npmjs.com/package/togpx#gpx
+        return togpx(geojsonData, {
+          creator: "OpenRouteService.org"
+        });
+      };
+      /**
+       * Save GPX file by doing an additional api call
+       * using format=gpx with the same options
+       * @param options - route options
+       * @param filename - filename of the export file
+       */
+      let saveGpxFromApi = (options, filename) => {
+        let userOptions = orsSettingsFactory.getUserOptions();
+        let settings = orsSettingsFactory.getSettings();
+        let payload = orsUtilsService.routingPayload(settings, userOptions);
+        payload.format = "gpx";
+        if (!options.instructions) payload.instructions = false;
+        const request = orsRouteService.fetchRoute(payload);
+        orsRouteService.routingRequests.requests.push(request);
+        request.promise.then(
+          function(response) {
+            // parsing xml to js object using https://www.npmjs.com/package/xml-js
+            let exportData = xml2js(response);
+            let metadata = exportData.elements[0].elements[0].elements;
+            metadata[0].elements[0].text = filename;
+            // description node can be <desc></desc> so the parsed object wont have an elements array
+            if (metadata[1].elements == null) {
+              metadata[1].elements = [{ text: "", type: "text" }];
+            }
+            // this will suppress the jshint error for linebreak before ternary
+            /*jshint -W014 */
+            metadata[1].elements[0].text = options.instruction
+              ? "This route and instructions were generated from maps.openrouteservice"
+              : "This route was generated from maps.openrouteservice";
+            // parsing back to xml string + saving
+            exportData = js2xml(exportData);
+            exportData = new Blob([exportData], {
+              type: "application/xml;charset=utf-8"
             });
-        }
+            FileSaver.saveAs(exportData, filename + ".gpx");
+          },
+          function(error) {
+            orsSettingsFactory.requestSubject.onNext(false);
+            alert("There was an error generating the gpx file: " + error);
+          }
+        );
+      };
 
       let orsExportFactory = {};
       /**
@@ -98,9 +101,9 @@ angular
            */
           case "gpx":
             if (options.toGpx) {
-              exportData = gpxExportFromMap(geometry, filename)
+              exportData = gpxExportFromMap(geometry, filename);
             } else {
-                saveGpxFromApi(options, filename, extension)
+              saveGpxFromApi(options, filename, extension);
             }
             break;
           case "kml":
@@ -126,7 +129,7 @@ angular
           case "geojson":
             if (geomType === "linestring") {
               if (!options.elevation) {
-                angular.forEach(geometry, (value) => {
+                angular.forEach(geometry, value => {
                   value = value.splice(2, 1);
                 });
               }
@@ -161,7 +164,7 @@ angular
         }
         // as API gpx generation is async we have to save it upon returned promise
         // therefore skipping saving for gpx here
-        if (!(format === 'gpx' && !options.toGpx)) {
+        if (!(format === "gpx" && !options.toGpx)) {
           exportData = new Blob([exportData], {
             type: "application/xml;charset=utf-8"
           });
