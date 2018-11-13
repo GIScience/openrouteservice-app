@@ -84,12 +84,10 @@ angular.module("orsApp.ors-header", []).component("orsHeader", {
        */
       ctrl.setDefaultValues = value => {
         angular.forEach(Object.keys(ctrl.currentOptions.env), key => {
+          let pre = ctrl.currentOptions.env[key].split("/")
           ctrl.currentOptions.env[key] = [
             value,
-            ctrl.currentOptions.env[key]
-              .split("/")
-              .slice(3)
-              .join("/")
+            pre[pre.length - 1]
           ].join("/");
         });
       };
@@ -98,7 +96,7 @@ angular.module("orsApp.ors-header", []).component("orsHeader", {
        */
       ctrl.setENV = () => {
         ENV.directions = ctrl.currentOptions.env.directions;
-        ENV.analyse = ctrl.currentOptions.env.isochrones;
+        ENV.isochrones = ctrl.currentOptions.env.isochrones;
         ENV.geocode = ctrl.currentOptions.env.geocode;
         ENV.matrix = ctrl.currentOptions.env.matrix;
         ENV.pois = ctrl.currentOptions.env.pois;
@@ -110,7 +108,7 @@ angular.module("orsApp.ors-header", []).component("orsHeader", {
         alert(`Endpoints have been changed to
 geocode:     ${ENV.geocode}
 directions:   ${ENV.directions}
-isochrones:  ${ENV.analyse}
+isochrones:  ${ENV.isochrones}
 matrix:        ${ENV.matrix}
 pois:            ${ENV.pois}`);
       };

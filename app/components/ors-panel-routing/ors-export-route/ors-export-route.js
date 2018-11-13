@@ -10,6 +10,7 @@ angular
         let ctrl = this;
         ctrl.elevation = true;
         ctrl.instructions = false;
+        ctrl.toGpx = true;
         ctrl.filename = "ors-export-linestring";
         ctrl.gpxOptShow = true;
         ctrl.tcxOptShow = false;
@@ -88,10 +89,11 @@ angular
         ctrl.exportRoute = () => {
           let options = {
             elevation: ctrl.elevation,
-            instructions: ctrl.instructions
+            instructions: ctrl.instructions,
+            toGpx: ctrl.toGpx
           };
           let currentRoute = null;
-          if (ctrl.currentFileFormat == "rawjson") {
+          if (ctrl.currentFileFormat === "rawjson") {
             currentRoute =
               orsRouteService.data.routes[orsRouteService.getCurrentRouteIdx()];
           } else {

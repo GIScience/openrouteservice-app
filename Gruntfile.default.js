@@ -295,13 +295,13 @@ module.exports = function(grunt) {
                 constants: {
                     ENV: {
                         name: "production",
-                        geocode: "https://api.openrouteservice.org/geocoding",
+                        geocode: "https://api.openrouteservice.org/geocode",
                         directions:
                             "https://api.openrouteservice.org/directions",
                         isochrones:
                             "https://api.openrouteservice.org/isochrones",
                         matrix: "https://api.openrouteservice.org/matrix",
-                        pois: "https://api.openrouteservice.org/places",
+                        pois: "https://api.openrouteservice.org/pois",
                         shortenlink: "https://api-ssl.bitly.com/v3/shorten",
                         mapsurfer:
                             "https://api.openrouteservice.org/mapsurfer/{z}/{x}/{y}.png"

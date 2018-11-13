@@ -139,14 +139,14 @@ angular.module("orsApp.ors-aa-query", []).component("orsAaQuery", {
           }
         });
         ctrl.showIntervals[intervalIdx] =
-          ctrl.showIntervals[intervalIdx] === true ? false : true;
-        if (ctrl.intervalsHidden.indexOf(intervalIdx) == -1) {
+          ctrl.showIntervals[intervalIdx] !== true;
+        if (ctrl.intervalsHidden.indexOf(intervalIdx) === -1) {
           ctrl.intervalsHidden.push(intervalIdx);
         } else {
           const index = ctrl.intervalsHidden.indexOf(intervalIdx);
           ctrl.intervalsHidden.splice(index, 1);
         }
-        if (ctrl.intervalsHidden.length == ctrl.intervalsLength) {
+        if (ctrl.intervalsHidden.length === ctrl.intervalsLength) {
           ctrl.showOnMap = false;
         } else {
           ctrl.showOnMap = true;
