@@ -349,7 +349,6 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
       if (settings.profile.options.maxspeed)
         options.maximum_speed = settings.profile.options.maxspeed.toString();
       if (subgroup === "Bicycle") {
-        console.log(settings.profile.options);
         if (
           (settings.profile.options.steepness > 0) &
           (settings.profile.options.steepness <= 15)

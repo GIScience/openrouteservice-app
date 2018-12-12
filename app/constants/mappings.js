@@ -438,5 +438,35 @@ angular.module("orsApp").constant("mappings", {
       text: ">S5",
       color: "#132020"
     }
+  },
+  roadaccessrestrictions: {
+    "0": {
+      text: "None (there are no restrictions)",
+      color: "#fe7f6c"
+    },
+    "1": {
+      text: "No",
+      color: "#FE7F9C"
+    },
+    "2": {
+      text: "Customers",
+      color: "#FDAB9F"
+    },
+    "4": {
+      text: "Destination",
+      color: "#FF66CC"
+    },
+    "8": {
+      text: "Delivery",
+      color: "#FDB9C8"
+    },
+    "16": {
+      text: "Private",
+      color: "#F64A8A"
+    },
+    "32": {
+      text: "Permissive",
+      color: "#E0115F"
+    }
   }
 });
