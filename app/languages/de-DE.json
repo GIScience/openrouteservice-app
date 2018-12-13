@@ -55,6 +55,7 @@
     "SURFACE": "Oberfläche",
     "INCLINE": "Anstieg",
     "CURB": "Bordsteinhöhe",
+    "WHEELCHAIR_WIDTH" : "Mindestbreite",
     "ISOCHRONES": "Isochronen",
     "ISOCHRONEMETHOD": "Isochronen Methode",
     "TIMEDISTANCE": "Distanz",

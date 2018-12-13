@@ -119,6 +119,9 @@ angular.module("orsApp.params-service", []).factory("orsParamsService", [
           if (permalinkKeysReversed[key] == "curb") {
             settings.profile.options.curb = value;
           }
+          if (permalinkKeysReversed[key] == "wheelchairWidth") {
+            settings.profile.options.wheelchairWidth = value;
+          }
           if (permalinkKeysReversed[key] == "method") {
             settings.profile.options.analysis_options.method = value;
           }

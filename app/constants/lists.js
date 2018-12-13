@@ -383,6 +383,24 @@ angular.module("orsApp").constant("lists", {
           name: "Flexible",
           value: 0.31
         }
+      },
+      Width: {
+        "2": {
+          name: "2m",
+          value: 2.0
+        },
+        "1.5": {
+          name: "1.5m",
+          value: 1.5
+        },
+        "1": {
+          name: "1m",
+          value: 1.0
+        },
+        "-1": {
+          name: "Any width (no value set)",
+          value: -1
+        }
       }
     },
     hgvParams: {
@@ -721,7 +739,7 @@ angular.module("orsApp").constant("lists", {
       "steepness",
       "green"
     ],
-    Wheelchair: ["type", "weight", "maxspeed", "incline", "curb", "surface"]
+    Wheelchair: ["type", "weight", "maxspeed", "incline", "curb", "surface", "wheelchairWidth"]
   },
   //Whitelist for settings to be stored in permalink
   permalinkKeys: {
@@ -740,6 +758,7 @@ angular.module("orsApp").constant("lists", {
     surface: "h1",
     incline: "h2",
     curb: "h3",
+    wheelchairWidth: "h4",
     method: "i",
     isovalue: "j1",
     isointerval: "j2",

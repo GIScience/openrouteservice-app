@@ -403,6 +403,16 @@
                 </div>
                 <rzslider rz-slider-model="$ctrl.wheelchairSliders.Curb.value" rz-slider-options="$ctrl.wheelchairSliders.Curb.options">
                 </rzslider>
+                <div class="ui label tiny flleft">
+                    <span ng-bind-html="('WHEELCHAIR_WIDTH' | translate)">
+                    </span>
+                    <span ng-bind-html="':'">
+                    </span>
+                    <div class="detail" ng-bind="$ctrl.optionList.wheelchair.Width[$ctrl.wheelchairSliders.Width.value].name">
+                    </div>
+                </div>
+                <rzslider rz-slider-model="$ctrl.wheelchairSliders.Width.value" rz-slider-options="$ctrl.wheelchairSliders.Width.options">
+                </rzslider>
             </div>
         </div>
     </div>

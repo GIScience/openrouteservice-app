@@ -55,6 +55,7 @@
     "SURFACE": "Поверхность",
     "INCLINE": "Подъём",
     "CURB": "Бордюр",
+    "WHEELCHAIR_WIDTH" : "Minimum width",
     "ISOCHRONES": "Зоны доступности",
     "ISOCHRONEMETHOD": "Метод расчёта",
     "TIMEDISTANCE": "Время",

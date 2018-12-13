@@ -55,6 +55,7 @@
     "SURFACE": "Surface",
     "INCLINE": "Inclinaison",
     "CURB": "Trottoir",
+    "WHEELCHAIR_WIDTH" : "Minimum width",
     "ISOCHRONES": "Isochrones",
     "ISOCHRONEMETHOD": "Méthode isochrone",
     "TIMEDISTANCE": "Temps",

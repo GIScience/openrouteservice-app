@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 ### Added
-- Adds population attribution to info modal (issue #266)
-- Adds road access restrictions to panel and map (issue #267)
+- Adds population attribution to info modal ([#266](https://github.com/GIScience/openrouteservice-app/issues/266))
+- Adds road access restrictions to panel and map ([#267](https://github.com/GIScience/openrouteservice-app/issues/267))
+- Adds road access restrictions to panel and map ([#268](https://github.com/GIScience/openrouteservice-app/issues/268))
 ### Fixed
 ### Changed
 ### Deprecated

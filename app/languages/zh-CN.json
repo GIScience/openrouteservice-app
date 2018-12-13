@@ -55,6 +55,7 @@
     "SURFACE": "路面",
     "INCLINE": "斜坡",
     "CURB": "边道",
+    "WHEELCHAIR_WIDTH" : "Minimum width",
     "ISOCHRONES": "等值线",
     "ISOCHRONEMETHOD": "等值算法",
     "TIMEDISTANCE": "时间",

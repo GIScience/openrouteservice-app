@@ -55,6 +55,7 @@
     "SURFACE": "Surface",
     "INCLINE": "Incline",
     "CURB": "Curb",
+    "WHEELCHAIR_WIDTH" : "Minimum width",
     "ISOCHRONES": "Isochroƒnes",
     "ISOCHRONEMETHOD": "Isochrone method",
     "TIMEDISTANCE": "Time",
