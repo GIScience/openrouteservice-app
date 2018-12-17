@@ -739,7 +739,15 @@ angular.module("orsApp").constant("lists", {
       "steepness",
       "green"
     ],
-    Wheelchair: ["type", "weight", "maxspeed", "incline", "curb", "surface", "wheelchairWidth"]
+    Wheelchair: [
+      "type",
+      "weight",
+      "maxspeed",
+      "incline",
+      "curb",
+      "surface",
+      "wheelchairWidth"
+    ]
   },
   //Whitelist for settings to be stored in permalink
   permalinkKeys: {
