@@ -41,7 +41,7 @@ angular
           orsAaService.toggle(obj.isoidx, obj.toggle, obj.zoom);
         };
         ctrl.toggleInterval = obj => {
-          orsAaService.toggleInterval(obj.isoidx, obj.revIsoIidx, obj.toggle)
+          orsAaService.toggleInterval(obj.isoidx, obj.revIsoIidx, obj.toggle);
         };
         ctrl.removeQuery = isoidx => {
           orsAaService.remove(isoidx);

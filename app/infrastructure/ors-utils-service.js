@@ -349,7 +349,6 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
       if (settings.profile.options.maxspeed)
         options.maximum_speed = settings.profile.options.maxspeed.toString();
       if (subgroup === "Bicycle") {
-        console.log(settings.profile.options);
         if (
           (settings.profile.options.steepness > 0) &
           (settings.profile.options.steepness <= 15)
@@ -390,9 +389,11 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
         //options.profile_params.track_type = '';
         //options.profile_params.smoothness_type = '';
         if (settings.profile.options.curb)
-          options.profile_params.restrictions.maximum_sloped_curb = settings.profile.options.curb.toString();
+          options.profile_params.restrictions.maximum_sloped_kerb = settings.profile.options.curb.toString();
         if (settings.profile.options.incline)
           options.profile_params.restrictions.maximum_incline = settings.profile.options.incline.toString();
+        if (settings.profile.options.wheelchairWidth)
+          options.profile_params.restrictions.minimum_width = settings.profile.options.wheelchairWidth.toString();
       }
       if (angular.equals(options.profile_params.weightings, {}))
         delete options.profile_params.weightings;

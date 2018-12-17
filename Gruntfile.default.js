@@ -284,7 +284,10 @@ module.exports = function(grunt) {
                             "http://localhost:8082/name_of_war_archive/matrix",
                         pois:
                             "http://localhost:8082/name_of_war_archive/locations",
-                        shortenlink: "https://api-ssl.bitly.com/v3/shorten"
+                        shortenlink: "https://api-ssl.bitly.com/v3/shorten",
+                        mapsurfer:
+                            "https://api.openrouteservice.org/mapsurfer/{z}/{x}/{y}.png",
+                        landmarks: 'https://landmarks-api.openrouteservice.org/'
                     }
                 }
             },
@@ -304,7 +307,8 @@ module.exports = function(grunt) {
                         pois: "https://api.openrouteservice.org/pois",
                         shortenlink: "https://api-ssl.bitly.com/v3/shorten",
                         mapsurfer:
-                            "https://api.openrouteservice.org/mapsurfer/{z}/{x}/{y}.png"
+                            "https://api.openrouteservice.org/mapsurfer/{z}/{x}/{y}.png",
+                        landmarks: 'https://landmarks-api.openrouteservice.org/'
                     }
                 }
             }

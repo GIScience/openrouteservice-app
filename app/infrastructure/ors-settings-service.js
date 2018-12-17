@@ -86,6 +86,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
       return orsSettingsFactory[currentSettingsObj].getValue().profile.options;
     };
     orsSettingsFactory.setActiveOptions = (options, fireRequest) => {
+      console.log(options);
       orsSettingsFactory[
         currentSettingsObj
       ].getValue().profile.options = options;

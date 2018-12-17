@@ -84,11 +84,8 @@ angular.module("orsApp.ors-header", []).component("orsHeader", {
        */
       ctrl.setDefaultValues = value => {
         angular.forEach(Object.keys(ctrl.currentOptions.env), key => {
-          let pre = ctrl.currentOptions.env[key].split("/")
-          ctrl.currentOptions.env[key] = [
-            value,
-            pre[pre.length - 1]
-          ].join("/");
+          let pre = ctrl.currentOptions.env[key].split("/");
+          ctrl.currentOptions.env[key] = [value, pre[pre.length - 1]].join("/");
         });
       };
       /**

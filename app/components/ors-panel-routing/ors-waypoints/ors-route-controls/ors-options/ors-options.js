@@ -394,16 +394,22 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
           ctrl.currentOptions.surface !== undefined
             ? ctrl.optionList.wheelchair.Surface[ctrl.currentOptions.surface]
                 .value
-            : ctrl.optionList.wheelchair.Surface["concrete"].value;
+            : ctrl.optionList.wheelchair.Surface["any"].value;
         ctrl.currentOptions.incline =
           ctrl.currentOptions.incline !== undefined
             ? ctrl.optionList.wheelchair.Incline[ctrl.currentOptions.incline]
                 .value
-            : ctrl.optionList.wheelchair.Incline["3"].value;
+            : ctrl.optionList.wheelchair.Incline["31"].value;
         ctrl.currentOptions.curb =
           ctrl.currentOptions.curb !== undefined
             ? ctrl.optionList.wheelchair.Curb[ctrl.currentOptions.curb].value
-            : ctrl.optionList.wheelchair.Curb["0.03"].value;
+            : ctrl.optionList.wheelchair.Curb["0.31"].value;
+        ctrl.currentOptions.wheelchairWidth =
+          ctrl.currentOptions.wheelchairWidth !== undefined
+            ? ctrl.optionList.wheelchair.Width[
+                ctrl.currentOptions.wheelchairWidth
+              ].value
+            : ctrl.optionList.wheelchair.Width["-1"].value;
         ctrl.wheelchairSliders = {
           Surface: {
             value: ctrl.currentOptions.surface,
@@ -492,6 +498,34 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
               hideLimitLabels: true,
               onEnd: () => {
                 ctrl.currentOptions.curb = ctrl.wheelchairSliders.Curb.value;
+                ctrl.changeOptions();
+              }
+            }
+          },
+          Width: {
+            value: ctrl.currentOptions.wheelchairWidth,
+            options: {
+              stepsArray: [
+                {
+                  value: ctrl.optionList.wheelchair.Width["1"].value
+                },
+                {
+                  value: ctrl.optionList.wheelchair.Width["1.5"].value
+                },
+                {
+                  value: ctrl.optionList.wheelchair.Width["2"].value
+                },
+                {
+                  value: ctrl.optionList.wheelchair.Width["-1"].value
+                }
+              ],
+              showTicks: true,
+              showTicksValues: false,
+              hidePointerLabels: true,
+              hideLimitLabels: true,
+              onEnd: () => {
+                ctrl.currentOptions.wheelchairWidth =
+                  ctrl.wheelchairSliders.Width.value;
                 ctrl.changeOptions();
               }
             }
