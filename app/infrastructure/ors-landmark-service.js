@@ -61,8 +61,7 @@ angular.module("orsApp.landmark-service", []).factory("orsLandmarkService", [
 
             const desired = 0.0005;
             const endNode = prevNodes[prevNodes.length - 1];
-            for (var n = 0; n < prevNodes.length; n++) {
-              var node = prevNodes[n];
+            for (let node in prevNodes) {
               var x = Math.pow(endNode[1] - node[1], 2);
               var y = Math.pow(endNode[0] - node[0], 2);
               var dist = Math.sqrt(x + y);
