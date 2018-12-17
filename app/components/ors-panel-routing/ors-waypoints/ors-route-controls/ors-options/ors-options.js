@@ -406,7 +406,9 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
             : ctrl.optionList.wheelchair.Curb["0.31"].value;
         ctrl.currentOptions.wheelchairWidth =
           ctrl.currentOptions.wheelchairWidth !== undefined
-            ? ctrl.optionList.wheelchair.Width[ctrl.currentOptions.wheelchairWidth].value
+            ? ctrl.optionList.wheelchair.Width[
+                ctrl.currentOptions.wheelchairWidth
+              ].value
             : ctrl.optionList.wheelchair.Width["-1"].value;
         ctrl.wheelchairSliders = {
           Surface: {
@@ -522,7 +524,8 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
               hidePointerLabels: true,
               hideLimitLabels: true,
               onEnd: () => {
-                ctrl.currentOptions.wheelchairWidth = ctrl.wheelchairSliders.Width.value;
+                ctrl.currentOptions.wheelchairWidth =
+                  ctrl.wheelchairSliders.Width.value;
                 ctrl.changeOptions();
               }
             }
@@ -580,7 +583,6 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
         ctrl.routing = route == "directions" ? true : false;
       });
       ctrl.changeOptions = () => {
-        console.log(true)
         // call setoptions
         if (ctrl.currentOptions.difficulty)
           ctrl.difficultySliders.Fitness.options.disabled =
