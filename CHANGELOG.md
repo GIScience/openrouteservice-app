@@ -4,15 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+<!--## [Unreleased]
 
 ### Added
-- Adds population attribution to info modal ([#266](https://github.com/GIScience/openrouteservice-app/issues/266))
-- Adds road access restrictions to panel and map ([#267](https://github.com/GIScience/openrouteservice-app/issues/267))
-- Adds road access restrictions to panel and map ([#268](https://github.com/GIScience/openrouteservice-app/issues/268))
 ### Fixed
 ### Changed
-### Deprecated
+### Deprecated-->
+
+## [v0.3.7] - 2018-12-17
+
+### Added
+- Population attribution to info modal ([#266](https://github.com/GIScience/openrouteservice-app/issues/266))
+- Road access restrictions to panel and map ([#267](https://github.com/GIScience/openrouteservice-app/issues/267))
+- Minimum wheelchair width setting ([#268](https://github.com/GIScience/openrouteservice-app/issues/268))
 
 ## [v0.3.6] - 2018-11-13
 
@@ -21,9 +25,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - GPX export file generation supports both old and new method (([#256](https://github.com/GIScience/openrouteservice-app/issues/256)))
 
 ### Fixed
-- incorrect Wheelchair parameters ([#264](https://github.com/GIScience/openrouteservice-app/issues/264))
-- unchecking hgv settings leaves setting=false remnant in request' ([#263](https://github.com/GIScience/openrouteservice-app/issues/263))
-- broken Isochrone toggle ([#260](https://github.com/GIScience/openrouteservice-app/issues/260))
+- Incorrect Wheelchair parameters ([#264](https://github.com/GIScience/openrouteservice-app/issues/264))
+- Unchecking hgv settings leaves setting=false remnant in request' ([#263](https://github.com/GIScience/openrouteservice-app/issues/263))
+- Broken Isochrone toggle ([#260](https://github.com/GIScience/openrouteservice-app/issues/260))
 
 ## [v0.3.5] - 2018-09-11
 
@@ -68,7 +72,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Support for additional Turn instructions keep left/keep right (provided by graphhopper 0.10)
 - Custom endpoint settings (gear icon in bottom left corner of the settings) ([#243](https://github.com/GIScience/openrouteservice-app/issues/243))
 - Personalized isochrone-color, distance marker and elevation profile settings ([#234](https://github.com/GIScience/openrouteservice-app/issues/234))
-- Tooltip for geocode results that show the datasource ([#245](https://github.com/GIScience/openrouteservice-app/issues/245)) 
+- Tooltip for geocode results that show the datasource ([#245](https://github.com/GIScience/openrouteservice-app/issues/245))
 
 ### Changed
 - Heightgraph (aka. elevation profile) visibility on mobile devices (see 5194fac1f1f5e58667b7fac64e1a6964330b1968)
@@ -161,7 +165,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Italian as interface language
-- Functionality to restrict routes so that they do not cross all borders, controlled borders, or the borders of 
+- Functionality to restrict routes so that they do not cross all borders, controlled borders, or the borders of
     specific countries ([#157](https://github.com/GIScience/openrouteservice-app/issues/157))
 
 ### Changed
@@ -202,19 +206,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!--
 
 ### Added
- for new features.
+ new features.
 
 ### Changed
- for changes in existing functionality.
+ something in existing functionality.
 
 ### Deprecated
- for soon-to-be removed features.
+ a soon-to-be removed feature.
 
 ### Removed
- for now removed features.
+ a now removed feature.
 
 ### Fixed
- for any bug fixes.
+ a bug.
 
 ### Security
  in case of vulnerabilities.

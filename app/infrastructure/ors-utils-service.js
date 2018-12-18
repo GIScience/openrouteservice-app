@@ -389,7 +389,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
         //options.profile_params.track_type = '';
         //options.profile_params.smoothness_type = '';
         if (settings.profile.options.curb)
-          options.profile_params.restrictions.maximum_sloped_curb = settings.profile.options.curb.toString();
+          options.profile_params.restrictions.maximum_sloped_kerb = settings.profile.options.curb.toString();
         if (settings.profile.options.incline)
           options.profile_params.restrictions.maximum_incline = settings.profile.options.incline.toString();
         if (settings.profile.options.wheelchairWidth)

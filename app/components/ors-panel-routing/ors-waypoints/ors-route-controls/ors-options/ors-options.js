@@ -583,7 +583,6 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
         ctrl.routing = route == "directions" ? true : false;
       });
       ctrl.changeOptions = () => {
-        console.log(true);
         // call setoptions
         if (ctrl.currentOptions.difficulty)
           ctrl.difficultySliders.Fitness.options.disabled =
