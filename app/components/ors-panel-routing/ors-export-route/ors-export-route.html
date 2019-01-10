@@ -8,7 +8,6 @@
         </label>
         <div class="ui input">
             <input ng-model="$ctrl.filename" required="" select-on-click="">
-            </input>
         </div>
     </div>
     <div class="ui divider">
@@ -16,13 +15,45 @@
     <div>
         <label ng-bind-html="('FILE_FORMAT' | translate)">
         </label>
-        <select ng-change="$ctrl.change_fileFormat($ctrl.selected_fileformat)" ng-model="$ctrl.selected_fileformat"
+        <select class="ui selection dropdown" ng-change="$ctrl.change_fileFormat($ctrl.selected_fileformat)"
+                ng-model="$ctrl.selected_fileformat"
                 ng-options="fileFormatOpt.text for fileFormatOpt in $ctrl.fileFormat">
         </select>
     </div>
-    <div ng-if="$ctrl.selected_fileformat.value == 'geojson'">
-        <label ng-bind-html="('ELEVATION' | translate)"></label>
-        <input type="checkbox" ng-model="$ctrl.elevation"/>
+    <div ng-if="$ctrl.geojsonOptShow">
+        <br>
+        <div class="ui checkbox">
+            <input type="checkbox" id="elevation" data-ng-model="$ctrl.elevation"
+                   ng-click="$ctrl.elevation != $ctrl.elevation"/>
+            <label for="elevation" ng-bind-html="('ELEVATION' | translate)"></label>
+        </div>
+    </div>
+    <div ng-if="$ctrl.gpxOptShow">
+        <br>
+        <div class="field ors-inline">
+            <div class="ui radio checkbox">
+                <input ng-model="$ctrl.toGpx"
+                       ng-value=true type="radio">
+                <label ng-click="$ctrl.toGpx = true">togpx
+                </label>
+            </div>
+        </div>
+        <div class="field ors-inline">
+            <div class="ui radio checkbox">
+                <input  ng-model="$ctrl.toGpx"
+                        ng-value=false type="radio">
+                <label ng-click="$ctrl.toGpx = false">Ors API
+                </label>
+            </div>
+        </div>
+        <div ng-if="!$ctrl.toGpx">
+            <br>
+            <div class="ui checkbox">
+                <input type="checkbox" id="instructions" data-ng-model="$ctrl.instructions"
+                       ng-click="$ctrl.instructions != $ctrl.instructions">
+                <label for="instructions" ng-bind-html="('INCLUDE_INSTRUCTIONS' | translate)"></label>
+            </div>
+        </div>
     </div>
     <div class="ui divider">
     </div>

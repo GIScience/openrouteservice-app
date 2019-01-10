@@ -4,7 +4,6 @@ angular.module('orsApp.cookies-service', ['ngCookies'])
         orsCookiesFactory.getCookies = () => {
             let routinglang, language, units, showHeightgraph, randomIsoColor, distanceMarkers, env
             let cookieUserOptions = $cookies.getObject('userOptions') ? $cookies.getObject('userOptions') : {}
-            // console.warn(cookieUserOptions)
             if ('language' in cookieUserOptions) {
                 language = cookieUserOptions.language
             } else {
@@ -43,7 +42,6 @@ angular.module('orsApp.cookies-service', ['ngCookies'])
                 distanceMarkers = lists.userOptions.distanceMarkers.default
             }
             // save a copy of the default endpoint setup to ENV once
-            console.log(typeof(ENV.default) === "undefined")
             if (typeof(ENV.default) === "undefined") {
                 ENV.default = {
                     geocode: JSON.parse(JSON.stringify(ENV)).geocode,
@@ -64,7 +62,6 @@ angular.module('orsApp.cookies-service', ['ngCookies'])
                     pois: ENV.pois
                 }
             }
-            console.log(env)
             return {
                 language: language,
                 routinglang: routinglang,

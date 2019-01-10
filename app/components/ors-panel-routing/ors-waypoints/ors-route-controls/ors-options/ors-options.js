@@ -6,10 +6,10 @@ angular.module('orsApp.ors-options', [])
             activeProfile: '<',
             showOptions: '<'
         },
-        controller: ['orsSettingsFactory', 'orsCookiesFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', '$scope', '$timeout', 'lists', 'countries', 'carBrands', 'carCategories', function (orsSettingsFactory, orsCookiesFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService, $scope, $timeout, lists, countries, carBrands, carCategories) {
-            let ctrl = this;
+        controller: ['orsSettingsFactory', 'orsCookiesFactory', 'orsObjectsFactory', 'orsUtilsService', 'orsRequestService', 'orsParamsService', '$scope', '$timeout', 'lists', 'countries', function(orsSettingsFactory, orsCookiesFactory, orsObjectsFactory, orsUtilsService, orsRequestService, orsParamsService, $scope, $timeout, lists, countries) {
+            let ctrl = this
             ctrl.fuelSettings = true
-            ctrl.optionList = lists.optionList;
+            ctrl.optionList = lists.optionList
             ctrl.$onInit = () => {
                 /** This is a reference of the settings object, if we change here, it is updated in settings */
                 ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
@@ -47,7 +47,6 @@ angular.module('orsApp.ors-options', [])
                     ctrl.maxspeedCheckbox = false;
                 }
                 ctrl.toggleMaxspeedSlider = (fireRequest = true) => {
-                    console.log('TOGGLED')
                     if (ctrl.maxspeedCheckbox === true) {
                         ctrl.maxspeedSlider.options.disabled = false;
                         ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
@@ -133,7 +132,6 @@ angular.module('orsApp.ors-options', [])
                 ctrl.toggleQuietSlider(false);
                 // set hgv options from params
                 ctrl.toggleHgvOptSlider = (name, fireRequest = true) => {
-                    console.log(name)
                     switch (name) {
                         case 'height':
                             if (ctrl.hgvHeightCb === true) {
@@ -172,7 +170,6 @@ angular.module('orsApp.ors-options', [])
                             }
                             break;
                         case 'axleload':
-                            console.log('****')
                             if (ctrl.hgvAxleloadCb === true) {
                                 ctrl.hgvSliders.AxleLoad.options.disabled = false;
                                 ctrl.currentOptions.axleload = ctrl.hgvSliders.AxleLoad.value;
@@ -211,7 +208,6 @@ angular.module('orsApp.ors-options', [])
                 // check if params contain hgv settings within range
                 angular.forEach(hgvParamsInit, (val, key) => {
                     if (ctrl.currentOptions[key] >= ctrl.optionList.hgvParams[key].min && ctrl.currentOptions[key] <= ctrl.optionList.hgvParams[key].max) {
-                        console.log(ctrl.currentOptions[key])
                         hgvParamsInit[key].val = ctrl.currentOptions[key];
                         ctrl[hgvParamsInit[key].checkbox] = true;
                     }
@@ -342,9 +338,26 @@ angular.module('orsApp.ors-options', [])
                     }
                 };
                 // wheelchair sliders
-                ctrl.currentOptions.surface = ctrl.currentOptions.surface !== undefined ? ctrl.optionList.wheelchair.Surface[ctrl.currentOptions.surface].value : ctrl.optionList.wheelchair.Surface['concrete'].value;
-                ctrl.currentOptions.incline = ctrl.currentOptions.incline !== undefined ? ctrl.optionList.wheelchair.Incline[ctrl.currentOptions.incline].value : ctrl.optionList.wheelchair.Incline['3'].value;
-                ctrl.currentOptions.curb = ctrl.currentOptions.curb !== undefined ? ctrl.optionList.wheelchair.Curb[ctrl.currentOptions.curb].value : ctrl.optionList.wheelchair.Curb['0.03'].value;
+                ctrl.currentOptions.surface =
+                    ctrl.currentOptions.surface !== undefined
+                        ? ctrl.optionList.wheelchair.Surface[ctrl.currentOptions.surface]
+                            .value
+                        : ctrl.optionList.wheelchair.Surface["any"].value;
+                ctrl.currentOptions.incline =
+                    ctrl.currentOptions.incline !== undefined
+                        ? ctrl.optionList.wheelchair.Incline[ctrl.currentOptions.incline]
+                            .value
+                        : ctrl.optionList.wheelchair.Incline["31"].value;
+                ctrl.currentOptions.curb =
+                    ctrl.currentOptions.curb !== undefined
+                        ? ctrl.optionList.wheelchair.Curb[ctrl.currentOptions.curb].value
+                        : ctrl.optionList.wheelchair.Curb["0.31"].value;
+                ctrl.currentOptions.wheelchairWidth =
+                    ctrl.currentOptions.wheelchairWidth !== undefined
+                        ? ctrl.optionList.wheelchair.Width[
+                            ctrl.currentOptions.wheelchairWidth
+                            ].value
+                        : ctrl.optionList.wheelchair.Width["-1"].value;
                 ctrl.wheelchairSliders = {
                     Surface: {
                         value: ctrl.currentOptions.surface,
@@ -415,6 +428,34 @@ angular.module('orsApp.ors-options', [])
                                 ctrl.changeOptions();
                             }
                         }
+                    },
+                    Width: {
+                        value: ctrl.currentOptions.wheelchairWidth,
+                        options: {
+                            stepsArray: [
+                                {
+                                    value: ctrl.optionList.wheelchair.Width["1"].value
+                                },
+                                {
+                                    value: ctrl.optionList.wheelchair.Width["1.5"].value
+                                },
+                                {
+                                    value: ctrl.optionList.wheelchair.Width["2"].value
+                                },
+                                {
+                                    value: ctrl.optionList.wheelchair.Width["-1"].value
+                                }
+                            ],
+                            showTicks: true,
+                            showTicksValues: false,
+                            hidePointerLabels: true,
+                            hideLimitLabels: true,
+                            onEnd: () => {
+                                ctrl.currentOptions.wheelchairWidth =
+                                    ctrl.wheelchairSliders.Width.value;
+                                ctrl.changeOptions();
+                            }
+                        }
                     }
                 };
                 if (ctrl.currentOptions.borders.country !== undefined) {
@@ -424,7 +465,7 @@ angular.module('orsApp.ors-options', [])
                         if (numbers.indexOf(ctrl.countries[i].cid) != -1) {
                             ctrl.checkedCountries.push(ctrl.countries[i].id);
                             ctrl.countries[i].check = true;
-                            ctrl.avoidCountries = true;
+                            ctrl.avoidCountries  = true;
 
                         }
                     }
@@ -521,11 +562,11 @@ angular.module('orsApp.ors-options', [])
                 ctrl.passBordersToOptions();
             };
             /**
-             * Generates the avoid_countries value and passes it to options
-             */
+            * Generates the avoid_countries value and passes it to options
+            */
             ctrl.passBordersToOptions = () => {
                 let cstring = "";
-                if (ctrl.avoidCountries) {
+                if(ctrl.avoidCountries){
                     for (var i = 0; i < ctrl.checkedCountries.length; i++) {
                         let country = ctrl.countries[ctrl.checkedCountries[i]].cid;
                         if (cstring === "") cstring += country;
@@ -554,7 +595,7 @@ angular.module('orsApp.ors-options', [])
             ctrl.drivingStyle = true
             ctrl.chooseCategory = () => {
                 // rename Object key of the filters.fuel_consumptions and keep value
-                renameKey = (o, newKey) => {
+                const renameKey = (o, newKey) => {
                     if (Object.keys(o)[0] !== newKey) {
                         Object.defineProperty(o, newKey,
                             Object.getOwnPropertyDescriptor(o, Object.keys(o)[0]));
