@@ -1,4 +1,6 @@
-angular.module('orsApp').constant('carBrands', [
+angular
+  .module("orsApp")
+  .constant("carBrands", [
     "9ff",
     "AEC",
     "AFG",
@@ -733,4 +735,4 @@ angular.module('orsApp').constant('carBrands', [
     "ÚVMV",
     "Škoda",
     "Ẽfini"
-]);
+  ]);
