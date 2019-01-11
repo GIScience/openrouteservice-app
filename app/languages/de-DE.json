@@ -209,5 +209,7 @@
     "DRIVING_SPEED": "Fahrgeschwindigkeit",
     "VEHICLE_CATEGORY": "Fahrzeugklasse",
     "TANK_SIZE": "Tankgröße",
-    "SPECIFIC_FUEL_CONSUMPTION": "Spezifischer Kraftstoffverbrauch"
+    "SPECIFIC_FUEL_CONSUMPTION": "Spezifischer Kraftstoffverbrauch",
+    "CONSUMPTION": "consumption",
+    "EMISSION": "emission"
 }
