@@ -228,7 +228,7 @@
         </ul>
     </div>
 </div>
-<div class="options-box" ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'HeavyVehicle'">
+<div class="options-box" ng-show="$ctrl.activeSubgroup == 'Car'">
     <div class="pointer" ng-click="$ctrl.fuelSettings = !$ctrl.fuelSettings">
         <i ng-class="$ctrl.getClass($ctrl.fuelSettings)">
         </i>
@@ -242,7 +242,8 @@
                     <label for="fuelType" ng-bind-html="('FUEL_TYPE' | translate) + ': '">
                     </label>
                     <select id="fuelType" ng-model="$ctrl.ofs.filters.fuel_type"
-                            ng-options="fueltype for fueltype in ['gasoline','diesel']"></select>
+                            ng-options="fueltype for fueltype in ['gasoline','diesel']"
+                            ng-change="$ctrl.requestConsumption()"></select>
                 </div>
             </li>
             <li>
@@ -251,7 +252,7 @@
                     </label>
                     <select id="vehicleCategory"
                             ng-model="$ctrl.ofs.filters.vehicle_categories[0]"
-                            ng-change="$ctrl.chooseCategory()"
+                            ng-change="$ctrl.chooseCategory();$ctrl.requestConsumption()"
                             ng-options="category.short as category.en for category in $ctrl.carCategories"></select>
                 </div>
             </li>
@@ -259,12 +260,13 @@
                 <div>
                     <input type="checkbox"
                            ng-model="$ctrl.drivingSpeed"
-                           ng-click="$ctrl.check('style')">
+                           ng-click="$ctrl.check('style');$ctrl.requestConsumption()">
                     <label for="drivingSpeed" ng-bind-html="('DRIVING_SPEED' | translate) + ': '">
                     </label>
                     <input id="drivingSpeed"
                            ng-disabled="!$ctrl.drivingSpeed"
                            ng-model="$ctrl.ofs.filters.driving_speed"
+                           ng-change="$ctrl.requestConsumption()"
                     >
                 </div>
             </li>
@@ -272,13 +274,14 @@
                 <div>
                     <input type="checkbox"
                            ng-model="$ctrl.drivingStyle"
-                           ng-click="$ctrl.check('speed')"/>
+                           ng-click="$ctrl.check('speed');$ctrl.requestConsumption()"/>
                     <label for="drivingStyle" ng-bind-html="('DRIVING_STYLE' | translate) + ': '">
                     </label>
                     <select id="drivingStyle"
                             ng-model="$ctrl.ofs.filters.driving_style"
                             ng-disabled="!$ctrl.drivingStyle"
-                            ng-options="style for style in ['moderate', 'fast']"></select>
+                            ng-options="style for style in ['moderate', 'fast']"
+                            ng-change="$ctrl.requestConsumption()"></select>
                 </div>
             </li>
             <li>
@@ -291,7 +294,8 @@
                            ng-disabled="!$ctrl.fuelConsumption"
                            ng-model="$ctrl.ofs.filters.fuel_consumptions[$ctrl.ofs.filters.vehicle_categories[0]]"
                            style="width : 30px"
-                    > liters
+                           ng-change="$ctrl.requestConsumption()"
+                    > l / 100 km
                 </div>
             </li>
             <li>
@@ -304,7 +308,8 @@
                            ng-disabled="!$ctrl.tankSize"
                            ng-model="$ctrl.ofs.filters.tank_sizes[$ctrl.ofs.filters.vehicle_categories[0]]"
                            style="width : 30px"
-                    > l / 100 km
+                           ng-change="$ctrl.requestConsumption()"
+                    > liters
                 </div>
             </li>
             <!--<li>

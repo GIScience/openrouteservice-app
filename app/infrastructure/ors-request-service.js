@@ -122,7 +122,7 @@ angular.module("orsApp.request-service", []).factory("orsRequestService", [
      * @param {Object} response: response data
      */
     orsRequestService.processResponse = response => {
-      var data = response.data;
+      let data = response.data;
       return data;
     };
     return orsRequestService;

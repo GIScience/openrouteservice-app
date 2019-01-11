@@ -6,6 +6,7 @@ angular.module("orsApp.fuel-service", []).factory("orsFuelService", [
   "orsObjectsFactory",
   "lists",
   "ENV",
+  "orsRouteService",
   (
     $q,
     $http,
@@ -13,35 +14,60 @@ angular.module("orsApp.fuel-service", []).factory("orsFuelService", [
     orsMapFactory,
     orsObjectsFactory,
     lists,
-    ENV
+    ENV,
+    orsRouteService
   ) => {
-    /**
-     * Requests geocoding from ORS backend
-     * @param {String} requestData: XML for request payload
-     */
-    let orsLocationsService = {};
-    orsLocationsService.requests = [];
-    orsLocationsService.clear = () => {
-      for (let req of orsLocationsService.requests) {
+    let orsFuelService = {};
+    orsFuelService.requests = [];
+    orsFuelService.clear = () => {
+      for (let req of orsFuelService.requests) {
         if ("cancel" in req) req.cancel("Cancel last request");
       }
-      orsLocationsService.requests = [];
+      orsFuelService.requests = [];
     };
     /**
-     * Requests locations
-     * @param {String} requestData: XML for request payload
+     *
+     * @param geometry
+     * @param ofsSettings
+     * @returns {{promise: *, cancel: cancel}}
      */
-    orsLocationsService.fetchLocations = requestData => {
-      var url = ENV.pois;
-      var canceller = $q.defer();
-      var cancel = reason => {
+    orsFuelService.getConsumption = ofsSettings => {
+      let idx =
+        orsRouteService.getCurrentRouteIdx() === undefined
+          ? 0
+          : orsRouteService.getCurrentRouteIdx();
+      let route;
+      if (
+        angular.isDefined(orsRouteService.data) &&
+        angular.isDefined(orsRouteService.data.routes)
+      ) {
+        if (orsRouteService.data.routes.length > 0) {
+          let data = orsRouteService.data;
+          route = data.routes[idx];
+        }
+      }
+      let geometry = {
+        coordinates: route.geometryRaw,
+        type: "LineString"
+      };
+      let url = ENV.fuel;
+      let canceller = $q.defer();
+      let requestData = {
+        request: "route",
+        geometry: {
+          geojson: geometry,
+          filters: ofsSettings.filters
+        }
+      };
+      let cancel = reason => {
         canceller.resolve(reason);
       };
-      var promise = $http
+      let promise = $http
         .post(url, requestData, {
           timeout: canceller.promise
         })
         .then(response => {
+          route.summary.ofs = response.data;
           return response.data;
         });
       return {
@@ -49,71 +75,7 @@ angular.module("orsApp.fuel-service", []).factory("orsFuelService", [
         cancel: cancel
       };
     };
-    orsLocationsService.panTo = geometry => {
-      let action = orsObjectsFactory.createMapAction(
-        0,
-        lists.layers[2],
-        {
-          lat: geometry[1],
-          lng: geometry[0]
-        },
-        undefined,
-        undefined
-      );
-      orsMapFactory.mapServiceSubject.onNext(action);
-    };
-    orsLocationsService.emphPoi = (geometry, category) => {
-      let action = orsObjectsFactory.createMapAction(
-        11,
-        lists.layers[2],
-        {
-          lat: geometry[1],
-          lng: geometry[0]
-        },
-        undefined,
-        category
-      );
-      orsMapFactory.mapServiceSubject.onNext(action);
-    };
-    orsLocationsService.DeEmphPoi = () => {
-      let action = orsObjectsFactory.createMapAction(
-        2,
-        lists.layers[2],
-        undefined,
-        undefined
-      );
-      orsMapFactory.mapServiceSubject.onNext(action);
-    };
-    /**
-     * Saves a lookup table to resolve parent category of subcategory
-     * @param {Object} dict: lookup table
-     */
-    orsLocationsService.setSubcategoriesLookup = dict => {
-      orsLocationsService.subcategoriesLookup = dict;
-    };
-    orsLocationsService.getSubcategoriesLookup = () => {
-      return orsLocationsService.subcategoriesLookup;
-    };
-    orsLocationsService.addLocationsToMap = data => {
-      const locations = orsObjectsFactory.createMapAction(
-        10,
-        lists.layers[8],
-        data,
-        undefined,
-        undefined
-      );
-      orsMapFactory.mapServiceSubject.onNext(locations);
-    };
-    orsLocationsService.clearLocationsToMap = data => {
-      const locations = orsObjectsFactory.createMapAction(
-        2,
-        lists.layers[8],
-        undefined,
-        undefined,
-        undefined
-      );
-      orsMapFactory.mapServiceSubject.onNext(locations);
-    };
-    return orsLocationsService;
+
+    return orsFuelService;
   }
 ]);

@@ -1969,13 +1969,15 @@ angular.module("orsApp").directive("orsPopup", [
   "orsUtilsService",
   "orsRequestService",
   "orsRouteService",
+  "orsFuelService",
   (
     $compile,
     $timeout,
     orsSettingsFactory,
     orsUtilsService,
     orsRequestService,
-    orsRouteService
+    orsRouteService,
+    orsFuelService
   ) => {
     return {
       restrict: "E",

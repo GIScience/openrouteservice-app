@@ -12,7 +12,7 @@
  * @author: Amandus Butzer, amandus@openrouteservice.org, Timothy Ellersiek, timothy@openrouteservice.org
  * @version: 0.3.7
  */
-(function() {
+(function(searchString, position) {
   fetchData().then(bootstrapApplication);
 
   function fetchData() {
@@ -47,6 +47,7 @@
       "orsApp.map-service",
       "orsApp.objects-service",
       "orsApp.locations-service",
+      "orsApp.fuel-service",
       "orsApp.params-service",
       "orsApp.request-service",
       "orsApp.settings-service",
@@ -97,9 +98,12 @@
               config.url === ENV.isochrones ||
               config.url === ENV.pois ||
               config.url === ENV.matrix ||
-              config.url === ENV.mapsurfer
+              config.url === ENV.mapsurfer ||
+              config.url === ENV.fuel
             ) {
-              config.url = config.url + ak;
+              config.url += ak;
+              if (config.url.startsWith(ENV.fuel))
+                config.url += "&request=route";
             }
             return config || $q.when(config);
           },

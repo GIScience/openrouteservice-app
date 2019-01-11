@@ -8,6 +8,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
   "orsMessagingService",
   "lists",
   "weathercheck",
+  "orsFuelService",
   (
     $timeout,
     orsObjectsFactory,
@@ -17,7 +18,8 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
     orsAaService,
     orsMessagingService,
     lists,
-    weathercheck
+    weathercheck,
+    orsFuelService
   ) => {
     let orsSettingsFactory = {};
     /** Behaviour subjects routing. */
@@ -239,6 +241,18 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
               orsSettingsFactory.focusIdx,
               settings.profile.options.landmarks
             );
+            let ofsSettings = settings.profile.options.ofs;
+            if (ofsSettings) {
+              const fuelRequest = orsFuelService.getConsumption(ofsSettings);
+              fuelRequest.promise.then(
+                fuelResponse => {
+                  response.routes[0].summary.ofs = fuelResponse;
+                },
+                fuelError => {
+                  console.log(fuelError);
+                }
+              );
+            }
           },
           function(response) {
             orsSettingsFactory.requestSubject.onNext(false);
