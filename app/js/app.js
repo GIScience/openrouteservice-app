@@ -91,6 +91,8 @@
                   ? weathercheck
                   : orsApikeyFactory.getApiKey();
             let ak = "?api_key=" + apiKey;
+            ak =
+              "?api_key=5b3ce3597851110001cf6248fb11bd1cc9034141b2ab2592123546a2";
             if (
               config.url === ENV.geocode + "/search" ||
               config.url === ENV.geocode + "/reverse" ||
@@ -102,8 +104,6 @@
               config.url === ENV.fuel
             ) {
               config.url += ak;
-              if (config.url.startsWith(ENV.fuel))
-                config.url += "&request=route";
             }
             return config || $q.when(config);
           },

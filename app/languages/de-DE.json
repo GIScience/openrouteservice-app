@@ -201,7 +201,6 @@
     "LOCALE_HEIGHTGRAPH": "Höhenprofil",
     "DEVELOPER_SETTINGS": "Entwickler Optionen",
     "INCLUDE_INSTRUCTIONS": "Include Instructions",
-    "SEARCH_CAR_BRANDS": "Suche Automarken z.B. BMW",
     "FUEL_CONSUMPTION": "Kraftstoffverbrauch (experimentell)",
     "FUEL_TYPE": "Kraftstoffart",
     "CAR_BRAND": "Auto Marke",
@@ -210,6 +209,10 @@
     "VEHICLE_CATEGORY": "Fahrzeugklasse",
     "TANK_SIZE": "Tankgröße",
     "SPECIFIC_FUEL_CONSUMPTION": "Spezifischer Kraftstoffverbrauch",
-    "CONSUMPTION": "consumption",
-    "EMISSION": "emission"
+    "CONSUMPTION": "Verbrauch",
+    "EMISSION": "Emission",
+    "CAR_MODEL": "Automodell",
+    "CAR_YEAR": "Baujahr",
+    "CAR_TYPE": "Spezieller Typ",
+    "SEARCH_FOR": "Suche nach "
 }

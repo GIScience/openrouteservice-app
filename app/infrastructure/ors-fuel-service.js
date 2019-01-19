@@ -50,6 +50,9 @@ angular.module("orsApp.fuel-service", []).factory("orsFuelService", [
         coordinates: route.geometryRaw,
         type: "LineString"
       };
+      let parameters = {
+        request: "route"
+      };
       let url = ENV.fuel;
       let canceller = $q.defer();
       let requestData = {
@@ -63,11 +66,44 @@ angular.module("orsApp.fuel-service", []).factory("orsFuelService", [
         canceller.resolve(reason);
       };
       let promise = $http
-        .post(url, requestData, {
-          timeout: canceller.promise
-        })
+        .post(
+          url,
+          requestData,
+          { params: parameters },
+          {
+            timeout: canceller.promise
+          }
+        )
         .then(response => {
           route.summary.ofs = response.data;
+          return response.data;
+        });
+      return {
+        promise: promise,
+        cancel: cancel
+      };
+    };
+
+    orsFuelService.getCars = brand => {
+      let url = ENV.fuel;
+      let canceller = $q.defer();
+      let parameters = {
+        request: "cars",
+        brand: brand,
+        source: "cfd"
+      };
+      let cancel = reason => {
+        canceller.resolve(reason);
+      };
+      let promise = $http
+        .get(
+          url,
+          { params: parameters },
+          {
+            timeout: canceller.promise
+          }
+        )
+        .then(response => {
           return response.data;
         });
       return {

@@ -37,7 +37,7 @@
                     </span>
                 </div>
                 <div ng-repeat="(vehicleClass, info) in route.summary.ofs['fuel_stats']" ng-if="showFuelInfo">
-                    <div ng-if="$ctrl.classInQuery(route.summary.ofs, vehicleClass)">
+                    <div ng-if="$ctrl.classInQuery(route.summary.ofs, vehicleClass) || vehicleClass==='individual'">
                         <div ng-if="info['category_info']['calculation_errors'] !== 'No Errors'">
                             <div>Not enough data to calculate category {{$ctrl.carCategories[vehicleClass].en}}</div>
                         </div>

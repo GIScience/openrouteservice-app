@@ -692,10 +692,30 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
         );
       };
       ctrl.queryBrand = "";
+      ctrl.queryModel = "";
+      ctrl.queryYear = "";
+      ctrl.queryType = "";
       ctrl.carCategories = carCategories;
       ctrl.brands = carBrands;
+      ctrl.categoryCheck = false;
+      ctrl.brandCheck = true;
+      ctrl.modelCheck = false;
+      ctrl.yearCheck = false;
+      ctrl.typeCheck = false;
       ctrl.drivingSpeed = false;
       ctrl.drivingStyle = true;
+      ctrl.carResponse = undefined;
+      ctrl.carModels = [];
+      ctrl.carYears = [];
+      ctrl.carTypes = [];
+      ctrl.set = list => {
+        ctrl[list] =
+          list === "carYears"
+            ? Object.keys(ctrl.carResponse[ctrl.queryModel])
+            : list === "carTypes"
+              ? Object.keys(ctrl.carResponse[ctrl.queryModel][ctrl.queryYear])
+              : console.log(list);
+      };
       ctrl.chooseCategory = () => {
         // rename Object key of the filters.fuel_consumptions and keep value
         const renameKey = (o, newKey) => {
@@ -731,7 +751,25 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
             break;
         }
       };
-      ctrl.requestConsumption = () => {
+      ctrl.toggleSource = source => {
+        if (source === "category") {
+          ctrl.brandCheck = !ctrl.categoryCheck;
+        } else if (source === "brand") {
+          ctrl.categoryCheck = !ctrl.brandCheck;
+        }
+      };
+      ctrl.requestConsumption = (individual = null) => {
+        if (individual !== null) {
+          if (individual === "queryModel") {
+            ctrl.ofs.filters.cfd_ids = ctrl.carResponse[ctrl.queryModel].all;
+          } else if (individual === "queryYear") {
+            ctrl.ofs.filters.cfd_ids =
+              ctrl.carResponse[ctrl.queryModel][ctrl.queryYear].all;
+          } else if (individual === "queryType") {
+            ctrl.ofs.filters.cfd_ids =
+              ctrl.carResponse[ctrl.queryModel][ctrl.queryYear][ctrl.queryType];
+          }
+        }
         ctrl.currentOptions.ofs = ctrl.ofs;
         if (ctrl.currentOptions.ofs && !ctrl.drivingSpeed) {
           delete ctrl.currentOptions.ofs.filters.driving_speed;
@@ -739,8 +777,26 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
         if (ctrl.currentOptions.ofs && !ctrl.drivingStyle) {
           delete ctrl.currentOptions.ofs.filters.driving_style;
         }
+        if (ctrl.categoryCheck) {
+          delete ctrl.currentOptions.ofs.filters.cfd_ids;
+        }
+        if (ctrl.brandCheck) {
+          delete ctrl.currentOptions.ofs.filters.vehicle_categories;
+        }
         orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
         orsFuelService.getConsumption(ctrl.currentOptions.ofs);
+      };
+      ctrl.requestCars = () => {
+        let carRequest = orsFuelService.getCars(ctrl.queryBrand);
+        carRequest.promise.then(
+          carResponse => {
+            ctrl.carResponse = carResponse;
+            ctrl.carModels = Object.keys(carResponse);
+          },
+          carError => {
+            console.log(carError);
+          }
+        );
       };
       //
       //
@@ -759,6 +815,22 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
       $scope.searchBrand = row => {
         return !!(
           row.toLowerCase().indexOf(ctrl.queryBrand.toLowerCase() || "") !== -1
+        );
+      };
+      $scope.searchModel = row => {
+        return !!(
+          row.toLowerCase().indexOf(ctrl.queryModel.toLowerCase() || "") !== -1
+        );
+      };
+      $scope.searchYear = row => {
+        console.log(ctrl.carYears);
+        return !!(
+          row.toLowerCase().indexOf(ctrl.queryYear.toLowerCase() || "") !== -1
+        );
+      };
+      $scope.searchType = row => {
+        return !!(
+          row.toLowerCase().indexOf(ctrl.queryType.toLowerCase() || "") !== -1
         );
       };
     }

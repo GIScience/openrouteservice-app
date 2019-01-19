@@ -201,7 +201,6 @@
     "LOCALE_HEIGHTGRAPH": "Elevation profile",
     "DEVELOPER_SETTINGS": "Developer Settings",
     "INCLUDE_INSTRUCTIONS": "Include Instructions",
-    "SEARCH_CAR_BRANDS": "Search for car brands",
     "FUEL_CONSUMPTION": "Fuel consumption (experimental)",
     "FUEL_TYPE": "Fuel type",
     "CAR_BRAND": "Car brand",
@@ -211,5 +210,9 @@
     "TANK_SIZE": "Tank size",
     "SPECIFIC_FUEL_CONSUMPTION": "Specific fuel consumption",
     "CONSUMPTION": "consumption",
-    "EMISSION": "emission"
+    "EMISSION": "emission",
+    "CAR_MODEL": "Car model",
+    "CAR_YEAR": "Construction year",
+    "CAR_TYPE": "Special type",
+    "SEARCH_FOR": "Search for "
 }
