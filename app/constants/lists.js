@@ -232,34 +232,6 @@ angular.module("orsApp").constant("lists", {
         shortValue: "2"
       }
     },
-    difficulty: {
-      fitness: {
-        "-1": {
-          name: "Unset",
-          value: -1
-        },
-        "0": {
-          name: "Novice",
-          value: 0
-        },
-        "1": {
-          name: "Moderate",
-          value: 1
-        },
-        "2": {
-          name: "Amateur",
-          value: 2
-        },
-        "3": {
-          name: "Pro",
-          value: 3
-        }
-      },
-      steepness: {
-        min: 0,
-        max: 15
-      }
-    },
     borders: {
       all: {
         subgroups: ["Car", "HeavyVehicle"]
@@ -282,14 +254,6 @@ angular.module("orsApp").constant("lists", {
           "Pedestrian"
         ]
       },
-      unpaved: {
-        name: "unpavedroads",
-        subgroups: ["Car", "Bicycle", "HeavyVehicle"]
-      },
-      paved: {
-        name: "pavedroads",
-        subgroups: ["Car", "Bicycle", "HeavyVehicle"]
-      },
       fords: {
         name: "fords",
         subgroups: [
@@ -310,14 +274,6 @@ angular.module("orsApp").constant("lists", {
       },
       tollroads: {
         name: "tollways",
-        subgroups: ["Car", "HeavyVehicle"]
-      },
-      tunnels: {
-        name: "tunnels",
-        subgroups: ["Car", "HeavyVehicle"]
-      },
-      tracks: {
-        name: "tracks",
         subgroups: ["Car", "HeavyVehicle"]
       }
     },
@@ -430,98 +386,6 @@ angular.module("orsApp").constant("lists", {
         value: "axleload"
       }
     },
-    maxspeeds: {
-      Car: {
-        min: 30,
-        max: 300,
-        default: 100,
-        step: 5
-      },
-      Bicycle: {
-        min: 5,
-        max: 50,
-        default: 25,
-        step: 1
-      },
-      BicycleMTB: {
-        min: 5,
-        max: 50,
-        default: 20,
-        step: 1
-      },
-      BicycleRacer: {
-        min: 5,
-        max: 50,
-        default: 30,
-        step: 1
-      },
-      BicycleTour: {
-        min: 5,
-        max: 50,
-        default: 25,
-        step: 1
-      },
-      BicycleSafety: {
-        min: 5,
-        max: 50,
-        default: 20,
-        step: 1
-      },
-      BicycleElectro: {
-        min: 5,
-        max: 50,
-        default: 20,
-        step: 1
-      },
-      Pedestrian: {
-        min: 3,
-        max: 15,
-        default: 6,
-        step: 1
-      },
-      Wheelchair: {
-        min: 5,
-        max: 50,
-        default: 8,
-        step: 1
-      },
-      HeavyVehicle: {
-        min: 30,
-        max: 200,
-        default: 100,
-        step: 5
-      },
-      goods: {
-        min: 30,
-        max: 200,
-        default: 100,
-        step: 5
-      },
-      bus: {
-        min: 30,
-        max: 200,
-        default: 100,
-        step: 5
-      },
-      agricultural: {
-        min: 30,
-        max: 200,
-        default: 100,
-        step: 5
-      },
-      forestry: {
-        min: 30,
-        max: 200,
-        default: 100,
-        step: 5
-      },
-      delivery: {
-        min: 30,
-        max: 200,
-        default: 100,
-        step: 5
-      }
-    },
     green: {
       min: 0.1,
       max: 1
@@ -612,14 +476,10 @@ angular.module("orsApp").constant("lists", {
   permalinkFilters: {
     avoidables: [
       "ferry",
-      "unpaved",
-      "paved",
       "fords",
       "steps",
       "highways",
-      "tollroads",
-      "tunnels",
-      "tracks"
+      "tollroads"
     ],
     analysis: ["method", "isovalue", "isointerval", "reverseflow"],
     Car: ["type", "weight", "maxspeed"],
@@ -689,60 +549,36 @@ angular.module("orsApp").constant("lists", {
       "axleload",
       "hazmat"
     ],
-    Bicycle: ["type", "weight", "maxspeed", "fitness", "incline", "steepness"],
+    Bicycle: ["type", "weight"],
     BicycleSafety: [
       "type",
-      "weight",
-      "maxspeed",
-      "fitness",
-      "incline",
-      "steepness"
+      "weight"
     ],
     BicycleMTB: [
       "type",
-      "weight",
-      "maxspeed",
-      "fitness",
-      "incline",
-      "steepness"
+      "weight"
     ],
     BicycleRacer: [
       "type",
-      "weight",
-      "maxspeed",
-      "fitness",
-      "incline",
-      "steepness"
+      "weight"
     ],
     BicycleElectro: [
       "type",
-      "weight",
-      "maxspeed",
-      "fitness",
-      "incline",
-      "steepness"
+      "weight"
     ],
     BicycleTour: [
       "type",
-      "weight",
-      "maxspeed",
-      "fitness",
-      "incline",
-      "steepness"
+      "weight"
     ],
-    Pedestrian: ["type", "weight", "maxspeed", "fitness", "steepness", "green"],
+    Pedestrian: ["type", "weight", "green"],
     PedestrianHiking: [
       "type",
       "weight",
-      "maxspeed",
-      "fitness",
-      "steepness",
       "green"
     ],
     Wheelchair: [
       "type",
       "weight",
-      "maxspeed",
       "incline",
       "curb",
       "surface",
@@ -754,15 +590,12 @@ angular.module("orsApp").constant("lists", {
     wps: "a",
     type: "b",
     weight: "c",
-    maxspeed: "d",
     hgvWeight: "f1",
     width: "f2",
     height: "f3",
     axleload: "f4",
     length: "f5",
     hazmat: "f6",
-    fitness: "g1",
-    steepness: "g2",
     surface: "h1",
     incline: "h2",
     curb: "h3",
@@ -774,13 +607,9 @@ angular.module("orsApp").constant("lists", {
     routinglang: "k1",
     units: "k2",
     ferry: "l1",
-    unpaved: "l2",
-    paved: "l3",
     fords: "l4",
     highways: "l5",
     tollroads: "l6",
-    tunnels: "l7",
-    tracks: "l8",
     green: "m1",
     lat: "n1",
     lng: "n2",

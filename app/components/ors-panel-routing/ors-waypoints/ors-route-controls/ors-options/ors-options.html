@@ -35,22 +35,7 @@
                     </input>
                 </div>
             </li>
-            <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'HeavyVehicle'">
-                <div class="ui checkbox">
-                    <input id="unpaved" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.unpaved" type="checkbox">
-                        <label for="unpaved" ng-bind-html="('UNPAVED' | translate)">
-                        </label>
-                    </input>
-                </div>
-            </li>
-            <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'HeavyVehicle'">
-                <div class="ui checkbox">
-                    <input id="paved" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.paved" type="checkbox">
-                        <label for="paved" ng-bind-html="('PAVED' | translate)">
-                        </label>
-                    </input>
-                </div>
-            </li>
+            
             <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Pedestrian' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'HeavyVehicle'">
                 <div class="ui checkbox">
                     <input id="fords" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.fords" type="checkbox">
@@ -79,22 +64,6 @@
                 <div class="ui checkbox">
                     <input id="tollroads" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tollroads" type="checkbox">
                         <label for="tollroads" ng-bind-html="('TOLLROADS' | translate)">
-                        </label>
-                    </input>
-                </div>
-            </li>
-            <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'HeavyVehicle'">
-                <div class="ui checkbox">
-                    <input id="tunnels" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tunnels" type="checkbox">
-                        <label for="tunnels" ng-bind-html="('TUNNELS' | translate)">
-                        </label>
-                    </input>
-                </div>
-            </li>
-            <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'HeavyVehicle'">
-                <div class="ui checkbox">
-                    <input id="tracks" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tracks" type="checkbox">
-                        <label for="tracks" ng-bind-html="('TRACKS' | translate)">
                         </label>
                     </input>
                 </div>
@@ -203,42 +172,6 @@
         </ul>
     </div>
 </div>
-<div class="options-box" ng-show="$ctrl.activeSubgroup == 'Bicycle'">
-    <div class="pointer" ng-click="difficultyOptions = !difficultyOptions">
-        <i ng-class="$ctrl.getClass(difficultyOptions)">
-        </i>
-        <span ng-bind-html="('DIFFICULTY' | translate)">
-        </span>
-    </div>
-    <div class="collapsable" ng-class="{ showMe: difficultyOptions }">
-        <div class="ors-options-menu">
-            <div class="ui label tiny flleft">
-                <span ng-bind-html="('FITNESS' | translate)">
-                </span>
-                <span ng-bind-html="':'">
-                </span>
-                <div class="detail" ng-bind-html="$ctrl.fitnessValue">
-                </div>
-            </div>
-            <rzslider rz-slider-model="$ctrl.difficultySliders.Fitness.value" rz-slider-options="$ctrl.difficultySliders.Fitness.options">
-            </rzslider>
-            <div class="ui divider">
-            </div>
-            <div class="ui checkbox" id="cb-avoidhills">
-                <input id="avoidhills" name="orsRouteDifficultyAvoidHills" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.difficulty.avoidhills" type="checkbox">
-                    <label for="avoidhills" ng-bind-html="('AVOIDHILLS' | translate)">
-                    </label>
-                </input>
-            </div>
-            <div class="ui divider">
-            </div>
-            <div class="ui label tiny flleft" ng-bind-html="('MAXIMUMSTEEPNESS' | translate)">
-            </div>
-            <rzslider rz-slider-model="$ctrl.difficultySliders.Steepness.value" rz-slider-options="$ctrl.difficultySliders.Steepness.options">
-            </rzslider>
-        </div>
-    </div>
-</div>
 <div class="options-box" ng-show="$ctrl.activeSubgroup == 'HeavyVehicle'">
     <div class="pointer" ng-click="hgvOptions = !hgvOptions">
         <i ng-class="$ctrl.getClass(hgvOptions)">
@@ -311,7 +244,7 @@
         </ul>
     </div>
 </div>
-<div class="options-box" ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Wheelchair' || $ctrl.activeSubgroup == 'HeavyVehicle' || $ctrl.activeSubgroup == 'Pedestrian'">
+<div class="options-box" ng-show="$ctrl.activeSubgroup == 'Pedestrian'">
     <div class="pointer" ng-click="additionalOptions = !additionalOptions">
         <i ng-class="$ctrl.getClass(additionalOptions)">
         </i>
@@ -326,16 +259,6 @@
                     </label>
                 </input>
             </div>
-        </div>
-        <div class="ors-options-menu">
-            <div class="ui checkbox">
-                <input id="maximumspeed" name="orsRouteMaximumspeedInput" ng-change="$ctrl.toggleMaxspeedSlider()" ng-model="$ctrl.maxspeedCheckbox" type="checkbox">
-                    <label for="maximumspeed" ng-bind-html="('MAXIMUMSPEED' | translate)">
-                    </label>
-                </input>
-            </div>
-            <rzslider rz-slider-model="$ctrl.maxspeedSlider.value" rz-slider-options="$ctrl.maxspeedSlider.options">
-            </rzslider>
         </div>
         <div class="ors-options-menu" ng-show="$ctrl.activeSubgroup == 'Pedestrian'">
             <div class="ui checkbox">

@@ -337,11 +337,8 @@ angular.module("orsApp").directive("orsMap", () => {
           orsCookiesFactory.getMapOptions() &&
           orsCookiesFactory.getMapOptions().msi
             ? orsCookiesFactory.getMapOptions().msi
-            : 3;
-        // override cookies if mapsurfer in cookies
-        if ($scope.mapStyleId === 0) {
-          $scope.mapStyleId = 3;
-        }
+            : 0;
+
         // mapOptionsInitSubject is a replay subject and only subscribes once
         let mapInitSubject = orsSettingsFactory.mapOptionsInitSubject.subscribe(
           settings => {
@@ -472,6 +469,7 @@ angular.module("orsApp").directive("orsMap", () => {
           // add mapstyle
           angular.forEach($scope.baseLayers, (value, key) => {
             if (value.options.id == $scope.mapStyleId) {
+              console.log($scope.mapStyleId, $scope.baseLayers)
               $scope.baseLayers[key].addTo($scope.orsMap);
             }
           });
