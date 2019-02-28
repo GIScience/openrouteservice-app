@@ -209,6 +209,12 @@
                    ng-model-options="{debounce: 500}"
                    ng-change="$ctrl.changeOptions('pois')"
                    style="width: 70%"/>
+            <br>
+            <label ng-bind-html="'Fuel: '"></label>
+            <input data-ng-model="$ctrl.currentOptions.env.fuel"
+                   ng-model-options="{debounce: 500}"
+                   ng-change="$ctrl.changeOptions('fuel')"
+                   style="width: 70%"/>
         </div>
         <div ng-show="$ctrl.api">
             <br>

@@ -469,7 +469,7 @@ angular.module("orsApp").directive("orsMap", () => {
           // add mapstyle
           angular.forEach($scope.baseLayers, (value, key) => {
             if (value.options.id == $scope.mapStyleId) {
-              console.log($scope.mapStyleId, $scope.baseLayers)
+              console.log($scope.mapStyleId, $scope.baseLayers);
               $scope.baseLayers[key].addTo($scope.orsMap);
             }
           });
@@ -1967,13 +1967,15 @@ angular.module("orsApp").directive("orsPopup", [
   "orsUtilsService",
   "orsRequestService",
   "orsRouteService",
+  "orsFuelService",
   (
     $compile,
     $timeout,
     orsSettingsFactory,
     orsUtilsService,
     orsRequestService,
-    orsRouteService
+    orsRouteService,
+    orsFuelService
   ) => {
     return {
       restrict: "E",

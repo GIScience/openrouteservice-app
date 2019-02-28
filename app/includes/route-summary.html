@@ -65,6 +65,32 @@
                 <span ng-bind-html="(route.summary.descent | distance)">
                 </span>
             </div>
+            <div class="summary-item" ng-if="route.summary.consumption" tooltip-side="top" tooltip-template="{{('CONSUMPTION' | translate)}}" tooltips="">
+                <span>
+                    <i class="fa fa-tint">
+                    </i>
+                </span>
+                <span ng-bind-html="(route.summary.consumption | round: ' l')">
+                </span>
+            </div>
+        </div>
+        <div>
+            <div class="summary-item" ng-if="route.summary.emission" tooltip-side="top" tooltip-template="{{('EMISSION' | translate)}}" tooltips="">
+                <span>
+                    <i class="fa fa-cloud-upload">
+                    </i>
+                </span>
+                <span ng-bind-html="(route.summary.emission | round: ' kg CO<sub>2</sub>')">
+                </span>
+            </div>
+            <div class="summary-item" ng-if="route.summary.fuelCost" tooltip-side="top" tooltip-template="{{('FUEL_COSTS' | translate)}}" tooltips="">
+                <span>
+                    <i class="fa fa-eur">
+                    </i>
+                </span>
+                <span ng-bind-html="(route.summary.fuelCost | round)">
+                </span>
+            </div>
         </div>
         <button class="summary-select" data-ng-click="$ctrl.setIdx($index); $ctrl.showInstructions();" ng-bind-html="('DETAILS' | translate)" ng-show="!$ctrl.shouldDisplayRouteDetails">
             >

@@ -21,7 +21,7 @@ angular
         orsCookiesFactory
       ) {
         let ctrl = this;
-        ctrl.showOptions = false;
+        ctrl.showOptions = true;
         ctrl.add = () => {
           ctrl.onAdd();
           ctrl.showAdd = true;

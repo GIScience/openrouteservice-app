@@ -88,4 +88,18 @@ angular
     return function(array, needle) {
       return array.indexOf(needle) >= 0;
     };
+  })
+  .filter("round", () => {
+    return (input, units = "") => {
+      return "<b>" + input.toFixed(1) + "</b>" + units;
+    };
+  })
+  .filter("capitalize", () => {
+    return str => {
+      str = str.split(" ");
+      for (let i = 0, x = str.length; i < x; i++) {
+        str[i] = str[i][0].toUpperCase() + str[i].substr(1);
+      }
+      return str.join(" ");
+    };
   });

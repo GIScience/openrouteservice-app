@@ -13,10 +13,12 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
     "orsUtilsService",
     "orsRequestService",
     "orsParamsService",
+    "orsFuelService",
     "$scope",
     "$timeout",
     "lists",
     "countries",
+    "carCategories",
     function(
       orsSettingsFactory,
       orsCookiesFactory,
@@ -24,16 +26,29 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
       orsUtilsService,
       orsRequestService,
       orsParamsService,
+      orsFuelService,
       $scope,
       $timeout,
       lists,
-      countries
+      countries,
+      carCategories
     ) {
       let ctrl = this;
       ctrl.optionList = lists.optionList;
       ctrl.$onInit = () => {
         /** This is a reference of the settings object, if we change here, it is updated in settings */
         ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
+
+        let brandsRequest = orsFuelService.getBrands();
+        brandsRequest.promise.then(
+          brandsResponse => {
+            ctrl.carBrands = brandsResponse.brands;
+          },
+          brandsError => {
+            console.log(brandsError);
+          }
+        );
+
         // preference/weight is only considered for routing panel
         if (ctrl.routing)
           ctrl.currentOptions.weight =
@@ -469,7 +484,7 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
         // call setoptions
         if (ctrl.currentOptions.difficulty)
           ctrl.difficultySliders.Fitness.options.disabled =
-            ctrl.currentOptions.difficulty.avoidhills === true ? true : false;
+            ctrl.currentOptions.difficulty.avoidhills === true;
         orsSettingsFactory.setActiveOptions(ctrl.currentOptions, ctrl.routing);
       };
       ctrl.getClass = bool => {
@@ -563,6 +578,137 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
               .indexOf(ctrl.queryCountries.toLowerCase() || "") !== -1) &&
           (!row.hasOwnProperty("check") || row.check === false)
         );
+      };
+
+      // OFS options
+      ctrl.carCategories = carCategories;
+      ctrl.categoryCheck = true;
+      ctrl.carModels = ctrl.carYears = ctrl.carTypes = [];
+      ctrl.set = list => {
+        ctrl[list] =
+          list === "carYears"
+            ? Object.keys(ctrl.carResponse[ctrl.queryModel])
+            : list === "carTypes" && ctrl.queryYear
+              ? Object.keys(ctrl.carResponse[ctrl.queryModel][ctrl.queryYear])
+              : list;
+      };
+      ctrl.chooseCategory = () => {
+        // rename Object key of the filters.fuel_consumptions and keep value
+        const renameKey = (o, newKey) => {
+          if (Object.keys(o)[0] !== newKey) {
+            Object.defineProperty(
+              o,
+              newKey,
+              Object.getOwnPropertyDescriptor(o, Object.keys(o)[0])
+            );
+            delete o[Object.keys(o)[0]];
+          }
+        };
+        if (ctrl.tankSize)
+          renameKey(
+            ctrl.ofs.filters.tank_sizes,
+            ctrl.ofs.filters.vehicle_categories[0]
+          );
+        if (ctrl.fuelConsumption)
+          renameKey(
+            ctrl.ofs.filters.fuel_consumptions,
+            ctrl.ofs.filters.vehicle_categories[0]
+          );
+      };
+      ctrl.toggleSource = source => {
+        if (source === "category") {
+          ctrl.brandCheck = !ctrl.categoryCheck;
+        } else if (source === "brand") {
+          ctrl.categoryCheck = !ctrl.brandCheck;
+        }
+      };
+      ctrl.requestConsumption = () => {
+        if (ctrl.brandCheck) {
+          if (ctrl.queryType) {
+            ctrl.ofs.filters.cfd_ids =
+              ctrl.carResponse[ctrl.queryModel][ctrl.queryYear][ctrl.queryType];
+            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} - ${
+              ctrl.queryModel
+            } (${ctrl.queryYear}) ${ctrl.queryType}`;
+          } else if (ctrl.queryYear) {
+            ctrl.ofs.filters.cfd_ids =
+              ctrl.carResponse[ctrl.queryModel][ctrl.queryYear].all;
+            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} - ${
+              ctrl.queryModel
+            } (${ctrl.queryYear})`;
+          } else if (ctrl.queryModel) {
+            ctrl.ofs.filters.cfd_ids = ctrl.carResponse[ctrl.queryModel].all;
+            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} - ${
+              ctrl.queryModel
+            }`;
+          }
+        } else {
+          ctrl.ofs.filters.request_id =
+            ctrl.carCategories[ctrl.ofs.filters.vehicle_categories[0]].en;
+        }
+        ctrl.currentOptions.ofs = ctrl.ofs;
+        if (ctrl.categoryCheck) {
+          delete ctrl.currentOptions.ofs.filters.cfd_ids;
+        } else {
+          delete ctrl.currentOptions.ofs.filters.vehicle_categories[0];
+        }
+        orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
+        ctrl.requesting = true;
+        orsFuelService.getConsumption(ctrl.currentOptions.ofs);
+        ctrl.requesting = false;
+        if (!ctrl.autoCall) {
+          ctrl.removeOfsSettings();
+        }
+      };
+      ctrl.filterOutAll = list => {
+        return list.filter(e => {
+          return e !== "all";
+        });
+      };
+      ctrl.removeOfsSettings = () => {
+        delete ctrl.currentOptions.ofs;
+        orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
+      };
+      ctrl.requestCars = () => {
+        let carRequest = orsFuelService.getCars(ctrl.queryBrand);
+        carRequest.promise.then(
+          carResponse => {
+            ctrl.carResponse = carResponse;
+            ctrl.carModels = Object.keys(carResponse);
+          },
+          carError => {
+            console.log(carError);
+          }
+        );
+      };
+      ctrl.toggleAutoCall = () => {
+        if (!ctrl.autoCall) {
+          ctrl.removeOfsSettings();
+        } else {
+          ctrl.currentOptions.ofs = ctrl.ofs;
+          orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
+        }
+      };
+      //
+      ctrl.ofs = {
+        filters: {
+          data_source: "cfd",
+          fuel_type: "gasoline",
+          vehicle_type: "car",
+          driving_speed: 60,
+          vehicle_categories: ["c"],
+          fuel_consumptions: {},
+          tank_sizes: {},
+          request_id: "medium cars"
+        }
+      };
+      $scope.searchBrand = row => {
+        return ctrl.queryBrand
+          ? !!(
+              row.toLowerCase().indexOf(ctrl.queryBrand.toLowerCase() || "") !==
+              -1
+            )
+          : row;
       };
     }
   ]

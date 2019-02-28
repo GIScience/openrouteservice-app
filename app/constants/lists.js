@@ -474,13 +474,7 @@ angular.module("orsApp").constant("lists", {
     }
   },
   permalinkFilters: {
-    avoidables: [
-      "ferry",
-      "fords",
-      "steps",
-      "highways",
-      "tollroads"
-    ],
+    avoidables: ["ferry", "fords", "steps", "highways", "tollroads"],
     analysis: ["method", "isovalue", "isointerval", "reverseflow"],
     Car: ["type", "weight", "maxspeed"],
     hgv: [
@@ -550,32 +544,13 @@ angular.module("orsApp").constant("lists", {
       "hazmat"
     ],
     Bicycle: ["type", "weight"],
-    BicycleSafety: [
-      "type",
-      "weight"
-    ],
-    BicycleMTB: [
-      "type",
-      "weight"
-    ],
-    BicycleRacer: [
-      "type",
-      "weight"
-    ],
-    BicycleElectro: [
-      "type",
-      "weight"
-    ],
-    BicycleTour: [
-      "type",
-      "weight"
-    ],
+    BicycleSafety: ["type", "weight"],
+    BicycleMTB: ["type", "weight"],
+    BicycleRacer: ["type", "weight"],
+    BicycleElectro: ["type", "weight"],
+    BicycleTour: ["type", "weight"],
     Pedestrian: ["type", "weight", "green"],
-    PedestrianHiking: [
-      "type",
-      "weight",
-      "green"
-    ],
+    PedestrianHiking: ["type", "weight", "green"],
     Wheelchair: [
       "type",
       "weight",

@@ -1,4 +1,5 @@
 @import 'variables.less';
+
 a {
     transition: color .4s;
     color: #265C83;
@@ -46,7 +47,7 @@ h3, h4, h5 {
 }
 
 span tooltip {
-    box-sizing: initial!important;
+    box-sizing: initial !important;
 }
 
 .ors-controls-button {
@@ -130,6 +131,7 @@ tooltip._multiline {
     display: inline-block;
     text-align: left;
 }
+
 .flright {
     float: right !important;
 }
@@ -181,7 +183,6 @@ tooltip._multiline {
     margin-bottom: 10px !important;
 }
 
-
 /* Semantic ui overrides */
 
 .ui.checkbox, .item {
@@ -205,10 +206,12 @@ label, .label {
         }
     }
 }
+
 .ors-navigation {
     display: flex;
     flex-direction: column;
 }
+
 .ors-summary, .ors-features {
     align-self: start;
     ul {
@@ -218,7 +221,7 @@ label, .label {
 }
 
 .ors-version {
-    margin-top:auto;
+    margin-top: auto;
     padding-bottom: 3px;
     text-align: center;
     font-size: 11px;
@@ -227,7 +230,8 @@ label, .label {
         color: silver;
         &:hover, &:visited, &:active, &:link {
             text-decoration: none;
-        };
+        }
+    ;
         &:hover {
             color: @orsHoverColor;
         }
@@ -272,7 +276,6 @@ button.summary-select {
 //     background-color: rgb(250, 250, 250);
 // }
 
-
 /* options menu */
 
 .ors-options-menu {
@@ -300,6 +303,26 @@ button.summary-select {
     input {
         width: 150px;
     }
+    select {
+        max-width: 150px;
+        white-space: nowrap !important;
+        margin-bottom: 8px;
+    }
+    margin-top : 8px;
+    margin-bottom: 8px;
+}
+
+.ors-select-tooltip {
+    tooltip {
+        padding-top: 9px;
+    }
+    div {
+        float: left;
+    }
+}
+
+.ors-options-label {
+    margin-top: 4px;
 }
 
 .options-box {
@@ -324,7 +347,7 @@ button.summary-select {
 }
 
 .collapsable {
-    
+
     overflow: hidden;
     height: 0;
 }
@@ -360,7 +383,7 @@ button.summary-select {
             cursor: pointer;
             user-select: none;
             border-right: transparent !important;
-            font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
+            font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
             &:focus, &:active {
                 border: 1px solid rgba(34, 36, 38, 0.15) !important;
                 border-right: transparent !important;
@@ -406,6 +429,15 @@ button.summary-select {
     }
 }
 
+.ors-fuel-table {
+    border: thin solid;
+    border-collapse: collapse;
+    .entry {
+        border-top: thin solid;
+        border-right: thin solid;
+
+    }
+}
 
 /* scrollbar */
 
@@ -419,10 +451,10 @@ button.summary-select {
 //     -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 // }
 
-/* 
-  Allow angular.js to be loaded in body, hiding cloaked elements until 
-  templates compile.  The !important is important given that there may be 
-  other selectors that are more specific or come later and might alter display.  
+/*
+  Allow angular.js to be loaded in body, hiding cloaked elements until
+  templates compile.  The !important is important given that there may be
+  other selectors that are more specific or come later and might alter display.
  */
 
 [ng\:cloak], [ng-cloak], .ng-cloak {

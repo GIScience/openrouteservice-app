@@ -16,15 +16,18 @@ angular
       "orsObjectsFactory",
       "orsRouteService",
       "lists",
+      "carCategories",
       function(
         $rootScope,
         orsSettingsFactory,
         orsMapFactory,
         orsObjectsFactory,
         orsRouteService,
-        lists
+        lists,
+        carCategories
       ) {
         let ctrl = this;
+        ctrl.carCategories = carCategories;
         ctrl.checkboxes = [false, false, false, false];
         ctrl.showShare = false;
         ctrl.showExport = false;
@@ -77,6 +80,9 @@ angular
         };
         ctrl.DeEmphRoute = () => {
           orsRouteService.DeEmph();
+        };
+        ctrl.classInQuery = (ofsData, vehicleClass) => {
+          return ofsData.general.vehicle_categories.indexOf(vehicleClass) > -1;
         };
       }
     ]
