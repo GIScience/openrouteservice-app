@@ -82,9 +82,7 @@ angular
           orsRouteService.DeEmph();
         };
         ctrl.classInQuery = (ofsData, vehicleClass) => {
-          let inside =
-            ofsData["general"]["vehicle_categories"].indexOf(vehicleClass) > -1;
-          return inside;
+          return ofsData.general.vehicle_categories.indexOf(vehicleClass) > -1;
         };
       }
     ]

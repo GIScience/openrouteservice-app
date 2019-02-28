@@ -228,14 +228,14 @@
         </ul>
     </div>
 </div>
-<div class="options-box" ng-show="$ctrl.activeSubgroup == 'Car'">
-    <div class="pointer" ng-click="$ctrl.fuelSettings = !$ctrl.fuelSettings">
-        <i ng-class="$ctrl.getClass($ctrl.fuelSettings)">
+<div class="options-box" ng-if="$ctrl.routing" ng-show="$ctrl.activeSubgroup == 'Car'">
+    <div class="pointer" ng-click="fuelSettings = !fuelSettings">
+        <i ng-class="$ctrl.getClass(fuelSettings)">
         </i>
         <span ng-bind-html="('FUEL_CONSUMPTION' | translate)">
         </span>
     </div>
-    <div class="collapsable" ng-class="{ showMe: $ctrl.fuelSettings }">
+    <div class="collapsable" ng-class="{ showMe: fuelSettings }">
         <ul class="ors-options-menu">
             <li>
                 <div class="ui checkbox">
@@ -245,6 +245,7 @@
                             ng-click="$ctrl.toggleSource('brand')"
                             ng-model="$ctrl.brandCheck" type="checkbox">
                     <label for="brandCheck"
+                           ng-style="!$ctrl.brandCheck ? {color:'grey'} : undefined"
                            ng-bind-html="('CAR_BRAND' | translate)"
                            ng-click="$ctrl.toggleSource('brand')">
                     </label>
@@ -253,15 +254,15 @@
                     <div>
                         <label for="brandInput"></label>
                         <div class="ors-options-input ui input" id="brandInput">
-                            <input focus-if="$ctrl.fuelSettings" ng-model="$ctrl.queryBrand"
+                            <input ng-model="$ctrl.queryBrand"
                                    ng-model-options="{debounce: 300}"
                                    ng-change="$ctrl.queryModel = ''"
                                    ng-focus="$ctrl.focusBrand = true"
-                                   placeholder="{{('SEARCH_FOR' | translate)}}{{('CAR_BRAND' | translate)}}" select-on-click="" type="text">
+                                   placeholder="{{('SEARCH' | translate)}}{{('CAR_BRAND' | translate)}}" select-on-click="" type="text">
                         </div>
-                        <span tooltip-side="right" tooltip-template="{{('RESET' | translate)}}" tooltips="">
+                        <span tooltip-side="right" tooltip-template="{{('_RESET' | translate)}} {{('CAR_BRAND' | translate)}}" tooltips="">
                         <button class="ors-controls-button"
-                                ng-click="$ctrl.queryBrand = undefined; $ctrl.carResponse = undefined; $ctrl.showModel = false; $ctrl.showYear = false; $ctrl.showType = false">
+                                ng-click="$ctrl.focusBrand = false; $ctrl.queryBrand = undefined; $ctrl.carResponse = undefined; $ctrl.showModel = false; $ctrl.showYear = false; $ctrl.showType = false">
                             <i class="fa fa-remove">
                             </i>
                         </button>
@@ -270,9 +271,9 @@
                     <div class="row" ng-if="$ctrl.focusBrand">
                         <table id="brandResults">
                             <tbody>
-                            <tr ng-repeat="brand in $ctrl.brands | filter: searchBrand">
+                            <tr ng-repeat="brand in $ctrl.carBrands | filter: searchBrand">
                                 <td>
-                                    <div ng-click="$ctrl.queryBrand = brand;$ctrl.requestCars(brand);$ctrl.focusBrand = false;$ctrl.showModel = true;">{{brand}}</div>
+                                    <div ng-click="$ctrl.queryBrand = brand;$ctrl.requestCars(brand);$ctrl.focusBrand = false;$ctrl.showModel = true; $ctrl.yearCheck = false; $ctrl.typeCheck = false">{{brand}}</div>
                                 </td>
                             </tr>
                             </tbody>
@@ -293,32 +294,23 @@
                         </label>
                     </div>
                     <div ng-if="$ctrl.modelCheck">
-                        <div>
+                        <div class="ors-select-tooltip">
                             <label for="modelInput"></label>
                             <div class="ors-options-input ui input" id="modelInput">
-                                <input ng-model="$ctrl.queryModel" ng-model-options="{debounce: 300}"
-                                       ng-change="$ctrl.queryYear = ''"
-                                       ng-focus="$ctrl.focusModel = true"
-                                       placeholder="{{('SEARCH_FOR' | translate)}}{{('CAR_MODEL' | translate)}}" select-on-click="" type="text">
+                                <select class="ui selection dropdown no-wrap"
+                                        ng-model="$ctrl.queryModel"
+                                        ng-change="$ctrl.queryYear = ''; $ctrl.set('carYears'); $ctrl.carTypes = []; $ctrl.showYear = true"
+                                        ng-focus="$ctrl.focusModel = true"
+                                        ng-options="model for model in $ctrl.carModels"
+                                        type="text"></select>
                             </div>
-                            <span tooltip-side="right" tooltip-template="{{('RESET' | translate)}}" tooltips="">
+                            <span style="padding-top: 9px" tooltip-side="right" tooltip-template="{{('_RESET' | translate)}} {{('CAR_MODEL' | translate)}}" tooltips="">
                             <button class="ors-controls-button"
                                     ng-click="$ctrl.queryModel = undefined; $ctrl.showYear = false; $ctrl.showType = false">
                                 <i class="fa fa-remove">
                                 </i>
                             </button>
                             </span>
-                        </div>
-                        <div class="row" ng-if="$ctrl.focusModel">
-                            <table id="modelResults">
-                                <tbody>
-                                <tr ng-repeat="model in $ctrl.carModels | filter: searchModel">
-                                    <td ng-if="model !== 'all'">
-                                        <div ng-click="$ctrl.queryModel = model; $ctrl.set('carYears');$ctrl.showYear = true;$ctrl.focusModel = false;$ctrl.requestConsumption('queryModel')">{{model}}</div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -336,32 +328,22 @@
                     </label>
                     </div>
                     <div ng-if="$ctrl.yearCheck">
-                        <div>
+                        <div class="ors-select-tooltip">
                             <label for="yearInput"></label>
                             <div class="ors-options-input ui input" id="yearInput">
-                                <input ng-model="$ctrl.queryYear" ng-model-options="{debounce: 300}"
-                                       ng-change="$ctrl.queryType = ''"
-                                       ng-focus="$ctrl.focusYear = true"
-                                       placeholder="{{('SEARCH_FOR' | translate)}}{{('CAR_YEAR' | translate)}}" select-on-click="" type="text">
+                                <select class="ui selection dropdown no-wrap"
+                                        ng-model="$ctrl.queryYear"
+                                        ng-change="$ctrl.queryType = ''; $ctrl.showType = true; $ctrl.set('carTypes');$ctrl.focusYear = false"
+                                        ng-focus="$ctrl.focusYear = true"
+                                        ng-options="year for year in $ctrl.filterOutAll($ctrl.carYears)" type="text"></select>
                             </div>
-                            <span tooltip-side="right" tooltip-template="{{('RESET' | translate)}}" tooltips="">
+                            <span tooltip-side="right" tooltip-template="{{('_RESET' | translate)}} {{('CAR_YEAR' | translate)}}" tooltips="">
                             <button class="ors-controls-button"
                                     ng-click="$ctrl.queryYear = undefined; $ctrl.showType = false">
                                 <i class="fa fa-remove">
                                 </i>
                             </button>
                             </span>
-                        </div>
-                        <div class="row" ng-if="$ctrl.focusYear">
-                            <table id="yearResults">
-                                <tbody>
-                                <tr ng-repeat="year in $ctrl.carYears | filter: searchYear">
-                                    <td ng-if="year !== 'all'">
-                                        <div ng-click="$ctrl.queryYear = year; $ctrl.showType = true; $ctrl.set('carTypes');$ctrl.focusYear = false;$ctrl.requestConsumption('queryYear')">{{year}}</div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -379,32 +361,22 @@
                         </label>
                     </div>
                     <div ng-if="$ctrl.typeCheck">
-                        <div>
+                        <div class="ors-select-tooltip">
                             <label for="typeInput"></label>
                             <div class="ors-options-input ui input" id="typeInput">
-                                <input ng-model="$ctrl.queryType" ng-model-options="{debounce: 300}"
-                                       ng-focus="$ctrl.focusType = true"
-                                       placeholder="{{('SEARCH_FOR' | translate)}}{{('CAR_TYPE' | translate)}}" select-on-click=""
-                                       type="text">
+                                <select class="ui selection dropdown"
+                                        ng-model="$ctrl.queryType"
+                                        ng-options="type for type in $ctrl.filterOutAll($ctrl.carTypes)"
+                                        ng-change="$ctrl.set('carTypes');"
+                                        type="text"></select>
                             </div>
-                            <span tooltip-side="right" tooltip-template="{{('RESET' | translate)}}" tooltips="">
+                            <span tooltip-side="right" tooltip-template="{{( '_RESET' | translate)}} {{( 'CAR_TYPE' | translate)}}" tooltips="">
                                 <button class="ors-controls-button"
                                         ng-click="$ctrl.queryType = undefined">
                                     <i class="fa fa-remove">
                                     </i>
                                 </button>
                             </span>
-                        </div>
-                        <div class="row" ng-if="$ctrl.focusType">
-                            <table id="typeResults">
-                                <tbody>
-                                <tr ng-repeat="type in $ctrl.carTypes | filter: searchType">
-                                    <td ng-if="type !== 'all'">
-                                        <div ng-click="$ctrl.queryType = type;$ctrl.set('carTypes');$ctrl.focusType = false;$ctrl.requestConsumption('queryType')">{{type}}</div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -417,6 +389,7 @@
                            ng-click="$ctrl.toggleSource('category')"
                     >
                     <label for="categoryCheck"
+                           ng-style="!$ctrl.categoryCheck ? {color:'grey'} : undefined"
                            ng-bind-html="('VEHICLE_CATEGORY' | translate) + ': '"
                            ng-click="$ctrl.toggleSource('category')">
                     </label>
@@ -424,71 +397,39 @@
                 <div ng-if="$ctrl.categoryCheck">
                     <label for="vehicleCategory">
                     </label>
-                    <select class="ors-options-input ui selection dropdown"
+                    <select class="ors-options-input ui selection dropdown no-wrap"
                             id="vehicleCategory"
                             ng-model="$ctrl.ofs.filters.vehicle_categories[0]"
-                            ng-change="$ctrl.chooseCategory();$ctrl.requestConsumption()"
+                            ng-change="$ctrl.chooseCategory()"
                             ng-options="category.short as category.en for category in $ctrl.carCategories"></select>
                 </div>
             </li>
             <li>
-                <div class="ui divider">
-                </div>
                 <div>
                     <label for="fuelType" ng-bind-html="('FUEL_TYPE' | translate) + ': '">
                     </label>
                     <select class="ors-options-input ui selection dropdown"
                             id="fuelType" ng-model="$ctrl.ofs.filters.fuel_type"
-                            ng-options="fueltype for fueltype in ['gasoline','diesel']"
-                            ng-change="$ctrl.requestConsumption()"></select>
+                            ng-options="fueltype for fueltype in ['gasoline','diesel']"></select>
                 </div>
             </li>
             <li>
-                <div class="ui divider">
-                </div>
                 <span>
-                    <span class="ui checkbox">
-                        <input id="drivingSpeedCheck"
-                                type="checkbox"
-                               ng-model="$ctrl.drivingSpeed"
-                               ng-click="$ctrl.check('style')">
-                        <label for="drivingSpeedCheck" class="ors-options-label">
-
-                        </label>
-                    </span>
                     <label for="drivingSpeed" ng-bind-html="('DRIVING_SPEED' | translate) + ': '">
                     </label>
                     <span class="row ui input">
                         <input id="drivingSpeed"
-                               ng-disabled="!$ctrl.drivingSpeed"
                                ng-model="$ctrl.ofs.filters.driving_speed"
-                               ng-change="$ctrl.requestConsumption()"
+                               style="width: 60px"
                         >
                     </span>
                 </span>
             </li>
             <li>
-                <div>
-                    <span class="ui checkbox">
-                        <input id="drivingStyleCheck"
-                               type="checkbox"
-                               ng-model="$ctrl.drivingStyle"
-                               ng-click="$ctrl.check('speed')"/>
-                        <label for="drivingStyleCheck" class="ors-options-label">
-                        </label>
-                    </span>
-                    <label for="drivingStyle" ng-bind-html="('DRIVING_STYLE' | translate) + ': '">
-                    </label>
-                    <select class="ors-options-input ui selection dropdown"
-                            id="drivingStyle"
-                            ng-model="$ctrl.ofs.filters.driving_style"
-                            ng-disabled="!$ctrl.drivingStyle"
-                            ng-options="style for style in ['moderate', 'fast']"
-                            ng-change="$ctrl.requestConsumption()"></select>
-                </div>
-            </li>
-            <li>
                 <div class="ui divider">
+                </div>
+                <div>
+                    <p class="-italic" ng-bind-html="('OPTIONAL_PARAMS' | translate)"></p>
                 </div>
                 <div>
                     <span class="ui checkbox">
@@ -502,8 +443,7 @@
                         <input id="fuelConsumption"
                                ng-disabled="!$ctrl.fuelConsumption"
                                ng-model="$ctrl.ofs.filters.fuel_consumptions[$ctrl.ofs.filters.vehicle_categories[0]]"
-                               style="width : 60px"
-                               ng-change="$ctrl.requestConsumption()"
+                               style="width: 60px"
                         >
                     </span>
                     <div>
@@ -512,8 +452,6 @@
                 </div>
             </li>
             <li>
-                <div class="ui divider">
-                </div>
                 <div>
                     <span class="ui checkbox">
                         <input id="tankSizeCheck" type="checkbox" value="$ctrl.tankSize" ng-model="$ctrl.tankSize"
@@ -527,11 +465,31 @@
                                ng-disabled="!$ctrl.tankSize"
                                ng-model="$ctrl.ofs.filters.tank_sizes[$ctrl.ofs.filters.vehicle_categories[0]]"
                                style="width : 30px"
-                               ng-change="$ctrl.requestConsumption()"
                         >
                     </span>
                      liters
                 </div>
+            </li>
+            <li>
+                <div class="ui divider">
+                </div>
+                <span>
+                    <button ng-class="{
+                                'tiny teal ui button disabled': !(($ctrl.categoryCheck)||($ctrl.modelCheck && $ctrl.queryModel && $ctrl.queryBrand)),
+                                'tiny teal ui button': !$ctrl.requesting && (($ctrl.categoryCheck)||($ctrl.modelCheck && $ctrl.queryModel && $ctrl.queryBrand)),
+                                'tiny teal ui button loading': $ctrl.requesting}"
+                            ng-click="$ctrl.requestConsumption()"
+                            class="tiny teal ui button">
+                        <i class="fa gas-pump">
+                        </i>
+                        <span ng-bind-html="('CALC_CONSUMPTION' | translate)" class="ng-binding"></span>
+                    </button>
+                </span>
+                <span class="ui checkbox">
+                        <input id="autoCall" type="checkbox" value="$ctrl.autoCall" ng-model="$ctrl.autoCall"
+                               ng-click="$ctrl.toggleAutoCall()"/>
+                        <label for="autoCall" class="ors-options-label">{{( "ON_ROUTE_CHANGE" | translate)}}</label>
+                </span>
             </li>
         </ul>
     </div>

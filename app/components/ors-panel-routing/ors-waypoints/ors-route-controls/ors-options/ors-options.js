@@ -19,7 +19,6 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
     "lists",
     "countries",
     "carCategories",
-    "carBrands",
     function(
       orsSettingsFactory,
       orsCookiesFactory,
@@ -32,15 +31,24 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
       $timeout,
       lists,
       countries,
-      carCategories,
-      carBrands
+      carCategories
     ) {
       let ctrl = this;
-      ctrl.fuelSettings = true;
       ctrl.optionList = lists.optionList;
       ctrl.$onInit = () => {
         /** This is a reference of the settings object, if we change here, it is updated in settings */
         ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
+
+        let brandsRequest = orsFuelService.getBrands();
+        brandsRequest.promise.then(
+          brandsResponse => {
+            ctrl.carBrands = brandsResponse.brands;
+          },
+          brandsError => {
+            console.log(brandsError);
+          }
+        );
+
         // preference/weight is only considered for routing panel
         if (ctrl.routing)
           ctrl.currentOptions.weight =
@@ -569,15 +577,12 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
         }
       };
       ctrl.$onChanges = changesObj => {
-        console.log(changesObj);
         if (changesObj.showOptions) ctrl.refreshSlider();
         if (changesObj.activeSubgroup || changesObj.activeProfile) {
-          console.log("hallo", changesObj.activeProfile);
           ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeSubgroup];
           // check if already initiated
           /** update slider settings */
           if (ctrl.maxspeedSlider) {
-            console.log(true);
             ctrl.maxspeedSlider.value = ctrl.maxspeedOptions.default;
             ctrl.maxspeedSlider.options.floor = ctrl.maxspeedOptions.min;
             ctrl.maxspeedSlider.options.ceil = ctrl.maxspeedOptions.max;
@@ -691,30 +696,18 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
           (!row.hasOwnProperty("check") || row.check === false)
         );
       };
-      ctrl.queryBrand = "";
-      ctrl.queryModel = "";
-      ctrl.queryYear = "";
-      ctrl.queryType = "";
+
+      // OFS options
       ctrl.carCategories = carCategories;
-      ctrl.brands = carBrands;
-      ctrl.categoryCheck = false;
-      ctrl.brandCheck = true;
-      ctrl.modelCheck = false;
-      ctrl.yearCheck = false;
-      ctrl.typeCheck = false;
-      ctrl.drivingSpeed = false;
-      ctrl.drivingStyle = true;
-      ctrl.carResponse = undefined;
-      ctrl.carModels = [];
-      ctrl.carYears = [];
-      ctrl.carTypes = [];
+      ctrl.categoryCheck = true;
+      ctrl.carModels = ctrl.carYears = ctrl.carTypes = [];
       ctrl.set = list => {
         ctrl[list] =
           list === "carYears"
             ? Object.keys(ctrl.carResponse[ctrl.queryModel])
-            : list === "carTypes"
+            : list === "carTypes" && ctrl.queryYear
               ? Object.keys(ctrl.carResponse[ctrl.queryModel][ctrl.queryYear])
-              : console.log(list);
+              : list;
       };
       ctrl.chooseCategory = () => {
         // rename Object key of the filters.fuel_consumptions and keep value
@@ -739,18 +732,6 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
             ctrl.ofs.filters.vehicle_categories[0]
           );
       };
-      ctrl.check = what => {
-        switch (what) {
-          case "speed":
-            if (ctrl.drivingSpeed) ctrl.drivingSpeed = false;
-            delete ctrl.drivingSpeed;
-            break;
-          case "style":
-            if (ctrl.drivingStyle) ctrl.drivingStyle = false;
-            delete ctrl.drivingStyle;
-            break;
-        }
-      };
       ctrl.toggleSource = source => {
         if (source === "category") {
           ctrl.brandCheck = !ctrl.categoryCheck;
@@ -758,33 +739,45 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
           ctrl.categoryCheck = !ctrl.brandCheck;
         }
       };
-      ctrl.requestConsumption = (individual = null) => {
-        if (individual !== null) {
-          if (individual === "queryModel") {
-            ctrl.ofs.filters.cfd_ids = ctrl.carResponse[ctrl.queryModel].all;
-          } else if (individual === "queryYear") {
-            ctrl.ofs.filters.cfd_ids =
-              ctrl.carResponse[ctrl.queryModel][ctrl.queryYear].all;
-          } else if (individual === "queryType") {
+      ctrl.requestConsumption = () => {
+        if (ctrl.brandCheck) {
+          if (ctrl.queryType) {
             ctrl.ofs.filters.cfd_ids =
               ctrl.carResponse[ctrl.queryModel][ctrl.queryYear][ctrl.queryType];
+            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} ${ctrl.queryModel} (${ctrl.queryYear}) ${ctrl.queryType}`
+          } else if (ctrl.queryYear) {
+            ctrl.ofs.filters.cfd_ids =
+              ctrl.carResponse[ctrl.queryModel][ctrl.queryYear].all;
+              ctrl.ofs.filters.request_id = `${ctrl.queryBrand} ${ctrl.queryModel} (${ctrl.queryYear})`
+          } else if (ctrl.queryModel) {
+            ctrl.ofs.filters.cfd_ids = ctrl.carResponse[ctrl.queryModel].all;
+            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} ${ctrl.queryModel}`
           }
+        } else {
+            ctrl.ofs.filters.request_id = ctrl.carCategories[ctrl.ofs.filters.vehicle_categories[0]].en
         }
         ctrl.currentOptions.ofs = ctrl.ofs;
-        if (ctrl.currentOptions.ofs && !ctrl.drivingSpeed) {
-          delete ctrl.currentOptions.ofs.filters.driving_speed;
-        }
-        if (ctrl.currentOptions.ofs && !ctrl.drivingStyle) {
-          delete ctrl.currentOptions.ofs.filters.driving_style;
-        }
         if (ctrl.categoryCheck) {
           delete ctrl.currentOptions.ofs.filters.cfd_ids;
-        }
-        if (ctrl.brandCheck) {
-          delete ctrl.currentOptions.ofs.filters.vehicle_categories;
+        } else {
+          delete ctrl.currentOptions.ofs.filters.vehicle_categories[0];
         }
         orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
+        ctrl.requesting = true;
         orsFuelService.getConsumption(ctrl.currentOptions.ofs);
+        ctrl.requesting = false;
+        if (!ctrl.autoCall) {
+          ctrl.removeOfsSettings();
+        }
+      };
+      ctrl.filterOutAll = list => {
+        return list.filter(e => {
+          return e !== "all";
+        });
+      };
+      ctrl.removeOfsSettings = () => {
+        delete ctrl.currentOptions.ofs;
+        orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
       };
       ctrl.requestCars = () => {
         let carRequest = orsFuelService.getCars(ctrl.queryBrand);
@@ -798,40 +791,34 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
           }
         );
       };
-      //
+      ctrl.toggleAutoCall = () => {
+        if (!ctrl.autoCall) {
+          ctrl.removeOfsSettings();
+        } else {
+          ctrl.currentOptions.ofs = ctrl.ofs;
+          orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
+        }
+      };
       //
       ctrl.ofs = {
         filters: {
           data_source: "cfd",
           fuel_type: "gasoline",
           vehicle_type: "car",
-          driving_style: "moderate",
           driving_speed: 60,
-          vehicle_categories: [],
+          vehicle_categories: ["c"],
           fuel_consumptions: {},
-          tank_sizes: {}
+          tank_sizes: {},
+          request_id: 'medium cars'
         }
       };
       $scope.searchBrand = row => {
-        return !!(
-          row.toLowerCase().indexOf(ctrl.queryBrand.toLowerCase() || "") !== -1
-        );
-      };
-      $scope.searchModel = row => {
-        return !!(
-          row.toLowerCase().indexOf(ctrl.queryModel.toLowerCase() || "") !== -1
-        );
-      };
-      $scope.searchYear = row => {
-        console.log(ctrl.carYears);
-        return !!(
-          row.toLowerCase().indexOf(ctrl.queryYear.toLowerCase() || "") !== -1
-        );
-      };
-      $scope.searchType = row => {
-        return !!(
-          row.toLowerCase().indexOf(ctrl.queryType.toLowerCase() || "") !== -1
-        );
+        return ctrl.queryBrand
+          ? !!(
+              row.toLowerCase().indexOf(ctrl.queryBrand.toLowerCase() || "") !==
+              -1
+            )
+          : row;
       };
     }
   ]

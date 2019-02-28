@@ -88,7 +88,6 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
       return orsSettingsFactory[currentSettingsObj].getValue().profile.options;
     };
     orsSettingsFactory.setActiveOptions = (options, fireRequest) => {
-      console.log(options);
       orsSettingsFactory[
         currentSettingsObj
       ].getValue().profile.options = options;
@@ -243,15 +242,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
             );
             let ofsSettings = settings.profile.options.ofs;
             if (ofsSettings) {
-              const fuelRequest = orsFuelService.getConsumption(ofsSettings);
-              fuelRequest.promise.then(
-                fuelResponse => {
-                  response.routes[0].summary.ofs = fuelResponse;
-                },
-                fuelError => {
-                  console.log(fuelError);
-                }
-              );
+              orsFuelService.getConsumption(ofsSettings)
             }
           },
           function(response) {
