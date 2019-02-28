@@ -1,15 +1,13 @@
 {
   "name": "maps.openrouteservice.org",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "repository": {
     "type": "git",
     "url": "https://github.com/GIScience/openrouteservice-app.git"
   },
   "scripts": {
     "start": "npm run lite",
-    "lite": "lite-server",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "lite": "lite-server"
   },
   "license": "ISC",
   "dependencies": {
@@ -30,7 +28,7 @@
     "leaflet-control-angular": "^0.1.4",
     "leaflet-geometryutil": "^0.8.0",
     "leaflet-omnivore": "^0.3.4",
-    "snyk": "^1.80.1",
+    "snyk": "^1.135.1",
     "togpx": "^0.5.3",
     "tokml": "^0.4.0",
     "xml-js": "^1.6.7",
