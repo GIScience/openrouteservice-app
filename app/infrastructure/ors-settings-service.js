@@ -240,7 +240,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
               orsSettingsFactory.focusIdx,
               settings.profile.options.landmarks
             );
-            let ofsSettings = settings.profile.options.ofs;
+            let ofsSettings = profile === "Car" ? settings.profile.options.ofs : undefined;
             if (ofsSettings) {
               orsFuelService.getConsumption(ofsSettings);
             }
