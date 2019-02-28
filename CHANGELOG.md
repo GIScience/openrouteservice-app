@@ -9,7 +9,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 ### Fixed
 ### Changed
-### Deprecated-->
+### Deprecated
+### Removed-->
+
+
+## [v0.3.8] - 2019-02-28
+
+### Added
+- OpenFuelService integration ([#248](https://github.com/GIScience/openrouteservice-app/issues/248))
+
+### Removed
+- cycling-tour profile ([#272](https://github.com/GIScience/openrouteservice-app/issues/272))
+- some options see ORS issue [#396](https://github.com/GIScience/openrouteservice/issues/396) ([#274](https://github.com/GIScience/openrouteservice-app/issues/274))
 
 ## [v0.3.7] - 2018-12-17
 

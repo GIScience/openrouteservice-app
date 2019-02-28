@@ -38,7 +38,6 @@ angular
         };
         // subscribes to changes in waypoints, this doesnt have to be added though, why?
         // orsSettingsFactory.subscribeToAaWaypoints(function onNext(d) {
-        //     console.log('waypoints updated!!! panel', d);
         //     ctrl.waypoints = d;
         // });
         ctrl.collapsed = false;
@@ -71,7 +70,6 @@ angular
         };
         ctrl.$doCheck = () => {
           // check if array has changed
-          //console.log('update route');
         };
         ctrl.waypointsChanged = () => {};
         ctrl.resetWaypoints = () => {

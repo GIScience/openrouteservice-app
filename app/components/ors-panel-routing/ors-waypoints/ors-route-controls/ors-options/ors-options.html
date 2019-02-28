@@ -35,22 +35,7 @@
                     </input>
                 </div>
             </li>
-            <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'HeavyVehicle'">
-                <div class="ui checkbox">
-                    <input id="unpaved" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.unpaved" type="checkbox">
-                        <label for="unpaved" ng-bind-html="('UNPAVED' | translate)">
-                        </label>
-                    </input>
-                </div>
-            </li>
-            <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'HeavyVehicle'">
-                <div class="ui checkbox">
-                    <input id="paved" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.paved" type="checkbox">
-                        <label for="paved" ng-bind-html="('PAVED' | translate)">
-                        </label>
-                    </input>
-                </div>
-            </li>
+
             <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Pedestrian' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'HeavyVehicle'">
                 <div class="ui checkbox">
                     <input id="fords" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.fords" type="checkbox">
@@ -79,22 +64,6 @@
                 <div class="ui checkbox">
                     <input id="tollroads" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tollroads" type="checkbox">
                         <label for="tollroads" ng-bind-html="('TOLLROADS' | translate)">
-                        </label>
-                    </input>
-                </div>
-            </li>
-            <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'HeavyVehicle'">
-                <div class="ui checkbox">
-                    <input id="tunnels" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tunnels" type="checkbox">
-                        <label for="tunnels" ng-bind-html="('TUNNELS' | translate)">
-                        </label>
-                    </input>
-                </div>
-            </li>
-            <li ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'HeavyVehicle'">
-                <div class="ui checkbox">
-                    <input id="tracks" name="orsRouteAvoidablesInput" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.avoidables.tracks" type="checkbox">
-                        <label for="tracks" ng-bind-html="('TRACKS' | translate)">
                         </label>
                     </input>
                 </div>
@@ -155,47 +124,53 @@
                 <div class="row">
                     <table id="results">
                         <tbody>
-                            <tr ng-repeat="country in $ctrl.countries | filter: checked ">
-                                <td>
-                                    <input class="ui checkbox" id="c_{{country.cid}}" name="orsRouteAvoidablesCountries" ng-change="$ctrl.toggleCountries(country.id)" ng-disabled="!$ctrl.avoidCountries || $ctrl.currentOptions.borders.all" ng-model="$ctrl.countries[country.id].check" type="checkbox">
-                                    </input>
-                                </td>
-                                <td id="cname">
-                                    {{country[$ctrl.language]}}
-                                </td>
-                                <td id="ename">
-                                    <i>
-                                        <small>
-                                            ({{country.official_en_name}})
-                                        </small>
-                                    </i>
-                                </td>
-                            </tr>
-                            <tr ng-if="$ctrl.queryCountries" ng-repeat="country in $ctrl.countries | filter: search ">
-                                <td>
-                                    <input class="ui checkbox" id="c_{{country.cid}}" name="orsRouteAvoidablesCountries" ng-change="$ctrl.toggleCountries(country.id)" ng-disabled="$ctrl.currentOptions.borders.all" ng-model="$ctrl.countries[country.id].check" type="checkbox">
-                                    </input>
-                                </td>
-                                <td id="cname">
-                                    {{country[$ctrl.language]}}
-                                </td>
-                                <td align="right" hidden="" id="cid">
-                                    ({{country.cid}})
-                                </td>
-                                <td id="ename">
-                                    <i>
-                                        <small>
-                                            ({{country.official_en_name}})
-                                        </small>
-                                    </i>
-                                </td>
-                                <td hidden="" id="nname">
-                                    {{country.native_names}}
-                                </td>
-                                <td hidden="" id="ccode">
-                                    {{country.country_code}}
-                                </td>
-                            </tr>
+                        <tr ng-repeat="country in $ctrl.countries | filter: checked ">
+                            <td>
+                                <input class="ui checkbox" id="c_{{country.cid}}" name="orsRouteAvoidablesCountries"
+                                       ng-change="$ctrl.toggleCountries(country.id)"
+                                       ng-disabled="!$ctrl.avoidCountries || $ctrl.currentOptions.borders.all"
+                                       ng-model="$ctrl.countries[country.id].check" type="checkbox">
+                                </input>
+                            </td>
+                            <td id="cname">
+                                {{country[$ctrl.language]}}
+                            </td>
+                            <td id="ename">
+                                <i>
+                                    <small>
+                                        ({{country.official_en_name}})
+                                    </small>
+                                </i>
+                            </td>
+                        </tr>
+                        <tr ng-if="$ctrl.queryCountries" ng-repeat="country in $ctrl.countries | filter: search ">
+                            <td>
+                                <input class="ui checkbox" id="c_{{country.cid}}" name="orsRouteAvoidablesCountries"
+                                       ng-change="$ctrl.toggleCountries(country.id)"
+                                       ng-disabled="$ctrl.currentOptions.borders.all"
+                                       ng-model="$ctrl.countries[country.id].check" type="checkbox">
+                                </input>
+                            </td>
+                            <td id="cname">
+                                {{country[$ctrl.language]}}
+                            </td>
+                            <td align="right" hidden="" id="cid">
+                                ({{country.cid}})
+                            </td>
+                            <td id="ename">
+                                <i>
+                                    <small>
+                                        ({{country.official_en_name}})
+                                    </small>
+                                </i>
+                            </td>
+                            <td hidden="" id="nname">
+                                {{country.native_names}}
+                            </td>
+                            <td hidden="" id="ccode">
+                                {{country.country_code}}
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -203,40 +178,270 @@
         </ul>
     </div>
 </div>
-<div class="options-box" ng-show="$ctrl.activeSubgroup == 'Bicycle'">
-    <div class="pointer" ng-click="difficultyOptions = !difficultyOptions">
-        <i ng-class="$ctrl.getClass(difficultyOptions)">
+<div class="options-box" ng-if="$ctrl.routing" ng-show="$ctrl.activeSubgroup == 'Car'">
+    <div class="pointer" ng-click="fuelSettings = !fuelSettings">
+        <i ng-class="$ctrl.getClass(fuelSettings)">
         </i>
-        <span ng-bind-html="('DIFFICULTY' | translate)">
+        <span ng-bind-html="('FUEL_CONSUMPTION' | translate)">
         </span>
     </div>
-    <div class="collapsable" ng-class="{ showMe: difficultyOptions }">
-        <div class="ors-options-menu">
-            <div class="ui label tiny flleft">
-                <span ng-bind-html="('FITNESS' | translate)">
-                </span>
-                <span ng-bind-html="':'">
-                </span>
-                <div class="detail" ng-bind-html="$ctrl.fitnessValue">
-                </div>
-            </div>
-            <rzslider rz-slider-model="$ctrl.difficultySliders.Fitness.value" rz-slider-options="$ctrl.difficultySliders.Fitness.options">
-            </rzslider>
-            <div class="ui divider">
-            </div>
-            <div class="ui checkbox" id="cb-avoidhills">
-                <input id="avoidhills" name="orsRouteDifficultyAvoidHills" ng-change="$ctrl.changeOptions()" ng-model="$ctrl.currentOptions.difficulty.avoidhills" type="checkbox">
-                    <label for="avoidhills" ng-bind-html="('AVOIDHILLS' | translate)">
+    <div class="collapsable" ng-class="{ showMe: fuelSettings }">
+        <ul class="ors-options-menu">
+            <li>
+                <div class="ui checkbox">
+                    <input
+                            id="brandCheck"
+                            name="orsCarBrands"
+                            ng-click="$ctrl.toggleSource('brand')"
+                            ng-model="$ctrl.brandCheck" type="checkbox">
+                    <label for="brandCheck"
+                           ng-style="!$ctrl.brandCheck ? {color:'grey'} : undefined"
+                           ng-bind-html="('CAR_BRAND' | translate)"
+                           ng-click="$ctrl.toggleSource('brand')">
                     </label>
-                </input>
-            </div>
-            <div class="ui divider">
-            </div>
-            <div class="ui label tiny flleft" ng-bind-html="('MAXIMUMSTEEPNESS' | translate)">
-            </div>
-            <rzslider rz-slider-model="$ctrl.difficultySliders.Steepness.value" rz-slider-options="$ctrl.difficultySliders.Steepness.options">
-            </rzslider>
-        </div>
+                </div>
+                <div ng-if="$ctrl.brandCheck">
+                    <div>
+                        <label for="brandInput"></label>
+                        <div class="ors-options-input ui input" id="brandInput">
+                            <input ng-model="$ctrl.queryBrand"
+                                   ng-model-options="{debounce: 300}"
+                                   ng-change="$ctrl.queryModel = ''"
+                                   ng-focus="$ctrl.focusBrand = true"
+                                   placeholder="{{('SEARCH' | translate)}} {{('CAR_BRAND' | translate)}}" select-on-click="" type="text">
+                        </div>
+                        <span tooltip-side="right" tooltip-template="{{('_RESET' | translate)}} {{('CAR_BRAND' | translate)}}" tooltips="">
+                        <button class="ors-controls-button"
+                                ng-click="$ctrl.focusBrand = false; $ctrl.queryBrand = undefined; $ctrl.carResponse = undefined; $ctrl.showModel = false; $ctrl.showYear = false; $ctrl.showType = false">
+                            <i class="fa fa-remove">
+                            </i>
+                        </button>
+                        </span>
+                    </div>
+                    <div class="row" ng-if="$ctrl.focusBrand">
+                        <table id="brandResults">
+                            <tbody>
+                            <tr ng-repeat="brand in $ctrl.carBrands | filter: searchBrand">
+                                <td>
+                                    <div ng-click="$ctrl.queryBrand = brand;$ctrl.requestCars(brand);$ctrl.focusBrand = false;$ctrl.showModel = true; $ctrl.yearCheck = false; $ctrl.typeCheck = false">{{brand}}</div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </li>
+            <li ng-if="$ctrl.showModel">
+                <div ng-if="$ctrl.brandCheck">
+                    <div class="ui checkbox">
+                        <input
+                                id="modelCheck"
+                                ng-click="$ctrl.toggleSource('model')"
+                                ng-model="$ctrl.modelCheck" type="checkbox">
+                        <label for="modelCheck"
+                               ng-bind-html="('CAR_MODEL' | translate)"
+                               ng-click="$ctrl.toggleSource('model')">
+                        </label>
+                    </div>
+                    <div ng-if="$ctrl.modelCheck">
+                        <div class="ors-select-tooltip">
+                            <label for="modelInput"></label>
+                            <div class="ors-options-input ui input" id="modelInput">
+                                <select class="ui selection dropdown no-wrap"
+                                        ng-model="$ctrl.queryModel"
+                                        ng-change="$ctrl.queryYear = ''; $ctrl.set('carYears'); $ctrl.carTypes = []; $ctrl.showYear = true"
+                                        ng-focus="$ctrl.focusModel = true"
+                                        ng-options="model for model in $ctrl.carModels"
+                                        type="text"></select>
+                            </div>
+                            <span style="padding-top: 9px" tooltip-side="right" tooltip-template="{{('_RESET' | translate)}} {{('CAR_MODEL' | translate)}}" tooltips="">
+                            <button class="ors-controls-button"
+                                    ng-click="$ctrl.queryModel = undefined; $ctrl.showYear = false; $ctrl.showType = false">
+                                <i class="fa fa-remove">
+                                </i>
+                            </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li ng-if="$ctrl.showYear">
+                <div ng-if="$ctrl.modelCheck && $ctrl.brandCheck">
+                    <div class="ui checkbox">
+                    <input
+                            id="yearCheck"
+                            ng-click="$ctrl.toggleSource('year')"
+                            ng-model="$ctrl.yearCheck" type="checkbox">
+                    <label for="yearCheck"
+                           ng-bind-html="('CAR_YEAR' | translate)"
+                           ng-click="$ctrl.toggleSource('year')">
+                    </label>
+                    </div>
+                    <div ng-if="$ctrl.yearCheck">
+                        <div class="ors-select-tooltip">
+                            <label for="yearInput"></label>
+                            <div class="ors-options-input ui input" id="yearInput">
+                                <select class="ui selection dropdown no-wrap"
+                                        ng-model="$ctrl.queryYear"
+                                        ng-change="$ctrl.queryType = ''; $ctrl.showType = true; $ctrl.set('carTypes');$ctrl.focusYear = false"
+                                        ng-focus="$ctrl.focusYear = true"
+                                        ng-options="year for year in $ctrl.filterOutAll($ctrl.carYears)" type="text"></select>
+                            </div>
+                            <span tooltip-side="right" tooltip-template="{{('_RESET' | translate)}} {{('CAR_YEAR' | translate)}}" tooltips="">
+                            <button class="ors-controls-button"
+                                    ng-click="$ctrl.queryYear = undefined; $ctrl.showType = false">
+                                <i class="fa fa-remove">
+                                </i>
+                            </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li ng-if="$ctrl.showType">
+                <div ng-if="$ctrl.modelCheck && $ctrl.brandCheck && $ctrl.yearCheck">
+                    <div class="ui checkbox">
+                        <input
+                                id="typeCheck"
+                                ng-click="$ctrl.toggleSource('type')"
+                                ng-model="$ctrl.typeCheck" type="checkbox">
+                        <label for="typeCheck"
+                               ng-bind-html="('CAR_TYPE' | translate)"
+                               ng-click="$ctrl.toggleSource('type')">
+                        </label>
+                    </div>
+                    <div ng-if="$ctrl.typeCheck">
+                        <div class="ors-select-tooltip">
+                            <label for="typeInput"></label>
+                            <div class="ors-options-input ui input" id="typeInput">
+                                <select class="ui selection dropdown"
+                                        ng-model="$ctrl.queryType"
+                                        ng-options="type for type in $ctrl.filterOutAll($ctrl.carTypes)"
+                                        ng-change="$ctrl.set('carTypes');"
+                                        type="text"></select>
+                            </div>
+                            <span tooltip-side="right" tooltip-template="{{( '_RESET' | translate)}} {{( 'CAR_TYPE' | translate)}}" tooltips="">
+                                <button class="ors-controls-button"
+                                        ng-click="$ctrl.queryType = undefined">
+                                    <i class="fa fa-remove">
+                                    </i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="ui checkbox">
+                    <input type="checkbox"
+                           id="categoryCheck"
+                           ng-model="$ctrl.categoryCheck"
+                           ng-click="$ctrl.toggleSource('category')"
+                    >
+                    <label for="categoryCheck"
+                           ng-style="!$ctrl.categoryCheck ? {color:'grey'} : undefined"
+                           ng-bind-html="('VEHICLE_CATEGORY' | translate) + ': '"
+                           ng-click="$ctrl.toggleSource('category')">
+                    </label>
+                </div>
+                <div ng-if="$ctrl.categoryCheck">
+                    <label for="vehicleCategory">
+                    </label>
+                    <select class="ors-options-input ui selection dropdown no-wrap"
+                            id="vehicleCategory"
+                            ng-model="$ctrl.ofs.filters.vehicle_categories[0]"
+                            ng-change="$ctrl.chooseCategory()"
+                            ng-options="category.short as category.en for category in $ctrl.carCategories"></select>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <label for="fuelType" ng-bind-html="('FUEL_TYPE' | translate) + ': '">
+                    </label>
+                    <select class="ors-options-input ui selection dropdown"
+                            id="fuelType" ng-model="$ctrl.ofs.filters.fuel_type"
+                            ng-options="fueltype for fueltype in ['gasoline','diesel']"></select>
+                </div>
+            </li>
+            <li>
+                <span>
+                    <label for="drivingSpeed" ng-bind-html="('DRIVING_SPEED' | translate) + ': '">
+                    </label>
+                    <span class="row ui input">
+                        <input id="drivingSpeed"
+                               ng-model="$ctrl.ofs.filters.driving_speed"
+                               style="width: 60px"
+                        >
+                    </span>
+                </span>
+            </li>
+            <li>
+                <div class="ui divider">
+                </div>
+                <div>
+                    <p class="-italic" ng-bind-html="('OPTIONAL_PARAMS' | translate)"></p>
+                </div>
+                <div>
+                    <span class="ui checkbox">
+                        <input id="consumptionCheck" type="checkbox" value="$ctrl.fuelConsumption" ng-model="$ctrl.fuelConsumption"
+                           ng-click="$ctrl.fuelConsumption != $ctrl.fuelConsumption">
+                        <label for="consumptionCheck" class="ors-options-label"></label>
+                    </span>
+                    <label for="fuelConsumption" ng-bind-html="('SPECIFIC_FUEL_CONSUMPTION' | translate) + ': '">
+                    </label>
+                    <span class="row ui input">
+                        <input id="fuelConsumption"
+                               ng-disabled="!$ctrl.fuelConsumption"
+                               ng-model="$ctrl.ofs.filters.fuel_consumptions[$ctrl.ofs.filters.vehicle_categories[0]]"
+                               style="width: 60px"
+                        >
+                    </span>
+                    <div>
+                        in litres per 100 km
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <span class="ui checkbox">
+                        <input id="tankSizeCheck" type="checkbox" value="$ctrl.tankSize" ng-model="$ctrl.tankSize"
+                           ng-click="$ctrl.tankSize != $ctrl.tankSize">
+                        <label for="tankSizeCheck" class="ors-options-label"></label>
+                    </span>
+                    <label for="tankSize" ng-bind-html="('TANK_SIZE' | translate) + ': '">
+                    </label>
+                    <span class="row ui input">
+                        <input id="tankSize"
+                               ng-disabled="!$ctrl.tankSize"
+                               ng-model="$ctrl.ofs.filters.tank_sizes[$ctrl.ofs.filters.vehicle_categories[0]]"
+                               style="width : 60px"
+                        >
+                    </span>
+                     liters
+                </div>
+            </li>
+            <li>
+                <div class="ui divider">
+                </div>
+                <span>
+                    <button ng-class="{
+                                'tiny teal ui button disabled': !(($ctrl.categoryCheck)||($ctrl.modelCheck && $ctrl.queryModel && $ctrl.queryBrand)),
+                                'tiny teal ui button': !$ctrl.requesting && (($ctrl.categoryCheck)||($ctrl.modelCheck && $ctrl.queryModel && $ctrl.queryBrand)),
+                                'tiny teal ui button loading': $ctrl.requesting}"
+                            ng-click="$ctrl.requestConsumption()"
+                            class="tiny teal ui button">
+                        <i class="fa gas-pump">
+                        </i>
+                        <span ng-bind-html="('CALC_CONSUMPTION' | translate)" class="ng-binding"></span>
+                    </button>
+                </span>
+                <span class="ui checkbox">
+                        <input id="autoCall" type="checkbox" value="$ctrl.autoCall" ng-model="$ctrl.autoCall"
+                               ng-click="$ctrl.toggleAutoCall()"/>
+                        <label for="autoCall" class="ors-options-label">{{( "ON_ROUTE_CHANGE" | translate)}}</label>
+                </span>
+            </li>
+        </ul>
     </div>
 </div>
 <div class="options-box" ng-show="$ctrl.activeSubgroup == 'HeavyVehicle'">
@@ -311,7 +516,7 @@
         </ul>
     </div>
 </div>
-<div class="options-box" ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Wheelchair' || $ctrl.activeSubgroup == 'HeavyVehicle' || $ctrl.activeSubgroup == 'Pedestrian'">
+<div class="options-box" ng-show="$ctrl.activeSubgroup == 'Pedestrian'">
     <div class="pointer" ng-click="additionalOptions = !additionalOptions">
         <i ng-class="$ctrl.getClass(additionalOptions)">
         </i>
@@ -327,21 +532,12 @@
                 </input>
             </div>
         </div>
-        <div class="ors-options-menu">
-            <div class="ui checkbox">
-                <input id="maximumspeed" name="orsRouteMaximumspeedInput" ng-change="$ctrl.toggleMaxspeedSlider()" ng-model="$ctrl.maxspeedCheckbox" type="checkbox">
-                    <label for="maximumspeed" ng-bind-html="('MAXIMUMSPEED' | translate)">
-                    </label>
-                </input>
-            </div>
-            <rzslider rz-slider-model="$ctrl.maxspeedSlider.value" rz-slider-options="$ctrl.maxspeedSlider.options">
-            </rzslider>
-        </div>
         <div class="ors-options-menu" ng-show="$ctrl.activeSubgroup == 'Pedestrian'">
             <div class="ui checkbox">
-                <input id="greenrouting" name="orsRouteGreenRoutingInput" ng-change="$ctrl.toggleGreenSlider()" ng-model="$ctrl.greenActive" type="checkbox">
-                    <label for="greenrouting" ng-bind-html="('GREEN_ROUTING' | translate)">
-                    </label>
+                <input id="greenrouting" name="orsRouteGreenRoutingInput" ng-change="$ctrl.toggleGreenSlider()"
+                       ng-model="$ctrl.greenActive" type="checkbox">
+                <label for="greenrouting" ng-bind-html="('GREEN_ROUTING' | translate)">
+                </label>
                 </input>
             </div>
             <rzslider rz-slider-model="$ctrl.greenSlider.value" rz-slider-options="$ctrl.greenSlider.options">
@@ -349,9 +545,10 @@
         </div>
         <div class="ors-options-menu" ng-show="$ctrl.activeSubgroup == 'Pedestrian'">
             <div class="ui checkbox">
-                <input id="greenrouting" name="orsRouteQuietRoutingInput" ng-change="$ctrl.toggleQuietSlider()" ng-model="$ctrl.quietActive" type="checkbox">
-                    <label for="quietrouting" ng-bind-html="('QUIET_ROUTING' | translate)">
-                    </label>
+                <input id="quietrouting" name="orsRouteQuietRoutingInput" ng-change="$ctrl.toggleQuietSlider()"
+                       ng-model="$ctrl.quietActive" type="checkbox">
+                <label for="quietrouting" ng-bind-html="('QUIET_ROUTING' | translate)">
+                </label>
                 </input>
             </div>
             <rzslider rz-slider-model="$ctrl.quietSlider.value" rz-slider-options="$ctrl.quietSlider.options">

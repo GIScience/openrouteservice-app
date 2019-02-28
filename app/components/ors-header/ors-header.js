@@ -97,6 +97,7 @@ angular.module("orsApp.ors-header", []).component("orsHeader", {
         ENV.geocode = ctrl.currentOptions.env.geocode;
         ENV.matrix = ctrl.currentOptions.env.matrix;
         ENV.pois = ctrl.currentOptions.env.pois;
+        ENV.fuel = ctrl.currentOptions.env.fuel;
       };
       /**
        * Informs the user about changed Endpoints
@@ -107,7 +108,8 @@ geocode:     ${ENV.geocode}
 directions:   ${ENV.directions}
 isochrones:  ${ENV.isochrones}
 matrix:        ${ENV.matrix}
-pois:            ${ENV.pois}`);
+pois:            ${ENV.pois}
+fuel:            ${ENV.fuel}`);
       };
       /**
        * Save Endpoints to cookies

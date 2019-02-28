@@ -27,6 +27,49 @@
             </div>
             <div class="bottom-border">
             </div>
+            <div class="options-box" ng-if="route.summary.ofs">
+                <div class="margin-bottom-6" ng-click="showFuelInfo = !showFuelInfo" ng-init="showFuelInfo = true;">
+                    <span>
+                        <i ng-class="$ctrl.getClass(showFuelInfo)">
+                        </i>
+                    </span>
+                    <span ng-bind-html="('FUEL_CONSUMPTION' | translate)">
+                    </span>
+                </div>
+                <div style="color: grey; font-style: italic" ng-if="showFuelInfo" ng-bind-html="('_FOR' | translate) + ' ' + route.summary.ofs.request_id + ':'"></div>
+                <br>
+                <div ng-repeat="(vehicleClass, info) in route.summary.ofs['fuel_stats']" ng-if="showFuelInfo">
+                    <div ng-if="$ctrl.classInQuery(route.summary.ofs, vehicleClass) || (vehicleClass==='individual' && $first)">
+                        <div ng-if="info['category_info']['calculation_errors'] !== 'No Errors'">
+                            <div>Not enough data to calculate category {{$ctrl.carCategories[vehicleClass].en}}</div>
+                        </div>
+                        <div ng-if="info['category_info']['calculation_errors'] === 'No Errors'">
+                            <div ng-if="heading !== 'route'" ng-repeat="(heading, content) in info">
+                                <table class="ui celled teal compact small table">
+                                    <thead>
+                                        <tr>
+                                            <th ng-bind-html="heading.split('_').join(' ') | capitalize"></th><th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody align="right">
+                                    <tr ng-repeat="(key,value) in content">
+                                        <td class="entry" ng-bind-html="key.split('_').join(' ').replace('per','/')"></td>
+                                        <td class="entry">{{value}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="route.summary.ofs['attributions'] && showFuelInfo" style="color: grey; font-style: italic">
+                    <div >Attributions:</div>
+                    <div ng-repeat="source in route.summary.ofs['attributions']">{{source}}</div>
+                </div>
+            </div>
+            <div class="bottom-border">
+            </div>
         </li>
     </ul>
 </div>

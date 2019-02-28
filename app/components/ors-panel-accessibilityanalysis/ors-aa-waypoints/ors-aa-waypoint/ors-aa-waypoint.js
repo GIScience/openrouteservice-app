@@ -35,13 +35,10 @@ angular.module("orsApp.ors-aa-waypoint", []).component("orsAaWaypoint", {
         ctrl.showGeocodingPanel = !ctrl.showGeocodingPanel;
       };
       // ctrl.$doCheck = () => {
-      //  console.log('check');
       // }
       // ctrl.$onChanges = (changesObj) => {
       //     // can be different kinds of changes
       //     if (changesObj.idx) {
-      //      console.log(changesObj.idx);
-      //      console.log(ctrl.waypoints);
       //      // if array is reversed, 5 changes, how to unify???
       //     }
       // };

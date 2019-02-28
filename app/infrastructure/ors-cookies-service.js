@@ -63,7 +63,8 @@ angular
             directions: JSON.parse(JSON.stringify(ENV)).directions,
             isochrones: JSON.parse(JSON.stringify(ENV)).isochrones,
             matrix: JSON.parse(JSON.stringify(ENV)).matrix,
-            pois: JSON.parse(JSON.stringify(ENV)).pois
+            pois: JSON.parse(JSON.stringify(ENV)).pois,
+            fuel: JSON.parse(JSON.stringify(ENV)).fuel
           };
         }
         if ("env" in cookieUserOptions) {
@@ -74,7 +75,8 @@ angular
             directions: ENV.directions,
             isochrones: ENV.isochrones,
             matrix: ENV.matrix,
-            pois: ENV.pois
+            pois: ENV.pois,
+            fuel: ENV.fuel
           };
         }
         return {

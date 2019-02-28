@@ -13,10 +13,12 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
     "orsUtilsService",
     "orsRequestService",
     "orsParamsService",
+    "orsFuelService",
     "$scope",
     "$timeout",
     "lists",
     "countries",
+    "carCategories",
     function(
       orsSettingsFactory,
       orsCookiesFactory,
@@ -24,16 +26,29 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
       orsUtilsService,
       orsRequestService,
       orsParamsService,
+      orsFuelService,
       $scope,
       $timeout,
       lists,
-      countries
+      countries,
+      carCategories
     ) {
       let ctrl = this;
       ctrl.optionList = lists.optionList;
       ctrl.$onInit = () => {
         /** This is a reference of the settings object, if we change here, it is updated in settings */
         ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
+
+        let brandsRequest = orsFuelService.getBrands();
+        brandsRequest.promise.then(
+          brandsResponse => {
+            ctrl.carBrands = brandsResponse.brands;
+          },
+          brandsError => {
+            console.log(brandsError);
+          }
+        );
+
         // preference/weight is only considered for routing panel
         if (ctrl.routing)
           ctrl.currentOptions.weight =
@@ -64,43 +79,6 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
             }
           }
         };
-        // set maxspeed slider from params
-        ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeSubgroup];
-        // enable or disable checkbox depending on whether maxspeed is set
-        let maxspeedVal;
-        if (ctrl.currentOptions.maxspeed >= 0) {
-          maxspeedVal = ctrl.currentOptions.maxspeed;
-          ctrl.maxspeedCheckbox = true;
-        } else {
-          maxspeedVal = ctrl.maxspeedOptions.default;
-          ctrl.maxspeedCheckbox = false;
-        }
-        ctrl.toggleMaxspeedSlider = (fireRequest = true) => {
-          if (ctrl.maxspeedCheckbox === true) {
-            ctrl.maxspeedSlider.options.disabled = false;
-            ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
-          } else if (ctrl.maxspeedCheckbox === false) {
-            ctrl.maxspeedSlider.options.disabled = true;
-            delete ctrl.currentOptions.maxspeed;
-          }
-          if (fireRequest) ctrl.changeOptions();
-        };
-        ctrl.maxspeedSlider = {
-          value: maxspeedVal,
-          options: {
-            floor: ctrl.maxspeedOptions.min,
-            ceil: ctrl.maxspeedOptions.max,
-            step: ctrl.maxspeedOptions.step,
-            translate: value => {
-              return value + " <b>km/h</b>";
-            },
-            onEnd: () => {
-              ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
-              ctrl.changeOptions();
-            }
-          }
-        };
-        ctrl.toggleMaxspeedSlider(false);
         ctrl.greenActive = false;
         ctrl.toggleGreenSlider = (fireRequest = true) => {
           if (ctrl.greenActive === true) {
@@ -323,72 +301,6 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
           }
         };
         ctrl.toggleHgvOptSlider("", false);
-        // Difficulty settings
-        ctrl.currentOptions.fitness =
-          ctrl.currentOptions.fitness !== undefined
-            ? ctrl.optionList.difficulty.fitness[ctrl.currentOptions.fitness]
-                .value
-            : ctrl.optionList.difficulty.fitness["-1"].value;
-        ctrl.fitnessValue =
-          ctrl.optionList.difficulty.fitness[ctrl.currentOptions.fitness].name;
-        ctrl.currentOptions.steepness =
-          ctrl.currentOptions.steepness !== undefined
-            ? ctrl.currentOptions.steepness
-            : ctrl.optionList.difficulty.steepness.min;
-        ctrl.avoidHillsCheckbox();
-        ctrl.difficultySliders = {
-          Fitness: {
-            value: ctrl.currentOptions.fitness,
-            options: {
-              stepsArray: [
-                {
-                  value: ctrl.optionList.difficulty.fitness["-1"].value
-                },
-                {
-                  value: ctrl.optionList.difficulty.fitness["0"].value
-                },
-                {
-                  value: ctrl.optionList.difficulty.fitness["1"].value
-                },
-                {
-                  value: ctrl.optionList.difficulty.fitness["2"].value
-                },
-                {
-                  value: ctrl.optionList.difficulty.fitness["3"].value
-                }
-              ],
-              showTicks: true,
-              showTicksValues: false,
-              hidePointerLabels: true,
-              hideLimitLabels: true,
-              onEnd: () => {
-                ctrl.currentOptions.fitness =
-                  ctrl.difficultySliders.Fitness.value;
-                ctrl.changeOptions();
-                ctrl.avoidHillsCheckbox();
-                ctrl.fitnessValue =
-                  ctrl.optionList.difficulty.fitness[
-                    ctrl.currentOptions.fitness
-                  ].name;
-              }
-            }
-          },
-          Steepness: {
-            value: ctrl.currentOptions.steepness,
-            options: {
-              floor: ctrl.optionList.difficulty.steepness.min,
-              ceil: ctrl.optionList.difficulty.steepness.max,
-              translate: value => {
-                return value + " <b>%</b>";
-              },
-              onEnd: () => {
-                ctrl.currentOptions.steepness =
-                  ctrl.difficultySliders.Steepness.value;
-                ctrl.changeOptions();
-              }
-            }
-          }
-        };
         // wheelchair sliders
         ctrl.currentOptions.surface =
           ctrl.currentOptions.surface !== undefined
@@ -563,20 +475,6 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
       };
       ctrl.$onChanges = changesObj => {
         if (changesObj.showOptions) ctrl.refreshSlider();
-        if (changesObj.activeSubgroup || changesObj.activeProfile) {
-          ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeSubgroup];
-          // check if already initiated
-          /** update slider settings */
-          if (ctrl.maxspeedSlider) {
-            ctrl.maxspeedSlider.value = ctrl.maxspeedOptions.default;
-            ctrl.maxspeedSlider.options.floor = ctrl.maxspeedOptions.min;
-            ctrl.maxspeedSlider.options.ceil = ctrl.maxspeedOptions.max;
-            ctrl.maxspeedSlider.options.step = ctrl.maxspeedOptions.step;
-            if (ctrl.currentOptions.maxspeed) {
-              ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
-            }
-          }
-        }
       };
       // Get the app route, we need this to know whether to fire a request when the options change
       orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
@@ -586,7 +484,7 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
         // call setoptions
         if (ctrl.currentOptions.difficulty)
           ctrl.difficultySliders.Fitness.options.disabled =
-            ctrl.currentOptions.difficulty.avoidhills === true ? true : false;
+            ctrl.currentOptions.difficulty.avoidhills === true;
         orsSettingsFactory.setActiveOptions(ctrl.currentOptions, ctrl.routing);
       };
       ctrl.getClass = bool => {
@@ -680,6 +578,137 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
               .indexOf(ctrl.queryCountries.toLowerCase() || "") !== -1) &&
           (!row.hasOwnProperty("check") || row.check === false)
         );
+      };
+
+      // OFS options
+      ctrl.carCategories = carCategories;
+      ctrl.categoryCheck = true;
+      ctrl.carModels = ctrl.carYears = ctrl.carTypes = [];
+      ctrl.set = list => {
+        ctrl[list] =
+          list === "carYears"
+            ? Object.keys(ctrl.carResponse[ctrl.queryModel])
+            : list === "carTypes" && ctrl.queryYear
+              ? Object.keys(ctrl.carResponse[ctrl.queryModel][ctrl.queryYear])
+              : list;
+      };
+      ctrl.chooseCategory = () => {
+        // rename Object key of the filters.fuel_consumptions and keep value
+        const renameKey = (o, newKey) => {
+          if (Object.keys(o)[0] !== newKey) {
+            Object.defineProperty(
+              o,
+              newKey,
+              Object.getOwnPropertyDescriptor(o, Object.keys(o)[0])
+            );
+            delete o[Object.keys(o)[0]];
+          }
+        };
+        if (ctrl.tankSize)
+          renameKey(
+            ctrl.ofs.filters.tank_sizes,
+            ctrl.ofs.filters.vehicle_categories[0]
+          );
+        if (ctrl.fuelConsumption)
+          renameKey(
+            ctrl.ofs.filters.fuel_consumptions,
+            ctrl.ofs.filters.vehicle_categories[0]
+          );
+      };
+      ctrl.toggleSource = source => {
+        if (source === "category") {
+          ctrl.brandCheck = !ctrl.categoryCheck;
+        } else if (source === "brand") {
+          ctrl.categoryCheck = !ctrl.brandCheck;
+        }
+      };
+      ctrl.requestConsumption = () => {
+        if (ctrl.brandCheck) {
+          if (ctrl.queryType) {
+            ctrl.ofs.filters.cfd_ids =
+              ctrl.carResponse[ctrl.queryModel][ctrl.queryYear][ctrl.queryType];
+            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} - ${
+              ctrl.queryModel
+            } (${ctrl.queryYear}) ${ctrl.queryType}`;
+          } else if (ctrl.queryYear) {
+            ctrl.ofs.filters.cfd_ids =
+              ctrl.carResponse[ctrl.queryModel][ctrl.queryYear].all;
+            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} - ${
+              ctrl.queryModel
+            } (${ctrl.queryYear})`;
+          } else if (ctrl.queryModel) {
+            ctrl.ofs.filters.cfd_ids = ctrl.carResponse[ctrl.queryModel].all;
+            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} - ${
+              ctrl.queryModel
+            }`;
+          }
+        } else {
+          ctrl.ofs.filters.request_id =
+            ctrl.carCategories[ctrl.ofs.filters.vehicle_categories[0]].en;
+        }
+        ctrl.currentOptions.ofs = ctrl.ofs;
+        if (ctrl.categoryCheck) {
+          delete ctrl.currentOptions.ofs.filters.cfd_ids;
+        } else {
+          delete ctrl.currentOptions.ofs.filters.vehicle_categories[0];
+        }
+        orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
+        ctrl.requesting = true;
+        orsFuelService.getConsumption(ctrl.currentOptions.ofs);
+        ctrl.requesting = false;
+        if (!ctrl.autoCall) {
+          ctrl.removeOfsSettings();
+        }
+      };
+      ctrl.filterOutAll = list => {
+        return list.filter(e => {
+          return e !== "all";
+        });
+      };
+      ctrl.removeOfsSettings = () => {
+        delete ctrl.currentOptions.ofs;
+        orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
+      };
+      ctrl.requestCars = () => {
+        let carRequest = orsFuelService.getCars(ctrl.queryBrand);
+        carRequest.promise.then(
+          carResponse => {
+            ctrl.carResponse = carResponse;
+            ctrl.carModels = Object.keys(carResponse);
+          },
+          carError => {
+            console.log(carError);
+          }
+        );
+      };
+      ctrl.toggleAutoCall = () => {
+        if (!ctrl.autoCall) {
+          ctrl.removeOfsSettings();
+        } else {
+          ctrl.currentOptions.ofs = ctrl.ofs;
+          orsSettingsFactory.setActiveOptions(ctrl.currentOptions);
+        }
+      };
+      //
+      ctrl.ofs = {
+        filters: {
+          data_source: "cfd",
+          fuel_type: "gasoline",
+          vehicle_type: "car",
+          driving_speed: 60,
+          vehicle_categories: ["c"],
+          fuel_consumptions: {},
+          tank_sizes: {},
+          request_id: "medium cars"
+        }
+      };
+      $scope.searchBrand = row => {
+        return ctrl.queryBrand
+          ? !!(
+              row.toLowerCase().indexOf(ctrl.queryBrand.toLowerCase() || "") !==
+              -1
+            )
+          : row;
       };
     }
   ]
