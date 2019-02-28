@@ -79,43 +79,6 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
             }
           }
         };
-        // set maxspeed slider from params
-        ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeSubgroup];
-        // enable or disable checkbox depending on whether maxspeed is set
-        let maxspeedVal;
-        if (ctrl.currentOptions.maxspeed >= 0) {
-          maxspeedVal = ctrl.currentOptions.maxspeed;
-          ctrl.maxspeedCheckbox = true;
-        } else {
-          maxspeedVal = ctrl.maxspeedOptions.default;
-          ctrl.maxspeedCheckbox = false;
-        }
-        ctrl.toggleMaxspeedSlider = (fireRequest = true) => {
-          if (ctrl.maxspeedCheckbox === true) {
-            ctrl.maxspeedSlider.options.disabled = false;
-            ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
-          } else if (ctrl.maxspeedCheckbox === false) {
-            ctrl.maxspeedSlider.options.disabled = true;
-            delete ctrl.currentOptions.maxspeed;
-          }
-          if (fireRequest) ctrl.changeOptions();
-        };
-        ctrl.maxspeedSlider = {
-          value: maxspeedVal,
-          options: {
-            floor: ctrl.maxspeedOptions.min,
-            ceil: ctrl.maxspeedOptions.max,
-            step: ctrl.maxspeedOptions.step,
-            translate: value => {
-              return value + " <b>km/h</b>";
-            },
-            onEnd: () => {
-              ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
-              ctrl.changeOptions();
-            }
-          }
-        };
-        ctrl.toggleMaxspeedSlider(false);
         ctrl.greenActive = false;
         ctrl.toggleGreenSlider = (fireRequest = true) => {
           if (ctrl.greenActive === true) {
@@ -338,72 +301,6 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
           }
         };
         ctrl.toggleHgvOptSlider("", false);
-        // Difficulty settings
-        ctrl.currentOptions.fitness =
-          ctrl.currentOptions.fitness !== undefined
-            ? ctrl.optionList.difficulty.fitness[ctrl.currentOptions.fitness]
-                .value
-            : ctrl.optionList.difficulty.fitness["-1"].value;
-        ctrl.fitnessValue =
-          ctrl.optionList.difficulty.fitness[ctrl.currentOptions.fitness].name;
-        ctrl.currentOptions.steepness =
-          ctrl.currentOptions.steepness !== undefined
-            ? ctrl.currentOptions.steepness
-            : ctrl.optionList.difficulty.steepness.min;
-        ctrl.avoidHillsCheckbox();
-        ctrl.difficultySliders = {
-          Fitness: {
-            value: ctrl.currentOptions.fitness,
-            options: {
-              stepsArray: [
-                {
-                  value: ctrl.optionList.difficulty.fitness["-1"].value
-                },
-                {
-                  value: ctrl.optionList.difficulty.fitness["0"].value
-                },
-                {
-                  value: ctrl.optionList.difficulty.fitness["1"].value
-                },
-                {
-                  value: ctrl.optionList.difficulty.fitness["2"].value
-                },
-                {
-                  value: ctrl.optionList.difficulty.fitness["3"].value
-                }
-              ],
-              showTicks: true,
-              showTicksValues: false,
-              hidePointerLabels: true,
-              hideLimitLabels: true,
-              onEnd: () => {
-                ctrl.currentOptions.fitness =
-                  ctrl.difficultySliders.Fitness.value;
-                ctrl.changeOptions();
-                ctrl.avoidHillsCheckbox();
-                ctrl.fitnessValue =
-                  ctrl.optionList.difficulty.fitness[
-                    ctrl.currentOptions.fitness
-                  ].name;
-              }
-            }
-          },
-          Steepness: {
-            value: ctrl.currentOptions.steepness,
-            options: {
-              floor: ctrl.optionList.difficulty.steepness.min,
-              ceil: ctrl.optionList.difficulty.steepness.max,
-              translate: value => {
-                return value + " <b>%</b>";
-              },
-              onEnd: () => {
-                ctrl.currentOptions.steepness =
-                  ctrl.difficultySliders.Steepness.value;
-                ctrl.changeOptions();
-              }
-            }
-          }
-        };
         // wheelchair sliders
         ctrl.currentOptions.surface =
           ctrl.currentOptions.surface !== undefined
@@ -578,20 +475,6 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
       };
       ctrl.$onChanges = changesObj => {
         if (changesObj.showOptions) ctrl.refreshSlider();
-        if (changesObj.activeSubgroup || changesObj.activeProfile) {
-          ctrl.maxspeedOptions = ctrl.optionList.maxspeeds[ctrl.activeSubgroup];
-          // check if already initiated
-          /** update slider settings */
-          if (ctrl.maxspeedSlider) {
-            ctrl.maxspeedSlider.value = ctrl.maxspeedOptions.default;
-            ctrl.maxspeedSlider.options.floor = ctrl.maxspeedOptions.min;
-            ctrl.maxspeedSlider.options.ceil = ctrl.maxspeedOptions.max;
-            ctrl.maxspeedSlider.options.step = ctrl.maxspeedOptions.step;
-            if (ctrl.currentOptions.maxspeed) {
-              ctrl.currentOptions.maxspeed = ctrl.maxspeedSlider.value;
-            }
-          }
-        }
       };
       // Get the app route, we need this to know whether to fire a request when the options change
       orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
@@ -744,17 +627,24 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
           if (ctrl.queryType) {
             ctrl.ofs.filters.cfd_ids =
               ctrl.carResponse[ctrl.queryModel][ctrl.queryYear][ctrl.queryType];
-            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} ${ctrl.queryModel} (${ctrl.queryYear}) ${ctrl.queryType}`
+            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} - ${
+              ctrl.queryModel
+            } (${ctrl.queryYear}) ${ctrl.queryType}`;
           } else if (ctrl.queryYear) {
             ctrl.ofs.filters.cfd_ids =
               ctrl.carResponse[ctrl.queryModel][ctrl.queryYear].all;
-              ctrl.ofs.filters.request_id = `${ctrl.queryBrand} ${ctrl.queryModel} (${ctrl.queryYear})`
+            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} - ${
+              ctrl.queryModel
+            } (${ctrl.queryYear})`;
           } else if (ctrl.queryModel) {
             ctrl.ofs.filters.cfd_ids = ctrl.carResponse[ctrl.queryModel].all;
-            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} ${ctrl.queryModel}`
+            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} - ${
+              ctrl.queryModel
+            }`;
           }
         } else {
-            ctrl.ofs.filters.request_id = ctrl.carCategories[ctrl.ofs.filters.vehicle_categories[0]].en
+          ctrl.ofs.filters.request_id =
+            ctrl.carCategories[ctrl.ofs.filters.vehicle_categories[0]].en;
         }
         ctrl.currentOptions.ofs = ctrl.ofs;
         if (ctrl.categoryCheck) {
@@ -809,7 +699,7 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
           vehicle_categories: ["c"],
           fuel_consumptions: {},
           tank_sizes: {},
-          request_id: 'medium cars'
+          request_id: "medium cars"
         }
       };
       $scope.searchBrand = row => {

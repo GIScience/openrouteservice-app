@@ -46,55 +46,60 @@ angular.module("orsApp.fuel-service", []).factory("orsFuelService", [
           route = data.routes[idx];
         }
       }
-      let geometry = {
-        coordinates: route.geometryRaw,
-        type: "LineString"
-      };
-      let parameters = {
-        request: "route"
-      };
-      let url = ENV.fuel;
-      let canceller = $q.defer();
-      let requestData = {
-        request: "route",
-        geometry: {
-          geojson: geometry,
-          filters: ofsSettings.filters
-        }
-      };
-      let cancel = reason => {
-        canceller.resolve(reason);
-      };
-      let promise = $http
-        .post(
-          url,
-          requestData,
-          { params: parameters },
-          {
-            timeout: canceller.promise
+      if (route && route.geometryRaw) {
+        let geometry = {
+          coordinates: route.geometryRaw,
+          type: "LineString"
+        };
+        let parameters = {
+          request: "route"
+        };
+        let url = ENV.fuel;
+        let canceller = $q.defer();
+        let requestData = {
+          request: "route",
+          geometry: {
+            geojson: geometry,
+            filters: ofsSettings.filters
           }
-        )
-        .then(response => {
-          let fuelSubject = null
-          if (Object.keys(response.data.fuel_stats).length === 1 && response.data.fuel_stats.individual) {
-            fuelSubject = response.data.fuel_stats.individual
-          } else {
-            let category = response.data.general.vehicle_categories[0]
-            fuelSubject = response.data.fuel_stats[category]
-          }
-          fuelSubject.total_cost.price_date = fuelSubject.total_cost.price_date.split('T')[0].split('-').reverse().join('.')
-          if (fuelSubject.category_info.calculation_errors === 'No Errors') {
-            route.summary.consumption = fuelSubject.total_consumption.liters
-            route.summary.emission = fuelSubject.total_emissions.co2_kg
-            route.summary.fuelCost = fuelSubject.total_cost.w_tax_euro
-          }
-          route.summary.ofs = response.data;
-          return response.data;
-        });
-      return {
-        promise: promise,
-        cancel: cancel
-      };
+        };
+        let cancel = reason => {
+          canceller.resolve(reason);
+        };
+        let promise = $http
+          .post(
+            url,
+            requestData,
+            { params: parameters },
+            {
+              timeout: canceller.promise
+            }
+          )
+          .then(response => {
+            let fuelSubject = null;
+            if (
+              Object.keys(response.data.fuel_stats).length === 1 &&
+              response.data.fuel_stats.individual
+            ) {
+              fuelSubject = response.data.fuel_stats.individual;
+            } else {
+              let category = response.data.general.vehicle_categories[0];
+              fuelSubject = response.data.fuel_stats[category];
+            }
+            fuelSubject.total_cost.price_date = fuelSubject.total_cost.price_date
+              .split("T")[0]
+              .split("-")
+              .reverse()
+              .join(".");
+            if (fuelSubject.category_info.calculation_errors === "No Errors") {
+              route.summary.consumption = fuelSubject.total_consumption.liters;
+              route.summary.emission = fuelSubject.total_emissions.co2_kg;
+              route.summary.fuelCost = fuelSubject.total_cost.w_tax_euro;
+            }
+            route.summary.ofs = response.data;
+            return response.data;
+          });
+      }
     };
     orsFuelService.getBrands = () => {
       let url = ENV.fuel;

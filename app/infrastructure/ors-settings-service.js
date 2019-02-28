@@ -242,7 +242,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
             );
             let ofsSettings = settings.profile.options.ofs;
             if (ofsSettings) {
-              orsFuelService.getConsumption(ofsSettings)
+              orsFuelService.getConsumption(ofsSettings);
             }
           },
           function(response) {
