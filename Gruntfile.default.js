@@ -287,7 +287,8 @@ module.exports = function(grunt) {
                         shortenlink: "https://api-ssl.bitly.com/v3/shorten",
                         mapsurfer:
                             "https://api.openrouteservice.org/mapsurfer/{z}/{x}/{y}.png",
-                        landmarks: 'https://landmarks-api.openrouteservice.org/'
+                        landmarks: 'https://landmarks-api.openrouteservice.org/',
+                        fuel: "https://api.openrouteservice.org/fuel"
                     }
                 }
             },
@@ -308,7 +309,8 @@ module.exports = function(grunt) {
                         shortenlink: "https://api-ssl.bitly.com/v3/shorten",
                         mapsurfer:
                             "https://api.openrouteservice.org/mapsurfer/{z}/{x}/{y}.png",
-                        landmarks: 'https://landmarks-api.openrouteservice.org/'
+                        landmarks: 'https://landmarks-api.openrouteservice.org/',
+                        fuel: "https://api.openrouteservice.org/fuel"
                     }
                 }
             }

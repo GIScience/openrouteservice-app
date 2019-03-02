@@ -39,15 +39,9 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
         /** This is a reference of the settings object, if we change here, it is updated in settings */
         ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
 
-        let brandsRequest = orsFuelService.getBrands();
-        brandsRequest.promise.then(
-          brandsResponse => {
-            ctrl.carBrands = brandsResponse.brands;
-          },
-          brandsError => {
-            console.log(brandsError);
-          }
-        );
+        if (!ctrl.carBrands) {
+          ctrl.initOFS();
+        }
 
         // preference/weight is only considered for routing panel
         if (ctrl.routing)
@@ -481,6 +475,9 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
         ctrl.routing = route == "directions" ? true : false;
       });
       ctrl.changeOptions = () => {
+        if (!ctrl.carBrands) {
+          ctrl.initOFS();
+        }
         // call setoptions
         if (ctrl.currentOptions.difficulty)
           ctrl.difficultySliders.Fitness.options.disabled =
@@ -581,6 +578,21 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
       };
 
       // OFS options
+      ctrl.initOFS = () => {
+        try {
+          let brandsRequest = orsFuelService.getBrands();
+          brandsRequest.promise.then(
+            brandsResponse => {
+              ctrl.carBrands = brandsResponse.brands;
+            },
+            brandsError => {
+              console.log(brandsError);
+            }
+          );
+        } catch (e) {
+          ctrl.carBrands = null;
+        }
+      };
       ctrl.carCategories = carCategories;
       ctrl.categoryCheck = true;
       ctrl.carModels = ctrl.carYears = ctrl.carTypes = [];
