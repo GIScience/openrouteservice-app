@@ -13,7 +13,7 @@ angular
         if ($location.path() == "/") {
           ctrl.activeMenu = "/directions";
         } else ctrl.activeMenu = $location.path();
-        ctrl.version = "0.3.8";
+        ctrl.version = "0.3.9";
       }
     ],
     $routeConfig: [
