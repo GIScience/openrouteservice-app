@@ -178,7 +178,7 @@
         </ul>
     </div>
 </div>
-<div class="options-box" ng-if="$ctrl.routing" ng-show="$ctrl.activeSubgroup == 'Car'">
+<div class="options-box" ng-if="$ctrl.routing && $ctrl.carBrands" ng-show="$ctrl.activeSubgroup == 'Car'">
     <div class="pointer" ng-click="fuelSettings = !fuelSettings">
         <i ng-class="$ctrl.getClass(fuelSettings)">
         </i>

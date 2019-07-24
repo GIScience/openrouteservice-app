@@ -12,6 +12,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed-->
 
+## [v0.3.9] - 2019-03-02
+
+### Changed
+- fuel options initialization
+    - hide fuel options if it is not possible to retrieve car brands
+    - retry fuel option initialization on option change (after changing endpoint)
+
+### Fixed
+- missing fuel endpoint in Gruntfile.default.js ([#279](https://github.com/GIScience/openrouteservice-app/issues/279))
 
 ## [v0.3.8] - 2019-02-28
 
