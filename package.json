@@ -28,7 +28,6 @@
     "leaflet-control-angular": "^0.1.4",
     "leaflet-geometryutil": "^0.8.0",
     "leaflet-omnivore": "^0.3.4",
-    "snyk": "^1.135.1",
     "togpx": "^0.5.3",
     "tokml": "^0.4.0",
     "xml-js": "^1.6.7",
@@ -70,6 +69,5 @@
     "serve-static": "^1.13.2",
     "time-grunt": "^1.4.0",
     "traceur": "0.0.111"
-  },
-  "snyk": true
+  }
 }
