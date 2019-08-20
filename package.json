@@ -40,7 +40,7 @@
     "d3-scale-chromatic": "^1.1.1",
     "grunt": "^1.0.4",
     "grunt-angular-templates": "^1.1.0",
-    "grunt-browserify": "^5.0.0",
+    "grunt-browserify": "^5.3.0",
     "grunt-cache-bust": "^1.5.1",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-clean": "^2.0.0",
