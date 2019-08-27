@@ -49,10 +49,12 @@ module.exports = function(grunt) {
             }
         },
         // compiles slider less to css
-        grunt: {
-            sliderMakeCss: {
-                gruntfile: "bower_components/angularjs-slider/Gruntfile.js",
-                task: "css"
+        run_grunt: {
+        sliderMakeCss: {
+            src: 'bower_components/angularjs-slider/Gruntfile.js',
+                options: {
+                task: 'css'
+                }
             }
         },
         watch: {
@@ -386,7 +388,7 @@ module.exports = function(grunt) {
             "less:development",
             "prettier",
             "copy:sliderLess",
-            "grunt:sliderMakeCss",
+            "run_grunt:sliderMakeCss",
             "ngtemplates",
             "clean:task_rm_build",
             "copy:build",
@@ -410,7 +412,7 @@ module.exports = function(grunt) {
         "less:development",
         "prettier",
         "copy:sliderLess",
-        "grunt:sliderMakeCss",
+        "run_grunt:sliderMakeCss",
         "browserify:turf",
         "ngtemplates",
         "ngconstant:ors",
@@ -422,7 +424,7 @@ module.exports = function(grunt) {
         "less:development",
         "prettier",
         "copy:sliderLess",
-        "grunt:sliderMakeCss",
+        "run_grunt:sliderMakeCss",
         "ngtemplates",
         "clean:task_rm_build",
         "copy:build",
@@ -447,7 +449,7 @@ module.exports = function(grunt) {
             "less:development",
             "prettier",
             "copy:sliderLess",
-            "grunt:sliderMakeCss",
+            "run_grunt:sliderMakeCss",
             "browserify:turf",
             "ngtemplates",
             "ngconstant:local",
