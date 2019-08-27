@@ -112,22 +112,6 @@ module.exports = function(grunt) {
                 esnext: true
             }
         },
-        htmlhint: {
-            build: {
-                options: {
-                    "tag-pair": true,
-                    "tagname-lowercase": true,
-                    "attr-lowercase": true,
-                    "attr-value-double-quotes": true,
-                    "doctype-first": true,
-                    "spec-char-escape": true,
-                    "id-unique": true,
-                    "head-script-disabled": false,
-                    "style-disabled": true
-                },
-                src: ["build/index.html"]
-            }
-        },
         useminPrepare: {
             html: "build/index.html",
             options: {
