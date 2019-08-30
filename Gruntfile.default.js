@@ -50,12 +50,18 @@ module.exports = function(grunt) {
         },
         // compiles slider less to css
         run_grunt: {
-        sliderMakeCss: {
-            src: 'bower_components/angularjs-slider/Gruntfile.js',
-                options: {
-                task: 'css'
+            options:{
+                debug: true,
+                verbose: true
+            },
+            sliderMakeCss: {
+                src: 'bower_components/angularjs-slider/Gruntfile.js',
+                    options: {
+                        log: true,
+                        gruntCli: '../../node_modules/.bin/grunt',
+                        task: 'css'
+                    }
                 }
-            }
         },
         watch: {
             options: {
@@ -408,7 +414,6 @@ module.exports = function(grunt) {
         "less:development",
         "prettier",
         "copy:sliderLess",
-        "run_grunt:sliderMakeCss",
         "ngtemplates",
         "clean:task_rm_build",
         "copy:build",
