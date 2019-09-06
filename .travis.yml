@@ -8,9 +8,10 @@ branches:
   - development
   - /^release-v.*$/ # this should check release-v* branches
 script:
-- npm install grunt-cli -g
+- npm install -g grunt-cli
 - npm install
 - node_modules/bower/bin/bower install
 - cd bower_components/angularjs-slider && npm install && cd ../..
+- cat bower_components/angularjs-slider/Gruntfile.js
 - cp Gruntfile.default.js Gruntfile.js
-- grunt ci
+- node_modules/.bin/grunt ci
