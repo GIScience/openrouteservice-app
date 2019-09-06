@@ -36,7 +36,6 @@
   },
   "devDependencies": {
     "bower": "^1.8.2",
-    "concurrently": "^2.0.0",
     "connect-modrewrite": "^0.9.0",
     "d3-scale-chromatic": "^1.1.1",
     "grunt-angular-templates": "^1.2.0",
