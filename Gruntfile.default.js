@@ -130,7 +130,7 @@ module.exports = function(grunt) {
         },
         uglify: {
             options: {
-                preserveComments: "false", //"some", "all",
+                'output.comments': "false", //"some", "all",
                 compress: false,
                 mangle: false
             }
