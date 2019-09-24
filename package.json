@@ -35,7 +35,7 @@
     "zone.js": "0.6.12"
   },
   "devDependencies": {
-    "bower": "^1.8.2",
+    "bower": "^1.8.8",
     "connect-modrewrite": "^0.9.0",
     "d3-scale-chromatic": "^1.1.1",
     "grunt-angular-templates": "^1.2.0",
