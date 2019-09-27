@@ -23,7 +23,7 @@
     "core-js": "2.4.0",
     "geojson": "^0.4.1",
     "grunt": "^1.0.4",
-    "grunt-contrib-watch": "^1.1.0",
+    "grunt-contrib-watch": "git+https://github.com/TheGreatRefrigerator/grunt-contrib-watch.git",
     "grunt-remove-logging": "^0.2.0",
     "leaflet": "latest",
     "leaflet-control-angular": "git+https://github.com/grantHarris/leaflet-control-angular.git",
