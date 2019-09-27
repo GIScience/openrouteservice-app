@@ -12,6 +12,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed-->
 
+## [v0.3.11] - 2019-09-27
+
+### Added
+- warning flag for wheelchair profile
+
+### Fixed
+- remaining security issues ([#294](https://github.com/GIScience/openrouteservice-app/issues/294))
+- some translations
+
 ## [v0.3.10] - 2019-09-06
 
 ### Added

@@ -55,7 +55,7 @@
     "SURFACE": "Superficie",
     "INCLINE": "Inclinazione",
     "CURB": "Ostacoli a gradino",
-    "WHEELCHAIR_WIDTH" : "Larghezza minima",
+    "WHEELCHAIR_WIDTH": "Larghezza minima",
     "ISOCHRONES": "Isocrone",
     "ISOCHRONEMETHOD": "Metodo iscorone",
     "TIMEDISTANCE": "Tempo",
@@ -220,5 +220,6 @@
     "FUEL_INFO": "At least a vehicle category or a car brand and model need to be specified.",
     "CONSUMPTION": "Consumption",
     "EMISSION": "Emission",
-    "_FOR": "For"
+    "_FOR": "For",
+    "WHEELCHAIR_FLAG": "(Europe only)"
 }

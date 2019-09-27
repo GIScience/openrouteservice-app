@@ -119,4 +119,7 @@
             </i>
         </button>
     </li>
+    <li ng-if="$ctrl.activeSubgroup === $ctrl.profiles.Wheelchair.name">
+        <span class="ors-nav-wheelchair-warning">{{('WHEELCHAIR_FLAG' | translate)}}</span>
+    </li>
 </ul>
