@@ -219,5 +219,6 @@
     "FUEL_INFO": "Le type de véhicule ou la marque et le modèle doivent être indiqués.",
     "CONSUMPTION": "Consommation",
     "EMISSION": "Émission",
-    "_FOR": "Pour"
+    "_FOR": "Pour",
+    "WHEELCHAIR_FLAG": "(Europe only)"
 }
