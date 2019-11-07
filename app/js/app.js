@@ -92,7 +92,7 @@
                   : orsApikeyFactory.getApiKey();
             let ak = "?api_key=" + apiKey;
             if (
-              config.url === ENV.geocode + "/search" ||
+              config.url === ENV.geocode + "/autocomplete" ||
               config.url === ENV.geocode + "/reverse" ||
               config.url === ENV.directions ||
               config.url === ENV.isochrones ||

@@ -221,5 +221,6 @@
     "CONSUMPTION": "Verbrauch",
     "EMISSION": "Emission",
     "_FOR": "Für",
-    "WHEELCHAIR_FLAG": "(nur Europa)"
+    "WHEELCHAIR_FLAG": "(nur Europa)",
+    "ADDRESSES_HINT": "Search small to large for best results (e.g. teststreet 2 templatetown fakecountry)"
 }
