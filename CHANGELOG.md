@@ -12,6 +12,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed-->
 
+## [Unreleased]
+
+### Added
+- some german translations
+
+### Changed
+- version of leaflet.heightgraph, leaflet-distance-markers
+- geocoding endpoint from `search` to `autocomplete`
+- address search debounce from 1s to 200ms
+
+### Fixed
+- some translations
+
 ## [v0.3.11] - 2019-09-27
 
 ### Added
