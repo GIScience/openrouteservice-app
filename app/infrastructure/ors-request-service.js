@@ -38,23 +38,23 @@ angular.module("orsApp.request-service", []).factory("orsRequestService", [
      * Replaces request if new one is fired on same index
      * @param {Object} request: xhr request
      * @param {number} idx: WP idx
-     * @param {string} panel: Current requests queue
+     * @param {string} requestsQueue: Current requests queue
      */
     orsRequestService.geocodeRequests.updateRequest = (
       request,
       idx,
-      requestsQue
+      requestsQueue
     ) => {
       if (
-        typeof orsRequestService.geocodeRequests[requestsQue][idx] ===
+        typeof orsRequestService.geocodeRequests[requestsQueue][idx] ===
         "undefined"
       ) {
-        orsRequestService.geocodeRequests[requestsQue][idx] = request;
+        orsRequestService.geocodeRequests[requestsQueue][idx] = request;
       } else {
-        orsRequestService.geocodeRequests[requestsQue][idx].cancel(
+        orsRequestService.geocodeRequests[requestsQueue][idx].cancel(
           "Cancel last request"
         );
-        orsRequestService.geocodeRequests[requestsQue][idx] = request;
+        orsRequestService.geocodeRequests[requestsQueue][idx] = request;
       }
     };
     /**
@@ -99,7 +99,7 @@ angular.module("orsApp.request-service", []).factory("orsRequestService", [
      */
     orsRequestService.geocode = (requestData, reverse = false) => {
       var url = ENV.geocode;
-      reverse ? (url += "/reverse") : (url += "/search");
+      url += reverse ? "/reverse" : "/autocomplete";
       var canceller = $q.defer();
       var cancel = function(reason) {
         canceller.resolve(reason);

@@ -166,7 +166,12 @@ angular.module("orsApp").directive("orsMap", () => {
             left: 50
           },
           position: "bottomright",
-          mappings: mappings
+          mappings: mappings,
+          highlightStyle: {
+            color: "rgb(0,243,235)",
+            opacity: 0.7,
+            weight: 6
+          }
         });
 
         /**
@@ -984,12 +989,12 @@ angular.module("orsApp").directive("orsMap", () => {
                 "</a>";
             if (feature.properties["osm_tags"].wheelchair)
               popupContent += "<br>" + lists.locations_icons.wheelchair;
-            if (feature.properties.osm_type == 1) {
+            if (feature.properties.osm_type === 1) {
               popupContent +=
                 '<br><br><a href="http://www.openstreetmap.org/node/' +
                 feature.properties.osm_id +
                 '" target=_blank>Edit on OpenStreetMap</a>';
-            } else if (feature.properties.osm_type == 2) {
+            } else if (feature.properties.osm_type === 2) {
               popupContent +=
                 '<br><br><a href="http://www.openstreetmap.org/way/' +
                 feature.properties.osm_id +

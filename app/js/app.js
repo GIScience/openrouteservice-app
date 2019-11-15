@@ -10,7 +10,7 @@
  *|------------------------------------------------------------------------------------*/
 /**
  * @author: Amandus Butzer, amandus@openrouteservice.org, Timothy Ellersiek, timothy@openrouteservice.org
- * @version: 0.3.11
+ * @version: 0.3.12
  */
 (function(searchString, position) {
   fetchData().then(bootstrapApplication);
@@ -92,7 +92,7 @@
                   : orsApikeyFactory.getApiKey();
             let ak = "?api_key=" + apiKey;
             if (
-              config.url === ENV.geocode + "/search" ||
+              config.url === ENV.geocode + "/autocomplete" ||
               config.url === ENV.geocode + "/reverse" ||
               config.url === ENV.directions ||
               config.url === ENV.isochrones ||

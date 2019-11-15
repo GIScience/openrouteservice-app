@@ -33,11 +33,11 @@ module.exports = function(grunt) {
                 src: [
                     "bower_components/font-awesome/**",
                     "bower_components/leaflet/**",
-                    "bower_components/leaflet.heightgraph/**"
+                    "node_modules/leaflet.heightgraph/dist/**"
                 ],
                 dest: "build"
             },
-            // copies the slidervariables into the related bower_component
+            // copies the slider variables into the related bower_component
             sliderLess: {
                 expand: true,
                 cwd: "./",
@@ -55,13 +55,13 @@ module.exports = function(grunt) {
                 verbose: true
             },
             sliderMakeCss: {
-                src: 'bower_components/angularjs-slider/Gruntfile.js',
-                    options: {
-                        log: true,
-                        gruntCli: '../../node_modules/.bin/grunt',
-                        task: 'css'
-                    }
+                src: "bower_components/angularjs-slider/Gruntfile.js",
+                options: {
+                    log: true,
+                    gruntCli: "../../node_modules/.bin/grunt",
+                    task: "css"
                 }
+            }
         },
         watch: {
             options: {
@@ -130,7 +130,7 @@ module.exports = function(grunt) {
         },
         uglify: {
             options: {
-                'output.comments': "false", //"some", "all",
+                "output.comments": false, //"some", "all",
                 compress: false,
                 mangle: false
             }
@@ -194,10 +194,10 @@ module.exports = function(grunt) {
                 options: {
                     hostname: "localhost",
                     port: 3005,
-                    //base: 'src',
+                    //base: "src",
                     livereload: true,
                     open: true,
-                    middleware: function(connect, options, middlewares) {
+                    middleware: function(connect) {
                         return [
                             modRewrite([
                                 "!\\.html|\\.js|\\.txt|\\.ico|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]"
@@ -254,7 +254,7 @@ module.exports = function(grunt) {
             // Options for all targets
             options: {
                 space: "  ",
-                wrap: '"use strict";\n\n {%= __ngModule %}',
+                wrap: '"use strict";\n\n {\%= __ngModule %}',
                 name: "config"
             },
             // Environment targets
@@ -279,7 +279,7 @@ module.exports = function(grunt) {
                         shortenlink: "https://api-ssl.bitly.com/v3/shorten",
                         mapsurfer:
                             "https://api.openrouteservice.org/mapsurfer/{z}/{x}/{y}.png",
-                        landmarks: 'https://landmarks-api.openrouteservice.org/',
+                        landmarks: "https://landmarks-api.openrouteservice.org/",
                         fuel: "https://api.openrouteservice.org/fuel"
                     }
                 }
@@ -301,7 +301,7 @@ module.exports = function(grunt) {
                         shortenlink: "https://api-ssl.bitly.com/v3/shorten",
                         mapsurfer:
                             "https://api.openrouteservice.org/mapsurfer/{z}/{x}/{y}.png",
-                        landmarks: 'https://landmarks-api.openrouteservice.org/',
+                        landmarks: "https://landmarks-api.openrouteservice.org/",
                         fuel: "https://api.openrouteservice.org/fuel"
                     }
                 }
