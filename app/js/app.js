@@ -10,7 +10,7 @@
  *|------------------------------------------------------------------------------------*/
 /**
  * @author: Amandus Butzer, amandus@openrouteservice.org, Timothy Ellersiek, timothy@openrouteservice.org
- * @version: 0.3.11
+ * @version: 0.3.12
  */
 (function(searchString, position) {
   fetchData().then(bootstrapApplication);

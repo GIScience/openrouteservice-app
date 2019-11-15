@@ -12,13 +12,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed-->
 
-## [Unreleased]
+## [v0.3.12] - 2019-11-15
 
 ### Added
 - some german translations
+- inspect route above x meter elevation (heightgraph update)
 
 ### Changed
-- version of leaflet.heightgraph, leaflet-distance-markers
+- version of leaflet.heightgraph, leaflet-distance-markers and grunt-contrib-cssmin to latest
 - geocoding endpoint from `search` to `autocomplete`
 - address search debounce from 1s to 200ms
 
