@@ -595,8 +595,8 @@ angular.module("orsApp").constant("lists", {
     country: "o3"
   },
   reversePermalinkKeys: function(obj) {
-    var rev = {};
-    for (var key in obj) {
+    let rev = {};
+    for (let key in obj) {
       rev[obj[key]] = key;
     }
     return rev;
@@ -683,9 +683,9 @@ angular.module("orsApp").constant("lists", {
       return parseInt(Math.random() * (max - min + 1), 10) + min;
     },
     get_random_color: function() {
-      var h = this.rand(150, 250);
-      var s = this.rand(30, 100);
-      var l = this.rand(20, 70);
+      let h = this.rand(150, 250);
+      let s = this.rand(30, 100);
+      let l = this.rand(20, 70);
       return "hsl(" + h + "," + s + "%," + l + "%)";
     },
     getStyle: function(c, w, o) {

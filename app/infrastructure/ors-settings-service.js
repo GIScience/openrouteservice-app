@@ -46,7 +46,6 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
     /**
      * Sets the settings from permalink
      * @param {Object} set - The settings object.
-     * @param {boolean} focus - If only one waypoint is set zoom to it.
      */
     orsSettingsFactory.setSettings = set => {
       /** Fire request */
@@ -54,13 +53,13 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
     };
     /**
      * Sets user specific options in settings (language, routinglang and units). Can be used for any key-value pair. Is used by both permalink and Cookies
-     * @param {Object} options- Consists of routing instruction language and units km/mi
+     * @param {Object} params - set user options as key value pairs.
      */
     orsSettingsFactory.setUserOptions = params => {
       if (params === undefined) return;
       //get current settings and add new params/replace existing params
       let set = orsSettingsFactory.userOptionsSubject.getValue();
-      for (var k in params) {
+      for (let k in params) {
         set[k] = params[k];
       }
       orsSettingsFactory.userOptionsSubject.onNext(set);
@@ -130,13 +129,13 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
       return orsSettingsFactory[currentSettingsObj].getValue().waypoints;
     };
     /**
-     * Intializes empty waypoints without coordinates.
-     * @param {number} n - Specifices the amount of waypoints to be added
+     * Initializes empty waypoints without coordinates.
+     * @param {number} n - Specifies the amount of waypoints to be added
      */
     orsSettingsFactory.initWaypoints = n => {
       orsSettingsFactory[currentSettingsObj].getValue().waypoints = [];
-      var wp;
-      for (var i = 1; i <= n; i++) {
+      let wp;
+      for (let i = 1; i <= n; i++) {
         wp = orsObjectsFactory.createWaypoint("", new L.latLng());
         orsSettingsFactory[currentSettingsObj].getValue().waypoints.push(wp);
       }
@@ -150,6 +149,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
      * @param {number} idx - Which is the index of the to be updated wp.
      * @param {string} address - Which is the string of the address.
      * @param {Object} pos - Which is the latlng object.
+     * @param {boolean} fireRequest - If a route request should be sent
      */
     orsSettingsFactory.updateWaypoint = (
       idx,
@@ -204,16 +204,15 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
     /**
      * Checks if two waypoints are set
      * @param {Object} settings - route settings object
-     * @return {boolean} routePresent - whether route is present
+     * @return {integer} num - whether route is present
      */
     orsSettingsFactory.handleRoutePresent = (settings, num) => {
       let sum = 0,
         routePresent = false;
       angular.forEach(settings.waypoints, waypoint => {
         sum += waypoint._set;
-        if (sum == num) {
+        if (sum === num) {
           routePresent = true;
-          return;
         }
       });
       return routePresent;
@@ -281,6 +280,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
      * @param {Object} pos - latLng Object
      * @param {number} idx - Index of waypoint
      * @param {boolean} init - Init is true when the service is loaded over permalink with the correct indices of waypoints
+     * @param fromHover
      */
     orsSettingsFactory.getAddress = (pos, idx, init, fromHover = false) => {
       // if this function is called from a popup we have to translate the index
@@ -289,9 +289,9 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
           const set = orsSettingsFactory[currentSettingsObj].getValue();
           if (idx === 0) {
             idx = 0;
-          } else if (idx == 2) {
+          } else if (idx === 2) {
             idx = set.waypoints.length - 1;
-          } else if (idx == 1) {
+          } else if (idx === 1) {
             idx = set.waypoints.length - 2;
           }
         }
@@ -302,7 +302,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
       const payload = orsUtilsService.geocodingPayload(lngLatString, true);
       const request = orsRequestService.geocode(payload, true);
       const requestsQue =
-        orsSettingsFactory.ngRouteSubject.getValue() == "directions"
+        orsSettingsFactory.ngRouteSubject.getValue() === "directions"
           ? "routeRequests"
           : "aaRequests";
       orsRequestService.geocodeRequests.updateRequest(
@@ -344,7 +344,8 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
     };
     /**
      * Sets waypoints into settings.
-     * @param {waypoints.<Object>} List of waypoint objects.
+     * @param waypoints
+     * @param fireRequest
      */
     orsSettingsFactory.setWaypoints = (waypoints, fireRequest = true) => {
       orsSettingsFactory[currentSettingsObj].getValue().waypoints = waypoints;
@@ -361,7 +362,9 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
     };
     /**
      * Sets waypoint into settings.
-     * @param {waypoints.<Object>} List of waypoint objects.
+     * @param waypoint
+     * @param idx
+     * @param fireRequest
      */
     orsSettingsFactory.setWaypoint = (waypoint, idx, fireRequest = true) => {
       orsSettingsFactory[currentSettingsObj].getValue().waypoints[
@@ -385,6 +388,8 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
      * either be a start, via or end
      * @param {number} idx - Type of wp which should be added: start, via or end.
      * @param {Object} wp - The waypoint object to be inserted to wp list.
+     * @param {boolean} fireRequest - If a route request should be made.
+     * @param {boolean} fromHover - If the waypoint was added by pulling the hover point from the route
      */
     orsSettingsFactory.insertWaypointFromMap = (
       idx,
@@ -402,11 +407,11 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
       } else {
         if (idx === 0) {
           orsSettingsFactory[currentSettingsObj].value.waypoints[idx] = wp;
-        } else if (idx == 2) {
+        } else if (idx === 2) {
           orsSettingsFactory[currentSettingsObj].value.waypoints[
             orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1
           ] = wp;
-        } else if (idx == 1) {
+        } else if (idx === 1) {
           orsSettingsFactory[currentSettingsObj].value.waypoints.splice(
             orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1,
             0,
@@ -430,9 +435,9 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
      */
     orsSettingsFactory.getCurrentSettings = path => {
       let settingsObject;
-      if (path == "directions") {
+      if (path === "directions") {
         settingsObject = "routingSettingsSubject";
-      } else if (path == "reach") {
+      } else if (path === "reach") {
         settingsObject = "aaSettingsSubject";
       }
       return settingsObject;
@@ -442,9 +447,9 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
      */
     orsSettingsFactory.getCurrentWaypoints = path => {
       let waypointsObject;
-      if (path == "directions") {
+      if (path === "directions") {
         waypointsObject = "routingWaypointsSubject";
-      } else if (path == "reach") {
+      } else if (path === "reach") {
         waypointsObject = "aaWaypointsSubject";
       }
       return waypointsObject;
@@ -459,7 +464,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
       if (idx === 0) {
         iconIdx = 0;
       } else if (
-        idx ==
+        idx ===
         orsSettingsFactory[currentSettingsObj].getValue().waypoints.length - 1
       ) {
         iconIdx = 2;
@@ -481,7 +486,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
       set.profile.type = currentProfile.type;
       /** Fire a new request if on route. */
       const isAaPanel =
-        orsSettingsFactory.ngRouteSubject.getValue() == "reach" ? true : false;
+        orsSettingsFactory.ngRouteSubject.getValue() === "reach" ? true : false;
       if (!isAaPanel) orsSettingsFactory[currentSettingsObj].onNext(set);
     };
     /**
