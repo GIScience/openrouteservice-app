@@ -148,9 +148,9 @@
                     </div>
                 </div>
                 <div class="field"
-                     ng-if="$ctrl.lists_extra_info.TrailDifficulty | contains:$ctrl.getActiveProfile().type">
+                     ng-if="$ctrl.lists_extra_info.traildifficulty | contains:$ctrl.getActiveProfile().type">
                     <div class="ui checkbox">
-                        <input data-ng-model="$ctrl.extra_infos.TrailDifficulty" id="traildifficulty_exin"
+                        <input data-ng-model="$ctrl.extra_infos.traildifficulty" id="traildifficulty_exin"
                                ng-change="$ctrl.changeExtras()" type="checkbox">
                         <label for="traildifficulty_exin" ng-bind-html="('traildifficulty' | translate)">
                         </label>

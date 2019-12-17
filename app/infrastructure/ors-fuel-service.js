@@ -39,11 +39,11 @@ angular.module("orsApp.fuel-service", []).factory("orsFuelService", [
       let route;
       if (
         angular.isDefined(orsRouteService.data) &&
-        angular.isDefined(orsRouteService.data.routes)
+        angular.isDefined(orsRouteService.data.features)
       ) {
-        if (orsRouteService.data.routes.length > 0) {
+        if (orsRouteService.data.features.length > 0) {
           let data = orsRouteService.data;
-          route = data.routes[idx];
+          route = data.features[idx];
         }
       }
       if (route && route.geometryRaw) {
@@ -92,11 +92,14 @@ angular.module("orsApp.fuel-service", []).factory("orsFuelService", [
               .reverse()
               .join(".");
             if (fuelSubject.category_info.calculation_errors === "No Errors") {
-              route.summary.consumption = fuelSubject.total_consumption.liters;
-              route.summary.emission = fuelSubject.total_emissions.co2_kg;
-              route.summary.fuelCost = fuelSubject.total_cost.w_tax_euro;
+              route.properties.summary.consumption =
+                fuelSubject.total_consumption.liters;
+              route.properties.summary.emission =
+                fuelSubject.total_emissions.co2_kg;
+              route.properties.summary.fuelCost =
+                fuelSubject.total_cost.w_tax_euro;
             }
-            route.summary.ofs = response.data;
+            route.properties.summary.ofs = response.data;
             return response.data;
           });
       }

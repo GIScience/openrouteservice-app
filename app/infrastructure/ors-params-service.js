@@ -24,13 +24,13 @@ angular.module("orsApp.params-service", []).factory("orsParamsService", [
           }
         }
       };
-      const user_options = {}
+      const user_options = {};
       const permalinkKeysReversed = lists.reversePermalinkKeys(
-          lists.permalinkKeys
-      )
+        lists.permalinkKeys
+      );
       //TODO: Replace with native loop and use break; in each if clause so not all conditions have to be checked all the time
       angular.forEach(params, (value, key) => {
-        key = permalinkKeysReversed[key]
+        key = permalinkKeysReversed[key];
         if (key === "wps") {
           //TODO Debug, adding does not properly work
           const wps = value.match(/[^,]+,[^,]+/g);
@@ -68,62 +68,69 @@ angular.module("orsApp.params-service", []).factory("orsParamsService", [
           }
           settings.waypoints = waypoints;
         }
-          if (key === "type") {
-            for (let type in lists.profiles) {
-              if (lists.profiles[type].shortValue === value) {
-                settings.profile.type = lists.profiles[type].name;
-              }
+        if (key === "type") {
+          for (let type in lists.profiles) {
+            if (lists.profiles[type].shortValue === value) {
+              settings.profile.type = lists.profiles[type].name;
             }
           }
-          if (key === "weight") {
-            for (let weightType in lists.optionList.weight) {
-              if (lists.optionList.weight[weightType].shortValue === value) {
-                settings.profile.options.weight =
-                  lists.optionList.weight[weightType].value;
-              }
+        }
+        if (key === "weight") {
+          for (let weightType in lists.optionList.weight) {
+            if (lists.optionList.weight[weightType].shortValue === value) {
+              settings.profile.options.weight =
+                lists.optionList.weight[weightType].value;
             }
           }
-          if (key in [
-              "maxspeed",
-              "hgvWeight",
-              "width",
-              "height",
-              "axleload",
-              "length",
-              "hazmat",
-              "surface",
-              "incline",
-              "curb",
-              "wheelchairWidth"]) {
-            settings.profile.options[key] = value;
-          }
+        }
+        if (key === "hazmat") {
+          settings.profile.options[key] = orsParamsService.parseStringToBool(
+            value
+          );
+        }
+        if (
+          [
+            "maxspeed",
+            "hgvWeight",
+            "width",
+            "height",
+            "axleload",
+            "length",
+            "surface",
+            "incline",
+            "curb",
+            "wheelchairWidth"
+          ].includes(key)
+        ) {
+          settings.profile.options[key] = value;
+        }
 
-          if (key in ["method", "isovalue", "isointerval"]) {
-            settings.profile.options.analysis_options.method = value;
+        if (["method", "isovalue", "isointerval"].includes(key)) {
+          settings.profile.options.analysis_options[key] = value;
+        }
+        if (key === "reverseflow") {
+          settings.profile.options.analysis_options.reverseflow = orsParamsService.parseStringToBool(
+            value
+          );
+        }
+        if (["routinglang", "units", "lat", "lng", "zoom"].includes(key)) {
+          user_options[key] = value;
+        }
+        if (
+          ["ferry", "fords", "highways", "tollroads"].includes(key) &&
+          orsParamsService.parseStringToBool(value)
+        ) {
+          settings.profile.options.avoidables[
+            key
+          ] = orsParamsService.parseStringToBool(value);
+        }
+        if (["all", "controlled"].includes(key)) {
+          if (orsParamsService.parseStringToBool(value)) {
+            settings.profile.options.borders[
+              key
+            ] = orsParamsService.parseStringToBool(value);
           }
-          if (key === "reverseflow") {
-            settings.profile.options.analysis_options.reverseflow = orsParamsService.parseStringToBool(
-              value
-            );
-          }
-          if (key in ["routinglang", "units", "lat", "lng", "zoom"]) {
-            user_options[key] = value;
-          }
-          if (key in ["ferry","fords","highways","tollroads"] && orsParamsService.parseStringToBool(value)) {
-            settings.profile.options.avoidables[key] = orsParamsService.parseStringToBool(
-              value
-            );
-          }
-          if (key in ["all","controlled"]) {
-            if (orsParamsService.parseStringToBool(value)) {
-              settings.profile.options.borders.all = orsParamsService.parseStringToBool(
-                value
-              );
-            }
-          }
-          if (key === "country") {
-            settings.profile.options.borders.country = value.replace(/,/g, "|");
-          }
+        }
       });
       return {
         settings: settings,
@@ -131,8 +138,8 @@ angular.module("orsApp.params-service", []).factory("orsParamsService", [
       };
     };
     orsParamsService.parseStringToBool = string => {
-      if (string === 1) return true;
-      else if (string === 0) return false;
+      if (string === "1") return true;
+      else if (string === "0") return false;
     };
     return orsParamsService;
   }

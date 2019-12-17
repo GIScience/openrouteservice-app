@@ -2,7 +2,7 @@
  *|                                                     University of Heidelberg
  *|   _____ _____  _____      _                         Department of Geography
  *|  / ____|_   _|/ ____|    (_)                        Chair of GIScience
- *| | |  __  | | | (___   ___ _  ___ _ __   ___ ___     (C) 2018
+ *| | |  __  | | | (___   ___ _  ___ _ __   ___ ___     (C) 2019
  *| | | |_ | | |  \___ \ / __| |/ _ \ '_ \ / __/ _ \
  *| | |__| |_| |_ ____) | (__| |  __/ | | | (_|  __/    Berliner Strasse 45
  *|  \_____|_____|_____/ \___|_|\___|_| |_|\___\___|    D-69120 Heidelberg, Germany
@@ -94,7 +94,7 @@
             if (
               config.url === ENV.geocode + "/autocomplete" ||
               config.url === ENV.geocode + "/reverse" ||
-              config.url === ENV.directions ||
+              config.url.startsWith(ENV.directions) ||
               config.url === ENV.isochrones ||
               config.url === ENV.pois ||
               config.url === ENV.matrix ||
@@ -116,66 +116,11 @@
             let messagingService = $injector.get("orsMessagingService");
             switch (rejection.status) {
               case 400:
-                messagingService.messageSubject.onNext({
-                  text:
-                    "Code " +
-                    rejection.data.error.code +
-                    ": " +
-                    rejection.data.error.message,
-                  color: 0
-                });
-                break;
               case 401:
-                messagingService.messageSubject.onNext({
-                  text:
-                    "Code " +
-                    rejection.data.error.code +
-                    ": " +
-                    rejection.data.error.message,
-                  color: 0
-                });
-                break;
               case 403:
-                messagingService.messageSubject.onNext({
-                  text:
-                    "Code " +
-                    rejection.data.error.code +
-                    ": " +
-                    rejection.data.error.message,
-                  color: 0
-                });
-                break;
               case 404:
-                //messagingService.messageSubject.onNext(lists.errors.CONNECTION);
-                messagingService.messageSubject.onNext({
-                  text:
-                    "Code " +
-                    rejection.data.error.code +
-                    ": " +
-                    rejection.data.error.message,
-                  color: 0
-                });
-                break;
               case 405:
-                messagingService.messageSubject.onNext({
-                  text:
-                    "Code " +
-                    rejection.data.error.code +
-                    ": " +
-                    rejection.data.error.message,
-                  color: 0
-                });
-                break;
               case 413:
-                messagingService.messageSubject.onNext({
-                  text:
-                    "Code " +
-                    rejection.data.error.code +
-                    ": " +
-                    rejection.data.error.message,
-                  color: 0
-                });
-                break;
               case 500:
                 messagingService.messageSubject.onNext({
                   text:
@@ -187,8 +132,6 @@
                 });
                 break;
               case 503:
-                messagingService.messageSubject.onNext(lists.errors.CONNECTION);
-                break;
               case 0:
                 messagingService.messageSubject.onNext(lists.errors.CONNECTION);
                 break;

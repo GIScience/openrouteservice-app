@@ -36,8 +36,8 @@ angular.module("orsApp.ors-waypoint", []).component("orsWaypoint", {
         ctrl.showGeocodingPanelIdx = ctrl.idx;
       };
       ctrl.getIdx = () => {
-        if (ctrl.idx == 0) return "A";
-        else if (ctrl.idx == ctrl.waypoints.length - 1) return "B";
+        if (ctrl.idx === 0) return "A";
+        else if (ctrl.idx === ctrl.waypoints.length - 1) return "B";
         else return ctrl.idx;
       };
       ctrl.emph = () => {
@@ -62,8 +62,8 @@ angular.module("orsApp.ors-waypoint", []).component("orsWaypoint", {
       };
       ctrl.getPlaceholder = () => {
         let placeholder;
-        if (ctrl.idx == 0) placeholder = "Start";
-        else if (ctrl.idx == ctrl.waypoints.length - 1) placeholder = "End";
+        if (ctrl.idx === 0) placeholder = "Start";
+        else if (ctrl.idx === ctrl.waypoints.length - 1) placeholder = "End";
         else placeholder = "Via";
         return placeholder;
       };

@@ -180,7 +180,7 @@ angular.module("orsApp").constant("lists", {
     steepness: ["Wheelchair", "hgv", "Pedestrian", "Bicycle", "Car"],
     green: ["Pedestrian", "Bicycle"],
     noise: ["Pedestrian", "Bicycle"],
-    TrailDifficulty: ["Pedestrian", "Bicycle"],
+    traildifficulty: ["Pedestrian", "Bicycle"],
     HeavyVehicle: [
       "surface",
       "waytype",
@@ -196,7 +196,7 @@ angular.module("orsApp").constant("lists", {
       "steepness",
       "green",
       "noise",
-      "TrailDifficulty"
+      "traildifficulty"
     ],
     Pedestrian: [
       "surface",
@@ -205,7 +205,7 @@ angular.module("orsApp").constant("lists", {
       "steepness",
       "green",
       "noise",
-      "TrailDifficulty"
+      "traildifficulty"
     ],
     Wheelchair: [
       "surface",
@@ -214,7 +214,7 @@ angular.module("orsApp").constant("lists", {
       "steepness",
       "green",
       "noise",
-      "TrailDifficulty"
+      "traildifficulty"
     ]
   },
   optionList: {

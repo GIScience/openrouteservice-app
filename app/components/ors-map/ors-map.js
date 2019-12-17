@@ -211,12 +211,12 @@ angular.module("orsApp").directive("orsMap", () => {
                     : orsRouteService.getCurrentRouteIdx();
                 if (
                   angular.isDefined(orsRouteService.data) &&
-                  angular.isDefined(orsRouteService.data.routes)
+                  angular.isDefined(orsRouteService.data.features)
                 ) {
-                  if (orsRouteService.data.routes.length > 0) {
+                  if (orsRouteService.data.features.length > 0) {
                     let data = orsRouteService.data;
-                    let route = data.routes[idx];
-                    if (route.elevation) {
+                    let route = data.features[idx];
+                    if (route.geometry[0][0].length === 3) {
                       const hgGeojson = orsRouteService.processHeightgraphData(
                         route
                       );
@@ -635,7 +635,12 @@ angular.module("orsApp").directive("orsMap", () => {
           if (updateWp) {
             orsSettingsFactory.updateWaypoint(idx, "", pos, fireRequest);
           } else {
-            const waypoint = orsObjectsFactory.createWaypoint("", pos, 1);
+            const waypoint = orsObjectsFactory.createWaypoint(
+              "",
+              pos,
+              1,
+              idx === -1
+            );
             orsSettingsFactory.insertWaypointFromMap(
               idx,
               waypoint,
@@ -915,14 +920,11 @@ angular.module("orsApp").directive("orsMap", () => {
               mouseover: highlightFeature,
               mouseout: resetHighlight
             });
-            let popupContent = ""
-            let cIds = feature.properties["category_ids"]
-            let osmTags = feature.properties.osm_tags
+            let popupContent = "";
+            let cIds = feature.properties["category_ids"];
+            let osmTags = feature.properties.osm_tags;
             if (osmTags.name)
-              popupContent +=
-                "<strong>" +
-                osmTags.name +
-                "</strong><br>";
+              popupContent += "<strong>" + osmTags.name + "</strong><br>";
             // use category_name with space instead of underscore if no name tag available
             else {
               let noUnderscoreName = cIds[Object.keys(cIds)[0]].category_name
@@ -939,31 +941,22 @@ angular.module("orsApp").directive("orsMap", () => {
             if (osmTags.address) {
               popupContent += lists.locations_icons.address + " ";
               if (osmTags.address.street)
-                popupContent +=
-                  osmTags.address.street + ", ";
+                popupContent += osmTags.address.street + ", ";
               if (osmTags.address.house_number)
-                popupContent +=
-                  osmTags.address.house_number + ", ";
+                popupContent += osmTags.address.house_number + ", ";
               if (osmTags.address.postal_code)
-                popupContent +=
-                  osmTags.address.postal_code + ", ";
+                popupContent += osmTags.address.postal_code + ", ";
               if (osmTags.address.locality)
-                popupContent +=
-                  osmTags.address.locality + ", ";
+                popupContent += osmTags.address.locality + ", ";
               if (osmTags.address.region)
-                popupContent +=
-                  osmTags.address.region + ", ";
+                popupContent += osmTags.address.region + ", ";
               if (osmTags.address.country)
-                popupContent +=
-                  osmTags.address.country + ", ";
+                popupContent += osmTags.address.country + ", ";
               popupContent = popupContent.slice(0, -2);
             }
             if (osmTags.phone)
               popupContent +=
-                "<br>" +
-                lists.locations_icons.phone +
-                " " +
-                osmTags.phone;
+                "<br>" + lists.locations_icons.phone + " " + osmTags.phone;
             if (osmTags.website)
               popupContent +=
                 "<br>" +
@@ -1083,7 +1076,7 @@ angular.module("orsApp").directive("orsMap", () => {
             }
           });
           polyLine.on("addDistanceMarkers", () => {
-            polyLine.addDistanceMarkers;
+            polyLine.addDistanceMarkers();
           });
           polyLine.on("removeDistanceMarkers", polyLine.removeDistanceMarkers);
           polyLine.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
@@ -1302,7 +1295,8 @@ angular.module("orsApp").directive("orsMap", () => {
           const toggle = actionPackage.extraInformation.toggle;
           const idx = actionPackage.extraInformation.idx;
           $scope.mapModel.geofeatures[actionPackage.layerCode]
-            .getLayers()[idx].setStyle({
+            .getLayers()
+            [idx].setStyle({
               opacity: toggle === true ? 0 : 1,
               weight: toggle === true ? 0 : 1,
               fillOpacity: toggle === true ? 0 : 1

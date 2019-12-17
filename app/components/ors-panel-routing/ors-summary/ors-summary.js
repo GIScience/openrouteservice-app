@@ -45,17 +45,22 @@ angular
         /** if we are coming back to route panel */
         if (
           angular.isDefined(orsRouteService.data) &&
-          angular.isDefined(orsRouteService.data.routes)
+          angular.isDefined(orsRouteService.data.features)
         ) {
-          if (orsRouteService.data.routes.length > 0) {
+          if (orsRouteService.data.features.length > 0) {
             ctrl.data = orsRouteService.data;
             const idx = ctrl.getIdx() === undefined ? 0 : ctrl.getIdx();
-            ctrl.route = ctrl.data.routes[idx];
-            if (ctrl.route.elevation) {
+            ctrl.route = ctrl.data.features[idx];
+            if (ctrl.data.metadata.query.elevation) {
               // process heightgraph data
-              const hgGeojson = orsRouteService.processHeightgraphData(
-                ctrl.route
-              );
+              const hgGeojson = orsRouteService.processHeightgraphData({
+                geometry: {
+                  coordinates: ctrl.route.geometryRaw
+                },
+                properties: {
+                  extras: ctrl.route.properties.extras
+                }
+              });
               orsRouteService.addHeightgraph(hgGeojson);
             }
             orsRouteService.addRoute(ctrl.route);
@@ -75,7 +80,7 @@ angular
           }
         );
         ctrl.EmphRoute = idx => {
-          const geometry = ctrl.data.routes[idx].geometry;
+          const geometry = ctrl.data.features[idx].geometry;
           orsRouteService.Emph(geometry);
         };
         ctrl.DeEmphRoute = () => {

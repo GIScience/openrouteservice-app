@@ -27,7 +27,7 @@ angular
         /** use scope in order to share same template ng-include with summaries */
         ctrl.routeIndex = orsRouteService.getCurrentRouteIdx();
         ctrl.data = orsRouteService.data;
-        $scope.route = ctrl.route = ctrl.data.routes[ctrl.routeIndex];
+        $scope.route = ctrl.route = ctrl.data.features[ctrl.routeIndex];
         /** subscribe to route object if instructions are already open */
         /** if we are returning to this panel, dispose all old subscriptions */
         try {
@@ -36,8 +36,8 @@ angular
         $rootScope.routeSubscriptionInstructions = orsRouteService.routesSubject.subscribe(
           data => {
             ctrl.routeIndex = orsRouteService.getCurrentRouteIdx();
-            if (data.routes) {
-              $scope.route = ctrl.route = data.routes[ctrl.routeIndex];
+            if (data.features) {
+              $scope.route = ctrl.route = data.features[ctrl.routeIndex];
               ctrl.data = orsRouteService.data;
               ctrl.isLoading = false;
             }
@@ -96,8 +96,8 @@ angular
           return arrow;
         };
         ctrl.EmphSegment = idx => {
-          const segmentStart = $scope.route.way_points[idx];
-          const segmentEnd = $scope.route.way_points[idx + 1];
+          const segmentStart = $scope.route.properties.way_points[idx];
+          const segmentEnd = $scope.route.properties.way_points[idx + 1];
           const routeString = $scope.route.geometry;
           const geometry = routeString.slice(segmentStart, segmentEnd + 1);
           orsRouteService.Emph(geometry);
@@ -125,11 +125,11 @@ angular
           const routeString = $scope.route.geometry;
           let geometry;
           if (destination) {
-            const segmentEnd = $scope.route.way_points[idx];
+            const segmentEnd = $scope.route.properties.way_points[idx];
             geometry = [routeString[segmentEnd]];
           } else {
-            const segmentStart = $scope.route.way_points[idx];
-            const segmentEnd = $scope.route.way_points[idx + 1];
+            const segmentStart = $scope.route.properties.way_points[idx];
+            const segmentEnd = $scope.route.properties.way_points[idx + 1];
             geometry = routeString.slice(segmentStart, segmentEnd + 1);
           }
           orsRouteService.zoomTo(geometry);

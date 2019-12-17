@@ -187,28 +187,29 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
         instructions: true,
         geometry: true,
         units: "m",
-        attributes: "detourfactor|percentage",
+        attributes: ["detourfactor", "percentage"],
         instructions_format: "html",
         elevation: lists.profiles[settings.profile.type].elevation,
-        options: JSON.stringify(orsUtilsService.generateOptions(settings))
+        options: orsUtilsService.generateOptions(settings)
       };
       // remove options if empty
-      if (payload.options.length == 2) delete payload.options;
+      if (
+        Object.entries(payload.options).length === 0 &&
+        payload.options.constructor === Object
+      )
+        delete payload.options;
       const subgroup = lists.profiles[settings.profile.type].subgroup;
-      // prepare waypoints
-      let waypoints = [];
-      angular.forEach(settings.waypoints, function(waypoint) {
-        if (waypoint._set == 1) waypoints.push(waypoint);
+      // format coordinates and skip_segments from waypoints
+      payload.coordinates = [];
+      payload.skip_segments = [];
+      angular.forEach(settings.waypoints, (waypoint, idx) => {
+        if (waypoint._set === 1)
+          payload.coordinates.push([
+            orsUtilsService.roundCoordinate(waypoint._latlng.lng),
+            orsUtilsService.roundCoordinate(waypoint._latlng.lat)
+          ]);
+        if (waypoint._direct) payload.skip_segments.push(idx);
       });
-      payload.coordinates = "";
-      for (let j = 0, i = 0; i < waypoints.length; i++) {
-        payload.coordinates +=
-          orsUtilsService.roundCoordinate(waypoints[i]._latlng.lng) +
-          "," +
-          orsUtilsService.roundCoordinate(waypoints[i]._latlng.lat) +
-          "|";
-      }
-      payload.coordinates = payload.coordinates.slice(0, -1);
       // extras
       payload.extra_info = [];
       const extra_infos = orsUtilsService.getExtraInformation();
@@ -221,8 +222,9 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
         )
           payload.extra_info.push(key);
       });
-      payload.extra_info = payload.extra_info.join("|");
-      if (payload.extra_info.length == 0) delete payload.extra_info;
+      for (let param of ["extra_info", "skip_segments"]) {
+        if (payload[param].length === 0) delete payload[param];
+      }
       return payload;
     };
     /**
@@ -231,7 +233,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
      * @param {boolean} reverse: if reversed geocoding, default false
      * @param {string} language: Desired language of response
      * @param {number} limit: To limit the amount of responses
-     * @return {Object} payload: Paylod object used in xhr request
+     * @return {Object} payload: Payload object used in xhr request
      */
     orsUtilsService.geocodingPayload = function(
       obj,
@@ -263,9 +265,9 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
     orsUtilsService.generateOptions = settings => {
       const subgroup = lists.profiles[settings.profile.type].subgroup;
       let options = {
-        avoid_features: "",
+        avoid_features: [],
         avoid_borders: "",
-        avoid_countries: "",
+        avoid_countries: [],
         profile_params: {
           weightings: {},
           restrictions: {}
@@ -278,8 +280,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
         if (value === true) {
           const avSubgroups = lists.optionList.avoidables[key].subgroups;
           if (avSubgroups.indexOf(subgroup) !== -1) {
-            options.avoid_features +=
-              lists.optionList.avoidables[key].name + "|";
+            options.avoid_features.push(lists.optionList.avoidables[key].name);
           }
         }
       });
@@ -291,8 +292,6 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
       }
       if (options.avoid_features.length === 0) {
         delete options.avoid_features;
-      } else {
-        options.avoid_features = options.avoid_features.slice(0, -1);
       }
       if (subgroup === "Car" || subgroup === "HeavyVehicle") {
         if (!angular.isUndefined(settings.profile.options.borders)) {
@@ -312,7 +311,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
       // remove if empty
       if (angular.equals(options.avoid_borders, ""))
         delete options.avoid_borders;
-      if (angular.equals(options.avoid_countries, ""))
+      if (angular.equals(options.avoid_countries, []))
         delete options.avoid_countries;
       if (subgroup === "HeavyVehicle") {
         let vt = 0;
@@ -361,18 +360,6 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
         ) {
           options.profile_params.weightings.steepness_difficulty = {
             level: settings.profile.options.fitness.toString()
-          };
-        }
-      }
-      if (subgroup === "Pedestrian") {
-        if (settings.profile.options.green) {
-          options.profile_params.weightings.green = {
-            factor: settings.profile.options.green
-          };
-        }
-        if (settings.profile.options.quiet) {
-          options.profile_params.weightings.quiet = {
-            factor: settings.profile.options.quiet
           };
         }
       }
@@ -441,7 +428,11 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
         options: JSON.stringify(orsUtilsService.generateOptions(settings))
       };
       // remove options if empty
-      if (payload.options.length == 2) delete payload.options;
+      if (
+        Object.entries(payload.options).length === 0 &&
+        payload.options.constructor === Object
+      )
+        delete payload.options;
       // if avoid area polygon
       if (
         settings.avoidable_polygons &&
@@ -495,7 +486,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
         // primary information
         if (
           "name" in properties &&
-          properties.name.indexOf(properties.street) == -1 &&
+          properties.name.indexOf(properties.street) === -1 &&
           properties.name !== properties.street
         ) {
           feature.processed.primary = properties.name;
@@ -684,7 +675,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
                 )
               ) {
                 // converts the pipes to commas to keep permalink clean
-                if (o == "country") {
+                if (o === "country") {
                   if (obj[o] !== "") {
                     let c = obj[o].replace(/\|/g, ",");
                     link += "&" + lists.permalinkKeys[o] + "=" + c;

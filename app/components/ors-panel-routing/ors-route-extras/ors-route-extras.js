@@ -20,9 +20,12 @@ angular
         let ctrl = this;
         ctrl.mappings = mappings;
         ctrl.processExtras = (currentRoute, key) => {
-          let totalDistance = currentRoute.summary.distance;
+          let totalDistance = currentRoute.properties.summary.distance;
           let extras = {};
-          angular.forEach(currentRoute.extras[key].values, function(elem, i) {
+          angular.forEach(currentRoute.properties.extras[key].values, function(
+            elem,
+            i
+          ) {
             const fr = elem[0],
               to = elem[1];
             if (fr !== to) {
@@ -57,11 +60,15 @@ angular
           let y0 = 0;
           let typesOrder = [];
           // sort by value to maintain color ordering
-          currentRoute.extras[key].summary.sort(function(a, b) {
+          currentRoute.properties.extras[key].summary.sort(function(a, b) {
             return parseFloat(a.value) - parseFloat(b.value);
           });
-          for (let i = 0; i < currentRoute.extras[key].summary.length; i++) {
-            const extra = currentRoute.extras[key].summary[i];
+          for (
+            let i = 0;
+            i < currentRoute.properties.extras[key].summary.length;
+            i++
+          ) {
+            const extra = currentRoute.properties.extras[key].summary[i];
 
             extras[extra.value].distance = extra.distance;
             extras[extra.value].percentage = extra.amount;
@@ -77,7 +84,7 @@ angular
         ctrl.routeExtras = [];
         $scope.$watch("$ctrl.currentRoute", route => {
           ctrl.routeExtras = [];
-          for (let key in route.extras) {
+          for (let key in route.properties.extras) {
             const data = ctrl.processExtras(route, key);
             ctrl.routeExtras.push({
               data: data.extras,

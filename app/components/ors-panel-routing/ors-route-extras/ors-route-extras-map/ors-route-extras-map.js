@@ -15,11 +15,11 @@ angular
       "orsRouteService",
       function(orsRouteService) {
         let ctrl = this;
-        let currentRoute = orsRouteService.data.routes;
+        let currentRoute = orsRouteService.data.features;
         ctrl.$onInit = () => {
           //orsRouteService.DeColor();
           angular.forEach(ctrl.checkboxes, function(checked, idx) {
-            if (ctrl.i == idx) {
+            if (ctrl.i === idx) {
               if (checked) {
                 angular.forEach(ctrl.types, function(value, key) {
                   const color = value.color;
@@ -38,7 +38,7 @@ angular
         ctrl.updateExtrasColor = () => {
           ctrl.checkboxes[ctrl.i] = !ctrl.checkboxes[ctrl.i];
           angular.forEach(ctrl.checkboxes, function(checked, idx) {
-            if (ctrl.i == idx) {
+            if (ctrl.i === idx) {
               if (ctrl.checkboxes[ctrl.i]) {
                 angular.forEach(ctrl.types, function(value, key) {
                   const color = value.color;
