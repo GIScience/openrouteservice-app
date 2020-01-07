@@ -592,7 +592,8 @@ angular.module("orsApp").constant("lists", {
     zoom: "n3",
     all: "o1",
     controlled: "o2",
-    country: "o3"
+    country: "o3",
+    skip_segments: "s"
   },
   reversePermalinkKeys: function(obj) {
     let rev = {};

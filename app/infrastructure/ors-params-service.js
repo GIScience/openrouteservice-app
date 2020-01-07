@@ -28,6 +28,10 @@ angular.module("orsApp.params-service", []).factory("orsParamsService", [
       const permalinkKeysReversed = lists.reversePermalinkKeys(
         lists.permalinkKeys
       );
+      let skip_segments = [];
+      if (params.s) {
+        skip_segments = params.s.split(",");
+      }
       //TODO: Replace with native loop and use break; in each if clause so not all conditions have to be checked all the time
       angular.forEach(params, (value, key) => {
         key = permalinkKeysReversed[key];
@@ -42,11 +46,21 @@ angular.module("orsApp.params-service", []).factory("orsParamsService", [
           angular.forEach(wps, wp => {
             wp = wp.split(",");
             if (isNaN(wp[0]) && isNaN(wp[1])) {
-              wp = orsObjectsFactory.createWaypoint("", false, 0);
+              wp = orsObjectsFactory.createWaypoint(
+                "",
+                false,
+                0,
+                skip_segments.includes(idx.toString())
+              );
             } else {
               latLng = new L.latLng([parseFloat(wp[0]), parseFloat(wp[1])]);
               latLngString = orsUtilsService.parseLatLngString(latLng);
-              wp = orsObjectsFactory.createWaypoint(latLngString, latLng, 1);
+              wp = orsObjectsFactory.createWaypoint(
+                latLngString,
+                latLng,
+                1,
+                skip_segments.includes(idx.toString())
+              );
               validWpCnt += 1;
             }
             idx += 1;

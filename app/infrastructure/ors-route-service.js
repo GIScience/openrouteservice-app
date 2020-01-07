@@ -216,7 +216,7 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
     ) => {
       orsRouteService.data = data;
       let cnt = 0;
-      angular.forEach(orsRouteService.data.features, route => {
+      for (let route of orsRouteService.data.features) {
         //const geometry = orsUtilsService.decodePolyline(route.geometry, route.elevation);
         route.geometryRaw = angular.copy(route.geometry.coordinates);
         let originalRoute = angular.copy(route);
@@ -292,9 +292,7 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
             // var max = Math.max.apply(null, values);
             // var min = Math.min.apply(null, values);
             // process heightgraph data
-            const hgGeojson = orsRouteService.processHeightgraphData(
-              originalRoute
-            );
+            const hgGeojson = orsRouteService.processHeightgraphData(route);
             orsRouteService.addHeightgraph(hgGeojson);
           } else {
             orsRouteService.removeHeightgraph();
@@ -302,16 +300,16 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
           orsRouteService.addRoute(route, focusIdx);
         }
         cnt += 1;
-      });
+      }
       orsRouteService.routesSubject.onNext(orsRouteService.data);
     };
     /** process point information */
     orsRouteService.processPointExtras = (route, profile) => {
       const fetchExtrasAtPoint = (extrasObj, idx) => {
         const extrasAtPoint = {};
-        angular.forEach(extrasObj, (values, key) => {
+        for (const [key, values] of Object.entries(extrasObj)) {
           if (mappings[key][values[idx]] === undefined) {
-            console.log(values, idx, key);
+            console.log(values, idx, key, mappings[key], values[idx]);
           }
           if (key === "traildifficulty" && profile === "Pedestrian") {
             extrasAtPoint[key] = mappings[key][values[idx]].text_hiking;
@@ -338,63 +336,121 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
           } else {
             extrasAtPoint[key] = mappings[key][values[idx]].text;
           }
-        });
+        }
         return extrasAtPoint;
       };
       // prepare extras object
       function generateExtrasObj() {
         let result = {};
-        angular.forEach(route.properties.extras, (val, key) => {
+        for (const [key, val] of Object.entries(route.properties.extras)) {
           let list = [];
 
-          // function repairExtras(extraElement) {
-          //   let skipped = orsRouteService.data.metadata.query.skip_segments
-          //   for (let skippedSegment of skipped) {
-          //     let count = 0
-          //     let skipNode = route.properties.way_points[skippedSegment]
-          //     for (const [index, extraSegment] of extraElement.values.entries()) {
-          //
-          //       if (extraSegment[1] > skipNode > extraSegment[0]) {
-          //         let upper = extraSegment[1]
-          //         extraSegment[1] = skipNode - 1
-          //         extraElement.values.splice(index + 1, 0 , [skipNode, upper, extraSegment[2]])
-          //         extraElement.values.splice(index + 1, 0 , [skipNode - 1, skipNode, 'false'])
-          //         // summary:[{value:3,distance:5293.4,amount:96.5},{value:0,distance:191.8,amount:3.5}
-          //         extraElement.summary.push({
-          //           value: 'false',
-          //           distance: 0,
-          //           amount: 0
-          //         })
-          //       }
-          //     }
-          //   }
-          // }
+          function repairExtras(extraElement) {
+            let skipped = orsRouteService.data.metadata.query.skip_segments;
+            for (let skippedSegment of skipped) {
+              let count = 0;
+              // get faulty segment,
+              let skipNode = route.properties.way_points[skippedSegment];
+              if (extraElement.values.length === 0) {
+                extraElement.values.push([0, skipNode, "false"]);
+                extraElement.summary.push({
+                  value: "false",
+                  distance: 0,
+                  amount: 0
+                });
+                continue;
+              }
+              let justSkipped = false;
+              for (const [
+                index,
+                extraSegment
+              ] of extraElement.values.entries()) {
+                extraSegment[0] += count;
+                extraSegment[1] += count;
+                if (justSkipped) {
+                  justSkipped = false;
+                  continue;
+                }
+                // between case
+                if (extraSegment[1] >= skipNode && skipNode > extraSegment[0]) {
+                  justSkipped = true;
+                  count++;
+                  let upper = extraSegment[1];
+                  let category = extraSegment[2];
+                  extraSegment[1] = skipNode - 1;
+                  extraElement.values.splice(index + 1, 0, [
+                    skipNode - 1,
+                    upper,
+                    extraSegment[2]
+                  ]);
+                  if (extraSegment[0] === extraSegment[1]) {
+                    extraSegment[1] = skipNode;
+                    extraSegment[2] = "false";
+                  } else {
+                    extraElement.values.splice(index + 1, 0, [
+                      skipNode - 2,
+                      skipNode - 1,
+                      "false"
+                    ]);
+                  }
+                  // summary:[{value:3,distance:5293.4,amount:96.5},{value:0,distance:191.8,amount:3.5}
 
-          // if (orsRouteService.data.metadata.query.skip_segments) {
-          //   repairExtras(val)
-          // }
-          // if orsRouteService.data.metadata.skipped_segemnts
-          // get faulty segment,
-          // repair
-          // repair distance & amount
-          // add summary entry
+                  let i = skipNode;
+                  let geomReference =
+                    orsRouteService.data.features[0].geometryRaw;
+                  while (geomReference[i][2] === 0) {
+                    i++;
+                  }
+                  geomReference[skipNode][2] = geomReference[i][2];
 
-          angular.forEach(val.values, (extraList, keyIdx) => {
-            for (let start = extraList[0]; start < extraList[1]; start++) {
-              list.push(extraList[2]);
+                  if (skipNode === 1) {
+                    geomReference[0][2] = geomReference[i][2];
+                  }
+                  if (
+                    !extraElement.summary.some(
+                      summary => summary.value === "false"
+                    )
+                  ) {
+                    extraElement.summary.push({
+                      value: "false",
+                      distance: 0,
+                      amount: 0
+                    });
+                  }
+                }
+              }
+              if (skipNode === route.geometry.length - 1) {
+                extraElement.values.push([
+                  extraElement.values[extraElement.values.length - 1][1],
+                  skipNode,
+                  "false"
+                ]);
+                let i = skipNode;
+                let geomReference =
+                  orsRouteService.data.features[0].geometryRaw;
+                while (geomReference[i][2] === 0) {
+                  i--;
+                }
+                geomReference[skipNode][2] = geomReference[i][2];
+
+                if (skipNode === 1) {
+                  geomReference[0][2] = geomReference[i][2];
+                }
+              }
             }
-          });
-          // push last extra, not considered in above loop
-          list.push(val.values[val.values.length - 1][2]);
-          // if (orsRouteService.data.metadata.query.skip_segments) {
-          //   let skipped = orsRouteService.data.metadata.query.skip_segments
-          //     for (let skippedSegment of skipped) {
-          //       let skipNode = route.properties.way_points[skippedSegment]
-          //       list.splice(skipNode - 1, 0, 'false')
-          //     }
-          // }
+          }
+          let skip_segments = orsRouteService.data.metadata.query.skip_segments;
+          if (skip_segments) {
+            repairExtras(val);
+          }
+
+          for (let extraList of val.values) {
+            for (let i = extraList[0]; i <= extraList[1]; i++) {
+              list[i] = extraList[2];
+            }
+          }
           result[key] = list;
-        });
+        }
         return result;
       }
       let extrasObj = generateExtrasObj();
@@ -472,7 +528,7 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
         typeof orsResponse === "string" ? JSON.parse(orsResponse) : orsResponse;
       // extract coordinates and extras from ors response
       let {
-        geometry: { coordinates: coordinates },
+        geometryRaw: coordinates,
         properties: { extras: extras }
       } = responseObject;
       if (extras) {

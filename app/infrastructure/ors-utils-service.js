@@ -758,6 +758,21 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
       if (userOptions.units !== undefined)
         link += "&" + lists.permalinkKeys.units + "=" + userOptions.units;
       // This timeout is neccessariliy needed to update the permalink on router reuse !!!
+      let skip_segments = [];
+      if (latLngs) {
+        for (let idx in waypoints) {
+          let waypoint = waypoints[idx];
+          if (waypoint._direct) skip_segments.push(idx);
+        }
+        if (skip_segments) {
+          link +=
+            "&" +
+            lists.permalinkKeys.skip_segments +
+            "=" +
+            skip_segments.join(",");
+        }
+      }
+
       $timeout(function() {
         $location.search(link);
       });

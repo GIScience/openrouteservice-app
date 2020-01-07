@@ -291,7 +291,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
             idx = 0;
           } else if (idx === 2) {
             idx = set.waypoints.length - 1;
-          } else if (idx === 1) {
+          } else if (idx === 1 || idx === -1) {
             idx = set.waypoints.length - 2;
           }
         }
@@ -411,7 +411,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
           orsSettingsFactory[currentSettingsObj].value.waypoints[
             orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1
           ] = wp;
-        } else if (idx === 1) {
+        } else if (idx === 1 || idx === -1) {
           orsSettingsFactory[currentSettingsObj].value.waypoints.splice(
             orsSettingsFactory[currentSettingsObj].value.waypoints.length - 1,
             0,

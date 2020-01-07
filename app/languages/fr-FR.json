@@ -221,5 +221,6 @@
     "EMISSION": "Émission",
     "_FOR": "Pour",
     "WHEELCHAIR_FLAG": "(Europe only)",
-    "ADDRESSES_HINT": "Search small to large for best results (e.g. teststreet 2 templatetown fakecountry)"
+    "ADDRESSES_HINT": "Search small to large for best results (e.g. teststreet 2 templatetown fakecountry)",
+    "ADD_DIRECT": "Add as direct point"
 }

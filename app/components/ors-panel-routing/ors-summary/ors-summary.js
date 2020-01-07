@@ -54,9 +54,7 @@ angular
             if (ctrl.data.metadata.query.elevation) {
               // process heightgraph data
               const hgGeojson = orsRouteService.processHeightgraphData({
-                geometry: {
-                  coordinates: ctrl.route.geometryRaw
-                },
+                geometry: ctrl.route.geometryRaw,
                 properties: {
                   extras: ctrl.route.properties.extras
                 }
