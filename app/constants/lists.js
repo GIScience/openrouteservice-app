@@ -443,7 +443,8 @@ angular.module("orsApp").constant("lists", {
         "fr-FR",
         "pl-PL",
         "it-IT",
-        "id-ID"
+        "id-ID",
+        "hu-HU"
       ]
     },
     routinglanguages: {
