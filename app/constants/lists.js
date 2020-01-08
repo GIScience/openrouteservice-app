@@ -460,7 +460,8 @@ angular.module("orsApp").constant("lists", {
         "it",
         "nl",
         "zh-CN",
-        "es"
+        "es",
+        "id"
       ]
     },
     units: {
