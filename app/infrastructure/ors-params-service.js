@@ -29,7 +29,7 @@ angular.module("orsApp.params-service", []).factory("orsParamsService", [
         lists.permalinkKeys
       );
       let skip_segments = [];
-      if (params.s) {
+      if (params.s && params.s.length > 0) {
         skip_segments = params.s.split(",");
       }
       //TODO: Replace with native loop and use break; in each if clause so not all conditions have to be checked all the time

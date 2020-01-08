@@ -764,7 +764,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
           let waypoint = waypoints[idx];
           if (waypoint._direct) skip_segments.push(idx);
         }
-        if (skip_segments) {
+        if (skip_segments && skip_segments.length > 0) {
           link +=
             "&" +
             lists.permalinkKeys.skip_segments +
