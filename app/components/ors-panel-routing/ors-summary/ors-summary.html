@@ -1,13 +1,13 @@
 <div class="ors-summary">
     <ul>
-        <li data-ng-repeat="route in $ctrl.data.routes">
+        <li data-ng-repeat="route in $ctrl.data.features">
             <!-- <div ng-include="'includes/route-summary.html'" ng-mouseout="$ctrl.DeEmphRoute()" ng-mouseover="$ctrl.EmphRoute($index)">
             </div> -->
             <div ng-include="'includes/route-summary.html'">
             </div>
             <div class="bottom-border">
             </div>
-            <div class="options-box" ng-if="route.extras">
+            <div class="options-box" ng-if="route.properties.extras">
                 <div class="pointer margin-bottom-6" ng-click="showRouteExtras = !showRouteExtras" ng-init="showRouteExtras = true;">
                     <span>
                         <i ng-class="$ctrl.getClass(showRouteExtras)">
@@ -27,7 +27,7 @@
             </div>
             <div class="bottom-border">
             </div>
-            <div class="options-box" ng-if="route.summary.ofs">
+            <div class="options-box" ng-if="route.properties.summary.ofs">
                 <div class="margin-bottom-6" ng-click="showFuelInfo = !showFuelInfo" ng-init="showFuelInfo = true;">
                     <span>
                         <i ng-class="$ctrl.getClass(showFuelInfo)">
@@ -36,10 +36,10 @@
                     <span ng-bind-html="('FUEL_CONSUMPTION' | translate)">
                     </span>
                 </div>
-                <div style="color: grey; font-style: italic" ng-if="showFuelInfo" ng-bind-html="('_FOR' | translate) + ' ' + route.summary.ofs.request_id + ':'"></div>
+                <div style="color: grey; font-style: italic" ng-if="showFuelInfo" ng-bind-html="('_FOR' | translate) + ' ' + route.properties.summary.ofs.request_id + ':'"></div>
                 <br>
-                <div ng-repeat="(vehicleClass, info) in route.summary.ofs['fuel_stats']" ng-if="showFuelInfo">
-                    <div ng-if="$ctrl.classInQuery(route.summary.ofs, vehicleClass) || (vehicleClass==='individual' && $first)">
+                <div ng-repeat="(vehicleClass, info) in route.properties.summary.ofs['fuel_stats']" ng-if="showFuelInfo">
+                    <div ng-if="$ctrl.classInQuery(route.properties.summary.ofs, vehicleClass) || (vehicleClass==='individual' && $first)">
                         <div ng-if="info['category_info']['calculation_errors'] !== 'No Errors'">
                             <div>Not enough data to calculate category {{$ctrl.carCategories[vehicleClass].en}}</div>
                         </div>
@@ -63,9 +63,9 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="route.summary.ofs['attributions'] && showFuelInfo" style="color: grey; font-style: italic">
+                <div ng-if="route.properties.summary.ofs['attributions'] && showFuelInfo" style="color: grey; font-style: italic">
                     <div >Attributions:</div>
-                    <div ng-repeat="source in route.summary.ofs['attributions']">{{source}}</div>
+                    <div ng-repeat="source in route.properties.summary.ofs['attributions']">{{source}}</div>
                 </div>
             </div>
             <div class="bottom-border">

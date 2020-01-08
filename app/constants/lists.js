@@ -180,7 +180,7 @@ angular.module("orsApp").constant("lists", {
     steepness: ["Wheelchair", "hgv", "Pedestrian", "Bicycle", "Car"],
     green: ["Pedestrian", "Bicycle"],
     noise: ["Pedestrian", "Bicycle"],
-    TrailDifficulty: ["Pedestrian", "Bicycle"],
+    traildifficulty: ["Pedestrian", "Bicycle"],
     HeavyVehicle: [
       "surface",
       "waytype",
@@ -196,7 +196,7 @@ angular.module("orsApp").constant("lists", {
       "steepness",
       "green",
       "noise",
-      "TrailDifficulty"
+      "traildifficulty"
     ],
     Pedestrian: [
       "surface",
@@ -205,7 +205,7 @@ angular.module("orsApp").constant("lists", {
       "steepness",
       "green",
       "noise",
-      "TrailDifficulty"
+      "traildifficulty"
     ],
     Wheelchair: [
       "surface",
@@ -214,7 +214,7 @@ angular.module("orsApp").constant("lists", {
       "steepness",
       "green",
       "noise",
-      "TrailDifficulty"
+      "traildifficulty"
     ]
   },
   optionList: {
@@ -443,7 +443,8 @@ angular.module("orsApp").constant("lists", {
         "fr-FR",
         "pl-PL",
         "it-IT",
-        "id-ID"
+        "id-ID",
+        "hu-HU"
       ]
     },
     routinglanguages: {
@@ -459,7 +460,8 @@ angular.module("orsApp").constant("lists", {
         "it",
         "nl",
         "zh-CN",
-        "es"
+        "es",
+        "id"
       ]
     },
     units: {
@@ -592,11 +594,12 @@ angular.module("orsApp").constant("lists", {
     zoom: "n3",
     all: "o1",
     controlled: "o2",
-    country: "o3"
+    country: "o3",
+    skip_segments: "s"
   },
   reversePermalinkKeys: function(obj) {
-    var rev = {};
-    for (var key in obj) {
+    let rev = {};
+    for (let key in obj) {
       rev[obj[key]] = key;
     }
     return rev;
@@ -683,9 +686,9 @@ angular.module("orsApp").constant("lists", {
       return parseInt(Math.random() * (max - min + 1), 10) + min;
     },
     get_random_color: function() {
-      var h = this.rand(150, 250);
-      var s = this.rand(30, 100);
-      var l = this.rand(20, 70);
+      let h = this.rand(150, 250);
+      let s = this.rand(30, 100);
+      let l = this.rand(20, 70);
       return "hsl(" + h + "," + s + "%," + l + "%)";
     },
     getStyle: function(c, w, o) {

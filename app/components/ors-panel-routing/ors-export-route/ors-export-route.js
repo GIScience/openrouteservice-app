@@ -95,11 +95,14 @@ angular
           let currentRoute = null;
           if (ctrl.currentFileFormat === "rawjson") {
             currentRoute =
-              orsRouteService.data.routes[orsRouteService.getCurrentRouteIdx()];
+              orsRouteService.data.features[
+                orsRouteService.getCurrentRouteIdx()
+              ];
           } else {
             currentRoute =
-              orsRouteService.data.routes[orsRouteService.getCurrentRouteIdx()]
-                .geometry;
+              orsRouteService.data.features[
+                orsRouteService.getCurrentRouteIdx()
+              ].geometry;
           }
           orsExportFactory.exportFile(
             currentRoute,

@@ -6,6 +6,11 @@ angular.module("orsApp").constant("mappings", {
     }
   },
   steepness: {
+    false: {
+      text: "no data",
+      type: "false",
+      color: "grey"
+    },
     "-5": {
       text: "16%+",
       type: "-1",
@@ -63,6 +68,11 @@ angular.module("orsApp").constant("mappings", {
     }
   },
   waytypes: {
+    false: {
+      text: "no data",
+      type: "false",
+      color: "grey"
+    },
     "0": {
       text: "Other",
       color: "#30959e"
@@ -109,6 +119,11 @@ angular.module("orsApp").constant("mappings", {
     }
   },
   surface: {
+    false: {
+      text: "no data",
+      type: "false",
+      color: "grey"
+    },
     "0": {
       text: "Other",
       color: "#ddcdeb"
@@ -187,6 +202,11 @@ angular.module("orsApp").constant("mappings", {
     }
   },
   suitability: {
+    false: {
+      text: "no data",
+      type: "false",
+      color: "grey"
+    },
     "3": {
       text: "3/10",
       color: "#3D3D3D"
@@ -221,6 +241,11 @@ angular.module("orsApp").constant("mappings", {
     }
   },
   green: {
+    false: {
+      text: "no data",
+      type: "false",
+      color: "grey"
+    },
     "3": {
       text: "10/10",
       color: "#8ec639"
@@ -255,6 +280,11 @@ angular.module("orsApp").constant("mappings", {
     }
   },
   noise: {
+    false: {
+      text: "no data",
+      type: "false",
+      color: "grey"
+    },
     "7": {
       text: "7/10",
       color: "#F8A056"
@@ -273,6 +303,11 @@ angular.module("orsApp").constant("mappings", {
     }
   },
   tollways: {
+    false: {
+      text: "no data",
+      type: "false",
+      color: "grey"
+    },
     "0": {
       text: "LOCALE_NO_TOLLWAY",
       color: "#6ca97b"
@@ -283,6 +318,11 @@ angular.module("orsApp").constant("mappings", {
     }
   },
   avgspeed: {
+    false: {
+      text: "no data",
+      type: "false",
+      color: "grey"
+    },
     "3": {
       text: "3 km/h",
       color: "#f2fdff",
@@ -399,6 +439,11 @@ angular.module("orsApp").constant("mappings", {
     }
   },
   traildifficulty: {
+    false: {
+      text: "no data",
+      type: "false",
+      color: "grey"
+    },
     "0": {
       text: "Missing SAC tag",
       text_hiking: "Missing SAC tag",
@@ -440,6 +485,11 @@ angular.module("orsApp").constant("mappings", {
     }
   },
   roadaccessrestrictions: {
+    false: {
+      text: "no data",
+      type: "false",
+      color: "grey"
+    },
     "0": {
       text: "None (there are no restrictions)",
       color: "#fe7f6c"

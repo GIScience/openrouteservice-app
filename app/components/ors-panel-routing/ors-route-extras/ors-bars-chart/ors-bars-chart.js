@@ -165,7 +165,7 @@ angular.module("orsApp.ors-bars-chart", []).directive("orsBarsChart", () => {
         $scope.EmphSegment = segments => {
           angular.forEach(segments, function(pair) {
             const routeString =
-              orsRouteService.data.routes[$scope.routeIndex].geometry;
+              orsRouteService.data.features[$scope.routeIndex].geometry;
             const geometry = routeString.slice(pair[0], pair[1] + 1);
             orsRouteService.Emph(geometry);
           });

@@ -20,15 +20,21 @@ angular
         let ctrl = this;
         ctrl.mappings = mappings;
         ctrl.processExtras = (currentRoute, key) => {
-          let totalDistance = currentRoute.summary.distance;
+          let totalDistance = currentRoute.properties.summary.distance;
           let extras = {};
-          angular.forEach(currentRoute.extras[key].values, function(elem, i) {
+          for (const [i, elem] of Object.entries(
+            currentRoute.properties.extras[key].values
+          )) {
+            // angular.forEach(currentRoute.properties.extras[key].values, function(
+            //   elem,
+            //   i
+            // ) {
             const fr = elem[0],
               to = elem[1];
             if (fr !== to) {
               let typeNumber;
 
-              typeNumber = parseInt(elem[2]);
+              typeNumber = elem[2] === "false" ? "false" : parseInt(elem[2]);
 
               const routeSegment = currentRoute.geometry.slice(fr, to);
               if (typeNumber in extras) {
@@ -38,8 +44,10 @@ angular
                 // checks for Profile : Pedestrian and Cycling have different values https://github.com/GIScience/openrouteservice-docs/tree/4.2#trail-difficulty
                 if (
                   key === "traildifficulty" &&
-                  orsRouteService.data.info.query.profile.substring(0, 4) ===
-                    "foot"
+                  orsRouteService.data.metadata.query.profile.substring(
+                    0,
+                    4
+                  ) === "foot"
                 ) {
                   text = ctrl.mappings[key][typeNumber].text_hiking;
                 } else {
@@ -53,16 +61,14 @@ angular
                 };
               }
             }
-          });
+          }
           let y0 = 0;
           let typesOrder = [];
           // sort by value to maintain color ordering
-          currentRoute.extras[key].summary.sort(function(a, b) {
+          currentRoute.properties.extras[key].summary.sort(function(a, b) {
             return parseFloat(a.value) - parseFloat(b.value);
           });
-          for (let i = 0; i < currentRoute.extras[key].summary.length; i++) {
-            const extra = currentRoute.extras[key].summary[i];
-
+          for (const extra of currentRoute.properties.extras[key].summary) {
             extras[extra.value].distance = extra.distance;
             extras[extra.value].percentage = extra.amount;
             extras[extra.value].y0 = y0;
@@ -77,7 +83,7 @@ angular
         ctrl.routeExtras = [];
         $scope.$watch("$ctrl.currentRoute", route => {
           ctrl.routeExtras = [];
-          for (let key in route.extras) {
+          for (let key in route.properties.extras) {
             const data = ctrl.processExtras(route, key);
             ctrl.routeExtras.push({
               data: data.extras,

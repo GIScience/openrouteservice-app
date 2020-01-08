@@ -211,12 +211,12 @@ angular.module("orsApp").directive("orsMap", () => {
                     : orsRouteService.getCurrentRouteIdx();
                 if (
                   angular.isDefined(orsRouteService.data) &&
-                  angular.isDefined(orsRouteService.data.routes)
+                  angular.isDefined(orsRouteService.data.features)
                 ) {
-                  if (orsRouteService.data.routes.length > 0) {
+                  if (orsRouteService.data.features.length > 0) {
                     let data = orsRouteService.data;
-                    let route = data.routes[idx];
-                    if (route.elevation) {
+                    let route = data.features[idx];
+                    if (route.geometry[0][0].length === 3) {
                       const hgGeojson = orsRouteService.processHeightgraphData(
                         route
                       );
@@ -434,7 +434,7 @@ angular.module("orsApp").directive("orsMap", () => {
           let avoidPolygons = {
             type: polygons.features.length > 1 ? "MultiPolygon" : "Polygon"
           };
-          if (polygons.features.length == 1) {
+          if (polygons.features.length === 1) {
             avoidPolygons.coordinates = [
               orsUtilsService.trimCoordinates(
                 polygons.features[0].geometry.coordinates[0],
@@ -473,44 +473,30 @@ angular.module("orsApp").directive("orsMap", () => {
         $scope.mapModel.map.on("load", evt => {
           // add mapstyle
           angular.forEach($scope.baseLayers, (value, key) => {
-            if (value.options.id == $scope.mapStyleId) {
+            if (value.options.id === $scope.mapStyleId) {
               console.log($scope.mapStyleId, $scope.baseLayers);
               $scope.baseLayers[key].addTo($scope.orsMap);
             }
           });
-          $scope.mapModel.geofeatures.layerRoutePoints.addTo(
-            $scope.mapModel.map
-          );
-          $scope.mapModel.geofeatures.layerCustomMarkers.addTo(
-            $scope.mapModel.map
-          );
-          $scope.mapModel.geofeatures.layerRouteLines.addTo(
-            $scope.mapModel.map
-          );
-          $scope.mapModel.geofeatures.layerRouteNumberedMarkers.addTo(
-            $scope.mapModel.map
-          );
-          $scope.mapModel.geofeatures.layerAvoid.addTo($scope.mapModel.map);
-          $scope.mapModel.geofeatures.layerAccessibilityAnalysis.addTo(
-            $scope.mapModel.map
-          );
-          $scope.mapModel.geofeatures.layerAccessibilityAnalysisNumberedMarkers.addTo(
-            $scope.mapModel.map
-          );
-          $scope.mapModel.geofeatures.layerEmph.addTo($scope.mapModel.map);
-          $scope.mapModel.geofeatures.layerTracks.addTo($scope.mapModel.map);
-          $scope.mapModel.geofeatures.layerRouteExtras.addTo(
-            $scope.mapModel.map
-          );
-          $scope.mapModel.geofeatures.layerLocations.addTo($scope.mapModel.map);
-          $scope.mapModel.geofeatures.layerRouteDrag.addTo($scope.mapModel.map);
-          $scope.mapModel.geofeatures.layerLandmarks.addTo($scope.mapModel.map);
-          $scope.mapModel.geofeatures.layerLandmarksEmph.addTo(
-            $scope.mapModel.map
-          );
-          $scope.mapModel.geofeatures.layerHereMarkers.addTo(
-            $scope.mapModel.map
-          );
+          for (let layerName of [
+            "layerRoutePoints",
+            "layerCustomMarkers",
+            "layerRouteLines",
+            "layerRouteNumberedMarkers",
+            "layerAvoid",
+            "layerAccessibilityAnalysis",
+            "layerAccessibilityAnalysisNumberedMarkers",
+            "layerEmph",
+            "layerTracks",
+            "layerRouteExtras",
+            "layerLocations",
+            "layerRouteDrag",
+            "layerLandmarks",
+            "layerLandmarksEmph",
+            "layerHereMarkers"
+          ]) {
+            $scope.mapModel.geofeatures[layerName].addTo($scope.mapModel.map);
+          }
           // add layer control
           $scope.layerControls = L.control
             .layers($scope.baseLayers, $scope.overlays)
@@ -534,7 +520,7 @@ angular.module("orsApp").directive("orsMap", () => {
           $scope.mapModel.map.on("editable:vertex:altclick", deleteVertex);
           $scope.mapModel.map.on("baselayerchange", function(e) {
             angular.forEach($scope.baseLayers, (value, key) => {
-              if (e.name == key) {
+              if (e.name === key) {
                 $scope.mapStyleId = value.options.id;
               }
             });
@@ -649,7 +635,12 @@ angular.module("orsApp").directive("orsMap", () => {
           if (updateWp) {
             orsSettingsFactory.updateWaypoint(idx, "", pos, fireRequest);
           } else {
-            const waypoint = orsObjectsFactory.createWaypoint("", pos, 1);
+            const waypoint = orsObjectsFactory.createWaypoint(
+              "",
+              pos,
+              1,
+              idx === -1
+            );
             orsSettingsFactory.insertWaypointFromMap(
               idx,
               waypoint,
@@ -790,7 +781,7 @@ angular.module("orsApp").directive("orsMap", () => {
           $scope.clearLayer("layerLandmarks");
           let setCnt = 0;
           angular.forEach(waypoints, (waypoint, idx) => {
-            var iconIdx = orsSettingsFactory.getIconIdx(idx);
+            let iconIdx = orsSettingsFactory.getIconIdx(idx);
             if (waypoint._latlng.lat && waypoint._latlng.lng) {
               $scope.addWaypoint(
                 idx,
@@ -800,10 +791,10 @@ angular.module("orsApp").directive("orsMap", () => {
                 aaIcon
               );
             }
-            if (waypoint._set == 1) setCnt += 1;
+            if (waypoint._set === 1) setCnt += 1;
           });
           // if only one waypoint is set, clear the route line layer
-          if (setCnt == 1) $scope.clearLayer("layerRouteLines");
+          if (setCnt === 1) $scope.clearLayer("layerRouteLines");
         };
         $scope.reshuffleIndicesText = actionPackage => {
           let i = 0;
@@ -811,7 +802,7 @@ angular.module("orsApp").directive("orsMap", () => {
             layer => {
               let markerIcon;
               markerIcon =
-                actionPackage.layerCode == lists.layers[5]
+                actionPackage.layerCode === lists.layers[5]
                   ? createLabelIcon("textLabelclass-isochrones", i + 1)
                   : createLabelIcon("textLabelclass", i + 1);
               layer.setIcon(markerIcon);
@@ -828,7 +819,7 @@ angular.module("orsApp").directive("orsMap", () => {
             if (typeof actionPackage.featureId != "undefined") {
               $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer(
                 layer => {
-                  if (layer.options.index == actionPackage.featureId) {
+                  if (layer.options.index === actionPackage.featureId) {
                     $scope.orsMap.fitBounds(layer.getBounds());
                   }
                 }
@@ -931,11 +922,9 @@ angular.module("orsApp").directive("orsMap", () => {
             });
             let popupContent = "";
             let cIds = feature.properties["category_ids"];
-            if (feature.properties["osm_tags"].name)
-              popupContent +=
-                "<strong>" +
-                feature.properties["osm_tags"].name +
-                "</strong><br>";
+            let osmTags = feature.properties.osm_tags;
+            if (osmTags.name)
+              popupContent += "<strong>" + osmTags.name + "</strong><br>";
             // use category_name with space instead of underscore if no name tag available
             else {
               let noUnderscoreName = cIds[Object.keys(cIds)[0]].category_name
@@ -949,45 +938,36 @@ angular.module("orsApp").directive("orsMap", () => {
             ] = orsLocationsService.getSubcategoriesLookup()[
               parseInt(Object.keys(cIds)[0])
             ];
-            if (feature.properties["osm_tags"].address) {
+            if (osmTags.address) {
               popupContent += lists.locations_icons.address + " ";
-              if (feature.properties["osm_tags"].address.street)
-                popupContent +=
-                  feature.properties["osm_tags"].address.street + ", ";
-              if (feature.properties["osm_tags"].address.house_number)
-                popupContent +=
-                  feature.properties["osm_tags"].address.house_number + ", ";
-              if (feature.properties["osm_tags"].address.postal_code)
-                popupContent +=
-                  feature.properties["osm_tags"].address.postal_code + ", ";
-              if (feature.properties["osm_tags"].address.locality)
-                popupContent +=
-                  feature.properties["osm_tags"].address.locality + ", ";
-              if (feature.properties["osm_tags"].address.region)
-                popupContent +=
-                  feature.properties["osm_tags"].address.region + ", ";
-              if (feature.properties["osm_tags"].address.country)
-                popupContent +=
-                  feature.properties["osm_tags"].address.country + ", ";
+              if (osmTags.address.street)
+                popupContent += osmTags.address.street + ", ";
+              if (osmTags.address.house_number)
+                popupContent += osmTags.address.house_number + ", ";
+              if (osmTags.address.postal_code)
+                popupContent += osmTags.address.postal_code + ", ";
+              if (osmTags.address.locality)
+                popupContent += osmTags.address.locality + ", ";
+              if (osmTags.address.region)
+                popupContent += osmTags.address.region + ", ";
+              if (osmTags.address.country)
+                popupContent += osmTags.address.country + ", ";
               popupContent = popupContent.slice(0, -2);
             }
-            if (feature.properties["osm_tags"].phone)
+            if (osmTags.phone)
               popupContent +=
-                "<br>" +
-                lists.locations_icons.phone +
-                " " +
-                feature.properties["osm_tags"].phone;
-            if (feature.properties["osm_tags"].website)
+                "<br>" + lists.locations_icons.phone + " " + osmTags.phone;
+            if (osmTags.website)
               popupContent +=
                 "<br>" +
                 lists.locations_icons.website +
                 " " +
                 '<a href="' +
-                feature.properties["osm_tags"].website +
+                osmTags.website +
                 '" target=_blank>' +
-                feature.properties["osm_tags"].website +
+                osmTags.website +
                 "</a>";
-            if (feature.properties["osm_tags"].wheelchair)
+            if (osmTags.wheelchair)
               popupContent += "<br>" + lists.locations_icons.wheelchair;
             if (feature.properties.osm_type === 1) {
               popupContent +=
@@ -1037,7 +1017,7 @@ angular.module("orsApp").directive("orsMap", () => {
         $scope.addLandmark = actionPackage => {
           const onEachFeature = (feature, layer) => {
             let popupContent = "";
-            var type =
+            let type =
               feature.properties.type.charAt(0).toUpperCase() +
               feature.properties.type.replace(/_/g, " ").slice(1);
             if (
@@ -1096,7 +1076,7 @@ angular.module("orsApp").directive("orsMap", () => {
             }
           });
           polyLine.on("addDistanceMarkers", () => {
-            polyLine.addDistanceMarkers;
+            polyLine.addDistanceMarkers();
           });
           polyLine.on("removeDistanceMarkers", polyLine.removeDistanceMarkers);
           polyLine.addTo($scope.mapModel.geofeatures[actionPackage.layerCode]);
@@ -1343,9 +1323,7 @@ angular.module("orsApp").directive("orsMap", () => {
         $scope.colorRangeIsochronesRotator = lists.isochronesColorsRanges;
         $scope.addIsochrones = actionPackage => {
           const randomColorsSelected =
-            orsSettingsFactory.getUserOptions().randomIsoColor === true
-              ? true
-              : false;
+            orsSettingsFactory.getUserOptions().randomIsoColor === true;
           let colorRangeStart = 120;
           if (randomColorsSelected) {
             colorRangeStart = $scope.colorRangeIsochronesRotator[0];
@@ -1360,7 +1338,7 @@ angular.module("orsApp").directive("orsMap", () => {
               actionPackage.geometry[i].geometry.coordinates[0],
               {
                 fillColor:
-                  actionPackage.geometry.length == 1
+                  actionPackage.geometry.length === 1
                     ? $scope.getGradientColor(1, colorRangeStart)
                     : $scope.getGradientColor(
                         i / (actionPackage.geometry.length - 1),
@@ -1408,10 +1386,10 @@ angular.module("orsApp").directive("orsMap", () => {
          * clears layer entirely or specific layer in layer
          */
         $scope.clear = actionPackage => {
-          if (!(actionPackage.featureId === undefined)) {
+          if (actionPackage.featureId !== undefined) {
             $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer(
               layer => {
-                if (layer.options.index == actionPackage.featureId) {
+                if (layer.options.index === actionPackage.featureId) {
                   $scope.mapModel.geofeatures[
                     actionPackage.layerCode
                   ].removeLayer(layer);
@@ -1429,7 +1407,7 @@ angular.module("orsApp").directive("orsMap", () => {
           $scope.mapModel.geofeatures[actionPackage.layerCode].eachLayer(
             layer => {
               layer.eachLayer(subLayer => {
-                if (subLayer.options.index == actionPackage.featureId) {
+                if (subLayer.options.index === actionPackage.featureId) {
                   $scope.mapModel.geofeatures[
                     actionPackage.layerCode
                   ].removeLayer(layer);
@@ -1442,7 +1420,7 @@ angular.module("orsApp").directive("orsMap", () => {
         orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
           //let svg = d3.select($scope.mapModel.map.getPanes().overlayPane);
           $scope.clearMap(true);
-          $scope.routing = route == "directions" ? true : false;
+          $scope.routing = route == "directions";
           //if ($scope.routing) svg.style("opacity", 1);
         });
         orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
@@ -1601,12 +1579,12 @@ angular.module("orsApp").directive("orsMap", () => {
                                 </div>
                             </div>
                             <div class="poi-items" ng-show="showResults">
-                                <div class="poi-item" ng-repeat="feature in results" ng-click="panTo(feature.geometry.coordinates);" ng-mouseout="DeEmphPoi();" ng-mouseover="EmphPoi(feature.geometry.coordinates, feature.properties.categoryGroupId);">
+                                <div class="poi-item" ng-repeat="feature in results" ng-init="osmTags = feature.properties['osm_tags']" ng-click="panTo(feature.geometry.coordinates);" ng-mouseout="DeEmphPoi();" ng-mouseover="EmphPoi(feature.geometry.coordinates, feature.properties.categoryGroupId);">
                                     <div class="poi-row">
                                         <div class="icon" ng-bind-html='categoryIcons[feature.properties.categoryGroupId]'></div>
-                                        <div class="text" ng-if="feature.properties['osm_tags'].name === undefined" ng-bind-html="feature.properties.noUnderscoreName"></div>
-                                        <div class="text" ng-if="feature.properties['osm_tags'].name" ng-bind-html='feature.properties["osm_tags"].name'></div>
-                                        <div class="icon pointer" ng-click="poiDetails = !poiDetails; $event.stopPropagation();" ng-show='feature.properties["osm_tags"].address || feature.properties["osm_tags"].phone || feature.properties["osm_tags"].wheelchair || feature.properties["osm_tags"].website'>
+                                        <div class="text" ng-if="osmTags.name === undefined" ng-bind-html="feature.properties.noUnderscoreName"></div>
+                                        <div class="text" ng-if="osmTags.name" ng-bind-html='osmTags.name'></div>
+                                        <div class="icon pointer" ng-click="poiDetails = !poiDetails; $event.stopPropagation();" ng-show='osmTags.address || osmTags.phone || osmTags.wheelchair || osmTags.website'>
                                             <i ng-class="getClass(poiDetails)" >
                                             </i>
                                         </div>
@@ -1618,34 +1596,34 @@ angular.module("orsApp").directive("orsMap", () => {
                                         </div>
                                     </div>                                  
                                     <div class="collapsable poi-details" ng-class="{ showMe: poiDetails }">    
-                                        <div class="poi-row" ng-if="feature.properties['osm_tags'].address">
+                                        <div class="poi-row" ng-if="osmTags.address">
                                             <div class="icon">
                                                 <i class="fa fa-address-card"></i>
                                             </div>
                                             <div class="text">
-                                                <span ng-if=feature.properties['osm_tags'].address.street ng-bind-html="feature.properties['osm_tags'].address.street + ', '"></span>
-                                                <span ng-if=feature.properties['osm_tags'].address.house_number ng-bind-html="feature.properties['osm_tags'].address.house_number + ', '"></span>
-                                                <span ng-if=feature.properties['osm_tags'].address.postal_code ng-bind-html="feature.properties['osm_tags'].address.postal_code + ', '"></span>
-                                                <span ng-if=feature.properties['osm_tags'].address.locality ng-bind-html="feature.properties['osm_tags'].address.locality + ', '"></span>
-                                                <span ng-if=feature.properties['osm_tags'].address.region ng-bind-html="feature.properties['osm_tags'].address.region + ', '"></span>
-                                                <span ng-if=feature.properties['osm_tags'].address.country ng-bind-html="feature.properties['osm_tags'].address.country"></span>
+                                                <span ng-if=osmTags.address.street ng-bind-html="osmTags.address.street + ', '"></span>
+                                                <span ng-if=osmTags.address.house_number ng-bind-html="osmTags.address.house_number + ', '"></span>
+                                                <span ng-if=osmTags.address.postal_code ng-bind-html="osmTags.address.postal_code + ', '"></span>
+                                                <span ng-if=osmTags.address.locality ng-bind-html="osmTags.address.locality + ', '"></span>
+                                                <span ng-if=osmTags.address.region ng-bind-html="osmTags.address.region + ', '"></span>
+                                                <span ng-if=osmTags.address.country ng-bind-html="osmTags.address.country"></span>
                                             </div>                                        
                                         </div>
-                                         <div class="poi-row" ng-if="feature.properties['osm_tags'].phone">
+                                         <div class="poi-row" ng-if="osmTags.phone">
                                             <div class="icon">
                                                 <i class="fa fa-phone"></i>
                                             </div>
-                                            <div class="text" ng-bind-html='feature.properties["osm_tags"].phone'></div>
+                                            <div class="text" ng-bind-html='osmTags.phone'></div>
                                         </div>
-                                         <div class="poi-row" ng-if="feature.properties['osm_tags'].website">
+                                         <div class="poi-row" ng-if="osmTags.website">
                                             <div class="icon">
                                                 <i class="fa fa-globe"></i>
                                             </div> 
-                                            <div class="text" ng-bind-html="feature.properties['osm_tags'].website">
+                                            <div class="text" ng-bind-html="osmTags.website">
                                             </div>
                                         </div>
-                                        <div class="poi-row" ng-if="feature.properties['osm_tags'].wheelchair">
-                                             <div ng-if="feature.properties['osm_tags'].wheelchair">
+                                        <div class="poi-row" ng-if="osmTags.wheelchair">
+                                             <div ng-if="osmTags.wheelchair">
                                                 <i class="fa fa-wheelchair-alt"></i>
                                             </div>                                       
                                         </div> 
@@ -1792,8 +1770,7 @@ angular.module("orsApp").directive("orsMap", () => {
               };
               $scope.toggleSubcategories = function(categoryId) {
                 if (categoryId) $scope.selectedCategoryId = categoryId;
-                $scope.showSubcategories =
-                  $scope.showSubcategories === true ? false : true;
+                $scope.showSubcategories = $scope.showSubcategories !== true;
               };
               $scope.EmphPoi = (geometry, category) => {
                 if ($map.getZoom() >= 14)

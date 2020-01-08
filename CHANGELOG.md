@@ -12,6 +12,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed-->
 
+## [v0.4.0] - 2020-01-08
+
+### Added
+- direct Waypoints: choose from "right-click" menu ([#305](https://github.com/GIScience/openrouteservice-app/issues/305))
+- hungarian translation for interface ([#306](https://github.com/GIScience/openrouteservice-app/issues/306))
+- indonesian translation for instructions
+
+### Changed
+- ORS api version for routing to V2
+
 ## [v0.3.12] - 2019-11-15
 
 ### Added
@@ -38,7 +48,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [v0.3.10] - 2019-09-06
 
 ### Added
-- indonesian as interface language ([]())
+- indonesian as interface language
 
 ### Fixed
 - most security issues ([#294](https://github.com/GIScience/openrouteservice-app/issues/294))

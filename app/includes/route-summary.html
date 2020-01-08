@@ -1,5 +1,5 @@
 <div class="ors-route-card">
-    <div class="left" ng-switch="$ctrl.data.info.query.profile">
+    <div class="left" ng-switch="$ctrl.data.metadata.query.profile">
         <div ng-switch-when="driving-car">
             <i class="fa fa-lg fa-car">
             </i>
@@ -13,7 +13,7 @@
             </i>
         </div>
         <div ng-switch-when="wheelchair">
-            <i class="fa fa-lg fa-wheelchair">
+            <i class="fa fa-lg fa-wheelchair-alt">
             </i>
         </div>
         <div ng-switch-when="foot-walking|foot-hiking" ng-switch-when-separator="|">
@@ -23,72 +23,72 @@
     </div>
     <div class="right">
         <div>
-            <div class="summary-item" ng-if="route.summary.duration" tooltip-side="top" tooltip-template="{{('DURATION' | translate)}}" tooltips="">
+            <div class="summary-item" ng-if="route.properties.summary.duration" tooltip-side="top" tooltip-template="{{('DURATION' | translate)}}" tooltips="">
                 <span>
                     <i class="fa fa-clock-o">
                     </i>
                 </span>
-                <span ng-bind-html="(route.summary.duration | duration)">
+                <span ng-bind-html="(route.properties.summary.duration | duration)">
                 </span>
             </div>
-            <div class="summary-item" ng-if="route.summary.distance" tooltip-side="top" tooltip-template="{{('DISTANCE' | translate)}}" tooltips="">
+            <div class="summary-item" ng-if="route.properties.summary.distance" tooltip-side="top" tooltip-template="{{('DISTANCE' | translate)}}" tooltips="">
                 <span>
                     <i class="fa fa-arrows-h">
                     </i>
                 </span>
-                <span ng-bind-html="(route.summary.distance | distance)">
+                <span ng-bind-html="(route.properties.summary.distance | distance)">
                 </span>
             </div>
-            <div class="summary-item" ng-if="route.summary.distance_actual" tooltip-side="top" tooltip-template="{{('ACTUALDISTANCE' | translate)}}" tooltips="">
+            <div class="summary-item" ng-if="route.properties.summary.distance_actual" tooltip-side="top" tooltip-template="{{('ACTUALDISTANCE' | translate)}}" tooltips="">
                 <span>
                     <i class="fa fa-ellipsis-h">
                     </i>
                 </span>
-                <span ng-bind-html="(route.summary.distance_actual | distance)">
+                <span ng-bind-html="(route.properties.summary.distance_actual | distance)">
                 </span>
             </div>
         </div>
         <div>
-            <div class="summary-item" ng-if="route.summary.ascent" tooltip-side="top" tooltip-template="{{('ASCENT' | translate)}}" tooltips="">
+            <div class="summary-item" ng-if="route.properties.ascent" tooltip-side="top" tooltip-template="{{('ASCENT' | translate)}}" tooltips="">
                 <span>
                     <i class="fa fa-long-arrow-up">
                     </i>
                 </span>
-                <span ng-bind-html="(route.summary.ascent | distance)">
+                <span ng-bind-html="(route.properties.ascent | distance)">
                 </span>
             </div>
-            <div class="summary-item" ng-if="route.summary.descent" tooltip-side="top" tooltip-template="{{('DESCENT' | translate)}}" tooltips="">
+            <div class="summary-item" ng-if="route.properties.descent" tooltip-side="top" tooltip-template="{{('DESCENT' | translate)}}" tooltips="">
                 <span>
                     <i class="fa fa-long-arrow-down">
                     </i>
                 </span>
-                <span ng-bind-html="(route.summary.descent | distance)">
+                <span ng-bind-html="(route.properties.descent | distance)">
                 </span>
             </div>
-            <div class="summary-item" ng-if="route.summary.consumption" tooltip-side="top" tooltip-template="{{('CONSUMPTION' | translate)}}" tooltips="">
+            <div class="summary-item" ng-if="route.properties.summary.consumption" tooltip-side="top" tooltip-template="{{('CONSUMPTION' | translate)}}" tooltips="">
                 <span>
                     <i class="fa fa-tint">
                     </i>
                 </span>
-                <span ng-bind-html="(route.summary.consumption | round: ' l')">
+                <span ng-bind-html="(route.properties.summary.consumption | round: ' l')">
                 </span>
             </div>
         </div>
         <div>
-            <div class="summary-item" ng-if="route.summary.emission" tooltip-side="top" tooltip-template="{{('EMISSION' | translate)}}" tooltips="">
+            <div class="summary-item" ng-if="route.properties.summary.emission" tooltip-side="top" tooltip-template="{{('EMISSION' | translate)}}" tooltips="">
                 <span>
                     <i class="fa fa-cloud-upload">
                     </i>
                 </span>
-                <span ng-bind-html="(route.summary.emission | round: ' kg CO<sub>2</sub>')">
+                <span ng-bind-html="(route.properties.summary.emission | round: ' kg CO<sub>2</sub>')">
                 </span>
             </div>
-            <div class="summary-item" ng-if="route.summary.fuelCost" tooltip-side="top" tooltip-template="{{('FUEL_COSTS' | translate)}}" tooltips="">
+            <div class="summary-item" ng-if="route.properties.summary.fuelCost" tooltip-side="top" tooltip-template="{{('FUEL_COSTS' | translate)}}" tooltips="">
                 <span>
                     <i class="fa fa-eur">
                     </i>
                 </span>
-                <span ng-bind-html="(route.summary.fuelCost | round)">
+                <span ng-bind-html="(route.properties.summary.fuelCost | round)">
                 </span>
             </div>
         </div>

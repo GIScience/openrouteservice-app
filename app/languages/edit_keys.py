@@ -2,7 +2,7 @@
 # written in python 2.7.12
 # for python >3 you might have to switch out "raw_input()" with "input()"
 #
-# Usage: 
+# Usage:
 #
 # for adding a key value pair to the language files in this folder :
 #
@@ -58,6 +58,7 @@ for file in os.listdir(os.getcwd()) :
 					# parse back to json and overwrite old file
 					with open(file, 'w') as f :
 						f.write(json.dumps(DataDict, indent = 4, ensure_ascii = False, separators=(',', ': ')).encode('utf-8'))
+						f.write('\n')
 						print '"' + key + '": "' + DataDict[key] + '" written to ' + file
 			else :
 				if remove :
@@ -69,6 +70,7 @@ for file in os.listdir(os.getcwd()) :
 					# parse back to json and overwrite old file
 					with open(file, 'w') as f :
 						f.write(json.dumps(DataDict, indent = 4, ensure_ascii = False, separators=(',', ': ')).encode('utf-8'))
+						f.write('\n')
 						print '"' + key + '"' + ' has ben removed from ' + file
 				else:
 					print file + ' already has "'  + key + '" key!'

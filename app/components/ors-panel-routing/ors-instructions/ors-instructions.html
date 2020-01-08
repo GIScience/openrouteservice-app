@@ -26,7 +26,7 @@
     <div ng-if="!$ctrl.isLoading" ng-include="'includes/route-summary.html'">
     </div>
     <div class="bottom-border"></div>
-    <div class="options-box" ng-if="$ctrl.route.extras">
+    <div class="options-box" ng-if="$ctrl.route.properties.extras">
         <div class="pointer margin-bottom-6" ng-click="showRouteExtras = !showRouteExtras">
             <i ng-class="$ctrl.getClass(showRouteExtras)">
             </i>
@@ -34,7 +34,7 @@
             </span>
         </div>
         <div class="collapsable" ng-class="{ showMe: showRouteExtras }">
-            <ors-route-extras current-route="$ctrl.route" ng-if="$ctrl.route.extras" route-index="$ctrl.routeIndex">
+            <ors-route-extras current-route="$ctrl.route" ng-if="$ctrl.route.properties.extras" route-index="$ctrl.routeIndex">
             </ors-route-extras>
         </div>
     </div>

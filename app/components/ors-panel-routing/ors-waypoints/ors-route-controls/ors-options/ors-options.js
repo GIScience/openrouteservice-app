@@ -438,10 +438,10 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
           }
         };
         if (ctrl.currentOptions.borders.country !== undefined) {
-          let numbers = ctrl.currentOptions.borders.country.split("|");
+          let numbers = ctrl.currentOptions.borders.country;
           // parse cid to real ID and pass it to checktCountries + checkbox model
           for (var i = 0; i < ctrl.countries.length; i++) {
-            if (numbers.indexOf(ctrl.countries[i].cid) != -1) {
+            if (numbers.indexOf(ctrl.countries[i].cid) !== -1) {
               ctrl.checkedCountries.push(ctrl.countries[i].id);
               ctrl.countries[i].check = true;
               ctrl.avoidCountries = true;
@@ -472,7 +472,7 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
       };
       // Get the app route, we need this to know whether to fire a request when the options change
       orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
-        ctrl.routing = route == "directions" ? true : false;
+        ctrl.routing = route === "directions";
       });
       ctrl.changeOptions = () => {
         if (!ctrl.carBrands) {
@@ -538,19 +538,19 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
        * Generates the avoid_countries value and passes it to options
        */
       ctrl.passBordersToOptions = () => {
-        let cstring = "";
+        let countryListToAvoid = [];
         if (ctrl.avoidCountries) {
           for (var i = 0; i < ctrl.checkedCountries.length; i++) {
-            let country = ctrl.countries[ctrl.checkedCountries[i]].cid;
-            if (cstring === "") cstring += country;
-            else cstring += "|" + country;
+            countryListToAvoid.push(
+              ctrl.countries[ctrl.checkedCountries[i]].cid
+            );
           }
         }
         if (ctrl.currentOptions.borders !== undefined)
-          ctrl.currentOptions.borders.country = cstring;
+          ctrl.currentOptions.borders.country = countryListToAvoid;
         else
           ctrl.currentOptions.borders = {
-            country: cstring
+            country: countryListToAvoid
           };
 
         ctrl.changeOptions();

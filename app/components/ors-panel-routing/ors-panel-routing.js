@@ -80,7 +80,7 @@ angular
         };
         ctrl.showInstructions = () => {
           ctrl.shouldDisplayRouteDetails =
-            ctrl.shouldDisplayRouteDetails === true ? false : true;
+            ctrl.shouldDisplayRouteDetails !== true;
         };
       }
     ],
