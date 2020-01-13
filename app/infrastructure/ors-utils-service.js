@@ -757,7 +757,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
           "&" + lists.permalinkKeys.routinglang + "=" + userOptions.routinglang;
       if (userOptions.units !== undefined)
         link += "&" + lists.permalinkKeys.units + "=" + userOptions.units;
-      // This timeout is neccessariliy needed to update the permalink on router reuse !!!
+      // This timeout is necessarily needed to update the permalink on router reuse !!!
       let skip_segments = [];
       if (latLngs) {
         for (let idx in waypoints) {

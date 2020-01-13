@@ -55,11 +55,14 @@ angular.module("orsApp.ors-header", []).component("orsHeader", {
       ctrl.presetEndpoints = fill => {
         if (fill === "local") {
           angular.forEach(Object.keys(ctrl.currentOptions.env), key => {
-            ctrl.envBase = "http://localhost:8082/openrouteservice-4.5.0";
-            ctrl.currentOptions.env[key] =
-              key === "directions"
-                ? ctrl.envBase + "/routes"
-                : ctrl.envBase + "/" + key; // backend directions endpoint is called routes...
+            ctrl.envBase = "http://localhost:8082/ors/v2";
+            ctrl.currentOptions.env[key] = [
+              "directions",
+              "matrix",
+              "isochrones"
+            ].includes(key)
+              ? ctrl.envBase + "/" + key
+              : "https://api.openrouteservice.org/" + key;
           });
         } else if (fill === "api") {
           angular.forEach(Object.keys(ctrl.currentOptions.env), key => {
