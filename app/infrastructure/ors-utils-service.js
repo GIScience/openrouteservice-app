@@ -363,6 +363,14 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
           };
         }
       }
+      if (subgroup === "Pedestrian") {
+        if (settings.profile.options.green) {
+          options.profile_params.weightings.green = settings.profile.options.green
+        }
+        if (settings.profile.options.quiet) {
+          options.profile_params.weightings.quiet = settings.profile.options.quiet
+        }
+      }
       // if avoid area polygon
       if (
         settings.avoidable_polygons &&
