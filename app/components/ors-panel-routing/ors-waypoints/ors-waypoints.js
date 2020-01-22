@@ -35,10 +35,13 @@ angular
         ctrl.$onInit = () => {
           /** If waypoints list is empty initialize new waypoints. */
           ctrl.waypoints = orsSettingsFactory.getWaypoints();
-          if (ctrl.waypoints.length == 0) {
+          if (ctrl.waypoints.length === 0) {
             ctrl.waypoints = orsSettingsFactory.initWaypoints(2);
           }
           ctrl.showAdd = true;
+          ctrl.roundTrip =
+            Object.entries(orsSettingsFactory.getActiveOptions().round_trip)
+              .length === 0;
         };
         // ctrl.$onChanges = function(changesObj) {
         //     console.log(changesObj)
@@ -51,7 +54,7 @@ angular
         ctrl.collapsed = false;
         ctrl.collapseIcon = "fa fa-chevron-down";
         ctrl.collapse = () => {
-          ctrl.collapsed = ctrl.collapsed === true ? false : true;
+          ctrl.collapsed = ctrl.collapsed !== true;
           if (ctrl.collapsed === true) {
             ctrl.sortableOptions.disabled = true;
             ctrl.collapseIcon = "fa fa-chevron-right";
@@ -68,11 +71,7 @@ angular
         ctrl.showViapoints = idx => {
           if (ctrl.collapsed === true) {
             if (ctrl.waypoints.length > 2) {
-              if (idx == 0) {
-                return true;
-              } else {
-                return false;
-              }
+              return idx === 0;
             }
           } else {
             return false;
@@ -83,12 +82,8 @@ angular
          * @param {number} The idx.
          */
         ctrl.collapseWp = idx => {
-          if (ctrl.collapsed == true) {
-            if (idx == 0 || idx == ctrl.waypoints.length - 1) {
-              return true;
-            } else {
-              return false;
-            }
+          if (ctrl.collapsed === true) {
+            return idx === 0 || idx === ctrl.waypoints.length - 1;
           } else {
             return true;
           }
@@ -100,8 +95,8 @@ angular
          */
         ctrl.deleteWaypoint = idx => {
           /** is this waypoint set, if so fire request and update route **/
-          let toggleRequest = ctrl.waypoints[idx]._set == 1 ? true : false;
-          if (ctrl.waypoints.length == 2) {
+          let toggleRequest = ctrl.waypoints[idx]._set === 1;
+          if (ctrl.waypoints.length === 2) {
             let wp = orsObjectsFactory.createWaypoint("", new L.latLng());
             ctrl.waypoints[idx] = wp;
           } else {
@@ -116,7 +111,7 @@ angular
           ctrl.waypoints.reverse();
           orsSettingsFactory.setWaypoints(ctrl.waypoints);
         };
-        /** Resets waypoints to emptry start and end. */
+        /** Resets waypoints to empty start and end. */
         ctrl.resetWaypoints = () => {
           orsRouteService.resetRoute();
           ctrl.waypoints = orsSettingsFactory.initWaypoints(2);
@@ -128,7 +123,7 @@ angular
           ctrl.waypoints.splice(ctrl.waypoints.length - 1, 0, wp);
           orsSettingsFactory.setWaypoints(ctrl.waypoints, false);
         };
-        /** If dropdown of addresses is openend once again and address is changed. */
+        /** If dropdown of addresses is opened once again and address is changed. */
         ctrl.addressChanged = () => {
           orsSettingsFactory.setWaypoints(ctrl.waypoints, true);
         };

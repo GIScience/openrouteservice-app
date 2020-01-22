@@ -86,6 +86,11 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
     orsSettingsFactory.getActiveOptions = () => {
       return orsSettingsFactory[currentSettingsObj].getValue().profile.options;
     };
+    /**
+     * Sets active options and can directly fire a request
+     * @param options
+     * @param fireRequest
+     */
     orsSettingsFactory.setActiveOptions = (options, fireRequest) => {
       orsSettingsFactory[
         currentSettingsObj
@@ -219,7 +224,18 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
     };
     /** Subscription function to current routing settings */
     orsSettingsFactory.routingSettingsSubject.subscribe(settings => {
-      const isRoutePresent = orsSettingsFactory.handleRoutePresent(settings, 2);
+      // if a roundtrip should be generated, a route is present with only one waypoint
+      let wpsNeededForRoute =
+        settings.profile &&
+        settings.profile.options &&
+        settings.profile.options.round_trip &&
+        Object.entries(settings.profile.options.round_trip).length !== 0
+          ? 1
+          : 2;
+      const isRoutePresent = orsSettingsFactory.handleRoutePresent(
+        settings,
+        wpsNeededForRoute
+      );
       if (isRoutePresent) {
         orsSettingsFactory.requestSubject.onNext(true);
         /** Cancel outstanding requests */
@@ -486,7 +502,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
       set.profile.type = currentProfile.type;
       /** Fire a new request if on route. */
       const isAaPanel =
-        orsSettingsFactory.ngRouteSubject.getValue() === "reach" ? true : false;
+        orsSettingsFactory.ngRouteSubject.getValue() === "reach";
       if (!isAaPanel) orsSettingsFactory[currentSettingsObj].onNext(set);
     };
     /**

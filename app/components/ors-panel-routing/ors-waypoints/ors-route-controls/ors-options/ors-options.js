@@ -4,7 +4,8 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
   bindings: {
     activeSubgroup: "<",
     activeProfile: "<",
-    showOptions: "<"
+    showOptions: "<",
+    roundTrip: "=?"
   },
   controller: [
     "orsSettingsFactory",
@@ -38,7 +39,6 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
       ctrl.$onInit = () => {
         /** This is a reference of the settings object, if we change here, it is updated in settings */
         ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
-
         if (!ctrl.carBrands) {
           ctrl.initOFS();
         }
@@ -72,6 +72,119 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
               ctrl.changeOptions();
             }
           }
+        };
+        // Set round trip settings from permalink if available
+        ctrl.roundTripOptions =
+          Object.entries(ctrl.currentOptions.round_trip).length !== 0;
+        ctrl.roundTrip = ctrl.roundTripOptions;
+        ctrl.waypoints = orsSettingsFactory.getWaypoints();
+        if (ctrl.roundTrip && ctrl.waypoints.length > 1) {
+          ctrl.cachedWayPoints = ctrl.waypoints;
+          ctrl.waypoints = [ctrl.cachedWayPoints.shift()];
+          orsSettingsFactory.setWaypoints(ctrl.waypoints);
+        }
+        let {
+          length: round_length,
+          points: round_points,
+          seed: round_seed
+        } = ctrl.currentOptions.round_trip;
+        ctrl.roundTripSeed = {
+          min: round_seed || 0,
+          max: round_seed || 0,
+          value: round_seed || 0
+        };
+        /**
+         * Called when checking the roundtrip checkbox.
+         * Event is true when checked & false when unchecked.
+         * Unnecessary waypoints are stored in ctrl.chachedWayPoints and used again when switching
+         * back to normal routing.
+         * @param event
+         */
+        ctrl.toggleRoundTrip = event => {
+          if (event) {
+            ctrl.currentOptions.round_trip = {
+              length: ctrl.roundTripLengthSlider.value,
+              points: ctrl.roundTripPointsSlider.value,
+              seed: ctrl.roundTripSeed.value
+            };
+            ctrl.cachedWayPoints = orsSettingsFactory.getWaypoints();
+            ctrl.waypoints = [ctrl.cachedWayPoints.shift()];
+            ctrl.changeOptions();
+            orsSettingsFactory.setWaypoints(ctrl.waypoints);
+          } else {
+            if (ctrl.cachedWayPoints) {
+              ctrl.waypoints = ctrl.waypoints
+                ? ctrl.waypoints.concat(ctrl.cachedWayPoints)
+                : ctrl.cachedWayPoints;
+            } else {
+              ctrl.waypoints.push(
+                orsObjectsFactory.createWaypoint("", false, 0)
+              );
+            }
+            ctrl.currentOptions.round_trip = {};
+            ctrl.changeOptions();
+            orsSettingsFactory.setWaypoints(ctrl.waypoints);
+          }
+        };
+
+        ctrl.roundTripLengthSlider = {
+          value: round_length || ctrl.optionList.roundTrip.length.preset,
+          options: {
+            floor: ctrl.optionList.roundTrip.length.min,
+            ceil: ctrl.optionList.roundTrip.length.max,
+            step: 1000,
+            precision: 1,
+            translate: value => {
+              return value / 1000 + " <b>km</b>";
+            },
+            onEnd: () => {
+              if (ctrl.currentOptions.round_trip) {
+                ctrl.currentOptions.round_trip.length =
+                  ctrl.roundTripLengthSlider.value;
+              } else {
+                ctrl.currentOptions.round_trip = {
+                  length: ctrl.roundTripLengthSlider.value
+                };
+              }
+              ctrl.changeOptions();
+            }
+          }
+        };
+        ctrl.roundTripPointsSlider = {
+          value: round_points || ctrl.optionList.roundTrip.points.preset,
+          options: {
+            floor: ctrl.optionList.roundTrip.points.min,
+            ceil: ctrl.optionList.roundTrip.points.max,
+            precision: 1,
+            translate: value => {
+              return value + "";
+            },
+            onEnd: () => {
+              if (ctrl.currentOptions.round_trip) {
+                ctrl.currentOptions.round_trip.points =
+                  ctrl.roundTripPointsSlider.value;
+              } else {
+                ctrl.currentOptions.round_trip = {
+                  points: ctrl.roundTripPointsSlider.value
+                };
+              }
+              ctrl.changeOptions();
+            }
+          }
+        };
+        /**
+         * Simple logic to handle the seed parameter.
+         * Moving the seed over the maximum seed value increases it.
+         * Max and Min values are for returning to previous randomization
+         * @param i
+         */
+        ctrl.moveSeed = i => {
+          ctrl.roundTripSeed.value += i;
+          if (ctrl.roundTripSeed.value > ctrl.roundTripSeed.max) {
+            ctrl.roundTripSeed.max += i;
+          }
+          ctrl.currentOptions.round_trip.seed = ctrl.roundTripSeed.value;
+          ctrl.changeOptions();
         };
         ctrl.greenActive = false;
         ctrl.toggleGreenSlider = (fireRequest = true) => {

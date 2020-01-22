@@ -18,6 +18,70 @@
         </div>
     </div>
 </div>
+<div class="options-box" ng-if="$ctrl.routing">
+    <div class="pointer" ng-click="$ctrl.roundTripOptions = !$ctrl.roundTripOptions">
+        <i ng-class="$ctrl.getClass($ctrl.roundTripOptions)">
+        </i>
+        <span ng-bind-html="('ROUNDTRIP' | translate)">
+        </span>
+    </div>
+    <div class="collapsable" ng-class="{ showMe: $ctrl.roundTripOptions }">
+        <div class="ui checkbox ors-options-checkbox">
+            <input id="roundTrip" name="orsRoundTrip" ng-change="$ctrl.toggleRoundTrip($ctrl.roundTrip)" ng-model="$ctrl.roundTrip" type="checkbox">
+            <label for="roundTrip" ng-bind-html="('ROUNDTRIP_DO' | translate)">
+            </label>
+            </input>
+        </div>
+        <ul class="ors-options-menu" ng-if="$ctrl.roundTrip">
+            <li>
+                <div class="ui label tiny flleft">
+                    <span ng-bind-html="('ROUNDTRIP_LENGTH' | translate)">
+                    </span>
+                </div>
+                <rzslider rz-slider-model="$ctrl.roundTripLengthSlider.value" rz-slider-options="$ctrl.roundTripLengthSlider.options">
+                </rzslider>
+            </li>
+            <li>
+                <div class="ui label tiny flleft">
+                    <span ng-bind-html="('ROUNDTRIP_ROUNDNESS' | translate)">
+                    </span>
+                </div>
+                <rzslider rz-slider-model="$ctrl.roundTripPointsSlider.value" rz-slider-options="$ctrl.roundTripPointsSlider.options">
+                </rzslider>
+            </li>
+            <li>
+                <span>
+                    <button ng-click="$ctrl.moveSeed(1)"
+                            class="tiny teal ui button">
+                        <i class="fa fa-circle-o-notch">
+                        </i>
+                        <span ng-bind-html="  ('ROUNDTRIP_RANDOMIZE' | translate)" class="ng-binding"></span>
+                    </button>
+                </span>
+                <span ng-if="$ctrl.roundTripSeed.value !== $ctrl.roundTripSeed.min"
+                      tooltip-side="top"
+                      tooltip-template="{{('ROUNDTRIP_PREVIOUS' | translate)}}"
+                      tooltips="">
+                    <button class="ors-controls-button"
+                            ng-click="$ctrl.moveSeed(-1)">
+                        <i class="fa fa-chevron-left">
+                        </i>
+                    </button>
+                </span>
+                <span ng-if="$ctrl.roundTripSeed.value !== $ctrl.roundTripSeed.max"
+                      tooltip-side="top"
+                      tooltip-template="{{('ROUNDTRIP_NEXT' | translate)}}"
+                      tooltips="">
+                    <button class="ors-controls-button"
+                            ng-click="$ctrl.moveSeed(1)">
+                        <i class="fa fa-chevron-right">
+                        </i>
+                    </button>
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>
 <div class="options-box" ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'Bicycle' || $ctrl.activeSubgroup == 'Wheelchair' || $ctrl.activeSubgroup == 'HeavyVehicle' || $ctrl.activeSubgroup == 'Pedestrian'">
     <div class="pointer" ng-click="avoidablesOptions = !avoidablesOptions">
         <i ng-class="$ctrl.getClass(avoidablesOptions)">

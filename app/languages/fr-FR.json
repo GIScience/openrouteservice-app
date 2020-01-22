@@ -222,5 +222,12 @@
     "_FOR": "Pour",
     "WHEELCHAIR_FLAG": "(Europe only)",
     "ADDRESSES_HINT": "Search small to large for best results (e.g. teststreet 2 templatetown fakecountry)",
-    "ADD_DIRECT": "Add as direct point"
+    "ADD_DIRECT": "Add as direct point",
+    "ROUNDTRIP_LENGTH": "Approximate length",
+    "ROUNDTRIP_ROUNDNESS": "Roundness",
+    "ROUNDTRIP_RANDOMIZE": "Randomize",
+    "ROUNDTRIP_PREVIOUS": "Previous round trip",
+    "ROUNDTRIP_NEXT": "Next round trip",
+    "ROUNDTRIP": "Round trip (experimental)",
+    "ROUNDTRIP_DO": "Do round trip"
 }

@@ -11,7 +11,8 @@ angular.module("orsApp.ors-waypoint", []).component("orsWaypoint", {
     showAdd: "=",
     addresses: "<",
     showGeocodingPanel: "=",
-    showGeocodingPanelIdx: "="
+    showGeocodingPanelIdx: "=",
+    roundTrip: "<"
   },
   controller: [
     "orsSettingsFactory",

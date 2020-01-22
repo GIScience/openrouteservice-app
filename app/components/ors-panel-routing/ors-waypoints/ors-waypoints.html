@@ -3,7 +3,7 @@
 </div>
 <div ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.waypoints" class="ors-wp-list">
      <div ng-repeat="waypoint in $ctrl.waypoints" ng-show="$ctrl.collapseWp($index)" class="ors-wp-container">
-     	<ors-waypoint idx="$index" on-delete="$ctrl.deleteWaypoint(idx)" waypoint="waypoint" waypoints="$ctrl.waypoints" show-add="$ctrl.showAdd" show-geocoding-panel="$ctrl.showGeocodingPanel" show-geocoding-panel-idx="$ctrl.showGeocodingPanelIdx">
+     	<ors-waypoint round-trip="$ctrl.roundTrip" idx="$index" on-delete="$ctrl.deleteWaypoint(idx)" waypoint="waypoint" waypoints="$ctrl.waypoints" show-add="$ctrl.showAdd" show-geocoding-panel="$ctrl.showGeocodingPanel" show-geocoding-panel-idx="$ctrl.showGeocodingPanelIdx">
 		</ors-waypoint>
 		<div class="ui horizontal divider ors-wp-divider" ng-show="$ctrl.showViapoints($index)">
 		    <a class="ui circular label ors-label">
@@ -13,6 +13,6 @@
 	</div>
 </div>
 <div class="bottom-border"></div>
-<ors-route-controls show-add="$ctrl.showAdd" on-add="$ctrl.addWaypoint()" on-reverse="$ctrl.reverseWaypoints()" on-reset="$ctrl.resetWaypoints()" on-waypoints-changed="$ctrl.waypointsChanged()" active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup">
+<ors-route-controls show-add="$ctrl.showAdd" on-add="$ctrl.addWaypoint()" on-reverse="$ctrl.reverseWaypoints()" on-reset="$ctrl.resetWaypoints()" on-waypoints-changed="$ctrl.waypointsChanged()" active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup" round-trip="$ctrl.roundTrip">
 </ors-route-controls>
 <div class="bottom-border"></div>

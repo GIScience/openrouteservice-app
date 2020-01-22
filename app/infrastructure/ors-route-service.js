@@ -531,6 +531,9 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
         geometryRaw: coordinates,
         properties: { extras: extras }
       } = responseObject;
+      if (!coordinates && responseObject.geometry) {
+        coordinates = responseObject.geometry;
+      }
       if (extras) {
         Object.entries(extras).forEach(([extraKey, extraData]) => {
           let features = [];

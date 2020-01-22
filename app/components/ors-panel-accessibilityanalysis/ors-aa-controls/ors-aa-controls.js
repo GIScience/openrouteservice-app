@@ -19,7 +19,7 @@ angular.module("orsApp.ors-aa-controls", []).component("orsAaControls", {
         ctrl.onCalculate();
       };
       ctrl.callOptions = () => {
-        ctrl.showOptions = ctrl.showOptions === false ? true : false;
+        ctrl.showOptions = ctrl.showOptions === false;
       };
       ctrl.$onInit = () => {
         ctrl.showOptions = true;

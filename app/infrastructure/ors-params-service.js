@@ -20,7 +20,8 @@ angular.module("orsApp.params-service", []).factory("orsParamsService", [
           options: {
             analysis_options: {},
             avoidables: {},
-            borders: {}
+            borders: {},
+            round_trip: {}
           }
         }
       };
@@ -122,6 +123,14 @@ angular.module("orsApp.params-service", []).factory("orsParamsService", [
         if (["method", "isovalue", "isointerval"].includes(key)) {
           settings.profile.options.analysis_options[key] = value;
         }
+
+        if (["round_length", "round_points", "round_seed"].includes(key)) {
+          value *= key === "round_length" ? 1000 : 1;
+          settings.profile.options.round_trip[key.split("_")[1]] = parseInt(
+            value
+          );
+        }
+
         if (key === "reverseflow") {
           settings.profile.options.analysis_options.reverseflow = orsParamsService.parseStringToBool(
             value

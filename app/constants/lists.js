@@ -232,6 +232,21 @@ angular.module("orsApp").constant("lists", {
         shortValue: "2"
       }
     },
+    roundTrip: {
+      length: {
+        min: 1000,
+        max: 100000,
+        preset: 10000
+      },
+      points: {
+        min: 3,
+        max: 30,
+        preset: 10
+      },
+      seed: {
+        preset: 0
+      }
+    },
     borders: {
       all: {
         subgroups: ["Car", "HeavyVehicle"]
@@ -592,6 +607,9 @@ angular.module("orsApp").constant("lists", {
     lat: "n1",
     lng: "n2",
     zoom: "n3",
+    round_length: "r1",
+    round_points: "r2",
+    round_seed: "r3",
     all: "o1",
     controlled: "o2",
     country: "o3",

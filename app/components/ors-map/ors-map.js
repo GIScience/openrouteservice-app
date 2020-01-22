@@ -265,7 +265,7 @@ angular.module("orsApp").directive("orsMap", () => {
               function() {
                 let orsLeft = document.getElementsByClassName("ors-left");
                 orsLeft = angular.element(orsLeft);
-                if (orsLeft.css("display") == "none") {
+                if (orsLeft.css("display") === "none") {
                   orsLeft.show();
                 } else {
                   orsLeft.hide();
@@ -1063,9 +1063,10 @@ angular.module("orsApp").directive("orsMap", () => {
           const isDistanceMarkers =
             orsSettingsFactory.getUserOptions().distanceMarkers === true;
           let polyLine = L.polyline(actionPackage.geometry, {
-            index: !(actionPackage.featureId === undefined)
-              ? actionPackage.featureId
-              : null,
+            index:
+              actionPackage.featureId !== undefined
+                ? actionPackage.featureId
+                : null,
             interactive: false,
             distanceMarkers: {
               lazy: !isDistanceMarkers,
@@ -1089,9 +1090,10 @@ angular.module("orsApp").directive("orsMap", () => {
         $scope.addPolyline = actionPackage => {
           $scope.mapModel.map.closePopup();
           const polyLine = L.polyline(actionPackage.geometry, {
-            index: !(actionPackage.featureId === undefined)
-              ? actionPackage.featureId
-              : null,
+            index:
+              actionPackage.featureId !== undefined
+                ? actionPackage.featureId
+                : null,
             interactive: true,
             distanceMarkers: {
               lazy: true

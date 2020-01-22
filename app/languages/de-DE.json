@@ -223,5 +223,12 @@
     "_FOR": "Für",
     "WHEELCHAIR_FLAG": "(nur Europa)",
     "ADDRESSES_HINT": "Für beste Ergebnisse formulieren Sie Ihre Suchanfrage von klein nach groß (bspw. Musterstraße 1 Musterstadt Musterland)",
-    "ADD_DIRECT": "Als direkten Wegpunkt hinzufügen"
+    "ADD_DIRECT": "Als direkten Wegpunkt hinzufügen",
+    "ROUNDTRIP_LENGTH": "Ungefähre Länge",
+    "ROUNDTRIP_ROUNDNESS": "Kreisförmigkeit",
+    "ROUNDTRIP_RANDOMIZE": "Randomisieren",
+    "ROUNDTRIP_PREVIOUS": "Letzter Rundweg",
+    "ROUNDTRIP_NEXT": "Nächster Rundweg",
+    "ROUNDTRIP": "Rundweg (experimentell)",
+    "ROUNDTRIP_DO": "Rundweg generieren"
 }

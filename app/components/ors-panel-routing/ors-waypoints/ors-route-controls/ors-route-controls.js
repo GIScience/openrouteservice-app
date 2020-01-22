@@ -34,7 +34,7 @@ angular
           ctrl.onWaypointsChanged();
         };
         ctrl.callOptions = () => {
-          ctrl.showOptions = ctrl.showOptions == false ? true : false;
+          ctrl.showOptions = ctrl.showOptions === false;
         };
         /**
          * Called when clicking the zoom button. Forwards zoom command to mapservice
@@ -57,6 +57,7 @@ angular
       onWaypointsChanged: "&",
       showAdd: "=",
       activeSubgroup: "<",
-      activeProfile: "<"
+      activeProfile: "<",
+      roundTrip: "="
     }
   });

@@ -365,13 +365,20 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
       }
       if (subgroup === "Pedestrian") {
         if (settings.profile.options.green) {
-          options.profile_params.weightings.green = settings.profile.options.green
+          options.profile_params.weightings.green =
+            settings.profile.options.green;
         }
         if (settings.profile.options.quiet) {
-          options.profile_params.weightings.quiet = settings.profile.options.quiet
+          options.profile_params.weightings.quiet =
+            settings.profile.options.quiet;
         }
       }
-      // if avoid area polygon
+      if (
+        settings.profile.options.round_trip &&
+        Object.entries(settings.profile.options.round_trip).length !== 0
+      ) {
+        options.round_trip = settings.profile.options.round_trip;
+      }
       if (
         settings.avoidable_polygons &&
         settings.avoidable_polygons.coordinates.length > 0
@@ -737,6 +744,11 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
                 }
               }
             }
+            if (lists.optionList.roundTrip[o]) {
+              link += "&" + lists.permalinkKeys["round_" + o] + "=";
+              link +=
+                obj[o] >= 1000 ? (obj[o] / 1000).toString() : obj[o].toString();
+            }
           }
         }
       }
@@ -759,6 +771,12 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
       }
       if (waypointsSet)
         link += lists.permalinkKeys.wps + "=" + latLngs.join(",");
+      // When reloading the page a second empty waypoint is expected
+      if (
+        settings.profile.options.round_trip &&
+        Object.entries(settings.profile.options.round_trip).length !== 0
+      )
+        link += ",null,null";
       getProp(profile);
       if (userOptions.routinglang !== undefined)
         link +=
@@ -784,6 +802,24 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
       $timeout(function() {
         $location.search(link);
       });
+    };
+    /**
+     * Recursively deletes key-value-pairs with empty objects from a given object
+     * E.g. {'a':{}, 'b':1} -> {'b':1}
+     * @param obj
+     */
+    orsUtilsService.deleteEmptyObjects = obj => {
+      for (let k in obj) {
+        if (!obj[k] || typeof obj[k] !== "object") {
+          continue; // If null or not an object, skip to the next iteration
+        }
+
+        // The property is an object
+        orsUtilsService.deleteEmptyObjects(obj[k]); // <-- Make a recursive call on the nested object
+        if (Object.keys(obj[k]).length === 0) {
+          delete obj[k]; // The object had no properties, so delete that property
+        }
+      }
     };
     return orsUtilsService;
   }

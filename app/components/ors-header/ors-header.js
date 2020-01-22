@@ -67,7 +67,9 @@ angular.module("orsApp.ors-header", []).component("orsHeader", {
         } else if (fill === "api") {
           angular.forEach(Object.keys(ctrl.currentOptions.env), key => {
             ctrl.envBase = "https://api.openrouteservice.org";
-            ctrl.currentOptions.env[key] = ctrl.envBase + "/" + key;
+            ctrl.currentOptions.env[key] = ctrl.envBase + "/";
+            ctrl.currentOptions.env[key] +=
+              key === "directions" ? "v2/" + key : key;
           });
         } else if (fill === "default") {
           angular.forEach(Object.keys(ctrl.currentOptions.env), key => {
