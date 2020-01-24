@@ -12,6 +12,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed-->
 
+## [v0.4.1] - 2020-01-24
+
+### Added
+- experimental round trip functionality
+  - round trips can be made from one starting point by choosing the
+    approximate length (`options.round_trip.length`) of the trip (may vary greatly!)
+  - the roundness sets the `options.round_trip.points` api parameter
+    and defines the number of helper points generated
+  - the randomization sets the `options.round_trip.seed` api parameter
+    which randomly defines the direction in which the helper points
+    are generated
+
+### Fixed
+- gpx export with ors API ([#308](https://github.com/GIScience/openrouteservice-app/issues/308))
+- green & quiet routing ([#310](https://github.com/GIScience/openrouteservice-app/issues/310))
+
+### Changed
+- endpoints for local development to `http://localhost:8082/ors(/v2)`
+
 ## [v0.4.0] - 2020-01-08
 
 ### Added
