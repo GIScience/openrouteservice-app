@@ -265,17 +265,16 @@ module.exports = function(grunt) {
                 constants: {
                     ENV: {
                         name: "local",
-                        // change name_of_war_archive to the name of the ors backend war version you are using (e.g. openrouteservice-4.4.0)
                         geocode:
-                            "http://localhost:8082/name_of_war_archive/geocode",
+                            "http://localhost:8082/ors/geocode",
                         directions:
-                            "http://localhost:8082/name_of_war_archive/routes",
+                            "http://localhost:8082/ors/v2/directions",
                         isochrones:
-                            "http://localhost:8082/name_of_war_archive/isochrones",
+                            "http://localhost:8082/ors/isochrones",
                         matrix:
-                            "http://localhost:8082/name_of_war_archive/matrix",
+                            "http://localhost:8082/ors/matrix",
                         pois:
-                            "http://localhost:8082/name_of_war_archive/locations",
+                            "https://api.openrouteservice.org/pois",
                         shortenlink: "https://api-ssl.bitly.com/v3/shorten",
                         mapsurfer:
                             "https://api.openrouteservice.org/mapsurfer/{z}/{x}/{y}.png",
