@@ -76,6 +76,91 @@ angular
         );
       };
 
+      // create a simple Course TCX file (MARQ24)
+      // see https://www8.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd
+      let totcx = (name, metadata, speedInKmh) => {
+        var tcx = {
+          TrainingCenterDatabase: {
+            "@xsi:schemaLocation":
+              "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd",
+            "@xmlns":
+              "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2",
+            "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+            Courses: { Course: [] }
+          }
+        };
+
+        var speed = speedInKmh / 3.6; // need to convert in m per sec
+        var coursObj = {
+          Name: name,
+          Lap: {
+            TotalTimeSeconds: "",
+            DistanceMeters: metadata[metadata.length - 1].distance,
+            BeginPosition: {
+              LatitudeDegrees: metadata[0].coords[0],
+              LongitudeDegrees: metadata[0].coords[1]
+            },
+            EndPosition: {
+              LatitudeDegrees: metadata[metadata.length - 1].coords[0],
+              LongitudeDegrees: metadata[metadata.length - 1].coords[1]
+            },
+            Intensity: "Active"
+          },
+          Track: { Trackpoint: [] },
+          Creator: { Name: "OpenRouteService.org" }
+        };
+
+        var lastDistance = 0;
+        var totalTimeInSec = 0;
+        metadata.forEach(function meta(data, i) {
+          if (data.distance !== undefined) {
+            var deltaDistanceInMeter = data.distance - lastDistance;
+            var timeDelta = deltaDistanceInMeter / speed;
+            totalTimeInSec = totalTimeInSec + timeDelta;
+
+            var hour = parseInt(totalTimeInSec / 3600);
+            var totalTimeInSecSubHour = totalTimeInSec - hour * 3600;
+            var hourS = hour + "";
+
+            var minS = parseInt(totalTimeInSecSubHour / 60) + "";
+            var secS = parseInt(totalTimeInSecSubHour % 60) + "";
+            var msS = (totalTimeInSecSubHour % 60).toFixed(3) + "";
+
+            if (hourS.length == 1) {
+              hourS = "0" + hourS;
+            }
+            if (minS.length == 1) {
+              minS = "0" + minS;
+            }
+            if (secS.length == 1) {
+              msS = "0" + msS;
+            }
+            var tp = {
+              Time: "2010-01-01T" + hourS + ":" + minS + ":" + msS + "Z",
+              Position: {
+                LatitudeDegrees: data.coords[0],
+                LongitudeDegrees: data.coords[1]
+              }
+            };
+            if (
+              data.heights !== undefined &&
+              data.heights.height !== undefined
+            ) {
+              tp.AltitudeMeters = data.heights.height;
+            }
+            tp.DistanceMeters = data.distance;
+            lastDistance = data.distance;
+            coursObj.Track.Trackpoint.push(tp);
+          }
+        });
+        coursObj.Lap.TotalTimeSeconds = totalTimeInSec.toFixed(1);
+        tcx.TrainingCenterDatabase.Courses.Course.push(coursObj);
+
+        JXON.config({ attrPrefix: "@" });
+        var tcx_str = JXON.stringify(tcx);
+        return '<?xml version="1.0" encoding="UTF-8"?>' + tcx_str;
+      };
+
       let orsExportFactory = {};
       /**
        * Export any vector element on the map to file
@@ -87,6 +172,7 @@ angular
        */
       orsExportFactory.exportFile = (
         geometry,
+        metadata,
         geomType,
         options,
         format,
@@ -109,6 +195,9 @@ angular
           case "kml":
             geojsonData = L.polyline(geometry).toGeoJSON();
             exportData = tokml(geojsonData);
+            break;
+          case "tcx":
+            exportData = totcx(filename, metadata, options.speedInKmh);
             break;
           case "rawjson":
             // removing nodes from the geometry data that is for sure not needed
