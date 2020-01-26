@@ -86,7 +86,23 @@ angular
             "@xmlns":
               "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2",
             "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
-            Courses: { Course: [] }
+            Courses: { Course: [] },
+            Author: {
+              "@xsi:type": "Application_t",
+              Name: "OpenRouteService.org",
+              Build: {
+                Version: {
+                  VersionMajor: "0",
+                  VersionMinor: "4",
+                  BuildMajor: "1",
+                  BuildMinor: "0"
+                },
+                Type: "Release",
+                Time: "Jan 26 2020, 10:00:00",
+                Builder: "mcp"
+              },
+              LangID: "DE", PartNumber: "ORS-00410-DE" // The formatted XXX-XXXXX-XX Garmin part number of a PC application
+            }
           }
         };
 
@@ -106,24 +122,7 @@ angular
             },
             Intensity: "Active"
           },
-          Track: { Trackpoint: [] },
-          Creator: {
-            "@xsi:type": "Application_t",
-            Name: "OpenRouteService.org",
-            Build: {
-              Version: {
-                VersionMajor: "0",
-                VersionMinor: "4",
-                BuildMajor: "1",
-                BuildMinor: "0"
-              },
-              Type: "Release",
-              Time: "Jan 26 2020, 10:00:00",
-              Builder: "mcp"
-            },
-            LangID: "DE",
-            PartNumber: "ORS-00410-DE" // The formatted XXX-XXXXX-XX Garmin part number of a PC application
-          }
+          Track: { Trackpoint: [] }
         };
 
         var lastDistance = 0;
