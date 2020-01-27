@@ -81,8 +81,8 @@ angular
       let toTcx = (name, speedInKmPerH) => {
         let version = "0.4.1"
         let pointInformation = orsRouteService.data.features[orsRouteService.getCurrentRouteIdx()].point_information
-        let appVersion = version.split('.')
-        let garminPartNumber = `ORS-0{$appVersion[0]}{$appVersion[1]}{$appVersion[2]}0-DE`
+        let [majorV, minorV, patchV] = version.split('.')
+        let garminPartNumber = `ORS-0${majorV}${minorV}${patchV}0-DE`
         let tcx = {
           TrainingCenterDatabase: {
             "@xsi:schemaLocation":
@@ -96,9 +96,9 @@ angular
               Name: "openrouteservice.org",
               Build: {
                 Version: {
-                  VersionMajor: appVersion[0],
-                  VersionMinor: appVersion[1],
-                  BuildMajor: appVersion[2],
+                  VersionMajor: majorV,
+                  VersionMinor: minorV,
+                  BuildMajor: patchV,
                   BuildMinor: "0"
                 },
                 Type: "Release",
