@@ -78,8 +78,12 @@ angular
 
       // create a simple Course TCX file (MARQ24)
       // see https://www8.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd
-      let totcx = (name, metadata, speedInKmh) => {
-        var tcx = {
+      let toTcx = (name, speedInKmPerH) => {
+        let version = "0.4.1"
+        let pointInformation = orsRouteService.data.features[orsRouteService.getCurrentRouteIdx()].point_information
+        let appVersion = version.split('.')
+        let garminPartNumber = `ORS-0{$appVersion[0]}{$appVersion[1]}{$appVersion[2]}0-DE`
+        let tcx = {
           TrainingCenterDatabase: {
             "@xsi:schemaLocation":
               "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd",
@@ -89,90 +93,70 @@ angular
             Courses: { Course: [] },
             Author: {
               "@xsi:type": "Application_t",
-              Name: "OpenRouteService.org",
+              Name: "openrouteservice.org",
               Build: {
                 Version: {
-                  VersionMajor: "0",
-                  VersionMinor: "4",
-                  BuildMajor: "1",
+                  VersionMajor: appVersion[0],
+                  VersionMinor: appVersion[1],
+                  BuildMajor: appVersion[2],
                   BuildMinor: "0"
                 },
                 Type: "Release",
                 Time: "Jan 26 2020, 10:00:00",
                 Builder: "mcp"
               },
-              LangID: "DE", PartNumber: "ORS-00410-DE" // The formatted XXX-XXXXX-XX Garmin part number of a PC application
+              LangID: "DE", PartNumber: garminPartNumber // The formatted XXX-XXXXX-XX Garmin part number of a PC application
             }
           }
         };
 
-        var speed = speedInKmh / 3.6; // need to convert in m per sec
-        var coursObj = {
+        let speedInMPerS = speedInKmPerH / 3.6; // need to convert in m per sec
+        let courseObj = {
           Name: name,
           Lap: {
             TotalTimeSeconds: "",
-            DistanceMeters: metadata[metadata.length - 1].distance,
+            DistanceMeters: pointInformation[pointInformation.length - 1].distance,
             BeginPosition: {
-              LatitudeDegrees: metadata[0].coords[0],
-              LongitudeDegrees: metadata[0].coords[1]
+              LatitudeDegrees: pointInformation[0].coords[0],
+              LongitudeDegrees: pointInformation[0].coords[1]
             },
             EndPosition: {
-              LatitudeDegrees: metadata[metadata.length - 1].coords[0],
-              LongitudeDegrees: metadata[metadata.length - 1].coords[1]
+              LatitudeDegrees: pointInformation[pointInformation.length - 1].coords[0],
+              LongitudeDegrees: pointInformation[pointInformation.length - 1].coords[1]
             },
             Intensity: "Active"
           },
           Track: { Trackpoint: [] }
-        };
-
-        var lastDistance = 0;
-        var totalTimeInSec = 0;
-        metadata.forEach(function meta(data, i) {
+        }
+        let duration
+        for (const data of pointInformation) {
           if (data.distance !== undefined) {
-            var deltaDistanceInMeter = data.distance - lastDistance;
-            var timeDelta = deltaDistanceInMeter / speed;
-            totalTimeInSec = totalTimeInSec + timeDelta;
-
-            var hour = parseInt(totalTimeInSec / 3600);
-            var totalTimeInSecSubHour = totalTimeInSec - hour * 3600;
-            var hourS = hour + "";
-
-            var minS = parseInt(totalTimeInSecSubHour / 60) + "";
-            var secS = parseInt(totalTimeInSecSubHour % 60) + "";
-            var msS = (totalTimeInSecSubHour % 60).toFixed(3) + "";
-
-            if (hourS.length == 1) {
-              hourS = "0" + hourS;
-            }
-            if (minS.length == 1) {
-              minS = "0" + minS;
-            }
-            if (secS.length == 1) {
-              msS = "0" + msS;
-            }
-            var tp = {
-              Time: "2010-01-01T" + hourS + ":" + minS + ":" + msS + "Z",
+            duration = data.distance / speedInMPerS;
+            const seconds = duration.toFixed(3) || 0
+            const milliSeconds = seconds.split('.')[1] || 0
+            let durationDate = new Date(2010,0,1,0,0,seconds, milliSeconds)
+            let tp = {
+              Time: durationDate.toISOString(),
               Position: {
                 LatitudeDegrees: data.coords[0],
                 LongitudeDegrees: data.coords[1]
-              }
-            };
+              },
+              DistanceMeters: data.distance
+            }
             if (
-              data.heights !== undefined &&
+              data.heights &&
               data.heights.height !== undefined
             ) {
               tp.AltitudeMeters = data.heights.height;
             }
-            tp.DistanceMeters = data.distance;
-            lastDistance = data.distance;
-            coursObj.Track.Trackpoint.push(tp);
+            courseObj.Track.Trackpoint.push(tp);
           }
-        });
-        coursObj.Lap.TotalTimeSeconds = totalTimeInSec.toFixed(1);
-        tcx.TrainingCenterDatabase.Courses.Course.push(coursObj);
+        }
+        courseObj.Lap.TotalTimeSeconds = duration.toFixed(1);
+        tcx.TrainingCenterDatabase.Courses.Course.push(courseObj);
 
         JXON.config({ attrPrefix: "@" });
-        var tcx_str = JXON.stringify(tcx);
+        const tcx_str = JXON.stringify(tcx)
         return '<?xml version="1.0" encoding="UTF-8"?>' + tcx_str;
       };
 
@@ -187,7 +171,6 @@ angular
        */
       orsExportFactory.exportFile = (
         geometry,
-        metadata,
         geomType,
         options,
         format,
@@ -212,7 +195,7 @@ angular
             exportData = tokml(geojsonData);
             break;
           case "tcx":
-            exportData = totcx(filename, metadata, options.speedInKmh);
+            exportData = toTcx(filename, options.speedInKmh);
             break;
           case "rawjson":
             // removing nodes from the geometry data that is for sure not needed

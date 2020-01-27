@@ -99,7 +99,6 @@ angular
             speedInKmh: ctrl.speedInKmh
           };
           let currentRoute = null;
-          let currentRouteMetaData = null;
           if (ctrl.currentFileFormat === "rawjson") {
             currentRoute =
               orsRouteService.data.features[
@@ -110,16 +109,9 @@ angular
               orsRouteService.data.features[
                 orsRouteService.getCurrentRouteIdx()
               ].geometry;
-            if (ctrl.currentFileFormat === "tcx") {
-              currentRouteMetaData =
-                orsRouteService.data.features[
-                  orsRouteService.getCurrentRouteIdx()
-                ].point_information;
-            }
           }
           orsExportFactory.exportFile(
             currentRoute,
-            currentRouteMetaData,
             "linestring",
             options,
             ctrl.currentFileFormat,
