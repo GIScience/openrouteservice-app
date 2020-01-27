@@ -4,6 +4,7 @@ module.exports = function(grunt) {
         pattern: ["grunt-*", "!grunt-cli*"]
     });
     var modRewrite = require("connect-modrewrite");
+    var proxy = require("http-proxy-middleware");
     var serveStatic = require("serve-static");
     grunt.initConfig({
         copy: {
