@@ -134,14 +134,13 @@ angular
             duration = data.distance / speedInMPerS;
             const seconds = duration.toFixed(3) || 0
             const milliSeconds = seconds.split('.')[1] || 0
-            let durationDate = new Date(2010,0,1,0,0,seconds, milliSeconds)
+            let durationDate = new Date(2010,0,1,12,0,seconds, milliSeconds)
             let tp = {
               Time: durationDate.toISOString(),
               Position: {
                 LatitudeDegrees: data.coords[0],
                 LongitudeDegrees: data.coords[1]
-              },
-              DistanceMeters: data.distance
+              }
             }
             if (
               data.heights &&
@@ -149,6 +148,7 @@ angular
             ) {
               tp.AltitudeMeters = data.heights.height;
             }
+            tp.DistanceMeters = data.distance;
             courseObj.Track.Trackpoint.push(tp);
           }
         }
