@@ -11,6 +11,7 @@ angular
         ctrl.elevation = true;
         ctrl.instructions = false;
         ctrl.toGpx = true;
+        ctrl.speedInKmh = 9.5;
         ctrl.filename = "ors-export-linestring";
         ctrl.gpxOptShow = true;
         ctrl.tcxOptShow = false;
@@ -25,6 +26,10 @@ angular
           {
             text: "Keyhole Markup Language (.kml)",
             value: "kml"
+          },
+          {
+            text: "GarminTCX (.tcx)",
+            value: "tcx"
           },
           {
             text: "GeoJSON (.geojson)",
@@ -90,7 +95,8 @@ angular
           let options = {
             elevation: ctrl.elevation,
             instructions: ctrl.instructions,
-            toGpx: ctrl.toGpx
+            toGpx: ctrl.toGpx,
+            speedInKmh: ctrl.speedInKmh
           };
           let currentRoute = null;
           if (ctrl.currentFileFormat === "rawjson") {
