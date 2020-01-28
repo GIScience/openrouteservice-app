@@ -4,7 +4,6 @@ module.exports = function(grunt) {
         pattern: ["grunt-*", "!grunt-cli*"]
     });
     var modRewrite = require("connect-modrewrite");
-    var proxy = require("http-proxy-middleware");
     var serveStatic = require("serve-static");
     grunt.initConfig({
         copy: {
@@ -199,6 +198,9 @@ module.exports = function(grunt) {
                     livereload: true,
                     open: true,
                     middleware: function(connect) {
+                        // MARQ24 added proxy to avoid CORS when running OWN backend via SpringBoot
+                        // this will require the usage of NodeJS 13.x
+                        var proxy = require("http-proxy-middleware");
                         return [
                             modRewrite([
                                 "!\\.html|\\.js|\\.txt|\\.ico|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]"
@@ -211,7 +213,6 @@ module.exports = function(grunt) {
                                 "/node_modules",
                                 serveStatic("./node_modules")
                             ),
-                            // MARQ24 added proxy to avoid CORS when running OWN backend via SpringBoot
                             proxy("/ors",{ target: 'http://localhost:8082', changeOrigin: true, pathRewrite: {'^/ors/': '/' }}),
                             serveStatic("./app")
                         ];
