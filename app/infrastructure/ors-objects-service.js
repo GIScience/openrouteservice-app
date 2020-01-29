@@ -43,14 +43,23 @@ angular
        * @param {Object} style - Contains style elements.
        * @param {Object} extraInformation - TODO
        */
-      constructor(aCode, layerCode, geometry, fId, style, extraInformation) {
+      constructor(
+        aCode,
+        layerCode,
+        geometry,
+        fId,
+        style,
+        extraInformation,
+        cRI
+      ) {
         this._actionCode = aCode;
         this._package = {
           layerCode: layerCode,
           geometry: geometry,
           featureId: fId,
           style: style,
-          extraInformation: extraInformation
+          extraInformation: extraInformation,
+          currentRouteIndex: cRI
         };
       }
     }
@@ -79,7 +88,8 @@ angular
         geometry = undefined,
         featureId = undefined,
         style = undefined,
-        extraInformation = undefined
+        extraInformation = undefined,
+        currentRouteIndex = 0
       ) => {
         return new mapAction(
           actionCode,
@@ -87,7 +97,8 @@ angular
           geometry,
           featureId,
           style,
-          extraInformation
+          extraInformation,
+          currentRouteIndex
         );
       }
     };

@@ -232,5 +232,6 @@
     "ROUNDTRIP": "Rundweg (experimentell)",
     "ROUNDTRIP_DO": "Rundweg generieren",
     "PACE_SPEED_INKMH": "Geschwindigkeit in km/h",
-    "IMPORT_DEVIATION_TOLERANCE": "Abweichungstoleranz"
+    "IMPORT_DEVIATION_TOLERANCE": "Abweichungstoleranz",
+    "LOCAL_ALT_ROUTE": "Alternative route (slow!, only for routes below 100km)"
 }

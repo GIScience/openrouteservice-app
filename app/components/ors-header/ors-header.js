@@ -26,7 +26,9 @@ angular.module("orsApp.ors-header", []).component("orsHeader", {
         // ctrl.showSettings = ctrl.showDev = ctrl.editEndpoints =  true;
 
         /* initialize endpoint urls from cookies */
-        ctrl.currentOptions.env = orsCookiesFactory.getCookies().env;
+        let cookies = orsCookiesFactory.getCookies();
+        ctrl.currentOptions.env = cookies.env;
+        ctrl.currentOptions.alternativeRoutes = cookies.alternativeRoutes; //TODO set from cookies/permalink
         ctrl.setENV();
         ctrl.envBase = ctrl.currentOptions.env.directions
           .split("/")
@@ -38,6 +40,7 @@ angular.module("orsApp.ors-header", []).component("orsHeader", {
           waytype: true,
           surface: true
         };
+        ctrl.saveENV = false;
         ctrl.lists_extra_info = lists.extra_info;
         ctrl.getActiveProfile = orsSettingsFactory.getActiveProfile;
         ctrl.optionList = lists.userOptions;
@@ -97,12 +100,16 @@ angular.module("orsApp.ors-header", []).component("orsHeader", {
        * Writes the endpoint settings to app/js/config.js to take immediate effect
        */
       ctrl.setENV = () => {
-        ENV.directions = ctrl.currentOptions.env.directions;
-        ENV.isochrones = ctrl.currentOptions.env.isochrones;
-        ENV.geocode = ctrl.currentOptions.env.geocode;
-        ENV.matrix = ctrl.currentOptions.env.matrix;
-        ENV.pois = ctrl.currentOptions.env.pois;
-        ENV.fuel = ctrl.currentOptions.env.fuel;
+        for (let ep of [
+          "directions",
+          "isochrones",
+          "geocode",
+          "matrix",
+          "pois",
+          "fuel"
+        ]) {
+          ENV[ep] = ctrl.currentOptions.env[ep];
+        }
       };
       /**
        * Informs the user about changed Endpoints
@@ -120,7 +127,7 @@ fuel:            ${ENV.fuel}`);
        * Save Endpoints to cookies
        */
       ctrl.saveEndpoints = () => {
-        if (ctrl.saveCookies)
+        if (ctrl.saveENV)
           orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions);
       };
       /**
@@ -132,7 +139,7 @@ fuel:            ${ENV.fuel}`);
           .split("/")
           .slice(0, 3)
           .join("/");
-        if (ctrl.saveCookies)
+        if (ctrl.saveENV)
           orsCookiesFactory.setCookieUserOptions(ctrl.currentOptions);
       };
 
@@ -155,7 +162,7 @@ fuel:            ${ENV.fuel}`);
           $translate.use(ctrl.currentOptions.language);
         orsSettingsFactory.setUserOptions(ctrl.currentOptions);
         // if endpoints should not be saved to cookies pass current options without them
-        if (!ctrl.saveCookies) {
+        if (!ctrl.saveENV) {
           let withoutEnv = JSON.parse(JSON.stringify(ctrl.currentOptions));
           delete withoutEnv.env;
           orsCookiesFactory.setCookieUserOptions(withoutEnv);

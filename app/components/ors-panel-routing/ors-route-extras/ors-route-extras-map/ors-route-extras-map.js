@@ -16,21 +16,24 @@ angular
       function(orsRouteService) {
         let ctrl = this;
         let currentRoute = orsRouteService.data.features;
+        ctrl.calculateExtraColorSegments = () => {
+          angular.forEach(ctrl.types, function(value, key) {
+            const color = value.color;
+            angular.forEach(ctrl.types[key].intervals, function(v, k) {
+              const geom = currentRoute[ctrl.routeIndex].geometry.slice(
+                v[0],
+                v[1] + 1
+              );
+              orsRouteService.Color(geom, color);
+            });
+          });
+        };
         ctrl.$onInit = () => {
           //orsRouteService.DeColor();
           angular.forEach(ctrl.checkboxes, function(checked, idx) {
             if (ctrl.i === idx) {
               if (checked) {
-                angular.forEach(ctrl.types, function(value, key) {
-                  const color = value.color;
-                  angular.forEach(ctrl.types[key].intervals, function(v, k) {
-                    const geom = currentRoute[ctrl.routeIndex].geometry.slice(
-                      v[0],
-                      v[1] + 1
-                    );
-                    orsRouteService.Color(geom, color);
-                  });
-                });
+                ctrl.calculateExtraColorSegments();
               }
             }
           });
@@ -40,16 +43,7 @@ angular
           angular.forEach(ctrl.checkboxes, function(checked, idx) {
             if (ctrl.i === idx) {
               if (ctrl.checkboxes[ctrl.i]) {
-                angular.forEach(ctrl.types, function(value, key) {
-                  const color = value.color;
-                  angular.forEach(ctrl.types[key].intervals, function(v, k) {
-                    const geom = currentRoute[ctrl.routeIndex].geometry.slice(
-                      v[0],
-                      v[1] + 1
-                    );
-                    orsRouteService.Color(geom, color);
-                  });
-                });
+                ctrl.calculateExtraColorSegments();
               } else {
                 orsRouteService.DeColor();
               }

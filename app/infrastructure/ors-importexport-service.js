@@ -209,19 +209,13 @@ angular
             exportData = toTcx(filename, options.speedInKmh);
             break;
           case "rawjson":
-            // removing nodes from the geometry data that is for sure not needed
-            // by 3'rd party...
-            delete geometry.extras;
-            delete geometry.geometryRaw;
-            delete geometry.$$hashKey;
-
-            // MARQ24: point_information have an massive effect on the actual file size!
-            // So I am not 100% sure if this should be included or not in the exported
-            // json data - personally I do not have any need for this info on my mobile
-            // client - that's why IMHO it can/should be removed from the raw output
-            delete geometry.point_information;
-
-            exportData = JSON.stringify(geometry);
+            let jsonOutput = {
+              bbox: geometry.bbox,
+              geometry: geometry.geometry,
+              properties: geometry.properties,
+              type: geometry.type
+            };
+            exportData = JSON.stringify(jsonOutput);
             extension = ".json";
             break;
           case "geojson":

@@ -83,6 +83,14 @@
                         </label>
                     </div>
                 </div>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input data-ng-model="$ctrl.currentOptions.alternativeRoutes" id="alternativeRoutes"
+                               ng-change="$ctrl.changeOptions('alternativeRoutes')" type="checkbox">
+                        <label for="alternativeRoutes" ng-bind-html="('LOCAL_ALT_ROUTE' | translate)">
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -225,8 +233,8 @@
         <button ng-click="$ctrl.resetEndpoints(); $ctrl.showPopup()">Reset</button>
         <button ng-click="$ctrl.setENV(); $ctrl.saveEndpoints(); $ctrl.showPopup()">Change Endpoints</button>
         <div class="ui checkbox">
-            <input data-ng-model="$ctrl.saveCookies" id="saveCookies" type="checkbox">
-            <label for="saveCookies" ng-bind-html="'Save to cookies'">
+            <input data-ng-model="$ctrl.saveENV" id="saveENV" type="checkbox">
+            <label for="saveENV" ng-bind-html="'Save to cookies'">
             </label>
         </div>
     </section>

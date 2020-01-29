@@ -27,7 +27,7 @@ angular
         ctrl.showWKT = false;
         ctrl.isCsv = false;
         ctrl.loadedPreviewLayers = [];
-        ctrl.importTolerance = 0.007
+        ctrl.importTolerance = 0.007;
         ctrl.fileNameChanged = fileName => {
           var uploadedFiles = [];
           var fileArrayLength = fileName.files.length;
@@ -122,10 +122,10 @@ angular
           let tolerance =
             turf.lineDistance(linestring, "kilometers") > 100 ? 0.015 : 0.007;
           linestring = turf.simplify(
-              linestring, ctrl.importTolerance !== 0.007 ?
-                  ctrl.importTolerance :
-                  tolerance,
-              true);
+            linestring,
+            ctrl.importTolerance !== 0.007 ? ctrl.importTolerance : tolerance,
+            true
+          );
           let waypoints = [];
           for (let coord of linestring.geometry.coordinates) {
             const latLng = new L.latLng([

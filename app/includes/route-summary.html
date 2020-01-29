@@ -4,7 +4,7 @@
             <i class="fa fa-lg fa-car">
             </i>
         </div>
-        <div ng-switch-when="cycling-regular|cycling-road|cycling-safe|cycling-mountain|cycling-tour|cycling-electric" ng-switch-when-separator="|">
+        <div ng-switch-when="cycling-regular|cycling-road|cycling-mountain|cycling-electric" ng-switch-when-separator="|">
             <i class="fa fa-lg fa-bicycle">
             </i>
         </div>
@@ -30,16 +30,26 @@
                 </span>
                 <span ng-bind-html="(route.properties.summary.duration | duration)">
                 </span>
+                <span ng-if="route.properties.summary.durationDelta"
+                      ng-bind-html="' ('+ (route.properties.summary.durationDelta > 0 ? '+ ' : '- ')  + (route.properties.summary.durationDelta | duration) +')'"></span>
             </div>
-            <div class="summary-item" ng-if="route.properties.summary.distance" tooltip-side="top" tooltip-template="{{('DISTANCE' | translate)}}" tooltips="">
+            <div class="summary-item"
+                 ng-if="route.properties.summary.distance"
+                 tooltip-side="top" tooltip-template="{{('DISTANCE' | translate)}}"
+                 tooltips="">
                 <span>
                     <i class="fa fa-arrows-h">
                     </i>
                 </span>
                 <span ng-bind-html="(route.properties.summary.distance | distance)">
                 </span>
+                <span ng-if="route.properties.summary.distanceDelta"
+                      ng-bind-html="' ('+ (route.properties.summary.distanceDelta > 0 ? '+' : '')  + (route.properties.summary.distanceDelta | distance) +')'"></span>
             </div>
-            <div class="summary-item" ng-if="route.properties.summary.distance_actual" tooltip-side="top" tooltip-template="{{('ACTUALDISTANCE' | translate)}}" tooltips="">
+            <div class="summary-item" ng-if="route.properties.summary.distance_actual"
+                 tooltip-side="top"
+                 tooltip-template="{{('ACTUALDISTANCE' | translate)}}"
+                 tooltips="">
                 <span>
                     <i class="fa fa-ellipsis-h">
                     </i>
@@ -92,7 +102,11 @@
                 </span>
             </div>
         </div>
-        <button class="summary-select" data-ng-click="$ctrl.setIdx($index); $ctrl.showInstructions();" ng-bind-html="('DETAILS' | translate)" ng-show="!$ctrl.shouldDisplayRouteDetails">
+        <button class="summary-select"
+                ng-if="$index === $ctrl.currentRouteIndex"
+                data-ng-click="$ctrl.setIdx($index); $ctrl.showInstructions();"
+                ng-bind-html="('DETAILS' | translate)"
+                ng-show="!$ctrl.shouldDisplayRouteDetails">
             >
         </button>
     </div>

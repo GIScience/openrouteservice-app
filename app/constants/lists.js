@@ -489,6 +489,9 @@ angular.module("orsApp").constant("lists", {
     },
     distanceMarkers: {
       default: false
+    },
+    alternativeRoutes: {
+      default: false
     }
   },
   permalinkFilters: {
@@ -640,6 +643,13 @@ angular.module("orsApp").constant("lists", {
     route: function() {
       return {
         color: "#b5152b",
+        weight: 5,
+        opacity: 1
+      };
+    },
+    routeAlternative: () => {
+      return {
+        color: "#6D6D6D",
         weight: 5,
         opacity: 1
       };

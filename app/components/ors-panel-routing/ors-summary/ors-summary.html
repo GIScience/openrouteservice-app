@@ -1,13 +1,11 @@
 <div class="ors-summary">
     <ul>
-        <li data-ng-repeat="route in $ctrl.data.features">
-            <!-- <div ng-include="'includes/route-summary.html'" ng-mouseout="$ctrl.DeEmphRoute()" ng-mouseover="$ctrl.EmphRoute($index)">
-            </div> -->
-            <div ng-include="'includes/route-summary.html'">
+        <li data-ng-repeat="route in $ctrl.data.features" ng-class="{active: $index === $ctrl.currentRouteIndex}">
+            <div ng-include="'includes/route-summary.html'" ng-mouseout="$ctrl.DeEmphRoute()" ng-mouseover="$ctrl.emphRoute($index)" ng-click="$ctrl.changeCurrentRoute($index)">
             </div>
             <div class="bottom-border">
             </div>
-            <div class="options-box" ng-if="route.properties.extras">
+            <div class="options-box" ng-if="route.properties.extras && $index === $ctrl.currentRouteIndex">
                 <div class="pointer margin-bottom-6" ng-click="showRouteExtras = !showRouteExtras" ng-init="showRouteExtras = true;">
                     <span>
                         <i ng-class="$ctrl.getClass(showRouteExtras)">

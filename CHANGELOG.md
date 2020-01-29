@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - deviation tolerance during route import ([#325](https://github.com/GIScience/openrouteservice-app/issues/325))
     - set lower value for more waypoints/accuracy
+- alternative route feature ([#319](https://github.com/GIScience/openrouteservice-app/issues/319))
+    - activate in settings, click route or sidebar entry to switch route
+    - only for routes with 2 points (start & end) below 100km
+    - default values for `weight-factor` and `share-factor` used
 
 ### Changed
 - maxZoom of all basemaps to 18 ([#311](https://github.com/GIScience/openrouteservice-app/issues/311))

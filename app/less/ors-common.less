@@ -86,7 +86,7 @@ span tooltip {
     width: 100%;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     cursor: default;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -96,7 +96,7 @@ span tooltip {
     .left {
         color: rgba(0, 0, 0, 0.7);
         padding: 1rem 1rem 0 1rem;
-        flex: 0 0 15%;
+        flex: 0 0 10%;
     }
     .right {
         color: rgba(0, 0, 0, 0.7);
@@ -112,8 +112,12 @@ span tooltip {
         color: rgba(0, 0, 0, 0.7);
         flex: 1 1 auto;
         text-align: right;
+        min-width: 84px;
         padding-top: 0.2rem;
         padding-right: 0rem;
+        .details {
+            width: 100%;
+        }
     }
 }
 
@@ -217,6 +221,9 @@ label, .label {
     ul {
         padding: 0;
         margin: 0;
+        li.active {
+            border-left: 2px solid #b5152b;
+        }
     }
 }
 
@@ -256,6 +263,9 @@ button.summary-select {
     color: @orsHoverColor;
     display: block;
     outline: none !important;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
 }
 
 .top-border {

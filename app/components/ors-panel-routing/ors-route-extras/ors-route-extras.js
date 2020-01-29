@@ -25,17 +25,11 @@ angular
           for (const [i, elem] of Object.entries(
             currentRoute.properties.extras[key].values
           )) {
-            // angular.forEach(currentRoute.properties.extras[key].values, function(
-            //   elem,
-            //   i
-            // ) {
             const fr = elem[0],
               to = elem[1];
             if (fr !== to) {
-              let typeNumber;
-
-              typeNumber = elem[2] === "false" ? "false" : parseInt(elem[2]);
-
+              let typeNumber =
+                elem[2] === "false" ? "false" : parseInt(elem[2]);
               const routeSegment = currentRoute.geometry.slice(fr, to);
               if (typeNumber in extras) {
                 extras[typeNumber].intervals.push([fr, to]);
@@ -93,7 +87,6 @@ angular
               checkboxes: ctrl.checkboxes
             });
           }
-          //ctrl.routeExtras = angular.copy(ctrl.routeExtras);
         });
       }
     ]
