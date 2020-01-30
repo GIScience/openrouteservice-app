@@ -1,7 +1,7 @@
 {
   "name": "openrouteservice.org",
   "description": "angular version of openrouteservice.org",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "homepage": "http://www.heigit.org",
   "license": "ISC",
   "private": true,
