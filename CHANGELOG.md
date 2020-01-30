@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed-->
 
+## [Unreleased]
+
+### Fixed
+- TypeError when using isochrones with avoid areas ([#321](https://github.com/GIScience/openrouteservice-app/issues/321))
+
 ## [v0.4.1] - 2020-01-24
 
 ### Added
