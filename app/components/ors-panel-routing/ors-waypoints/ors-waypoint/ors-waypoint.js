@@ -42,14 +42,16 @@ angular.module("orsApp.ors-waypoint", []).component("orsWaypoint", {
         else return ctrl.idx;
       };
       ctrl.emph = () => {
-        const highlightWaypoint = orsObjectsFactory.createMapAction(
-          3,
-          lists.layers[2],
-          ctrl.waypoint._latlng,
-          ctrl.idx,
-          undefined
-        );
-        orsMapFactory.mapServiceSubject.onNext(highlightWaypoint);
+        if (Object.entries(ctrl.waypoint._latlng).length !== 0) {
+          const highlightWaypoint = orsObjectsFactory.createMapAction(
+            3,
+            lists.layers[2],
+            ctrl.waypoint._latlng,
+            ctrl.idx,
+            undefined
+          );
+          orsMapFactory.mapServiceSubject.onNext(highlightWaypoint);
+        }
       };
       ctrl.deEmph = () => {
         const clearHighlightWaypoints = orsObjectsFactory.createMapAction(

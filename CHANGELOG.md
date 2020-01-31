@@ -12,6 +12,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed-->
 
+## [v0.4.2] - 2020-01-30
+
+### Added
+- tcx export format (Garmin) incl. adjustable pace in km/h ([#313](https://github.com/GIScience/openrouteservice-app/pull/313))
+- http-proxy for using this client with a local ors backend:
+  - Running `grunt ors_local` will
+    now initially map the ENV endpoints to the same host the frontend is running (localhost:3005)
+    and will proxy it to localhost:8082 if the URL contains `/ors/`.
+
+### Fixed
+- TypeError when using isochrones with avoid areas ([#321](https://github.com/GIScience/openrouteservice-app/issues/321))
+- deleting last waypoint input field for round trip routing ([#312](https://github.com/GIScience/openrouteservice-app/issues/312))
+- a console error appearing for swapping empty waypoints
+
 ## [v0.4.1] - 2020-01-24
 
 ### Added

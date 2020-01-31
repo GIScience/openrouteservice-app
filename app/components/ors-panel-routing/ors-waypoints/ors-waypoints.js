@@ -96,7 +96,7 @@ angular
         ctrl.deleteWaypoint = idx => {
           /** is this waypoint set, if so fire request and update route **/
           let toggleRequest = ctrl.waypoints[idx]._set === 1;
-          if (ctrl.waypoints.length === 2) {
+          if (ctrl.waypoints.length === 2 || ctrl.roundTrip) {
             let wp = orsObjectsFactory.createWaypoint("", new L.latLng());
             ctrl.waypoints[idx] = wp;
           } else {

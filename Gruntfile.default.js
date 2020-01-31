@@ -198,6 +198,9 @@ module.exports = function(grunt) {
                     livereload: true,
                     open: true,
                     middleware: function(connect) {
+                        // MARQ24 added proxy to avoid CORS when running OWN backend via SpringBoot
+                        // this will require the usage of NodeJS 13.x
+                        var proxy = require("http-proxy-middleware");
                         return [
                             modRewrite([
                                 "!\\.html|\\.js|\\.txt|\\.ico|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]"
@@ -210,6 +213,7 @@ module.exports = function(grunt) {
                                 "/node_modules",
                                 serveStatic("./node_modules")
                             ),
+                            proxy("/ors",{ target: 'http://localhost:8082', changeOrigin: true, pathRewrite: {'^/ors/': '/' }}),
                             serveStatic("./app")
                         ];
                     }
@@ -266,13 +270,13 @@ module.exports = function(grunt) {
                     ENV: {
                         name: "local",
                         geocode:
-                            "http://localhost:8082/ors/geocode",
+                            "http://localhost:3005/ors/geocode",
                         directions:
-                            "http://localhost:8082/ors/v2/directions",
+                            "http://localhost:3005/ors/v2/directions",
                         isochrones:
-                            "http://localhost:8082/ors/isochrones",
+                            "http://localhost:3005/ors/isochrones",
                         matrix:
-                            "http://localhost:8082/ors/matrix",
+                            "http://localhost:3005/ors/matrix",
                         pois:
                             "https://api.openrouteservice.org/pois",
                         shortenlink: "https://api-ssl.bitly.com/v3/shorten",

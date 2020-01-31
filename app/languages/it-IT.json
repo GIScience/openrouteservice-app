@@ -230,5 +230,6 @@
     "ROUNDTRIP_PREVIOUS": "Previous round trip",
     "ROUNDTRIP_NEXT": "Next round trip",
     "ROUNDTRIP": "Round trip (experimental)",
-    "ROUNDTRIP_DO": "Do round trip"
+    "ROUNDTRIP_DO": "Do round trip",
+    "PACE_SPEED_INKMH": "Pace in km/h"
 }

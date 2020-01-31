@@ -448,13 +448,6 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
         payload.options.constructor === Object
       )
         delete payload.options;
-      // if avoid area polygon
-      if (
-        settings.avoidable_polygons &&
-        settings.avoidable_polygons.coordinates.length > 0
-      ) {
-        payload.options.avoid_polygons = settings.avoidable_polygons;
-      }
       return payload;
     };
     /**

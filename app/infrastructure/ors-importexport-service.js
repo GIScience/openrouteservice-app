@@ -76,6 +76,101 @@ angular
         );
       };
 
+      // create a simple Course TCX file (MARQ24)
+      // see https://www8.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd
+      let toTcx = (name, speedInKmPerH) => {
+        let version = "0.4.2";
+        let pointInformation =
+          orsRouteService.data.features[orsRouteService.getCurrentRouteIdx()]
+            .point_information;
+        let [majorV, minorV, patchV] = version.split(".");
+        let garminPartNumber = `ORS-0${majorV}${minorV}${patchV}0-DE`;
+        let tcx = {
+          TrainingCenterDatabase: {
+            "@xsi:schemaLocation":
+              "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd",
+            "@xmlns":
+              "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2",
+            "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+            Courses: { Course: [] },
+            Author: {
+              "@xsi:type": "Application_t",
+              Name: "openrouteservice.org",
+              Build: {
+                Version: {
+                  VersionMajor: majorV,
+                  VersionMinor: minorV,
+                  BuildMajor: patchV,
+                  BuildMinor: "0"
+                },
+                Type: "Release",
+                Time: "Jan 26 2020, 10:00:00",
+                Builder: "mcp"
+              },
+              LangID: "DE",
+              PartNumber: garminPartNumber // The formatted XXX-XXXXX-XX Garmin part number of a PC application
+            }
+          }
+        };
+
+        let speedInMPerS = speedInKmPerH / 3.6; // need to convert in m per sec
+        let courseObj = {
+          Name: name,
+          Lap: {
+            TotalTimeSeconds: "",
+            DistanceMeters:
+              pointInformation[pointInformation.length - 1].distance,
+            BeginPosition: {
+              LatitudeDegrees: pointInformation[0].coords[0],
+              LongitudeDegrees: pointInformation[0].coords[1]
+            },
+            EndPosition: {
+              LatitudeDegrees:
+                pointInformation[pointInformation.length - 1].coords[0],
+              LongitudeDegrees:
+                pointInformation[pointInformation.length - 1].coords[1]
+            },
+            Intensity: "Active"
+          },
+          Track: { Trackpoint: [] }
+        };
+        let duration;
+        for (const data of pointInformation) {
+          if (data.distance !== undefined) {
+            duration = data.distance / speedInMPerS;
+            const seconds = duration.toFixed(3) || 0;
+            const milliSeconds = seconds.split(".")[1] || 0;
+            let durationDate = new Date(
+              2010,
+              0,
+              1,
+              12,
+              0,
+              seconds,
+              milliSeconds
+            );
+            let tp = {
+              Time: durationDate.toISOString(),
+              Position: {
+                LatitudeDegrees: data.coords[0],
+                LongitudeDegrees: data.coords[1]
+              }
+            };
+            if (data.heights && data.heights.height !== undefined) {
+              tp.AltitudeMeters = data.heights.height;
+            }
+            tp.DistanceMeters = data.distance;
+            courseObj.Track.Trackpoint.push(tp);
+          }
+        }
+        courseObj.Lap.TotalTimeSeconds = duration.toFixed(1);
+        tcx.TrainingCenterDatabase.Courses.Course.push(courseObj);
+
+        JXON.config({ attrPrefix: "@" });
+        const tcx_str = JXON.stringify(tcx);
+        return '<?xml version="1.0" encoding="UTF-8"?>' + tcx_str;
+      };
+
       let orsExportFactory = {};
       /**
        * Export any vector element on the map to file
@@ -109,6 +204,9 @@ angular
           case "kml":
             geojsonData = L.polyline(geometry).toGeoJSON();
             exportData = tokml(geojsonData);
+            break;
+          case "tcx":
+            exportData = toTcx(filename, options.speedInKmh);
             break;
           case "rawjson":
             // removing nodes from the geometry data that is for sure not needed
