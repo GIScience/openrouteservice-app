@@ -46,7 +46,7 @@ angular
            * check if anything is saved in the settings object
            * if there isn't initialize settings object from permalink or provide empty
            */
-          if (orsSettingsFactory.getWaypoints().length == 0) {
+          if (orsSettingsFactory.getWaypoints().length === 0) {
             ctrl.routeParams = next.params;
             orsSettingsFactory.initWaypoints(1);
             const importedParams = orsParamsService.importSettings(

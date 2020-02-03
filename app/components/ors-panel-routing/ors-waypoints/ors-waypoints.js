@@ -1,7 +1,8 @@
 angular
   .module("orsApp.ors-waypoints", [
     "orsApp.ors-waypoint",
-    "orsApp.ors-route-controls"
+    "orsApp.ors-route-controls",
+    "moment-picker"
   ])
   .component("orsWaypoints", {
     templateUrl:
@@ -17,6 +18,7 @@ angular
     controller: [
       "orsSettingsFactory",
       "orsObjectsFactory",
+      "orsCookiesFactory",
       "orsUtilsService",
       "orsRouteService",
       "orsRequestService",
@@ -25,6 +27,7 @@ angular
       function(
         orsSettingsFactory,
         orsObjectsFactory,
+        orsCookiesFactory,
         orsUtilsService,
         orsRouteService,
         orsRequestService,
@@ -42,6 +45,24 @@ angular
           ctrl.roundTrip =
             Object.entries(orsSettingsFactory.getActiveOptions().round_trip)
               .length === 0;
+          ctrl.timeInput = moment();
+          ctrl.locale = moment.locale()
+          ctrl.timeModes = [
+              {
+                text: "TIME_LEAVE_NOW",
+                mode: 'depart',
+                id: 0
+              },{
+                text: "TIME_DEPART_AT",
+                mode: 'depart',
+                id: 1
+              },{
+                text: "TIME_ARRIVE_BY",
+                mode: 'arrive',
+                id: 2
+              }
+            ]
+          ctrl.timeMode = ctrl.timeModes[0]
         };
         // ctrl.$onChanges = function(changesObj) {
         //     console.log(changesObj)

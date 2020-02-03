@@ -235,5 +235,8 @@
     "LOCAL_ALT_ROUTE": "Alternative route (slow!, only for routes below 100km)",
     "TURN_INFO_RDB_EXIT": "Exit",
     "TURN_INFO_UTURN": "U-Turn",
-    "NEW_CLIENT_INFO": "Visit our new responsive map client!"
+    "NEW_CLIENT_INFO": "Visit our new responsive map client!",
+    "TIME_DEPART_AT": "Depart at",
+    "TIME_LEAVE_NOW": "Leave now",
+    "TIME_ARRIVE_BY": "Arrive by"
 }

@@ -236,5 +236,8 @@
     "LOCAL_ALT_ROUTE": "Alternatív útvonal (Lassú! Csak 100 km-nél rövidebb útvonalakhoz.)",
     "TURN_INFO_RDB_EXIT": "Kihajtás",
     "TURN_INFO_UTURN": "Megfordulás",
-    "NEW_CLIENT_INFO": "Látogassa meg új, reszponzív térképkliensünket!"
+    "NEW_CLIENT_INFO": "Látogassa meg új, reszponzív térképkliensünket!",
+    "TIME_DEPART_AT": "Depart at",
+    "TIME_LEAVE_NOW": "Leave now",
+    "TIME_ARRIVE_BY": "Arrive by"
 }
