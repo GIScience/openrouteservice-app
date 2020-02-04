@@ -42,27 +42,29 @@ angular
             ctrl.waypoints = orsSettingsFactory.initWaypoints(2);
           }
           ctrl.showAdd = true;
-          ctrl.roundTrip =
-            Object.entries(orsSettingsFactory.getActiveOptions().round_trip)
-              .length === 0;
+          ctrl.options = orsSettingsFactory.getActiveOptions();
+          ctrl.roundTrip = Object.entries(ctrl.options.round_trip).length === 0;
           ctrl.timeInput = moment();
-          ctrl.locale = moment.locale()
+          ctrl.locale = moment.locale();
           ctrl.timeModes = [
-              {
-                text: "TIME_LEAVE_NOW",
-                mode: 'depart',
-                id: 0
-              },{
-                text: "TIME_DEPART_AT",
-                mode: 'depart',
-                id: 1
-              },{
-                text: "TIME_ARRIVE_BY",
-                mode: 'arrive',
-                id: 2
-              }
-            ]
-          ctrl.timeMode = ctrl.timeModes[0]
+            {
+              text: "TIME_LEAVE_NOW",
+              mode: "departure",
+              id: 0
+            },
+            {
+              text: "TIME_DEPART_AT",
+              mode: "departure",
+              id: 1
+            },
+            {
+              text: "TIME_ARRIVE_BY",
+              mode: "arrival",
+              id: 2
+            }
+          ];
+          ctrl.timeMode = ctrl.timeModes[0];
+          ctrl.changeTimeMode();
         };
         // ctrl.$onChanges = function(changesObj) {
         //     console.log(changesObj)
@@ -84,6 +86,13 @@ angular
             ctrl.sortableOptions.disabled = false;
             ctrl.collapseIcon = "fa fa-chevron-down";
           }
+        };
+        ctrl.changeTimeMode = () => {
+          ctrl.options.time = {
+            mode: ctrl.timeMode.mode,
+            value: ctrl.timeInput.format()
+          };
+          orsSettingsFactory.setActiveOptions(ctrl.options, true);
         };
         /**
          * Determines whether list of viapoints should be shown.

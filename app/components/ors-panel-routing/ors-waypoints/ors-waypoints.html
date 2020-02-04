@@ -13,7 +13,7 @@
 	</div>
 </div>
 <div>
-	<select class="ui selection dropdown" ng-change="$ctrl.changeTimeMode($ctrl.timeMode)"
+	<select class="ui selection dropdown" ng-change="$ctrl.changeTimeMode()"
 			ng-model="$ctrl.timeMode"
 			ng-options="(timeMode.text | translate) for timeMode in $ctrl.timeModes">
 	</select>
@@ -29,11 +29,13 @@
 				   ng-model="$ctrl.timeInput"
 				   min-view="month"
 				   max-view="hour"
-				   format="llll"
+				   format="ddd, MMM Do, HH:mm"
 				   locale="{{$ctrl.locale}}"
 				   ng-model-options="{ updateOn: 'blur' }"
 				   placeholder="Select a date..."
-				   moment-picker="$ctrl.timeInput">
+				   moment-picker="$ctrl.timeInput"
+				   ng-keydown="$event.keyCode === 13 && $ctrl.changeTimeMode()"
+				   change="$ctrl.changeTimeMode()">
 		</div>
 	</span>
 </div>

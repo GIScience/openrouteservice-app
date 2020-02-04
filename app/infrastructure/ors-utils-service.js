@@ -137,6 +137,10 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
         elevation: lists.profiles[settings.profile.type].elevation,
         options: orsUtilsService.generateOptions(settings)
       };
+      let time = settings.profile.options.time;
+      if (time && Object.entries(time).length !== 0) {
+        payload[time.mode] = time.value;
+      }
       // remove options if empty
       if (
         Object.entries(payload.options).length === 0 &&
