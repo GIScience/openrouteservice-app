@@ -12,21 +12,20 @@
 		 </div>
 	</div>
 </div>
-<div>
-	<select class="ui selection dropdown" ng-change="$ctrl.changeTimeMode()"
-			ng-model="$ctrl.timeMode"
-			ng-options="(timeMode.text | translate) for timeMode in $ctrl.timeModes">
-	</select>
-</div>
-<div class="ors-wp-item" ng-if="$ctrl.timeMode.id != 0">
-	<span class="wp-idx">
-		<i aria-hidden="true" class="fa fa-calendar">
-		</i>
-	</span>
-	<span class="wp-input">
-		<div class="ui left labeled fluid input">
-			<input class="form-control"
-				   ng-model="$ctrl.timeInput"
+<div class="ors-time-option">
+	<div class="time-mode">
+		<select class="ui selection dropdown" ng-change="$ctrl.changeTimeMode()"
+				ng-model="$ctrl.timeMode"
+				ng-options="(timeMode.text | translate) for timeMode in $ctrl.timeModes">
+		</select>
+	</div>
+	<div class="time-choose" ng-if="$ctrl.timeMode.id != 0">
+		<span class="time-choose-icon">
+			<i aria-hidden="true" class="fa fa-calendar">
+			</i>
+		</span>
+		<span class="time-choose-input ui left fluid input">
+			<input ng-model="$ctrl.timeInput"
 				   min-view="month"
 				   max-view="hour"
 				   format="ddd, MMM Do, HH:mm"
@@ -36,8 +35,8 @@
 				   moment-picker="$ctrl.timeInput"
 				   ng-keydown="$event.keyCode === 13 && $ctrl.changeTimeMode()"
 				   change="$ctrl.changeTimeMode()">
-		</div>
-	</span>
+		</span>
+	</div>
 </div>
 <div class="bottom-border"></div>
 <ors-route-controls show-add="$ctrl.showAdd" on-add="$ctrl.addWaypoint()" on-reverse="$ctrl.reverseWaypoints()" on-reset="$ctrl.resetWaypoints()" on-waypoints-changed="$ctrl.waypointsChanged()" active-profile="$ctrl.activeProfile" active-subgroup="$ctrl.activeSubgroup" round-trip="$ctrl.roundTrip">

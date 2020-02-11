@@ -44,7 +44,7 @@ angular
           ctrl.showAdd = true;
           ctrl.options = orsSettingsFactory.getActiveOptions();
           ctrl.roundTrip = Object.entries(ctrl.options.round_trip).length === 0;
-          ctrl.timeInput = moment();
+          ctrl.timeInput = moment(); // creates date-time object for current time
           ctrl.locale = moment.locale();
           ctrl.timeModes = [
             {
@@ -87,12 +87,17 @@ angular
             ctrl.collapseIcon = "fa fa-chevron-down";
           }
         };
-        ctrl.changeTimeMode = () => {
+        ctrl.changeTimeMode = (sendRequest = true) => {
           ctrl.options.time = {
             mode: ctrl.timeMode.mode,
-            value: ctrl.timeInput.format()
+            value:
+              ctrl.timeMode.id === 0
+                ? moment()
+                    .format()
+                    .slice(0, 19)
+                : ctrl.timeInput.format().slice(0, 19) // only pass local time without zone identifier
           };
-          orsSettingsFactory.setActiveOptions(ctrl.options, true);
+          orsSettingsFactory.setActiveOptions(ctrl.options, sendRequest);
         };
         /**
          * Determines whether list of viapoints should be shown.

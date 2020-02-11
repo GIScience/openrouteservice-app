@@ -454,6 +454,46 @@ button.summary-select {
     }
 }
 
+.ors-time-option {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px 10px 10px;
+    .time-mode {
+        align-content: space-between;
+        margin: 0 5px 0 27px;
+        select.ui.dropdown {
+            min-width: 0;
+            max-height: 40px;
+            height: 25px;
+            width: max-content;
+            &:focus, &:active, &:hover{
+                border: 1px solid rgba(34, 36, 38, 0.15) !important;
+            }
+        }
+    }
+    .time-choose {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: left;
+        padding: 4px 2px 0 2px;
+        .time-choose-icon {
+            flex-basis: 5%;
+            margin-right: 7px;
+        }
+        .ui.fluid.input {
+            flex-basis: 50%;
+            input{
+                text-align: center;
+                width: max-content;
+                &:focus, &:active {
+                    border: 1px solid rgba(34, 36, 38, 0.15) !important;
+                }
+            }
+        }
+    }
+}
+
 /* scrollbar */
 
 // ::-webkit-scrollbar {
