@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - maxZoom of all basemaps to 18 ([#311](https://github.com/GIScience/openrouteservice-app/issues/311))
+- route processing logic to increase performance ([#320](https://github.com/GIScience/openrouteservice-app/issues/320))
 
 ## [v0.4.2] - 2020-01-30
 

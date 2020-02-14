@@ -218,8 +218,7 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
       let cnt = 0;
       for (let route of orsRouteService.data.features) {
         //const geometry = orsUtilsService.decodePolyline(route.geometry, route.elevation);
-        route.geometryRaw = angular.copy(route.geometry.coordinates);
-        let originalRoute = angular.copy(route);
+        route.geometryRaw = JSON.parse(JSON.stringify(route.geometry.coordinates))
         let coordinates = route.geometry.coordinates;
         // reverse order, needed as leaflet ISO 6709
         for (let i = 0; i < coordinates.length; i++) {
