@@ -12,6 +12,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed-->
 
+## [Unreleased]
+
+### Added
+- deviation tolerance during route import ([#325](https://github.com/GIScience/openrouteservice-app/issues/325))
+    - set lower value for more waypoints/accuracy
+
 ## [v0.4.2] - 2020-01-30
 
 ### Added

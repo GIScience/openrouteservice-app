@@ -230,5 +230,6 @@
     "ROUNDTRIP_NEXT": "Next round trip",
     "ROUNDTRIP": "Round trip (experimental)",
     "ROUNDTRIP_DO": "Do round trip",
-    "PACE_SPEED_INKMH": "Pace in km/h"
+    "PACE_SPEED_INKMH": "Pace in km/h",
+    "IMPORT_DEVIATION_TOLERANCE": "Deviation tolerance"
 }
