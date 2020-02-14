@@ -64,9 +64,7 @@ angular.module("orsApp").directive("orsMap", () => {
         $scope.translateFilter = $filter("translate");
         const mapsurfer = L.tileLayer(ENV.mapsurfer + ak, {
           attribution: orsNamespaces.layerMapSurfer.attribution,
-          id: 0,
-          minZoom: orsNamespaces.layerMapSurfer.minZoom,
-          maxZoom: orsNamespaces.layerMapSurfer.maxZoom
+          id: 0
         });
         const bkgtopplus = L.tileLayer.wms(orsNamespaces.layerBkgTopPlus.url, {
           layers: "web",
