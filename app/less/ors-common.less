@@ -102,8 +102,9 @@ span tooltip {
         color: rgba(0, 0, 0, 0.7);
         flex: 1 1 auto;
         padding: 1rem 1rem 0 1rem;
-        -display: flex;
-        flex-direction: column;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
         i {
             color: #767676;
         }
@@ -456,11 +457,14 @@ button.summary-select {
 
 .ors-time-option {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     padding: 0 10px 10px 10px;
+    align-items: center;
+    align-content: space-between;
+    justify-content: left;
     .time-mode {
-        align-content: space-between;
-        margin: 0 5px 0 27px;
+        flex-basis: 40%;
+        margin: 0 5px 0 3px;
         select.ui.dropdown {
             min-width: 0;
             max-height: 40px;
@@ -471,24 +475,19 @@ button.summary-select {
             }
         }
     }
+    .time-icon {
+        flex-basis: 5%;
+        margin: 0 4px 0 3px;
+    }
     .time-choose {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: left;
-        padding: 4px 2px 0 2px;
-        .time-choose-icon {
-            flex-basis: 5%;
-            margin-right: 7px;
-        }
-        .ui.fluid.input {
-            flex-basis: 50%;
-            input{
-                text-align: center;
-                width: max-content;
-                &:focus, &:active {
-                    border: 1px solid rgba(34, 36, 38, 0.15) !important;
-                }
+        flex-basis: 55%;
+        margin-right: 2px;
+        input{
+            text-align: center;
+            width: max-content;
+            height: 35px;
+            &:focus, &:active {
+                border: 1px solid rgba(34, 36, 38, 0.15) !important;
             }
         }
     }

@@ -13,29 +13,27 @@
 	</div>
 </div>
 <div class="ors-time-option">
+	<div class="time-icon">
+		<i aria-hidden="true" class="fa fa-calendar">
+		</i>
+	</div>
 	<div class="time-mode">
 		<select class="ui selection dropdown" ng-change="$ctrl.changeTimeMode()"
 				ng-model="$ctrl.timeMode"
 				ng-options="(timeMode.text | translate) for timeMode in $ctrl.timeModes">
 		</select>
 	</div>
-	<div class="time-choose" ng-if="$ctrl.timeMode.id != 0">
-		<span class="time-choose-icon">
-			<i aria-hidden="true" class="fa fa-calendar">
-			</i>
-		</span>
-		<span class="time-choose-input ui left fluid input">
-			<input ng-model="$ctrl.timeInput"
-				   min-view="month"
-				   max-view="hour"
-				   format="ddd, MMM Do, HH:mm"
-				   locale="{{$ctrl.locale}}"
-				   ng-model-options="{ updateOn: 'blur' }"
-				   placeholder="Select a date..."
-				   moment-picker="$ctrl.timeInput"
-				   ng-keydown="$event.keyCode === 13 && $ctrl.changeTimeMode()"
-				   change="$ctrl.changeTimeMode()">
-		</span>
+	<div class="time-choose ui left fluid input"  ng-if="$ctrl.timeMode.id != 0">
+		<input ng-model="$ctrl.timeInput"
+			   min-view="month"
+			   max-view="hour"
+			   format="ddd, MMM Do, HH:mm"
+			   locale="{{$ctrl.locale}}"
+			   ng-model-options="{ updateOn: 'blur' }"
+			   placeholder="Select a date..."
+			   moment-picker="$ctrl.timeInput"
+			   ng-keydown="$event.keyCode === 13 && $ctrl.changeTimeMode()"
+			   change="$ctrl.changeTimeMode()">
 	</div>
 </div>
 <div class="bottom-border"></div>

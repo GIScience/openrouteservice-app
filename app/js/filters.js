@@ -69,7 +69,7 @@ angular
   .filter("area", [
     "orsSettingsFactory",
     orsSettingsFactory => {
-      function distance(input, round) {
+      function distance(input) {
         input = parseInt(input);
         let units = orsSettingsFactory.getUserOptions().units;
         if (units === "km") {

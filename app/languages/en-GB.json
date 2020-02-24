@@ -5,7 +5,7 @@
     "PEDESTRIAN": "Pedestrian",
     "WHEELCHAIR": "Wheelchair",
     "DISTANCE": "Distance",
-    "DURATION": "Time",
+    "DURATION": "Duration",
     "SETTINGS": "Settings",
     "DOCUMENTATION": "API Documentation",
     "ROUTING": "Routing",
@@ -239,5 +239,7 @@
     "NEW_CLIENT_INFO": "Visit our new responsive map client!",
     "TIME_DEPART_AT": "Depart at",
     "TIME_LEAVE_NOW": "Leave now",
-    "TIME_ARRIVE_BY": "Arrive by"
+    "TIME_ARRIVE_BY": "Arrive by",
+    "ARRIVAL_ON": "Arrival on",
+    "DEPARTURE_ON": "Departure on"
 }

@@ -42,6 +42,16 @@ angular
         ctrl.getIdx = () => {
           return orsRouteService.getCurrentRouteIdx();
         };
+        /**
+         * When arriving on the same day as departure, the month and day is omitted
+         * @param props
+         * @returns {string}
+         */
+        ctrl.getTimeFormat = props => {
+          let departureDay = moment(props.departure).format("MM:dd");
+          let arrivalDay = moment(props.arrival).format("MM:dd");
+          return departureDay === arrivalDay ? "HH:mm" : "MMM Do, HH:mm";
+        };
         ctrl.getClass = bool => {
           if (bool === true) return "fa fa-lg fa-fw fa-angle-down";
           else return "fa fa-lg fa-fw fa-angle-right";

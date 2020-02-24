@@ -208,6 +208,12 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
       orsRouteService.data = data;
       let cnt = 0;
       for (let route of orsRouteService.data.features) {
+        // extract relevant time
+        if (data.metadata.query.departure) {
+          route.arrival = moment(route.properties.arrival);
+        } else if (data.metadata.query.arrival) {
+          route.departure = moment(route.properties.departure);
+        }
         if (cnt > 0) {
           // alternative route difference
           let firstRouteSummary =

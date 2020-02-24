@@ -83,13 +83,9 @@ angular
               arrow += "fa-rotate-45";
               break;
             case 6:
-              break;
             case 7:
-              break;
             case 8:
-              break;
             case 9:
-              break;
             case 10:
               break;
           }
@@ -138,6 +134,16 @@ angular
           const routeString = $scope.route.geometry;
           const geometry = routeString.slice(pair[0], pair[1] + 1);
           orsRouteService.zoomTo(geometry);
+        };
+        /**
+         * When arriving on the same day as departure, the month and day is omitted
+         * @param props
+         * @returns {string}
+         */
+        ctrl.getTimeFormat = props => {
+          let departureDay = moment(props.departure).format("MM:dd");
+          let arrivalDay = moment(props.arrival).format("MM:dd");
+          return departureDay === arrivalDay ? "HH:mm" : "MMM Do, HH:mm";
         };
       }
     ]

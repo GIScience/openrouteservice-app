@@ -239,5 +239,7 @@
     "NEW_CLIENT_INFO": "Látogassa meg új, reszponzív térképkliensünket!",
     "TIME_DEPART_AT": "Depart at",
     "TIME_LEAVE_NOW": "Leave now",
-    "TIME_ARRIVE_BY": "Arrive by"
+    "TIME_ARRIVE_BY": "Arrive by",
+    "ARRIVAL_ON": "Arrival on",
+    "DEPARTURE_ON": "Departure on"
 }

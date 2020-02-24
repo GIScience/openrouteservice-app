@@ -94,8 +94,8 @@ angular
               ctrl.timeMode.id === 0
                 ? moment()
                     .format()
-                    .slice(0, 19)
-                : ctrl.timeInput.format().slice(0, 19) // only pass local time without zone identifier
+                    .slice(0, 16)
+                : ctrl.timeInput.format().slice(0, 16) // only pass local time without zone identifier & seconds
           };
           orsSettingsFactory.setActiveOptions(ctrl.options, sendRequest);
         };

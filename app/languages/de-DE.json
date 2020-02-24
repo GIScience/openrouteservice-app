@@ -239,5 +239,7 @@
     "NEW_CLIENT_INFO": "Besuche unseren neuen map Client!",
     "TIME_DEPART_AT": "Abfahrt ab",
     "TIME_LEAVE_NOW": "Jetzt starten",
-    "TIME_ARRIVE_BY": "Ankunft bis"
+    "TIME_ARRIVE_BY": "Ankunft bis",
+    "ARRIVAL_ON": "Ankunft am",
+    "DEPARTURE_ON": "Abfahrt am"
 }
