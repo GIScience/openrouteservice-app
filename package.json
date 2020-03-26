@@ -1,6 +1,6 @@
 {
   "name": "maps.openrouteservice.org",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/GIScience/openrouteservice-app.git"

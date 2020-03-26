@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed-->
 
+## [v0.5.0] - 2020-03-26
+
+### Removed
+- support for node 6 & 7. Please use version 8 or above
+
 ## [v0.4.3] - 2020-03-26
 
 ### Added
