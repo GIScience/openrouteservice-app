@@ -9,6 +9,7 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
   "lists",
   "mappings",
   "ENV",
+  // "mockResponse", // uncomment to mock response using mock.js constant
   (
     $rootScope,
     $q,
@@ -20,6 +21,7 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
     lists,
     mappings,
     ENV
+    // mockResponse // uncomment to mock response using mock.js constant
   ) => {
     /**
      * Requests geocoding from ORS backend

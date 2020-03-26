@@ -81,6 +81,7 @@
         ENV,
         orsApikeyFactory,
         weathercheck
+        // mockResponse // uncomment to mock response using mock.js constant
       ) {
         return {
           request: function(config) {

@@ -9,6 +9,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
   "lists",
   "weathercheck",
   "orsFuelService",
+  // "mockResponse", // uncomment to mock response using mock.js constant
   (
     $timeout,
     orsObjectsFactory,
@@ -20,6 +21,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
     lists,
     weathercheck,
     orsFuelService
+    // mockResponse // uncomment to mock response using mock.js constant
   ) => {
     let orsSettingsFactory = {};
     /** Behaviour subjects routing. */
@@ -247,6 +249,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
         orsRouteService.routingRequests.requests.push(request);
         request.promise.then(
           function(response) {
+            // response = angular.copy(mockResponse); // uncomment to mock response using mock.js constant
             orsSettingsFactory.requestSubject.onNext(false);
             const profile = settings.profile.type;
             orsRouteService.processResponse(
