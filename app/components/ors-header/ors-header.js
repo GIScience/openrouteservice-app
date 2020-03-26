@@ -43,6 +43,9 @@ angular.module("orsApp.ors-header", []).component("orsHeader", {
         ctrl.saveENV = false;
         ctrl.lists_extra_info = lists.extra_info;
         ctrl.getActiveProfile = orsSettingsFactory.getActiveProfile;
+        ctrl.getActiveSubGroup = () => {
+          return lists.profiles[ctrl.getActiveProfile().type].subgroup
+        }
         ctrl.optionList = lists.userOptions;
         ctrl.changeExtras();
       };

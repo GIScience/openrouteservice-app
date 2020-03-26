@@ -173,11 +173,11 @@ angular.module("orsApp").constant("lists", {
     }
   },
   extra_info: {
-    surface: ["Wheelchair", "hgv", "Pedestrian", "Bicycle", "Car"],
-    waytype: ["Wheelchair", "hgv", "Pedestrian", "Bicycle", "Car"],
-    suitability: ["Wheelchair", "hgv", "Pedestrian", "Bicycle", "Car"],
-    tollways: ["hgv", "Car"],
-    steepness: ["Wheelchair", "hgv", "Pedestrian", "Bicycle", "Car"],
+    surface: ["Wheelchair", "HeavyVehicle", "Pedestrian", "Bicycle", "Car"],
+    waytype: ["Wheelchair", "HeavyVehicle", "Pedestrian", "Bicycle", "Car"],
+    suitability: ["Wheelchair", "HeavyVehicle", "Pedestrian", "Bicycle", "Car"],
+    tollways: ["HeavyVehicle", "Car"],
+    steepness: ["Wheelchair", "HeavyVehicle", "Pedestrian", "Bicycle", "Car"],
     green: ["Pedestrian", "Bicycle"],
     noise: ["Pedestrian", "Bicycle"],
     traildifficulty: ["Pedestrian", "Bicycle"],
