@@ -27,6 +27,7 @@ angular
         ctrl.showWKT = false;
         ctrl.isCsv = false;
         ctrl.loadedPreviewLayers = [];
+        ctrl.importTolerance = 0.007;
         ctrl.fileNameChanged = fileName => {
           var uploadedFiles = [];
           var fileArrayLength = fileName.files.length;
@@ -62,7 +63,7 @@ angular
           };
           var onLoadEndHandler = () => {
             processedCount++;
-            if (processedCount == fileArrayLength) {
+            if (processedCount === fileArrayLength) {
               //this code will run after everything has been loaded and processed
               ctrl.uploadedFiles = uploadedFiles;
               $scope.$apply();
@@ -120,7 +121,11 @@ angular
           let linestring = turf.helpers.lineString(geometry);
           let tolerance =
             turf.lineDistance(linestring, "kilometers") > 100 ? 0.015 : 0.007;
-          linestring = turf.simplify(linestring, tolerance, true);
+          linestring = turf.simplify(
+            linestring,
+            ctrl.importTolerance !== 0.007 ? ctrl.importTolerance : tolerance,
+            true
+          );
           let waypoints = [];
           for (let coord of linestring.geometry.coordinates) {
             const latLng = new L.latLng([

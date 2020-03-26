@@ -1,6 +1,6 @@
 {
   "name": "maps.openrouteservice.org",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/GIScience/openrouteservice-app.git"
@@ -32,6 +32,7 @@
     "leaflet-geometryutil": "^0.8.0",
     "leaflet-omnivore": "^0.3.4",
     "leaflet.heightgraph": "^0.4.1",
+    "leaflet.featuregroup.subgroup": "^1.0.2",
     "togpx": "^0.5.3",
     "tokml": "^0.4.0",
     "xml-js": "^1.6.7",

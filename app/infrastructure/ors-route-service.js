@@ -1,4 +1,5 @@
 angular.module("orsApp.route-service", []).factory("orsRouteService", [
+  "$rootScope",
   "$q",
   "$http",
   "orsUtilsService",
@@ -8,7 +9,9 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
   "lists",
   "mappings",
   "ENV",
+  // "mockResponse", // uncomment to mock response using mock.js constant
   (
+    $rootScope,
     $q,
     $http,
     orsUtilsService,
@@ -18,6 +21,7 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
     lists,
     mappings,
     ENV
+    // mockResponse // uncomment to mock response using mock.js constant
   ) => {
     /**
      * Requests geocoding from ORS backend
@@ -148,13 +152,15 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
       );
       orsMapFactory.mapServiceSubject.onNext(action);
     };
-    orsRouteService.addRoute = (route, focusIdx) => {
+    orsRouteService.addRoute = (route, focusIdx, routeIdx) => {
       const routePadding = orsObjectsFactory.createMapAction(
         1,
         lists.layers[1],
         route.geometry,
         undefined,
-        lists.layerStyles.routePadding()
+        lists.layerStyles.routePadding(),
+        undefined,
+        routeIdx
       );
       orsMapFactory.mapServiceSubject.onNext(routePadding);
       const routeLine = orsObjectsFactory.createMapAction(
@@ -162,20 +168,27 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
         lists.layers[1],
         route.geometry,
         undefined,
-        lists.layerStyles.route()
+        routeIdx !== orsRouteService.getCurrentRouteIdx()
+          ? lists.layerStyles.routeAlternative()
+          : lists.layerStyles.route(),
+        undefined,
+        routeIdx
       );
       orsMapFactory.mapServiceSubject.onNext(routeLine);
-      const routeHover = orsObjectsFactory.createMapAction(
-        41,
-        lists.layers[1],
-        route.geometry,
-        undefined,
-        lists.layerStyles.routeHovering(),
-        {
-          pointInformation: route.point_information
-        }
-      );
-      orsMapFactory.mapServiceSubject.onNext(routeHover);
+      if (routeIdx === orsRouteService.getCurrentRouteIdx()) {
+        const routeHover = orsObjectsFactory.createMapAction(
+          41,
+          lists.layers[1],
+          route.geometry,
+          undefined,
+          lists.layerStyles.routeHovering(),
+          {
+            pointInformation: route.point_information
+          }
+        );
+        orsMapFactory.mapServiceSubject.onNext(routeHover);
+      }
+
       if (focusIdx) {
         const zoomTo = orsObjectsFactory.createMapAction(
           0,
@@ -214,12 +227,24 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
       focusIdx,
       includeLandmarks
     ) => {
+      orsRouteService.setCurrentRouteIdx(0);
       orsRouteService.data = data;
       let cnt = 0;
       for (let route of orsRouteService.data.features) {
-        //const geometry = orsUtilsService.decodePolyline(route.geometry, route.elevation);
-        route.geometryRaw = angular.copy(route.geometry.coordinates);
-        let originalRoute = angular.copy(route);
+        if (cnt > 0) {
+          // alternative route difference
+          let firstRouteSummary =
+            orsRouteService.data.features[0].properties.summary;
+          let distance = route.properties.summary.distance;
+          let duration = route.properties.summary.duration;
+          route.properties.summary.distanceDelta =
+            distance - firstRouteSummary.distance;
+          route.properties.summary.durationDelta =
+            duration - firstRouteSummary.duration;
+        }
+        route.geometryRaw = JSON.parse(
+          JSON.stringify(route.geometry.coordinates)
+        );
         let coordinates = route.geometry.coordinates;
         // reverse order, needed as leaflet ISO 6709
         for (let i = 0; i < coordinates.length; i++) {
@@ -297,20 +322,22 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
           } else {
             orsRouteService.removeHeightgraph();
           }
-          orsRouteService.addRoute(route, focusIdx);
         }
+
+        orsRouteService.addRoute(route, focusIdx, cnt);
         cnt += 1;
       }
       orsRouteService.routesSubject.onNext(orsRouteService.data);
+      $rootScope.$broadcast("activeRouteChanged", 0);
     };
     /** process point information */
     orsRouteService.processPointExtras = (route, profile) => {
       const fetchExtrasAtPoint = (extrasObj, idx) => {
         const extrasAtPoint = {};
         for (const [key, values] of Object.entries(extrasObj)) {
-          if (mappings[key][values[idx]] === undefined) {
-            console.log(values, idx, key, mappings[key], values[idx]);
-          }
+          // if (mappings[key][values[idx]] === undefined) {
+          //   console.log(values, idx, key, mappings[key], values[idx]);
+          // }
           if (key === "traildifficulty" && profile === "Pedestrian") {
             extrasAtPoint[key] = mappings[key][values[idx]].text_hiking;
           } else if (mappings[key][values[idx]].type === -1) {
@@ -393,9 +420,8 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
                       "false"
                     ]);
                   }
-                  // summary:[{value:3,distance:5293.4,amount:96.5},{value:0,distance:191.8,amount:3.5}
-
                   let i = skipNode;
+                  // no need to handle multiple routes as only works without skipped segments
                   let geomReference =
                     orsRouteService.data.features[0].geometryRaw;
                   while (geomReference[i][2] === 0) {

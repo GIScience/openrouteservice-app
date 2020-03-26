@@ -16,7 +16,8 @@ angular
           showHeightgraph,
           randomIsoColor,
           distanceMarkers,
-          env;
+          env,
+          alternativeRoutes;
         let cookieUserOptions = $cookies.getObject("userOptions")
           ? $cookies.getObject("userOptions")
           : {};
@@ -56,6 +57,11 @@ angular
         } else {
           distanceMarkers = lists.userOptions.distanceMarkers.default;
         }
+        if ("alternativeRoutes" in cookieUserOptions) {
+          alternativeRoutes = cookieUserOptions.alternativeRoutes;
+        } else {
+          alternativeRoutes = lists.userOptions.alternativeRoutes.default;
+        }
         // save a copy of the default endpoint setup to ENV once
         if (typeof ENV.default === "undefined") {
           ENV.default = {
@@ -86,7 +92,8 @@ angular
           showHeightgraph: showHeightgraph,
           randomIsoColor: randomIsoColor,
           distanceMarkers: distanceMarkers,
-          env: env
+          env: env,
+          alternativeRoutes: alternativeRoutes
         };
       };
       orsCookiesFactory.getLocale = () => {

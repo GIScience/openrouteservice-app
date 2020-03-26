@@ -15,9 +15,9 @@ angular
         return "<b>" + "< 1" + "</b>" + " min";
       } else {
         let HHMM = [];
-        if (hours.toString().length == 1) HHMM.push("0" + hours);
+        if (hours.toString().length === 1) HHMM.push("0" + hours);
         else HHMM.push(hours);
-        if (minutes.toString().length == 1) HHMM.push("0" + minutes);
+        if (minutes.toString().length === 1) HHMM.push("0" + minutes);
         else HHMM.push(minutes);
         return "<b>" + HHMM.join(":") + "</b>";
       }
@@ -29,9 +29,9 @@ angular
       function distance(input, round) {
         input = parseInt(input);
         let units = orsSettingsFactory.getUserOptions().units;
-        if (units == "km") {
+        if (units === "km") {
           units = " m";
-          if (input >= 1000) {
+          if (Math.abs(input) >= 1000) {
             if (round) {
               input = (input / 1000).toFixed();
             } else {
@@ -42,7 +42,7 @@ angular
           } else {
             input = input.toFixed();
           }
-        } else if (units == "mi") {
+        } else if (units === "mi") {
           /** convert meters to miles */
           if (round) {
             input = (input * 0.000621371192).toFixed();
@@ -72,9 +72,9 @@ angular
       function distance(input, round) {
         input = parseInt(input);
         let units = orsSettingsFactory.getUserOptions().units;
-        if (units == "km") {
+        if (units === "km") {
           input = (input / 1000000).toFixed(2);
-        } else if (units == "mi") {
+        } else if (units === "mi") {
           input = (input / 2589988.11034).toFixed(2);
         }
         input = input + " " + units + "<sup>2</sup>";

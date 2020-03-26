@@ -15,6 +15,12 @@
 </div>
 <section ng-show="$ctrl.uploadedFiles.length > 0">
     <div>
+        <label for="importTolerance">
+            {{'IMPORT_DEVIATION_TOLERANCE' | translate}}
+        </label>
+        <input ng-model="$ctrl.importTolerance" value="$ctrl.importTolerance" type="number" id="importTolerance" step="0.001">
+    </div>
+    <div>
         <table class="ui celled striped table">
             <thead>
                 <tr>

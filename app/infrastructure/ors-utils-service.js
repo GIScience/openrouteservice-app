@@ -210,6 +210,21 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
           ]);
         if (waypoint._direct) payload.skip_segments.push(idx);
       });
+      // alternative routes
+      let orsSettingsFactory = $injector.get("orsSettingsFactory");
+      if (
+        orsSettingsFactory.getUserOptions().alternativeRoutes &&
+        settings.waypoints.length === 2
+      ) {
+        let from = turf.helpers.point(payload.coordinates[0]);
+        let to = turf.helpers.point(payload.coordinates[1]);
+        let beeLineDistance = turf.distance(from, to, "kilometers");
+        // only generate alternative routes for a distance below 100 km
+        if (beeLineDistance <= 100) {
+          payload.alternative_routes = { target_count: 2 };
+        }
+      }
+
       // extras
       payload.extra_info = [];
       const extra_infos = orsUtilsService.getExtraInformation();
@@ -229,7 +244,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
     };
     /**
      * generates object for request and serializes it to http parameters
-     * @param {String} str: Free form address
+     * @param {Object} obj: Free form address
      * @param {boolean} reverse: if reversed geocoding, default false
      * @param {string} language: Desired language of response
      * @param {number} limit: To limit the amount of responses

@@ -20,7 +20,7 @@ angular.module("orsApp.map-service", []).factory("orsMapFactory", [
           editable: true,
           maxBounds: bounds,
           minZoom: 2,
-          maxZoom: 17
+          maxZoom: 18
         });
       }
     };

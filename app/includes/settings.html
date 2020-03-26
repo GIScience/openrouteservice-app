@@ -51,7 +51,7 @@
         </label>
         <select data-ng-model="$ctrl.currentOptions.routinglang"
                 data-ng-options="(language) for language in $ctrl.optionList.routinglanguages.all"
-                name="routinglanguage" ng-change="$ctrl.changeOptions('routinglang)">
+                name="routinglanguage" ng-change="$ctrl.changeOptions('routinglang')">
         </select>
     </section>
     <section>
@@ -83,6 +83,14 @@
                         </label>
                     </div>
                 </div>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input data-ng-model="$ctrl.currentOptions.alternativeRoutes" id="alternativeRoutes"
+                               ng-change="$ctrl.changeOptions('alternativeRoutes')" type="checkbox">
+                        <label for="alternativeRoutes" ng-bind-html="('LOCAL_ALT_ROUTE' | translate)">
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -91,7 +99,7 @@
         </h2>
         <div class="ui form align-left">
             <div class="grouped fields">
-                <div class="field" ng-if="$ctrl.lists_extra_info.steepness | contains:$ctrl.getActiveProfile().type">
+                <div class="field" ng-if="$ctrl.lists_extra_info.steepness | contains:$ctrl.getActiveSubGroup()">
                     <div class="ui checkbox">
                         <input data-ng-model="$ctrl.extra_infos.steepness" id="steepness_exin" type="checkbox"
                                ng-change="$ctrl.changeExtras()">
@@ -99,7 +107,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="field" ng-if="$ctrl.lists_extra_info.surface | contains:$ctrl.getActiveProfile().type">
+                <div class="field" ng-if="$ctrl.lists_extra_info.surface | contains:$ctrl.getActiveSubGroup()">
                     <div class="ui checkbox">
                         <input data-ng-model="$ctrl.extra_infos.surface" id="surface_exin"
                                ng-change="$ctrl.changeExtras()" type="checkbox">
@@ -107,7 +115,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="field" ng-if="$ctrl.lists_extra_info.waytype | contains:$ctrl.getActiveProfile().type">
+                <div class="field" ng-if="$ctrl.lists_extra_info.waytype | contains:$ctrl.getActiveSubGroup()">
                     <div class="ui checkbox">
                         <input data-ng-model="$ctrl.extra_infos.waytype" id="waytype_exin"
                                ng-change="$ctrl.changeExtras()" type="checkbox">
@@ -115,7 +123,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="field" ng-if="$ctrl.lists_extra_info.suitability | contains:$ctrl.getActiveProfile().type">
+                <div class="field" ng-if="$ctrl.lists_extra_info.suitability | contains:$ctrl.getActiveSubGroup()">
                     <div class="ui checkbox">
                         <input data-ng-model="$ctrl.extra_infos.suitability" id="suitability_exin"
                                ng-change="$ctrl.changeExtras()" type="checkbox">
@@ -123,7 +131,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="field" ng-if="$ctrl.lists_extra_info.tollways | contains:$ctrl.getActiveProfile().type">
+                <div class="field" ng-if="$ctrl.lists_extra_info.tollways | contains:$ctrl.getActiveSubGroup()">
                     <div class="ui checkbox">
                         <input data-ng-model="$ctrl.extra_infos.tollways" id="tollways_exin"
                                ng-change="$ctrl.changeExtras()" type="checkbox">
@@ -131,7 +139,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="field" ng-if="$ctrl.lists_extra_info.green | contains:$ctrl.getActiveProfile().type">
+                <div class="field" ng-if="$ctrl.lists_extra_info.green | contains:$ctrl.getActiveSubGroup()">
                     <div class="ui checkbox">
                         <input data-ng-model="$ctrl.extra_infos.green" id="green_exin" ng-change="$ctrl.changeExtras()"
                                type="checkbox">
@@ -139,7 +147,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="field" ng-if="$ctrl.lists_extra_info.noise | contains:$ctrl.getActiveProfile().type">
+                <div class="field" ng-if="$ctrl.lists_extra_info.noise | contains:$ctrl.getActiveSubGroup()">
                     <div class="ui checkbox">
                         <input data-ng-model="$ctrl.extra_infos.noise" id="noise_exin" ng-change="$ctrl.changeExtras()"
                                type="checkbox">
@@ -148,7 +156,7 @@
                     </div>
                 </div>
                 <div class="field"
-                     ng-if="$ctrl.lists_extra_info.traildifficulty | contains:$ctrl.getActiveProfile().type">
+                     ng-if="$ctrl.lists_extra_info.traildifficulty | contains:$ctrl.getActiveSubGroup()">
                     <div class="ui checkbox">
                         <input data-ng-model="$ctrl.extra_infos.traildifficulty" id="traildifficulty_exin"
                                ng-change="$ctrl.changeExtras()" type="checkbox">
@@ -225,8 +233,8 @@
         <button ng-click="$ctrl.resetEndpoints(); $ctrl.showPopup()">Reset</button>
         <button ng-click="$ctrl.setENV(); $ctrl.saveEndpoints(); $ctrl.showPopup()">Change Endpoints</button>
         <div class="ui checkbox">
-            <input data-ng-model="$ctrl.saveCookies" id="saveCookies" type="checkbox">
-            <label for="saveCookies" ng-bind-html="'Save to cookies'">
+            <input data-ng-model="$ctrl.saveENV" id="saveENV" type="checkbox">
+            <label for="saveENV" ng-bind-html="'Save to cookies'">
             </label>
         </div>
     </section>

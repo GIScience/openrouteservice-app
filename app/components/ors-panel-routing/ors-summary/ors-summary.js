@@ -32,6 +32,10 @@ angular
         ctrl.showShare = false;
         ctrl.showExport = false;
         ctrl.profiles = lists.profiles;
+        ctrl.currentRouteIndex = orsRouteService.getCurrentRouteIdx() || 0;
+        $rootScope.$on("activeRouteChanged", (f, idx) => {
+          ctrl.currentRouteIndex = idx;
+        });
         ctrl.setIdx = idx => {
           orsRouteService.setCurrentRouteIdx(idx);
         };
@@ -50,18 +54,20 @@ angular
           if (orsRouteService.data.features.length > 0) {
             ctrl.data = orsRouteService.data;
             const idx = ctrl.getIdx() === undefined ? 0 : ctrl.getIdx();
-            ctrl.route = ctrl.data.features[idx];
-            if (ctrl.data.metadata.query.elevation) {
-              // process heightgraph data
-              const hgGeojson = orsRouteService.processHeightgraphData({
-                geometry: ctrl.route.geometryRaw,
-                properties: {
-                  extras: ctrl.route.properties.extras
-                }
-              });
-              orsRouteService.addHeightgraph(hgGeojson);
+            for (let [key, route] of Object.entries(ctrl.data.features)) {
+              key = parseInt(key);
+              if (key === idx && ctrl.data.metadata.query.elevation) {
+                // process heightgraph data
+                const hgGeojson = orsRouteService.processHeightgraphData({
+                  geometry: route.geometryRaw,
+                  properties: {
+                    extras: route.properties.extras
+                  }
+                });
+                orsRouteService.addHeightgraph(hgGeojson);
+              }
+              orsRouteService.addRoute(route, undefined, key);
             }
-            orsRouteService.addRoute(ctrl.route);
           }
         }
         /** if we are returning to this panel, dispose all old subscriptions */
@@ -86,6 +92,11 @@ angular
         };
         ctrl.classInQuery = (ofsData, vehicleClass) => {
           return ofsData.general.vehicle_categories.indexOf(vehicleClass) > -1;
+        };
+        ctrl.changeCurrentRoute = idx => {
+          if (idx === ctrl.currentRouteIndex) return;
+          ctrl.setIdx(idx);
+          $rootScope.$broadcast("activeRouteChanged", idx);
         };
       }
     ]
