@@ -338,6 +338,10 @@ angular.module("orsApp").constant("lists", {
         }
       },
       Curb: {
+        "0.001": {
+          name: "0.0 cm",
+          value: 0.001
+        },
         "0.03": {
           name: "Up to 3cm",
           value: 0.03
