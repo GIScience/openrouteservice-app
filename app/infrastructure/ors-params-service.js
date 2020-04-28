@@ -21,7 +21,8 @@ angular.module("orsApp.params-service", []).factory("orsParamsService", [
             analysis_options: {},
             avoidables: {},
             borders: {},
-            round_trip: {}
+            round_trip: {},
+            time:{}
           }
         }
       };
@@ -106,6 +107,12 @@ angular.module("orsApp.params-service", []).factory("orsParamsService", [
           settings.profile.options[key] = orsParamsService.parseStringToBool(
             value
           );
+        }
+        if (key === "time_mode") {
+          settings.profile.options.time.mode = 'arrival'
+        }
+        if (key === "time_value") {
+          settings.profile.options.time.value = moment(parseInt(value, 36))
         }
         if (
           [

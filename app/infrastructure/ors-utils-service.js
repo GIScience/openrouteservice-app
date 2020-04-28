@@ -651,6 +651,16 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
               link +=
                 obj[o] >= 1000 ? (obj[o] / 1000).toString() : obj[o].toString();
             }
+            if (lists.optionList.time[o] && obj.id !== 0) {
+              if (o === "mode" && obj[o] === "arrival") {
+                link += "&" + lists.permalinkKeys["time_" + o] + "=1";
+              }
+              if (o === "value") {
+                let date = moment(obj[o]);
+                link += "&" + lists.permalinkKeys["time_" + o] + "=";
+                link += date.valueOf().toString(36);
+              }
+            }
           }
         }
       }
