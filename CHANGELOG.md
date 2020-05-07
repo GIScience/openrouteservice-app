@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 ### Added
+- World Imagery (Esri) satellite base layer
 - 0mm kerb option for wheelchair profile
 
 ## [v0.5.0] - 2020-03-26
