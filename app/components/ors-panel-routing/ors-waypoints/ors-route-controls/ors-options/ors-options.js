@@ -499,6 +499,9 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
             options: {
               stepsArray: [
                 {
+                  value: ctrl.optionList.wheelchair.Curb["0.001"].value
+                },
+                {
                   value: ctrl.optionList.wheelchair.Curb["0.03"].value
                 },
                 {
