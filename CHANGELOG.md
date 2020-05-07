@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed-->
 
-## [Unreleased]
+## [v0.5.1] - 2020-05-07
 
 ### Added
 - World Imagery (Esri) satellite base layer
