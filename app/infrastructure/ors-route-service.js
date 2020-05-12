@@ -56,29 +56,6 @@ angular.module("orsApp.route-service", []).factory("orsRouteService", [
       }
       orsRouteService.routingRequests.requests = [];
     };
-    /**
-     * Requests route from ORS backend
-     * @param {String} requestData: XML for request payload
-     */
-    orsRouteService.fetchRoute = requestData => {
-      let url = ENV.directions;
-      const canceller = $q.defer();
-      const cancel = reason => {
-        canceller.resolve(reason);
-      };
-      url += `/${requestData.profile}/${requestData.geometry_format}`;
-      delete requestData.profile;
-      delete requestData.geometry_format;
-      const promise = $http
-        .post(url, requestData, { timeout: canceller.promise })
-        .then(response => {
-          return response.data;
-        });
-      return {
-        promise: promise,
-        cancel: cancel
-      };
-    };
     orsRouteService.setCurrentRouteIdx = idx => {
       orsRouteService.currentRouteIdx = idx;
     };

@@ -12,6 +12,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed-->
 
+## [v0.5.2] - 2020-05-12
+
+### Fixed
+- avoid features & polygons not working for isochrones
+### Changed
+- isochrones endpoint to V2 API
+### Removed
+- Mapsurfer baselayer
+
 ## [v0.5.1] - 2020-05-07
 
 ### Added

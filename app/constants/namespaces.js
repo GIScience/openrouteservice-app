@@ -47,15 +47,6 @@ angular.module("orsApp").constant("orsNamespaces", {
     keywords: "Openrouteservice. Routing. GIS. Universität Heidelberg",
     src: "Route point logged using Openrouteservice"
   },
-  /**
-   * map layers used on the openlayers map
-   */
-  //url to Open Map Surfer layer
-  layerMapSurfer: {
-    url: "https://api.openrouteservice.org/mapsurfer/{z}/{x}/{y}.png",
-    attribution:
-      'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, powered by <a href="http://mapsurfernet.com/">MapSurfer.NET</a>'
-  },
   //url to hillshade overlay
   layerHs:
     "https://korona.geog.uni-heidelberg.de/tiles/asterh/x={x}&y={y}&z={z}",

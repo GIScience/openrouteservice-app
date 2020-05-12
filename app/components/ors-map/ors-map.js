@@ -62,10 +62,6 @@ angular.module("orsApp").directive("orsMap", () => {
         let ak = "?api_key=" + apiKey;
 
         $scope.translateFilter = $filter("translate");
-        const mapsurfer = L.tileLayer(ENV.mapsurfer + ak, {
-          attribution: orsNamespaces.layerMapSurfer.attribution,
-          id: 0
-        });
         const bkgtopplus = L.tileLayer.wms(orsNamespaces.layerBkgTopPlus.url, {
           layers: "web",
           format: "image/png",
@@ -397,7 +393,7 @@ angular.module("orsApp").directive("orsMap", () => {
           orsCookiesFactory.getMapOptions() &&
           orsCookiesFactory.getMapOptions().msi
             ? orsCookiesFactory.getMapOptions().msi
-            : 0;
+            : 3;
 
         // mapOptionsInitSubject is a replay subject and only subscribes once
         let mapInitSubject = orsSettingsFactory.mapOptionsInitSubject.subscribe(
@@ -514,7 +510,6 @@ angular.module("orsApp").directive("orsMap", () => {
           setSettings();
         };
         $scope.baseLayers = {
-          OpenMapSurfer: mapsurfer,
           "TopPlus-Web-Open": bkgtopplus,
           "TopPlus-Web-Open Greyscale": bkgtopplusgrey,
           OpenStreetMap: openstreetmap,
@@ -530,7 +525,6 @@ angular.module("orsApp").directive("orsMap", () => {
           // add mapstyle
           angular.forEach($scope.baseLayers, (value, key) => {
             if (value.options.id === $scope.mapStyleId) {
-              console.log($scope.mapStyleId, $scope.baseLayers);
               $scope.baseLayers[key].addTo($scope.orsMap);
             }
           });

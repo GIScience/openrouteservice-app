@@ -245,7 +245,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
         orsRouteService.resetRoute();
         const userOptions = orsSettingsFactory.getUserOptions();
         const payload = orsUtilsService.routingPayload(settings, userOptions);
-        const request = orsRouteService.fetchRoute(payload);
+        const request = orsUtilsService.createRequest("directions", payload);
         orsRouteService.routingRequests.requests.push(request);
         request.promise.then(
           function(response) {
@@ -280,7 +280,7 @@ angular.module("orsApp.settings-service", []).factory("orsSettingsFactory", [
         /** Cancel outstanding requests */
         orsAaService.aaRequests.clear();
         const payload = orsUtilsService.isochronesPayload(settings);
-        const request = orsAaService.getIsochrones(payload);
+        const request = orsUtilsService.createRequest("isochrones", payload);
         orsAaService.aaRequests.requests.push(request);
         request.promise.then(
           function(response) {
