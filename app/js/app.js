@@ -96,7 +96,7 @@
               config.url === ENV.geocode + "/autocomplete" ||
               config.url === ENV.geocode + "/reverse" ||
               config.url.startsWith(ENV.directions) ||
-              config.url === ENV.isochrones ||
+              config.url.startsWith(ENV.isochrones) ||
               config.url === ENV.pois ||
               config.url === ENV.matrix ||
               config.url === ENV.mapsurfer ||

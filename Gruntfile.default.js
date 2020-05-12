@@ -274,7 +274,7 @@ module.exports = function(grunt) {
                         directions:
                             "http://localhost:3005/ors/v2/directions",
                         isochrones:
-                            "http://localhost:3005/ors/isochrones",
+                            "http://localhost:3005/ors/v2/isochrones",
                         matrix:
                             "http://localhost:3005/ors/matrix",
                         pois:
@@ -298,7 +298,7 @@ module.exports = function(grunt) {
                         directions:
                             "https://api.openrouteservice.org/v2/directions",
                         isochrones:
-                            "https://api.openrouteservice.org/isochrones",
+                            "https://api.openrouteservice.org/v2/isochrones",
                         matrix: "https://api.openrouteservice.org/matrix",
                         pois: "https://api.openrouteservice.org/pois",
                         shortenlink: "https://api-ssl.bitly.com/v3/shorten",

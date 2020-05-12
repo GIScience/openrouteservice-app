@@ -430,20 +430,23 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
       let payload;
       payload = {
         format: "json",
-        locations:
-          orsUtilsService.roundCoordinate(settings.waypoints[0]._latlng.lng) +
-          "," +
-          orsUtilsService.roundCoordinate(settings.waypoints[0]._latlng.lat),
+        locations: [
+          [
+            orsUtilsService.roundCoordinate(settings.waypoints[0]._latlng.lng),
+            orsUtilsService.roundCoordinate(settings.waypoints[0]._latlng.lat)
+          ]
+        ],
         // this will suppress the jshint error for linebreak before ternary
         /*jshint -W014 */
         range_type:
           parseInt(settings.profile.options.analysis_options.method) === 0
             ? "time"
             : "distance",
-        range:
+        range: [
           parseInt(settings.profile.options.analysis_options.method) === 0
             ? settings.profile.options.analysis_options.isovalue * 60
-            : settings.profile.options.analysis_options.isovalue * 1000,
+            : settings.profile.options.analysis_options.isovalue * 1000
+        ],
         interval:
           parseInt(settings.profile.options.analysis_options.method) === 0
             ? settings.profile.options.analysis_options.isointerval * 60
@@ -454,8 +457,8 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
             : lists.isochroneOptionList.reverseFlow.start,
         /*jshint +W014 */
         profile: lists.profiles[settings.profile.type].request,
-        attributes: "area|reachfactor|total_pop",
-        options: JSON.stringify(orsUtilsService.generateOptions(settings))
+        attributes: ["area", "reachfactor", "total_pop"],
+        options: orsUtilsService.generateOptions(settings)
       };
       // remove options if empty
       if (
@@ -828,6 +831,27 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
           delete obj[k]; // The object had no properties, so delete that property
         }
       }
+    };
+    orsUtilsService.createRequest = (type, requestData) => {
+      let url = ENV[type];
+      const canceller = $q.defer();
+      const cancel = reason => {
+        canceller.resolve(reason);
+      };
+      url += `/${requestData.profile}`;
+      if (type === "directions") url += `/${requestData.geometry_format}`;
+      delete requestData.profile;
+      delete requestData.geometry_format;
+      delete requestData.format;
+      const promise = $http
+        .post(url, requestData, { timeout: canceller.promise })
+        .then(response => {
+          return response.data;
+        });
+      return {
+        promise: promise,
+        cancel: cancel
+      };
     };
     return orsUtilsService;
   }

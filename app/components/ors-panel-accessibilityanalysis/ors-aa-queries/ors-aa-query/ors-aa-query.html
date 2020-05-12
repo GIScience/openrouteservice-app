@@ -1,7 +1,7 @@
 <div class="ors-aa-query">
     <div class="segment">
         <div class="summary" ng-mouseout="$ctrl.deEmph();" ng-mouseover="$ctrl.emph();">
-            <div class="ui label tiny block margin-bottom-3" ng-switch="$ctrl.attributes.info.query.range_type">
+            <div class="ui label tiny block margin-bottom-3" ng-switch="$ctrl.attributes.metadata.query.range_type">
                 <span ng-bind-html="$ctrl.isochroneIdx + 1">
                 </span>
                 <span ng-bind-html="'-'">
@@ -11,9 +11,9 @@
                 <span ng-bind-html="('DISTANCE' | translate)" ng-switch-when="distance">
                 </span>
                 <div class="detail">
-                    <span ng-bind-html="($ctrl.attributes.info.query.ranges[$ctrl.attributes.info.query.ranges.length-1] | distance:true)" ng-switch-when="distance">
+                    <span ng-bind-html="($ctrl.attributes.metadata.query.range[0] | distance:true)" ng-switch-when="distance">
                     </span>
-                    <span ng-bind-html="$ctrl.attributes.info.query.ranges[$ctrl.attributes.info.query.ranges.length-1]/60" ng-switch-when="time">
+                    <span ng-bind-html="$ctrl.attributes.metadata.query.range[0]/60" ng-switch-when="time">
                     </span>
                     <span ng-bind-html="'min'" ng-switch-when="time">
                     </span>
@@ -29,7 +29,7 @@
                 <i ng-class="$ctrl.show()" tooltip-append-to-body="true" tooltip-side="top" tooltip-template="{{('TOGGLESHOW' | translate)}}" tooltips="">
                 </i>
             </span>
-            <span ng-click="$ctrl.zoomTo($ctrl.attributes.info.query.ranges.length-1);">
+            <span ng-click="$ctrl.zoomTo($ctrl.attributes.metadata.query.range[0]);">
                 <i class="fa fa-expand" tooltip-append-to-body="true" tooltip-side="top" tooltip-template="{{('EXPAND' | translate)}}" tooltips="">
                 </i>
             </span>
@@ -44,7 +44,7 @@
         </div>
     </div>
     <div class="segment" ng-mouseout="$ctrl.deEmph();" ng-mouseover="$ctrl.emph();">
-        <div class="icon" ng-switch="$ctrl.attributes.info.query.profile">
+        <div class="icon" ng-switch="$ctrl.attributes.metadata.query.profile">
             <div ng-switch-when="driving-car">
                 <i class="fa fa-lg fa-car">
                 </i>
@@ -67,7 +67,7 @@
             </div>
         </div>
         <div class="waypoint">
-            <h4 ng-bind-html="$ctrl.attributes.info.address">
+            <h4 ng-bind-html="$ctrl.attributes.metadata.address">
             </h4>
         </div>
         <div class="opacitySlider">
@@ -84,7 +84,7 @@
     <div class="collapsable" ng-class="{ showMe: showIsochrones }">
         <table class="ui celled teal compact small table">
             <thead>
-                <tr ng-switch="$ctrl.attributes.info.query.range_type">
+                <tr ng-switch="$ctrl.attributes.metadata.query.range_type">
                     <th>
                         <span ng-bind-html="('RANGE' | translate)">
                         </span>
@@ -93,7 +93,7 @@
                         <span ng-bind-html="('AREA' | translate)">
                         </span>
                     </th>
-                    <th ng-switch-when="time">
+                    <th>
                         <span ng-bind-html="('REACHFACTOR' | translate)">
                         </span>
                     </th>
@@ -109,25 +109,31 @@
                 </tr>
             </thead>
             <tbody align="right">
-                <tr class="pointer" ng-class="{highlight: hover}" ng-click="$ctrl.zoomTo($index); $event.stopPropagation();" ng-mouseout="$ctrl.deEmph(); hover=false;" ng-mouseover="$ctrl.emph($index); hover=true;" ng-repeat="isochrone in $ctrl.attributes.info.query.ranges" ng-switch="$ctrl.attributes.info.query.range_type">
+                <tr class="pointer"
+                    ng-class="{highlight: hover}"
+                    ng-click="$ctrl.zoomTo($index); $event.stopPropagation();"
+                    ng-mouseout="$ctrl.deEmph(); hover=false;"
+                    ng-mouseover="$ctrl.emph($index); hover=true;"
+                    ng-repeat="isochrone in $ctrl.attributes.features"
+                    ng-switch="$ctrl.attributes.metadata.query.range_type">
                     <td>
-                        <span ng-bind-html="(isochrone | distance:true)" ng-switch-when="distance">
+                        <span ng-bind-html="(isochrone.properties.value | distance:true)" ng-switch-when="distance">
                         </span>
-                        <span ng-bind-html="(isochrone/60)" ng-switch-when="time">
+                        <span ng-bind-html="(isochrone.properties.value/60)" ng-switch-when="time">
                         </span>
                         <span ng-bind-html="'min'" ng-switch-when="time">
                         </span>
                     </td>
                     <td>
-                        <span ng-bind-html="($ctrl.attributes.features[$index].properties.area | area)">
-                        </span>
-                    </td>
-                    <td ng-switch-when="time">
-                        <span ng-bind-html="($ctrl.attributes.features[$index].properties.reachfactor | number: 2)">
+                        <span ng-bind-html="(isochrone.properties.area | area)">
                         </span>
                     </td>
                     <td>
-                        <span ng-bind-html="($ctrl.attributes.features[$index].properties.total_pop)">
+                        <span ng-bind-html="(isochrone.properties.reachfactor | number: 2)">
+                        </span>
+                    </td>
+                    <td>
+                        <span ng-bind-html="(isochrone.properties.total_pop)">
                         </span>
                     </td>
                     <td>

@@ -143,7 +143,7 @@ angular.module("orsApp.aa-service", []).factory("orsAaService", [
       action = orsObjectsFactory.createMapAction(
         34,
         lists.layers[5],
-        isochronesObj.info.query.locations[0],
+        isochronesObj.metadata.query.locations[0],
         idx
       );
       orsMapFactory.mapServiceSubject.onNext(action);
@@ -186,7 +186,7 @@ angular.module("orsApp.aa-service", []).factory("orsAaService", [
     orsAaService.processResponse = (data, settings) => {
       orsAaService.orsAaObj = data;
       // add geocode address
-      orsAaService.orsAaObj.info.address = settings.waypoints[0]._address;
+      orsAaService.orsAaObj.metadata.address = settings.waypoints[0]._address;
       // reverse order, needed as leaflet ISO 6709
       for (let i = 0; i < orsAaService.orsAaObj.features.length; i++) {
         for (
@@ -199,38 +199,11 @@ angular.module("orsApp.aa-service", []).factory("orsAaService", [
           ].reverse();
         }
       }
-      // split ranges into list
-      orsAaService.orsAaObj.info.query.ranges = orsAaService.orsAaObj.info.query.ranges.split(
-        ","
-      );
       orsAaService.aaSubject.onNext(orsAaService.orsAaObj);
     };
     /** Subscription function to current aa responses object, used in panel. */
     orsAaService.subscribeToAaQueries = o => {
       return orsAaService.aaSubject.subscribe(o);
-    };
-    /**
-     * Requests accessiblity analysis from ORS backend
-     * @param {String} requestData: XML for request payload
-     */
-    orsAaService.getIsochrones = requestData => {
-      var url = ENV.isochrones;
-      var canceller = $q.defer();
-      var cancel = reason => {
-        canceller.resolve(reason);
-      };
-      var promise = $http
-        .get(url, {
-          params: requestData,
-          timeout: canceller.promise
-        })
-        .then(response => {
-          return response.data;
-        });
-      return {
-        promise: promise,
-        cancel: cancel
-      };
     };
     return orsAaService;
   }
