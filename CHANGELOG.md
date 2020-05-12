@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed-->
 
+## [Unreleased]
+
+### Removed
+- Mapsurfer baselayer
+
 ## [v0.5.1] - 2020-05-07
 
 ### Added
