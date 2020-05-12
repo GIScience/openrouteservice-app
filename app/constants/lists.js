@@ -271,11 +271,7 @@ angular.module("orsApp").constant("lists", {
       },
       fords: {
         name: "fords",
-        subgroups: [
-          "Bicycle",
-          "Wheelchair",
-          "Pedestrian"
-        ]
+        subgroups: ["Bicycle", "Wheelchair", "Pedestrian"]
       },
       steps: {
         name: "steps",
