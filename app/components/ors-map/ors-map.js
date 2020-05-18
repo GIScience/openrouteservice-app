@@ -99,6 +99,10 @@ angular.module("orsApp").directive("orsMap", () => {
           attribution: orsNamespaces.layerWorldImagery.attribution,
           id: 7
         });
+        const cycleOSM = L.tileLayer(orsNamespaces.layerCycleOsm.url, {
+          attribution: orsNamespaces.layerCycleOsm.attribution,
+          id: 8
+        });
         // const stamen = L.tileLayer(orsNamespaces.layerStamen.url, {
         //     attribution: orsNamespaces.layerStamen.attribution,
         // });
@@ -516,7 +520,8 @@ angular.module("orsApp").directive("orsMap", () => {
           OpenCycleMap: opencyclemap,
           "Transport Dark": transportdark,
           Outdoors: outdoors,
-          "World Imagery": worldImagery
+          "World Imagery": worldImagery,
+          CycleOSM: cycleOSM
         };
         $scope.overlays = {
           // "Hillshade": hillshade
