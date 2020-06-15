@@ -45,7 +45,7 @@ angular
         let payload = orsUtilsService.routingPayload(settings, userOptions);
         payload.geometry_format = "gpx";
         if (!options.instructions) payload.instructions = false;
-        const request = orsRouteService.fetchRoute(payload);
+        const request = orsUtilsService.createRequest("directions", payload);
         orsRouteService.routingRequests.requests.push(request);
         request.promise.then(
           function(response) {
