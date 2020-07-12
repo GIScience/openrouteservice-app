@@ -1115,6 +1115,7 @@ angular.module("orsApp").directive("orsMap", () => {
          */
         $scope.addFeatures = actionPackage => {
           const isDistanceMarkers =
+            actionPackage.layerCode == "layerRouteLines" &&
             orsSettingsFactory.getUserOptions().distanceMarkers === true;
           let polyLine = L.polyline(actionPackage.geometry, {
             index:
