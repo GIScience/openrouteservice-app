@@ -290,12 +290,17 @@ angular.module("orsApp").directive("orsMap", () => {
           if (setting === "distanceMarkers") {
             // get Leaflet route object
             let lines = $scope.mapModel.geofeatures.layerRouteLines._layers;
-            let route = lines[Object.keys(lines)[0]];
 
             if (options.distanceMarkers === true) {
-              route.addDistanceMarkers();
+              Object.values(lines).forEach(route => {
+                if (route.options.distanceMarkers.cssClass)
+                  route.addDistanceMarkers();
+              });
             } else {
-              route.removeDistanceMarkers();
+              Object.values(lines).forEach(route => {
+                if (route.options.distanceMarkers.cssClass)
+                  route.removeDistanceMarkers();
+              });
             }
           }
         });
