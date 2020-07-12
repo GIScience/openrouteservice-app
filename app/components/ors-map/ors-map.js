@@ -187,12 +187,26 @@ angular.module("orsApp").directive("orsMap", () => {
             for (let [key, value] of Object.entries(
               $scope.alternativeRouteLayers
             )) {
+              const routeLines = $scope.geofeatures.layerRouteLines;
               if (key === idx.toString()) {
+                if (orsSettingsFactory.getUserOptions().distanceMarkers === true) {
+                  const routeLeafletId = Object.keys(value._layers)[0];
+                  routeLines.getLayer(routeLeafletId).addDistanceMarkers();
+                }
                 value.bringToFront();
                 Object.values(value._layers)[1]
                   .setStyle(lists.layerStyles.route())
                   .closeTooltip();
               } else {
+                if (orsSettingsFactory.getUserOptions().distanceMarkers === true) {
+                  for (let routeLeafletId of Object.keys(value._layers)) {
+                    if (
+                      Object.keys(routeLines._layers).includes(routeLeafletId)
+                    ) {
+                      routeLines.getLayer(routeLeafletId).removeDistanceMarkers();
+                    }
+                  }
+                }
                 Object.values(value._layers)[1]
                   .setStyle(lists.layerStyles.routeAlternative())
                   .closeTooltip();
@@ -233,6 +247,10 @@ angular.module("orsApp").directive("orsMap", () => {
          * @param payload.setting {String} - holds the changed Setting
          */
         $scope.$on("changeOptions", (func, payload) => {
+          let currentRouteIdx =
+              orsRouteService.getCurrentRouteIdx() === undefined
+                  ? 0
+                  : orsRouteService.getCurrentRouteIdx();
           let options = payload.options;
           let setting = payload.setting;
           if (setting === "heightgraph") {
@@ -258,10 +276,6 @@ angular.module("orsApp").directive("orsMap", () => {
                 close.bind("click", () => {
                   globals.showHeightgraph = false;
                 });
-                let idx =
-                  orsRouteService.getCurrentRouteIdx() === undefined
-                    ? 0
-                    : orsRouteService.getCurrentRouteIdx();
                 if (
                   angular.isDefined(orsRouteService.data) &&
                   angular.isDefined(orsRouteService.data.features)
@@ -276,7 +290,7 @@ angular.module("orsApp").directive("orsMap", () => {
                         );
                       }
                     }
-                    orsRouteService.addHeightgraph($scope.heightGraphData[idx]);
+                    orsRouteService.addHeightgraph($scope.heightGraphData[currentRouteIdx]);
                   }
                 } else {
                   $scope.hg.remove();
@@ -288,17 +302,25 @@ angular.module("orsApp").directive("orsMap", () => {
             }
           }
           if (setting === "distanceMarkers") {
-            // get Leaflet route object
-            let lines = $scope.mapModel.geofeatures.layerRouteLines._layers;
-            let route = lines[Object.keys(lines)[0]];
-
-            if (options.distanceMarkers === true) {
-              route.addDistanceMarkers();
-            } else {
+            $scope.toggleDistanceMarkerSetting(options.distanceMarkers, currentRouteIdx)
+          }
+        });
+        /**
+         * Handles distance marker (DM) settings
+         * @param addDistanceMarkers - if DM should be added or removed
+         * @param currentRouteIdx - current route index
+         */
+        $scope.toggleDistanceMarkerSetting = (addDistanceMarkers, currentRouteIdx) => {
+          const lines = $scope.mapModel.geofeatures.layerRouteLines._layers;
+          if (addDistanceMarkers) {
+            // alternative routes are at every 2nd index
+            lines[Object.keys(lines)[2* currentRouteIdx]].addDistanceMarkers();
+          } else {
+            for (const route of Object.values(lines)) {
               route.removeDistanceMarkers();
             }
           }
-        });
+        }
 
         /* FULLWIDTH CONTROLLER */
         L.FullwidthControl = L.Control.extend({
@@ -1115,6 +1137,7 @@ angular.module("orsApp").directive("orsMap", () => {
          */
         $scope.addFeatures = actionPackage => {
           const isDistanceMarkers =
+            actionPackage.layerCode === "layerRouteLines" &&
             orsSettingsFactory.getUserOptions().distanceMarkers === true;
           let polyLine = L.polyline(actionPackage.geometry, {
             index:
