@@ -31,7 +31,7 @@
     "leaflet-distance-markers": "git+https://github.com/adoroszlai/leaflet-distance-markers.git",
     "leaflet-geometryutil": "^0.8.0",
     "leaflet-omnivore": "^0.3.4",
-    "leaflet.heightgraph": "^0.4.1",
+    "leaflet.heightgraph": "^1.1.0",
     "leaflet.featuregroup.subgroup": "^1.0.2",
     "togpx": "^0.5.3",
     "tokml": "^0.4.0",
