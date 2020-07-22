@@ -57,8 +57,8 @@ angular.module("orsApp").directive("orsMap", () => {
           ENV.key !== undefined
             ? ENV.key
             : orsApikeyFactory.getApiKey() === undefined
-              ? weathercheck
-              : orsApikeyFactory.getApiKey();
+            ? weathercheck
+            : orsApikeyFactory.getApiKey();
         let ak = "?api_key=" + apiKey;
 
         $scope.translateFilter = $filter("translate");
@@ -103,15 +103,6 @@ angular.module("orsApp").directive("orsMap", () => {
           attribution: orsNamespaces.layerCycleOsm.attribution,
           id: 8
         });
-        // const stamen = L.tileLayer(orsNamespaces.layerStamen.url, {
-        //     attribution: orsNamespaces.layerStamen.attribution,
-        // });
-        /*const hillshade = L.tileLayer(orsNamespaces.overlayHillshade.url, {
-                    format: 'image/png',
-                    opacity: 0.45,
-                    transparent: true,
-                    attribution: '<a href="http://srtm.csi.cgiar.org/">SRTM</a>; ASTER GDEM is a product of <a href="http://www.meti.go.jp/english/press/data/20090626_03.html">METI</a> and <a href="https://lpdaac.usgs.gov/products/aster_policies">NASA</a>',
-                });*/
         $scope.heightGraphData = [];
         $scope.geofeatures = {
           layerLocationMarker: L.featureGroup(),
@@ -189,7 +180,9 @@ angular.module("orsApp").directive("orsMap", () => {
             )) {
               const routeLines = $scope.geofeatures.layerRouteLines;
               if (key === idx.toString()) {
-                if (orsSettingsFactory.getUserOptions().distanceMarkers === true) {
+                if (
+                  orsSettingsFactory.getUserOptions().distanceMarkers === true
+                ) {
                   const routeLeafletId = Object.keys(value._layers)[0];
                   routeLines.getLayer(routeLeafletId).addDistanceMarkers();
                 }
@@ -198,12 +191,16 @@ angular.module("orsApp").directive("orsMap", () => {
                   .setStyle(lists.layerStyles.route())
                   .closeTooltip();
               } else {
-                if (orsSettingsFactory.getUserOptions().distanceMarkers === true) {
+                if (
+                  orsSettingsFactory.getUserOptions().distanceMarkers === true
+                ) {
                   for (let routeLeafletId of Object.keys(value._layers)) {
                     if (
                       Object.keys(routeLines._layers).includes(routeLeafletId)
                     ) {
-                      routeLines.getLayer(routeLeafletId).removeDistanceMarkers();
+                      routeLines
+                        .getLayer(routeLeafletId)
+                        .removeDistanceMarkers();
                     }
                   }
                 }
@@ -248,9 +245,9 @@ angular.module("orsApp").directive("orsMap", () => {
          */
         $scope.$on("changeOptions", (func, payload) => {
           let currentRouteIdx =
-              orsRouteService.getCurrentRouteIdx() === undefined
-                  ? 0
-                  : orsRouteService.getCurrentRouteIdx();
+            orsRouteService.getCurrentRouteIdx() === undefined
+              ? 0
+              : orsRouteService.getCurrentRouteIdx();
           let options = payload.options;
           let setting = payload.setting;
           if (setting === "heightgraph") {
@@ -290,7 +287,9 @@ angular.module("orsApp").directive("orsMap", () => {
                         );
                       }
                     }
-                    orsRouteService.addHeightgraph($scope.heightGraphData[currentRouteIdx]);
+                    orsRouteService.addHeightgraph(
+                      $scope.heightGraphData[currentRouteIdx]
+                    );
                   }
                 } else {
                   $scope.hg.remove();
@@ -302,7 +301,10 @@ angular.module("orsApp").directive("orsMap", () => {
             }
           }
           if (setting === "distanceMarkers") {
-            $scope.toggleDistanceMarkerSetting(options.distanceMarkers, currentRouteIdx)
+            $scope.toggleDistanceMarkerSetting(
+              options.distanceMarkers,
+              currentRouteIdx
+            );
           }
         });
         /**
@@ -310,17 +312,20 @@ angular.module("orsApp").directive("orsMap", () => {
          * @param addDistanceMarkers - if DM should be added or removed
          * @param currentRouteIdx - current route index
          */
-        $scope.toggleDistanceMarkerSetting = (addDistanceMarkers, currentRouteIdx) => {
+        $scope.toggleDistanceMarkerSetting = (
+          addDistanceMarkers,
+          currentRouteIdx
+        ) => {
           const lines = $scope.mapModel.geofeatures.layerRouteLines._layers;
           if (addDistanceMarkers) {
             // alternative routes are at every 2nd index
-            lines[Object.keys(lines)[2* currentRouteIdx]].addDistanceMarkers();
+            lines[Object.keys(lines)[2 * currentRouteIdx]].addDistanceMarkers();
           } else {
             for (const route of Object.values(lines)) {
               route.removeDistanceMarkers();
             }
           }
-        }
+        };
 
         /* FULLWIDTH CONTROLLER */
         L.FullwidthControl = L.Control.extend({
@@ -532,7 +537,6 @@ angular.module("orsApp").directive("orsMap", () => {
           orsSettingsFactory.setAvoidableAreas(avoidPolygons);
         };
         const shapeDrawn = function(e) {
-          //$scope.layerControls.addOverlay($scope.geofeatures.layerAvoid, 'Avoidable regions');
           setSettings();
         };
         $scope.baseLayers = {
@@ -544,9 +548,6 @@ angular.module("orsApp").directive("orsMap", () => {
           Outdoors: outdoors,
           "World Imagery": worldImagery,
           CycleOSM: cycleOSM
-        };
-        $scope.overlays = {
-          // "Hillshade": hillshade
         };
         $scope.mapModel.map.on("load", evt => {
           // add mapstyle
@@ -576,7 +577,7 @@ angular.module("orsApp").directive("orsMap", () => {
           }
           // add layer control
           $scope.layerControls = L.control
-            .layers($scope.baseLayers, $scope.overlays)
+            .layers($scope.baseLayers)
             .addTo($scope.mapModel.map);
           $scope.mapModel.map.editTools.featuresLayer =
             $scope.geofeatures.layerAvoid;
@@ -642,9 +643,6 @@ angular.module("orsApp").directive("orsMap", () => {
             $scope.popup.update();
           }, 300);
         });
-        //$scope.mapModel.map.on('baselayerchange', emitMapChangeBaseMap);
-        //$scope.mapModel.map.on('overlayadd', emitMapChangeOverlay);
-        //$scope.mapModel.map.on('overlayremove', emitMapChangeOverlay);
         $scope.mapModel.map.on("zoomend", e => {
           const currentZoom = $scope.mapModel.map.getZoom();
           if (currentZoom >= 15) {
@@ -906,7 +904,6 @@ angular.module("orsApp").directive("orsMap", () => {
                   $timeout(function() {
                     $scope.mapModel.map.panTo(actionPackage.geometry);
                   }, 100);
-                  //$scope.mapModel.map.setZoom(13);
                 } else {
                   let bounds = new L.LatLngBounds(actionPackage.geometry);
                   $scope.orsMap.fitBounds(bounds);
@@ -1122,7 +1119,6 @@ angular.module("orsApp").directive("orsMap", () => {
                 '<span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-map-marker"></i><i class="fa fa-stack-1x icon-back"></i>' +
                 lists.landmark_icons[feature.properties.type] +
                 "</span>";
-              //locationsIcon.options.html = lists.landmark_icons[feature.properties.type];//'<i class="fa fa-map-marker"><i class="fa fa-lg fa-institution"></i></i>';
               return L.marker(latlng, {
                 icon: landmarksIcon,
                 draggable: "false"
@@ -1216,7 +1212,7 @@ angular.module("orsApp").directive("orsMap", () => {
             currentRouteIndex: actionPackage.currentRouteIndex
           });
           polyLine.bubblingMouseEvents = false;
-          // click inactive route geomgetry to activate
+          // click inactive route geometry to activate
           polyLine.on("click", e => {
             orsRouteService.setCurrentRouteIdx(
               polyLine.options.currentRouteIndex
@@ -1377,7 +1373,6 @@ angular.module("orsApp").directive("orsMap", () => {
           $scope.hoverPoint = new L.marker(snappedPosition.latlng, {
             icon: hoverIcon,
             draggable: "true"
-            //bubblingMouseEvents: true
           })
             .addTo(mapModel.geofeatures.layerRouteDrag)
             .on("dragend", event => {
@@ -1417,7 +1412,6 @@ angular.module("orsApp").directive("orsMap", () => {
                 hoverPolyLine,
                 e.latlng
               );
-              //$scope.mapModel.geofeatures.layerRouteDrag.clearLayers();
               $scope.distanceAtInterpolatedPoint =
                 snappedPosition.factor *
                 pointList[pointList.length - 1].distance;
@@ -1602,10 +1596,8 @@ angular.module("orsApp").directive("orsMap", () => {
           );
         };
         orsSettingsFactory.subscribeToNgRoute(function onNext(route) {
-          //let svg = d3.select($scope.mapModel.map.getPanes().overlayPane);
           $scope.clearMap(true);
           $scope.routing = route === "directions";
-          //if ($scope.routing) svg.style("opacity", 1);
         });
         orsSettingsFactory.subscribeToWaypoints(function onNext(d) {
           const waypoints = d;
@@ -1618,7 +1610,6 @@ angular.module("orsApp").directive("orsMap", () => {
           // re-add waypoints only after init
           if (waypoints.length > 0)
             $scope.reAddWaypoints(waypoints, $scope.routing, true);
-          // $scope.addWaypoint(idx, iconIdx, waypoint._latlng, fireRequest);
         });
         $scope.hereControl = L.control({
           position: "bottomright"
@@ -1633,7 +1624,7 @@ angular.module("orsApp").directive("orsMap", () => {
           $scope.mapModel.map.closePopup();
           const lngLatString = orsUtilsService.parseLngLatString(pos);
           const latLngString = orsUtilsService.parseLatLngString(pos);
-          // get the information of the rightclick location
+          // get the information of the right-click location
           const payload = orsUtilsService.geocodingPayload(lngLatString, true);
           const request = orsRequestService.geocode(payload, true);
           request.promise.then(
@@ -1657,7 +1648,7 @@ angular.module("orsApp").directive("orsMap", () => {
               $scope.address.latLng = latLngString;
               $scope.mapModel.map.addControl($scope.hereControl);
               // add temporary circle marker
-              var circleMarkerOptions = {
+              const circleMarkerOptions = {
                 radius: 5,
                 fillColor: "#FFF",
                 color: "#000",
