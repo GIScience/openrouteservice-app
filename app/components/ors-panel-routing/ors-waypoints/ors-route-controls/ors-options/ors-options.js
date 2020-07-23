@@ -717,8 +717,8 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
           list === "carYears"
             ? Object.keys(ctrl.carResponse[ctrl.queryModel])
             : list === "carTypes" && ctrl.queryYear
-            ? Object.keys(ctrl.carResponse[ctrl.queryModel][ctrl.queryYear])
-            : list;
+              ? Object.keys(ctrl.carResponse[ctrl.queryModel][ctrl.queryYear])
+              : list;
       };
       ctrl.chooseCategory = () => {
         // rename Object key of the filters.fuel_consumptions and keep value
@@ -755,14 +755,20 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
           if (ctrl.queryType) {
             ctrl.ofs.filters.cfd_ids =
               ctrl.carResponse[ctrl.queryModel][ctrl.queryYear][ctrl.queryType];
-            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} - ${ctrl.queryModel} (${ctrl.queryYear}) ${ctrl.queryType}`;
+            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} - ${
+              ctrl.queryModel
+            } (${ctrl.queryYear}) ${ctrl.queryType}`;
           } else if (ctrl.queryYear) {
             ctrl.ofs.filters.cfd_ids =
               ctrl.carResponse[ctrl.queryModel][ctrl.queryYear].all;
-            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} - ${ctrl.queryModel} (${ctrl.queryYear})`;
+            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} - ${
+              ctrl.queryModel
+            } (${ctrl.queryYear})`;
           } else if (ctrl.queryModel) {
             ctrl.ofs.filters.cfd_ids = ctrl.carResponse[ctrl.queryModel].all;
-            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} - ${ctrl.queryModel}`;
+            ctrl.ofs.filters.request_id = `${ctrl.queryBrand} - ${
+              ctrl.queryModel
+            }`;
           }
         } else {
           ctrl.ofs.filters.request_id =
