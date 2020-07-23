@@ -10,7 +10,7 @@
  *|------------------------------------------------------------------------------------*/
 /**
  * @author: Amandus Butzer, amandus@openrouteservice.org, Timothy Ellersiek, timothy@openrouteservice.org
- * @version: 0.5.3
+ * @version: 0.5.4
  */
 (function(searchString, position) {
   fetchData().then(bootstrapApplication);
@@ -89,8 +89,8 @@
               ENV.key !== undefined
                 ? ENV.key
                 : orsApikeyFactory.getApiKey() === undefined
-                  ? weathercheck
-                  : orsApikeyFactory.getApiKey();
+                ? weathercheck
+                : orsApikeyFactory.getApiKey();
             let ak = "?api_key=" + apiKey;
             if (
               config.url === ENV.geocode + "/autocomplete" ||

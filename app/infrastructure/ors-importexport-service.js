@@ -5,6 +5,7 @@ angular
  **/ .factory("orsExportFactory", [
     "FileSaver",
     "Blob",
+    "$translate",
     "orsNamespaces",
     "orsRequestService",
     "orsSettingsFactory",
@@ -13,6 +14,7 @@ angular
     (
       FileSaver,
       Blob,
+      $translate,
       orsNamespaces,
       orsRequestService,
       orsSettingsFactory,
@@ -45,7 +47,7 @@ angular
         let payload = orsUtilsService.routingPayload(settings, userOptions);
         payload.geometry_format = "gpx";
         if (!options.instructions) payload.instructions = false;
-        const request = orsRouteService.fetchRoute(payload);
+        const request = orsUtilsService.createRequest("directions", payload);
         orsRouteService.routingRequests.requests.push(request);
         request.promise.then(
           function(response) {
@@ -79,7 +81,7 @@ angular
       // create a simple Course TCX file (MARQ24)
       // see https://www8.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd
       let toTcx = (name, speedInKmPerH) => {
-        let version = "0.5.3";
+        let version = "0.5.4";
         let pointInformation =
           orsRouteService.data.features[orsRouteService.getCurrentRouteIdx()]
             .point_information;
@@ -132,7 +134,8 @@ angular
             },
             Intensity: "Active"
           },
-          Track: { Trackpoint: [] }
+          Track: { Trackpoint: [] },
+          CoursePoint: []
         };
         let duration;
         for (const data of pointInformation) {
@@ -164,6 +167,108 @@ angular
           }
         }
         courseObj.Lap.TotalTimeSeconds = duration.toFixed(1);
+
+        // adding now the navigation info...
+        const turnInstructions =
+          orsRouteService.data.features[orsRouteService.getCurrentRouteIdx()]
+            .properties.segments;
+
+        // for the timing we need to sum up the distance of the steps...
+        // (to be able to calculate the time of the 'CoursePoint')
+        let totalDistance = 0;
+        let segmentCount = 0;
+        for (const segment of turnInstructions) {
+          for (const step of segment.steps) {
+            totalDistance = totalDistance + step.distance;
+            duration = totalDistance / speedInMPerS;
+            const seconds = duration.toFixed(3) || 0;
+            const milliSeconds = seconds.split(".")[1] || 0;
+            let durationDate = new Date(
+              2010,
+              0,
+              1,
+              12,
+              0,
+              seconds,
+              milliSeconds
+            );
+
+            let alternativeName;
+            let pointType;
+            // see org.heigit.ors.routing.instructions.InstructionType
+            switch (step.type) {
+              case 0:
+              case 2:
+              case 4:
+              case 12:
+                pointType = "Left";
+                break;
+
+              case 1:
+              case 3:
+              case 5:
+              case 13:
+                pointType = "Right";
+                break;
+
+              case 6:
+                // Continue...
+                pointType = "Straight";
+                break;
+
+              case 7:
+                pointType = "Right"; // not valid in LeftSide Traffic countries...
+                alternativeName =
+                  $translate.instant("TURN_INFO_RDB_EXIT") +
+                  " " +
+                  step.exit_number;
+                break;
+
+              case 9:
+                pointType = "Generic";
+                alternativeName = $translate.instant("TURN_INFO_UTURN");
+                break;
+
+              case 10: // finish
+              case 11: // depart
+                if (
+                  (step.type === 11 && segmentCount === 0) ||
+                  (step.type === 10 && segmentCount === turnInstructions.length)
+                ) {
+                  pointType = "Generic";
+                }
+                break;
+
+              default:
+                break;
+            }
+
+            if (step.type !== undefined) {
+              // the index of the coordinate of the "step" start...
+              let coordIndex = step.way_points[0];
+
+              // get rid of the possible present HTML tags...
+              let inst = step.instruction.replace(/<[^>]+>/g, "").trim();
+
+              // adding the Turn-Instructions...
+              let coursePointObj = {
+                Name:
+                  alternativeName !== undefined
+                    ? alternativeName
+                    : inst.substr(0, 10).trim(),
+                Time: durationDate.toISOString(),
+                Position: {
+                  LatitudeDegrees: pointInformation[coordIndex].coords[0],
+                  LongitudeDegrees: pointInformation[coordIndex].coords[1]
+                },
+                PointType: pointType,
+                Notes: inst
+              };
+              courseObj.CoursePoint.push(coursePointObj);
+            }
+          }
+          segmentCount++;
+        }
         tcx.TrainingCenterDatabase.Courses.Course.push(courseObj);
 
         JXON.config({ attrPrefix: "@" });

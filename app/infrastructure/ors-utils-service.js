@@ -22,8 +22,8 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
         if (pair !== undefined) {
           let ptA = pair[0].toString().split(".");
           let ptB = pair[1].toString().split(".");
-          ptA = ptA[0] + "." + ptA[1].substr(0, 5);
-          ptB = ptB[0] + "." + ptB[1].substr(0, 5);
+          ptA = ptA[0] + "." + ptA[1].substr(0, length);
+          ptB = ptB[0] + "." + ptB[1].substr(0, length);
           coordsTrimmed.push([ptA, ptB]);
         }
       }
@@ -43,12 +43,6 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
     orsUtilsService.getExtraInformation = () => {
       return orsUtilsService.extra_information;
     };
-    orsUtilsService.isInt = n => {
-      return Number(n) === n && n % 1 === 0;
-    };
-    orsUtilsService.isFloat = n => {
-      return Number(n) === n && n % 1 !== 0;
-    };
     /**
      * checks whether position are valid coordinates
      * @param {String} lat: Latitude as string
@@ -60,11 +54,7 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
       const ck_lng = /^(-?(?:1[0-7]|[1-9])?\d(?:\.\d{1,18})?|180(?:\.0{1,18})?)$/;
       const validLat = ck_lat.test(lat);
       const validLon = ck_lng.test(lng);
-      if (validLat && validLon) {
-        return true;
-      } else {
-        return false;
-      }
+      return validLat && validLon;
     };
     /**
      * Rounds decimal of coordinate
@@ -98,51 +88,6 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
         ", " +
         Math.round(latlng.lat * 1000000) / 1000000
       );
-    };
-    /**
-     * Decodes to a [latitude, longitude] coordinates array.
-     * @param {String} str
-     * @param {Boolean} elevation
-     * @param {Number} precision
-     * @returns {Array}
-     */
-    orsUtilsService.decodePolyline = function(str, elevation, precision) {
-      let index = 0,
-        lat = 0,
-        lng = 0,
-        coordinates = [],
-        shift = 0,
-        result = 0,
-        byte = null,
-        latitude_change,
-        longitude_change,
-        factor = Math.pow(10, precision || 5);
-      // Coordinates have variable length when encoded, so just keep
-      // track of whether we've hit the end of the string. In each
-      // loop iteration, a single coordinate is decoded.
-      while (index < str.length) {
-        // Reset shift, result, and byte
-        byte = null;
-        shift = 0;
-        result = 0;
-        do {
-          byte = str.charCodeAt(index++) - 63;
-          result |= (byte & 0x1f) << shift;
-          shift += 5;
-        } while (byte >= 0x20);
-        latitude_change = result & 1 ? ~(result >> 1) : result >> 1;
-        shift = result = 0;
-        do {
-          byte = str.charCodeAt(index++) - 63;
-          result |= (byte & 0x1f) << shift;
-          shift += 5;
-        } while (byte >= 0x20);
-        longitude_change = result & 1 ? ~(result >> 1) : result >> 1;
-        lat += latitude_change;
-        lng += longitude_change;
-        coordinates.push([lat / factor, lng / factor]);
-      }
-      return coordinates;
     };
     /**
      * Requests shorten link
@@ -329,26 +274,21 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
       if (angular.equals(options.avoid_countries, []))
         delete options.avoid_countries;
       if (subgroup === "HeavyVehicle") {
+        const hgvOptionsMap = {
+          width: "width",
+          height: "height",
+          hgvWeight: "weight",
+          length: "length",
+          axleload: "axleload"
+        };
         let vt = 0;
-        if (!angular.isUndefined(settings.profile.options.width)) {
-          options.profile_params.restrictions.width = settings.profile.options.width.toString();
-          ++vt;
-        }
-        if (!angular.isUndefined(settings.profile.options.height)) {
-          options.profile_params.restrictions.height = settings.profile.options.height.toString();
-          ++vt;
-        }
-        if (!angular.isUndefined(settings.profile.options.hgvWeight)) {
-          options.profile_params.restrictions.weight = settings.profile.options.hgvWeight.toString();
-          ++vt;
-        }
-        if (!angular.isUndefined(settings.profile.options.length)) {
-          options.profile_params.restrictions.length = settings.profile.options.length.toString();
-          ++vt;
-        }
-        if (!angular.isUndefined(settings.profile.options.axleload)) {
-          options.profile_params.restrictions.axleload = settings.profile.options.axleload.toString();
-          ++vt;
+        for (const [key, value] of Object.entries(hgvOptionsMap)) {
+          if (!angular.isUndefined(settings.profile.options[key])) {
+            options.profile_params.restrictions[
+              value
+            ] = settings.profile.options[key].toString();
+            ++vt;
+          }
         }
         if (
           !angular.isUndefined(settings.profile.options.hazmat) &&
@@ -602,63 +542,6 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
         }
         return element.getElementsByTagNameNS(ns, tagName);
       }
-    };
-    /**
-     * convert a distance to an easy to read format.
-     * @param distance: a number
-     * @param uom: distance unit; one of m/yd
-     */
-    orsUtilsService.convertDistanceFormat = function(distance, uom) {
-      uom = uom.toLowerCase();
-      const origDistance = parseFloat(distance);
-      distance = parseFloat(distance);
-      if (distance >= 1000) {
-        uom = "km";
-        distance = distance / 1000;
-        distance = orsUtilsService.round(distance);
-      } else {
-        uom = "m";
-      }
-      distance = orsUtilsService.round(distance);
-      return [origDistance, distance, uom];
-    };
-    /**
-     * positions are often set as data-attributes in the Ui/ HTML file. Converts them to OpenLayers.LonLat position
-     * @param positionString: String containing the coordinates
-     * @return: OpenLayers.LonLat with these coordinates
-     */
-    orsUtilsService.convertPositionStringToLonLat = function(positionString) {
-      var pos = positionString.split(" ");
-      pos = L.latLng(pos[1], pos[0]);
-      return pos;
-    };
-    /**
-     * rounds a given distance to an appropriate number of digits
-     * @distance: number to round
-     */
-    orsUtilsService.round = function(distance) {
-      //precision - set the number of fractional digits to round to
-      var precision = 4;
-      if (distance < 0.3) {
-        precision = 3;
-      }
-      if (distance >= 0.3) {
-        precision = 2;
-      }
-      if (distance > 2) {
-        precision = 1;
-      }
-      if (distance > 100) {
-        precision = 0;
-      }
-      if (distance > 300) {
-        precision = -1;
-      }
-      if (distance > 2000) {
-        precision = -2;
-      }
-      var p = Math.pow(10, precision);
-      return Math.round(distance * p) / p;
     };
     /**
      * generates a string of current settings to be used in permalink

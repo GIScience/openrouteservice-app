@@ -233,5 +233,7 @@
     "ROUNDTRIP_DO": "Rundweg generieren",
     "PACE_SPEED_INKMH": "Geschwindigkeit in km/h",
     "IMPORT_DEVIATION_TOLERANCE": "Abweichungstoleranz",
-    "LOCAL_ALT_ROUTE": "Alternative route (slow!, only for routes below 100km)"
+    "LOCAL_ALT_ROUTE": "Alternative Route (langsam!, nur für Routen unter 100km)",
+    "TURN_INFO_RDB_EXIT": "Ausfahrt",
+    "TURN_INFO_UTURN": "Kehrtwende"
 }

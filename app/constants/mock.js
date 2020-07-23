@@ -100,14 +100,21 @@ angular.module("orsApp").constant("mockResponse", {
             ]
           },
           waytypes: {
-            values: [[0, 17, 5], [17, 32, 3]],
+            values: [
+              [0, 17, 5],
+              [17, 32, 3]
+            ],
             summary: [
               { value: 5.0, distance: 892.2, amount: 55.77 },
               { value: 3.0, distance: 255.8, amount: 15.99 }
             ]
           },
           steepness: {
-            values: [[0, 18, -1], [18, 22, -3], [22, 32, 1]],
+            values: [
+              [0, 18, -1],
+              [18, 22, -3],
+              [22, 32, 1]
+            ],
             summary: [
               { value: -1.0, distance: 952.5, amount: 59.53 },
               { value: 1.0, distance: 598.0, amount: 37.38 },
@@ -259,7 +266,12 @@ angular.module("orsApp").constant("mockResponse", {
         ],
         extras: {
           surface: {
-            values: [[0, 10, 0], [10, 12, 1], [12, 42, 0], [42, 77, 3]],
+            values: [
+              [0, 10, 0],
+              [10, 12, 1],
+              [12, 42, 0],
+              [42, 77, 3]
+            ],
             summary: [
               { value: 0.0, distance: 1177.5, amount: 51.5 },
               { value: 3.0, distance: 965.7, amount: 42.24 },
@@ -267,7 +279,11 @@ angular.module("orsApp").constant("mockResponse", {
             ]
           },
           waytypes: {
-            values: [[0, 42, 5], [42, 69, 2], [69, 77, 3]],
+            values: [
+              [0, 42, 5],
+              [42, 69, 2],
+              [69, 77, 3]
+            ],
             summary: [
               { value: 5.0, distance: 1274.9, amount: 55.77 },
               { value: 2.0, distance: 645.8, amount: 28.25 },
@@ -275,7 +291,11 @@ angular.module("orsApp").constant("mockResponse", {
             ]
           },
           steepness: {
-            values: [[0, 2, 1], [2, 63, -1], [63, 77, 1]],
+            values: [
+              [0, 2, 1],
+              [2, 63, -1],
+              [63, 77, 1]
+            ],
             summary: [
               { value: -1.0, distance: 1361.1, amount: 59.53 },
               { value: 1.0, distance: 854.5, amount: 37.38 }
@@ -463,7 +483,12 @@ angular.module("orsApp").constant("mockResponse", {
         ],
         extras: {
           surface: {
-            values: [[0, 10, 0], [10, 16, 1], [16, 39, 0], [39, 90, 3]],
+            values: [
+              [0, 10, 0],
+              [10, 16, 1],
+              [16, 39, 0],
+              [39, 90, 3]
+            ],
             summary: [
               { value: 0.0, distance: 1211.8, amount: 51.5 },
               { value: 3.0, distance: 993.8, amount: 42.24 },
@@ -471,7 +496,11 @@ angular.module("orsApp").constant("mockResponse", {
             ]
           },
           waytypes: {
-            values: [[0, 39, 5], [39, 82, 2], [82, 90, 3]],
+            values: [
+              [0, 39, 5],
+              [39, 82, 2],
+              [82, 90, 3]
+            ],
             summary: [
               { value: 5.0, distance: 1312.1, amount: 55.77 },
               { value: 2.0, distance: 664.6, amount: 28.25 },
@@ -479,7 +508,10 @@ angular.module("orsApp").constant("mockResponse", {
             ]
           },
           steepness: {
-            values: [[0, 2, 1], [2, 90, -1]],
+            values: [
+              [0, 2, 1],
+              [2, 90, -1]
+            ],
             summary: [
               { value: -1.0, distance: 1400.7, amount: 59.53 },
               { value: 1.0, distance: 879.4, amount: 37.38 }
@@ -593,7 +625,10 @@ angular.module("orsApp").constant("mockResponse", {
     service: "routing",
     timestamp: 1583508855164,
     query: {
-      coordinates: [[8.507195, 48.946406], [8.50771, 48.953142]],
+      coordinates: [
+        [8.507195, 48.946406],
+        [8.50771, 48.953142]
+      ],
       profile: "driving-car",
       preference: "fastest",
       format: "geojson",

@@ -12,6 +12,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed-->
 
+## [v0.5.4] - 2020-07-23
+
+### Fixed
+- gpx export exception ([#335](https://github.com/GIScience/openrouteservice-app/issues/335))
+- distance markers not only on active route ([PR #337](https://github.com/GIScience/openrouteservice-app/pull/337))
+- turn instruction with tcx export ([PR #323](https://github.com/GIScience/openrouteservice-app/pull/323))
+
+### Removed
+- unused code
+- unused dependency
+
+### Security
+- updated some dependencies
+
 ## [v0.5.3] - 2020-05-18
 
 ### Added
