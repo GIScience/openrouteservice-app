@@ -89,8 +89,8 @@
               ENV.key !== undefined
                 ? ENV.key
                 : orsApikeyFactory.getApiKey() === undefined
-                  ? weathercheck
-                  : orsApikeyFactory.getApiKey();
+                ? weathercheck
+                : orsApikeyFactory.getApiKey();
             let ak = "?api_key=" + apiKey;
             if (
               config.url === ENV.geocode + "/autocomplete" ||

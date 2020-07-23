@@ -170,8 +170,8 @@ angular
 
         // adding now the navigation info...
         const turnInstructions =
-            orsRouteService.data.features[orsRouteService.getCurrentRouteIdx()]
-                .properties.segments;
+          orsRouteService.data.features[orsRouteService.getCurrentRouteIdx()]
+            .properties.segments;
 
         // for the timing we need to sum up the distance of the steps...
         // (to be able to calculate the time of the 'CoursePoint')
@@ -184,13 +184,13 @@ angular
             const seconds = duration.toFixed(3) || 0;
             const milliSeconds = seconds.split(".")[1] || 0;
             let durationDate = new Date(
-                2010,
-                0,
-                1,
-                12,
-                0,
-                seconds,
-                milliSeconds
+              2010,
+              0,
+              1,
+              12,
+              0,
+              seconds,
+              milliSeconds
             );
 
             let alternativeName;
@@ -219,9 +219,9 @@ angular
               case 7:
                 pointType = "Right"; // not valid in LeftSide Traffic countries...
                 alternativeName =
-                    $translate.instant("TURN_INFO_RDB_EXIT") +
-                    " " +
-                    step.exit_number;
+                  $translate.instant("TURN_INFO_RDB_EXIT") +
+                  " " +
+                  step.exit_number;
                 break;
 
               case 9:
@@ -232,8 +232,8 @@ angular
               case 10: // finish
               case 11: // depart
                 if (
-                    (step.type === 11 && segmentCount === 0) ||
-                    (step.type === 10 && segmentCount === turnInstructions.length)
+                  (step.type === 11 && segmentCount === 0) ||
+                  (step.type === 10 && segmentCount === turnInstructions.length)
                 ) {
                   pointType = "Generic";
                 }
@@ -253,9 +253,9 @@ angular
               // adding the Turn-Instructions...
               let coursePointObj = {
                 Name:
-                    alternativeName !== undefined
-                        ? alternativeName
-                        : inst.substr(0, 10).trim(),
+                  alternativeName !== undefined
+                    ? alternativeName
+                    : inst.substr(0, 10).trim(),
                 Time: durationDate.toISOString(),
                 Position: {
                   LatitudeDegrees: pointInformation[coordIndex].coords[0],
