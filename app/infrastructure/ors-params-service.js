@@ -93,7 +93,7 @@ angular.module("orsApp.params-service", []).factory("orsParamsService", [
         if (key === "weight") {
           // switches to Recommended (0) for old Recommended values (2), old Fastest (0) go automatically to Recommended
           if (value === "2") {
-            value = "0"
+            value = "0";
           }
           for (let weightType in lists.optionList.weight) {
             if (lists.optionList.weight[weightType].shortValue === value) {
@@ -109,7 +109,7 @@ angular.module("orsApp.params-service", []).factory("orsParamsService", [
         }
         if (
           [
-            "maxspeed",
+            "maximum_speed",
             "hgvWeight",
             "width",
             "height",
