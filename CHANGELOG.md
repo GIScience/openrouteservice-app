@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - leaflet.heightgraph version & style
+- default weigthing option to recommended ([#315](https://github.com/GIScience/openrouteservice-app/issues/315))
+
+### Removed
+- fastest weighting option ([#315](https://github.com/GIScience/openrouteservice-app/issues/315))
 
 ## [v0.5.4] - 2020-07-23
 

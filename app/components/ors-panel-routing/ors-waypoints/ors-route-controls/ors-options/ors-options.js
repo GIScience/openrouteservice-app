@@ -48,19 +48,16 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
           ctrl.currentOptions.weight =
             ctrl.currentOptions.weight !== undefined
               ? ctrl.currentOptions.weight
-              : ctrl.optionList.weight.Fastest.value;
+              : ctrl.optionList.weight.Recommended.value;
         ctrl.weightSlider = {
           value: ctrl.currentOptions.weight,
           options: {
             stepsArray: [
               {
-                value: ctrl.optionList.weight.Fastest.value
+                value: ctrl.optionList.weight.Recommended.value
               },
               {
                 value: ctrl.optionList.weight.Shortest.value
-              },
-              {
-                value: ctrl.optionList.weight.Recommended.value
               }
             ],
             showTicks: true,

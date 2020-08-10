@@ -219,17 +219,13 @@ angular.module("orsApp").constant("lists", {
   },
   optionList: {
     weight: {
-      Fastest: {
-        value: "Fastest",
+      Recommended: {
+        value: "Recommended",
         shortValue: "0"
       },
       Shortest: {
         value: "Shortest",
         shortValue: "1"
-      },
-      Recommended: {
-        value: "Recommended",
-        shortValue: "2"
       }
     },
     roundTrip: {
