@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed-->
 
+## [Unreleased]
+
+### Changed
+- leaflet.heightgraph version & style
+
 ## [v0.5.4] - 2020-07-23
 
 ### Fixed

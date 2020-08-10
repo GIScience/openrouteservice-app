@@ -165,6 +165,11 @@ angular.module("orsApp").directive("orsMap", () => {
             color: "rgb(0,243,235)",
             opacity: 0.7,
             weight: 6
+          },
+          graphStyle: {
+            opacity: 0.8,
+            "fill-opacity": 0.6,
+            "stroke-width": "2px"
           }
         });
         $scope.alternativeRouteLayers = {};
