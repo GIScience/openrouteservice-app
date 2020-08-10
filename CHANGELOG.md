@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed-->
 
-## [Unreleased]
+## [v0.6.0] - 2020-08-10
 
 ### Added
 - maximum_speed for `driving-*` profiles.

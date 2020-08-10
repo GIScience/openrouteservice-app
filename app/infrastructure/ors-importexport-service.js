@@ -81,7 +81,7 @@ angular
       // create a simple Course TCX file (MARQ24)
       // see https://www8.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd
       let toTcx = (name, speedInKmPerH) => {
-        let version = "0.5.4";
+        let version = "0.6.0";
         let pointInformation =
           orsRouteService.data.features[orsRouteService.getCurrentRouteIdx()]
             .point_information;
