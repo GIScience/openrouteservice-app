@@ -12,6 +12,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 ### Removed-->
 
+## [v0.6.0] - 2020-08-10
+
+### Added
+- maximum_speed for `driving-*` profiles.
+    The option works for speeds down to `80` km/h (See [ors backend issue #480](https://github.com/GIScience/openrouteservice/issues/480))
+
+### Changed
+- leaflet.heightgraph version & style
+- default weighting option to `recommended` ([#315](https://github.com/GIScience/openrouteservice-app/issues/315))
+
+### Removed
+- `fastest` weighting option ([#315](https://github.com/GIScience/openrouteservice-app/issues/315))
+
 ## [v0.5.4] - 2020-07-23
 
 ### Fixed

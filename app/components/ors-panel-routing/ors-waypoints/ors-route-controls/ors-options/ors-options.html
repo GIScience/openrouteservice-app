@@ -17,6 +17,16 @@
             </rzslider>
         </div>
     </div>
+    <div class="ors-options-menu" ng-show="$ctrl.activeSubgroup == 'Car' || $ctrl.activeSubgroup == 'HeavyVehicle'">
+        <div class="ui checkbox">
+            <input id="maximum_speed" name="orsRouteMaximumspeedInput" ng-change="$ctrl.toggleMaximumSpeedSlider()" ng-model="$ctrl.maxspeedCheckbox" type="checkbox">
+            <label for="maximum_speed" ng-bind-html="('MAXIMUMSPEED' | translate)">
+            </label>
+            </input>
+        </div>
+        <rzslider rz-slider-model="$ctrl.maximumSpeedSlider.value" rz-slider-options="$ctrl.maximumSpeedSlider.options">
+        </rzslider>
+    </div>
 </div>
 <div class="options-box" ng-if="$ctrl.routing">
     <div class="pointer" ng-click="$ctrl.roundTripOptions = !$ctrl.roundTripOptions">

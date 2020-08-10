@@ -48,19 +48,16 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
           ctrl.currentOptions.weight =
             ctrl.currentOptions.weight !== undefined
               ? ctrl.currentOptions.weight
-              : ctrl.optionList.weight.Fastest.value;
+              : ctrl.optionList.weight.Recommended.value;
         ctrl.weightSlider = {
           value: ctrl.currentOptions.weight,
           options: {
             stepsArray: [
               {
-                value: ctrl.optionList.weight.Fastest.value
+                value: ctrl.optionList.weight.Recommended.value
               },
               {
                 value: ctrl.optionList.weight.Shortest.value
-              },
-              {
-                value: ctrl.optionList.weight.Recommended.value
               }
             ],
             showTicks: true,
@@ -186,6 +183,43 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
           ctrl.currentOptions.round_trip.seed = ctrl.roundTripSeed.value;
           ctrl.changeOptions();
         };
+        // set maximum_speed slider from params
+        const { min, max, preset, step } = lists.optionList.maximum_speed;
+        // enable or disable checkbox depending on whether maximum_speed is set
+        let maximumSpeedValue;
+        if (ctrl.currentOptions.maximum_speed >= 0) {
+          maximumSpeedValue = ctrl.currentOptions.maximum_speed;
+          ctrl.maxspeedCheckbox = true;
+        } else {
+          maximumSpeedValue = preset;
+          ctrl.maxspeedCheckbox = false;
+        }
+        ctrl.toggleMaximumSpeedSlider = (fireRequest = true) => {
+          if (ctrl.maxspeedCheckbox === true) {
+            ctrl.maximumSpeedSlider.options.disabled = false;
+            ctrl.currentOptions.maximum_speed = ctrl.maximumSpeedSlider.value;
+          } else if (ctrl.maxspeedCheckbox === false) {
+            ctrl.maximumSpeedSlider.options.disabled = true;
+            delete ctrl.currentOptions.maximum_speed;
+          }
+          if (fireRequest) ctrl.changeOptions();
+        };
+        ctrl.maximumSpeedSlider = {
+          value: maximumSpeedValue,
+          options: {
+            floor: min,
+            ceil: max,
+            step: step,
+            translate: value => {
+              return value + " <b>km/h</b>";
+            },
+            onEnd: () => {
+              ctrl.currentOptions.maximum_speed = ctrl.maximumSpeedSlider.value;
+              ctrl.changeOptions();
+            }
+          }
+        };
+        ctrl.toggleMaximumSpeedSlider(false);
         ctrl.greenActive = false;
         ctrl.toggleGreenSlider = (fireRequest = true) => {
           if (ctrl.greenActive === true) {

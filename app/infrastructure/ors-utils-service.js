@@ -170,6 +170,9 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
         }
       }
 
+      // maximum speed
+      if (settings.profile.options.maximum_speed && payload.profile.startsWith("driving"))
+        payload.maximum_speed = settings.profile.options.maximum_speed.toString();
       // extras
       payload.extra_info = [];
       const extra_infos = orsUtilsService.getExtraInformation();
@@ -300,8 +303,6 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
         }
         if (vt !== 0) options.vehicle_type = settings.profile.type;
       }
-      if (settings.profile.options.maxspeed)
-        options.maximum_speed = settings.profile.options.maxspeed.toString();
       if (subgroup === "Bicycle") {
         if (
           (settings.profile.options.steepness > 0) &

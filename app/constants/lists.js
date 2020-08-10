@@ -219,17 +219,13 @@ angular.module("orsApp").constant("lists", {
   },
   optionList: {
     weight: {
-      Fastest: {
-        value: "Fastest",
+      Recommended: {
+        value: "Recommended",
         shortValue: "0"
       },
       Shortest: {
         value: "Shortest",
         shortValue: "1"
-      },
-      Recommended: {
-        value: "Recommended",
-        shortValue: "2"
       }
     },
     roundTrip: {
@@ -399,6 +395,12 @@ angular.module("orsApp").constant("lists", {
         value: "axleload"
       }
     },
+    maximum_speed: {
+      min: 80,
+      max: 120,
+      preset: 100,
+      step: 1
+    },
     green: {
       min: 0.1,
       max: 1
@@ -495,11 +497,11 @@ angular.module("orsApp").constant("lists", {
   permalinkFilters: {
     avoidables: ["ferry", "fords", "steps", "highways", "tollroads"],
     analysis: ["method", "isovalue", "isointerval", "reverseflow"],
-    Car: ["type", "weight", "maxspeed"],
+    Car: ["type", "weight", "maximum_speed"],
     hgv: [
       "type",
       "weight",
-      "maxspeed",
+      "maximum_speed",
       "height",
       "width",
       "length",
@@ -510,7 +512,7 @@ angular.module("orsApp").constant("lists", {
     goods: [
       "type",
       "weight",
-      "maxspeed",
+      "maximum_speed",
       "height",
       "width",
       "length",
@@ -521,7 +523,7 @@ angular.module("orsApp").constant("lists", {
     bus: [
       "type",
       "weight",
-      "maxspeed",
+      "maximum_speed",
       "height",
       "width",
       "length",
@@ -532,7 +534,7 @@ angular.module("orsApp").constant("lists", {
     agricultural: [
       "type",
       "weight",
-      "maxspeed",
+      "maximum_speed",
       "height",
       "width",
       "length",
@@ -543,7 +545,7 @@ angular.module("orsApp").constant("lists", {
     forestry: [
       "type",
       "weight",
-      "maxspeed",
+      "maximum_speed",
       "height",
       "width",
       "length",
@@ -554,7 +556,7 @@ angular.module("orsApp").constant("lists", {
     delivery: [
       "type",
       "weight",
-      "maxspeed",
+      "maximum_speed",
       "height",
       "width",
       "length",
@@ -584,6 +586,7 @@ angular.module("orsApp").constant("lists", {
     wps: "a",
     type: "b",
     weight: "c",
+    maximum_speed: "d",
     hgvWeight: "f1",
     width: "f2",
     height: "f3",
