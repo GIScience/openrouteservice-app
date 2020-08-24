@@ -1,10 +1,10 @@
-FROM node:10
+FROM node:12
 
 RUN	apt-get update -qq
 
 RUN apt-get install -qq git-core
 
-RUN npm install -g npm@6.14.7
+#RUN npm install -g npm@6.14.7
 #PATCH https://github.com/GIScience/openrouteservice-app/issues/343
 
 ARG ORSAPP_RELEASE=v0.6.0
