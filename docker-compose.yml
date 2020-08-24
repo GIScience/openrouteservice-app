@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  # ors:
+  #   container_name: ors
+  #   ports: ["8080:8080"]
+  #   image: openrouteservice/openrouteservice:v6.2.0
+
+  ors-app:
+    network_mode: host
+    container_name: ors-app
+    image: openrouteservice-app:v0.6.0
+    ports: ["8035:3035"]
+    build:
+      context: ./
+      args:
+        ORSAPP_RELEASE: v0.6.0
+    volumes:
+      - ./build:/ors-app/app/build
+      - ./Gruntfile.default.js:/ors-app/Gruntfile.js
+    #TODO depends_on:
+    #  - ors
