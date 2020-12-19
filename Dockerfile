@@ -1,37 +1,22 @@
-FROM node:12
+FROM timbru31/node-alpine-git:12
 
-RUN	apt-get update -qq
+# copy required files
+COPY [".bowerrc", "bower.json", "bs-config.js", "main.js", "package.json", "package-lock.json", "/ors-classic-maps/"]
 
-RUN apt-get install -qq git-core
+RUN cd /ors-classic-maps
+WORKDIR /ors-classic-maps
 
-#RUN npm install -g npm@6.14.7
-#PATCH https://github.com/GIScience/openrouteservice-app/issues/343
-
-ARG ORSAPP_RELEASE=v0.6.0
-
-RUN git clone https://github.com/GIScience/openrouteservice-app.git /ors-app && \
-	cd /ors-app && \
-	git fetch --tags && \
-	git checkout -q $ORSAPP_RELEASE
-
-WORKDIR /ors-app
-
+# install npm dependencies
 RUN npm install
 
+# install bower dependencies
 RUN	node_modules/bower/bin/bower install --allow-root
-RUN	cd /ors-app/bower_components/angularjs-slider
-RUN npm install
-RUN cd /ors-app
 
-# RUN cd /ors-app && \
-# 	grunt less:development && \
-# 	grunt prettier && \
-# 	grunt copy:sliderLess && \
-# 	grunt run_grunt:sliderMakeCss && \
-# 	grunt browserify:turf && \
-# 	grunt ngtemplates && \
-# 	grunt ngconstant:local
+# move default Gruntfile to correct place
+COPY Gruntfile.default.js /ors-classic-maps/Gruntfile.js
 
-EXPOSE 3035
+# copy app after installing dependencies
+COPY app /ors-classic-maps/app
 
-CMD ["node_modules/grunt-cli/bin/grunt","--force","ors"]
+# Expose app ports
+EXPOSE 3035 3005

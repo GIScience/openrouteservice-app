@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - generation of slider styles
+- serving the app is now dockerized (
+  Thanks to [@stefanocudini](https://github.com/stefanocudini)!
+  See [PR $345](https://github.com/GIScience/openrouteservice-app/pull/345))
 
 ## [v0.6.0] - 2020-08-10
 

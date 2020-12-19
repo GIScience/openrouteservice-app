@@ -1,23 +1,16 @@
 version: '3'
 
 services:
-  # ors:
-  #   container_name: ors
-  #   ports: ["8080:8080"]
-  #   image: openrouteservice/openrouteservice:v6.2.0
-
-  ors-app:
-    network_mode: host
-    container_name: ors-app
-    image: openrouteservice-app:v0.6.0
+  ors-classic-maps:
+    container_name: ors-maps
+    image: ors-classic-maps:v0.6.0
     ports:
       - 8035:3035
+      - 3005:3005
     build:
-      context: ./
-      args:
-        ORSAPP_RELEASE: v0.6.0
+      context: .
     volumes:
-      - ./build:/ors-app/app/build
-      - ./Gruntfile.default.js:/ors-app/Gruntfile.js
-    #TODO depends_on:
-    #  - ors
+      - ./app:/ors-classic-maps/app
+      - ./Gruntfile.default.js:/ors-classic-maps/Gruntfile.js
+    entrypoint: ["/ors-classic-maps/node_modules/grunt-cli/bin/grunt","-b", "/ors-classic-maps"]
+    command: "ors"

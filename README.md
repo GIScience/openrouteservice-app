@@ -1,14 +1,74 @@
-# Openrouteservice
+# Classic openrouteservice maps client
 
 [![Build Status](https://travis-ci.org/GIScience/openrouteservice-app.svg?branch=development)](https://travis-ci.org/GIScience/openrouteservice-app)
 
-Openrouteservice is an online route planning application that is based on open source software, open data and open standards.
+The classic openrouteservice(ors) maps client is an online route planning application that is based on open source software, open data and open standards.
+
+It uses the [openrouteservice API](https://openrouteservice.org/) and needs a valid API key
+(free up to a [certain request limit per day](https://openrouteservice.org/plans/))
 
 ![preview](https://cloud.githubusercontent.com/assets/10322094/26202903/63ccd808-3bd9-11e7-9a89-f06ad50d583e.png)
 
 ## Installation
 
-The openrouteservice client requires **nodejs**, and a valid **Api-Key** to access the openrouteservice API. Also, make sure **git** is installed. 
+Requirements:
+- [git](https://git-scm.com/downloads)
+- docker
+- docker-compose
+
+Clone the repository
+```sh
+git clone https://github.com/GIScience/openrouteservice-app.git
+
+# switch to repository folder
+cd openrouteservice-app
+```
+
+First Replace weathercheck.txt content with your Api-Key:
+```sh
+# Open `app/weathercheck.txt` in your favorite text editor and replace the content with your Token.
+# e.g.:
+vim app/weathercheck.txt
+```
+
+Build the docker image:
+```
+docker-compose build
+```
+## Running the client
+
+Run docker-compose up:
+```
+docker-compose up -d
+```
+
+The app will be exposed on http://localhost:8035
+
+## Running in development mode
+- open on http://localhost:3005
+- container will be removed after stopping
+
+Normal endpoints:
+```
+docker-compose run -p 3005:3005 --rm ors-classic-maps dev
+```
+
+If you want to use the openrouteservice client with a
+[local backend version of openrouteservice](https://github.com/GIScience/openrouteservice) you have to adjust the
+*endpoint paths* to the *backend war version* you are using in `Grunfile.js`.
+
+Local ors backend:
+```
+docker-compose run -p 3005:3005 --rm ors-classic-maps ors_local
+```
+
+
+## Install dependencies locally
+
+If you want to have all dependencies locally, installation is a bit more difficult.
+Also, the commands for running the client are a bit different.
+
+Requirements:
 
 - [git](https://git-scm.com/downloads)
 - [nodejs](https://nodejs.org/en/download/package-manager/)
@@ -30,16 +90,9 @@ e.g.:
 npm install --no-optional
 ```
 
-### Step by Step instructions
+### Installation
 
-- Download openrouteservice repository:
-```sh
-# clone repository from github
-git clone https://github.com/GIScience/openrouteservice-app.git
-
-# switch to repository folder
-cd openrouteservice-app
-```
+After cloning the repository:
 
 - Install dependencies:
 ```sh
@@ -55,26 +108,23 @@ node_modules/bower/bin/bower install
 # Copy `Gruntfile.default.js` to `Gruntfile.js`
 cp Gruntfile.default.js Gruntfile.js
 
-# Copy `weathercheck.default.txt` to `weathercheck.txt`.
+# Copy `weathercheck.default.txt` to `weathercheck.txt`
 cp app/weathercheck.default.txt app/weathercheck.txt
 ```
 
-- Replace weathercheck.txt content with your Api-Key:
-```sh
-# Finally open `app/weathercheck.txt` in your favorite text editor and replace the content with your Token.
-# e.g.:
-vim app/weathercheck.txt
-```
+Don't forget to edit `weathercheck.txt` and insert your API key.
 
-## Run openrouteservice:
+### Run openrouteservice:
 
-For the standard openrouteservice version do:
+To enable console output information and logging for bug-fixing and feature development do:
+
+	grunt dev
+
+To build for production (all output in `build` folder):
 
 	grunt ors
 
-If you want to use the openrouteservice client with a [local backend version of openrouteservice](https://github.com/GIScience/openrouteservice) you have to adjust the *endpoint paths* to the *backend war version* you are using in `Grunfile.js`.
-
-Afterwards do:
+To use a local ors backend:
 
 	grunt ors_local
 
@@ -90,11 +140,8 @@ For new features, please create a new branch:
 
 	git checkout -b feature_branch
 
-In every case do a [pull request](https://help.github.com/articles/creating-a-pull-request/) to our development branch. Be sure to pull the latest changes beforehand and fix any emerging conflicts.
-
-To enable console output information and logging for bugfixing and feature development do:
-
-	grunt dev
+Do a [pull request](https://help.github.com/articles/creating-a-pull-request/) to our development branch.
+Be sure to pull the latest changes beforehand and fix any emerging conflicts.
 
 ## Translations
 

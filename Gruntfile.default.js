@@ -166,11 +166,9 @@ module.exports = function(grunt) {
         connect: {
             dev: {
                 options: {
-                    hostname: "localhost",
+                    hostname: "0.0.0.0",
                     port: 3005,
-                    //base: "src",
                     livereload: true,
-                    open: true,
                     middleware: function(connect) {
                         // MARQ24 added proxy to avoid CORS when running OWN backend via SpringBoot
                         // this will require the usage of NodeJS 13.x
@@ -195,13 +193,10 @@ module.exports = function(grunt) {
             },
             build: {
                 options: {
-                    hostname: "localhost",
+                    hostname: "0.0.0.0",
                     port: 3035,
-                    open: true,
-                    base: "./build",
-                    middleware: function(connect) {
+                    middleware: function() {
                         return [
-                            //modRewrite(['^[^\\.]*$ /index.html [L]']),
                             modRewrite([
                                 "!\\.html|\\.js|\\.txt|\\.ico|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]"
                             ]),
