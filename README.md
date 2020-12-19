@@ -2,13 +2,13 @@
 
 [![Build Status](https://travis-ci.org/GIScience/openrouteservice-app.svg?branch=development)](https://travis-ci.org/GIScience/openrouteservice-app)
 
-Openrouteservice is a online route planning application that is based on open source software, open data and open standards.
+Openrouteservice is an online route planning application that is based on open source software, open data and open standards.
 
 ![preview](https://cloud.githubusercontent.com/assets/10322094/26202903/63ccd808-3bd9-11e7-9a89-f06ad50d583e.png)
 
 ## Installation
 
-The openrouteservice client requires **nodejs** and a valid **Api-Key** to access the openrouteservice API. Also make sure that **git** is installed. 
+The openrouteservice client requires **nodejs**, and a valid **Api-Key** to access the openrouteservice API. Also, make sure **git** is installed. 
 
 - [git](https://git-scm.com/downloads)
 - [nodejs](https://nodejs.org/en/download/package-manager/)
@@ -50,20 +50,6 @@ npm install
 node_modules/bower/bin/bower install
 ```
 
-- Install required modules for slider layout:
-
-*(This step is for layout purposes only. If you want to skip it remove `grunt:sliderMakeCss` from the task queue in the renamed `Gruntfile.js` [see next step])*
-```sh
-# Switch to bower_components/angular folder:
-cd bower_components/angularjs-slider
-
-# install all modules listed as dependencies in package.json
-npm install
-
-# switch back to openrouteservice-app folder:
-cd ../..
-```
-
 - Initiate default files:
 ```sh
 # Copy `Gruntfile.default.js` to `Gruntfile.js`
@@ -80,7 +66,7 @@ cp app/weathercheck.default.txt app/weathercheck.txt
 vim app/weathercheck.txt
 ```
 
-## Run openrouteservice:	
+## Run openrouteservice:
 
 For the standard openrouteservice version do:
 
