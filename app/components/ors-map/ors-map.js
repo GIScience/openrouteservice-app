@@ -450,15 +450,23 @@ angular.module("orsApp").directive("orsMap", () => {
                   )[0];
                   return div;
                 };
-                $timeout(function() {
-                  if (!$scope.smallScreen)
-                    $scope.mapModel.map.addControl($scope.welcomeMsgBox);
-                }, 500);
               }
             }
             mapInitSubject.dispose();
           }
         );
+        $scope.floodMsgBox = L.control({
+          position: "topright"
+        });
+        $scope.floodMsgBox.onAdd = function(map) {
+          let div = $compile("<ors-flood-box></ors-flood-box>")(
+              $scope
+          )[0];
+          return div;
+        };
+        $timeout( () => {
+          if (!$scope.smallScreen) $scope.mapModel.map.addControl($scope.floodMsgBox);
+        }, 100);
         // sign up for API
         $scope.signupBox = L.control({
           position: "topleft"
@@ -467,10 +475,6 @@ angular.module("orsApp").directive("orsMap", () => {
           var div = $compile("<ors-signup-box></ors-signup-box>")($scope)[0];
           return div;
         };
-        $timeout(function() {
-          if (!$scope.smallScreen)
-            $scope.mapModel.map.addControl($scope.signupBox);
-        }, 300000);
         // brand
         $scope.brand = L.control({
           position: "topleft"
@@ -2204,6 +2208,28 @@ angular.module("orsApp").directive("orsWelcomeBox", [
             </div>
             <div class="list">
                 <span ng-bind-html="('WELCOME_MESSAGE' | translate)">
+                </span>
+            </div>
+        </div>`,
+      link: (scope, elem, attr) => {
+        scope.show = true;
+      }
+    };
+  }
+]);
+angular.module("orsApp").directive("orsFloodBox", [
+  "$translate",
+  $translate => {
+    return {
+      restrict: "E",
+      template: `<div ng-attr-class="{{ 'ui message ors-map-message fade red' }}" ng-show="show">
+            <i class="fa fa-close flright" data-ng-click="show = !show"></i>
+            <div class="header" ng-bind-html="'Cyclone Idai Response'">
+            </div>
+            <div class="list">
+                <span>
+                    Latest flood extents of the <a style="color: red;" href=https://emergency.copernicus.eu/mapping/list-of-activations-rapid target="_blank">Copernicus EMS</a> integrated as overlay!
+                    Use the avoid polygon tool to draw polygons and avoid flooded areas.
                 </span>
             </div>
         </div>`,
