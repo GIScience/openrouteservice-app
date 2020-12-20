@@ -131,5 +131,17 @@ angular.module("orsApp").constant("orsNamespaces", {
         'Tiles <a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases">CycleOSM</a> latest',
       id: 8
     }
+  },
+  overlayFloodExtent: {
+    GetCapabilities: "https://maps.heigit.org/geoserver/dors/wms?REQUEST=GetCapabilities&service=wms",
+    url: "https://maps.heigit.org/geoserver/dors/wms?",
+    options: {
+      format: "image/png",
+      opacity: 0.45,
+      transparent: true,
+      layers: "moz_idai_flooding",
+      styles: "flooding",
+      attribution: "Flood extents: <a href=\"https://emergency.copernicus.eu/mapping/list-of-components/EMSR348\">[EMSR348] Cyclon Idai in Mozambique</a>; Copernicus Emergency Management Service (© 2015 European Union)"
+    }
   }
 });

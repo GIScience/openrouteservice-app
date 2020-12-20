@@ -734,6 +734,20 @@ angular.module("orsApp").constant("lists", {
         opacity: 1,
         fillOpacity: 0
       };
+    },
+    disaster_boundary: function() {
+      return {
+        fillColor: "#000",
+        opacity: 0.0,
+        fillOpacity: 0.3
+      };
+    },
+    floodedAreas: () => {
+      return {
+        fill: false,
+        color: "#cf5f5f",
+        opacity: 0.5
+      };
     }
   },
   isochronesColorsRanges: [360, 300, 240, 180, 120, 60],

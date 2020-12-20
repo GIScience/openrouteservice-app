@@ -13,6 +13,7 @@ angular.module("orsApp").directive("orsMap", () => {
       "$compile",
       "$timeout",
       "$window",
+      "$injector",
       "orsSettingsFactory",
       "orsLocationsService",
       "orsObjectsFactory",
@@ -36,6 +37,7 @@ angular.module("orsApp").directive("orsMap", () => {
         $compile,
         $timeout,
         $window,
+        $injector,
         orsSettingsFactory,
         orsLocationsService,
         orsObjectsFactory,
@@ -94,6 +96,10 @@ angular.module("orsApp").directive("orsMap", () => {
           orsNamespaces.layerCycleOsm.url,
           orsNamespaces.layerCycleOsm.options
         );
+        const floodExtent = L.tileLayer.wms(
+          orsNamespaces.overlayFloodExtent.url,
+          orsNamespaces.overlayFloodExtent.options
+        );
         $scope.heightGraphData = [];
         $scope.geofeatures = {
           layerLocationMarker: L.featureGroup(),
@@ -123,8 +129,55 @@ angular.module("orsApp").directive("orsMap", () => {
             }
           }),
           layerTmcMarker: L.featureGroup(),
-          layerCustomMarkers: L.featureGroup()
+          layerCustomMarkers: L.featureGroup(),
+          layerDisasterBoundaries: L.featureGroup(),
+          layerFloodExtent: L.featureGroup()
         };
+        floodExtent.addTo($scope.geofeatures.layerFloodExtent)
+
+        const httpService = $injector.get("$http")
+        httpService.get("floodedAreas.json").then((response) => {
+          let popupContent = (feature) => {
+            return `<div style="margin: 10px"><b><a href=${feature.properties.url} target="_blank">${feature.properties.name.split("-")[0]}</a></b><br>imagery date: ${feature.properties["imagery date"]}</div>`
+          }
+          let floodedAreas = L.geoJSON(response.data, {
+            onEachFeature: (feature, layer) => {
+              layer.bindPopup(popupContent(feature))
+            }, style: lists.layerStyles.floodedAreas()
+          })
+          $scope.floodBounds = floodedAreas.getBounds()
+          floodedAreas.addTo($scope.geofeatures.layerFloodExtent)
+        }, (errorResponse) => {
+          console.log(errorResponse)
+        })
+          $scope.zoomToFlood = () => {
+              $scope.orsMap.fitBounds($scope.floodBounds);
+          };
+        const request = orsUtilsService.getDorsConfig();
+        request.promise.then(function(data) {
+          $scope.dors_config = data;
+          let i = 0;
+          for(let d_area of Object.values($scope.dors_config)){
+            d_area.checked = i === 0
+            i = i + 1
+          }
+          $scope.selectedRegion = {
+            selected: Object.values($scope.dors_config)[0].instance
+          };
+          const instance = $scope.selectedRegion.selected;
+          orsUtilsService.setDorsLink(instance);
+          let dArea = L.geoJSON($scope.dors_config[$scope.selectedRegion.selected].geojson, {
+            invert: true,
+            worldLatLngs: [L.latLng([85, 360]), L.latLng([85, -360]), L.latLng([-85, -360]), L.latLng([-85, 360])],
+            style: lists.layerStyles.disaster_boundary()
+          });
+          $scope.orsMap.setMaxBounds(L.geoJSON($scope.dors_config[$scope.selectedRegion.selected].geojson).getBounds());
+          $scope.zoomToFlood();
+          dArea.addTo($scope.geofeatures.layerDisasterBoundaries);
+          $scope.mapModel.map.addControl($scope.disasterSwitcher);
+        }, function(data) {
+          console.error(data);
+        });
         $scope.mapModel = {
           map: $scope.orsMap,
           geofeatures: $scope.geofeatures
@@ -549,6 +602,9 @@ angular.module("orsApp").directive("orsMap", () => {
           "World Imagery": worldImagery,
           CycleOSM: cycleOSM
         };
+        $scope.overlays = {
+          "Copernicus EMS: flood extent": $scope.geofeatures.layerFloodExtent
+        };
         $scope.mapModel.map.on("load", evt => {
           // add mapstyle
           angular.forEach($scope.baseLayers, (value, key) => {
@@ -571,13 +627,15 @@ angular.module("orsApp").directive("orsMap", () => {
             "layerRouteDrag",
             "layerLandmarks",
             "layerLandmarksEmph",
-            "layerHereMarkers"
+            "layerHereMarkers",
+            "layerDisasterBoundaries",
+            "layerFloodExtent"
           ]) {
             $scope.mapModel.geofeatures[layerName].addTo($scope.mapModel.map);
           }
           // add layer control
           $scope.layerControls = L.control
-            .layers($scope.baseLayers)
+            .layers($scope.baseLayers, $scope.overlays)
             .addTo($scope.mapModel.map);
           $scope.mapModel.map.editTools.featuresLayer =
             $scope.geofeatures.layerAvoid;

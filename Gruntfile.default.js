@@ -23,7 +23,8 @@ module.exports = function(grunt) {
                     "*.html",
                     "*.js",
                     "favicon.ico",
-                    "weathercheck.txt"
+                    "weathercheck.txt",
+                    "floodedAreas.json"
                 ],
                 dest: "build"
             },
