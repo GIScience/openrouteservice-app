@@ -117,6 +117,33 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
       };
     };
     /**
+     * Requests JSON object from dors_config.json file
+     */
+    orsUtilsService.getDorsConfig = () => {
+        var canceller = $q.defer();
+        var cancel = (reason) => {
+            canceller.resolve(reason);
+        };
+        var promise = $http.get('https://disaster-api.openrouteservice.org/dors_config.json', {
+            timeout: canceller.promise
+        })
+        .then((response) => {
+            return response.data;
+        });
+        return {
+            promise: promise,
+            cancel: cancel
+        };
+    };
+
+    orsUtilsService.setDorsLink = instance => {
+      var link = "https://disaster-api.openrouteservice.org/" + instance;
+      ENV.directions = link + "/routes";
+      ENV.geocode = link + "/geocode";
+      ENV.pois = link + "/pois";
+      ENV.analyse = link + "/isochrones";
+    };
+    /**
      * generates object for request and serializes it to http parameters
      * @param {Object} settings: route settings object
      * @param {Object} userSettings: To limit the amount of responses
