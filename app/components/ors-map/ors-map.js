@@ -477,7 +477,7 @@ angular.module("orsApp").directive("orsMap", () => {
         });
         $scope.brand.onAdd = function(map) {
           var divs = L.DomUtil.create("div", "ors-brand-small");
-          divs.innerHTML = '<img src="img/brand.png">';
+          divs.innerHTML = '<img src="img/brand.png"><br><img class="ors-hot" src="img/HOT.png">';
           return divs;
         };
         $timeout(function() {

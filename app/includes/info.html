@@ -1,5 +1,5 @@
 <header style="margin-top: 0">
-    <img height="auto" src="img/logo@2x.png" width="200px"/>
+    <img height="auto" src="img/logo@2x.png" width="300px"/>
 </header>
 <div class="ui divider">
 </div>
@@ -16,7 +16,19 @@
     </div>
     <p class="textjustify" ng-bind-html="('INFO_I' | translate)">
     </p>
-    </div>
+    <p> Thanks to the work of the
+        <a class="link" href="https://www.hotosm.org/">
+            Humanitarian OpenStreetMap Team
+        </a> and the
+        <a class="link" href="http://www.missingmaps.org/">
+            Missing Maps
+        </a> project, in disaster situations the OSM data is continually updated and enriched with critical information. Thus the road network is constantly enlarged by thousands of volunteers.
+    </p>
+
+    <p ng-bind-html="'The <b>Openrouteservice for Disaster Management</b> has the exceptional ability to take this data source update into account and recalculates the routing graph once an hour on basis of the most current OSM data. Furthermore, it considers as <emph>passable</emph> and <emph>impassable</emph> tagged ways (impassable=yes or status=impassable) and dynamically adjusts the graph weights of OSM streets accordingly. This allows disaster responders to navigate on basis of the most current road network.'">
+    </p>
+    <p ng-bind-html="'The <b>Openrouteservice for Disaster Management</b> also provides an accessibility analysis service for a given location and the possibility to export GPS tracks to be used offline in mobile devices. A special feature is the interactive <b>area avoid polygon</b> tool. It allows to interactively draw polygons onto the map which mark severely affected, not accessible, or impassable road section which should be avoid for navigation, or are potentially valuable for Search and Rescue (SAR) units.'">
+    </p>
     <div class="ui positive message textleft">
         <div class="header">
             {{ 'INFO_SUPPORT' | translate }}
@@ -29,6 +41,16 @@
     </div>
     <p class="textjustify" ng-bind-html="('INFO_II' | translate)">
     </p>
+</section>
+<div class="ui divider">
+</div>
+<section>
+    <img ng-src="img/disastermappers.png" width="60px" height="60px">
+    </img>
+    <img ng-src="img/HOT.png" width="100px" height="60px">
+    </img>
+    <img ng-src="img/missingmaps.png" width="141px" height="60px">
+    </img>
 </section>
 <div class="ui divider">
 </div>
