@@ -410,10 +410,30 @@ angular.module("orsApp").directive("orsMap", () => {
         $scope.zoomControl = new L.Control.Zoom({
           position: "topright"
         }).addTo($scope.mapModel.map);
-        L.control.scale().addTo($scope.mapModel.map);
-        /* AVOID AREA CONTROLLER */
-        L.NewPolygonControl = L.Control.extend({
-          options: {
+          L.control.scale().addTo($scope.mapModel.map)
+          // disaster region switcher
+          $scope.disasterSwitcher = L.control({
+              position: "bottomright"
+          })
+          $scope.switchRegions = () => {
+            const instance = $scope.selectedRegion.selected
+            $scope.geofeatures.layerDisasterBoundaries.clearLayers()
+            let dArea = L.geoJSON($scope.dors_config[instance].geojson, {
+              invert: true,
+              style: lists.layerStyles.disaster_boundary()
+            })
+            dArea.addTo($scope.geofeatures.layerDisasterBoundaries)
+            orsUtilsService.setDorsLink(instance)
+            $scope.orsMap.setMaxBounds(L.geoJSON($scope.dors_config[$scope.selectedRegion.selected].geojson).getBounds())
+            $scope.orsMap.fitBounds(L.geoJSON($scope.dors_config[instance].geojson).getBounds())
+          }
+          $scope.disasterSwitcher.onAdd = function (map) {
+              var div = $compile("<ors-disaster-list></ors-disaster-list>")($scope)[0]
+              return div
+          }
+          /* AVOID AREA CONTROLLER */
+          L.NewPolygonControl = L.Control.extend({
+              options: {
             position: "topright"
           },
           onAdd: function(map) {
@@ -490,8 +510,8 @@ angular.module("orsApp").directive("orsMap", () => {
                 settings.zoom
               );
             } else {
-              // Heidelberg
-              $scope.orsMap.setView([49.409445, 8.692953], 13);
+              // Africa Bounding Box
+              $scope.orsMap.setView([21.445313, 5.441022], 5);
               if (orsCookiesFactory.getMapOptions()) {
                 // Welcome box
                 $scope.welcomeMsgBox = L.control({
@@ -2314,6 +2334,29 @@ angular.module("orsApp").directive("orsSignupBox", [
       link: (scope, elem, attr) => {
         scope.show = true;
       }
+    };
+  }
+]);
+angular.module('orsApp').directive('orsDisasterList', [
+    '$compile', '$timeout', 'orsSettingsFactory',
+    ($compile, $timeout, orsSettingsFactory) => {
+    return {
+        restrict: 'E',
+        template: `
+                <div class="ui form ors-disaster-control">
+                  <div class="grouped fields">
+                    <label>Choose your region:</label>
+                    <div class="field" ng-repeat="area in dors_config">
+                      <div class="ui slider checkbox">
+                        <input type="radio" ng-checked="area.checked" ng-model="selectedRegion.selected" ng-value="area.instance" ng-change="switchRegions()" name="disaster-region">
+                        <label ng-click="switchRegions()">{{area.region}}<br><small><i>{{area.last_updated}}</i></small></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>`,
+        link: (scope, elem, attr) => {
+            scope.show = true;
+        }
     };
   }
 ]);
