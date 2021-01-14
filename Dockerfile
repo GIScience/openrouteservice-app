@@ -1,4 +1,4 @@
-FROM timbru31/node-alpine-git:12
+FROM node:12
 
 # copy required files
 COPY [".bowerrc", "bower.json", "bs-config.js", "main.js", "package.json", "package-lock.json", "/ors-classic-maps/"]
