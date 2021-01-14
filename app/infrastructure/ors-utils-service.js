@@ -137,11 +137,12 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
     };
 
     orsUtilsService.setDorsLink = instance => {
-      var link = "https://disaster-api.openrouteservice.org/" + instance;
-      ENV.directions = link + "/routes";
-      ENV.geocode = link + "/geocode";
-      ENV.pois = link + "/pois";
-      ENV.analyse = link + "/isochrones";
+      let dors_api = "https://disaster-api.openrouteservice.org/" + instance;
+      const ors_api = "https://api.openrouteservice.org"
+      ENV.directions = dors_api + "/v2/directions";
+      ENV.geocode = ors_api + "/pgeocode";
+      ENV.pois = ors_api + "/ppois";
+      ENV.isochrones = dors_api + "/v2/isochrones";
     };
     /**
      * generates object for request and serializes it to http parameters
