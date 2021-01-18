@@ -28,6 +28,15 @@ module.exports = function(grunt) {
                 ],
                 dest: "build"
             },
+            essentials: {
+                expand: true,
+                cwd: "app",
+                src: [
+                    "weathercheck.txt",
+                    "floodedAreas.json"
+                ],
+                dest: "build"
+            },
             libs: {
                 expand: true,
                 cwd: "./",
@@ -59,6 +68,10 @@ module.exports = function(grunt) {
             html: {
                 files: ["app/**/*.html"],
                 tasks: ["ngtemplates"]
+            },
+            essentials: {
+                files: ["app/weathercheck.txt", "app/floodedAreas.json"],
+                tasks: ["clean:task_rm_build_essentials","copy:essentials"]
             }
         },
         // Clean build folder up
@@ -76,6 +89,12 @@ module.exports = function(grunt) {
                     "build/values",
                     "build/css",
                     ".tmp"
+                ]
+            },
+            task_rm_build_essentials: {
+                src: [
+                    "build/weathercheck.txt",
+                    "build/floodedAreas.json"
                 ]
             }
         },
@@ -367,7 +386,8 @@ module.exports = function(grunt) {
             "clean:task_rm_build_unused",
             "stripDebug",
             "cacheBust",
-            "connect:build:keepalive"
+            "connect:build",
+            "watch:essentials"
         ]
     );
     grunt.registerTask("dev", "Run local server for development purposes", [
