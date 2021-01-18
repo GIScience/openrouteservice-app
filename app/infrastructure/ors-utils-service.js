@@ -120,25 +120,26 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
      * Requests JSON object from dors_config.json file
      */
     orsUtilsService.getDorsConfig = () => {
-        var canceller = $q.defer();
-        var cancel = (reason) => {
-            canceller.resolve(reason);
-        };
-        var promise = $http.get('https://disaster-api.openrouteservice.org/dors_config.json', {
-            timeout: canceller.promise
+      var canceller = $q.defer();
+      var cancel = reason => {
+        canceller.resolve(reason);
+      };
+      var promise = $http
+        .get("https://disaster-api.openrouteservice.org/dors_config.json", {
+          timeout: canceller.promise
         })
-        .then((response) => {
-            return response.data;
+        .then(response => {
+          return response.data;
         });
-        return {
-            promise: promise,
-            cancel: cancel
-        };
+      return {
+        promise: promise,
+        cancel: cancel
+      };
     };
 
     orsUtilsService.setDorsLink = instance => {
       let dors_api = "https://disaster-api.openrouteservice.org/" + instance;
-      const ors_api = "https://api.openrouteservice.org"
+      const ors_api = "https://api.openrouteservice.org";
       ENV.directions = dors_api + "/v2/directions";
       ENV.geocode = ors_api + "/pgeocode";
       ENV.pois = ors_api + "/ppois";

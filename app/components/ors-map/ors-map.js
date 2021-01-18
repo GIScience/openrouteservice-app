@@ -135,49 +135,74 @@ angular.module("orsApp").directive("orsMap", () => {
         };
         floodExtent.addTo($scope.geofeatures.layerFloodExtent)
 
-        const httpService = $injector.get("$http")
-        httpService.get("floodedAreas.json").then((response) => {
-          let popupContent = (feature) => {
-            return `<div style="margin: 10px"><b><a href=${feature.properties.url} target="_blank">${feature.properties.name.split("-")[0]}</a></b><br>imagery date: ${feature.properties["imagery date"]}</div>`
+        const httpService = $injector.get("$http");
+        httpService.get("floodedAreas.json").then(
+          response => {
+            let popupContent = feature => {
+              return `<div style="margin: 10px"><b><a href=${
+                feature.properties.url
+              } target="_blank">${
+                feature.properties.name.split("-")[0]
+              }</a></b><br>imagery date: ${
+                feature.properties["imagery date"]
+              }</div>`;
+            };
+            let floodedAreas = L.geoJSON(response.data, {
+              onEachFeature: (feature, layer) => {
+                layer.bindPopup(popupContent(feature));
+              },
+              style: lists.layerStyles.floodedAreas()
+            });
+            $scope.floodBounds = floodedAreas.getBounds();
+            floodedAreas.addTo($scope.geofeatures.layerFloodExtent);
+          },
+          errorResponse => {
+            console.log(errorResponse);
           }
-          let floodedAreas = L.geoJSON(response.data, {
-            onEachFeature: (feature, layer) => {
-              layer.bindPopup(popupContent(feature))
-            }, style: lists.layerStyles.floodedAreas()
-          })
-          $scope.floodBounds = floodedAreas.getBounds()
-          floodedAreas.addTo($scope.geofeatures.layerFloodExtent)
-        }, (errorResponse) => {
-          console.log(errorResponse)
-        })
-          $scope.zoomToFlood = () => {
-              $scope.orsMap.fitBounds($scope.floodBounds);
-          };
+        );
+        $scope.zoomToFlood = () => {
+          $scope.orsMap.fitBounds($scope.floodBounds);
+        };
         const request = orsUtilsService.getDorsConfig();
-        request.promise.then(function(data) {
-          $scope.dors_config = data;
-          let i = 0;
-          for(let d_area of Object.values($scope.dors_config)){
-            d_area.checked = i === 0
-            i = i + 1
+        request.promise.then(
+          function(data) {
+            $scope.dors_config = data;
+            let i = 0;
+            for (let d_area of Object.values($scope.dors_config)) {
+              d_area.checked = i === 0;
+              i = i + 1;
+            }
+            $scope.selectedRegion = {
+              selected: Object.values($scope.dors_config)[0].instance
+            };
+            const instance = $scope.selectedRegion.selected;
+            orsUtilsService.setDorsLink(instance);
+            let dArea = L.geoJSON(
+              $scope.dors_config[$scope.selectedRegion.selected].geojson,
+              {
+                invert: true,
+                worldLatLngs: [
+                  L.latLng([85, 360]),
+                  L.latLng([85, -360]),
+                  L.latLng([-85, -360]),
+                  L.latLng([-85, 360])
+                ],
+                style: lists.layerStyles.disaster_boundary()
+              }
+            );
+            $scope.orsMap.setMaxBounds(
+              L.geoJSON(
+                $scope.dors_config[$scope.selectedRegion.selected].geojson
+              ).getBounds()
+            );
+            $scope.zoomToFlood();
+            dArea.addTo($scope.geofeatures.layerDisasterBoundaries);
+            $scope.mapModel.map.addControl($scope.disasterSwitcher);
+          },
+          function(data) {
+            console.error(data);
           }
-          $scope.selectedRegion = {
-            selected: Object.values($scope.dors_config)[0].instance
-          };
-          const instance = $scope.selectedRegion.selected;
-          orsUtilsService.setDorsLink(instance);
-          let dArea = L.geoJSON($scope.dors_config[$scope.selectedRegion.selected].geojson, {
-            invert: true,
-            worldLatLngs: [L.latLng([85, 360]), L.latLng([85, -360]), L.latLng([-85, -360]), L.latLng([-85, 360])],
-            style: lists.layerStyles.disaster_boundary()
-          });
-          $scope.orsMap.setMaxBounds(L.geoJSON($scope.dors_config[$scope.selectedRegion.selected].geojson).getBounds());
-          $scope.zoomToFlood();
-          dArea.addTo($scope.geofeatures.layerDisasterBoundaries);
-          $scope.mapModel.map.addControl($scope.disasterSwitcher);
-        }, function(data) {
-          console.error(data);
-        });
+        );
         $scope.mapModel = {
           map: $scope.orsMap,
           geofeatures: $scope.geofeatures
@@ -410,30 +435,38 @@ angular.module("orsApp").directive("orsMap", () => {
         $scope.zoomControl = new L.Control.Zoom({
           position: "topright"
         }).addTo($scope.mapModel.map);
-          L.control.scale().addTo($scope.mapModel.map)
-          // disaster region switcher
-          $scope.disasterSwitcher = L.control({
-              position: "bottomright"
-          })
-          $scope.switchRegions = () => {
-            const instance = $scope.selectedRegion.selected
-            $scope.geofeatures.layerDisasterBoundaries.clearLayers()
-            let dArea = L.geoJSON($scope.dors_config[instance].geojson, {
-              invert: true,
-              style: lists.layerStyles.disaster_boundary()
-            })
-            dArea.addTo($scope.geofeatures.layerDisasterBoundaries)
-            orsUtilsService.setDorsLink(instance)
-            $scope.orsMap.setMaxBounds(L.geoJSON($scope.dors_config[$scope.selectedRegion.selected].geojson).getBounds())
-            $scope.orsMap.fitBounds(L.geoJSON($scope.dors_config[instance].geojson).getBounds())
-          }
-          $scope.disasterSwitcher.onAdd = function (map) {
-              var div = $compile("<ors-disaster-list></ors-disaster-list>")($scope)[0]
-              return div
-          }
-          /* AVOID AREA CONTROLLER */
-          L.NewPolygonControl = L.Control.extend({
-              options: {
+        L.control.scale().addTo($scope.mapModel.map);
+        // disaster region switcher
+        $scope.disasterSwitcher = L.control({
+          position: "bottomright"
+        });
+        $scope.switchRegions = () => {
+          const instance = $scope.selectedRegion.selected;
+          $scope.geofeatures.layerDisasterBoundaries.clearLayers();
+          let dArea = L.geoJSON($scope.dors_config[instance].geojson, {
+            invert: true,
+            style: lists.layerStyles.disaster_boundary()
+          });
+          dArea.addTo($scope.geofeatures.layerDisasterBoundaries);
+          orsUtilsService.setDorsLink(instance);
+          $scope.orsMap.setMaxBounds(
+            L.geoJSON(
+              $scope.dors_config[$scope.selectedRegion.selected].geojson
+            ).getBounds()
+          );
+          $scope.orsMap.fitBounds(
+            L.geoJSON($scope.dors_config[instance].geojson).getBounds()
+          );
+        };
+        $scope.disasterSwitcher.onAdd = function(map) {
+          var div = $compile("<ors-disaster-list></ors-disaster-list>")(
+            $scope
+          )[0];
+          return div;
+        };
+        /* AVOID AREA CONTROLLER */
+        L.NewPolygonControl = L.Control.extend({
+          options: {
             position: "topright"
           },
           onAdd: function(map) {
@@ -532,13 +565,12 @@ angular.module("orsApp").directive("orsMap", () => {
           position: "topright"
         });
         $scope.floodMsgBox.onAdd = function(map) {
-          let div = $compile("<ors-flood-box></ors-flood-box>")(
-              $scope
-          )[0];
+          let div = $compile("<ors-flood-box></ors-flood-box>")($scope)[0];
           return div;
         };
-        $timeout( () => {
-          if (!$scope.smallScreen) $scope.mapModel.map.addControl($scope.floodMsgBox);
+        $timeout(() => {
+          if (!$scope.smallScreen)
+            $scope.mapModel.map.addControl($scope.floodMsgBox);
         }, 100);
         // sign up for API
         $scope.signupBox = L.control({
@@ -554,7 +586,8 @@ angular.module("orsApp").directive("orsMap", () => {
         });
         $scope.brand.onAdd = function(map) {
           var divs = L.DomUtil.create("div", "ors-brand-small");
-          divs.innerHTML = '<img src="img/brand.png"><br><img class="ors-hot" src="img/HOT.png">';
+          divs.innerHTML =
+            '<img src="img/brand.png"><br><img class="ors-hot" src="img/HOT.png">';
           return divs;
         };
         $timeout(function() {
@@ -2337,12 +2370,14 @@ angular.module("orsApp").directive("orsSignupBox", [
     };
   }
 ]);
-angular.module('orsApp').directive('orsDisasterList', [
-    '$compile', '$timeout', 'orsSettingsFactory',
-    ($compile, $timeout, orsSettingsFactory) => {
+angular.module("orsApp").directive("orsDisasterList", [
+  "$compile",
+  "$timeout",
+  "orsSettingsFactory",
+  ($compile, $timeout, orsSettingsFactory) => {
     return {
-        restrict: 'E',
-        template: `
+      restrict: "E",
+      template: `
                 <div class="ui form ors-disaster-control">
                   <div class="grouped fields">
                     <label>Choose your region:</label>
@@ -2354,9 +2389,9 @@ angular.module('orsApp').directive('orsDisasterList', [
                     </div>
                   </div>
                 </div>`,
-        link: (scope, elem, attr) => {
-            scope.show = true;
-        }
+      link: (scope, elem, attr) => {
+        scope.show = true;
+      }
     };
   }
 ]);
