@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- link to new map client
+
 ### Changed
 - generation of slider styles
 - serving the app is now dockerized (

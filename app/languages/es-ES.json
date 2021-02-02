@@ -234,5 +234,6 @@
     "IMPORT_DEVIATION_TOLERANCE": "Deviation tolerance",
     "LOCAL_ALT_ROUTE": "Alternative route (slow!, only for routes below 100km)",
     "TURN_INFO_RDB_EXIT": "Exit",
-    "TURN_INFO_UTURN": "U-Turn"
+    "TURN_INFO_UTURN": "U-Turn",
+    "NEW_CLIENT_INFO": "Visit our new responsive map client!"
 }
