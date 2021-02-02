@@ -12,7 +12,5 @@ script:
 - npm install -g grunt-cli
 - npm install
 - node_modules/bower/bin/bower install
-- cd bower_components/angularjs-slider && npm install && cd ../..
-- cat bower_components/angularjs-slider/Gruntfile.js
 - cp Gruntfile.default.js Gruntfile.js
 - node_modules/.bin/grunt ci
