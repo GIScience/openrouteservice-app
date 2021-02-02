@@ -171,7 +171,10 @@ angular.module("orsApp.utils-service", []).factory("orsUtilsService", [
       }
 
       // maximum speed
-      if (settings.profile.options.maximum_speed && payload.profile.startsWith("driving"))
+      if (
+        settings.profile.options.maximum_speed &&
+        payload.profile.startsWith("driving")
+      )
         payload.maximum_speed = settings.profile.options.maximum_speed.toString();
       // extras
       payload.extra_info = [];

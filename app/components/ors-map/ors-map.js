@@ -63,17 +63,37 @@ angular.module("orsApp").directive("orsMap", () => {
 
         $scope.translateFilter = $filter("translate");
         const bkgtopplus = L.tileLayer.wms(
-            orsNamespaces.layerBkgTopPlus.url,
-            orsNamespaces.layerBkgTopPlus.options.normal);
+          orsNamespaces.layerBkgTopPlus.url,
+          orsNamespaces.layerBkgTopPlus.options.normal
+        );
         const bkgtopplusgrey = L.tileLayer.wms(
           orsNamespaces.layerBkgTopPlus.url,
-          orsNamespaces.layerBkgTopPlus.options.grey);
-        const openstreetmap = L.tileLayer(orsNamespaces.layerOSM.url, orsNamespaces.layerOSM.options);
-        const opencyclemap = L.tileLayer(orsNamespaces.layerOSMCycle.url, orsNamespaces.layerOSMCycle.options);
-        const transportdark = L.tileLayer(orsNamespaces.layerOSMDark.url, orsNamespaces.layerOSMDark.options);
-        const outdoors = L.tileLayer(orsNamespaces.layerOutdoors.url, orsNamespaces.layerOutdoors.options);
-        const worldImagery = L.tileLayer(orsNamespaces.layerWorldImagery.url, orsNamespaces.layerWorldImagery.options);
-        const cycleOSM = L.tileLayer(orsNamespaces.layerCycleOsm.url, orsNamespaces.layerCycleOsm.options);
+          orsNamespaces.layerBkgTopPlus.options.grey
+        );
+        const openstreetmap = L.tileLayer(
+          orsNamespaces.layerOSM.url,
+          orsNamespaces.layerOSM.options
+        );
+        const opencyclemap = L.tileLayer(
+          orsNamespaces.layerOSMCycle.url,
+          orsNamespaces.layerOSMCycle.options
+        );
+        const transportdark = L.tileLayer(
+          orsNamespaces.layerOSMDark.url,
+          orsNamespaces.layerOSMDark.options
+        );
+        const outdoors = L.tileLayer(
+          orsNamespaces.layerOutdoors.url,
+          orsNamespaces.layerOutdoors.options
+        );
+        const worldImagery = L.tileLayer(
+          orsNamespaces.layerWorldImagery.url,
+          orsNamespaces.layerWorldImagery.options
+        );
+        const cycleOSM = L.tileLayer(
+          orsNamespaces.layerCycleOsm.url,
+          orsNamespaces.layerCycleOsm.options
+        );
         $scope.heightGraphData = [];
         $scope.geofeatures = {
           layerLocationMarker: L.featureGroup(),
