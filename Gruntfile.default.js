@@ -36,31 +36,6 @@ module.exports = function(grunt) {
                     "node_modules/leaflet.heightgraph/dist/**"
                 ],
                 dest: "build"
-            },
-            // copies the slider variables into the related bower_component
-            sliderLess: {
-                expand: true,
-                cwd: "./",
-                src: ["app/less/angularjs-slider.variables.less"],
-                dest: "bower_components/angularjs-slider/src/",
-                rename: function(dest) {
-                    return dest + "variables.less";
-                }
-            }
-        },
-        // compiles slider less to css
-        run_grunt: {
-            options:{
-                debug: true,
-                verbose: true
-            },
-            sliderMakeCss: {
-                src: "bower_components/angularjs-slider/Gruntfile.js",
-                options: {
-                    log: true,
-                    gruntCli: "../../node_modules/.bin/grunt",
-                    task: "css"
-                }
             }
         },
         watch: {
@@ -69,14 +44,13 @@ module.exports = function(grunt) {
             },
             less: {
                 files: [
-                    "app/less/**/*.less",
-                    "!app/less/angularjs-slider.variables.less"
+                    "app/less/**/*.less"
                 ],
                 tasks: ["less:development"]
             },
             less_sliders: {
                 files: ["app/less/angularjs-slider.variables.less"],
-                tasks: ["copy:sliderLess", "grunt:sliderMakeCss"]
+                tasks: ["less:development"]
             },
             js: {
                 files: ["app/**/*.js"]
@@ -192,11 +166,9 @@ module.exports = function(grunt) {
         connect: {
             dev: {
                 options: {
-                    hostname: "localhost",
+                    hostname: "0.0.0.0",
                     port: 3005,
-                    //base: "src",
                     livereload: true,
-                    open: true,
                     middleware: function(connect) {
                         // MARQ24 added proxy to avoid CORS when running OWN backend via SpringBoot
                         // this will require the usage of NodeJS 13.x
@@ -221,13 +193,10 @@ module.exports = function(grunt) {
             },
             build: {
                 options: {
-                    hostname: "localhost",
+                    hostname: "0.0.0.0",
                     port: 3035,
-                    open: true,
-                    base: "./build",
-                    middleware: function(connect) {
+                    middleware: function() {
                         return [
-                            //modRewrite(['^[^\\.]*$ /index.html [L]']),
                             modRewrite([
                                 "!\\.html|\\.js|\\.txt|\\.ico|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]"
                             ]),
@@ -357,7 +326,8 @@ module.exports = function(grunt) {
                         "app/less/ors-panel-routing.less",
                     "app/css/ors-sidebar-outlet.css":
                         "app/less/ors-sidebar-outlet.less",
-                    "app/css/ors-tooltips.css": "app/less/ors-tooltips.less"
+                    "app/css/ors-tooltips.css": "app/less/ors-tooltips.less",
+                    "app/css/ors-ng-sliders.css": "app/less/ors-ng-sliders.less"
                 }
             }
         },
@@ -380,8 +350,6 @@ module.exports = function(grunt) {
             "browserify:turf",
             "less:development",
             "prettier",
-            "copy:sliderLess",
-            "run_grunt:sliderMakeCss",
             "ngtemplates",
             "clean:task_rm_build",
             "copy:build",
@@ -404,8 +372,6 @@ module.exports = function(grunt) {
     grunt.registerTask("dev", "Run local server for development purposes", [
         "less:development",
         "prettier",
-        "copy:sliderLess",
-        "run_grunt:sliderMakeCss",
         "browserify:turf",
         "ngtemplates",
         "ngconstant:ors",
@@ -416,7 +382,6 @@ module.exports = function(grunt) {
         "browserify:turf",
         "less:development",
         "prettier",
-        "copy:sliderLess",
         "ngtemplates",
         "clean:task_rm_build",
         "copy:build",
@@ -440,8 +405,6 @@ module.exports = function(grunt) {
         [
             "less:development",
             "prettier",
-            "copy:sliderLess",
-            "run_grunt:sliderMakeCss",
             "browserify:turf",
             "ngtemplates",
             "ngconstant:local",

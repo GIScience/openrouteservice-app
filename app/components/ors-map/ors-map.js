@@ -62,47 +62,38 @@ angular.module("orsApp").directive("orsMap", () => {
         let ak = "?api_key=" + apiKey;
 
         $scope.translateFilter = $filter("translate");
-        const bkgtopplus = L.tileLayer.wms(orsNamespaces.layerBkgTopPlus.url, {
-          layers: "web",
-          format: "image/png",
-          attribution:
-            '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2017, <a href="https://sgx.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>',
-          id: 1
-        });
+        const bkgtopplus = L.tileLayer.wms(
+          orsNamespaces.layerBkgTopPlus.url,
+          orsNamespaces.layerBkgTopPlus.options.normal
+        );
         const bkgtopplusgrey = L.tileLayer.wms(
           orsNamespaces.layerBkgTopPlus.url,
-          {
-            layers: "web_grau",
-            format: "image/png",
-            attribution:
-              '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2017, <a href="https://sgx.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>',
-            id: 2
-          }
+          orsNamespaces.layerBkgTopPlus.options.grey
         );
-        const openstreetmap = L.tileLayer(orsNamespaces.layerOSM.url, {
-          attribution: orsNamespaces.layerOSM.attribution,
-          id: 3
-        });
-        const opencyclemap = L.tileLayer(orsNamespaces.layerOSMCycle.url, {
-          attribution: orsNamespaces.layerOSMCycle.attribution,
-          id: 4
-        });
-        const transportdark = L.tileLayer(orsNamespaces.layerOSMDark.url, {
-          attribution: orsNamespaces.layerOSMDark.attribution,
-          id: 5
-        });
-        const outdoors = L.tileLayer(orsNamespaces.layerOutdoors.url, {
-          attribution: orsNamespaces.layerOutdoors.attribution,
-          id: 6
-        });
-        const worldImagery = L.tileLayer(orsNamespaces.layerWorldImagery.url, {
-          attribution: orsNamespaces.layerWorldImagery.attribution,
-          id: 7
-        });
-        const cycleOSM = L.tileLayer(orsNamespaces.layerCycleOsm.url, {
-          attribution: orsNamespaces.layerCycleOsm.attribution,
-          id: 8
-        });
+        const openstreetmap = L.tileLayer(
+          orsNamespaces.layerOSM.url,
+          orsNamespaces.layerOSM.options
+        );
+        const opencyclemap = L.tileLayer(
+          orsNamespaces.layerOSMCycle.url,
+          orsNamespaces.layerOSMCycle.options
+        );
+        const transportdark = L.tileLayer(
+          orsNamespaces.layerOSMDark.url,
+          orsNamespaces.layerOSMDark.options
+        );
+        const outdoors = L.tileLayer(
+          orsNamespaces.layerOutdoors.url,
+          orsNamespaces.layerOutdoors.options
+        );
+        const worldImagery = L.tileLayer(
+          orsNamespaces.layerWorldImagery.url,
+          orsNamespaces.layerWorldImagery.options
+        );
+        const cycleOSM = L.tileLayer(
+          orsNamespaces.layerCycleOsm.url,
+          orsNamespaces.layerCycleOsm.options
+        );
         $scope.heightGraphData = [];
         $scope.geofeatures = {
           layerLocationMarker: L.featureGroup(),

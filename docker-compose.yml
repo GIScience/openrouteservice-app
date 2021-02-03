@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  ors-classic-maps:
+    container_name: ors-maps
+    image: ors-classic-maps:v0.7.0
+    ports:
+      - 8035:3035
+      - 3005:3005
+    build:
+      context: .
+    volumes:
+      - ./app:/ors-classic-maps/app
+      - ./Gruntfile.default.js:/ors-classic-maps/Gruntfile.js
+    entrypoint: ["/ors-classic-maps/node_modules/grunt-cli/bin/grunt","-b", "/ors-classic-maps"]
+    command: "ors"

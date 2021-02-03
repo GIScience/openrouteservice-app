@@ -1,3 +1,5 @@
+@import 'variables.less';
+
 .rounded(@radius: 2px) {
   -webkit-border-radius: @radius;
   -moz-border-radius: @radius;
@@ -6,11 +8,11 @@
 @handleActiveColor: #bfbfbf;
 @handleHoverColor: #fff;
 @labelTextColor: #7e7e7e;
-@handleBgColor: #b5152b;
+@handleBgColor: @orsColor;
 @handleInnerColor: #fff;
 @handleDisabledColor: #a9a9a9;
 @limitLabelTextColor: @labelTextColor;
-@barFillColor: @handleBgColor;
+@barFillColor: @orsColor;
 @barDisabledFillColor: #a9a9a9;
 @barNormalColor: #a9a9a9;
 

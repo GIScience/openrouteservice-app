@@ -33,8 +33,7 @@ angular.module("orsApp").constant("orsNamespaces", {
   },
   /**
    * metadata used when generating (export) files on the openrouteservice
-   */
-  metadata: {
+   */ metadata: {
     name: "Openrouteservice Route",
     description:
       "Route exported using GIScience Universität Heidelberg Openrouteservice",
@@ -46,60 +45,91 @@ angular.module("orsApp").constant("orsNamespaces", {
     link: "http://www.geog.uni-heidelberg.de/gis/index_en.html",
     keywords: "Openrouteservice. Routing. GIS. Universität Heidelberg",
     src: "Route point logged using Openrouteservice"
-  },
-  //url to hillshade overlay
+  }, //url to hillshade overlay
   layerHs:
-    "https://korona.geog.uni-heidelberg.de/tiles/asterh/x={x}&y={y}&z={z}",
-  //url to OSM layer
-  layerOSM: {
-    url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    attribution:
-      'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  },
-  //url to OpenCycleMap
-  layerOSMCycle: {
-    url:
-      "https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=13efc496ac0b486ea05691c820824f5f",
-    attribution:
-      'Maps &copy; <a href="http://thunderforest.com/">Thunderforest</a>, Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  },
-  //url to Transport Dark map
-  layerOSMDark: {
-    url:
-      "https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png?apikey=13efc496ac0b486ea05691c820824f5f",
-    attribution:
-      'Maps &copy; <a href="http://thunderforest.com/">Thunderforest</a>, Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  },
-  //url to Outdoors map
-  layerOutdoors: {
-    url:
-      "https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=13efc496ac0b486ea05691c820824f5f",
-    attribution:
-      'Maps &copy; <a href="http://thunderforest.com/">Thunderforest</a>, Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  },
-  //url to stamen maps
-  layerStamen: {
-    url: "http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png",
-    attribution:
-      'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  },
-  overlayHillshade: {
-    url: "https://korona.geog.uni-heidelberg.de/tiles/asterh/x={x}&y={y}&z={z}"
-  },
+    "https://korona.geog.uni-heidelberg.de/tiles/asterh/x={x}&y={y}&z={z}", //url to OSM layer
   layerBkgTopPlus: {
     GetCapabilities:
       "https://sgx.geodatenzentrum.de/wms_topplus_web_open?request=GetCapabilities&service=wms",
-    url: "https://sgx.geodatenzentrum.de/wms_topplus_web_open?"
+    url: "https://sgx.geodatenzentrum.de/wms_topplus_web_open?",
+    options: {
+      normal: {
+        layers: "web",
+        format: "image/png",
+        attribution:
+          '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2020, <a href="https://sgx.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>',
+        id: 1
+      },
+      grey: {
+        layers: "web_grau",
+        format: "image/png",
+        attribution:
+          '© <a href="http://www.bkg.bund.de">Bundesamt für Kartographie und Geodäsie</a> 2020, <a href="https://sgx.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>',
+        id: 2
+      }
+    }
+  },
+  layerOSM: {
+    url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    options: {
+      attribution:
+        'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      id: 3
+    }
+  }, //url to OpenCycleMap
+  layerOSMCycle: {
+    url:
+      "https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=13efc496ac0b486ea05691c820824f5f",
+    options: {
+      attribution:
+        'Maps &copy; <a href="http://thunderforest.com/">Thunderforest</a>, Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      id: 4
+    }
+  }, //url to Transport Dark map
+  layerOSMDark: {
+    url:
+      "https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png?apikey=13efc496ac0b486ea05691c820824f5f",
+    options: {
+      attribution:
+        'Maps &copy; <a href="http://thunderforest.com/">Thunderforest</a>, Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      id: 5
+    }
+  }, //url to Outdoors map
+  layerOutdoors: {
+    url:
+      "https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=13efc496ac0b486ea05691c820824f5f",
+    options: {
+      attribution:
+        'Maps &copy; <a href="http://thunderforest.com/">Thunderforest</a>, Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      id: 6
+    }
+  }, //url to stamen maps
+  layerStamen: {
+    url: "http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png",
+    options: {
+      attribution:
+        'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }
+  },
+  overlayHillshade: {
+    url: "https://korona.geog.uni-heidelberg.de/tiles/asterh/x={x}&y={y}&z={z}",
+    options: {}
   },
   layerWorldImagery: {
     url:
       "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    attribution:
-      "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
+    options: {
+      attribution:
+        "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
+      id: 7
+    }
   },
   layerCycleOsm: {
     url: "https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
-    attribution:
-      'Tiles <a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases">CycleOSM</a> latest'
+    options: {
+      attribution:
+        'Tiles <a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases">CycleOSM</a> latest',
+      id: 8
+    }
   }
 });

@@ -4,13 +4,47 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!--## [Unreleased]
+<!--
+This is how a Changelog entry should look like:
+
+## [version] - YYYY-MM-DD
 
 ### Added
-### Fixed
+- for new features.
 ### Changed
+- existing functionality.
 ### Deprecated
-### Removed-->
+- soon-to-be removed features.
+### Removed
+- now removed features.
+### Fixed
+- any bug.
+### Security
+- in case of vulnerabilities. (Use for vulnerability fixes)
+
+RELEASING:
+1. Change Unreleased to new release number
+2. Add today's Date
+3. Change unreleased link to compare new release:
+[unreleased]: https://github.com/GIScience/openrouteservice/compare/vnew...HEAD
+4. Add new compare link below
+[new]: https://github.com/GIScience/openrouteservice/compare/vlast...vnew
+5. Git tag release commit with vX.X.X to enable links
+6. Double check issue links are valid
+7. Run 'grunt up' for patch, 'grunt up:minor' or 'grunt up:major' versions
+8. Add version to docker-compose.yml (grunt version always adds 1 on top the current version ...)
+ -->
+
+## [v0.7.0] - 2021-02-03
+
+### Added
+- link to new map client
+
+### Changed
+- generation of slider styles
+- running the app: It is now dockerized (
+  Thanks to [@stefanocudini](https://github.com/stefanocudini)!
+  See [PR $345](https://github.com/GIScience/openrouteservice-app/pull/345))
 
 ## [v0.6.0] - 2020-08-10
 
@@ -369,25 +403,34 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - hiding wrong Isochrones ([#160](https://github.com/GIScience/openrouteservice-app/issues/160))
 
-<!--
-
-### Added
- new features.
-
-### Changed
- something in existing functionality.
-
-### Deprecated
- a soon-to-be removed feature.
-
-### Removed
- a now removed feature.
-
-### Fixed
- a bug.
-
-### Security
- in case of vulnerabilities.
-
-
--->
+[unreleased]: https://github.com/GIScience/openrouteservice/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.6.0...v0.7.0
+[v0.6.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.4...v0.6.0
+[v0.5.4]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.3...v0.5.4
+[v0.5.3]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.2...v0.5.3
+[v0.5.2]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.1...v0.5.2
+[v0.5.1]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.0...v0.5.1
+[v0.5.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.4.3...v0.5.0
+[v0.4.3]: https://github.com/GIScience/openrouteservice-app/compare/v0.4.2...v0.4.3
+[v0.4.2]: https://github.com/GIScience/openrouteservice-app/compare/v0.4.1...v0.4.2
+[v0.4.1]: https://github.com/GIScience/openrouteservice-app/compare/v0.4.0...v0.4.1
+[v0.4.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.12...v0.4.0
+[v0.3.12]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.11...v0.3.12
+[v0.3.11]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.10...v0.3.11
+[v0.3.10]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.9...v0.3.10
+[v0.3.9]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.8...v0.3.9
+[v0.3.8]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.7...v0.3.8
+[v0.3.7]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.6...v0.3.7
+[v0.3.6]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.5...v0.3.6
+[v0.3.5]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.4...v0.3.5
+[v0.3.4]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.3...v0.3.4
+[v0.3.3]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.2...v0.3.3
+[v0.3.2]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.1...v0.3.2
+[v0.3.1]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.0...v0.3.1
+[v0.3.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.2.9...v0.3.0
+[v0.2.9]: https://github.com/GIScience/openrouteservice-app/compare/v0.2.8...v0.2.9
+[v0.2.8]: https://github.com/GIScience/openrouteservice-app/compare/0.2.7...v0.2.8
+[0.2.7]: https://github.com/GIScience/openrouteservice-app/compare/0.2.6...0.2.7
+[0.2.6]: https://github.com/GIScience/openrouteservice-app/compare/0.2.5...0.2.6
+[0.2.5]: https://github.com/GIScience/openrouteservice-app/compare/0.2.4...0.2.5
+[0.2.4]: https://github.com/GIScience/openrouteservice-app/compare/0.2.3...0.2.4

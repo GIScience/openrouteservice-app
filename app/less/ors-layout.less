@@ -1,4 +1,5 @@
 @import 'variables.less';
+
 html, body {
     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
     font-size: 90% !important;
@@ -9,11 +10,13 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
 .ors-main {
     display: flex;
     flex-direction: row;
     height: 100%;
 }
+
 .ors-left {
     order: 1;
     z-index: 1;
@@ -28,38 +31,63 @@ html, body {
     // -ms-flex-direction: column;
     flex-direction: column;
 }
+
+.ors-new-client-info {
+    flex: 0 0 18px;
+    background-color: @orsHoverColor;
+    b {
+        a {
+            display: block;
+            color: rgba(255, 255, 255, 0.75);
+            text-align: center;
+            text-decoration: none;
+            &:hover {
+                color: #FFF;
+            }
+        }
+    }
+}
+
 .ors-right {
     flex: 1 1 auto;
     order: 2;
     z-index: 0;
 }
+
 .ors-brand {
     img {
         width: 150px;
         height: auto;
     }
 }
-.ors-brand-small 
+
+.ors-brand-small {
     img {
         width: 75px;
         height: auto;
         opacity: 0.5;
         pointer-events: none;
+    }
 }
+
 @media screen and (min-width: 319px) and (max-width: 720px) {
     .ors-main {
         flex-direction: column;
     }
+
     .ors-left {
         order: 2;
         flex: 1 1 50vh;
     }
+
     .ors-sidebar {
         flex: 1 1 auto;
     }
+
     .ors-panel {
         flex: 1 1 auto;
     }
+
     .ors-right {
         order: 1;
         height: 50vh;
