@@ -37,6 +37,9 @@ RELEASING:
 
 ## [unreleased]
 
+### Added
+- Hungarian translations update (PR [#355](https://github.com/GIScience/openrouteservice-app/pull/355))
+
 ### Changed
 - clipboard.js from bower to npm
 
@@ -411,7 +414,7 @@ RELEASING:
 ### Fixed
 - hiding wrong Isochrones ([#160](https://github.com/GIScience/openrouteservice-app/issues/160))
 
-[unreleased]: https://github.com/GIScience/openrouteservice/compare/v0.7.0...HEAD
+[unreleased]: https://github.com/GIScience/openrouteservice-app/compare/v0.7.0...HEAD
 [0.7.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.4...v0.6.0
 [0.5.4]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.3...v0.5.4
