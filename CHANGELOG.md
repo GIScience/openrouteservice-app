@@ -35,6 +35,14 @@ RELEASING:
 8. Add version to docker-compose.yml (grunt version always adds 1 on top the current version ...)
  -->
 
+## [Unreleased]
+
+### Changed
+- clipboard.js from bower to npm
+
+### Fixed
+- broken build due to clipboard.js ([#359](https://github.com/GIScience/openrouteservice-app/issues/359))
+
 ## [v0.7.0] - 2021-02-03
 
 ### Added
