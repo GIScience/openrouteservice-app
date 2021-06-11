@@ -7,7 +7,7 @@ branches:
   only:
   - master
   - development
-  - /^release-v.*$/ # this should check release-v* branches
+  - /^release\/v.*$/
 script:
 - npm install -g grunt-cli
 - npm install
