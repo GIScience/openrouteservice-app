@@ -35,7 +35,7 @@ RELEASING:
 8. Add version to docker-compose.yml (grunt version always adds 1 on top the current version ...)
  -->
 
-## [Unreleased]
+## [unreleased]
 
 ### Changed
 - clipboard.js from bower to npm
@@ -43,7 +43,7 @@ RELEASING:
 ### Fixed
 - broken build due to clipboard.js ([#359](https://github.com/GIScience/openrouteservice-app/issues/359))
 
-## [v0.7.0] - 2021-02-03
+## [0.7.0] - 2021-02-03
 
 ### Added
 - link to new map client
@@ -54,7 +54,7 @@ RELEASING:
   Thanks to [@stefanocudini](https://github.com/stefanocudini)!
   See [PR $345](https://github.com/GIScience/openrouteservice-app/pull/345))
 
-## [v0.6.0] - 2020-08-10
+## [0.6.0] - 2020-08-10
 
 ### Added
 - maximum_speed for `driving-*` profiles.
@@ -67,7 +67,7 @@ RELEASING:
 ### Removed
 - `fastest` weighting option ([#315](https://github.com/GIScience/openrouteservice-app/issues/315))
 
-## [v0.5.4] - 2020-07-23
+## [0.5.4] - 2020-07-23
 
 ### Fixed
 - gpx export exception ([#335](https://github.com/GIScience/openrouteservice-app/issues/335))
@@ -81,12 +81,12 @@ RELEASING:
 ### Security
 - updated some dependencies
 
-## [v0.5.3] - 2020-05-18
+## [0.5.3] - 2020-05-18
 
 ### Added
 - CycleOSM baselayer
 
-## [v0.5.2] - 2020-05-12
+## [0.5.2] - 2020-05-12
 
 ### Fixed
 - avoid features & polygons not working for isochrones
@@ -95,18 +95,18 @@ RELEASING:
 ### Removed
 - Mapsurfer baselayer
 
-## [v0.5.1] - 2020-05-07
+## [0.5.1] - 2020-05-07
 
 ### Added
 - World Imagery (Esri) satellite base layer
 - 0mm kerb option for wheelchair profile
 
-## [v0.5.0] - 2020-03-26
+## [0.5.0] - 2020-03-26
 
 ### Removed
 - support for node 6 & 7. Please use version 8 or above
 
-## [v0.4.3] - 2020-03-26
+## [0.4.3] - 2020-03-26
 
 ### Added
 - deviation tolerance during route import ([#325](https://github.com/GIScience/openrouteservice-app/issues/325))
@@ -125,7 +125,7 @@ RELEASING:
 - maxZoom of all base maps to 18 ([#311](https://github.com/GIScience/openrouteservice-app/issues/311))
 - route processing logic to increase performance ([#320](https://github.com/GIScience/openrouteservice-app/issues/320))
 
-## [v0.4.2] - 2020-01-30
+## [0.4.2] - 2020-01-30
 
 ### Added
 - tcx export format (Garmin) incl. adjustable pace in km/h ([#313](https://github.com/GIScience/openrouteservice-app/pull/313))
@@ -139,7 +139,7 @@ RELEASING:
 - deleting last waypoint input field for round trip routing ([#312](https://github.com/GIScience/openrouteservice-app/issues/312))
 - a console error appearing for swapping empty waypoints
 
-## [v0.4.1] - 2020-01-24
+## [0.4.1] - 2020-01-24
 
 ### Added
 - experimental round trip functionality
@@ -158,7 +158,7 @@ RELEASING:
 ### Changed
 - endpoints for local development to `http://localhost:8082/ors(/v2)`
 
-## [v0.4.0] - 2020-01-08
+## [0.4.0] - 2020-01-08
 
 ### Added
 - direct Waypoints: choose from "right-click" menu ([#305](https://github.com/GIScience/openrouteservice-app/issues/305))
@@ -168,7 +168,7 @@ RELEASING:
 ### Changed
 - ORS api version for routing to V2
 
-## [v0.3.12] - 2019-11-15
+## [0.3.12] - 2019-11-15
 
 ### Added
 - some german translations
@@ -182,7 +182,7 @@ RELEASING:
 ### Fixed
 - some translations
 
-## [v0.3.11] - 2019-09-27
+## [0.3.11] - 2019-09-27
 
 ### Added
 - warning flag for wheelchair profile
@@ -191,7 +191,7 @@ RELEASING:
 - remaining security issues ([#294](https://github.com/GIScience/openrouteservice-app/issues/294))
 - some translations
 
-## [v0.3.10] - 2019-09-06
+## [0.3.10] - 2019-09-06
 
 ### Added
 - indonesian as interface language
@@ -200,7 +200,7 @@ RELEASING:
 - most security issues ([#294](https://github.com/GIScience/openrouteservice-app/issues/294))
 - some translations
 
-## [v0.3.9] - 2019-03-02
+## [0.3.9] - 2019-03-02
 
 ### Changed
 - fuel options initialization
@@ -210,7 +210,7 @@ RELEASING:
 ### Fixed
 - missing fuel endpoint in Gruntfile.default.js ([#279](https://github.com/GIScience/openrouteservice-app/issues/279))
 
-## [v0.3.8] - 2019-02-28
+## [0.3.8] - 2019-02-28
 
 ### Added
 - OpenFuelService integration ([#248](https://github.com/GIScience/openrouteservice-app/issues/248))
@@ -219,14 +219,14 @@ RELEASING:
 - cycling-tour profile ([#272](https://github.com/GIScience/openrouteservice-app/issues/272))
 - some options see ORS issue [#396](https://github.com/GIScience/openrouteservice/issues/396) ([#274](https://github.com/GIScience/openrouteservice-app/issues/274))
 
-## [v0.3.7] - 2018-12-17
+## [0.3.7] - 2018-12-17
 
 ### Added
 - Population attribution to info modal ([#266](https://github.com/GIScience/openrouteservice-app/issues/266))
 - Road access restrictions to panel and map ([#267](https://github.com/GIScience/openrouteservice-app/issues/267))
 - Minimum wheelchair width setting ([#268](https://github.com/GIScience/openrouteservice-app/issues/268))
 
-## [v0.3.6] - 2018-11-13
+## [0.3.6] - 2018-11-13
 
 ### Changed
 - Forum link to ask.openrouteservice.org (([#262](https://github.com/GIScience/openrouteservice-app/issues/262)))
@@ -237,7 +237,7 @@ RELEASING:
 - Unchecking hgv settings leaves setting=false remnant in request' ([#263](https://github.com/GIScience/openrouteservice-app/issues/263))
 - Broken Isochrone toggle ([#260](https://github.com/GIScience/openrouteservice-app/issues/260))
 
-## [v0.3.5] - 2018-09-11
+## [0.3.5] - 2018-09-11
 
 ### Changed
 - GPX export file generation
@@ -245,7 +245,7 @@ RELEASING:
 ### Fixed
 - GPX export strips out XML tag ([#256](https://github.com/GIScience/openrouteservice-app/issues/256))
 
-## [v0.3.4] - 2018-08-24
+## [0.3.4] - 2018-08-24
 
 ### Added
 - OpenMapSurfer tiles served via API
@@ -254,7 +254,7 @@ RELEASING:
 ### Fixed
 - Isochrones random colors
 
-## [v0.3.3] - 2018-08-16
+## [0.3.3] - 2018-08-16
 
 ### Added
 - default endpoint setting for current domain
@@ -265,7 +265,7 @@ RELEASING:
 - system error not fading ([#161](https://github.com/GIScience/openrouteservice-app/issues/161))
 - showing false internet connection error ([#235](https://github.com/GIScience/openrouteservice-app/issues/235))
 
-## [v0.3.2] - 2018-08-14
+## [0.3.2] - 2018-08-14
 
 ### Fixed
 - map settings not loading from cookies
@@ -274,7 +274,7 @@ RELEASING:
 ### Removed
 - korona map layers due to instability
 
-## [v0.3.1] - 2018-08-13
+## [0.3.1] - 2018-08-13
 
 ### Added
 - Support for additional Turn instructions keep left/keep right (provided by graphhopper 0.10)
@@ -285,7 +285,7 @@ RELEASING:
 ### Changed
 - Heightgraph (aka. elevation profile) visibility on mobile devices (see 5194fac1f1f5e58667b7fac64e1a6964330b1968)
 
-## [v0.3.0] - 2018-05-28
+## [0.3.0] - 2018-05-28
 
 ### Added
 - foldable sidebar ([#183](https://github.com/GIScience/openrouteservice-app/issues/183))
@@ -413,31 +413,31 @@ RELEASING:
 
 [unreleased]: https://github.com/GIScience/openrouteservice/compare/v0.7.0...HEAD
 [0.7.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.6.0...v0.7.0
-[v0.6.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.4...v0.6.0
-[v0.5.4]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.3...v0.5.4
-[v0.5.3]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.2...v0.5.3
-[v0.5.2]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.1...v0.5.2
-[v0.5.1]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.0...v0.5.1
-[v0.5.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.4.3...v0.5.0
-[v0.4.3]: https://github.com/GIScience/openrouteservice-app/compare/v0.4.2...v0.4.3
-[v0.4.2]: https://github.com/GIScience/openrouteservice-app/compare/v0.4.1...v0.4.2
-[v0.4.1]: https://github.com/GIScience/openrouteservice-app/compare/v0.4.0...v0.4.1
-[v0.4.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.12...v0.4.0
-[v0.3.12]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.11...v0.3.12
-[v0.3.11]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.10...v0.3.11
-[v0.3.10]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.9...v0.3.10
-[v0.3.9]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.8...v0.3.9
-[v0.3.8]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.7...v0.3.8
-[v0.3.7]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.6...v0.3.7
-[v0.3.6]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.5...v0.3.6
-[v0.3.5]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.4...v0.3.5
-[v0.3.4]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.3...v0.3.4
-[v0.3.3]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.2...v0.3.3
-[v0.3.2]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.1...v0.3.2
-[v0.3.1]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.0...v0.3.1
-[v0.3.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.2.9...v0.3.0
-[v0.2.9]: https://github.com/GIScience/openrouteservice-app/compare/v0.2.8...v0.2.9
-[v0.2.8]: https://github.com/GIScience/openrouteservice-app/compare/0.2.7...v0.2.8
+[0.6.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.4...v0.6.0
+[0.5.4]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.3...v0.5.4
+[0.5.3]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.2...v0.5.3
+[0.5.2]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.1...v0.5.2
+[0.5.1]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.0...v0.5.1
+[0.5.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.4.3...v0.5.0
+[0.4.3]: https://github.com/GIScience/openrouteservice-app/compare/v0.4.2...v0.4.3
+[0.4.2]: https://github.com/GIScience/openrouteservice-app/compare/v0.4.1...v0.4.2
+[0.4.1]: https://github.com/GIScience/openrouteservice-app/compare/v0.4.0...v0.4.1
+[0.4.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.12...v0.4.0
+[0.3.12]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.11...v0.3.12
+[0.3.11]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.10...v0.3.11
+[0.3.10]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.9...v0.3.10
+[0.3.9]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.8...v0.3.9
+[0.3.8]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.7...v0.3.8
+[0.3.7]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.6...v0.3.7
+[0.3.6]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.5...v0.3.6
+[0.3.5]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.4...v0.3.5
+[0.3.4]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.3...v0.3.4
+[0.3.3]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.2...v0.3.3
+[0.3.2]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.1...v0.3.2
+[0.3.1]: https://github.com/GIScience/openrouteservice-app/compare/v0.3.0...v0.3.1
+[0.3.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.2.9...v0.3.0
+[0.2.9]: https://github.com/GIScience/openrouteservice-app/compare/v0.2.8...v0.2.9
+[0.2.8]: https://github.com/GIScience/openrouteservice-app/compare/0.2.7...v0.2.8
 [0.2.7]: https://github.com/GIScience/openrouteservice-app/compare/0.2.6...0.2.7
 [0.2.6]: https://github.com/GIScience/openrouteservice-app/compare/0.2.5...0.2.6
 [0.2.5]: https://github.com/GIScience/openrouteservice-app/compare/0.2.4...0.2.5
