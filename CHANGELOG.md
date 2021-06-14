@@ -39,6 +39,9 @@ RELEASING:
 ### Fixed
 - CHANGELOG release 0.7.1 info
 
+### Security
+- updates for some packages through `npm audit fix`
+
 ## [0.7.1] - 2021-06-11
 
 ### Added
