@@ -38,6 +38,7 @@ RELEASING:
 
 ### Fixed
 - CHANGELOG release 0.7.1 info
+- poi service error for features without osm tags ([#363](https://github.com/GIScience/openrouteservice-app/issues/363))
 
 ### Security
 - updates for some packages through `npm audit fix`
