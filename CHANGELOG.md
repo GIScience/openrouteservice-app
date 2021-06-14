@@ -35,7 +35,16 @@ RELEASING:
 8. Add version to docker-compose.yml (grunt version always adds 1 on top the current version ...)
  -->
 
-## [unreleased]
+## [0.7.2] - 2021-06-14
+
+### Fixed
+- CHANGELOG release 0.7.1 info
+- poi service error for features without osm tags ([#363](https://github.com/GIScience/openrouteservice-app/issues/363))
+
+### Security
+- updates for some packages through `npm audit fix`
+
+## [0.7.1] - 2021-06-11
 
 ### Added
 - Hungarian translations update (PR [#355](https://github.com/GIScience/openrouteservice-app/pull/355))
@@ -414,7 +423,9 @@ RELEASING:
 ### Fixed
 - hiding wrong Isochrones ([#160](https://github.com/GIScience/openrouteservice-app/issues/160))
 
-[unreleased]: https://github.com/GIScience/openrouteservice-app/compare/v0.7.0...HEAD
+[unreleased]: https://github.com/GIScience/openrouteservice-app/compare/v0.7.2...HEAD
+[0.7.2]: https://github.com/GIScience/openrouteservice-app/compare/v0.7.1...v0.7.2
+[0.7.1]: https://github.com/GIScience/openrouteservice-app/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.4...v0.6.0
 [0.5.4]: https://github.com/GIScience/openrouteservice-app/compare/v0.5.3...v0.5.4

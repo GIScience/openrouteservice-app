@@ -992,7 +992,7 @@ angular.module("orsApp").directive("orsMap", () => {
             let popupContent = "";
             let cIds = feature.properties["category_ids"];
             let osmTags = feature.properties.osm_tags;
-            if (osmTags.name)
+            if (osmTags && osmTags.name)
               popupContent += "<strong>" + osmTags.name + "</strong><br>";
             // use category_name with space instead of underscore if no name tag available
             else {
@@ -1002,42 +1002,46 @@ angular.module("orsApp").directive("orsMap", () => {
               popupContent += "<strong>" + noUnderscoreName + "</strong>";
               feature.properties["noUnderscoreName"] = noUnderscoreName;
             }
+            if (osmTags) {
+              if (osmTags.address) {
+                popupContent += lists.locations_icons.address + " ";
+                let part_added = false;
+                for (let address_part of [
+                  "street",
+                  "house_number",
+                  "postal_code",
+                  "locality",
+                  "region",
+                  "country"
+                ]) {
+                  if (osmTags.address[address_part]) {
+                    part_added = true;
+                    popupContent += osmTags.address[address_part] + ", ";
+                  }
+                }
+                if (part_added) popupContent = popupContent.slice(0, -2);
+              }
+              if (osmTags.phone)
+                popupContent +=
+                  "<br>" + lists.locations_icons.phone + " " + osmTags.phone;
+              if (osmTags.website)
+                popupContent +=
+                  "<br>" +
+                  lists.locations_icons.website +
+                  " " +
+                  '<a href="' +
+                  osmTags.website +
+                  '" target=_blank>' +
+                  osmTags.website +
+                  "</a>";
+              if (osmTags.wheelchair)
+                popupContent += "<br>" + lists.locations_icons.wheelchair;
+            }
             feature.properties[
               "categoryGroupId"
             ] = orsLocationsService.getSubcategoriesLookup()[
               parseInt(Object.keys(cIds)[0])
             ];
-            if (osmTags.address) {
-              popupContent += lists.locations_icons.address + " ";
-              if (osmTags.address.street)
-                popupContent += osmTags.address.street + ", ";
-              if (osmTags.address.house_number)
-                popupContent += osmTags.address.house_number + ", ";
-              if (osmTags.address.postal_code)
-                popupContent += osmTags.address.postal_code + ", ";
-              if (osmTags.address.locality)
-                popupContent += osmTags.address.locality + ", ";
-              if (osmTags.address.region)
-                popupContent += osmTags.address.region + ", ";
-              if (osmTags.address.country)
-                popupContent += osmTags.address.country + ", ";
-              popupContent = popupContent.slice(0, -2);
-            }
-            if (osmTags.phone)
-              popupContent +=
-                "<br>" + lists.locations_icons.phone + " " + osmTags.phone;
-            if (osmTags.website)
-              popupContent +=
-                "<br>" +
-                lists.locations_icons.website +
-                " " +
-                '<a href="' +
-                osmTags.website +
-                '" target=_blank>' +
-                osmTags.website +
-                "</a>";
-            if (osmTags.wheelchair)
-              popupContent += "<br>" + lists.locations_icons.wheelchair;
             if (feature.properties.osm_type === 1) {
               popupContent +=
                 '<br><br><a href="http://www.openstreetmap.org/node/' +
