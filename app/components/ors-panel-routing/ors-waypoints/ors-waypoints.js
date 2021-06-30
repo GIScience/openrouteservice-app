@@ -44,7 +44,9 @@ angular
           ctrl.showAdd = true;
           ctrl.options = orsSettingsFactory.getActiveOptions();
           ctrl.roundTrip = Object.entries(ctrl.options.round_trip).length === 0;
-          ctrl.timeInput = ctrl.options.time.value ? ctrl.options.time.value : moment(); // creates date-time object for current time
+          ctrl.timeInput = ctrl.options.time.value
+            ? ctrl.options.time.value
+            : moment(); // creates date-time object for current time
           ctrl.locale = moment.locale();
           ctrl.timeModes = [
             {
@@ -63,7 +65,10 @@ angular
               id: 2
             }
           ];
-          ctrl.timeMode = ctrl.timeModes[ctrl.options.time.mode ? 2 : ctrl.options.time.value ? 1: 0];
+          ctrl.timeMode =
+            ctrl.timeModes[
+              ctrl.options.time.mode ? 2 : ctrl.options.time.value ? 1 : 0
+            ];
           ctrl.changeTimeMode();
         };
         // ctrl.$onChanges = function(changesObj) {

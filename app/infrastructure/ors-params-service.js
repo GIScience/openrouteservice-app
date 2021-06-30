@@ -22,7 +22,7 @@ angular.module("orsApp.params-service", []).factory("orsParamsService", [
             avoidables: {},
             borders: {},
             round_trip: {},
-            time:{}
+            time: {}
           }
         }
       };
@@ -109,10 +109,10 @@ angular.module("orsApp.params-service", []).factory("orsParamsService", [
           );
         }
         if (key === "time_mode") {
-          settings.profile.options.time.mode = 'arrival'
+          settings.profile.options.time.mode = "arrival";
         }
         if (key === "time_value") {
-          settings.profile.options.time.value = moment(parseInt(value, 36))
+          settings.profile.options.time.value = moment(parseInt(value, 36));
         }
         if (
           [
