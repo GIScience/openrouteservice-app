@@ -54,14 +54,16 @@ docker-compose run -p 3005:3005 --rm ors-classic-maps dev
 ```
 
 If you want to use the openrouteservice client with a
-[local backend version of openrouteservice](https://github.com/GIScience/openrouteservice) you have to adjust the
-*endpoint paths* to the *backend war version* you are using in `Grunfile.js`.
+[local backend version of openrouteservice](https://github.com/GIScience/openrouteservice) make sure
+you are using the correct *endpoint paths* in `ngconstant.local` of the `Grunfile.sample.js`.
 
 Local ors backend:
 ```
 docker-compose run -p 3005:3005 --rm ors-classic-maps ors_local
 ```
 
+> Note: In case of CORS issues try setting the endpoints of the backend services to `http://localhost:3005`
+> which should be proxied to `http://localhost:8082` by the `connect:dev` grunt task.
 
 ## Install dependencies locally
 

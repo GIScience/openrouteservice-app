@@ -239,13 +239,13 @@ module.exports = function(grunt) {
                     ENV: {
                         name: "local",
                         geocode:
-                            "http://localhost:3005/ors/geocode",
+                            "https://api.openrouteservice.org/geocode",
                         directions:
-                            "http://localhost:3005/ors/v2/directions",
+                            "http://localhost:8082/ors/v2/directions",
                         isochrones:
-                            "http://localhost:3005/ors/v2/isochrones",
+                            "http://localhost:8082/ors/v2/isochrones",
                         matrix:
-                            "http://localhost:3005/ors/matrix",
+                            "http://localhost:8082/ors/matrix",
                         pois:
                             "https://api.openrouteservice.org/pois",
                         shortenlink: "https://api-ssl.bitly.com/v3/shorten",
