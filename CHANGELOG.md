@@ -35,6 +35,11 @@ RELEASING:
 8. Add version to docker-compose.yml (grunt version always adds 1 on top the current version ...)
  -->
 
+## [unreleased]
+
+### Changed
+- leaflet.markercluster from bower to npm
+
 ## [0.7.2] - 2021-06-14
 
 ### Fixed
