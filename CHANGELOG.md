@@ -39,6 +39,12 @@ RELEASING:
 
 ### Changed
 - leaflet.markercluster from bower to npm
+- leftover bower dependencies to npm ([#365](https://github.com/GIScience/openrouteservice-app/issues/365))
+- to minimised sources where possible
+
+### Removed
+- bower as dependency management
+
 
 ## [0.7.2] - 2021-06-14
 
