@@ -1065,10 +1065,6 @@ angular.module("orsApp").directive("orsMap", () => {
           };
           let geojson = L.geoJson(actionPackage.geometry, {
             pointToLayer: function(feature, latlng) {
-              // let locationsIcon = L.icon({
-              //     iconUrl: '/bower_components/Font-Awesome-SVG-PNG/black/png/22/btc.png',
-              //     iconSize: [22, 22], // size of the icon
-              // });
               let locationsIcon = L.divIcon(lists.locationsIcon);
               locationsIcon.options.html =
                 lists.locations_icons[

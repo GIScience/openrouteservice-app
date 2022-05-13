@@ -1,7 +1,6 @@
 # Ignore .DS_Store
 .DS_Store
 node_modules
-bower_components
 weathercheck.txt
 app/js/config.js
 app/js/templates.js

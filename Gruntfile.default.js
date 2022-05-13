@@ -31,8 +31,8 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: "./",
                 src: [
-                    "bower_components/font-awesome/**",
-                    "bower_components/leaflet/**",
+                    "node_modules/font-awesome/**",
+                    "node_modules/leaflet/**",
                     "node_modules/leaflet.heightgraph/dist/**"
                 ],
                 dest: "build"
@@ -177,10 +177,6 @@ module.exports = function(grunt) {
                             modRewrite([
                                 "!\\.html|\\.js|\\.txt|\\.ico|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]"
                             ]),
-                            connect().use(
-                                "/bower_components",
-                                serveStatic("./bower_components")
-                            ),
                             connect().use(
                                 "/node_modules",
                                 serveStatic("./node_modules")

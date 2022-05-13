@@ -100,9 +100,6 @@ After cloning the repository:
 ```sh
 # install all modules listed as dependencies in package.json
 npm install
-
-# install dependencies listed in bower.json
-node_modules/bower/bin/bower install
 ```
 
 - Initiate default files:

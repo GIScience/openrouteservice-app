@@ -11,6 +11,5 @@ branches:
 script:
 - npm install -g grunt-cli
 - npm install
-- node_modules/bower/bin/bower install
 - cp Gruntfile.default.js Gruntfile.js
 - node_modules/.bin/grunt ci

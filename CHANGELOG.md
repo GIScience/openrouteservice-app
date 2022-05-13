@@ -35,10 +35,18 @@ RELEASING:
 8. Add version to docker-compose.yml (grunt version always adds 1 on top the current version ...)
  -->
 
-## [unreleased]
+## [0.7.3] - 2022-05-13
 
 ### Changed
 - leaflet.markercluster from bower to npm
+- leftover bower dependencies to npm ([#365](https://github.com/GIScience/openrouteservice-app/issues/365))
+- to minimised sources where possible
+
+### Removed
+- bower as dependency management
+
+### Fixed
+- urls to classic client
 
 ## [0.7.2] - 2021-06-14
 
@@ -428,7 +436,8 @@ RELEASING:
 ### Fixed
 - hiding wrong Isochrones ([#160](https://github.com/GIScience/openrouteservice-app/issues/160))
 
-[unreleased]: https://github.com/GIScience/openrouteservice-app/compare/v0.7.2...HEAD
+[unreleased]: https://github.com/GIScience/openrouteservice-app/compare/v0.7.3...HEAD
+[0.7.3]: https://github.com/GIScience/openrouteservice-app/compare/v0.7.2...v0.7.3
 [0.7.2]: https://github.com/GIScience/openrouteservice-app/compare/v0.7.1...v0.7.2
 [0.7.1]: https://github.com/GIScience/openrouteservice-app/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.6.0...v0.7.0
