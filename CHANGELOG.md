@@ -45,6 +45,8 @@ RELEASING:
 ### Removed
 - bower as dependency management
 
+### Fixed
+- urls to classic client
 
 ## [0.7.2] - 2021-06-14
 

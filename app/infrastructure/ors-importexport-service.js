@@ -62,8 +62,8 @@ angular
             // this will suppress the jshint error for linebreak before ternary
             /*jshint -W014 */
             metadata[1].elements[0].text = options.instruction
-              ? "This route and instructions were generated from maps.openrouteservice"
-              : "This route was generated from maps.openrouteservice";
+              ? "This route and instructions were generated from classic-maps.openrouteservice"
+              : "This route was generated from classic-maps.openrouteservice";
             // parsing back to xml string + saving
             exportData = js2xml(exportData);
             exportData = new Blob([exportData], {
