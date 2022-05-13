@@ -3,7 +3,7 @@ version: '3'
 services:
   ors-classic-maps:
     container_name: ors-maps
-    image: ors-classic-maps:v0.7.2
+    image: ors-classic-maps:v0.7.3
     ports:
       - 8035:3035
       - 3005:3005
