@@ -1,6 +1,6 @@
 # Classic openrouteservice maps client
 
-[![Build Status](https://travis-ci.org/GIScience/openrouteservice-app.svg?branch=development)](https://travis-ci.org/GIScience/openrouteservice-app)
+[![status: archive](https://github.com/GIScience/badges/raw/master/status/archive.svg)](https://github.com/GIScience/badges#archive) [![Build Status](https://travis-ci.org/GIScience/openrouteservice-app.svg?branch=development)](https://travis-ci.org/GIScience/openrouteservice-app)
 
 The classic openrouteservice(ors) maps client is an online route planning application that is based on open source software, open data and open standards.
 
