@@ -145,7 +145,7 @@
     "NO_ADDRESS": "查不到这里的地址",
     "suitability": "通行情况",
     "steepness": "陡峭程度",
-    "waytypes": "道路类型",
+    "waytype": "道路类型",
     "surface": "路面类型",
     "roadaccessrestrictions": "Road access restrictions",
     "green": "绿化程度 (for Germany only)",

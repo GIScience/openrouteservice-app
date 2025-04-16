@@ -145,7 +145,7 @@
     "NO_ADDRESS": "Alamat tidak ditemukan.",
     "suitability": "Kesusuaian jalan",
     "steepness": "Dapat dilalui pejalan",
-    "waytypes": "Tipe Jalan",
+    "waytype": "Tipe Jalan",
     "surface": "Permukaan",
     "roadaccessrestrictions": "Batasan Akses Jalan Raya",
     "green": "Indeks Kehijauan (for Germany only)",

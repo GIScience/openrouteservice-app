@@ -145,7 +145,7 @@
     "NO_ADDRESS": "Adres nie został znaleziony.",
     "suitability": "Utrzymanie dróg",
     "steepness": "Nachylenie",
-    "waytypes": "Typy dróg",
+    "waytype": "Typy dróg",
     "surface": "Nawierzchnie",
     "roadaccessrestrictions": "Ograniczenie ulica",
     "green": "Green index (for Germany only)",

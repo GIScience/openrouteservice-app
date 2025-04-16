@@ -145,7 +145,7 @@
     "NO_ADDRESS": "No se ha encontrado la dirección buscada",
     "suitability": "Aplicabilidad del camino",
     "steepness": "Inclinación",
-    "waytypes": "Tipos de camino",
+    "waytype": "Tipos de camino",
     "surface": "Superficie",
     "roadaccessrestrictions": "Camino restricción",
     "green": "Green index (for Germany only)",

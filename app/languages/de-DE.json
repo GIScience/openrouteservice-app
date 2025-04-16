@@ -145,7 +145,7 @@
     "NO_ADDRESS": "Es konnte keine Adresse gefunden werden.",
     "suitability": "Eignung der Wege",
     "steepness": "Steigung",
-    "waytypes": "Wegtypen",
+    "waytype": "Wegtypen",
     "surface": "Oberflächenbeschaffenheit",
     "roadaccessrestrictions": "Straßen-Beschränkungen",
     "green": "Grünflächen-Index (Eingeschränkt auf Deutschland)",

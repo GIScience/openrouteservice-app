@@ -145,7 +145,7 @@
     "NO_ADDRESS": "Aucune adresse n'a pu être trouvée.",
     "suitability": "Adéquation du type de voie",
     "steepness": "Pente",
-    "waytypes": "Types de voie",
+    "waytype": "Types de voie",
     "surface": "Surfaces",
     "roadaccessrestrictions": "Restrictions d'accès",
     "green": "Green index (Allemagne uniquement)",

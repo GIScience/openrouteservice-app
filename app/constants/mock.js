@@ -99,7 +99,7 @@ angular.module("orsApp").constant("mockResponse", {
               { value: 1.0, distance: 100.1, amount: 6.25 }
             ]
           },
-          waytypes: {
+          waytype: {
             values: [
               [0, 17, 5],
               [17, 32, 3]
@@ -278,7 +278,7 @@ angular.module("orsApp").constant("mockResponse", {
               { value: 1.0, distance: 143.0, amount: 6.25 }
             ]
           },
-          waytypes: {
+          waytype: {
             values: [
               [0, 42, 5],
               [42, 69, 2],
@@ -495,7 +495,7 @@ angular.module("orsApp").constant("mockResponse", {
               { value: 1.0, distance: 147.2, amount: 6.25 }
             ]
           },
-          waytypes: {
+          waytype: {
             values: [
               [0, 39, 5],
               [39, 82, 2],

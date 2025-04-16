@@ -67,7 +67,7 @@ angular.module("orsApp").constant("mappings", {
       color: "#AD0F0C"
     }
   },
-  waytypes: {
+  waytype: {
     false: {
       text: "no data",
       type: "false",
