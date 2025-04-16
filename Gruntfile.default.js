@@ -1,22 +1,16 @@
-module.exports = function(grunt) {
-    require("time-grunt")(grunt);
+module.exports = function (grunt) {
+    require("time-grunt")(grunt)
     require("load-grunt-tasks")(grunt, {
         pattern: ["grunt-*", "!grunt-cli*"]
-    });
-    var modRewrite = require("connect-modrewrite");
-    var serveStatic = require("serve-static");
+    })
+    let modRewrite = require("connect-modrewrite")
+    let serveStatic = require("serve-static")
     grunt.initConfig({
         copy: {
             all: {
-                expand: true,
-                cwd: "app",
-                src: ["**"],
-                dest: "build"
-            },
-            build: {
-                expand: true,
-                cwd: "app",
-                src: [
+                expand: true, cwd: "app", src: ["**"], dest: "build"
+            }, build: {
+                expand: true, cwd: "app", src: [
                     "img/**/*.png",
                     "languages/**/*.json",
                     "css/*.css",
@@ -24,48 +18,36 @@ module.exports = function(grunt) {
                     "*.js",
                     "favicon.ico",
                     "weathercheck.txt"
-                ],
-                dest: "build"
-            },
-            libs: {
-                expand: true,
-                cwd: "./",
-                src: [
+                ], dest: "build"
+            }, essentials: {
+                expand: true, cwd: "app", src: [
+                    "weathercheck.txt"
+                ], dest: "build"
+            }, libs: {
+                expand: true, cwd: "./", src: [
                     "node_modules/font-awesome/**",
                     "node_modules/leaflet/**",
                     "node_modules/leaflet.heightgraph/dist/**"
-                ],
-                dest: "build"
+                ], dest: "build"
             }
-        },
-        watch: {
+        }, watch: {
             options: {
                 livereload: true
-            },
-            less: {
-                files: [
-                    "app/less/**/*.less"
-                ],
-                tasks: ["less:development"]
-            },
-            less_sliders: {
-                files: ["app/less/angularjs-slider.variables.less"],
-                tasks: ["less:development"]
-            },
-            js: {
-                files: ["app/**/*.js"]
-            },
-            html: {
-                files: ["app/**/*.html"],
-                tasks: ["ngtemplates"]
+            }, less: {
+                files: ["app/less/**/*.less"], tasks: ["newer:less:development"]
+            }, less_sliders: {
+                files: ["app/less/angularjs-slider.variables.less"], tasks: ["less:development"]
+            }, js: {
+                files: ["app/**/*.js"] // tasks: ["newer:prettier"]
+            }, html: {
+                files: ["app/**/*.html"], tasks: ["ngtemplates:orsApp"]
+            }, essentials: {
+                files: ["app/weathercheck.txt"], tasks: ["clean:task_rm_build_essentials", "copy:essentials"]
             }
-        },
-        // Clean build folder up
-        clean: {
+        }, clean: {
             task_rm_build: {
                 src: ["build/*", "build"]
-            },
-            task_rm_build_unused: {
+            }, task_rm_build_unused: {
                 src: [
                     "build/components",
                     "build/infrastructure",
@@ -76,228 +58,166 @@ module.exports = function(grunt) {
                     "build/css",
                     ".tmp"
                 ]
+            }, task_rm_build_essentials: {
+                src: [
+                    "build/weathercheck.txt", "build/floodedAreas.json"
+                ]
             }
-        },
-        jshint: {
-            all: ["build/js/*.js", "build/components/**/*.js"],
-            options: {
+        }, jshint: {
+            all: ["build/js/*.js", "build/components/**/*.js"], options: {
                 globals: {
-                    _: false,
-                    $: false,
-                    angular: false,
-                    orsApp: true
-                },
-                browser: true,
-                devel: true,
-                esnext: true
+                    _: false, $: false, angular: false, orsApp: true
+                }, browser: true, devel: true, esnext: true
             }
-        },
-        useminPrepare: {
-            html: "build/index.html",
-            options: {
+        }, useminPrepare: {
+            html: "build/index.html", options: {
                 dest: "build"
             }
-        },
-        usemin: {
-            html: ["build/index.html"],
-            css: ["build/index.html"]
-        },
-        uglify: {
+        }, usemin: {
+            html: ["build/index.html"], css: ["build/index.html"]
+        }, uglify: {
             options: {
                 "output.comments": false, //"some", "all",
-                compress: false,
-                mangle: false
+                compress: false, mangle: false
             }
-        },
-        preprocess: {
+        }, preprocess: {
             options: {
-                inline: true,
-                context: {
+                inline: true, context: {
                     DEBUG: false
                 }
-            },
-            html: {
+            }, html: {
                 src: ["build/index.html"]
             }
-        },
-        jsdoc: {
+        }, jsdoc: {
             dist: {
-                src: ["app/js/*.js", "app/components/**/*.js"],
-                options: {
+                src: ["app/js/*.js", "app/components/**/*.js"], options: {
                     destination: "doc"
                 }
             }
-        },
-        removelogging: {
+        }, removelogging: {
             dist: {
                 src: ["build/scripts.js", "build/vendor.js"] // Each file will be overwritten with the output!
-            },
-            namespace: ["console", "console.info", "console.warn"]
-        },
-        traceur: {
+            }, namespace: ["console", "console.info", "console.warn"]
+        }, traceur: {
             options: {
-                copyRuntime: "build/",
-                //script: true,
-                moduleNames: false,
-                modules: "inline"
-            },
-            custom: {
+                copyRuntime: "build/", moduleNames: false, modules: "inline"
+            }, custom: {
                 files: [
                     {
-                        expand: true,
-                        cwd: "app/",
-                        src: [
+                        expand: true, cwd: "app/", src: [
                             "components/**/*.js",
                             "constants/**/*.js",
                             "values/**/*.js",
                             "infrastructure/**/*.js",
                             "js/**/*.js"
-                        ],
-                        dest: "build/"
+                        ], dest: "build/"
                     }
                 ]
             }
-        },
-        prettier: {
+        }, prettier: {
             files: {
                 src: ["app/**/**.js"]
             }
-        },
-        connect: {
+        }, connect: {
             dev: {
                 options: {
-                    hostname: "0.0.0.0",
-                    port: 3005,
-                    livereload: true,
-                    middleware: function(connect) {
-                        // MARQ24 added proxy to avoid CORS when running OWN backend via SpringBoot
-                        // this will require the usage of NodeJS 13.x
-                        var proxy = require("http-proxy-middleware");
+                    hostname: "localhost", port: 3005, livereload: true, middleware: function (connect) {
                         return [
-                            modRewrite([
-                                "!\\.html|\\.js|\\.txt|\\.ico|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]"
-                            ]),
-                            connect().use(
-                                "/node_modules",
-                                serveStatic("./node_modules")
-                            ),
-                            proxy("/ors",{ target: 'http://localhost:8082', changeOrigin: true, pathRewrite: {'^/ors/': '/' }}),
+                            modRewrite(["!\\.html|\\.js|\\.txt|\\.ico|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]"]),
+                            connect().use("/node_modules", serveStatic("./node_modules")),
                             serveStatic("./app")
-                        ];
+                        ]
                     }
                 }
-            },
-            build: {
+            }, build: {
                 options: {
-                    hostname: "0.0.0.0",
-                    port: 3035,
-                    middleware: function() {
+                    hostname: "0.0.0.0", port: 3035, middleware: function (a) {
                         return [
-                            modRewrite([
-                                "!\\.html|\\.js|\\.txt|\\.ico|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]"
-                            ]),
+                            modRewrite(["!\\.html|\\.js|\\.txt|\\.ico|\\.svg|\\.map|\\.woff2|\\.woff|\\.ttf|\\.css|\\.png$ /index.html [L]"]),
                             serveStatic("./build")
-                        ];
+                        ]
                     }
                 }
             }
-        },
-        tags: {
+        }, tags: {
             build: {
-                src: ["build/traceur_runtime.js"],
-                dest: "build/index.html"
+                src: ["build/traceur_runtime.js"], dest: "build/index.html"
             }
-        },
-        browserify: {
+        }, browserify: {
             turf: {
-                src: "main.js",
-                dest: "node_modules/turf.js",
-                options: {
+                src: "main.js", dest: "node_modules/turf.js", options: {
                     browserifyOptions: {
                         standalone: "turf"
                     }
                 }
             }
-        },
-        ngconstant: {
-            // Options for all targets
+        }, ngconstant: {
             options: {
-                space: "  ",
-                wrap: '"use strict";\n\n {\%= __ngModule %}',
-                name: "config"
-            },
-            // Environment targets
-            local: {
+                space: "  ", wrap: "\"use strict\";\n\n {\%= __ngModule %}", name: "config"
+            }, ors: {
                 options: {
                     dest: "app/js/config.js"
-                },
-                constants: {
+                }, constants: {
                     ENV: {
-                        name: "local",
-                        geocode:
-                            "https://api.openrouteservice.org/geocode",
-                        directions:
-                            "http://localhost:8082/ors/v2/directions",
-                        isochrones:
-                            "http://localhost:8082/ors/v2/isochrones",
-                        matrix:
-                            "http://localhost:8082/ors/matrix",
-                        pois:
-                            "https://api.openrouteservice.org/pois",
+                        name: "production",
+                        geocode: "https://api.openrouteservice.org/pgeocode",
+                        directions: "https://api.openrouteservice.org/v2/pdirections",
+                        isochrones: "https://api.openrouteservice.org/v2/pisochrones",
+                        matrix: "https://api.openrouteservice.org/v2/pmatrix",
+                        pois: "https://api.openrouteservice.org/ppois",
                         shortenlink: "https://api-ssl.bitly.com/v3/shorten",
-                        mapsurfer:
-                            "https://api.openrouteservice.org/mapsurfer/{z}/{x}/{y}.png",
+                        landmarks: "https://landmarks-api.openrouteservice.org/",
+                        fuel: "https://api.openrouteservice.org/pfuel"
+                    }
+                }
+            }, tardur: {
+                options: {
+                    dest: "app/js/config.js"
+                }, constants: {
+                    ENV: {
+                        name: "api",
+                        geocode: "https://api.openrouteservice.org/geocode",
+                        directions: "https://api.openrouteservice.org/tardur/v2/directions",
+                        isochrones: "https://api.openrouteservice.org/tardur/v2/isochrones",
+                        matrix: "https://api.openrouteservice.org/tardur/v2/matrix",
+                        pois: "https://api.openrouteservice.org/pois",
+                        shortenlink: "https://api-ssl.bitly.com/v3/shorten",
                         landmarks: "https://landmarks-api.openrouteservice.org/",
                         fuel: "https://api.openrouteservice.org/fuel"
                     }
                 }
-            },
-            ors: {
+            }, api: {
                 options: {
                     dest: "app/js/config.js"
-                },
-                constants: {
+                }, constants: {
                     ENV: {
-                        name: "production",
+                        name: "api",
                         geocode: "https://api.openrouteservice.org/geocode",
-                        directions:
-                            "https://api.openrouteservice.org/v2/directions",
-                        isochrones:
-                            "https://api.openrouteservice.org/v2/isochrones",
-                        matrix: "https://api.openrouteservice.org/matrix",
+                        directions: "https://api.openrouteservice.org/v2/directions",
+                        isochrones: "https://api.openrouteservice.org/v2/isochrones",
+                        matrix: "https://api.openrouteservice.org/v2/matrix",
                         pois: "https://api.openrouteservice.org/pois",
                         shortenlink: "https://api-ssl.bitly.com/v3/shorten",
-                        mapsurfer:
-                            "https://api.openrouteservice.org/mapsurfer/{z}/{x}/{y}.png",
                         landmarks: "https://landmarks-api.openrouteservice.org/",
                         fuel: "https://api.openrouteservice.org/fuel"
                     }
                 }
             }
-        },
-        stripDebug: {
+        }, stripDebug: {
             dist: {
                 files: {
                     "build/scripts.js": "build/scripts.js"
                 }
             }
-        },
-        cacheBust: {
+        }, cacheBust: {
             taskName: {
                 options: {
-                    assets: [
-                        "scripts.js",
-                        "vendor.js",
-                        "main.css",
-                        "vendor.css"
-                    ],
+                    assets: ["scripts.js", "vendor.js", "main.css", "vendor.css"],
                     baseDir: "./build",
                     deleteOriginals: true
-                },
-                src: ["./build/index.html"]
+                }, src: ["./build/index.html"]
             }
-        },
-        less: {
+        }, less: {
             development: {
                 files: {
                     "app/css/ors-addresses.css": "app/less/ors-addresses.less",
@@ -306,74 +226,101 @@ module.exports = function(grunt) {
                     "app/css/ors-extras.css": "app/less/ors-extras.less",
                     "app/css/ors-header.css": "app/less/ors-header.less",
                     "app/css/ors-icons.css": "app/less/ors-icons.less",
-                    "app/css/ors-instructions.css":
-                        "app/less/ors-instructions.less",
+                    "app/css/ors-instructions.css": "app/less/ors-instructions.less",
                     "app/css/ors-landmark.css": "app/less/ors-landmark.less",
                     "app/css/ors-layout.css": "app/less/ors-layout.less",
                     "app/css/ors-leaflet.css": "app/less/ors-leaflet.less",
                     "app/css/ors-loading.css": "app/less/ors-loading.less",
                     "app/css/ors-locations.css": "app/less/ors-locations.less",
                     "app/css/ors-modal.css": "app/less/ors-modal.less",
-                    "app/css/ors-nav-profiles.css":
-                        "app/less/ors-nav-profiles.less",
-                    "app/css/ors-panel-isochrones.css":
-                        "app/less/ors-panel-isochrones.less",
-                    "app/css/ors-panel-routing.css":
-                        "app/less/ors-panel-routing.less",
-                    "app/css/ors-sidebar-outlet.css":
-                        "app/less/ors-sidebar-outlet.less",
+                    "app/css/ors-nav-profiles.css": "app/less/ors-nav-profiles.less",
+                    "app/css/ors-panel-isochrones.css": "app/less/ors-panel-isochrones.less",
+                    "app/css/ors-panel-routing.css": "app/less/ors-panel-routing.less",
+                    "app/css/ors-sidebar-outlet.css": "app/less/ors-sidebar-outlet.less",
                     "app/css/ors-tooltips.css": "app/less/ors-tooltips.less",
                     "app/css/ors-ng-sliders.css": "app/less/ors-ng-sliders.less"
                 }
             }
-        },
-        ngtemplates: {
+        }, ngtemplates: {
             orsApp: {
                 cwd: "app",
-                src: [
-                    "components/**/*.html",
-                    "includes/**/*.html",
-                    "languages/**/*.json"
-                ],
+                src: ["components/**/*.html", "includes/**/*.html", "languages/**/*.json"],
                 dest: "app/js/templates.js"
             }
+        }, version: {
+            app: {
+                options: {
+                    prefix: "@version: "
+                }, src: ["app/js/app.js"]
+            }, infrastructure: {
+                options: {
+                    prefix: "let version = \""
+                }, src: ["app/infrastructure/ors-importexport-service.js"]
+            }, ors: {
+                src: ["package.json", "app/components/ors-navigation/ors-nav.js"]
+            }
+        }, "npm-command": {
+            default: {
+                options: {
+                    cwd: "./"
+                }
+            }
         }
-    });
-    grunt.registerTask(
-        "ors",
-        "Compiles all of the assets and copies the files to the build directory.",
-        [
-            "browserify:turf",
-            "less:development",
-            "prettier",
-            "ngtemplates",
-            "clean:task_rm_build",
-            "copy:build",
-            "ngconstant:ors",
-            "traceur",
-            "useminPrepare",
-            "concat",
-            "copy:libs",
-            "uglify",
-            "cssmin",
-            "usemin",
-            "preprocess",
-            "tags",
-            "clean:task_rm_build_unused",
-            "stripDebug",
-            "cacheBust",
-            "connect:build:keepalive"
-        ]
-    );
-    grunt.registerTask("dev", "Run local server for development purposes", [
+    })
+    // for development
+    grunt.registerTask("dev", "Run local server", [
+        "less:development", "prettier", "browserify:turf", "ngtemplates", "ngconstant:api", "connect:dev", "watch"
+    ])
+    grunt.registerTask("api", "Points to api.openrouteservice.org, API KEY NEEDED IN WEATHERCHECK.TXT!", [
+        "less:development", "prettier", "browserify:turf", "ngtemplates", "ngconstant:api", "connect:dev", "watch"
+    ])
+    // for production (copy to Build folder)
+    grunt.registerTask("ors", "Compiles all of the assets and copies the files to the build directory. Points to public endpoints.", [
+        "browserify:turf",
         "less:development",
         "prettier",
-        "browserify:turf",
         "ngtemplates",
+        "clean:task_rm_build",
+        "copy:build",
         "ngconstant:ors",
-        "connect:dev",
-        "watch"
-    ]);
+        "traceur",
+        "useminPrepare",
+        "concat",
+        "copy:libs",
+        "uglify",
+        "cssmin",
+        "usemin",
+        "preprocess",
+        "tags",
+        "clean:task_rm_build_unused",
+        "stripDebug",
+        "cacheBust",
+        "connect:build",
+        "watch:essentials"
+    ])
+    grunt.registerTask("staging", "Compiles all of the assets and copies the files to the build directory.", [
+        "browserify:turf",
+        "less:development",
+        "prettier",
+        "ngtemplates",
+        "clean:task_rm_build",
+        "copy:build",
+        "ngconstant:api",
+        "traceur",
+        "useminPrepare",
+        "concat",
+        "copy:libs",
+        "uglify",
+        "cssmin",
+        "usemin",
+        "preprocess",
+        "tags",
+        "clean:task_rm_build_unused",
+        "stripDebug",
+        "cacheBust",
+        "connect:build:keepalive"
+    ])
+    // run tests
     grunt.registerTask("ci", "Test build process with Travis", [
         "browserify:turf",
         "less:development",
@@ -394,18 +341,17 @@ module.exports = function(grunt) {
         "clean:task_rm_build_unused",
         "stripDebug",
         "cacheBust"
-    ]);
-    grunt.registerTask(
-        "ors_local",
-        "Run local ors frontend server on local ors backend tomcat",
-        [
-            "less:development",
-            "prettier",
-            "browserify:turf",
-            "ngtemplates",
-            "ngconstant:local",
-            "connect:dev",
-            "watch"
-        ]
-    );
-};
+    ])
+    // bump Version
+    grunt.registerTask("up", "Bump patch number in all important files", function (arg1) {
+        if (arguments.length === 0) {
+            grunt.task.run(["version::patch", "npm-command"])
+        } else if (arg1 === "minor") {
+            grunt.task.run(["version::minor", "npm-command"])
+        } else if (arg1 === "major") {
+            grunt.task.run(["version::major", "npm-command"])
+        } else {
+            grunt.log.writeln("Run \"grunt up\" task without arguments to bump patch version and \"grunt up:minor\" or \"grunt up:major\" for bumping minor or major version.")
+        }
+    })
+}
