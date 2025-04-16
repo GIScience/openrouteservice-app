@@ -16,8 +16,6 @@
 #		python edit_keys.py rm
 #
 # 		-> Enter key to remove (case sensitive!)
-#
-# having trouble? Message me: amandusbutzer@gmx.de
 ###
 
 import json, os, sys
