@@ -1,4 +1,4 @@
-FROM timbru31/node-alpine-git:12
+FROM timbru31/node-alpine-git
 
 # copy required files
 COPY ["bs-config.js", "main.js", "package.json", "package-lock.json", "/ors-classic-maps/"]
