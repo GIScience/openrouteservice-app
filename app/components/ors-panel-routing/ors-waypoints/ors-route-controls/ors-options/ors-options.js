@@ -39,9 +39,9 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
       ctrl.$onInit = () => {
         /** This is a reference of the settings object, if we change here, it is updated in settings */
         ctrl.currentOptions = orsSettingsFactory.getActiveOptions();
-        if (!ctrl.carBrands) {
-          ctrl.initOFS();
-        }
+        // if (!ctrl.carBrands) {
+        //   ctrl.initOFS();
+        // }
 
         // preference/weight is only considered for routing panel
         if (ctrl.routing)
@@ -625,9 +625,9 @@ angular.module("orsApp.ors-options", []).component("orsOptions", {
         ctrl.routing = route === "directions";
       });
       ctrl.changeOptions = () => {
-        if (!ctrl.carBrands) {
-          ctrl.initOFS();
-        }
+        // if (!ctrl.carBrands) {
+        //   ctrl.initOFS();
+        // }
         // call setoptions
         if (ctrl.currentOptions.difficulty)
           ctrl.difficultySliders.Fitness.options.disabled =
