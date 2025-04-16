@@ -35,6 +35,17 @@ RELEASING:
 8. Add version to docker-compose.yml (grunt version always adds 1 on top the current version ...)
  -->
 
+## [0.8.0] - 2025-04-16
+
+### Changed
+- OFS init request is now disabled
+
+### Fixed
+- API changed for extra info response from waytypes -> waytype
+
+### Security
+- updates for some packages through `npm audit fix`
+
 ## [0.7.3] - 2022-05-13
 
 ### Changed
@@ -436,7 +447,8 @@ RELEASING:
 ### Fixed
 - hiding wrong Isochrones ([#160](https://github.com/GIScience/openrouteservice-app/issues/160))
 
-[unreleased]: https://github.com/GIScience/openrouteservice-app/compare/v0.7.3...HEAD
+[unreleased]: https://github.com/GIScience/openrouteservice-app/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/GIScience/openrouteservice-app/compare/v0.7.3...v0.8.0
 [0.7.3]: https://github.com/GIScience/openrouteservice-app/compare/v0.7.2...v0.7.3
 [0.7.2]: https://github.com/GIScience/openrouteservice-app/compare/v0.7.1...v0.7.2
 [0.7.1]: https://github.com/GIScience/openrouteservice-app/compare/v0.7.0...v0.7.1
