@@ -170,6 +170,22 @@ module.exports = function (grunt) {
                         fuel: "https://api.openrouteservice.org/pfuel"
                     }
                 }
+            }, heigit: {
+                options: {
+                    dest: "app/js/config.js"
+                }, constants: {
+                    ENV: {
+                        name: "production",
+                        geocode: "https://api.heigit.org/pelias",
+                        directions: "https://api.heigit.org/ors/v2/directions",
+                        isochrones: "https://api.heigit.org/ors/v2/isochrones",
+                        matrix: "https://api.heigit.org/ors/v2/matrix",
+                        pois: "https://api.heigit.org/ops/pois",
+                        shortenlink: "https://api-ssl.bitly.com/v3/shorten",
+                        landmarks: "https://landmarks-api.openrouteservice.org/",
+                        fuel: "https://api.heigit.org/fuel"
+                    }
+                }
             }, tardur: {
                 options: {
                     dest: "app/js/config.js"
@@ -282,7 +298,8 @@ module.exports = function (grunt) {
         "ngtemplates",
         "clean:task_rm_build",
         "copy:build",
-        "ngconstant:ors",
+        "ngconstant:ors",  // change to heigit env after switching to new HeiGIT API
+        // "ngconstant:heigit",
         "traceur",
         "useminPrepare",
         "concat",

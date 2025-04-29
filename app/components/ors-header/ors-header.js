@@ -82,6 +82,26 @@ angular.module("orsApp.ors-header", []).component("orsHeader", {
               ? "v2/" + key
               : key;
           });
+        } else if (fill === "HeiGIT") {
+          angular.forEach(Object.keys(ctrl.currentOptions.env), key => {
+            ctrl.envBase = "https://api.heigit.org";
+            ctrl.currentOptions.env[key] = ctrl.envBase + "/";
+            switch (key) {
+              case "directions":
+              case "isochrones":
+              case "matrix":
+                ctrl.currentOptions.env[key] += `ors/v2/${key}`
+                break;
+              case "geocode":
+                ctrl.currentOptions.env[key] += `pelias`
+                break;
+              case "pois":
+                ctrl.currentOptions.env[key] += `ops/pois`
+                break;
+              default:
+                break;
+            }
+          });
         } else if (fill === "default") {
           angular.forEach(Object.keys(ctrl.currentOptions.env), key => {
             ctrl.currentOptions.env[key] = ENV.default[key];

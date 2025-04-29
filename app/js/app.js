@@ -103,6 +103,7 @@
               config.url === ENV.fuel
             ) {
               config.url += ak;
+              config.headers.Authorization = apiKey
             }
             return config || $q.when(config);
           },
