@@ -13,4 +13,4 @@ services:
       - ./app:/ors-classic-maps/app
       - ./Gruntfile.default.js:/ors-classic-maps/Gruntfile.js
     entrypoint: ["/ors-classic-maps/node_modules/grunt-cli/bin/grunt","-b", "/ors-classic-maps"]
-    command: "ors"
+    command: "tardur"

@@ -255,6 +255,22 @@ module.exports = function(grunt) {
                         fuel: "https://api.openrouteservice.org/fuel"
                     }
                 }
+            }, tardur: {
+                options: {
+                    dest: "app/js/config.js"
+                }, constants: {
+                    ENV: {
+                        name: "api",
+                        geocode: "https://api.openrouteservice.org/geocode",
+                        directions: "https://api.openrouteservice.org/tardur/v2/directions",
+                        isochrones: "https://api.openrouteservice.org/tardur/v2/isochrones",
+                        matrix: "https://api.openrouteservice.org/tardur/matrix",
+                        pois: "https://api.openrouteservice.org/pois",
+                        shortenlink: "https://api-ssl.bitly.com/v3/shorten",
+                        landmarks: "https://landmarks-api.openrouteservice.org/",
+                        fuel: "https://api.openrouteservice.org/fuel"
+                    }
+                }
             },
             ors: {
                 options: {
@@ -378,6 +394,28 @@ module.exports = function(grunt) {
         "connect:dev",
         "watch"
     ]);
+    grunt.registerTask("tardur", "Compiles all of the assets and copies the files to the build directory.", [
+        "browserify:turf",
+        "less:development",
+        "prettier",
+        "ngtemplates",
+        "clean:task_rm_build",
+        "copy:build",
+        "ngconstant:tardur",
+        "traceur",
+        "useminPrepare",
+        "concat",
+        "copy:libs",
+        "uglify",
+        "cssmin",
+        "usemin",
+        "preprocess",
+        "tags",
+        "clean:task_rm_build_unused",
+        "stripDebug",
+        "cacheBust",
+        "connect:build:keepalive"
+    ])
     grunt.registerTask("ci", "Test build process with Travis", [
         "browserify:turf",
         "less:development",
